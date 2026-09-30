@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "134d155e4587a3c8f7625df7",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:102",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "54912b3da05859845ae8ed65f05b6895034d4d9bbd6cf9a1ca60f4984b0f0149",
+    "after_hash": "617a5c86829c5dce9ba6f9ce5218891a11fd07be7b324c60758955b328fd95e0",
+    "before": [
+      61.44
+    ],
+    "after": [
+      61.44,
+      "BYD Blade Battery"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.dynamic_rwd_204_hp_bev_battery.chemistry_as_declared_70e6545ddb96.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "134d155e4587a3c8f7625df7:spec",
+    "revision_id": "134d155e4587a3c8f7625df7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      61.44,
+      "BYD Blade Battery"
+    ]
+  }
+}

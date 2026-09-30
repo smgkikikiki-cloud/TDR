@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "82db9e99b8e60795658c7926",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:239",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "578275133e14f18df845ed9c05e8cb9f6129e1d3d964b4a7592a8416d9353288",
+    "after_hash": "643eb7ae20dc4bf1a29ba27b395fc23dcb336ffd65cb49b04f8a57014aa72418",
+    "before": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true
+    ],
+    "after": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true,
+      "Double Wishbone"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.sealion7.sl7.trim.awd_ultimate_bev_chassis.suspension_front_3c4cc77e0b89.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "82db9e99b8e60795658c7926:spec",
+    "revision_id": "82db9e99b8e60795658c7926",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true,
+      "Double Wishbone"
+    ]
+  }
+}

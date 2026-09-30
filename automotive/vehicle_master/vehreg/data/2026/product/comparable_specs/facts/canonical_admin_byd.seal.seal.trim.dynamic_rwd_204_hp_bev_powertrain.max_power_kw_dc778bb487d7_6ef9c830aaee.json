@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.seal.seal.trim.dynamic_rwd_204_hp_bev:powertrain.max_power_kw:dc778bb487d7",
+      "trim_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 150,
+      "unit": "kW",
+      "qualifiers": {
+        "output_scope": "REAR_MOTOR",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

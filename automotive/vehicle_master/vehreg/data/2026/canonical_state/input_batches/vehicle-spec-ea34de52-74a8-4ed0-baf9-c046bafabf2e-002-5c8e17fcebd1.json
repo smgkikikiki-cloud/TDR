@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1",
+  "batch_hash": "e47545e6b3c61c31060381f368e7f9e54d7a2b58fa9539f58d9392ccbeb6df10",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T09:57:04+00:00",
+  "applied_at": "2026-09-30T09:59:15+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:1",
+      "revision_id": "1e43b8c3177a60ce105a54e1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:2",
+      "revision_id": "206547a881db6a9285c2f963",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:3",
+      "revision_id": "b11314a359df29599c3a42c1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:4",
+      "revision_id": "5c6fb57f99d0ba39ee22f7a8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:5",
+      "revision_id": "20148e7d7b017517fc435be3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:6",
+      "revision_id": "ff7d74c00d0a9860325ee03f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:7",
+      "revision_id": "9e99849ae84b90891a5dcd68",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:8",
+      "revision_id": "4eccee0fc74e93b3be6ccd93",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:9",
+      "revision_id": "0610e21c065512c1cd62cf14",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-002-5c8e17fcebd1:10",
+      "revision_id": "4e2bfed51801634e4d5fea14",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.ground_clearance_mm_b3f986a37970_34a3bf97bb04.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.seats_a35b05155f86.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.turning_radius_m_9ef6ea47386c_39a658fb753d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.height_mm_0f67f969fa0f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.width_mm_f0662eec995d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.length_mm_1c5aa385e17d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.curb_weight_kg_eef0f338d6b2_056e5dc13d63.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_technology.connected_services_312481418def.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_technology.smartphone_mirroring_39e62f6c776c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_vehicle.wheelbase_mm_648719175bd0.json",
+    "2026/canonical_state/shadow/4e2bfed51801634e4d5fea14.json",
+    "2026/canonical_state/shadow/1e43b8c3177a60ce105a54e1.json",
+    "2026/canonical_state/shadow/4eccee0fc74e93b3be6ccd93.json",
+    "2026/canonical_state/shadow/5c6fb57f99d0ba39ee22f7a8.json",
+    "2026/canonical_state/shadow/0610e21c065512c1cd62cf14.json",
+    "2026/canonical_state/shadow/b11314a359df29599c3a42c1.json",
+    "2026/canonical_state/shadow/206547a881db6a9285c2f963.json",
+    "2026/canonical_state/shadow/ff7d74c00d0a9860325ee03f.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/20148e7d7b017517fc435be3.json",
+    "2026/canonical_state/shadow/9e99849ae84b90891a5dcd68.json",
+    "2026/canonical_state/revisions.jsonl"
+  ]
+}

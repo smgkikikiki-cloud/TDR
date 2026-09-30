@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "801d4387804b513f7787b4b7",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:241",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "4d9fca80a3c3e0c50f29e59fe00d8ac2ce324d2f620f9c27f4e246cdfcf93006",
+    "after_hash": "56140825feed04c1a7aa79825d6439f7292053475eeeca8dcea012bbee6596d0",
+    "before": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true,
+      "Double Wishbone",
+      "Multi-link"
+    ],
+    "after": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.sealion7.sl7.trim.awd_ultimate_bev_comfort.auto_climate_afb3bae5970f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "801d4387804b513f7787b4b7:spec",
+    "revision_id": "801d4387804b513f7787b4b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      91.3,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      230,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true
+    ]
+  }
+}

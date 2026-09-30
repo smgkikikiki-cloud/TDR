@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4218525a04cc07278d32cdff",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:82",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "eb824379452568b0c85a377306c6738f5120a092f9c0fcdd7bd373a79a12bce9",
+    "after_hash": "81cb63c2752a575e89422cd7d4fa901e101dd9f4a30dff4b4f7b7c66e082467d",
+    "before": [
+      44.9,
+      "BYD Blade Battery"
+    ],
+    "after": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev_charging.connector_type_00182d67e0e6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4218525a04cc07278d32cdff:spec",
+    "revision_id": "4218525a04cc07278d32cdff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2"
+    ]
+  }
+}

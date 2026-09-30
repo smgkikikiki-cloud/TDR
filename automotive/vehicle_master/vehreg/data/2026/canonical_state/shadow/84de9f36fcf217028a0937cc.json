@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "84de9f36fcf217028a0937cc",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:297",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "aece34a2a9b58ac1242c5d85dcd8d8885945a386d7205367540b2460bdaf6199",
+    "after_hash": "2c7d939f889099596f728ae7293599ac369d05fb0eb1f44f08713f12598046eb",
+    "before": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev_comfort.ventilated_front_seats_ed6a21a6a839.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "84de9f36fcf217028a0937cc:spec",
+    "revision_id": "84de9f36fcf217028a0937cc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  }
+}

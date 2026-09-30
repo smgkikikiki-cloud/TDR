@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c173570cda6973db30adcc26",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:400",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "228824c677c6100e8be5452fb47b880a9016300b3373fdfb031b83e74284b95e",
+    "after_hash": "9f720d42b455af83a5087d5886c0bf8b08b0677fb88403b662f0f05a27f96e87",
+    "before": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD",
+      35,
+      83,
+      "Permanent Magnet Synchronous"
+    ],
+    "after": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD",
+      35,
+      83,
+      "Permanent Magnet Synchronous",
+      "Single Speed Automatic"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_powertrain.transmission_as_declared_c8b62cc422ea.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c173570cda6973db30adcc26:spec",
+    "revision_id": "c173570cda6973db30adcc26",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD",
+      35,
+      83,
+      "Permanent Magnet Synchronous",
+      "Single Speed Automatic"
+    ]
+  }
+}

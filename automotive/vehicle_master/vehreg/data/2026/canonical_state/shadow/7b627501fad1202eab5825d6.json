@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7b627501fad1202eab5825d6",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:397",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "7910d35ece41ff7d1d2b5dd264c6b6ab7f408bd1785856a3c1698737a7141b9c",
+    "after_hash": "a2254340343e742441bb79127560be012cab0ba1e2830e0eba7a58f2200d51b5",
+    "before": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD"
+    ],
+    "after": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD",
+      35
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_powertrain.max_power_kw_398e0332b76d_9bc570b7381c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7b627501fad1202eab5825d6:spec",
+    "revision_id": "7b627501fad1202eab5825d6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true,
+      301,
+      "165/70 R14",
+      101,
+      "FWD",
+      35
+    ]
+  }
+}

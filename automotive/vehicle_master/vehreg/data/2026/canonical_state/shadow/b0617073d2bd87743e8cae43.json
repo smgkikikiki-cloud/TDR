@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b0617073d2bd87743e8cae43",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:285",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "3d5df0ab62dc4e7dedd36a268cc582901d23cff8e481f6e0d2d665ff7bfe9389",
+    "before": [],
+    "after": [
+      82.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev_battery.catalog_capacity_kwh_9546c1824aa9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b0617073d2bd87743e8cae43:spec",
+    "revision_id": "b0617073d2bd87743e8cae43",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      82.5
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d07e1011de8704f50a313ed6",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:46",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "25c1da7a7152b19ad4b62068f4075d719048d9e74c6f663e5859ebd2b4a57ab1",
+    "after_hash": "6dc3aae623492b075deef788194496fe6fea1c2adc77cb2b2e5e00fe0fb06a89",
+    "before": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true
+    ],
+    "after": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev_comfort.keyless_entry_76c916cf560b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d07e1011de8704f50a313ed6:spec",
+    "revision_id": "d07e1011de8704f50a313ed6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true,
+      true
+    ]
+  }
+}

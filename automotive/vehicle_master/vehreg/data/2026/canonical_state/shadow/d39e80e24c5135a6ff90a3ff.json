@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d39e80e24c5135a6ff90a3ff",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:392",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "8f1eba3a13f586da43b201c3ae80d48b27d166f6d6cd91fd6658152281ac64c8",
+    "after_hash": "87d1f66e0ff8eedd0f53829d9a8cd48a16ce6ada2325f1153891037124c2041d",
+    "before": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm"
+    ],
+    "after": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_comfort.keyless_entry_6496d46b0d0d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d39e80e24c5135a6ff90a3ff:spec",
+    "revision_id": "d39e80e24c5135a6ff90a3ff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35,
+      "MacPherson Strut",
+      "Trailing Arm",
+      true
+    ]
+  }
+}

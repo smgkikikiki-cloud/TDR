@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9337d3a5c606f51be98fb9d1",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.premium_rwd_313_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "cf9a11453d3533ae266d06bd5cb929ed179cf1e5d13382594d07516486641c32",
+    "after_hash": "e68e3a01d4e5bc240b7f508abd36e7a1eb7c9abac2a0927f064a4ca87c2e6ec6",
+    "before": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150
+    ],
+    "after": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.sealion7.sl7.trim.premium_rwd_313_hp_bev_charging.v2l_supported_f1c35ad4c7d9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9337d3a5c606f51be98fb9d1:spec",
+    "revision_id": "9337d3a5c606f51be98fb9d1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.premium_rwd_313_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      82.5,
+      "BYD Blade Battery",
+      11,
+      "CCS2",
+      150,
+      true
+    ]
+  }
+}

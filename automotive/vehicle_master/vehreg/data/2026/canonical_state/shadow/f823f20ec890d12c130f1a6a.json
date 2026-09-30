@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f823f20ec890d12c130f1a6a",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:89",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "2891957dbdf7309befd434c38f071efe419b8e73d300bfb4d56bca2098bfc4c2",
+    "after_hash": "246da3839dea1bf8ad37a6e8da2cd2088c31574e307f5224a3e32e224ef873fb",
+    "before": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410
+    ],
+    "after": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev_fitment.tyre_size_f95ad9a61b58.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f823f20ec890d12c130f1a6a:spec",
+    "revision_id": "f823f20ec890d12c130f1a6a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16"
+    ]
+  }
+}

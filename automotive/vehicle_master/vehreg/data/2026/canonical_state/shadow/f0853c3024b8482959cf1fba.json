@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f0853c3024b8482959cf1fba",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:201",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.premium_rwd_313_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "1ba6b3b39e7740b79ec27a2effa6d787f20196aa585f08ae2913fe62dacf41e7",
+    "after_hash": "a771c02e550c7123dc0719e363bc7742c8a56e55e72e39cd8e9eeb6b81300c9d",
+    "before": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      650,
+      "235/45 R19"
+    ],
+    "after": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      650,
+      "235/45 R19",
+      5.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.premium_rwd_313_hp_bev_performance.acceleration_0_100_s_eef0f338d6b2_1150dee382d2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f0853c3024b8482959cf1fba:spec",
+    "revision_id": "f0853c3024b8482959cf1fba",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.premium_rwd_313_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      true,
+      650,
+      "235/45 R19",
+      5.9
+    ]
+  }
+}

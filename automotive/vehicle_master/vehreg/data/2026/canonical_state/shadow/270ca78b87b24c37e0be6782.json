@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "270ca78b87b24c37e0be6782",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:06+00:00",
+    "before_hash": "cd0a51fcac37147ae70aec228c9a9f3989d946c0618fc12b68672e3fd7a857aa",
+    "after_hash": "3bbb1af74d21098fd4bd6c65d2cf9f0b74a543b8b26ad38fe10032f7f2dc9829",
+    "before": [
+      44.9
+    ],
+    "after": [
+      44.9,
+      "LFP"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev_battery.chemistry_1dbeaa0f4b1c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "270ca78b87b24c37e0be6782:spec",
+    "revision_id": "270ca78b87b24c37e0be6782",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:06+00:00",
+    "payload": [
+      44.9,
+      "LFP"
+    ]
+  }
+}

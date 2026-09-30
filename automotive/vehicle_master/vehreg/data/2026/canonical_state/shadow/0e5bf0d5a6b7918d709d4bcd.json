@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0e5bf0d5a6b7918d709d4bcd",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:14",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:06+00:00",
+    "before_hash": "a4a6f4dec162dac03bf8d8f5f29c94137de4129c9cc0e057a99385495f3f79b5",
+    "after_hash": "8cada894ee8df709301aeb73ba9913752377015180d2d067c16334cafb31f029",
+    "before": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true
+    ],
+    "after": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev_comfort.power_windows_06c6ad8381cc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0e5bf0d5a6b7918d709d4bcd:spec",
+    "revision_id": "0e5bf0d5a6b7918d709d4bcd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:06+00:00",
+    "payload": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true,
+      true
+    ]
+  }
+}

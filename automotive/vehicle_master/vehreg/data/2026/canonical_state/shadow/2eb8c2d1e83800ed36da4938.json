@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2eb8c2d1e83800ed36da4938",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:106",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "fb31d01142499992a5932ab3b6acf52185d38eceb5f3335f1c7cf78d833f13c3",
+    "after_hash": "63d1e30bcb17d29f13d25a38fd31f02971a439c73197854942d589f6b2c1230d",
+    "before": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true
+    ],
+    "after": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.dynamic_rwd_204_hp_bev_chassis.suspension_front_657c7702b333.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2eb8c2d1e83800ed36da4938:spec",
+    "revision_id": "2eb8c2d1e83800ed36da4938",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone"
+    ]
+  }
+}

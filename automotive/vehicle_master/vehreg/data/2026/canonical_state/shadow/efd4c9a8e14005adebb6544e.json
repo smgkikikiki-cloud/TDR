@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "efd4c9a8e14005adebb6544e",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:111",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "152b9889f156968edc2d7e91390978c1d25bf0c5242c04f7a0642142e143d3c8",
+    "after_hash": "a84f1b7fbddd66187243b116145bf3bf8db7c7d7a667a9562347ef1ed76c85dd",
+    "before": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510
+    ],
+    "after": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510,
+      "225/50 R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.dynamic_rwd_204_hp_bev_fitment.tyre_size_08d797dc5ff3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "efd4c9a8e14005adebb6544e:spec",
+    "revision_id": "efd4c9a8e14005adebb6544e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510,
+      "225/50 R18"
+    ]
+  }
+}

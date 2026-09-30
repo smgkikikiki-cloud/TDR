@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c74210db198f6433e004a2aa",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:114",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "1308f2c570fe0cc1a77f03f2944cf8c2e6f33796f22a330b6ac645756bf195d2",
+    "after_hash": "812a35447b5b9afad92a4fd1203b24b859ce7c2eb83883a8a700c5a7d57f4380",
+    "before": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510,
+      "225/50 R18",
+      7.5,
+      "RWD"
+    ],
+    "after": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510,
+      "225/50 R18",
+      7.5,
+      "RWD",
+      150
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.dynamic_rwd_204_hp_bev_powertrain.max_power_kw_398e0332b76d_470c6202b2eb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c74210db198f6433e004a2aa:spec",
+    "revision_id": "c74210db198f6433e004a2aa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.dynamic_rwd_204_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      61.44,
+      "BYD Blade Battery",
+      "CCS2",
+      110,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      510,
+      "225/50 R18",
+      7.5,
+      "RWD",
+      150
+    ]
+  }
+}

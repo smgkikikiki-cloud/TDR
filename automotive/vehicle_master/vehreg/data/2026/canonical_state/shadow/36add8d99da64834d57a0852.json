@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "36add8d99da64834d57a0852",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:145",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "9d5ecf717e678e2c4b9da5e720a6b9dd40b804562545fa5326162ae27652be11",
+    "after_hash": "a2ca32b77f8b711cefc0ba6577b758ad4cf094dbb8cdfffcc4292080956600e6",
+    "before": [
+      82.56
+    ],
+    "after": [
+      82.56,
+      "BYD Blade Battery"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.performance_awd_dual_530_hp_bev_battery.chemistry_as_declared_58e576cc64ab.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "36add8d99da64834d57a0852:spec",
+    "revision_id": "36add8d99da64834d57a0852",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      82.56,
+      "BYD Blade Battery"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "63352b26240cb070d4978dd5",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:152",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "330835d9faa4cc27b940bc018c5be10d21981ab1ec911aedf0f1083304921f96",
+    "after_hash": "ef861dc51a4071969c339677382258b88e3b631a52f7041490fae023a2feca02",
+    "before": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true
+    ],
+    "after": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.performance_awd_dual_530_hp_bev_comfort.keyless_entry_169b59e69b4e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "63352b26240cb070d4978dd5:spec",
+    "revision_id": "63352b26240cb070d4978dd5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true
+    ]
+  }
+}

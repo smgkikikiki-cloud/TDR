@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f6d575bb642271982652a2b7",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:93",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "8f617965ba7880b3c72bef5978637545fc0c092158bc06b0f5d7ed3b0a2daa11",
+    "after_hash": "fe9b0d64555a98fc8537589ca2555e7bce6559fcb9506a2909bd8fb86b4ca946",
+    "before": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70
+    ],
+    "after": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70,
+      180
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev_powertrain.max_torque_nm_398e0332b76d_370db4db5aa8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f6d575bb642271982652a2b7:spec",
+    "revision_id": "f6d575bb642271982652a2b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70,
+      180
+    ]
+  }
+}

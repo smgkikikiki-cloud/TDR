@@ -164,7 +164,13 @@
                   "owner_directory_2026_09_13:053"
                 ]
               },
-              "id": "standard_range_dynamic_44_9_kwh_bev"
+              "id": "standard_range_dynamic_44_9_kwh_bev",
+              "battery_kwh": 44.9,
+              "height_mm": 1570,
+              "length_mm": 4290,
+              "seats": 5,
+              "wheelbase_mm": 2700,
+              "width_mm": 1770
             },
             {
               "name": "Extended Range Premium (60.48 kWh)",
@@ -174,7 +180,13 @@
                   "owner_directory_2026_09_13:053"
                 ]
               },
-              "id": "extended_range_premium_60_48_kwh_bev"
+              "id": "extended_range_premium_60_48_kwh_bev",
+              "battery_kwh": 60.48,
+              "height_mm": 1570,
+              "length_mm": 4290,
+              "seats": 5,
+              "wheelbase_mm": 2700,
+              "width_mm": 1770
             }
           ]
         }
@@ -249,7 +261,14 @@
               "aliases": [
                 "Seal Dynamic (RWD, 204 hp)"
               ],
-              "id": "dynamic_rwd_204_hp_bev"
+              "id": "dynamic_rwd_204_hp_bev",
+              "battery_kwh": 61.44,
+              "drivetrain": "RWD",
+              "height_mm": 1460,
+              "length_mm": 4800,
+              "seats": 5,
+              "wheelbase_mm": 2920,
+              "width_mm": 1875
             },
             {
               "name": "Premium (RWD, 313 hp)",
@@ -262,7 +281,14 @@
               "aliases": [
                 "Seal Premium (RWD, 313 hp)"
               ],
-              "id": "premium_rwd_313_hp_bev"
+              "id": "premium_rwd_313_hp_bev",
+              "battery_kwh": 82.56,
+              "drivetrain": "RWD",
+              "height_mm": 1460,
+              "length_mm": 4800,
+              "seats": 5,
+              "wheelbase_mm": 2920,
+              "width_mm": 1875
             },
             {
               "name": "Performance AWD (Dual Motor, 530 hp)",
@@ -275,7 +301,14 @@
               "aliases": [
                 "Seal Performance AWD (Dual Motor, 530 hp)"
               ],
-              "id": "performance_awd_dual_motor_530_hp_bev"
+              "id": "performance_awd_dual_530_hp_bev",
+              "battery_kwh": 82.56,
+              "drivetrain": "AWD",
+              "height_mm": 1460,
+              "length_mm": 4800,
+              "seats": 5,
+              "wheelbase_mm": 2920,
+              "width_mm": 1875
             }
           ]
         }
@@ -404,7 +437,16 @@
                   "owner_directory_2026_09_13:059"
                 ]
               },
-              "id": "premium_rwd_313_hp_bev"
+              "id": "premium_rwd_313_hp_bev",
+              "battery_kwh": 82.5,
+              "tire_front": "235/50 R19",
+              "tire_rear": "255/45 R19",
+              "drivetrain": "RWD",
+              "height_mm": 1620,
+              "length_mm": 4830,
+              "seats": 5,
+              "wheelbase_mm": 2930,
+              "width_mm": 1925
             },
             {
               "name": "Performance AWD (Dual Motor, 530 hp)",
@@ -414,12 +456,26 @@
                   "owner_directory_2026_09_13:059"
                 ]
               },
-              "id": "performance_awd_dual_motor_530_hp_bev"
+              "id": "performance_awd_dual_530_hp_bev",
+              "battery_kwh": 82.5,
+              "drivetrain": "AWD",
+              "height_mm": 1620,
+              "length_mm": 4830,
+              "seats": 5,
+              "wheelbase_mm": 2930,
+              "width_mm": 1925
             },
             {
               "name": "AWD Ultimate",
               "powertrain": "BEV",
-              "id": "awd_ultimate_bev"
+              "id": "awd_ultimate_bev",
+              "battery_kwh": 91.3,
+              "drivetrain": "AWD",
+              "height_mm": 1620,
+              "length_mm": 4830,
+              "seats": 5,
+              "wheelbase_mm": 2930,
+              "width_mm": 1925
             }
           ]
         }
@@ -716,7 +772,14 @@
                   "owner_directory_2026_09_13:052"
                 ]
               },
-              "id": "t3_cargo_van_pure_electric_bev"
+              "id": "t3_cargo_van_pure_electric_bev",
+              "battery_kwh": 44.9,
+              "drivetrain": "FWD",
+              "height_mm": 1875,
+              "length_mm": 4460,
+              "seats": 2,
+              "wheelbase_mm": 2725,
+              "width_mm": 1720
             }
           ]
         }

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "857404cc607d2541ab48143d",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:157",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "3040a1bb23a8b1afdad1b8a1d7428732c218e3469083af314f09f663912243ee",
+    "after_hash": "2dceb16e0b9676fcbfbc1de6294a701dfb83ac82c3ba52bdb6f0c890143d0c96",
+    "before": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      580,
+      "235/45 R19",
+      3.8,
+      "AWD"
+    ],
+    "after": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      580,
+      "235/45 R19",
+      3.8,
+      "AWD",
+      390
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.seal.seal.trim.performance_awd_dual_530_hp_bev_powertrain.max_power_kw_398e0332b76d_269adbdc4253.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "857404cc607d2541ab48143d:spec",
+    "revision_id": "857404cc607d2541ab48143d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      82.56,
+      "BYD Blade Battery",
+      "CCS2",
+      150,
+      true,
+      "Double Wishbone",
+      "Multi-link",
+      true,
+      true,
+      580,
+      "235/45 R19",
+      3.8,
+      "AWD",
+      390
+    ]
+  }
+}

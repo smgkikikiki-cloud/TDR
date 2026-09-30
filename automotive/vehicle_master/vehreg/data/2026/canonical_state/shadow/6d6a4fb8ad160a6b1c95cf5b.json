@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6d6a4fb8ad160a6b1c95cf5b",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "fe9b0d64555a98fc8537589ca2555e7bce6559fcb9506a2909bd8fb86b4ca946",
+    "after_hash": "6acd8403efb8e3fedd2f4134630a8381ae00d415c84fc3013a334041a761023a",
+    "before": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70,
+      180
+    ],
+    "after": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70,
+      180,
+      "Permanent Magnet Synchronous Motor"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev_powertrain.motor_type_e763b4355350.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6d6a4fb8ad160a6b1c95cf5b:spec",
+    "revision_id": "6d6a4fb8ad160a6b1c95cf5b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      44.9,
+      "BYD Blade Battery",
+      "CCS2",
+      60,
+      "MacPherson Strut",
+      "Torsion Beam",
+      false,
+      false,
+      410,
+      "195/60 R16",
+      12.3,
+      150,
+      70,
+      180,
+      "Permanent Magnet Synchronous Motor"
+    ]
+  }
+}

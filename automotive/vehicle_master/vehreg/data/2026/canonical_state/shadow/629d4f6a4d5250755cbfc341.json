@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "629d4f6a4d5250755cbfc341",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:15",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:06+00:00",
+    "before_hash": "8cada894ee8df709301aeb73ba9913752377015180d2d067c16334cafb31f029",
+    "after_hash": "099617e73bf423641d93a8f2a042d140007a19d4cf0c2459884e9fd654b9b98e",
+    "before": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true,
+      true
+    ],
+    "after": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true,
+      true,
+      233
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev_ev.rated_range_km_cdfbd28da665_69251832ed60.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "629d4f6a4d5250755cbfc341:spec",
+    "revision_id": "629d4f6a4d5250755cbfc341",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:06+00:00",
+    "payload": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2",
+      50,
+      "McPherson",
+      "Leaf Spring",
+      true,
+      true,
+      true,
+      233
+    ]
+  }
+}

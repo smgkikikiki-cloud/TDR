@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.seal.seal.trim.performance_awd_dual_530_hp_bev:powertrain.max_torque_nm:dc778bb487d7",
+      "trim_id": "byd.seal.seal.trim.performance_awd_dual_530_hp_bev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 360,
+      "unit": "Nm",
+      "qualifiers": {
+        "output_scope": "REAR_MOTOR",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

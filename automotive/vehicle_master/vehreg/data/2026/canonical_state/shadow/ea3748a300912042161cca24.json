@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ea3748a300912042161cca24",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:36",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "bcf56b206a8b34c6fdbaa4e512f243349ebc527b52a1e17c0e905e91134ff605",
+    "before": [],
+    "after": [
+      60.48
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev_battery.catalog_capacity_kwh_298b27eb5dab.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ea3748a300912042161cca24:spec",
+    "revision_id": "ea3748a300912042161cca24",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      60.48
+    ]
+  }
+}

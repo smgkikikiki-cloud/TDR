@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "864ddb28afa03b2d9668bd8f",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:40",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "eaaf2f676d87cc52927ed5d44455b62cc3f6e426e7fa7e1febfeee37a6f6da10",
+    "after_hash": "88a3eccb8087378cbdae6998189d7932540e8074546d7b04fb11deae504c20c3",
+    "before": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2"
+    ],
+    "after": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev_charging.dc_max_kw_9d18d19d12be_35a6d8438482.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "864ddb28afa03b2d9668bd8f:spec",
+    "revision_id": "864ddb28afa03b2d9668bd8f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80
+    ]
+  }
+}

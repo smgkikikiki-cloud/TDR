@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0ee72575d0ba93956f4f047d",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:8",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:06+00:00",
+    "before_hash": "87dcea6c0d97fd0e33ea1600fd1443d8fe022f0d15922dc0403e782d800ee5d2",
+    "after_hash": "a7912639a46d40a36e69a6b2542ff740ef4a55c2a177ad91c300b510af975144",
+    "before": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6
+    ],
+    "after": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev_charging.connector_type_63fbe6c36c53.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0ee72575d0ba93956f4f047d:spec",
+    "revision_id": "0ee72575d0ba93956f4f047d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:06+00:00",
+    "payload": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000,
+      8,
+      6.6,
+      "CCS2"
+    ]
+  }
+}

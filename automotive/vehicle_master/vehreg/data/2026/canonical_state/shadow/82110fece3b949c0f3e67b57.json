@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "82110fece3b949c0f3e67b57",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:5",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:06+00:00",
+    "before_hash": "5d1fc5b84695ac607732e8f093fb6eb9f53218a24b124d521ec98d4f3f1dafd1",
+    "after_hash": "b98b743451b67f9b77bb1fe96d960ea98cedfefc0ca7a2b8740b944602e777c8",
+    "before": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery"
+    ],
+    "after": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev_battery.warranty_km_a38c5c1d372f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "82110fece3b949c0f3e67b57:spec",
+    "revision_id": "82110fece3b949c0f3e67b57",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:06+00:00",
+    "payload": [
+      44.9,
+      "LFP",
+      "BYD Blade (LFP) battery",
+      500000
+    ]
+  }
+}

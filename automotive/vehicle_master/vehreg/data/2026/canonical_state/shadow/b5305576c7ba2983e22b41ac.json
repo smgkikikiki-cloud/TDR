@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b5305576c7ba2983e22b41ac",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:389",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "defecf0581b1331d63028b2e59c30155b77edc94bcb724898c143b58c4242dee",
+    "after_hash": "bace6ee8ec1b86d4fdb77098e6a3208194542caef4ed84c3e44b31f1b33e5b51",
+    "before": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate"
+    ],
+    "after": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_charging.dc_time_min_ddbe63be4976_17de62d88760.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b5305576c7ba2983e22b41ac:spec",
+    "revision_id": "b5305576c7ba2983e22b41ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      28.08,
+      "LFP",
+      "Lithium Iron Phosphate",
+      35
+    ]
+  }
+}

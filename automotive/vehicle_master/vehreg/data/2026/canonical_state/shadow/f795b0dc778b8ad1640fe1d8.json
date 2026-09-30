@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f795b0dc778b8ad1640fe1d8",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:49",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:07+00:00",
+    "before_hash": "794264b63e75c493e251a09a7d79cbd447835dd84eb624cdca4eceacb0b37c02",
+    "after_hash": "4daf914b4646a3719b2eba156105ef6270ab59708a707662ba88af8499ba192a",
+    "before": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true,
+      true,
+      490
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev_ev.rated_range_km_0ae84e372d69_a3e3bf2596ad.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f795b0dc778b8ad1640fe1d8:spec",
+    "revision_id": "f795b0dc778b8ad1640fe1d8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:07+00:00",
+    "payload": [
+      60.48,
+      "BYD Blade Battery",
+      7,
+      "CCS2",
+      80,
+      true,
+      "MacPherson Strut",
+      "Multi-link",
+      true,
+      true,
+      true,
+      true,
+      true,
+      490
+    ]
+  }
+}

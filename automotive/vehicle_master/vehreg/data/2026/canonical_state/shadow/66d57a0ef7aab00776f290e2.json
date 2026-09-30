@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "66d57a0ef7aab00776f290e2",
+    "command_id": "vehicle-spec-ea34de52-74a8-4ed0-baf9-c046bafabf2e-001-d21ee859b070:387",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T09:57:04+00:00",
+    "applied_at": "2026-09-30T09:59:08+00:00",
+    "before_hash": "446488aec78b7219444f3f070f155b74c6127419f6ca11e777a8845d17fb8dfb",
+    "after_hash": "dfb24d6551204177b4c57d98ff507417c5e757fa71dc009f124e76c31e665d03",
+    "before": [
+      28.08
+    ],
+    "after": [
+      28.08,
+      "LFP"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_changan.changan_lumin.gen1.trim.lumin_l_dc_bev_battery.chemistry_4c92a572c76b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "66d57a0ef7aab00776f290e2:spec",
+    "revision_id": "66d57a0ef7aab00776f290e2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:59:08+00:00",
+    "payload": [
+      28.08,
+      "LFP"
+    ]
+  }
+}
