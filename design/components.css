@@ -1,46 +1,154 @@
-/* TDR Design System · components (CSS only, ใช้กับ HTML ใดก็ได้) */
-.tdr{font-family:var(--font-sans,"IBM Plex Sans Thai",Tahoma,sans-serif);color:var(--ink,#0E1526)}
-.tdr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px}
+/* TDR Design System · shared components (CSS only; the React wrappers live in components/design/).
+   Tokens only, no colour literals and no fallbacks: design/tokens.css is always loaded first.
+   Rules: design/DESIGN.md §3 (colour), §4 (type), §5 (shape), §8 (data display). Reference: design/reference/components.html */
 
-/* Button */
-.tdr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--radius-md,8px);font:600 15px/1 var(--font-sans,"IBM Plex Sans Thai",sans-serif);border:1px solid transparent;cursor:pointer;text-decoration:none}
-.tdr-btn--primary{background:var(--action-primary,#002060);color:var(--on-action,#fff)}
-.tdr-btn--secondary{background:transparent;color:var(--ink,#0E1526);border-color:var(--ink,#0E1526)}
-.tdr-btn--upgrade{background:var(--brand-red,#AD1300);color:var(--on-action,#fff)}
-.tdr-btn--ghost{background:transparent;color:var(--brand-blue,#1D3880)}
-.tdr-btn:focus-visible{outline:2px solid var(--brand-blue,#1D3880);outline-offset:2px}
-.tdr-btn[disabled]{opacity:.45;cursor:not-allowed}
+.tdr { font-family: var(--font-sans); color: var(--ink); }
+.tdr-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 16px; }
 
-/* FilterChip */
-.tdr-chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:var(--radius-pill,999px);border:1px solid var(--border,#D6DBE5);background:var(--surface-page,#fff);color:var(--ink,#0E1526);font:500 14px/1 var(--font-sans,sans-serif);cursor:pointer}
-.tdr-chip[aria-pressed="true"]{border-color:var(--brand-blue,#1D3880);background:var(--surface-raised,#F3F5F9);color:var(--brand-navy,#002060);font-weight:600}
-.tdr-chip__x{font-size:16px;line-height:1;color:var(--ink-muted,#4A5368)}
+/* The legacy global button lift (globals.css) is for unmigrated pages; design components stay still. */
+button.tdr-btn:not(:disabled), button.tdr-btn:not(:disabled):hover, button.tdr-btn:not(:disabled):active,
+button.tdr-chip:not(:disabled), button.tdr-chip:not(:disabled):hover, button.tdr-chip:not(:disabled):active {
+  transform: none; box-shadow: var(--tdr-shadow, none); transition: none;
+}
 
-/* TierBadge */
-.tdr-tier{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--radius-pill,999px);font:600 12px/1.2 var(--font-sans,sans-serif)}
-.tdr-tier svg{width:13px;height:13px}
-.tdr-tier--free{background:var(--surface-raised,#F3F5F9);color:var(--ink,#0E1526);border:1px solid var(--border,#D6DBE5)}
-.tdr-tier--member{background:var(--surface-raised,#F3F5F9);color:var(--brand-blue,#1D3880);border:1px solid var(--brand-blue,#1D3880)}
-.tdr-tier--pro{background:var(--tier-pro,#1D3880);color:var(--on-action,#fff)}
-.tdr-tier--enterprise{background:var(--tier-enterprise,#0E1526);color:var(--surface-page,#fff)}
+/* Button — one solid --accent per viewport (DESIGN §3); everything else is outline or ghost.
+   The only navy fill is --contact (the Enterprise "Contact →" button). There is no generic solid-navy button. */
+.tdr-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: var(--radius-md); font: 600 15px/1 var(--font-sans); border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap; }
+.tdr-btn--secondary { background: transparent; color: var(--ink); border-color: var(--ink); font-weight: 500; }
+.tdr-btn--ghost { background: transparent; color: var(--brand-blue); padding: 0 4px; }
+.tdr-btn--accent { --tdr-shadow: var(--shadow-pop); background: var(--accent); color: var(--on-accent); }
+.tdr-btn--accent:hover { background: var(--accent-hover); }
+.tdr-btn--upgrade { --tdr-shadow: var(--shadow-pop); background: var(--accent); color: var(--on-accent); }
+.tdr-btn--upgrade:hover { background: var(--accent-hover); }
+.tdr-btn--contact { background: var(--action-primary); color: var(--on-action); min-width: 160px; }
+.tdr-btn:focus-visible, .tdr-chip:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-btn[disabled], .tdr-btn[aria-disabled="true"], .tdr-chip:disabled { opacity: .45; cursor: not-allowed; }
 
-/* DataFlag */
-.tdr-flag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:var(--radius-sm,4px);font:600 12px/1.3 var(--font-sans,sans-serif)}
-.tdr-flag--estimate{background:var(--flag-estimate-bg,#FFF1D0);color:var(--flag-estimate-ink,#7A4E00)}
-.tdr-flag--new{background:var(--surface-raised,#F3F5F9);color:var(--brand-blue,#1D3880);border:1px solid var(--brand-blue,#1D3880)}
-.tdr-flag--source{background:transparent;color:var(--ink-muted,#4A5368);font-weight:500;padding-left:0}
+/* Chip — filter chip; selected state via aria-pressed or .tdr-chip--on */
+.tdr-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--surface-page); color: var(--ink); font: 500 14px/1 var(--font-sans); white-space: nowrap; text-decoration: none; }
+button.tdr-chip, a.tdr-chip { cursor: pointer; }
+a.tdr-chip:hover, button.tdr-chip:hover { border-color: var(--brand-blue); }
+.tdr-chip[aria-pressed="true"], .tdr-chip--on { border-color: var(--brand-blue); background: var(--surface-raised); color: var(--brand-navy); font-weight: 600; }
+.tdr-chip__count { font: 500 13px/1 var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+.tdr-chip__x { font-size: 16px; line-height: 1; color: var(--ink-muted); }
+.tdr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* TierBadge — Free / Member / Pro / Enterprise are four distinct looks.
+   "free" is the plan; a report gated to signed-in members is "member", never "free". */
+.tdr-tier { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); font: 600 12px/1.2 var(--font-sans); white-space: nowrap; }
+.tdr-tier svg { width: 13px; height: 13px; flex: none; }
+.tdr-tier--free { background: var(--surface-raised); color: var(--ink); border: 1px solid var(--border); }
+.tdr-tier--member { background: var(--surface-raised); color: var(--brand-blue); border: 1px solid var(--brand-blue); }
+.tdr-tier--pro { background: var(--tier-pro); color: var(--on-action); }
+.tdr-tier--enterprise { background: var(--tier-enterprise); color: var(--surface-page); }
+
+/* Flag — data flags. Amber is for estimates and delays; never green/red for stage or confidence */
+.tdr-flag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: var(--radius-sm); font: 600 12px/1.3 var(--font-sans); white-space: nowrap; }
+.tdr-flag--estimate, .tdr-flag--delayed { background: var(--flag-estimate-bg); color: var(--flag-estimate-ink); }
+.tdr-flag--new { background: var(--surface-raised); color: var(--brand-blue); border: 1px solid var(--brand-blue); }
+.tdr-flag--source { background: transparent; color: var(--ink-muted); font-weight: 500; padding-left: 0; }
+.tdr-flag--soon { background: var(--surface-raised); color: var(--ink-muted); border: 1px dashed var(--border); border-radius: var(--radius-pill); padding: 3px 10px; }
 
 /* KpiCard */
-.tdr-kpi{display:flex;flex-direction:column;gap:4px;padding:12px 16px;border:1px solid var(--border,#D6DBE5);border-radius:var(--radius-lg,12px);background:var(--surface-page,#fff);min-width:180px}
-.tdr-kpi__label{font:500 13px/1.4 var(--font-sans,sans-serif);color:var(--ink-muted,#4A5368)}
-.tdr-kpi__value{font:500 32px/1.2 var(--font-mono,"IBM Plex Mono",monospace);color:var(--ink,#0E1526);font-variant-numeric:tabular-nums}
-.tdr-kpi__unit{font:400 14px/1 var(--font-sans,sans-serif);color:var(--ink-muted,#4A5368);margin-left:4px}
+.tdr-kpi { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-page); min-width: 180px; }
+.tdr-kpi__label { font: 500 13px/1.4 var(--font-sans); color: var(--ink-muted); }
+.tdr-kpi__value { font: 500 32px/1.2 var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tdr-kpi__unit { font: 400 14px/1 var(--font-sans); color: var(--ink-muted); margin-left: 4px; }
+.tdr-kpi__note { font: 400 13px/1.4 var(--font-sans); color: var(--ink-muted); }
+.tdr-kpi--lg { padding: 20px 24px; background: var(--surface-raised); }
+.tdr-kpi--lg .tdr-kpi__value { font: var(--type-data-lg); }
+.tdr-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
 
-/* Delta */
-.tdr-delta{font:600 14px/1 var(--font-mono,"IBM Plex Mono",monospace);font-variant-numeric:tabular-nums;white-space:nowrap}
-.tdr-delta--up{color:var(--delta-up)}
-.tdr-delta--down{color:var(--delta-down)}
-.tdr-delta--na{color:var(--ink-muted,#4A5368)}
+/* Delta — arrow and sign always, never colour alone (DESIGN §3). Built by lib/design/format.ts */
+.tdr-delta { font: 600 14px/1 var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tdr-delta--up { color: var(--delta-up); }
+.tdr-delta--down { color: var(--delta-down); }
+.tdr-delta--na { color: var(--ink-muted); }
 
-/* Watermark: วางเป็นชั้นบนสุดของแผงข้อมูล (position:relative บนแม่) */
-.tdr-watermark{position:absolute;inset:0;pointer-events:none;overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);align-content:space-around;justify-items:center;transform:rotate(-18deg) scale(1.3);opacity:.12;font:600 14px/1 var(--font-sans,sans-serif);color:var(--ink,#0E1526);user-select:none}
+/* Card — border, no shadow (DESIGN §5) */
+.tdr-card { display: block; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; background: var(--surface-page); color: var(--ink); text-decoration: none; }
+.tdr-card--raised { background: var(--surface-raised); }
+.tdr-card--dashed { border-style: dashed; background: var(--surface-raised); }
+a.tdr-card:hover { border-color: var(--brand-blue); }
+a.tdr-card:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-card__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.tdr-card__title { font: var(--type-h3); color: var(--brand-navy); margin: 0; }
+.tdr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+/* PageHead */
+.tdr-eyebrow { font: 600 13px/1.4 var(--font-sans); color: var(--red-text); }
+.tdr-eyebrow[lang="en"] { letter-spacing: .06em; text-transform: uppercase; }
+.tdr-pagehead { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px; align-items: end; padding: 48px 0 24px; }
+.tdr-pagehead--single { grid-template-columns: minmax(0, 1fr); }
+.tdr-pagehead__title { margin: 8px 0 6px; font: var(--type-h1); color: var(--brand-navy); word-break: keep-all; text-wrap: balance; }
+.tdr-pagehead__lead { margin: 8px 0 0; font: var(--type-body); color: var(--ink-muted); max-width: 720px; }
+.tdr-pagehead__aside { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: flex-end; }
+@media (max-width: 1023px) { .tdr-pagehead { grid-template-columns: minmax(0, 1fr); gap: 20px; } .tdr-pagehead__aside { justify-content: flex-start; } }
+@media (max-width: 767px) { .tdr-pagehead { padding: 32px 0 16px; } .tdr-pagehead__title { font-size: 30px; line-height: 40px; } }
+
+/* LockedBlock — a static decorative placeholder + tier badge + CTA. It never contains, blurs or
+   reveals real values (DESIGN §10.5): the component takes no children. */
+.tdr-locked { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-page); overflow: hidden; }
+.tdr-locked__ghost { height: var(--tdr-locked-h, 120px); background: repeating-linear-gradient(45deg, var(--border) 0 8px, transparent 8px 16px); }
+.tdr-locked__msg { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; padding: 16px 20px 20px; }
+.tdr-locked__msg p { margin: 0; color: var(--ink-muted); font: var(--type-body-sm); }
+
+/* StageBar (6 steps) and ConfidenceMeter (4 steps): navy/blue fill, text label, never green/red */
+.tdr-stagebar { display: flex; gap: 4px; margin: 8px 0; }
+.tdr-stagebar__seg { flex: 1; height: 6px; border-radius: 3px; background: var(--border); }
+.tdr-stagebar__seg--on { background: var(--brand-navy); }
+.tdr-stagebar__label { font-size: 13px; color: var(--brand-navy); }
+.tdr-conf { display: flex; gap: 3px; align-items: center; font-size: 12px; color: var(--ink-muted); }
+.tdr-conf__seg { width: 18px; height: 6px; border-radius: 3px; background: var(--border); flex: none; }
+.tdr-conf__seg--on { background: var(--brand-blue); }
+.tdr-conf__label { margin-left: 4px; }
+
+/* Table — shared treatment; wrap in .tdr-table-wrap so wide tables scroll inside themselves */
+.tdr-table-wrap { overflow-x: auto; max-width: 100%; }
+.tdr-table-wrap:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tdr-table caption { text-align: left; font: var(--type-label); color: var(--ink-muted); padding-bottom: 8px; }
+.tdr-table th, .tdr-table td { border-bottom: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; }
+.tdr-table th { font-weight: 600; color: var(--ink-muted); white-space: nowrap; }
+.tdr-table .tdr-num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Form — Field wraps a label, a control, a hint and an error */
+.tdr-field { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+.tdr-field__label { font: var(--type-label); color: var(--ink); }
+.tdr-field__hint { font-size: 13px; color: var(--ink-muted); }
+.tdr-field__error { font-size: 13px; color: var(--color-status-danger); }
+.tdr-input, .tdr-select { width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-page); color: var(--ink); font: 500 15px/1.4 var(--font-sans); }
+.tdr-input::placeholder { color: var(--ink-muted); }
+.tdr-input:focus-visible, .tdr-select:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; border-color: var(--brand-blue); }
+.tdr-input[aria-invalid="true"], .tdr-select[aria-invalid="true"] { border-color: var(--color-status-danger); }
+.tdr-input:disabled, .tdr-select:disabled { opacity: .55; cursor: not-allowed; }
+.tdr-otp { display: flex; gap: 8px; }
+.tdr-otp .tdr-input { width: 44px; text-align: center; font-family: var(--font-mono); padding: 0; }
+
+/* Swatch and map fills. Fills under 3:1 against the page (map-1/2, diverge-2/3/4, and diverge-4 in dark
+   mode at 2.9:1) need the --border-strong outline (DESIGN §8), so every swatch and region carries it;
+   scripts/check-design-contrast.ts fails if that rule or the tokens behind it regress. */
+.tdr-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; border: 1px solid var(--border-strong); flex: none; }
+.tdr-swatch--square { width: 12px; height: 12px; }
+.tdr-region { stroke: var(--border-strong); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.tdr-fill-map-1 { fill: var(--map-1); background-color: var(--map-1); }
+.tdr-fill-map-2 { fill: var(--map-2); background-color: var(--map-2); }
+.tdr-fill-map-3 { fill: var(--map-3); background-color: var(--map-3); }
+.tdr-fill-map-4 { fill: var(--map-4); background-color: var(--map-4); }
+.tdr-fill-map-5 { fill: var(--map-5); background-color: var(--map-5); }
+.tdr-fill-div-1 { fill: var(--diverge-1); background-color: var(--diverge-1); }
+.tdr-fill-div-2 { fill: var(--diverge-2); background-color: var(--diverge-2); }
+.tdr-fill-div-3 { fill: var(--diverge-3); background-color: var(--diverge-3); }
+.tdr-fill-div-4 { fill: var(--diverge-4); background-color: var(--diverge-4); }
+.tdr-fill-div-5 { fill: var(--diverge-5); background-color: var(--diverge-5); }
+.tdr-fill-cat-1 { fill: var(--chart-cat-1); background-color: var(--chart-cat-1); }
+.tdr-fill-cat-2 { fill: var(--chart-cat-2); background-color: var(--chart-cat-2); }
+.tdr-fill-cat-3 { fill: var(--chart-cat-3); background-color: var(--chart-cat-3); }
+.tdr-fill-cat-4 { fill: var(--chart-cat-4); background-color: var(--chart-cat-4); }
+.tdr-fill-cat-5 { fill: var(--chart-cat-5); background-color: var(--chart-cat-5); }
+.tdr-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12px; color: var(--ink-muted); }
+.tdr-legend li { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Watermark: place as the top layer of a data panel (position: relative on the parent).
+   A deterrent, not protection: it does not stop screenshots. */
+.tdr-watermark { position: absolute; inset: 0; pointer-events: none; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); align-content: space-around; justify-items: center; transform: rotate(-18deg) scale(1.3); opacity: .12; font: 600 14px/1 var(--font-sans); color: var(--ink); user-select: none; }

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "check:design": "node --experimental-strip-types scripts/build-design-tokens.ts --check && node --experimental-strip-types scripts/check-design-tokens.ts",
+    "check:design": "node --experimental-strip-types scripts/build-design-tokens.ts --check && node --experimental-strip-types scripts/check-design-tokens.ts && node --experimental-strip-types scripts/check-design-contrast.ts && node --experimental-strip-types scripts/check-design-components.ts",
     "build:design-tokens": "node --experimental-strip-types scripts/build-design-tokens.ts",
     "media:publish": "node --experimental-strip-types scripts/publish-official-media.ts",
     "media:prune-orphans": "node --experimental-strip-types scripts/prune-official-media-storage.ts",

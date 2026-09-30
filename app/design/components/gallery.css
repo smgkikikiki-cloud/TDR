@@ -1,0 +1,6 @@
+/* Layout for the design-component gallery only. Tokens only. */
+.tdr-gallery { padding-bottom: 64px; }
+.tdr-gallery h2 { margin: 40px 0 12px; font: var(--type-h3); color: var(--brand-navy); }
+.tdr-gallery__row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin: 8px 0; }
+.tdr-gallery__note { color: var(--ink-muted); font: var(--type-body-sm); margin: 0 0 8px; }
+.tdr-gallery__form { max-width: 360px; }
