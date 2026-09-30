@@ -10,7 +10,7 @@ from tools import retail_lineup_compile_worker as compile_worker
 from vehreg.retail_lineup_bootstrap import RetailLineupBootstrapError
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def test_compile_worker_persists_one_preview_then_completes(monkeypatch, tmp_path):
