@@ -136,11 +136,20 @@ Coverage includes:
 - unknown/extra target headers are rejected
 - target-model scope cannot silently change through row deletion/addition
 
+### Validation
+
+Draft PR #171 was used only to exercise repository CI; it remains unmerged.
+
+The first full run exposed one Chunk-3-specific bug: openpyxl read-only blank cells can be `EmptyCell` objects with no `.coordinate`. Commit `f76af345d63e006466a5472d4e5d19020255ae9e` removed that assumption while preserving formula rejection.
+
+The next full Vehicle Master run completed with **1594 passed / 11 failed / 4334 subtests passed**. The remaining 11 failures are the same pre-existing failures reproduced on `main`; no Retail Lineup Bootstrap test remained in the failure list. Web build passed. Therefore Chunk 3 introduces no additional known test failure relative to the current repository baseline.
+
 ### Commits
 
 - `54e3ae636b399ba0f9a71a8142fdc2d5c3fa47bb` — workbook contract
 - `4975253c7eaf71a8e9f8b5295d6b2e13eefbeec7` — workbook CLI
 - `8adf3dbd843df2784bb0ec7d98e0160663e7a8c9` — workbook tests
+- `f76af345d63e006466a5472d4e5d19020255ae9e` — read-only EmptyCell regression fix
 
 A draft integration PR exists only to run repository CI: PR #171. It must not be merged merely because Chunk 3 is complete; later chunks remain outstanding.
 
