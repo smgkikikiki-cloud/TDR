@@ -1,0 +1,601 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352",
+  "batch_hash": "779886bff6df0a91b0a9de75ad4ab64d5470e367d7c02533adfe03eaeac8807b",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T02:31:36+00:00",
+  "applied_at": "2026-09-30T02:32:36+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:1",
+      "revision_id": "f600b6b10e7ce26651aeda29",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.hyptec_ht",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:2",
+      "revision_id": "cb427adb4c4eaa798b524ec8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:3",
+      "revision_id": "19a5b2ae480ef51ab9930be4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:4",
+      "revision_id": "7b6af3813982c91fc69d841a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:5",
+      "revision_id": "9db3a833b60ca2652a387a7c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:6",
+      "revision_id": "f18e0b1364a889597080fb54",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:7",
+      "revision_id": "0bbb22b2c813e50ff7e1d590",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:8",
+      "revision_id": "53c9bf44283aadbbe5016287",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:9",
+      "revision_id": "707aff30f549803934cc524c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:10",
+      "revision_id": "87a99c06b9db8e786e1b4382",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:11",
+      "revision_id": "33fb4ceca5ca27b81d673ff0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:12",
+      "revision_id": "16b86a41bc4be6724f8c71f7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:13",
+      "revision_id": "47fef48472321158c1a177bd",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:14",
+      "revision_id": "7246c9d134f9b35f866b3de0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:15",
+      "revision_id": "fcd17c4a36bd7349878ea733",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:16",
+      "revision_id": "6c02040d136a4e924ce195e7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:17",
+      "revision_id": "7e3cfeeb1f9c5920ed5557c4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:18",
+      "revision_id": "1756c0a0aad358bffa2224e3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:19",
+      "revision_id": "62ae71545b755d46b1a65c7c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:20",
+      "revision_id": "5afb9c133a468ce74c415f75",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:21",
+      "revision_id": "35a121e41e1da0a1c12d89f0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:22",
+      "revision_id": "c80e503fd19be0a4b89f6cc3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:23",
+      "revision_id": "d845d5bb97f3b99a195f1a54",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:24",
+      "revision_id": "f63a3b12f89fcb56833907b9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:25",
+      "revision_id": "507f0d57fec0ac3287bda4a8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:26",
+      "revision_id": "1e109b2f0b5e2b7e63fdd2da",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:27",
+      "revision_id": "6f85a709fb02c04d57f5eb46",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:28",
+      "revision_id": "7d35fcbfc1da8a2ce25c2e1c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:29",
+      "revision_id": "241f02fa904693d2c84f4646",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:30",
+      "revision_id": "65948eb7e53efc1229d38e1f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:31",
+      "revision_id": "96e9defc2a12f6d2f3e7c319",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:32",
+      "revision_id": "8c0d316661eaab817dc40e3d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:33",
+      "revision_id": "57b2639df81a5b5d59ac18d5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:34",
+      "revision_id": "97279b60bd9291900d3ab66b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:35",
+      "revision_id": "bd4881bb0eaf8476e106380e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:36",
+      "revision_id": "94112ad28fc08a3ed8da1086",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:37",
+      "revision_id": "8630fa8ff48916f3240cebbe",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:38",
+      "revision_id": "75fa17f4ab6f8d6669d8b304",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:39",
+      "revision_id": "641583d3b1f1fecc8468793d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:40",
+      "revision_id": "91875a31f3c4668f92cf6d96",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:41",
+      "revision_id": "e193b63500460c8e40c7d814",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:42",
+      "revision_id": "321848d92a4454e017ee16bc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:43",
+      "revision_id": "4b38b255e17c3a9b42c442c6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:44",
+      "revision_id": "63c1914155b691b24a761c1c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:45",
+      "revision_id": "095ad8bd31a0edde6bc40f5b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:46",
+      "revision_id": "3bde6c96c952407d472fc4e5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:47",
+      "revision_id": "65b1ec985dbe39b219203800",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:48",
+      "revision_id": "1f0bfad2eee48cc7cd0a3d57",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:49",
+      "revision_id": "27626fad3154c18e68d5e8fc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:50",
+      "revision_id": "7c54f11258ee2fa9242c840d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:51",
+      "revision_id": "6760827e38abcffdc9460cb8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:52",
+      "revision_id": "be2a6f4cc24f31cb44a446af",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:53",
+      "revision_id": "898769430449eb0c4defc422",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:54",
+      "revision_id": "b12477121a3804af784c3ff5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:55",
+      "revision_id": "a12683247c0bcc2f6f747c5a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:56",
+      "revision_id": "c9cf418c9e8af7a85f117114",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:57",
+      "revision_id": "1a33843d4a6ab62fd5b5aab5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-b77b29e4-5e74-4bff-aee6-c507dc498a63-001-5f99850f6352:58",
+      "revision_id": "f7985fec160a2d60dccd11c0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.height_mm_0eef4704377c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_performance.top_speed_kmh_eef0f338d6b2_2ab58625d98b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_battery.chemistry_83fe2641ab87.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_charging.v2l_supported_794ad07e19ca.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.max_power_kw_dc778bb487d7_37aee5edfa76.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_ev.rated_range_km_0ae84e372d69_bf6ba8a80bd9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.cargo_volume_l_6a5d82f5ba62_da811ebd52fd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.length_mm_b3825a2b89dd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.esc_e12b44073a79.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.max_torque_nm_398e0332b76d_0f240872bf89.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.motor_count_07e7a98e9afd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.max_power_kw_398e0332b76d_5353059cf0aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.power_windows_27d0d95ec5cb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.airbag_count_fb956efc2b11.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_battery.warranty_years_19e756db26ed.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.rear_cross_traffic_e068b22ec189.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.motor_type_dd92056e8a2d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.auto_climate_000b8342ac59.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.keyless_entry_fe1c875fc629.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.cargo_volume_l_33557c0b97f2_f1451559b9eb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.gear_count_6867ed9e7386.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.ventilated_front_seats_214c6a88d632.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.electric_parking_brake_f8504102a8a5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_fitment.tyre_front_8c4963a49981.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.blind_spot_63e751ed1672.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_ev.rated_range_km_51bfb9054be0_b834c01001e8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.turning_radius_m_9ef6ea47386c_77ebdc739ed0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_fitment.tyre_rear_f6c6599c1128.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.width_mm_2d913a554e7e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_technology.led_headlights_b5739ce9e17b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_comfort.panoramic_roof_50af3846d1d4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.forward_collision_warning_738d531d3be5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.max_torque_nm_dc778bb487d7_8f5d55262a41.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.abs_88a2305cacd6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_battery.warranty_km_8d0ded5571fe.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.curb_weight_kg_eef0f338d6b2_389d217e634b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_chassis.suspension_rear_e953f6cac53c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_charging.connector_type_9f0342fb5333.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.aeb_a45367747a75.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_chassis.suspension_front_c4f20c1d59b3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.side_airbag_a9d7e393c1e6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_fitment.tyre_size_a8ae67ec4c6c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.lane_departure_warning_a9ca0c02393b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_battery.catalog_capacity_kwh_41f44e05b617.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.drivetrain_996f7fe23839.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_technology.surround_view_camera_9ea257ad6cfd.json",
+    "2026/models/aion.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.seats_c59415a5ad2f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_charging.dc_max_kw_9d18d19d12be_131ab3232b6f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.adaptive_cruise_2e0a930e1c48.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.driver_attention_alert_1446842fb89a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.lane_keep_assist_b0bca1f17824.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_performance.acceleration_0_100_s_eef0f338d6b2_eb716abfbb8b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_technology.ota_update_f3d389588b50.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_safety.curtain_airbag_7b569560d937.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_vehicle.wheelbase_mm_f3f304162e57.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_powertrain.transmission_2e6c4cb0aaf0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev_technology.connected_services_cc2bc871a95d.json",
+    "2026/canonical_state/shadow/65b1ec985dbe39b219203800.json",
+    "2026/canonical_state/shadow/19a5b2ae480ef51ab9930be4.json",
+    "2026/canonical_state/shadow/9db3a833b60ca2652a387a7c.json",
+    "2026/canonical_state/shadow/6760827e38abcffdc9460cb8.json",
+    "2026/canonical_state/shadow/898769430449eb0c4defc422.json",
+    "2026/canonical_state/shadow/d845d5bb97f3b99a195f1a54.json",
+    "2026/canonical_state/shadow/27626fad3154c18e68d5e8fc.json",
+    "2026/canonical_state/shadow/35a121e41e1da0a1c12d89f0.json",
+    "2026/canonical_state/shadow/7246c9d134f9b35f866b3de0.json",
+    "2026/canonical_state/shadow/241f02fa904693d2c84f4646.json",
+    "2026/canonical_state/shadow/fcd17c4a36bd7349878ea733.json",
+    "2026/canonical_state/shadow/63c1914155b691b24a761c1c.json",
+    "2026/canonical_state/shadow/6c02040d136a4e924ce195e7.json",
+    "2026/canonical_state/shadow/3bde6c96c952407d472fc4e5.json",
+    "2026/canonical_state/shadow/be2a6f4cc24f31cb44a446af.json",
+    "2026/canonical_state/shadow/16b86a41bc4be6724f8c71f7.json",
+    "2026/canonical_state/shadow/cb427adb4c4eaa798b524ec8.json",
+    "2026/canonical_state/shadow/75fa17f4ab6f8d6669d8b304.json",
+    "2026/canonical_state/shadow/c80e503fd19be0a4b89f6cc3.json",
+    "2026/canonical_state/shadow/47fef48472321158c1a177bd.json",
+    "2026/canonical_state/shadow/0bbb22b2c813e50ff7e1d590.json",
+    "2026/canonical_state/shadow/e193b63500460c8e40c7d814.json",
+    "2026/canonical_state/shadow/65948eb7e53efc1229d38e1f.json",
+    "2026/canonical_state/shadow/f7985fec160a2d60dccd11c0.json",
+    "2026/canonical_state/shadow/c9cf418c9e8af7a85f117114.json",
+    "2026/canonical_state/shadow/321848d92a4454e017ee16bc.json",
+    "2026/canonical_state/shadow/8630fa8ff48916f3240cebbe.json",
+    "2026/canonical_state/shadow/62ae71545b755d46b1a65c7c.json",
+    "2026/canonical_state/shadow/095ad8bd31a0edde6bc40f5b.json",
+    "2026/canonical_state/shadow/a12683247c0bcc2f6f747c5a.json",
+    "2026/canonical_state/shadow/6f85a709fb02c04d57f5eb46.json",
+    "2026/canonical_state/shadow/f63a3b12f89fcb56833907b9.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/96e9defc2a12f6d2f3e7c319.json",
+    "2026/canonical_state/shadow/8c0d316661eaab817dc40e3d.json",
+    "2026/canonical_state/shadow/7d35fcbfc1da8a2ce25c2e1c.json",
+    "2026/canonical_state/shadow/97279b60bd9291900d3ab66b.json",
+    "2026/canonical_state/shadow/507f0d57fec0ac3287bda4a8.json",
+    "2026/canonical_state/shadow/1a33843d4a6ab62fd5b5aab5.json",
+    "2026/canonical_state/shadow/7e3cfeeb1f9c5920ed5557c4.json",
+    "2026/canonical_state/shadow/f18e0b1364a889597080fb54.json",
+    "2026/canonical_state/shadow/641583d3b1f1fecc8468793d.json",
+    "2026/canonical_state/shadow/1756c0a0aad358bffa2224e3.json",
+    "2026/canonical_state/shadow/33fb4ceca5ca27b81d673ff0.json",
+    "2026/canonical_state/shadow/53c9bf44283aadbbe5016287.json",
+    "2026/canonical_state/shadow/91875a31f3c4668f92cf6d96.json",
+    "2026/canonical_state/shadow/f600b6b10e7ce26651aeda29.json",
+    "2026/canonical_state/shadow/94112ad28fc08a3ed8da1086.json",
+    "2026/canonical_state/shadow/bd4881bb0eaf8476e106380e.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/5afb9c133a468ce74c415f75.json",
+    "2026/canonical_state/shadow/1e109b2f0b5e2b7e63fdd2da.json",
+    "2026/canonical_state/shadow/1f0bfad2eee48cc7cd0a3d57.json",
+    "2026/canonical_state/shadow/87a99c06b9db8e786e1b4382.json",
+    "2026/canonical_state/shadow/7b6af3813982c91fc69d841a.json",
+    "2026/canonical_state/shadow/57b2639df81a5b5d59ac18d5.json",
+    "2026/canonical_state/shadow/b12477121a3804af784c3ff5.json",
+    "2026/canonical_state/shadow/4b38b255e17c3a9b42c442c6.json",
+    "2026/canonical_state/shadow/7c54f11258ee2fa9242c840d.json",
+    "2026/canonical_state/shadow/707aff30f549803934cc524c.json"
+  ]
+}
