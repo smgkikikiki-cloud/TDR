@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "489b54b312f99dafe2a75505",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:208",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "349ad3576632f4db42fbafa1596cab4051e1939cd5912fc12d6edd9bd5c95040",
+    "after_hash": "65152d406a5010dfb4858a1bbb43e4ff297dd499e8409e900190fc713ffb1c25",
+    "before": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true
+    ],
+    "after": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.omoda_c5.oc5.trim.new_max_plus_bev_comfort.keyless_entry_25556aa8bcac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "489b54b312f99dafe2a75505:spec",
+    "revision_id": "489b54b312f99dafe2a75505",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ]
+  }
+}

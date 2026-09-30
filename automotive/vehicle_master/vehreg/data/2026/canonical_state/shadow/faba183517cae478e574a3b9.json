@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "faba183517cae478e574a3b9",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:127",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "8fc90998f250e4b6b0d9ec9c9841dd318a6f886401eebae9e243b0167526896b",
+    "after_hash": "62c69737f4c4562fbe6443979c92dbe3be29c86b18735958e0eaf363ccc24b5a",
+    "before": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ],
+    "after": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.chery_v23.gen1.trim.v23_4wd_dual_bev_comfort.power_windows_f9014c32c2db.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "faba183517cae478e574a3b9:spec",
+    "revision_id": "faba183517cae478e574a3b9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true
+    ]
+  }
+}

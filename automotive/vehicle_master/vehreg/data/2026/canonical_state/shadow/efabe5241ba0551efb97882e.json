@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "efabe5241ba0551efb97882e",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "53ba1342065ad305a7e5d3b285f62acab3b8fb3a15591c9d773386095128b2b8",
+    "after_hash": "7f757803943d0729714282d1c407892a63f3d3bc79cce445583d15fac9b1342f",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540,
+      "245/45 R19",
+      6.29
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540,
+      "245/45 R19",
+      6.29,
+      "RWD"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_powertrain.drivetrain_cbeadbe46413.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "efabe5241ba0551efb97882e:spec",
+    "revision_id": "efabe5241ba0551efb97882e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540,
+      "245/45 R19",
+      6.29,
+      "RWD"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:chery.omoda_c5.oc5.trim.new_max_plus_bev:charging.dc_max_kw:9d18d19d12be",
+      "trim_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+      "field_key": "charging.dc_max_kw",
+      "value_state": "KNOWN",
+      "value": 110,
+      "unit": "kW",
+      "qualifiers": {
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

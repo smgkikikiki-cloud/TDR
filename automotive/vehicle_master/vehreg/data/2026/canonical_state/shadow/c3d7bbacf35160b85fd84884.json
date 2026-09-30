@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c3d7bbacf35160b85fd84884",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:334",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "b158329c0accbf99ebb884547df6af42d7a1d51276b8af26aa081798a5084845",
+    "after_hash": "b68089ff6427bc777545dad31ab751678783911bd304996910b75cfd5abfb0fb",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_chassis.suspension_front_e7d2d1aeb816.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c3d7bbacf35160b85fd84884:spec",
+    "revision_id": "c3d7bbacf35160b85fd84884",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut"
+    ]
+  }
+}

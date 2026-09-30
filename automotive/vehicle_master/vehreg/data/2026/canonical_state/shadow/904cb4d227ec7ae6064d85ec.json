@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "904cb4d227ec7ae6064d85ec",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:332",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "f90f7d845c73c53f74eed1e9970ad4dc480ba64705220fa5f24d2b7af5948e12",
+    "after_hash": "7e2415f178459ca1a12e6928b340d79bea2ecc649874ef977c0f854db26f4d9f",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC"
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_charging.dc_time_min_ddbe63be4976_addc72bc5d2f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "904cb4d227ec7ae6064d85ec:spec",
+    "revision_id": "904cb4d227ec7ae6064d85ec",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35
+    ]
+  }
+}

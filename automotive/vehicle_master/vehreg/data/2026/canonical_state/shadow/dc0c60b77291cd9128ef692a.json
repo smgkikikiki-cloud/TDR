@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dc0c60b77291cd9128ef692a",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:330",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "ed500b278b268fc5363f877caea64cca2f69472a687ad27f583a6f1483b12b55",
+    "after_hash": "d87e9af1a7d14e3d62f63fe2f0ac410cc5c4d5b97c98dded672ad46126b3b884",
+    "before": [
+      66.8
+    ],
+    "after": [
+      66.8,
+      "NMC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_battery.chemistry_f05ec02e029b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dc0c60b77291cd9128ef692a:spec",
+    "revision_id": "dc0c60b77291cd9128ef692a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "NMC"
+    ]
+  }
+}

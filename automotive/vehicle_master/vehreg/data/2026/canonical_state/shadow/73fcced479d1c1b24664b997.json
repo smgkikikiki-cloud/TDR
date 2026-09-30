@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "73fcced479d1c1b24664b997",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:198",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "466f15fa11c8c0cfc091fea1234b038b1d959344680f9a57a6abbd2bfc290432",
+    "before": [],
+    "after": [
+      50.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.omoda_c5.oc5.trim.new_max_plus_bev_battery.catalog_capacity_kwh_8590838121ef.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "73fcced479d1c1b24664b997:spec",
+    "revision_id": "73fcced479d1c1b24664b997",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      50.6
+    ]
+  }
+}

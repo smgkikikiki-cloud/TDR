@@ -77,7 +77,14 @@
             {
               "name": "NEW OMODA C5 EV MAX+",
               "powertrain": "BEV",
-              "id": "new_max_plus_bev"
+              "id": "new_max_plus_bev",
+              "battery_kwh": 50.6,
+              "drivetrain": "FWD",
+              "height_mm": 1588,
+              "length_mm": 4545,
+              "seats": 5,
+              "wheelbase_mm": 2630,
+              "width_mm": 1830
             }
           ]
         }
@@ -141,7 +148,13 @@
                   "owner_directory_2026_09_13:063"
                 ]
               },
-              "id": "v23_standard_rwd_bev"
+              "id": "v23_standard_rwd_bev",
+              "battery_kwh": 59.93,
+              "drivetrain": "RWD",
+              "height_mm": 1845,
+              "length_mm": 4220,
+              "wheelbase_mm": 2735,
+              "width_mm": 1915
             },
             {
               "name": "V23 4WD Dual Motor",
@@ -151,12 +164,24 @@
                   "owner_directory_2026_09_13:063"
                 ]
               },
-              "id": "v23_4wd_dual_motor_bev"
+              "id": "v23_4wd_dual_bev",
+              "battery_kwh": 81.76,
+              "drivetrain": "AWD",
+              "height_mm": 1845,
+              "length_mm": 4220,
+              "wheelbase_mm": 2735,
+              "width_mm": 1915
             },
             {
               "name": "PLUS 2WD",
               "powertrain": "BEV",
-              "id": "v23_plus_2wd_bev"
+              "id": "v23_plus_2wd_bev",
+              "battery_kwh": 59.93,
+              "drivetrain": "RWD",
+              "height_mm": 1845,
+              "length_mm": 4220,
+              "wheelbase_mm": 2735,
+              "width_mm": 1915
             }
           ]
         }

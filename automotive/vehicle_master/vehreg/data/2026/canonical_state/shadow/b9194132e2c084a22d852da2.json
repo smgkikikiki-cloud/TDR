@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9194132e2c084a22d852da2",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:129",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "bde5c3cc469c4d67df05bcd1187cb114773aa07a1374a7739e39aa0b184bf889",
+    "after_hash": "f20f21a0a7b30baac30c318f0191d6e2e69dee6f17e146a9f190e6ba26688868",
+    "before": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true,
+      true,
+      430
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.chery_v23.gen1.trim.v23_4wd_dual_bev_ev.rated_range_km_0ae84e372d69_755c58c38bb6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9194132e2c084a22d852da2:spec",
+    "revision_id": "b9194132e2c084a22d852da2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true,
+      true,
+      430
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:deepal.deepal_e07.gen1.trim.plus_bev:charging.dc_max_kw:9d18d19d12be",
+      "trim_id": "deepal.deepal_e07.gen1.trim.plus_bev",
+      "field_key": "charging.dc_max_kw",
+      "value_state": "KNOWN",
+      "value": 240,
+      "unit": "kW",
+      "qualifiers": {
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

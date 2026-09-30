@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e16a4b74cd296c059145bbc6",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:211",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "e084564d1060808125bde2e238c06f7939bd092aea61afc3c2adaa0415c0bd02",
+    "after_hash": "f53105867f628b2094b4fba343082b86be6cd1137495c432face40b46aaa3daa",
+    "before": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      422
+    ],
+    "after": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      422,
+      "215/55 R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.omoda_c5.oc5.trim.new_max_plus_bev_fitment.tyre_size_7b548305f734.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e16a4b74cd296c059145bbc6:spec",
+    "revision_id": "e16a4b74cd296c059145bbc6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      50.6,
+      "Lithium Iron Phosphate (LFP)",
+      "LFP",
+      6.6,
+      "CCS2",
+      110,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      422,
+      "215/55 R18"
+    ]
+  }
+}

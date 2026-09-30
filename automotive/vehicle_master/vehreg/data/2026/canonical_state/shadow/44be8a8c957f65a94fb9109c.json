@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44be8a8c957f65a94fb9109c",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:338",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "933bb8ac986664f701910e2fa62046fc85065a886dd5c42715ff181951d20a5a",
+    "after_hash": "31a985be0edab70c844ec372a1c9028f4fbb48d2da0dd644ffa760c4260b550e",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_comfort.ventilated_front_seats_bab488a0cb94.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44be8a8c957f65a94fb9109c:spec",
+    "revision_id": "44be8a8c957f65a94fb9109c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true
+    ]
+  }
+}

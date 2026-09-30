@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d2145ec0b0be7eeb70421f6f",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:200",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "b77a3e9671c49152790770338d6dadb244f80a24a5c658fa495e58e3b0003af3",
+    "after_hash": "c9e31666dd1df0b24a8f7746683350124f85fa158be98ec77e651ea561c262d4",
+    "before": [
+      50.6,
+      "LFP"
+    ],
+    "after": [
+      50.6,
+      "LFP",
+      "Lithium Iron Phosphate (LFP)"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.omoda_c5.oc5.trim.new_max_plus_bev_battery.chemistry_as_declared_6b1fc403e672.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d2145ec0b0be7eeb70421f6f:spec",
+    "revision_id": "d2145ec0b0be7eeb70421f6f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      50.6,
+      "LFP",
+      "Lithium Iron Phosphate (LFP)"
+    ]
+  }
+}

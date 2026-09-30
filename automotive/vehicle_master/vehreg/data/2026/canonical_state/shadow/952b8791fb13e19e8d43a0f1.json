@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "952b8791fb13e19e8d43a0f1",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:122",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "d662d50141107549793b5564673b7abc2fe129a69358a46c4c4481322c7735ec",
+    "after_hash": "59c3ed516e7c77d15c34e53212094d7c5b376a071bf8999629a52f0dc115dabe",
+    "before": [
+      81.76,
+      6.6,
+      104,
+      true
+    ],
+    "after": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.chery_v23.gen1.trim.v23_4wd_dual_bev_chassis.suspension_front_24d8f72538c9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "952b8791fb13e19e8d43a0f1:spec",
+    "revision_id": "952b8791fb13e19e8d43a0f1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      81.76,
+      6.6,
+      104,
+      true,
+      "MacPherson Strut"
+    ]
+  }
+}

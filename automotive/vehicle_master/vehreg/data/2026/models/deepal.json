@@ -269,7 +269,14 @@
                   "owner_directory_2026_09_13:072"
                 ]
               },
-              "id": "l07_standard_540_bev"
+              "id": "l07_standard_540_bev",
+              "battery_kwh": 66.8,
+              "drivetrain": "RWD",
+              "height_mm": 1480,
+              "length_mm": 4820,
+              "seats": 5,
+              "wheelbase_mm": 2900,
+              "width_mm": 1890
             },
             {
               "name": "L07 Plus 620",
@@ -332,7 +339,11 @@
                 "eco": [
                   "6818c168-0500-433e-aa17-2bcd45a27b8f"
                 ]
-              }
+              },
+              "battery_kwh": 89.98,
+              "drivetrain": "RWD",
+              "wheelbase_mm": 3120,
+              "id": "plus_bev"
             },
             {
               "name": "PERFORMANCE AWD",
@@ -345,7 +356,11 @@
                 "eco": [
                   "134aa3a6-38e1-46ee-a184-8b76b9e168da"
                 ]
-              }
+              },
+              "battery_kwh": 89.98,
+              "drivetrain": "AWD",
+              "wheelbase_mm": 3120,
+              "id": "performance_awd_bev"
             }
           ]
         }

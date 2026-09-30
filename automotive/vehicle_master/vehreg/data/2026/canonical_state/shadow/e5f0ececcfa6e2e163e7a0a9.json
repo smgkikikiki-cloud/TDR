@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e5f0ececcfa6e2e163e7a0a9",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:340",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "59ceacbb4625c6cea8eacc73605cea8778a664b3e05aea7164d22b368db094d7",
+    "after_hash": "c5e1a8811a2e434faf91aa3d6b2fcbd6de2b3ed2d52952cc75e6494304861125",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540,
+      "245/45 R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_fitment.tyre_size_13fe2497b81a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e5f0ececcfa6e2e163e7a0a9:spec",
+    "revision_id": "e5f0ececcfa6e2e163e7a0a9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm",
+      true,
+      true,
+      true,
+      540,
+      "245/45 R19"
+    ]
+  }
+}

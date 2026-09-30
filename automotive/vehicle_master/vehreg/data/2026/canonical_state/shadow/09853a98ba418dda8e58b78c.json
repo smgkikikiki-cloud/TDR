@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "09853a98ba418dda8e58b78c",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:335",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:07+00:00",
+    "before_hash": "b68089ff6427bc777545dad31ab751678783911bd304996910b75cfd5abfb0fb",
+    "after_hash": "346e0d665a774886455857502fc3ee5cadad379a9937162420d79a454ca0a3ed",
+    "before": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut"
+    ],
+    "after": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_deepal.deepal_l07.gen1.trim.l07_standard_540_bev_chassis.suspension_rear_10c1be082d7b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "09853a98ba418dda8e58b78c:spec",
+    "revision_id": "09853a98ba418dda8e58b78c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:07+00:00",
+    "payload": [
+      66.8,
+      "Ternary Lithium",
+      "NMC",
+      35,
+      true,
+      "MacPherson Strut",
+      "Multi-Link Independent H-Arm"
+    ]
+  }
+}

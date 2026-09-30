@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2771ed60a7a86261ca1f41df",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:85",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_plus_2wd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "f2078f25a1c85eb48848d78e755e805a910b1e1a80f522ffaa5adb7f7d2f8252",
+    "after_hash": "dbab20df8cf5bfb4115b19cdcf21d990abd09528c59a4665c9d977dbf3f35a36",
+    "before": [
+      59.93,
+      6.6,
+      85,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true
+    ],
+    "after": [
+      59.93,
+      6.6,
+      85,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.chery_v23.gen1.trim.v23_plus_2wd_bev_comfort.electric_parking_brake_1cd36ffe76d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2771ed60a7a86261ca1f41df:spec",
+    "revision_id": "2771ed60a7a86261ca1f41df",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_plus_2wd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      59.93,
+      6.6,
+      85,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ]
+  }
+}

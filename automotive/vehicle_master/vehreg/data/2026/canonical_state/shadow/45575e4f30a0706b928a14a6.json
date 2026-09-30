@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "45575e4f30a0706b928a14a6",
+    "command_id": "vehicle-spec-4849b714-e2b4-4aff-a32a-ec0bbf33aa77-001-a7677c227749:121",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T10:14:58+00:00",
+    "applied_at": "2026-09-30T10:16:05+00:00",
+    "before_hash": "62ef8eb3b0f9155867dd44b899b13fc78bdcf2bb2e2b8b053d2a35770b6e8091",
+    "after_hash": "d662d50141107549793b5564673b7abc2fe129a69358a46c4c4481322c7735ec",
+    "before": [
+      81.76,
+      6.6,
+      104
+    ],
+    "after": [
+      81.76,
+      6.6,
+      104,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_chery.chery_v23.gen1.trim.v23_4wd_dual_bev_charging.v2l_supported_05157dab0822.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "45575e4f30a0706b928a14a6:spec",
+    "revision_id": "45575e4f30a0706b928a14a6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T10:16:05+00:00",
+    "payload": [
+      81.76,
+      6.6,
+      104,
+      true
+    ]
+  }
+}
