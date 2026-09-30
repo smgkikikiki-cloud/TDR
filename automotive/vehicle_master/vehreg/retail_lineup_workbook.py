@@ -323,8 +323,8 @@ def _read_target_rows(ws, target_model_ids: Sequence[str]) -> list[dict[str, str
     seen_models: set[str] = set()
     for row_number in range(2, ws.max_row + 1):
         cells = [ws.cell(row_number, column) for column in range(1, len(TARGET_COLUMNS) + 1)]
-        for cell in cells:
-            _reject_formula(cell, location=f"TARGET_LINEUP!{cell.coordinate}")
+        for column, cell in enumerate(cells, start=1):
+            _reject_formula(cell, location=f"TARGET_LINEUP!R{row_number}C{column}")
         values = [_value(cell.value) for cell in cells]
         if not any(values):
             continue
