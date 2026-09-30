@@ -153,6 +153,40 @@ The next full Vehicle Master run completed with **1594 passed / 11 failed / 4334
 
 A draft integration PR exists only to run repository CI: PR #171. It must not be merged merely because Chunk 3 is complete; later chunks remain outstanding.
 
+## Chunk 4 — IN PROGRESS (first bounded slice)
+
+Implemented in this slice:
+
+- `automotive/vehicle_master/vehreg/retail_lineup_bootstrap_transaction.py`
+- `automotive/vehicle_master/tests/test_retail_lineup_bootstrap_transaction.py`
+
+Current transaction semantics:
+
+- copy the whole canonical data tree to a temporary sandbox
+- apply the immutable Chunk-2 plan only inside that sandbox
+- build `ReleaseBuilder` against the staged tree
+- run the production `enrich_release()` path against the staged tree
+- require every target trim to serve as CURRENT and every archived trim to serve as literal HISTORICAL
+- recheck the target-model baseline on live data immediately before promotion
+- promote only the changed files reported by staged apply
+- if a mid-promotion file replacement raises, restore already-promoted files from pre-promotion bytes and clean bootstrap temp files
+- idempotent replay with zero changed files validates the staged serving release but performs no promotion
+
+Transaction tests added for:
+
+- successful stage validation before promotion
+- release-validation failure leaves live tree byte-for-byte unchanged
+- simulated mid-promotion disk failure rolls back already-promoted files
+- simulated concurrent writer after staging triggers `STALE_BASELINE_BEFORE_PROMOTION` and does not promote the staged new trim
+
+Commits in this slice:
+
+- `22eaf696dfdd4e8cc83d6b207606d7539814d9f0` — whole-workbook transaction implementation
+- `57118c17847ca099b1952889f9bcc694161275f1` — transaction-boundary tests
+- `ba0636b307adb91ce2331e5056b9a52bda08fee5` — rollback temp-file cleanup hardening
+
+CI for the latest Chunk-4 head is pending at the end of this bounded work slice. Chunk 4 is **not yet marked COMPLETE** until those tests are observed in repository CI and any Chunk-4-specific failure is fixed.
+
 ## Next
 
-Chunk 4 is the whole-workbook outer sandbox / transaction boundary. It must take an immutable compiled plan, apply it only inside a copied canonical tree, validate the full resulting Catalog/release, and promote nothing unless the entire workbook succeeds.
+Resume Chunk 4 by inspecting CI for the latest branch head. If the new transaction tests pass and only the repository's known baseline failures remain, record Chunk 4 COMPLETE. If a Chunk-4-specific failure appears, fix only that bounded issue before moving on to Chunk 5.
