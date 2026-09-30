@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from hashlib import sha256
 import json
 import os
 from pathlib import Path
@@ -93,6 +94,48 @@ def _safe_relative(raw: str | Path) -> Path:
     if path.is_absolute() or not path.parts or ".." in path.parts:
         raise RetailLineupBootstrapError(f"unsafe staged changed path {raw!r}")
     return path
+
+
+def _file_sha256(path: Path) -> str:
+    digest = sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _snapshot_file_hashes(root: Path) -> dict[str, str]:
+    """Capture the pre-stage bytes without retaining a second full tree.
+
+    current_retail.json and trim_review.json are shared sidecars covering many
+    models.  The semantic bootstrap baseline intentionally hashes only targeted
+    models, so a concurrent writer touching another row in one of those files
+    could otherwise be overwritten by promoting the stale staged copy.  A
+    per-file compare-and-swap closes that hole for every file this plan writes.
+    """
+    return {
+        str(path.relative_to(root)): _file_sha256(path)
+        for path in root.rglob("*")
+        if path.is_file()
+    }
+
+
+def _assert_changed_paths_unchanged_since_stage(
+    live_data: Path,
+    changed_files: tuple[str, ...],
+    initial_hashes: dict[str, str],
+) -> None:
+    for raw in changed_files:
+        relative = _safe_relative(raw)
+        key = str(relative)
+        expected = initial_hashes.get(key)
+        live_path = live_data / relative
+        actual = _file_sha256(live_path) if live_path.is_file() else None
+        if actual != expected:
+            raise RetailLineupBootstrapError(
+                "CONCURRENT_WRITE_BEFORE_PROMOTION: canonical file changed after "
+                f"staging: {relative}"
+            )
 
 
 def _live_baseline(plan: RetailLineupPlan, data_dir: Path) -> str:
@@ -261,14 +304,15 @@ def apply_retail_lineup_plan_atomically(
 
     Any apply/validation failure happens only in the copied tree. Live files are
     considered for promotion only after the staged enriched release passes.
-    Immediately before promotion the target-model baseline is checked again so
-    a concurrent canonical edit cannot be silently overwritten.
+    Immediately before promotion both the target-model semantic baseline and
+    every changed file are checked against the exact state copied into staging.
     """
     live = Path(data_dir)
     if not live.is_dir():
         raise RetailLineupBootstrapError(f"canonical data directory does not exist: {live}")
 
     with tempfile.TemporaryDirectory(prefix="tdr-retail-lineup-bootstrap-") as temp:
+        initial_hashes = _snapshot_file_hashes(live)
         staged = Path(temp) / "data"
         shutil.copytree(live, staged)
 
@@ -295,6 +339,8 @@ def apply_retail_lineup_plan_atomically(
                 raise RetailLineupBootstrapError(
                     "STALE_BASELINE_BEFORE_PROMOTION: live canonical state changed "
                     f"after staging ({plan.baseline_hash} != {current_live_baseline})")
+            _assert_changed_paths_unchanged_since_stage(
+                live, applied.changed_files, initial_hashes)
             promoted = _promote_with_rollback(staged, live, applied.changed_files)
 
     return RetailLineupTransactionResult(
