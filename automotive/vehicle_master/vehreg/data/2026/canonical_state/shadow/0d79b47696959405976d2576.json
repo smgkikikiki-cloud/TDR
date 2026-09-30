@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0d79b47696959405976d2576",
+    "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:03:11+00:00",
+    "applied_at": "2026-09-30T03:04:43+00:00",
+    "before_hash": "fa252b050cce2d57461879431d39dc4b7dced6d1fe7ff7584f2a92fc2e60ee9c",
+    "after_hash": "79f6716ea096a37d01d3899f5e91dcb4ba7b5ac17e9ebe8880933c117fe569e5",
+    "before": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true
+    ],
+    "after": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.keyless_entry_a1eb6c2a67d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0d79b47696959405976d2576:spec",
+    "revision_id": "0d79b47696959405976d2576",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:04:43+00:00",
+    "payload": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true,
+      true
+    ]
+  }
+}

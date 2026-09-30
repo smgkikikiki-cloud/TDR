@@ -98,17 +98,35 @@
               "aliases": [
                 "Avatr 11 Royal Edition AWD (Dual Motor)"
               ],
-              "id": "royal_edition_awd_dual_motor_bev"
+              "id": "royal_edition_awd_dual_bev",
+              "battery_kwh": 116.79,
+              "drivetrain": "AWD",
+              "height_mm": 1601,
+              "length_mm": 4880,
+              "wheelbase_mm": 2975,
+              "width_mm": 1970
             },
             {
               "name": "Ultra",
               "powertrain": "BEV",
-              "id": "ultra_bev"
+              "id": "ultra_bev",
+              "battery_kwh": 116.79,
+              "drivetrain": "RWD",
+              "height_mm": 1601,
+              "length_mm": 4880,
+              "wheelbase_mm": 2975,
+              "width_mm": 1970
             },
             {
               "name": "Ultra AWD",
               "powertrain": "BEV",
-              "id": "ultra_awd_bev"
+              "id": "ultra_awd_bev",
+              "battery_kwh": 116.79,
+              "drivetrain": "AWD",
+              "height_mm": 1601,
+              "length_mm": 4880,
+              "wheelbase_mm": 2975,
+              "width_mm": 1970
             }
           ]
         }

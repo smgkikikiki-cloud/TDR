@@ -1,0 +1,1279 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f",
+  "batch_hash": "9e9dec7ce7ac0d2b9ee729a4898e375a24a3a4be48e70e69b048d11002594707",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T03:03:11+00:00",
+  "applied_at": "2026-09-30T03:04:44+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:1",
+      "revision_id": "89b7def8a5a135f6344d96de",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_11",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:2",
+      "revision_id": "553f16b1e8fb33ede4141934",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:3",
+      "revision_id": "4581061cf4f13f520c150e3f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:4",
+      "revision_id": "5242f967e85c67d66f6b18ba",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:5",
+      "revision_id": "dd78d228340011c4bd9a0510",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:6",
+      "revision_id": "81937ec1a9dbcdac14b33e5e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:7",
+      "revision_id": "6f8be77c66f935736e3279f6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:8",
+      "revision_id": "671ea5cf378f350861a28937",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:9",
+      "revision_id": "34c9be7bad6e8fa1f7824e83",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:10",
+      "revision_id": "7adc51be24d21629a13d3a07",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:11",
+      "revision_id": "684f11ddf0a3942dd9895fe4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:12",
+      "revision_id": "0d79b47696959405976d2576",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:13",
+      "revision_id": "fc848e3cf4ea0728d18bebf6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:14",
+      "revision_id": "4b8f79eb4b5ff4e04eaa4ee5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:15",
+      "revision_id": "5e0c49210e38127dd0d61ae2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:16",
+      "revision_id": "a43fe1a3e4dffd1252081e85",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:17",
+      "revision_id": "4f20ceb9013162818410c1a0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:18",
+      "revision_id": "6294809222aa486ba4ad414b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:19",
+      "revision_id": "1ea9a585a751c9dbdfff878a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:20",
+      "revision_id": "aa76f8ea67b2a37060391747",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:21",
+      "revision_id": "5a9e9e35b30fe8484f608712",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:22",
+      "revision_id": "35e0c3740e89d3a888190214",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:23",
+      "revision_id": "e7633d2778838cb83d25bfd0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:24",
+      "revision_id": "f75d9f9caf1b7ea0b229188c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:25",
+      "revision_id": "5fd7567f7cbe4952309307a3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:26",
+      "revision_id": "45f017555eaacf9c02cae0e9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:27",
+      "revision_id": "4b362466d879d6f5b403fab1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:28",
+      "revision_id": "5257e57c9cb3cf8fd7a25771",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:29",
+      "revision_id": "5228773b8304b1c772bbe209",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:30",
+      "revision_id": "18b739d15b2786be8a0ae860",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:31",
+      "revision_id": "72d9cdb093c66113bf9b6867",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:32",
+      "revision_id": "0c44481257b1491f455e7883",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:33",
+      "revision_id": "d495f5a83655a455716faa2f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:34",
+      "revision_id": "181023f245fd91dd76aa7751",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:35",
+      "revision_id": "0b196040439ba395c4f9bbe9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:36",
+      "revision_id": "7a2bfdd6ac794e12952f9d81",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:37",
+      "revision_id": "face8f5bd97f260e089d4bae",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:38",
+      "revision_id": "2cdf3ca55143d7b9929f6015",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:39",
+      "revision_id": "b737a39e26647235ed4ee3a1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:40",
+      "revision_id": "a9873931d6a454f8ac8c1838",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:41",
+      "revision_id": "fe791e01990edbfad4a2e535",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:42",
+      "revision_id": "591a8d28bcc686e11df09dfe",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:43",
+      "revision_id": "4c089634996fe29885a997f3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_11",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:44",
+      "revision_id": "18c14923731daf794a28cf8a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:45",
+      "revision_id": "f9678fa3f78a020bdd8fd391",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:46",
+      "revision_id": "dd10dd1cc0138f37935b7ead",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:47",
+      "revision_id": "758f8587b666a5b2c96f95d6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:48",
+      "revision_id": "0cbd64f0dc13221dbf246fc4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:49",
+      "revision_id": "dd843bfe9c582ef0cd611471",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:50",
+      "revision_id": "7b53cd8ed561b7a6a2e84b6f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:51",
+      "revision_id": "091fdfd0d713a4394bf24e84",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:52",
+      "revision_id": "10313caf50e76fc52b3b1eea",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:53",
+      "revision_id": "746b37ecf0101cb91de85921",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:54",
+      "revision_id": "cfd5441ff23e808a86ab24ec",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:55",
+      "revision_id": "f7a848d8e5ddb5a08f7ee3ba",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:56",
+      "revision_id": "7b7454244c8b1c5fe89733d5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:57",
+      "revision_id": "829e15bed0d281593fec96cf",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:58",
+      "revision_id": "a007e794f15f9fe546d5e91a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:59",
+      "revision_id": "b1563d6609cff467f68ef56d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:60",
+      "revision_id": "ddfbda669f8eeb5bb57579fa",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:61",
+      "revision_id": "b9f399c4addae46bfbb622c4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:62",
+      "revision_id": "e76c33d2379711d6e2e83c5e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:63",
+      "revision_id": "4e6e7a1bde68c9a3d2c7f734",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:64",
+      "revision_id": "cce096f80867f28c92c7af46",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:65",
+      "revision_id": "b883794d5a68668527cf7dbb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:66",
+      "revision_id": "42d06c11f40316b32aebe39b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:67",
+      "revision_id": "af772412ffd7f97ccd7aaf1d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:68",
+      "revision_id": "6687f98148e8e1dd9ffda5ed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:69",
+      "revision_id": "f266af080b5388d7cb449b9f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:70",
+      "revision_id": "7846089d1284fdf9f2d5e8de",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:71",
+      "revision_id": "605a3bf0e9406f6494887e1e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:72",
+      "revision_id": "a2d952adf87e8f1e98e36300",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:73",
+      "revision_id": "1f691d83aa09e6859f6ac8d1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:74",
+      "revision_id": "6f786c7070bdb310f9d9d482",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:75",
+      "revision_id": "9beeeaf09be3f1949caf024c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:76",
+      "revision_id": "d08cad1fabcc2b5c61b68ba9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:77",
+      "revision_id": "c85545bd23c6b2614897cacb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:78",
+      "revision_id": "9224c2bfd0242c00af750ba3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:79",
+      "revision_id": "a985be326a120e93ce52b403",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:80",
+      "revision_id": "a3251c017ecfa77d6b04478a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:81",
+      "revision_id": "9b077552c8e07882883d1727",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:82",
+      "revision_id": "d1725e80a71d6183681f1070",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:83",
+      "revision_id": "ee6c5d1eb34a0e9805ee4283",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:84",
+      "revision_id": "20940ada82744ce806ae1808",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:85",
+      "revision_id": "5887843feaa3502e4c57ad77",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_11",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:86",
+      "revision_id": "ebc020c2b848ac6196370d44",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:87",
+      "revision_id": "545f94be2b9c11021cfbfdb3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:88",
+      "revision_id": "e0a3601e29cbd1811b1fb566",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:89",
+      "revision_id": "be5f6d41d933064e56cabd07",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:90",
+      "revision_id": "0e0b1e3e974d41a3fc358a14",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:91",
+      "revision_id": "8aeef35bfb40692db03dd399",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:92",
+      "revision_id": "38850fe6557b987643ac169f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:93",
+      "revision_id": "a3cefdcef4d23abb387dee2f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:94",
+      "revision_id": "2c89259ee0b5d9175f762396",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:95",
+      "revision_id": "8c327ce7675eeb7fbf5be496",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:96",
+      "revision_id": "7d083d4cdc1169a1a1a0e62a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:97",
+      "revision_id": "d277fca1bd578c845922a3b1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:98",
+      "revision_id": "d5eb9c43c756a875c7914da5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:99",
+      "revision_id": "efac20e73f12f25e01898bd9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:100",
+      "revision_id": "a499c856ebc4fb3779ce716a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:101",
+      "revision_id": "8510a8839a68ae9d23730194",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:102",
+      "revision_id": "66bfe0fb2d35cc96398c7dff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:103",
+      "revision_id": "8c7edfb3bafcf3cb9cb8be1c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:104",
+      "revision_id": "3923a7afdf39b231b3b5a6eb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:105",
+      "revision_id": "6ced9155c4e484c1cf78a36e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:106",
+      "revision_id": "b4e127883b7c6e926c1256ed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:107",
+      "revision_id": "221b8477e1c5efd27deb1877",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:108",
+      "revision_id": "4475dc49cdd67c6b62e6d704",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:109",
+      "revision_id": "a0750d000dae535975028860",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:110",
+      "revision_id": "e51e1e82aa71b79873a7e032",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:111",
+      "revision_id": "37ef3e25fd79643679d23273",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:112",
+      "revision_id": "278bfe1bd904608036eeddc3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:113",
+      "revision_id": "c6ee2495f1b05a4fba07fa61",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:114",
+      "revision_id": "c43df52704d06668554bec1d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:115",
+      "revision_id": "79169f834f9f3e7c87459329",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:116",
+      "revision_id": "6ec4fed493f1887c01d2a0c8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:117",
+      "revision_id": "f947b69196b6ee01f0cd07ca",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:118",
+      "revision_id": "1f4d52a5b16cf9c7a1589a24",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:119",
+      "revision_id": "f2839d16f0fe9af83fddf907",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:120",
+      "revision_id": "1b3fb83e60703540251679fa",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:121",
+      "revision_id": "7435ca96fac158cd45048886",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:122",
+      "revision_id": "3a7df0b6819a70dae2dfe6f6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:123",
+      "revision_id": "30eeb6bcbf2c94d4dccc8ac1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:124",
+      "revision_id": "b0186ef34d1f44f51a891540",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:125",
+      "revision_id": "10099f26ee4b063e6e505397",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:126",
+      "revision_id": "34f5049c362e1433a41810d3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.panoramic_roof_8132602112a5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_technology.smartphone_mirroring_0bdb32f2f7e3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.forward_collision_warning_8d7b47f6f1b0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.blind_spot_0b2af243874e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.aeb_189b73f2e70e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_charging.ac_max_kw_eb074cbc86bb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.forward_collision_warning_ef7652883ae5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.aeb_df273b08bf1c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_charging.dc_time_min_ddbe63be4976_ded26c17520f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_charging.dc_time_min_ddbe63be4976_e17dad71cc84.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_performance.top_speed_kmh_eef0f338d6b2_43498e40572d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.auto_climate_527ff9553a9f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_ev.rated_range_km_0ae84e372d69_73b513b44653.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_powertrain.max_power_kw_398e0332b76d_1b288ff8a44d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_technology.ota_update_0db43a8b3abd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_charging.connector_type_195667e2cb6a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.height_mm_b17ecd5e5906.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_charging.dc_time_min_ddbe63be4976_641ff0d95f92.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_battery.chemistry_a5b2975831c6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.length_mm_fa8e25cafe9a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_charging.connector_type_19dbb8454f9f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.blind_spot_ec8805150269.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.power_windows_af5f93d0f33e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_charging.ac_max_kw_8f5131e70ff8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_charging.v2l_supported_4d0debfe7e24.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_powertrain.motor_count_801022164dae.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_comfort.keyless_entry_070bb1c4be57.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_performance.acceleration_0_100_s_eef0f338d6b2_24312aca2800.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.height_mm_96f266a14b95.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_performance.acceleration_0_100_s_eef0f338d6b2_564464dd3882.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_ev.rated_range_km_0ae84e372d69_f191e5ce4f67.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_battery.catalog_capacity_kwh_df7e58059436.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_battery.catalog_capacity_kwh_a17b09b1e0c8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.power_windows_538adbce6cf8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_charging.dc_max_kw_9d18d19d12be_751d377849b2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_ev.rated_range_km_51bfb9054be0_6ac746d52745.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_powertrain.max_power_kw_398e0332b76d_504d4f2ec4fe.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_technology.surround_view_camera_c589e84d1374.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.rear_cross_traffic_13b200eec6b0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_powertrain.max_power_kw_398e0332b76d_b854f927889f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_powertrain.motor_count_601a29a38d73.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_charging.ac_max_kw_9b7d73736189.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_technology.led_headlights_fd5472889810.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_powertrain.max_torque_nm_398e0332b76d_be400cc53e9a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.width_mm_c4fd7c37bd3d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.width_mm_df08f867f0b7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.aeb_d9057a8c941a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.curb_weight_kg_eef0f338d6b2_d41409cea7a3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_performance.acceleration_0_100_s_eef0f338d6b2_b74b9e85c1c9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_battery.warranty_years_50bf622990e7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_comfort.panoramic_roof_349553cee71c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.lane_departure_warning_edd5fd6e8980.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_battery.warranty_km_b05df385e0f4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.auto_climate_cb4975ec62ce.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.blind_spot_b26a59859013.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_powertrain.drivetrain_ada59d234546.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_technology.surround_view_camera_c1c3a493230a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_ev.rated_range_km_0ae84e372d69_6d37ec0e7ea1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_charging.connector_type_cd3264a38a70.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_charging.v2l_supported_1df7300079bb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.ventilated_front_seats_c9c5e68dd8d4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.height_mm_432390899a2b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_performance.top_speed_kmh_eef0f338d6b2_15e046a2397c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.lane_departure_warning_d0224f37772e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_technology.smartphone_mirroring_7dd1aa7d4a5c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_powertrain.drivetrain_1f03bda06067.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.wheelbase_mm_bf63f53122d8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_battery.chemistry_2762dc26dfd2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.rear_cross_traffic_98e8db237ae2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.esc_021681123ad0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_powertrain.motor_count_c0acfc6fd9b7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.lane_keep_assist_7191344994a9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_battery.warranty_years_9a86029389d5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.ground_clearance_mm_b3f986a37970_de03b611ddde.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_technology.surround_view_camera_540988c9efa4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.wheelbase_mm_f43b37c436a1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_ev.rated_range_km_51bfb9054be0_2a8f6b2e6917.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_comfort.keyless_entry_a1eb6c2a67d3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_technology.led_headlights_b2adb9b6f4b7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.abs_20b746c579ba.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.width_mm_be399d787e7d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.lane_departure_warning_93666a70c5b5.json",
+    "2026/models/avatr.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.curb_weight_kg_eef0f338d6b2_3a3c16743c1c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.keyless_entry_75727ae5e99e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.abs_d41b1e02f59b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_comfort.ventilated_front_seats_32fa0012c21d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_technology.led_headlights_60caa732ac40.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.curb_weight_kg_eef0f338d6b2_bc423dd7ffc0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_ev.rated_range_km_51bfb9054be0_5b67a578efdb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.length_mm_acfc1241ea2a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_charging.dc_max_kw_9d18d19d12be_089e4c470d8a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_vehicle.ground_clearance_mm_b3f986a37970_83750bc7510c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_powertrain.max_torque_nm_398e0332b76d_5a2ab21fc1e3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.length_mm_3cb90f877172.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_comfort.auto_climate_1774d8e2b97a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_technology.smartphone_mirroring_dd2be25f70c8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_fitment.tyre_size_3458628ee24d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_technology.ota_update_aa4eb18d810d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_battery.chemistry_b336b7dbd44a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_comfort.power_windows_5a60c65d2560.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.rear_cross_traffic_2676eaba9739.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_technology.ota_update_f3f72ab9423c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_battery.warranty_km_cafdfba402b5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_battery.warranty_km_fa2b1bceb5f5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_charging.v2l_supported_a27a14a34619.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_vehicle.wheelbase_mm_93d1799567ba.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_powertrain.drivetrain_abbe61a5628c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.esc_96244ac4fe4b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_battery.catalog_capacity_kwh_4931f70264fa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_fitment.tyre_size_1c006bcd7581.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.abs_75ccb10879b8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_charging.dc_max_kw_9d18d19d12be_ab70b1a59038.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.panoramic_roof_4bb60bd3a705.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.lane_keep_assist_3f30ca3926fd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_safety.forward_collision_warning_6e5132c04bb8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_fitment.tyre_size_f8b9454604b8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.ventilated_front_seats_290817cd72ba.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_battery.warranty_years_8fec0f97e468.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_vehicle.ground_clearance_mm_b3f986a37970_25c1de3e08c7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_powertrain.max_torque_nm_398e0332b76d_480718bb78dc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_safety.esc_1f98b7bcf8ed.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev_safety.lane_keep_assist_0cbfc4fad38b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_awd_bev_performance.top_speed_kmh_eef0f338d6b2_3287f935930f.json",
+    "2026/canonical_state/shadow/7846089d1284fdf9f2d5e8de.json",
+    "2026/canonical_state/shadow/35e0c3740e89d3a888190214.json",
+    "2026/canonical_state/shadow/758f8587b666a5b2c96f95d6.json",
+    "2026/canonical_state/shadow/6ec4fed493f1887c01d2a0c8.json",
+    "2026/canonical_state/shadow/d277fca1bd578c845922a3b1.json",
+    "2026/canonical_state/shadow/2cdf3ca55143d7b9929f6015.json",
+    "2026/canonical_state/shadow/a0750d000dae535975028860.json",
+    "2026/canonical_state/shadow/8aeef35bfb40692db03dd399.json",
+    "2026/canonical_state/shadow/278bfe1bd904608036eeddc3.json",
+    "2026/canonical_state/shadow/4f20ceb9013162818410c1a0.json",
+    "2026/canonical_state/shadow/545f94be2b9c11021cfbfdb3.json",
+    "2026/canonical_state/shadow/af772412ffd7f97ccd7aaf1d.json",
+    "2026/canonical_state/shadow/f7a848d8e5ddb5a08f7ee3ba.json",
+    "2026/canonical_state/shadow/5fd7567f7cbe4952309307a3.json",
+    "2026/canonical_state/shadow/6294809222aa486ba4ad414b.json",
+    "2026/canonical_state/shadow/b9f399c4addae46bfbb622c4.json",
+    "2026/canonical_state/shadow/1f691d83aa09e6859f6ac8d1.json",
+    "2026/canonical_state/shadow/f75d9f9caf1b7ea0b229188c.json",
+    "2026/canonical_state/shadow/ee6c5d1eb34a0e9805ee4283.json",
+    "2026/canonical_state/shadow/0cbd64f0dc13221dbf246fc4.json",
+    "2026/canonical_state/shadow/cfd5441ff23e808a86ab24ec.json",
+    "2026/canonical_state/shadow/d5eb9c43c756a875c7914da5.json",
+    "2026/canonical_state/shadow/b4e127883b7c6e926c1256ed.json",
+    "2026/canonical_state/shadow/5887843feaa3502e4c57ad77.json",
+    "2026/canonical_state/shadow/face8f5bd97f260e089d4bae.json",
+    "2026/canonical_state/shadow/6f786c7070bdb310f9d9d482.json",
+    "2026/canonical_state/shadow/8c327ce7675eeb7fbf5be496.json",
+    "2026/canonical_state/shadow/45f017555eaacf9c02cae0e9.json",
+    "2026/canonical_state/shadow/20940ada82744ce806ae1808.json",
+    "2026/canonical_state/shadow/81937ec1a9dbcdac14b33e5e.json",
+    "2026/canonical_state/shadow/a499c856ebc4fb3779ce716a.json",
+    "2026/canonical_state/shadow/4c089634996fe29885a997f3.json",
+    "2026/canonical_state/shadow/d1725e80a71d6183681f1070.json",
+    "2026/canonical_state/shadow/4475dc49cdd67c6b62e6d704.json",
+    "2026/canonical_state/shadow/e7633d2778838cb83d25bfd0.json",
+    "2026/canonical_state/shadow/a9873931d6a454f8ac8c1838.json",
+    "2026/canonical_state/shadow/e76c33d2379711d6e2e83c5e.json",
+    "2026/canonical_state/shadow/89b7def8a5a135f6344d96de.json",
+    "2026/canonical_state/shadow/34f5049c362e1433a41810d3.json",
+    "2026/canonical_state/shadow/553f16b1e8fb33ede4141934.json",
+    "2026/canonical_state/shadow/5228773b8304b1c772bbe209.json",
+    "2026/canonical_state/shadow/efac20e73f12f25e01898bd9.json",
+    "2026/canonical_state/shadow/1ea9a585a751c9dbdfff878a.json",
+    "2026/canonical_state/shadow/181023f245fd91dd76aa7751.json",
+    "2026/canonical_state/shadow/dd78d228340011c4bd9a0510.json",
+    "2026/canonical_state/shadow/684f11ddf0a3942dd9895fe4.json",
+    "2026/canonical_state/shadow/f9678fa3f78a020bdd8fd391.json",
+    "2026/canonical_state/shadow/dd10dd1cc0138f37935b7ead.json",
+    "2026/canonical_state/shadow/10313caf50e76fc52b3b1eea.json",
+    "2026/canonical_state/shadow/a2d952adf87e8f1e98e36300.json",
+    "2026/canonical_state/shadow/6ced9155c4e484c1cf78a36e.json",
+    "2026/canonical_state/shadow/7a2bfdd6ac794e12952f9d81.json",
+    "2026/canonical_state/shadow/746b37ecf0101cb91de85921.json",
+    "2026/canonical_state/shadow/b737a39e26647235ed4ee3a1.json",
+    "2026/canonical_state/shadow/591a8d28bcc686e11df09dfe.json",
+    "2026/canonical_state/shadow/a985be326a120e93ce52b403.json",
+    "2026/canonical_state/shadow/30eeb6bcbf2c94d4dccc8ac1.json",
+    "2026/canonical_state/shadow/a43fe1a3e4dffd1252081e85.json",
+    "2026/canonical_state/shadow/79169f834f9f3e7c87459329.json",
+    "2026/canonical_state/shadow/f266af080b5388d7cb449b9f.json",
+    "2026/canonical_state/shadow/605a3bf0e9406f6494887e1e.json",
+    "2026/canonical_state/shadow/4b362466d879d6f5b403fab1.json",
+    "2026/canonical_state/shadow/d08cad1fabcc2b5c61b68ba9.json",
+    "2026/canonical_state/shadow/4e6e7a1bde68c9a3d2c7f734.json",
+    "2026/canonical_state/shadow/b1563d6609cff467f68ef56d.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/dd843bfe9c582ef0cd611471.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/ebc020c2b848ac6196370d44.json",
+    "2026/canonical_state/shadow/5a9e9e35b30fe8484f608712.json",
+    "2026/canonical_state/shadow/9beeeaf09be3f1949caf024c.json",
+    "2026/canonical_state/shadow/aa76f8ea67b2a37060391747.json",
+    "2026/canonical_state/shadow/9224c2bfd0242c00af750ba3.json",
+    "2026/canonical_state/shadow/3a7df0b6819a70dae2dfe6f6.json",
+    "2026/canonical_state/shadow/a3cefdcef4d23abb387dee2f.json",
+    "2026/canonical_state/shadow/4581061cf4f13f520c150e3f.json",
+    "2026/canonical_state/shadow/37ef3e25fd79643679d23273.json",
+    "2026/canonical_state/shadow/fe791e01990edbfad4a2e535.json",
+    "2026/canonical_state/shadow/c85545bd23c6b2614897cacb.json",
+    "2026/canonical_state/shadow/671ea5cf378f350861a28937.json",
+    "2026/canonical_state/shadow/42d06c11f40316b32aebe39b.json",
+    "2026/canonical_state/shadow/2c89259ee0b5d9175f762396.json",
+    "2026/canonical_state/shadow/3923a7afdf39b231b3b5a6eb.json",
+    "2026/canonical_state/shadow/cce096f80867f28c92c7af46.json",
+    "2026/canonical_state/shadow/b883794d5a68668527cf7dbb.json",
+    "2026/canonical_state/shadow/7d083d4cdc1169a1a1a0e62a.json",
+    "2026/canonical_state/shadow/0e0b1e3e974d41a3fc358a14.json",
+    "2026/canonical_state/shadow/ddfbda669f8eeb5bb57579fa.json",
+    "2026/canonical_state/shadow/18c14923731daf794a28cf8a.json",
+    "2026/canonical_state/shadow/c43df52704d06668554bec1d.json",
+    "2026/canonical_state/shadow/0d79b47696959405976d2576.json",
+    "2026/canonical_state/shadow/6687f98148e8e1dd9ffda5ed.json",
+    "2026/canonical_state/shadow/fc848e3cf4ea0728d18bebf6.json",
+    "2026/canonical_state/shadow/a007e794f15f9fe546d5e91a.json",
+    "2026/canonical_state/shadow/be5f6d41d933064e56cabd07.json",
+    "2026/canonical_state/shadow/1b3fb83e60703540251679fa.json",
+    "2026/canonical_state/shadow/b0186ef34d1f44f51a891540.json",
+    "2026/canonical_state/shadow/f2839d16f0fe9af83fddf907.json",
+    "2026/canonical_state/shadow/0b196040439ba395c4f9bbe9.json",
+    "2026/canonical_state/shadow/f947b69196b6ee01f0cd07ca.json",
+    "2026/canonical_state/shadow/6f8be77c66f935736e3279f6.json",
+    "2026/canonical_state/shadow/4b8f79eb4b5ff4e04eaa4ee5.json",
+    "2026/canonical_state/shadow/7b7454244c8b1c5fe89733d5.json",
+    "2026/canonical_state/shadow/7adc51be24d21629a13d3a07.json",
+    "2026/canonical_state/shadow/9b077552c8e07882883d1727.json",
+    "2026/canonical_state/shadow/5242f967e85c67d66f6b18ba.json",
+    "2026/canonical_state/shadow/0c44481257b1491f455e7883.json",
+    "2026/canonical_state/shadow/e51e1e82aa71b79873a7e032.json",
+    "2026/canonical_state/shadow/1f4d52a5b16cf9c7a1589a24.json",
+    "2026/canonical_state/shadow/a3251c017ecfa77d6b04478a.json",
+    "2026/canonical_state/shadow/d495f5a83655a455716faa2f.json",
+    "2026/canonical_state/shadow/66bfe0fb2d35cc96398c7dff.json",
+    "2026/canonical_state/shadow/5e0c49210e38127dd0d61ae2.json",
+    "2026/canonical_state/shadow/7435ca96fac158cd45048886.json",
+    "2026/canonical_state/shadow/10099f26ee4b063e6e505397.json",
+    "2026/canonical_state/shadow/34c9be7bad6e8fa1f7824e83.json",
+    "2026/canonical_state/shadow/221b8477e1c5efd27deb1877.json",
+    "2026/canonical_state/shadow/5257e57c9cb3cf8fd7a25771.json",
+    "2026/canonical_state/shadow/7b53cd8ed561b7a6a2e84b6f.json",
+    "2026/canonical_state/shadow/e0a3601e29cbd1811b1fb566.json",
+    "2026/canonical_state/shadow/72d9cdb093c66113bf9b6867.json",
+    "2026/canonical_state/shadow/829e15bed0d281593fec96cf.json",
+    "2026/canonical_state/shadow/18b739d15b2786be8a0ae860.json",
+    "2026/canonical_state/shadow/8510a8839a68ae9d23730194.json",
+    "2026/canonical_state/shadow/c6ee2495f1b05a4fba07fa61.json",
+    "2026/canonical_state/shadow/091fdfd0d713a4394bf24e84.json",
+    "2026/canonical_state/shadow/8c7edfb3bafcf3cb9cb8be1c.json",
+    "2026/canonical_state/shadow/38850fe6557b987643ac169f.json"
+  ]
+}

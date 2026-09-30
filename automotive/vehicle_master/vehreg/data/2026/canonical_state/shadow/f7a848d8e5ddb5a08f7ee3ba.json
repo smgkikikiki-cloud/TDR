@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f7a848d8e5ddb5a08f7ee3ba",
+    "command_id": "vehicle-spec-254fbf70-e16b-40f3-9f9f-50dbc9e04dbe-001-f8f3e0002c2f:55",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:03:11+00:00",
+    "applied_at": "2026-09-30T03:04:43+00:00",
+    "before_hash": "79f6716ea096a37d01d3899f5e91dcb4ba7b5ac17e9ebe8880933c117fe569e5",
+    "after_hash": "873c699de99ee6f7e7533e971f14b6fad26b223b6ae3e118789454ba1e49689f",
+    "before": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_avatr.avatr_11.gen1.trim.ultra_bev_comfort.panoramic_roof_4bb60bd3a705.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f7a848d8e5ddb5a08f7ee3ba:spec",
+    "revision_id": "f7a848d8e5ddb5a08f7ee3ba",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:04:43+00:00",
+    "payload": [
+      116.79,
+      "NMC",
+      180000,
+      8,
+      11,
+      "CCS2",
+      240,
+      25,
+      true,
+      true,
+      true,
+      true
+    ]
+  }
+}
