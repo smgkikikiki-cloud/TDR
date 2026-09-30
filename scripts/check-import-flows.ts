@@ -21,7 +21,8 @@ check("the ECO path refuses a non-ECO source outright",
   ecoCli.includes("has no parser on the ECO path"));
 const uploadAction = read("app/admin/import-actions.ts");
 check("upload only accepts sources that have a parser",
-  uploadAction.includes('new Set(["ECO", "DLT"])'));
+  uploadAction.includes('new Set(["ECO", "DLT", "VEHICLE_SPECS"])')
+    && worker.includes('HANDLERS = {"ECO": _import_eco, "DLT": _import_dlt, "VEHICLE_SPECS": _import_vehicle_specs}'));
 
 console.log("\nimport results outlive the worker");
 // The run row's JSON array came first and was capped at 500, so a file with
