@@ -119,8 +119,6 @@ def validate_retail_lineup_staged_release(
     staged = Path(data_dir)
     year = int(plan.catalog_year)
 
-    # Explicit Catalog load first gives a narrow structural failure before the
-    # broader ProductMaster/release validation performed by ReleaseBuilder.
     Catalog.load(staged, year)
 
     inventory = _json_object(Path(inventory_path), label="TDR inventory")
@@ -184,9 +182,17 @@ def validate_retail_lineup_staged_release(
 
 
 def _promotion_order(paths: tuple[Path, ...]) -> tuple[Path, ...]:
-    # Data first; state/audit markers last, matching the existing canonical
-    # recovery ordering.  Path is a deterministic tie-breaker.
     return tuple(sorted(paths, key=lambda path: ("canonical_state" in path.parts, str(path))))
+
+
+def _cleanup_promotion_temps(live_data: Path, ordered: tuple[Path, ...]) -> None:
+    for relative in ordered:
+        target = live_data / relative
+        for suffix in (".rlb-tmp", ".rlb-rollback"):
+            try:
+                target.with_name(target.name + suffix).unlink(missing_ok=True)
+            except OSError:
+                pass
 
 
 def _promote_with_rollback(staged_data: Path, live_data: Path,
@@ -196,7 +202,6 @@ def _promote_with_rollback(staged_data: Path, live_data: Path,
         raise RetailLineupBootstrapError("staged apply returned duplicate changed paths")
     ordered = _promotion_order(relatives)
 
-    # Validate every staged source before touching live data.
     for relative in ordered:
         source = staged_data / relative
         if not source.is_file():
@@ -232,10 +237,12 @@ def _promote_with_rollback(staged_data: Path, live_data: Path,
                     os.replace(temporary, target)
             except Exception as rollback_exc:  # pragma: no cover - catastrophic filesystem failure
                 rollback_errors.append(f"{relative}: {rollback_exc}")
+        _cleanup_promotion_temps(live_data, ordered)
         detail = f"; rollback failures: {rollback_errors}" if rollback_errors else ""
         raise RetailLineupBootstrapError(
             f"bootstrap promotion failed and rollback was attempted: {exc}{detail}") from exc
 
+    _cleanup_promotion_temps(live_data, ordered)
     return tuple(str(path) for path in ordered)
 
 
@@ -252,7 +259,7 @@ def apply_retail_lineup_plan_atomically(
 ) -> RetailLineupTransactionResult:
     """Apply one immutable workbook plan as a whole-tree transaction.
 
-    Any apply/validation failure happens only in the copied tree.  Live files are
+    Any apply/validation failure happens only in the copied tree. Live files are
     considered for promotion only after the staged enriched release passes.
     Immediately before promotion the target-model baseline is checked again so
     a concurrent canonical edit cannot be silently overwritten.
