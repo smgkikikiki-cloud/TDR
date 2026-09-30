@@ -195,7 +195,11 @@ def upsert_bootstrap_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_D
                                                 reviewer: str, reviewed_at: str,
                                                 source_ref: str = "", notes: str = "",
                                                 write: bool = False) -> dict[str, Any]:
-    """Owner-authoritative bootstrap path; URL optional, all other guards same."""
+    """Owner-authoritative bootstrap archive/reopen path; never creates CURRENT review."""
+    action = str(action or "").strip().lower()
+    if action not in {"historical", "reopen"}:
+        raise RetailLifecycleReviewError(
+            "bootstrap lifecycle action must be historical or reopen; CURRENT membership belongs to current_retail")
     return _upsert(
         data_dir=data_dir, year=year, trim_id=trim_id, action=action,
         reviewer=reviewer, reviewed_at=reviewed_at, source_ref=source_ref,
