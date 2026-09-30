@@ -29,6 +29,8 @@
 .tdr-nav + .tdr-acts { margin-left: 0; }
 .tdr-acts .tdr-btn, .tdr-drawer .tdr-btn { white-space: nowrap; }
 .tdr-acts .tdr-btn--secondary { font-weight: 500; }
+/* Sign-up is a navy outline button (DESIGN.md §7). Scoped one level up so it beats components.css whatever the bundle order. */
+.tdr-header .tdr-signup, .tdr-drawer .tdr-signup { background: transparent; border-color: var(--brand-navy); color: var(--brand-navy); font-weight: 500; }
 .tdr-acts .tdr-btn--ghost { padding: 0 4px; }
 .tdr-icon-btn { width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--border); background: transparent; color: var(--ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; }
 .tdr-burger { display: none; }
@@ -81,7 +83,7 @@
   :root { --tdr-gutter: 16px; }
   .tdr-header__row { height: 64px; }
   .tdr-logo img { height: 30px; }
-  .tdr-acts .tdr-btn--primary { padding: 0 14px; }
+  .tdr-acts .tdr-signup { padding: 0 14px; }
   .tdr-acts .tdr-theme { display: none; }
   .tdr-footer { padding-bottom: 64px; }
   .tdr-bottom { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--surface-page); border-top: 1px solid var(--border); z-index: 6; }
@@ -93,6 +95,7 @@
 /* Burger drawer */
 .tdr-drawer-overlay { position: fixed; inset: 0; z-index: 20; background: color-mix(in srgb, var(--ink) 40%, transparent); }
 .tdr-drawer { position: absolute; top: 0; right: 0; bottom: 0; width: min(320px, 86vw); background: var(--surface-page); border-left: 1px solid var(--border); box-shadow: var(--shadow-pop); padding: 16px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+.tdr-drawer__nav { display: flex; flex-direction: column; gap: 4px; }
 .tdr-drawer a:not(.tdr-btn) { display: flex; align-items: center; min-height: 44px; color: var(--ink); font-weight: 500; font-size: 16px; }
 .tdr-drawer a.on { color: var(--brand-navy); font-weight: 700; }
 .tdr-drawer hr { width: 100%; border: 0; border-top: 1px solid var(--border); margin: 8px 0; }

@@ -20,7 +20,7 @@ export function Header() {
           <ThemeToggle className="tdr-icon-btn tdr-theme" />
           <Link className="tdr-btn tdr-btn--ghost tdr-pk" href={pricingEntry.href}>{pricingEntry.label}</Link>
           <Link className="tdr-btn tdr-btn--secondary tdr-login" href={memberEntry.href}>{memberEntry.label}</Link>
-          <Link className="tdr-btn tdr-btn--primary" href={signupEntry.href}>{signupEntry.label}</Link>
+          <Link className="tdr-btn tdr-signup" href={signupEntry.href}>{signupEntry.label}</Link>
           <MobileNav />
         </div>
       </div>

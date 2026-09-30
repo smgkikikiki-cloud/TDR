@@ -47,11 +47,19 @@ body.no-copy { -webkit-user-select: none; user-select: none; }
 body.no-copy input, body.no-copy textarea {
   -webkit-user-select: text; user-select: text;
 }
-/* The shell (header, footer, bottom bar) follows the theme. Page content stays light until a page
-   migrates: a migrated page wraps itself in .designPage, which lifts these two lines for it.
-   --ink is the one variable that both globals.css and tokens.css declare (tokens.css goes dark), and
-   body's colour is inherited as a computed value, so the frame restates the text colour as well. */
-.pageFrame:not(:has(.designPage)) { color-scheme: light; --ink: #101114; color: var(--ink); }
+/* Legacy/design boundary. The shell (header, footer, bottom bar) follows the theme; a page that has not
+   migrated stays light and keeps this frame. A migrated page wraps itself in .designPage and owns its
+   layout (tdr-wrap + design gutters): the frame's width, border, background and the main padding are
+   lifted for it, and it gets the design body text and page background.
+   --ink is the one variable both globals.css and tokens.css declare (tokens.css goes dark), and body's
+   colour is inherited as a computed value, so the legacy frame restates the text colour as well.
+   --legacy-ink is a temporary token (design/tokens.json); it goes when the last legacy page migrates. */
+.pageFrame:not(:has(.designPage)) { color-scheme: light; --ink: var(--legacy-ink); color: var(--legacy-ink); }
+.pageFrame:has(.designPage) { width: auto; margin: 0; min-height: 0; background: transparent; border: 0; }
+.pageFrame:has(.designPage) > main { padding: 0; }
+html:has(.designPage), body:has(.designPage) { background: var(--surface-page); }
+body:has(.designPage) { font-size: 16px; line-height: 1.625; }
+@media (max-width: 767px) { body:has(.designPage) { font-size: 15px; } }
 .pageFrame { width: min(1460px, calc(100% - 36px)); margin: 0 auto; background: var(--white); min-height: 100vh; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 main { padding: 0 var(--pagePad) 68px; }
 .siteHeader { border-bottom: 4px solid var(--red); padding: 19px var(--pagePad) 0; background: var(--white); }
