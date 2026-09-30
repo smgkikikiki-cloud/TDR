@@ -144,27 +144,38 @@ def _prune_releases(*, url: str, service_key: str) -> dict:
     return _rpc("prune_vehicle_releases", {}, url=url, service_key=service_key)
 
 
+def _prune_releases_best_effort(*, url: str, service_key: str) -> dict:
+    """Run retention housekeeping without turning a successful publish into failure.
+
+    Activation/publish is the correctness boundary. Retention only bounds old
+    release storage, so a timeout or other prune failure is reported to the
+    caller but must not negate a release that is already serving.
+    """
+    try:
+        return _prune_releases(url=url, service_key=service_key)
+    except RuntimeError as exc:
+        return {"status": "FAILED", "error": str(exc)}
+
+
 def publish(release: dict, *, url: str, service_key: str) -> dict:
-    """The legacy, unstaged path: one call to publish_vehicle_release(jsonb),
-    followed by the same bounded release retention as the staged path."""
+    """The legacy, unstaged path: publish first, then best-effort retention."""
     result = _rpc("publish_vehicle_release", {"release": release}, url=url, service_key=service_key)
-    result["retention"] = _prune_releases(url=url, service_key=service_key)
+    result["retention"] = _prune_releases_best_effort(url=url, service_key=service_key)
     return result
 
 
 def publish_staged(release: dict, *, url: str, service_key: str,
                    chunk_size: int = CHUNK_SIZE) -> dict:
-    """begin_vehicle_release -> stage_vehicle_release_chunk (in FK order,
-    chunked) -> activate_vehicle_release -> prune_vehicle_releases.
+    """begin_vehicle_release -> stage chunks -> activate -> best-effort retention.
 
-    Every call is safe to resend: begin_vehicle_release no-ops for an
-    already-ACTIVE/SUPERSEDED release_id and resumes an in-progress STAGING
-    one, each stage_vehicle_release_chunk call is idempotent by
-    (release_id, section, chunk_index, chunk_hash), and activate_vehicle_release
-    is a no-op once the release is already ACTIVE. Retention is also retried
-    when begin reports that this release is already ACTIVE, so a publish that
-    activated successfully but failed during pruning converges on the next
-    invocation instead of leaving storage growth silent.
+    Every publish-critical call is safe to resend: begin_vehicle_release
+    no-ops for an already-ACTIVE/SUPERSEDED release_id and resumes an
+    in-progress STAGING one, each stage_vehicle_release_chunk call is
+    idempotent by (release_id, section, chunk_index, chunk_hash), and
+    activate_vehicle_release is a no-op once the release is already ACTIVE.
+    Retention is housekeeping after that correctness boundary: it is retried
+    on later publishes, but failure is returned as metadata instead of making
+    an already-active release look like a failed publish.
     """
     release_id = str(release["release_id"])
     manifest = _manifest(release)
@@ -190,7 +201,7 @@ def publish_staged(release: dict, *, url: str, service_key: str,
                 "this publish did not make it the active release"
             )
         t_prune = time.monotonic()
-        retention = _prune_releases(url=url, service_key=service_key)
+        retention = _prune_releases_best_effort(url=url, service_key=service_key)
         timings["prune"] = time.monotonic() - t_prune
         timings["total"] = time.monotonic() - t_start
         return {"release_id": release_id, "status": status,
@@ -225,7 +236,7 @@ def publish_staged(release: dict, *, url: str, service_key: str,
     timings["activate"] = time.monotonic() - t_activate
 
     t_prune = time.monotonic()
-    retention = _prune_releases(url=url, service_key=service_key)
+    retention = _prune_releases_best_effort(url=url, service_key=service_key)
     timings["prune"] = time.monotonic() - t_prune
     timings["largest_chunk"] = largest_chunk_seconds
     timings["total"] = time.monotonic() - t_start
