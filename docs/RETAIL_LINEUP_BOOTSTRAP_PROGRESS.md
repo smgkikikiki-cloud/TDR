@@ -246,7 +246,9 @@ This separation is deliberate: Chunk 6 proves the Admin contract without modifyi
 
 ### Validation
 
-The Chunk-6 UI/action code through `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` passed the repository TypeScript job and the full Next.js web build. The same head passed Python compilation before entering the repository's long Vehicle Master test suite. Subsequent Chunk-6 commits add the Admin-home link, static safety-contract tests and a small Storage credential-compatibility hardening; current CI for those later heads remains in progress because every feature-branch commit spawned a full repository run.
+The Chunk-6 runtime code head is `fd02219933358ad14805f19f29cc165c08b80816`; commits after it only update this handoff document.
+
+The Chunk-6 UI/action code through `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` passed the repository TypeScript job and the full Next.js web build. The same head passed Python compilation before entering the repository's long Vehicle Master test suite. Subsequent runtime commits add the Admin-home link, static safety-contract tests and a small Storage credential-compatibility hardening; current CI for those later heads remains in progress because every feature-branch commit spawned a full repository run.
 
 Chunk 6 is marked complete at the implementation boundary because the web/type safety checks that exercise its Admin surface are green and its later Python changes are isolated/read-only; the final full Vehicle Master result is still being observed and must show only the known repository-baseline failures before Chunk 7 is merged or the draft PR is advanced.
 
