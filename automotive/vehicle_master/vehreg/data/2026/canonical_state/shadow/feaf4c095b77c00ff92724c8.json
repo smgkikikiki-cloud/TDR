@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "feaf4c095b77c00ff92724c8",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:11",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "55fdab37877f1a03b10395de108c2e57b81d84ab2ed9afa011ec2a109c7a4b4c",
+    "after_hash": "480613c716992492d24998d2b3a6d47405bda4ba34f11308e239086390836142",
+    "before": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link"
+    ],
+    "after": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_comfort.auto_climate_e7a00270a1db.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "feaf4c095b77c00ff92724c8:spec",
+    "revision_id": "feaf4c095b77c00ff92724c8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link",
+      true
+    ]
+  }
+}

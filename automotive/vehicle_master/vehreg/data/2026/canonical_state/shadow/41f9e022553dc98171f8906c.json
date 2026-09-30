@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "41f9e022553dc98171f8906c",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "6dee4d22d746f97915bb7637220a15e10c626e8abbd6e241df07ec4a9cada4d6",
+    "after_hash": "f1081a41834b0caca2fb49a402319d503e8e71943d64f30b3eceb61343ae37f9",
+    "before": [
+      64.78,
+      "NMC",
+      160000,
+      8
+    ],
+    "after": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_charging.ac_max_kw_87f251aaa669.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "41f9e022553dc98171f8906c:spec",
+    "revision_id": "41f9e022553dc98171f8906c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22
+    ]
+  }
+}

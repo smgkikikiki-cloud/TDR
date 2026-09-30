@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9c092253262150a6b69551f1",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "57467b2ef9b63dfabef7256f292a9727ff23c38f5ea79bd4f3135f4137cf5709",
+    "after_hash": "62369817046b27a03af3c9eb83362cbbc2f28957da602e03d6c242603df510c5",
+    "before": [
+      64.78
+    ],
+    "after": [
+      64.78,
+      "NMC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_battery.chemistry_14e66c7f9b78.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9c092253262150a6b69551f1:spec",
+    "revision_id": "9c092253262150a6b69551f1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC"
+    ]
+  }
+}

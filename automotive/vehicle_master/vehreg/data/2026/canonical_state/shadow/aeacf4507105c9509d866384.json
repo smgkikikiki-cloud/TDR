@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aeacf4507105c9509d866384",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "480613c716992492d24998d2b3a6d47405bda4ba34f11308e239086390836142",
+    "after_hash": "b0db9788b967e406f0df6c3aaa86f25b5707ff6c82d6024dd7d798524e7a5390",
+    "before": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link",
+      true
+    ],
+    "after": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_comfort.electric_parking_brake_29ed9a5ad0c6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aeacf4507105c9509d866384:spec",
+    "revision_id": "aeacf4507105c9509d866384",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ]
+  }
+}

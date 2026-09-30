@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8a776a8820d6966ea52e2f0c",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:4",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "62369817046b27a03af3c9eb83362cbbc2f28957da602e03d6c242603df510c5",
+    "after_hash": "71ffa5af4b65d0affe2fe2aba3d59d1e223fd9ddcc412e0d50bb11f76e7fc543",
+    "before": [
+      64.78,
+      "NMC"
+    ],
+    "after": [
+      64.78,
+      "NMC",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_battery.warranty_km_fc1fdc1c0ecc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8a776a8820d6966ea52e2f0c:spec",
+    "revision_id": "8a776a8820d6966ea52e2f0c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC",
+      160000
+    ]
+  }
+}

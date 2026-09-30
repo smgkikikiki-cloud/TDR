@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "65c50bbba69f396adb387d1b",
+    "command_id": "vehicle-spec-15c55148-bae1-47fe-8a5c-29a3ab6ee423-001-0e4e385fc127:10",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:34:34+00:00",
+    "applied_at": "2026-09-30T03:36:15+00:00",
+    "before_hash": "275a8fe9adb0d62964af604d57143d7313e781073b3ba2989a1b946beb32a89a",
+    "after_hash": "55fdab37877f1a03b10395de108c2e57b81d84ab2ed9afa011ec2a109c7a4b4c",
+    "before": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut"
+    ],
+    "after": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix1.gen1.trim.edrive20l_m_sport_bev_chassis.suspension_rear_78805232f326.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "65c50bbba69f396adb387d1b:spec",
+    "revision_id": "65c50bbba69f396adb387d1b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:36:15+00:00",
+    "payload": [
+      64.78,
+      "NMC",
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      "MacPherson Strut",
+      "Multi-Link"
+    ]
+  }
+}

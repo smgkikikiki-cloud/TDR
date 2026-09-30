@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:bmw.ix1.gen1.trim.edrive20l_m_sport_bev:powertrain.max_power_kw:157d561b6286",
+      "trim_id": "bmw.ix1.gen1.trim.edrive20l_m_sport_bev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 150,
+      "unit": "kW",
+      "qualifiers": {
+        "output_scope": "FRONT_MOTOR",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}
