@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "./gallery.css";
+import { ChipDemo } from "./ChipDemo";
 import {
   Button, Card, CardHead, Chip, ConfidenceMeter, Delta, Field, Flag, KpiCard, Legend, LockedBlock,
   PageHead, Select, StageBar, Swatch, Table, TextInput, TierBadge,
@@ -23,10 +24,9 @@ export default function DesignComponentsGallery() {
         />
 
         <h2>Button</h2>
-        <p className="tdr-gallery__note">หนึ่งปุ่มทึบสีแดง (accent) ต่อหน้าจอ · ปุ่มอื่นเป็นเส้นขอบหรือ ghost</p>
+        <p className="tdr-gallery__note">หนึ่งปุ่มทึบสีแดง (accent) ต่อหน้าจอ · ปุ่มอื่นเป็นเส้นขอบ (ค่าเริ่มต้น) หรือ ghost · สีน้ำเงินทึบมีเฉพาะปุ่ม Contact ของ Enterprise</p>
         <div className="tdr-gallery__row">
           <Button variant="accent">Accent (max 1 per view)</Button>
-          <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="ghost">Ghost</Button>
           <Button variant="contact" href="/contact">Contact →</Button>
@@ -39,8 +39,10 @@ export default function DesignComponentsGallery() {
           <Chip count={318}>SUV</Chip>
           <Chip pressed count={53}>Selected</Chip>
           <Chip pressed={false}>Not selected</Chip>
-          <Chip href="/models">Link chip</Chip>
+          <Chip href="/models" aria-current="page">Link chip</Chip>
         </div>
+        <p className="tdr-gallery__note">ปุ่มสลับ (toggle) ใช้งานได้จริง: onClick, disabled, aria-* · สถานะเป็นของผู้เรียกใช้ ไม่ใช่ของ Chip</p>
+        <ChipDemo />
 
         <h2>TierBadge</h2>
         <p className="tdr-gallery__note">Free · Member · Pro · Enterprise เป็นป้ายคนละแบบ (รายงานระดับสมาชิกใช้ Member ไม่ใช่ Free)</p>
@@ -143,6 +145,12 @@ export default function DesignComponentsGallery() {
           { fill: "cat-4", label: "cat 4" }, { fill: "cat-5", label: "cat 5" },
         ]} />
         <div className="tdr-gallery__row"><Swatch fill="div-4" /> <Swatch fill="map-1" /></div>
+        <p className="tdr-gallery__note">ช่องแผนที่ (SVG) มีเส้นขอบ 1px คงที่แม้ภาพถูกย่อ/ขยาย</p>
+        <svg viewBox="0 0 120 24" width="100%" height="64" role="img" aria-label="ตัวอย่างช่องแผนที่" style={{ maxWidth: 480 }}>
+          <rect data-testid="region" className="tdr-region tdr-fill-div-4" x="2" y="2" width="36" height="20" />
+          <rect className="tdr-region tdr-fill-map-1" x="42" y="2" width="36" height="20" />
+          <rect className="tdr-region tdr-fill-div-3" x="82" y="2" width="36" height="20" />
+        </svg>
       </div>
     </div>
   );

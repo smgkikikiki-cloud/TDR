@@ -22,14 +22,14 @@ export type DeltaUnit = "pp" | "%";
 export type DeltaDirection = "up" | "down" | "zero" | "na";
 export type DeltaView = { direction: DeltaDirection; text: string };
 
-/** DESIGN §8: a percentage change needs a base of at least 30, otherwise it is shown as "–". */
+/** DESIGN §8: a % change needs a base of at least 30, otherwise it is shown as "–". Not applied to pp. */
 export const MIN_PERCENT_BASE = 30;
 const MINUS = "−";
 
 /** Formats a change with its arrow and sign so it never relies on colour alone (DESIGN §3):
  *  up "▲ +1.2 pp", down "▼ −0.8 pp" (U+2212), rounds-to-zero "0.0 pp" with no arrow, missing or
- *  disallowed "–". `base` is the value the change is measured against: for unit "%" it is required
- *  and must be ≥ 30; for "pp" it only gates when given. */
+ *  disallowed "–". Only a "%" change is gated by `base` (required, and ≥ 30); a "pp" change (share
+ *  versus the previous month) is always shown. The low-base rule for maps lives with the map, not here. */
 export function formatDelta(
   value: number | null | undefined,
   opts: { unit?: DeltaUnit; base?: number | null; digits?: number } = {},
@@ -39,7 +39,6 @@ export function formatDelta(
   const na: DeltaView = { direction: "na", text: "–" };
   if (value == null || !Number.isFinite(value)) return na;
   if (unit === "%" && (opts.base == null || !(opts.base >= MIN_PERCENT_BASE))) return na;
-  if (unit === "pp" && opts.base != null && !(opts.base >= MIN_PERCENT_BASE)) return na;
   const factor = 10 ** digits;
   const rounded = Math.round(Math.abs(value) * factor) / factor;
   const body = new Intl.NumberFormat("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(rounded);

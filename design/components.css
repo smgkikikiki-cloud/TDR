@@ -11,9 +11,9 @@ button.tdr-chip:not(:disabled), button.tdr-chip:not(:disabled):hover, button.tdr
   transform: none; box-shadow: var(--tdr-shadow, none); transition: none;
 }
 
-/* Button — one solid --accent per viewport (DESIGN §3); everything else is outline or ghost */
+/* Button — one solid --accent per viewport (DESIGN §3); everything else is outline or ghost.
+   The only navy fill is --contact (the Enterprise "Contact →" button). There is no generic solid-navy button. */
 .tdr-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: var(--radius-md); font: 600 15px/1 var(--font-sans); border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap; }
-.tdr-btn--primary { background: var(--action-primary); color: var(--on-action); }
 .tdr-btn--secondary { background: transparent; color: var(--ink); border-color: var(--ink); font-weight: 500; }
 .tdr-btn--ghost { background: transparent; color: var(--brand-blue); padding: 0 4px; }
 .tdr-btn--accent { --tdr-shadow: var(--shadow-pop); background: var(--accent); color: var(--on-accent); }
@@ -22,7 +22,7 @@ button.tdr-chip:not(:disabled), button.tdr-chip:not(:disabled):hover, button.tdr
 .tdr-btn--upgrade:hover { background: var(--accent-hover); }
 .tdr-btn--contact { background: var(--action-primary); color: var(--on-action); min-width: 160px; }
 .tdr-btn:focus-visible, .tdr-chip:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
-.tdr-btn[disabled], .tdr-btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.tdr-btn[disabled], .tdr-btn[aria-disabled="true"], .tdr-chip:disabled { opacity: .45; cursor: not-allowed; }
 
 /* Chip — filter chip; selected state via aria-pressed or .tdr-chip--on */
 .tdr-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--surface-page); color: var(--ink); font: 500 14px/1 var(--font-sans); white-space: nowrap; text-decoration: none; }
@@ -130,7 +130,7 @@ a.tdr-card:focus-visible { outline: 2px solid var(--brand-blue); outline-offset:
    scripts/check-design-contrast.ts fails if that rule or the tokens behind it regress. */
 .tdr-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; border: 1px solid var(--border-strong); flex: none; }
 .tdr-swatch--square { width: 12px; height: 12px; }
-.tdr-region { stroke: var(--border-strong); stroke-width: .6; }
+.tdr-region { stroke: var(--border-strong); stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .tdr-fill-map-1 { fill: var(--map-1); background-color: var(--map-1); }
 .tdr-fill-map-2 { fill: var(--map-2); background-color: var(--map-2); }
 .tdr-fill-map-3 { fill: var(--map-3); background-color: var(--map-3); }

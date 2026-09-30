@@ -21,8 +21,10 @@ check("missing value is a dash", formatDelta(null), { direction: "na", text: "�
 check("NaN is a dash", formatDelta(Number.NaN), { direction: "na", text: "–" });
 check("percent needs a base", formatDelta(12, { unit: "%" }), { direction: "na", text: "–" });
 check("percent with base below 30 is a dash", formatDelta(12, { unit: "%", base: 29 }), { direction: "na", text: "–" });
+check("percent with base 29 is a dash (boundary)", formatDelta(5, { unit: "%", base: 29 }), { direction: "na", text: "–" });
 check("percent with base 30 is shown", formatDelta(12, { unit: "%", base: 30 }), { direction: "up", text: "▲ +12.0 %" });
-check("pp with a small base is a dash", formatDelta(2, { unit: "pp", base: 10 }), { direction: "na", text: "–" });
+check("pp with a small base is still shown", formatDelta(2, { unit: "pp", base: 10 }), { direction: "up", text: "\u25B2 +2.0 pp" });
+check("pp with base 0 is still shown", formatDelta(-1.5, { unit: "pp", base: 0 }), { direction: "down", text: "\u25BC \u22121.5 pp" });
 check("pp without a base is shown", formatDelta(2), { direction: "up", text: "▲ +2.0 pp" });
 check("thousands separators in large changes", formatDelta(-12345.6, { unit: "%", base: 100, digits: 0 }), { direction: "down", text: "▼ −12,346 %" });
 for (const v of [0.1, -0.1, 5, -5, 123.4, -123.4]) {
@@ -54,6 +56,13 @@ for (const cls of ["tdr-btn", "tdr-chip", "tdr-tier--free", "tdr-tier--member", 
 }
 check("no colour literal in components.css (hex, rgb, hsl, or a colour fallback inside var())", /#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/.test(css), false);
 check("member badge is not styled as free", /\.tdr-tier--member\s*\{[^}]*brand-blue/.test(css), true);
+const button = readFileSync("components/design/Button.tsx", "utf8");
+check("Button has no generic solid-navy primary variant", /\bprimary\b/.test(button.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "")), false);
+check("Button defaults to secondary", /variant = "secondary"/.test(button), true);
+check("contact is the only navy button", /\.tdr-btn--contact\s*\{[^}]*action-primary/.test(css) && !/\.tdr-btn--primary/.test(css), true);
+const chip = readFileSync("components/design/Chip.tsx", "utf8");
+check("toggle Chip accepts button attributes (onClick, disabled, aria-*)", /ButtonHTMLAttributes<HTMLButtonElement>/.test(chip) && /\.\.\.rest\} type=/.test(chip), true);
+check("Chip holds no filter state", /useState|useReducer/.test(chip), false);
 const locked = readFileSync("components/design/LockedBlock.tsx", "utf8");
 check("LockedBlock takes no children (no real values in the DOM)", /children/.test(locked.replace(/\/\*[\s\S]*?\*\//g, "")), false);
 const files = readdirSync("components/design").filter((f) => f.endsWith(".tsx"));

@@ -3,10 +3,11 @@
  *  - Text pairs must reach 4.5:1.
  *  - --border-strong and every --chart-cat-N must reach 3:1 against the page.
  *  - Any --map-N / --diverge-N fill under 3:1 against the page (in either mode) needs the --border-strong
- *    outline; design/components.css must give .tdr-swatch and .tdr-region that outline. This is where the
+ *    outline; design/components.css must give .tdr-swatch a 1px border and .tdr-region a non-scaling 1px
+ *    stroke in that colour (a thinner outline fails). This is where the
  *    known cases are covered: map-1/2, diverge-2/3/4, and --diverge-4 in dark mode at 2.9:1.
  *
- *    node --experimental-strip-types scripts/check-design-contrast.ts
+ *    node --experimental-strip-types scripts/check-design-contrast.ts [path/to/components.css]
  */
 import { readFileSync } from "node:fs";
 
@@ -57,10 +58,26 @@ for (const mode of modes) {
 }
 
 // pale map / diverging fills need the outline
-const css = readFileSync("design/components.css", "utf8");
-const rule = (selector: string) => new RegExp(`${selector.replace(".", "\\.")}\\s*\\{[^}]*--border-strong`).test(css);
-if (!rule(".tdr-swatch")) fail("design/components.css: .tdr-swatch must use var(--border-strong)");
-if (!rule(".tdr-region")) fail("design/components.css: .tdr-region must use var(--border-strong)");
+const cssPath = process.argv[2] ?? "design/components.css";
+const css = readFileSync(cssPath, "utf8");
+/** The declaration block of the first rule that starts with `selector` ("" when missing). */
+const ruleBody = (selector: string): string =>
+  new RegExp(`(?:^|\\})\\s*${selector.replace(".", "\\.")}\\s*\\{([^}]*)\\}`, "m").exec(css)?.[1] ?? "";
+
+// .tdr-swatch: a border of at least 1px, solid, in --border-strong.
+const swatch = ruleBody(".tdr-swatch");
+const swatchBorder = /border:\s*([\d.]+)px\s+solid\s+var\(--border-strong\)/.exec(swatch);
+if (!swatchBorder) fail(`${cssPath}: .tdr-swatch needs "border: Npx solid var(--border-strong)"`);
+else if (Number(swatchBorder[1]) < 1) fail(`${cssPath}: .tdr-swatch outline is ${swatchBorder[1]}px (needs at least 1px)`);
+
+// .tdr-region: SVG strokes are in user units, so the 1px outline must be non-scaling.
+const region = ruleBody(".tdr-region");
+if (!/stroke:\s*var\(--border-strong\)/.test(region)) fail(`${cssPath}: .tdr-region must stroke with var(--border-strong)`);
+const regionWidth = /stroke-width:\s*([\d.]+)(px)?/.exec(region);
+if (!regionWidth) fail(`${cssPath}: .tdr-region needs a stroke-width`);
+else if (regionWidth[2] !== "px") fail(`${cssPath}: .tdr-region stroke-width must be in px (got "${regionWidth[0]}")`);
+else if (Number(regionWidth[1]) < 1) fail(`${cssPath}: .tdr-region outline is ${regionWidth[1]}px (needs at least 1px)`);
+if (!/vector-effect:\s*non-scaling-stroke/.test(region)) fail(`${cssPath}: .tdr-region needs vector-effect: non-scaling-stroke so 1px stays 1px when the map SVG is scaled`);
 const needsOutline: string[] = [];
 for (const prefix of ["map", "diverge"]) for (let n = 1; n <= 5; n++) {
   const name = `${prefix}-${n}`;
