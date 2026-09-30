@@ -224,7 +224,7 @@ The export request state machine is `QUEUED -> PROCESSING -> READY | FAILED`; re
 
 ### Upload boundary
 
-The UI accepts `.xlsx` only, maximum 4 MB, stores it in the existing private import bucket and queues the dedicated `RETAIL_LINEUP_BOOTSTRAP` source kind. Chunk 6 intentionally does **not** add that source kind to the current `import_runs` constraint or importer handler. That migration/compiler wiring is Chunk 7, so a feature-branch UI upload is not claimed to be operational yet.
+The UI accepts `.xlsx` only, maximum 4 MB, stores it in the existing private import bucket and queues the dedicated `RETAIL_LINEUP_BOOTSTRAP` source kind. Chunk 6 intentionally does **not** add that source kind to the current `import_runs` constraint or source-import handler. That migration/compiler wiring is Chunk 7, so a feature-branch UI upload is not claimed to be operational yet.
 
 This separation is deliberate: Chunk 6 proves the Admin contract without modifying the ordinary ECO/DLT/Vehicle-Specs import worker.
 
@@ -232,7 +232,7 @@ This separation is deliberate: Chunk 6 proves the Admin contract without modifyi
 
 - `d31ef618cb23ddc526dffdf8c1b6888367a50ec9` — workbook export queue migration
 - `f17b75e5d3ab3b863c13e631ea8417c07770a5dd` — read-only workbook generator worker
-- `23c4898c899409e477e98e85db6fbfbfb50bbcde` — generator workflow
+- `23c4898c899409e477e98e85db6fbfb50bbcde` — generator workflow
 - `5ea8377237c626eb3661d456275c5a91a3b3430e` — generator worker tests
 - `bca45fb87f856c3d98cacd1017c573f0eb13d61c` — Admin read models
 - `109082b25311ee5daff9d3cc8dd5c9adb087fe8b` — initial Admin server actions
@@ -246,19 +246,57 @@ This separation is deliberate: Chunk 6 proves the Admin contract without modifyi
 
 ### Validation
 
-The Chunk-6 runtime code head is `fd02219933358ad14805f19f29cc165c08b80816`; commits after it only update this handoff document.
-
-Full Vehicle Master CI at Chunk-6 UI/action code head `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` completed with **1618 passed / 11 failed / 4334 subtests passed**. The 11 failures are exactly the same repository-baseline failures already observed before Chunk 6; no Retail Lineup Bootstrap test appears in the failure list. TypeScript passed and the full Next.js web build passed on the same head.
-
-The later runtime commits after `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` only add the Admin-home link, static safety-contract tests and a small Storage credential-compatibility hardening; they do not change canonical transaction/apply logic.
+Full Vehicle Master CI at Chunk-6 UI/action head `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` completed with **1618 passed / 11 failed / 4334 subtests passed**. The 11 failures are exactly the known repository-baseline failures; no Retail Lineup Bootstrap test is in the failure list. TypeScript and the full Next.js web build also passed on the same head.
 
 No Retail Lineup Bootstrap migration (v53-v55) has been applied to production. No `main` merge and no production canonical write has occurred.
 
-## Next — Chunk 7
+## Chunk 7 — IMPLEMENTED, VALIDATION PENDING
 
-Wire the two server-side execution paths while preserving the already-reviewed object boundary:
+The compile/apply/publish execution paths are now wired on the feature branch. This checkpoint is intentionally **not** a production activation: migrations remain unapplied and the draft PR remains unmerged while CI runs.
 
-1. add `RETAIL_LINEUP_BOOTSTRAP` to the `import_runs` source-kind constraint and make source-import compile the uploaded XLSX into one immutable `PREVIEW_READY` row linked to that import run;
-2. add the approved-plan apply worker that fetches/decodes the stored `compiled_plan`, runs the Chunk-4 transaction, commits exactly those promoted canonical files, publishes the exact commit/release and advances `APPLYING -> WRITTEN_PENDING_PUBLISH -> COMPLETED` (or FAILED/STALE).
+### Uploaded workbook -> immutable Preview
 
-Chunk 7 must include a scheduled recovery sweep so a lost repository-dispatch after Admin confirmation cannot strand an `APPLYING` plan forever.
+Implemented:
+
+- `supabase/migration_v56_retail_lineup_import_kind.sql`
+- `automotive/vehicle_master/tools/retail_lineup_compile_worker.py`
+- source-import workflow routing before the generic importer
+
+`RETAIL_LINEUP_BOOTSTRAP` is now an allowed durable `import_runs.source_kind`. The dedicated worker claims only that kind, downloads the XLSX, calls the existing Chunk-3 compiler against the checked-out canonical tree and persists exactly one PREVIEW_READY row linked by `import_run_id`. It never writes canonical files.
+
+A PROCESSING run is recoverable: if the process died after preview persistence, the unique `import_run_id` link is used as the idempotency key and the import run is completed from that already-persisted preview instead of compiling a second plan.
+
+### Approved Preview -> canonical commit -> serving release
+
+Implemented:
+
+- `automotive/vehicle_master/tools/retail_lineup_apply_worker.py`
+- `.github/workflows/retail-lineup-bootstrap-apply.yml`
+
+The worker fetches the durable row only after Admin has transitioned it to APPLYING, strictly decodes stored `compiled_plan` using the Chunk-5 codec, and executes the Chunk-4 whole-tree transaction. The workbook is never read or recompiled during Apply.
+
+The workflow shares `concurrency.group = canonical-vehicle-input` with the existing canonical writers. It verifies the transaction changed exactly the files it declared, commits/pushes that tree, records the exact commit, publishes that exact revision with the existing canonical publisher, then advances the durable plan to COMPLETED with the release id.
+
+If main moved before push, the workflow rebases and reruns the exact stored plan as an idempotent post-state verification before pushing.
+
+### Recovery
+
+The apply workflow has the same 15-minute scheduled sweep as the source importer. A lost `repository_dispatch` therefore cannot leave an APPLYING plan permanently stranded: the next sweep selects the oldest APPLYING plan and executes it.
+
+For the narrower push-success/publish-failure gap, the sweep also looks for WRITTEN_PENDING_PUBLISH and automatically republishes only when main is still the exact recorded commit. It refuses to force-publish an older revision after main has advanced; migration_v44's publish ordering guard remains authoritative.
+
+### Tests
+
+Implemented:
+
+- `automotive/vehicle_master/tests/test_retail_lineup_chunk7_workers.py`
+
+Coverage includes compile-preview persistence, PROCESSING crash recovery, stored-plan-only Apply, STALE baseline transition, migration/workflow wiring, canonical concurrency and scheduled recovery presence.
+
+Current code/test head before this documentation commit: `625261c430e4c6d331a85f1fa8fbd0759d199bc1`.
+
+CI for that head is queued/running. Do not call Chunk 7 validated until the targeted tests/imports and repository build have completed. No v56 migration has been applied to production, no main merge has occurred, and no production canonical write has occurred.
+
+## Next checkpoint
+
+Wait for the Chunk-7 CI head. If its only full-suite failures are the same known repository-baseline failures, mark Chunk 7 complete. After that, the next work is controlled production integration: apply v53-v56 migrations, merge the reviewed PR, then run a deliberately tiny end-to-end smoke test before using the bootstrap on the full 73-model ICE reset.
