@@ -1,4 +1,14 @@
 {
   "_comment": "ไฟล์ที่ย้ายมาใช้ Design System แล้ว — เพิ่ม path ทีละไฟล์ในแต่ละ PR · scripts/check-design-tokens.ts จะตรวจเข้มเฉพาะไฟล์ในรายการนี้",
-  "strict": ["app/semantic-tokens.css"]
+  "strict": [
+    "app/semantic-tokens.css",
+    "app/shell.css",
+    "app/layout.tsx",
+    "components/Header.tsx",
+    "components/Footer.tsx",
+    "components/NavLinks.tsx",
+    "components/MobileNav.tsx",
+    "components/ThemeToggle.tsx",
+    "components/BottomBar.tsx"
+  ]
 }

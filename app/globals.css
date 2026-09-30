@@ -47,6 +47,11 @@ body.no-copy { -webkit-user-select: none; user-select: none; }
 body.no-copy input, body.no-copy textarea {
   -webkit-user-select: text; user-select: text;
 }
+/* The shell (header, footer, bottom bar) follows the theme. Page content stays light until a page
+   migrates: a migrated page wraps itself in .designPage, which lifts these two lines for it.
+   --ink is the one variable that both globals.css and tokens.css declare (tokens.css goes dark), and
+   body's colour is inherited as a computed value, so the frame restates the text colour as well. */
+.pageFrame:not(:has(.designPage)) { color-scheme: light; --ink: #101114; color: var(--ink); }
 .pageFrame { width: min(1460px, calc(100% - 36px)); margin: 0 auto; background: var(--white); min-height: 100vh; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 main { padding: 0 var(--pagePad) 68px; }
 .siteHeader { border-bottom: 4px solid var(--red); padding: 19px var(--pagePad) 0; background: var(--white); }
