@@ -1,75 +1,90 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTeasers } from "@/lib/canonical-data";
-import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
+import { Card, CardHead, Chip } from "@/components/design";
+import { CompareToggle } from "@/components/models/CompareTray";
+import { ModelCard } from "@/components/models/ModelCard";
+import { BlockEmpty } from "@/components/models/states";
+import { getCanonicalHistoricalTrims, getCanonicalModelBundle, getCanonicalRelatedModels } from "@/lib/canonical-data";
+import { getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
-import { displayName, initials } from "@/lib/display-name";
-import { trimLocalId } from "@/lib/trim-editor-state";
-import { trimSummarySpecs } from "@/lib/model-trim-summary";
+import { familyOfBody } from "@/lib/body-families";
+import { displayName } from "@/lib/display-name";
+import { formatNumber } from "@/lib/design/format";
 import { modelRangeSummary, preferredRangeForTrim } from "@/lib/model-range-summary";
+import { trimSummarySpecs } from "@/lib/model-trim-summary";
+import { POWERTRAIN_LABEL, bahtRangeText, pictureCredit } from "@/lib/models/list";
+import { presentSpecText, tokenLabel } from "@/lib/models/spec-display";
+import { formatThaiDate } from "@/lib/models/trim-specs";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
+import { trimLocalId } from "@/lib/trim-editor-state";
 
-function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
-function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
-/** A price range carries one ฿, not one per end. */
-function bahtRange(values: number[]) {
-  if (!values.length) return null;
-  const min = Math.min(...values), max = Math.max(...values);
-  return min === max ? `฿${min.toLocaleString()} – ${max.toLocaleString()}`.replace(` – ${max.toLocaleString()}`, "") : `฿${min.toLocaleString()} – ${max.toLocaleString()}`;
-}
+const baht = (n: unknown) => (Number(n) > 0 ? `฿${Number(n).toLocaleString("en-US")}` : null);
+const launch = (r: any) => [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null;
+/** Only http(s) links are ever rendered as links. */
+const safeUrl = (value: unknown) => (/^https?:\/\//i.test(String(value ?? "")) ? String(value) : null);
+
 function ptSummary(p: any) {
   const b: string[] = [];
-  if (p.displacement_cc) b.push(`${Number(p.displacement_cc).toLocaleString()} cc`);
+  if (p.displacement_cc) b.push(`${Number(p.displacement_cc).toLocaleString("en-US")} cc`);
   if (p.battery_capacity_kwh) b.push(`${p.battery_capacity_kwh} kWh${p.battery_chemistry ? ` ${p.battery_chemistry}` : ""}`);
   if (p.powertrain_type) b.push(p.powertrain_type);
   if (p.horsepower_ps) b.push(`${p.horsepower_ps} PS`);
   return b.join(" · ") || p.label || "Powertrain";
 }
 
-/** One trim row. Shared by the current and the discontinued list. */
-function TrimRow({ t, ptById, specFields, muted, slug }: {
-  t: any;
-  ptById: Map<any, any>;
-  specFields: any[];
-  muted?: boolean;
-  slug: string;
-}) {
+/** One current trim as an accordion row: name, powertrain, declared range, list price (a promotion only adds a tag;
+ *  the list price stays the primary figure). Opened, it shows six summary specs, the description, active campaigns
+ *  with their conditions and source, and the link to the full spec page. */
+function TrimRow({ t, ptById, specFields, slug }: { t: any; ptById: Map<any, any>; specFields: any[]; slug: string }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
+  const ends = offers.map((o: any) => String(o.valid_to || "")).filter(Boolean).sort()[0];
   const summarySpecs = trimSummarySpecs(t, specFields, 6);
-  const publishedRange = preferredRangeForTrim(t);
+  const range = preferredRangeForTrim(t);
+  const rangeSource = safeUrl(t.range_source_url);
   return (
-    <details className={muted ? "sfTrimRow sfDiscontinued" : "sfTrimRow"}>
+    <details className="tdr-models-trim">
       <summary>
-        <div>
-          <h3>{t.name}</h3>
-          <span>{linked.map((p: any) => ptSummary(p)).join(" / ") || (muted ? "เลิกจำหน่ายแล้ว" : "")}</span>
-        </div>
-        <div className="sfTrimNums">
-          {publishedRange ? <span>{publishedRange.value.toLocaleString()} km {publishedRange.cycle}</span> : null}
-          {price ? <strong>{price}</strong> : <span className="sfMissing">ไม่ระบุราคา</span>}
-        </div>
+        <span className="tdr-models-trim__name">
+          <b>{t.name}</b>
+          <small>{linked.map((p: any) => ptSummary(p)).join(" / ")}</small>
+        </span>
+        <span className="tdr-models-trim__nums">
+          {range ? <span className="tdr-models-mono">{range.value.toLocaleString("en-US")} กม. {tokenLabel(range.cycle)}</span> : null}
+          {price ? <strong className="tdr-models-mono">{price}</strong> : <span className="tdr-models-miss">ไม่ระบุราคา</span>}
+          {offers.length ? <span className="tdr-models-promo">ราคาโปรโมชัน{ends ? ` · ถึง ${formatThaiDate(ends) || ends}` : ""}</span> : null}
+        </span>
       </summary>
-      <div className="sfTrimBody">
-        {summarySpecs.length ? <div className="sfSpecGrid">
-          {summarySpecs.map((spec) => <div key={spec.key}><small>{spec.label}</small><b>{spec.value}</b></div>)}
-        </div> : null}
-        {t.description ? <p>{t.description}</p> : summarySpecs.length ? null : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
-        {offers.length ? <div className="sfRows">
-          {offers.map((offer: any) => <div className="sfRow" key={`${offer.campaign_id}:${offer.option_id}`}>
-            <span>
-              <b>{offer.option_label || offer.campaign_name}</b><br />
-              <small>{offer.conditions?.text || "โปรดตรวจสอบเงื่อนไขกับผู้จำหน่าย"}{offer.valid_to ? ` · ถึง ${offer.valid_to}` : ""}</small>
-            </span>
-            <b>{baht(offer.amount_thb) || `ลด ${baht(offer.discount_thb)}`}</b>
-          </div>)}
-        </div> : null}
-        <Link className="sfTrimMore" href={`/models/${slug}/${encodeURIComponent(trimLocalId(t.canonical_id || t.id))}`}>
-          ดูสเปกทั้งหมดของรุ่นย่อยนี้ →
-        </Link>
-        {t.range_source_url ? <a className="sfSourceLink" href={t.range_source_url} target="_blank" rel="noreferrer">แหล่งข้อมูล Range ↗</a> : null}
-        {offers.map((offer: any) => offer.source_ref ? <a className="sfSourceLink" key={offer.source_ref} href={offer.source_ref} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null)}
+      <div className="tdr-models-trim__body">
+        {summarySpecs.length ? (
+          <dl className="tdr-models-specgrid">
+            {summarySpecs.map((spec) => <div key={spec.key}><dt>{presentSpecText(spec.label)}</dt><dd>{presentSpecText(spec.value)}</dd></div>)}
+          </dl>
+        ) : null}
+        {t.description ? <p>{t.description}</p> : summarySpecs.length ? null : <p className="tdr-models-miss">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
+        {offers.length ? (
+          <ul className="tdr-models-offers">
+            {offers.map((offer: any) => {
+              const src = safeUrl(offer.source_ref);
+              const amount = baht(offer.amount_thb) || (baht(offer.discount_thb) ? `ลด ${baht(offer.discount_thb)}` : null);
+              return (
+                <li key={`${offer.campaign_id}:${offer.option_id}`}>
+                  <span>
+                    <b>{offer.option_label || offer.campaign_name}</b>
+                    <small>{offer.conditions?.text || "โปรดตรวจสอบเงื่อนไขกับผู้จำหน่าย"}{offer.valid_to ? ` · ถึง ${formatThaiDate(offer.valid_to) || offer.valid_to}` : ""}</small>
+                    {src ? <a href={src} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null}
+                  </span>
+                  {amount ? <b className="tdr-models-mono">{amount}</b> : null}
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+        <p className="tdr-models-trim__links">
+          <Link href={`/models/${slug}/${encodeURIComponent(trimLocalId(t.canonical_id || t.id))}`}>ดูสเปกทั้งหมดของรุ่นย่อยนี้ →</Link>
+          {rangeSource ? <a href={rangeSource} target="_blank" rel="noreferrer">แหล่งข้อมูลระยะทาง ↗</a> : null}
+        </p>
       </div>
     </details>
   );
@@ -80,184 +95,166 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
   const r: any = await getCanonicalModelBundle(slug);
   if (!r) notFound();
 
-  const [events, programs, related, teasers] = await Promise.all([
-    r.editorial_id ? getRelatedEvents({ modelId: r.editorial_id }, 8) : [],
-    r.editorial_id ? getProductionProgramsByModel(r.editorial_id) : [],
+  // The three optional blocks fail open (their absence never blanks the page); the model itself throws to error.tsx.
+  const [programs, related, historical] = await Promise.all([
+    r.editorial_id ? getProductionProgramsByModel(r.editorial_id).catch(() => []) : [],
     getCanonicalRelatedModels(r, 6),
-    getModelMarketTeasers(r.id)
+    getCanonicalHistoricalTrims(r.id).catch(() => []),
   ]);
   const ptById = new Map((r.powertrains_detail || []).map((p: any) => [p.id, p]));
   const specFields = loadSpecFieldRegistry(new Date().getFullYear());
-  const allTrims = (r.trims || []) as any[];
-  const currentTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() !== "discontinued");
-  const pastTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() === "discontinued");
+  const currentTrims = (r.trims || []) as any[];
 
-  const trimPrices = currentTrims.map((t: any) => Number(t.price_baht)).filter((n: number) => Number.isFinite(n) && n > 0);
-  const heroPrice = bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
-    ? bahtRange([r.retail_price_min, r.retail_price_max].filter((n: any) => Number(n) > 0).map(Number))
-    : null);
+  const trimPrices = currentTrims.map((t) => Number(t.price_baht)).filter((n) => Number.isFinite(n) && n > 0);
+  const heroPrice = trimPrices.length
+    ? bahtRangeText(Math.min(...trimPrices), Math.max(...trimPrices))
+    : bahtRangeText(r.retail_price_min, r.retail_price_max);
   const heroRange = modelRangeSummary(currentTrims);
   const brand = displayName(r.brands);
+  const name = displayName(r);
+  const picture = pictureCredit(r);
+  const body = familyOfBody(r.body_type)?.label || bodyLabel(r.body_type);
+  const chips = [
+    r.segment && String(r.segment).toUpperCase() !== "UNKNOWN" ? `Segment ${r.segment}` : null,
+    ...(r.powertrains || []).map((p: string) => POWERTRAIN_LABEL[p] || p),
+    r.production_type && String(r.production_type).toUpperCase() !== "UNKNOWN" ? r.production_type : null,
+    r.seats ? `${r.seats} ที่นั่ง` : null,
+  ].filter(Boolean) as string[];
 
   const dimensions = [
-    r.length_mm ? { k: "ความยาว", v: `${Number(r.length_mm).toLocaleString()} mm` } : null,
-    r.width_mm ? { k: "ความกว้าง", v: `${Number(r.width_mm).toLocaleString()} mm` } : null,
-    r.wheelbase_mm ? { k: "ฐานล้อ", v: `${Number(r.wheelbase_mm).toLocaleString()} mm` } : null,
+    r.length_mm ? { k: "ความยาว", v: `${formatNumber(r.length_mm)} mm` } : null,
+    r.width_mm ? { k: "ความกว้าง", v: `${formatNumber(r.width_mm)} mm` } : null,
+    r.wheelbase_mm ? { k: "ฐานล้อ", v: `${formatNumber(r.wheelbase_mm)} mm` } : null,
     r.seats ? { k: "จำนวนที่นั่ง", v: `${r.seats} ที่นั่ง` } : null,
-    r.payload_capacity_kg ? { k: "Payload", v: `${Number(r.payload_capacity_kg).toLocaleString()} kg` } : null,
+    r.payload_capacity_kg ? { k: "Payload", v: `${formatNumber(r.payload_capacity_kg)} kg` } : null,
+    launch(r) ? { k: "เปิดตัวไทย", v: launch(r)! } : null,
+    r.production_country ? { k: "ประเทศที่ผลิต", v: r.production_country } : null,
+    r.production_type ? { k: "รูปแบบการนำเข้า/ประกอบ", v: r.production_type } : null,
   ].filter(Boolean) as { k: string; v: string }[];
+  const powertrains = (r.powertrains_detail || []) as any[];
 
-  return <>
-    {/* ---------- Zone A · สำหรับผู้ซื้อ ---------- */}
-    <section className="sfHero">
-      <div className="sfHeroSlot">
-        {r.image_url ? <img src={r.image_url} alt={displayName(r)} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(r)}</b></>}
-      </div>
-      <div className="sfHeroCopy">
-        <div className="sfEyebrow">{[brand, bodyLabel(r.body_type)].filter(Boolean).join(" · ") || "MODEL"}</div>
-        <h1>{displayName(r)}</h1>
-        
-        <div className="sfBadges">
-          {[r.segment, ...(r.powertrains || []), r.production_type, r.production_country, r.seats ? `${r.seats} ที่นั่ง` : null]
-            .filter((x) => x && String(x).toUpperCase() !== "UNKNOWN")
-            .map((x: any) => <span key={String(x)}>{String(x)}</span>)}
-        </div>
-        <div className="sfKeyBlock">
+  return <div className="tdr-wrap tdr-models-detail">
+    <nav className="tdr-models-crumbs" aria-label="เส้นทาง">
+      <ol>
+        <li><Link href="/models">Vehicle Database</Link></li>
+        {r.brands?.slug ? <li><Link href={`/brands/${r.brands.slug}`}>{brand}</Link></li> : brand ? <li>{brand}</li> : null}
+        <li aria-current="page">{name}</li>
+      </ol>
+    </nav>
+
+    <section className="tdr-models-hero" aria-labelledby="model-h1">
+      <figure className="tdr-models-hero__img">
+        {picture ? <img src={picture.src} alt={`${brand} ${name}`} /> : <span>{brand}<br /><b>{name}</b></span>}
+        {picture ? <figcaption>ภาพ: <a href={picture.href} target="_blank" rel="noreferrer">{picture.host} ↗</a></figcaption> : null}
+      </figure>
+      <div className="tdr-models-hero__copy">
+        <div className="tdr-eyebrow">{[brand, body].filter(Boolean).join(" · ") || "MODEL"}</div>
+        <h1 id="model-h1" className="tdr-models-h1">{name}</h1>
+        {chips.length ? <div className="tdr-chips">{chips.map((c) => <Chip key={c}>{c}</Chip>)}</div> : null}
+        <dl className="tdr-models-keyblock">
           <div>
-            <small>ราคาปัจจุบัน</small>
-            {heroPrice ? <strong>{heroPrice}</strong> : <strong className="sfMissing">ยังไม่ประกาศราคา</strong>}
-            <em>{trimPrices.length ? "คำนวณจากรุ่นย่อยที่จำหน่ายอยู่" : ""}</em>
+            <dt>ราคาปัจจุบัน</dt>
+            <dd>{heroPrice ? <strong className="tdr-models-mono">{heroPrice}</strong> : <strong className="tdr-models-miss">ยังไม่ประกาศราคา</strong>}</dd>
+            {trimPrices.length ? <small>คำนวณจากรุ่นย่อยที่จำหน่ายอยู่</small> : null}
           </div>
-          <div className={heroRange ? "mark" : undefined}>
-            <small>ระยะทางที่ผู้ผลิตประกาศ</small>
-            {heroRange ? <strong>{heroRange.range}</strong> : <strong className="sfMissing">ยังไม่มีข้อมูล</strong>}
-            <em>{heroRange ? heroRange.cycle : ""}</em>
-          </div>
+          {heroRange ? (
+            <div>
+              <dt>ระยะทางที่ผู้ผลิตประกาศ</dt>
+              <dd><strong className="tdr-models-mono">{presentSpecText(heroRange.range)}</strong></dd>
+              <small>{presentSpecText(heroRange.cycle)}</small>
+            </div>
+          ) : null}
+        </dl>
+        <div className="tdr-models-hero__cta">
+          <CompareToggle variant="button" model={{ id: r.id, name, brand }} />
         </div>
       </div>
     </section>
 
     {r.consumer_description ? (
-      <section className="sfBlock">
-        <div className="sfEyebrow ink">ข้อมูลรุ่น</div>
-        <p className="sfContext" style={{ marginTop: 12 }}>{r.consumer_description}</p>
+      <section className="tdr-models-blk" aria-label="ข้อมูลรุ่น">
+        <p className="tdr-models-context">{r.consumer_description}</p>
       </section>
     ) : null}
 
-    <section className="sfBlock">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow">รุ่นย่อยและราคา</div><h2>รุ่นย่อยที่จำหน่าย</h2></div>
-        <span>{currentTrims.length} Trim</span>
+    <section className="tdr-models-blk" aria-labelledby="model-trims">
+      <div className="tdr-models-sechead">
+        <div><div className="tdr-eyebrow">รุ่นย่อยและราคา</div><h2 id="model-trims">รุ่นย่อยที่จำหน่าย</h2></div>
+        <span className="tdr-models-mono">{formatNumber(currentTrims.length)} Trim</span>
       </div>
       {currentTrims.length
-        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} specFields={specFields} slug={slug} />)}</div>
-        : <div className="sfEmpty"><b>ยังไม่มีรุ่นย่อยในฐานข้อมูล</b></div>}
-      {pastTrims.length ? (
-        <details style={{ marginTop: 18 }}>
-          <summary className="sfEyebrow ink" style={{ cursor: "pointer", padding: "10px 0" }}>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({pastTrims.length})</summary>
-          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} specFields={specFields} slug={slug} muted />)}</div>
+        ? <div className="tdr-models-trims">{currentTrims.map((t) => <TrimRow key={t.id} t={t} ptById={ptById} specFields={specFields} slug={slug} />)}</div>
+        : <BlockEmpty title="ยังไม่มีรุ่นย่อยในฐานข้อมูล" />}
+      {historical.length ? (
+        <details className="tdr-models-past">
+          <summary>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({formatNumber(historical.length)})</summary>
+          <ul>
+            {historical.map((t: any) => (
+              <li key={t.id}><b>{t.name}</b>{t.powertrain ? <small>{POWERTRAIN_LABEL[t.powertrain] || t.powertrain}</small> : null}<span className="tdr-models-miss">เลิกจำหน่ายแล้ว</span></li>
+            ))}
+          </ul>
         </details>
       ) : null}
     </section>
 
-    {/* ---------- Zone B · ข้อมูลทางเทคนิค ---------- */}
-    <section className="sfTechZone sfBleed">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">ข้อมูลทางเทคนิค</div><h2>ข้อมูลทางเทคนิค</h2></div>
-      </div>
-      <div className="sfIndGrid">
+    <section className="tdr-models-blk" aria-labelledby="model-tech">
+      <div className="tdr-models-sechead"><div><div className="tdr-eyebrow">ข้อมูลทางเทคนิค</div><h2 id="model-tech">ข้อมูลทางเทคนิค</h2></div></div>
+      <div className="tdr-models-twocol">
         <div>
-          <h3 style={{ margin: "0 0 4px", fontSize: 16, fontWeight: 800 }}>ขนาดและความจุ</h3>
-          <div className="sfRows">
-            {dimensions.length
-              ? dimensions.map((d) => <div className="sfRow" key={d.k}><span>{d.k}</span><b>{d.v}</b></div>)
-              : <div className="sfRow"><span>ขนาดตัวถัง</span><b className="sfMissing">ยังไม่มีข้อมูล</b></div>}
-            <div className="sfRow"><span>เปิดตัวไทย</span>{launch(r) ? <b>{launch(r)}</b> : <b className="sfMissing">ไม่ระบุ</b>}</div>
-            <div className="sfRow"><span>ประเทศที่ผลิต</span>{r.production_country ? <b>{r.production_country}</b> : <b className="sfMissing">ไม่ระบุ</b>}</div>
-            <div className="sfRow"><span>รูปแบบการนำเข้า/ประกอบ</span>{r.production_type ? <b>{r.production_type}</b> : <b className="sfMissing">ไม่ระบุ</b>}</div>
-          </div>
+          <h3>ขนาดและความจุ</h3>
+          {dimensions.length
+            ? <dl className="tdr-models-rows">{dimensions.map((d) => <div key={d.k}><dt>{d.k}</dt><dd className="tdr-models-mono">{d.v}</dd></div>)}</dl>
+            : <BlockEmpty title="ยังไม่มีข้อมูลขนาดตัวถัง" />}
         </div>
         <div>
-          <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 800 }}>ระบบขับเคลื่อน</h3>
-          {(r.powertrains_detail || []).length
-            ? (r.powertrains_detail as any[]).map((p: any) => (
-              <details className="sfPtCard" key={p.id}>
-                <summary><b>{p.label || ptSummary(p)}</b><span>{ptSummary(p)}</span></summary>
-                <dl>
-                  <div><dt>ประเภท</dt><dd>{p.powertrain_type || "—"}</dd></div>
-                  {p.engine_code ? <div><dt>Engine code</dt><dd>{p.engine_code}</dd></div> : null}
-                  {p.motor_output_kw ? <div><dt>Motor output</dt><dd>{p.motor_output_kw} kW</dd></div> : null}
-                  {p.torque_nm ? <div><dt>แรงบิด</dt><dd>{p.torque_nm} Nm</dd></div> : null}
-                  {p.transmission ? <div><dt>Transmission</dt><dd>{p.transmission}</dd></div> : null}
-                  {p.drivetrain ? <div><dt>Drivetrain</dt><dd>{p.drivetrain}</dd></div> : null}
-                </dl>
-              </details>
-            ))
-            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อน</b></div>}
+          <h3>ระบบขับเคลื่อน</h3>
+          {powertrains.length ? powertrains.map((p) => (
+            <details className="tdr-models-pt" key={p.id}>
+              <summary><b>{p.label || ptSummary(p)}</b><span>{ptSummary(p)}</span></summary>
+              <dl>
+                {p.powertrain_type ? <div><dt>ประเภท</dt><dd>{p.powertrain_type}</dd></div> : null}
+                {p.engine_code ? <div><dt>Engine code</dt><dd>{p.engine_code}</dd></div> : null}
+                {p.motor_output_kw ? <div><dt>Motor output</dt><dd>{p.motor_output_kw} kW</dd></div> : null}
+                {p.torque_nm ? <div><dt>แรงบิด</dt><dd>{p.torque_nm} Nm</dd></div> : null}
+                {p.transmission ? <div><dt>Transmission</dt><dd>{p.transmission}</dd></div> : null}
+                {p.drivetrain ? <div><dt>Drivetrain</dt><dd>{p.drivetrain}</dd></div> : null}
+              </dl>
+            </details>
+          )) : <BlockEmpty title="ยังไม่มีรายละเอียดระบบขับเคลื่อน" />}
         </div>
       </div>
     </section>
 
-    {/* ---------- Zone C · อุตสาหกรรม ---------- */}
-    <section className="sfIndZone sfBleed">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow">ข้อมูลอุตสาหกรรม</div><h2 style={{ color: "#fff" }}>รุ่นนี้ในฐานะสินค้าอุตสาหกรรม</h2></div>
-      </div>
-      <div className="sfIndGrid">
-        
-        <div>
-          <div className="sfEmpty">
-            <b>{teasers.length ? "มีข้อมูลตลาดสำหรับรุ่นนี้" : "ยังไม่มีข้อมูลตลาดที่จับคู่กับรุ่นนี้"}</b>
-            <span>{teasers.length ? `ครอบคลุม ${teasers.length} ช่วงเวลาล่าสุด · เปิดกราฟ แนวโน้ม และ cohort ใน TDR Market` : "สถานะนี้ไม่กระทบราคา สเปก หรือการแสดงรถในแคตตาล็อก"}</span>
-            <Link href="/reports">เปิด TDR Market →</Link>
-          </div>
-        </div>
-      </div>
-      {programs.length ? (
-        <div className="sfBridge">
-          <div>
-            <div className="sfEyebrow">การผลิตในไทย</div>
-            <h3>รุ่นนี้มีข้อมูลการผลิตในประเทศไทย</h3>
-            <p>{programs.map((program: any) => [program.plants?.name_th || program.plants?.name_en, program.status].filter(Boolean).join(" · ")).join(" / ")}</p>
-          </div>
-          <span>ข้อมูลอุตสาหกรรม</span>
-        </div>
-      ) : null}
+    <section className="tdr-models-blk" aria-labelledby="model-market">
+      <div className="tdr-models-sechead"><div><div className="tdr-eyebrow">ตลาด</div><h2 id="model-market">ยอดจดของรุ่นนี้</h2></div></div>
+      {/* Blocker 11: the 12-month line and share belong to the market engine being replaced, and the Pro / non-Pro
+          split is part of that overhaul. Until then this block is fully static: nothing market-related is queried or
+          rendered here, so no market value can reach the DOM for any viewer. */}
+      <Card tone="dashed" className="tdr-models-state">
+        <b className="tdr-card__title">อยู่ระหว่างปรับปรุงระบบวิเคราะห์ตลาด</b>
+        <p className="tdr-models-muted"><Link href="/market">เปิด Automotive Intelligence →</Link></p>
+      </Card>
     </section>
 
-    <section className="sfBlock">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">ข่าวและอัปเดต</div><h2>ข่าวและอัปเดต</h2></div>
-        <Link href="/news">ข่าวทั้งหมด →</Link>
-      </div>
-      {events.length
-        ? <div className="sfNewsList">{events.map((e: any) => <article key={e.id}><time>{e.event_date}</time><div><b>{e.title_th}</b>{e.summary_th || e.source_name ? <p>{e.summary_th || e.source_name}</p> : null}</div></article>)}</div>
-        : <div className="sfEmpty"><b>ยังไม่มีข่าวที่เชื่อมกับรุ่นนี้</b></div>}
-    </section>
+    {programs.length ? (
+      <section className="tdr-models-blk" aria-labelledby="model-plant">
+        <Card>
+          <CardHead title={<span id="model-plant">การผลิตในไทย</span>} />
+          <p className="tdr-models-muted">{programs.map((program: any) => [program.plants?.name_th || program.plants?.name_en, program.status].filter(Boolean).join(" · ")).join(" / ")}</p>
+        </Card>
+      </section>
+    ) : null}
 
     {related.length ? (
-      <section className="sfBlock">
-        <div className="sfZoneHead">
-          <div><div className="sfEyebrow ink">แบรนด์เดียวกัน</div><h2>รถรุ่นอื่นจาก {brand || "แบรนด์เดียวกัน"}</h2></div>
-          {r.brands?.slug ? <Link href={`/brands/${r.brands.slug}`}>ดูทั้งแบรนด์ →</Link> : null}
+      <section className="tdr-models-blk" aria-labelledby="model-related">
+        <div className="tdr-models-sechead">
+          <div><div className="tdr-eyebrow">แบรนด์เดียวกัน</div><h2 id="model-related">รถรุ่นอื่นจาก {brand || "แบรนด์เดียวกัน"}</h2></div>
+          {r.brands?.slug ? <Link className="tdr-models-more" href={`/brands/${r.brands.slug}`}>ดูทั้งแบรนด์ →</Link> : null}
         </div>
-        <div className="sfGrid">
-          {related.map((m: any) => {
-            const meta = [bodyLabel(m.body_type), (m.powertrains || []).join(" / ")].filter(Boolean).join(" · ");
-            const price = bahtRange([m.retail_price_min, m.retail_price_max].filter((n: any) => Number(n) > 0).map(Number));
-            return (
-              <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>
-                <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(m)}</b></>}</div>
-                <div className="sfCardBody">
-                  <h3>{displayName(m)}</h3>
-                  {meta ? <p className="sfCardMeta">{meta}</p> : null}
-                  <div className="sfCardFoot">{price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}</div>
-                </div>
-              </Link>
-            );
-          })}
+        <div className="tdr-models-grid">
+          {related.map((m: any) => <ModelCard key={m.id} r={m} />)}
         </div>
       </section>
     ) : null}
-  </>;
+  </div>;
 }

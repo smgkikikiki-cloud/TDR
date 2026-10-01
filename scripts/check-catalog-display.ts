@@ -106,11 +106,12 @@ check("the logo is linked through tdr_brand_id, not a mutable slug",
   brandsLoader.includes("logoByEditorialId.get(row.tdr_brand_id)"), true);
 check("a missing editorial table leaves the catalogue standing",
   brandsLoader.includes("if (!editorialError)"), true);
-for (const page of ["app/brands/page.tsx", "app/brands/[slug]/page.tsx",
-                    "app/models/page.tsx"]) {
+for (const page of ["app/brands/page.tsx", "app/brands/[slug]/page.tsx"]) {
   check(`${page} still falls back to initials`,
     /logo_url \? <img[^>]*\/> : <span>\{initials\(/.test(fs.readFileSync(page, "utf8")), true);
 }
+// /models is a migrated design page (PR 6): brands are text, never logos (DESIGN §9), so it renders no logo at all.
+check("app/models/page.tsx renders no car-brand logo", /logo_url|<img/.test(fs.readFileSync("app/models/page.tsx", "utf8")), false);
 const homePage = fs.readFileSync("app/page.tsx", "utf8");
 check("app/page.tsx still falls back to initials",
   homePage.includes("resolveBrandLogo(brand.slug, brand.logo_url)")

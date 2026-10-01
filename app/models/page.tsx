@@ -1,235 +1,255 @@
-import { Fragment } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
-import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
-import { displayName, initials } from "@/lib/display-name";
-import { byRelevance } from "@/lib/relevance";
-import { FilterDisclosure } from "@/components/FilterDisclosure";
-import { BODY_LABEL, bodyLabel } from "@/lib/body-labels";
+import { Button, Chip, KpiCard, PageHead, TextInput } from "@/components/design";
+import { BodyTypeTile } from "@/components/models/BodyTypeTile";
+import { ListSkeleton } from "@/components/models/ListSkeleton";
+import { FilterRail } from "@/components/models/FilterRail";
+import { ModelCard } from "@/components/models/ModelCard";
+import { SortSelect } from "@/components/models/SortSelect";
+import { BlockEmpty, BlockError } from "@/components/models/states";
+import { getCanonicalBrands, getCanonicalModels, getCurrentTrimCountsByModel } from "@/lib/canonical-data";
+import { BODY_LABEL } from "@/lib/body-labels";
+import {
+  BODY_FAMILIES, bodyParam, familyForSelection, familyParam, parseBodyParam, toggleBodyValue,
+} from "@/lib/body-families";
 import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
+import { displayName } from "@/lib/display-name";
+import { formatNumber } from "@/lib/design/format";
+import {
+  POWERTRAIN_OPTION_LABEL, PRODUCTION_LABEL, facetHit, matchesFilters, modelsHref, normalizeParams, pageWindow,
+  parsePage, parseSort, sortModels, visibleOption, type FilterKey, type ModelListRow, type ModelsParams,
+} from "@/lib/models/list";
 
-type Sp = Record<string, string | undefined>;
-type Opt = { value: string; label: string; group?: string };
+export const metadata = { title: "Vehicle Database · รถที่จำหน่ายในประเทศไทย" };
 
-const opts = (values: string[]): Opt[] => values.map((v) => ({ value: v, label: v }));
+type Opt = { value: string; label: string };
+const opts = (values: string[], labels: Record<string, string> = {}): Opt[] => values.map((v) => ({ value: v, label: labels[v] || v }));
 
-/** Body type is the entry point Thai buyers actually use, so it leads the rail,
- *  carries Thai labels and is grouped by family. The stored values are the
- *  unchanged body_type strings — only the labels and the order are new. */
-const BODY_OPTIONS: Opt[] = [
-  { value: "SEDAN", label: "ซีดาน", group: "รถเก๋ง" },
-  { value: "HATCHBACK", label: "แฮทช์แบ็ก", group: "รถเก๋ง" },
-  { value: "COUPE", label: "คูเป้", group: "รถเก๋ง" },
-  { value: "CROSSOVER", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },
-  { value: "PPV", label: "PPV พื้นฐานกระบะ", group: "SUV" },
-  { value: "OFFROAD", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },
-  { value: "PICKUP", label: "กระบะ", group: "กระบะ · รถตู้ · MPV" },
-  { value: "MPV", label: "MPV", group: "กระบะ · รถตู้ · MPV" },
-  { value: "WAGON", label: "แวกอน", group: "กระบะ · รถตู้ · MPV" },
-  { value: "VAN", label: "รถตู้", group: "กระบะ · รถตู้ · MPV" },
-  { value: "TRUCK", label: "รถบรรทุก", group: "กระบะ · รถตู้ · MPV" },
-];
+/** Individual body values for the rail (a family chip above sets several at once; these tick one at a time). */
+const BODY_OPTIONS: Opt[] = [...BODY_FAMILIES.flatMap((f) => f.values), "TRUCK"]
+  .map((v) => ({ value: v, label: BODY_LABEL[v] || v }));
 
-/** The quick row: every body type, ordered by how often it is what a Thai
- *  buyer came here for. Each chip sets the same single body value the rail
- *  sets — nothing here filters across several values. */
-const BODY_QUICK = ["PICKUP", "PPV", "CROSSOVER", "OFFROAD", "SEDAN", "HATCHBACK", "MPV", "VAN", "COUPE"];
-
-const FACETS: { key: string; label: string; note?: string; options: Opt[] }[] = [
+const FACETS: { key: Exclude<FilterKey, "brand">; label: string; note?: string; options: Opt[] }[] = [
   { key: "body", label: "ประเภทตัวถัง", options: BODY_OPTIONS },
-  { key: "powertrain", label: "ระบบขับเคลื่อน", options: opts(["ICE", "HEV", "PHEV", "REEV", "BEV"]) },
+  { key: "powertrain", label: "ระบบขับเคลื่อน", options: opts(["ICE", "BEV", "HEV", "PHEV", "REEV"], POWERTRAIN_OPTION_LABEL) },
   { key: "segment", label: "ขนาดรถ (เก๋ง / SUV)", note: "สเกล A–E ใช้กับรถนั่ง กระบะและรถตู้ไม่มีค่านี้", options: opts(["A", "B", "C", "D", "E"]) },
   { key: "position", label: "ตำแหน่งตลาด", options: opts(["Mass", "Premium", "Luxury"]) },
-  { key: "production", label: "แหล่งผลิต", options: opts(["CBU", "CKD", "SKD"]) },
+  { key: "production", label: "แหล่งผลิต", options: opts(["CKD", "SKD", "CBU"], PRODUCTION_LABEL) },
 ];
+const FILTER_LABEL: Record<FilterKey, string> = { brand: "แบรนด์", body: "ตัวถัง", powertrain: "ขับเคลื่อน", segment: "ขนาดรถ", position: "ตำแหน่ง", production: "แหล่งผลิต" };
+const BRAND_RAIL_LIMIT = 10;
 
-const FILTER_LABEL: Record<string, string> = { brand: "แบรนด์", body: "ตัวถัง", powertrain: "ขับเคลื่อน", segment: "ขนาดรถ", position: "ตำแหน่ง", production: "แหล่งผลิต" };
-
-function valueLabel(key: string, value: string) {
-  return key === "body" ? BODY_LABEL[value] || value : value;
-}
-
-/** The catalog filter predicate. `skip` leaves one facet out so its option counts
- *  can be read against every OTHER active filter. Same comparisons as before. */
-function matches(r: any, sp: Sp, skip?: string) {
-  return (skip === "brand" || !sp.brand || r.brands?.slug === sp.brand)
-    && (skip === "segment" || !sp.segment || r.segment === sp.segment)
-    && (skip === "body" || !sp.body || r.body_type === sp.body)
-    && (skip === "position" || !sp.position || r.market_position === sp.position)
-    && (skip === "powertrain" || !sp.powertrain || (r.powertrains || []).includes(sp.powertrain))
-    && (skip === "production" || !sp.production || r.production_type === sp.production);
-}
-
-function facetHit(r: any, key: string, value: string) {
-  if (key === "body") return r.body_type === value;
-  if (key === "powertrain") return (r.powertrains || []).includes(value);
-  if (key === "segment") return r.segment === value;
-  if (key === "position") return r.market_position === value;
-  if (key === "production") return r.production_type === value;
-  return false;
-}
-
-function href(sp: Sp, key: string, value: string | null) {
-  const next = new URLSearchParams();
-  for (const [k, v] of Object.entries(sp)) if (v && k !== key) next.set(k, v);
-  if (value) next.set(key, value);
-  const q = next.toString();
-  return q ? `/models?${q}` : "/models";
-}
-
-function baht(min: any, max: any) {
-  const f = (n: number) => Number(n).toLocaleString();
-  if (!min && !max) return null;
-  return min && max && min !== max ? `฿${f(min)}–${f(max)}` : `฿${f(min || max)}`;
-}
-
-function Card({ r }: { r: any }) {
-  const brand = displayName(r.brands);
-  const name = displayName(r);
-  const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
-  const price = baht(r.retail_price_min, r.retail_price_max);
-  const local = r.production_type === "CKD" || r.production_type === "SKD";
+function Head({ lead, aside }: { lead?: string; aside?: React.ReactNode }) {
   return (
-    <Link className="sfCard" href={`/models/${r.slug}`}>
-      <div className="sfSlot">
-        {r.image_url ? <img src={r.image_url} alt={name} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{name}</b></>}
-      </div>
-      <div className="sfCardBody">
-        <div className="sfEyebrow">{brand || " "}</div>
-        <h3>{name}</h3>
-        {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
-        <div className="sfCardFoot">
-          {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
-          {local ? <span className="sfLocal">ประกอบไทย</span> : r.production_type === "CBU" ? <span className="sfImported">นำเข้า CBU</span> : null}
-        </div>
-      </div>
-    </Link>
+    <PageHead
+      eyebrow="Vehicle Database"
+      eyebrowLang="en"
+      title={<>รถที่จำหน่ายใน<span className="tdr-models-hl">ประเทศไทย</span></>}
+      lead={lead}
+      aside={aside}
+    />
   );
 }
 
-export default async function ModelsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
-  const sp = await searchParams;
-  const [brands, all] = await Promise.all([getCanonicalBrands(150), getCanonicalModels(600)]);
-  const current = (all as any[]).filter((r) => isCurrentLifecycleStatus(r.status));
-  // Public catalogue relevance uses recency only. Registration-derived
-  // ordering belongs to the entitled market tools.
-  const models = byRelevance(current.filter((r) => matches(r, sp)), new Map());
+function SearchBox() {
+  return (
+    <form className="tdr-models-search" action="/search" method="get" role="search">
+      <TextInput type="search" name="q" placeholder="ค้นหารุ่นรถหรือแบรนด์" aria-label="ค้นหารุ่นรถหรือแบรนด์" />
+      <Button type="submit" variant="secondary">ค้นหา</Button>
+    </form>
+  );
+}
+
+function Tabs({ sp, tab }: { sp: ModelsParams; tab: "sold" | "upcoming" }) {
+  return (
+    <nav className="tdr-models-tabs" aria-label="สถานะรุ่น">
+      <Link prefetch={false} href={modelsHref({ sort: sp.sort }, {})} aria-current={tab === "sold" ? "page" : undefined}>ขายแล้ว</Link>
+      <Link prefetch={false} href="/models?tab=upcoming" aria-current={tab === "upcoming" ? "page" : undefined}>กำลังมา</Link>
+    </nav>
+  );
+}
+
+export default async function ModelsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const sp = normalizeParams(await searchParams);
+  if (sp.tab === "upcoming") return <UpcomingTab sp={sp} />;
+  return <Suspense key={JSON.stringify(sp)} fallback={<ListSkeleton />}><SoldTab sp={sp} /></Suspense>;
+}
+
+function UpcomingTab({ sp }: { sp: ModelsParams }) {
+  const tab = "upcoming" as const;
+  // PR 12 (Upcoming, P16) owns this tab's data. Until it lands there is no query, no card and no count here:
+  // only the integration point, an honest empty state.
+  return <div className="tdr-wrap">
+    <Head aside={<SearchBox />} />
+    <Tabs sp={sp} tab={tab} />
+    <div data-upcoming-owner="PR-12">
+      <BlockEmpty title="กำลังมา" text="ยังไม่มีข้อมูลรถที่กำลังมา" />
+    </div>
+  </div>;
+}
+
+async function SoldTab({ sp }: { sp: ModelsParams }) {
+  const tab = "sold" as const;
+
+  let all: any[], brands: any[], trimCounts: Map<string, number>;
+  try {
+    [brands, all, trimCounts] = await Promise.all([getCanonicalBrands(150), getCanonicalModels(600), getCurrentTrimCountsByModel()]);
+  } catch {
+    return <div className="tdr-wrap">
+      <Head aside={<SearchBox />} />
+      <Tabs sp={sp} tab={tab} />
+      <BlockError title="ฐานข้อมูลรถยนต์" retryHref={modelsHref(sp, {})} />
+    </div>;
+  }
+
+  const current = (all as (ModelListRow & { status?: unknown; id: string })[]).filter((r) => isCurrentLifecycleStatus(r.status));
+  const sort = parseSort(sp.sort);
+  const page = parsePage(sp.page);
+  const selectedBody = parseBodyParam(sp.body);
+  const filtered = sortModels(current.filter((r) => matchesFilters(r, sp)), sort);
+  const win = pageWindow(filtered, page);
 
   const brandCount = new Set(current.map((r) => r.brands?.slug).filter(Boolean)).size;
+  const trimTotal = current.reduce((n, r) => n + (trimCounts.get(r.id) || 0), 0);
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
   const imported = current.filter((r) => r.production_type === "CBU").length;
-  const activeBrand = brands.find((b: any) => b.slug === sp.brand);
-  const activeFilters = Object.entries(sp).filter(([k, v]) => v && FILTER_LABEL[k]);
-  const bodyPool = current.filter((r) => matches(r, sp, "body"));
+  const activeBrand = (brands as any[]).find((b) => b.slug === sp.brand);
+  const bodyPool = current.filter((r) => matchesFilters(r, sp, "body"));
+  const activeFamily = familyForSelection(selectedBody);
 
-  return <>
-    <div className="sfStrip sfBleed">
-      <div className="sfStripItem"><b className="sfNum">{current.length.toLocaleString()}</b><span>รุ่นในแคตตาล็อก</span></div>
-      <div className="sfStripItem"><b className="sfNum">{brandCount.toLocaleString()}</b><span>แบรนด์</span></div>
-      <div className="sfStripItem"><b className="sfNum">{assembled.toLocaleString()}</b><span>ประกอบในไทย (CKD/SKD)</span></div>
-      <div className="sfStripItem"><b className="sfNum">{imported.toLocaleString()}</b><span>นำเข้าทั้งคัน (CBU)</span></div>
-      <div className="sfStripNote">นับจากรุ่นที่ยังจำหน่ายอยู่ในฐานข้อมูล TDR รุ่นที่เลิกจำหน่ายแล้วไม่ถูกนับ</div>
+  const activeChips: { key: FilterKey; label: string; href: string }[] = [];
+  for (const key of ["body", "powertrain", "segment", "position", "production", "brand"] as FilterKey[]) {
+    const raw = sp[key];
+    if (!raw) continue;
+    let label = raw;
+    if (key === "body") label = activeFamily?.label || selectedBody.map((v) => BODY_LABEL[v] || v).join(" + ");
+    else if (key === "brand") label = displayName(activeBrand, raw);
+    else if (key === "powertrain") label = POWERTRAIN_OPTION_LABEL[raw] || raw;
+    else if (key === "production") label = PRODUCTION_LABEL[raw] || raw;
+    activeChips.push({ key, label, href: modelsHref(sp, { [key]: null }) });
+  }
+
+  // Brand options for the rail: the biggest brands under the other filters, plus the active one so it can be undone.
+  const brandPool = current.filter((r) => matchesFilters(r, sp, "brand"));
+  const perBrand = new Map<string, number>();
+  for (const r of brandPool) if (r.brands?.slug) perBrand.set(r.brands.slug, (perBrand.get(r.brands.slug) || 0) + 1);
+  const brandOptions = [...perBrand.entries()]
+    .map(([slug, count]) => ({ slug, count, name: displayName((brands as any[]).find((b) => b.slug === slug) || { slug }) }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "en"));
+  const shownBrands = brandOptions.slice(0, BRAND_RAIL_LIMIT);
+  if (sp.brand && !shownBrands.some((b) => b.slug === sp.brand)) shownBrands.push({ slug: sp.brand, count: perBrand.get(sp.brand) || 0, name: displayName(activeBrand, sp.brand) });
+
+  const sortParams: Record<string, string> = {};
+  for (const [k, v] of Object.entries(sp)) if (v && k !== "sort" && k !== "page") sortParams[k] = v;
+
+  const lead = `รวมรถ ${formatNumber(current.length)} รุ่นที่ขายในไทยวันนี้ ครบทุกรุ่นย่อย สเปก และราคา อัปเดตต่อเนื่องทุกครั้งที่มีรุ่นใหม่หรือปรับราคา`;
+  const facetBlocks = FACETS.map((f) => {
+    const pool = current.filter((r) => matchesFilters(r, sp, f.key));
+    const options = f.options
+      .map((opt) => {
+        const on = f.key === "body" ? selectedBody.includes(opt.value) : sp[f.key] === opt.value;
+        const count = pool.filter((r) => facetHit(r, f.key, opt.value)).length;
+        const href = f.key === "body"
+          ? modelsHref(sp, { body: bodyParam(toggleBodyValue(selectedBody, opt.value)) })
+          : modelsHref(sp, { [f.key]: on ? null : opt.value });
+        return { ...opt, on, count, href };
+      })
+      .filter((o) => visibleOption(o.count, o.on));
+    return { f, options };
+  }).filter((b) => b.options.length > 0);
+
+  return <div className="tdr-wrap">
+    <Head lead={lead} aside={<SearchBox />} />
+
+    <div className="tdr-models-kpis">
+      <KpiCard label="รุ่นที่ยังจำหน่าย" value={current.length} />
+      <KpiCard label="รุ่นย่อย" value={trimTotal} />
+      <KpiCard label="แบรนด์" value={brandCount} />
+      <KpiCard label="ประกอบในไทย (CKD/SKD)" value={assembled} />
+      <KpiCard label="นำเข้าทั้งคัน (CBU)" value={imported} />
     </div>
+    <p className="tdr-models-note">นับจากรุ่นที่ยังจำหน่ายอยู่ในฐานข้อมูล TDR รุ่นที่เลิกจำหน่ายแล้วไม่ถูกนับ</p>
 
-    <section className="sfPageHead">
-      <div>
-        <div className="sfEyebrow">ฐานข้อมูลรถยนต์</div>
-        <h1>รถที่จำหน่ายในประเทศไทย</h1>
-      </div>
-      <div className="sfPageHeadAside">
-        <div className="sfEyebrow ink">ตรงกับตัวกรอง</div>
-        <b className="sfNum">{models.length.toLocaleString()}</b>
-        <span>จาก {current.length.toLocaleString()} รุ่น</span>
-      </div>
-    </section>
+    <Tabs sp={sp} tab={tab} />
 
-    <div className="sfTypeRow">
-      <Link className={sp.body ? undefined : "on"} href={href(sp, "body", null)}>
-        <b>ทุกประเภท</b><em className="sfNum">{bodyPool.length.toLocaleString()}</em>
-      </Link>
-      {BODY_QUICK.map((value) => {
-        const n = bodyPool.filter((r) => r.body_type === value).length;
-        const on = sp.body === value;
+    <nav className="tdr-models-tiles" aria-label="ประเภทตัวถัง">
+      <BodyTypeTile href={modelsHref(sp, { body: null })} label="ทั้งหมด" count={bodyPool.length} on={selectedBody.length === 0} />
+      {BODY_FAMILIES.map((family) => {
+        const on = activeFamily?.key === family.key;
         return (
-          <Link key={value} className={[on ? "on" : null, !on && n === 0 ? "off" : null].filter(Boolean).join(" ") || undefined} href={href(sp, "body", on ? null : value)}>
-            <b>{BODY_LABEL[value]}</b><em className="sfNum">{n.toLocaleString()}</em>
-          </Link>
+          <BodyTypeTile key={family.key} icon={family.icon} label={family.label} on={on}
+            count={bodyPool.filter((r) => !!r.body_type && family.values.includes(r.body_type)).length}
+            href={modelsHref(sp, { body: on ? null : familyParam(family) })} />
         );
       })}
-    </div>
+    </nav>
 
-    <div className="sfBrandRail">
-      <Link className={sp.brand ? undefined : "on"} href={href(sp, "brand", null)}><span>ทั้งหมด</span>ทุกแบรนด์</Link>
-      {brands.map((b: any) => (
-        <Link key={b.id} className={sp.brand === b.slug ? "on" : undefined} href={href(sp, "brand", b.slug)}>
-          {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{initials(b)}</span>}
-          {displayName(b)}
-        </Link>
-      ))}
-    </div>
-
-    <div className="sfCatalog sfBleed">
-      <div className="sfLayout">
-        <FilterDisclosure label={`ตัวกรอง${activeFilters.length ? ` · ${activeFilters.length}` : ""}`}>
-          <div className="sfRail">
-            <div className="sfRailHead">
-              <b>กรองรุ่นรถ</b>
-              {activeFilters.length ? <Link href="/models">ล้างทั้งหมด</Link> : null}
-            </div>
-            {FACETS.map((f) => {
-              const pool = current.filter((r) => matches(r, sp, f.key));
-              return (
-                <div className="sfGroup" key={f.key}>
-                  <h3>{f.label}</h3>
-                  {f.note ? <p className="sfGroupNote">{f.note}</p> : null}
-                  {f.options.map((opt, i) => {
-                    const on = sp[f.key] === opt.value;
-                    const n = pool.filter((r) => facetHit(r, f.key, opt.value)).length;
-                    const cls = ["sfOpt", on ? "on" : null, !on && n === 0 ? "off" : null].filter(Boolean).join(" ");
-                    const newGroup = opt.group && opt.group !== f.options[i - 1]?.group;
-                    return (
-                      <Fragment key={opt.value}>
-                        {newGroup ? <div className="sfOptGroup">{opt.group}</div> : null}
-                        <Link className={cls} href={href(sp, f.key, on ? null : opt.value)}>
-                          <span className="sfOptLabel"><i className="sfOptBox" />{opt.label}</span>
-                          <em>{n.toLocaleString()}</em>
-                        </Link>
-                      </Fragment>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        </FilterDisclosure>
-
-        <div>
-          <div className="sfResultBar">
-            <h2>{activeBrand ? displayName(activeBrand) : "รถทั้งหมด"} <span className="sfNum">{models.length.toLocaleString()} รุ่น</span></h2>
-            <Link className="sfChipClear" href="/brands">ดูตามแบรนด์ →</Link>
-          </div>
-
-          {activeFilters.length ? (
-            <div className="sfChips">
-              {activeFilters.map(([k, v]) => (
-                <Link className="sfChip" key={k} href={href(sp, k, null)}>
-                  {FILTER_LABEL[k]} · {k === "brand" ? displayName(activeBrand, v as string) : valueLabel(k, v as string)}
-                  <svg width="11" height="11" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.6" fill="none"><path d="M2 2l8 8M10 2l-8 8" /></svg>
-                </Link>
-              ))}
-              <Link className="sfChipClear" href="/models">ล้างทั้งหมด</Link>
-            </div>
-          ) : null}
-
-          {models.length ? (
-            <div className="sfGrid">{models.map((r: any) => <Card key={r.id} r={r} />)}</div>
-          ) : (
-            <div className="sfEmpty">
-              <b>ไม่มีรุ่นที่ตรงกับตัวกรองนี้</b>
-              <span>ลองเอาตัวกรองบางอันออก หรือ<Link href="/models"> ล้างทั้งหมด</Link></span>
-            </div>
-          )}
+    <div className="tdr-models-layout">
+      <FilterRail label={`ตัวกรอง${activeChips.length ? ` · ${activeChips.length}` : ""}`} resultLabel={`ดูผลลัพธ์ ${formatNumber(filtered.length)} รุ่น`}>
+        <div className="tdr-models-rail__head">
+          <b>กรองรุ่นรถ</b>
+          {activeChips.length ? <Link prefetch={false} href={modelsHref({ sort: sp.sort }, {})}>ล้างทั้งหมด</Link> : null}
         </div>
+        {facetBlocks.map(({ f, options }) => (
+          <div className="tdr-models-fg" key={f.key}>
+            <h3>{f.label}</h3>
+            {f.note ? <p className="tdr-models-fg__note">{f.note}</p> : null}
+            {options.map((o) => (
+              <Link key={o.value} prefetch={false} href={o.href} className={o.on ? "tdr-models-fo tdr-models-fo--on" : "tdr-models-fo"} aria-current={o.on ? "true" : undefined}>
+                <i aria-hidden="true">{o.on ? "✓" : ""}</i><span>{o.label}</span><em>{formatNumber(o.count)}</em>
+              </Link>
+            ))}
+          </div>
+        ))}
+        <div className="tdr-models-fg">
+          <h3>แบรนด์</h3>
+          {shownBrands.map((b) => {
+            const on = sp.brand === b.slug;
+            return (
+              <Link key={b.slug} prefetch={false} href={modelsHref(sp, { brand: on ? null : b.slug })} className={on ? "tdr-models-fo tdr-models-fo--on" : "tdr-models-fo"} aria-current={on ? "true" : undefined}>
+                <i aria-hidden="true">{on ? "✓" : ""}</i><span>{b.name}</span><em>{formatNumber(b.count)}</em>
+              </Link>
+            );
+          })}
+          <Link className="tdr-models-more" href="/brands">ดูทั้ง {formatNumber(brandCount)} แบรนด์ →</Link>
+        </div>
+      </FilterRail>
+
+      <div className="tdr-models-results">
+        <div className="tdr-models-rbar">
+          <h2>{activeBrand ? displayName(activeBrand) : "รถทั้งหมด"} <span className="tdr-models-mono">{formatNumber(filtered.length)} รุ่น</span></h2>
+          <SortSelect value={sort} params={sortParams} />
+        </div>
+
+        {activeChips.length ? (
+          <div className="tdr-chips tdr-models-active">
+            {activeChips.map((c) => (
+              <Chip key={c.key} prefetch={false} href={c.href} className="tdr-chip--on" aria-label={`เอาตัวกรอง ${FILTER_LABEL[c.key]} ${c.label} ออก`}>
+                {FILTER_LABEL[c.key]} · {c.label} <span className="tdr-chip__x" aria-hidden="true">✕</span>
+              </Chip>
+            ))}
+            <Link className="tdr-models-clear" prefetch={false} href={modelsHref({ sort: sp.sort }, {})}>ล้างทั้งหมด</Link>
+          </div>
+        ) : null}
+
+        {win.items.length ? (
+          <>
+            <div className="tdr-models-grid">
+              {win.items.map((r) => <ModelCard key={r.id} r={r} trimCount={trimCounts.get(r.id)} />)}
+            </div>
+            <div className="tdr-models-more-row">
+              {win.hasMore
+                ? <Link className="tdr-btn tdr-btn--secondary" prefetch={false} href={modelsHref(sp, { page: String(win.nextPage) })} scroll={false}>โหลดเพิ่ม · แสดง {formatNumber(win.shown)} จาก {formatNumber(win.total)}</Link>
+                : <span className="tdr-models-muted">แสดงครบ {formatNumber(win.total)} รุ่น</span>}
+            </div>
+          </>
+        ) : (
+          <BlockEmpty title="ไม่มีรุ่นที่ตรงกับตัวกรองนี้" text="ลองเอาตัวกรองบางอันออก">
+            <Link className="tdr-models-clear" prefetch={false} href={modelsHref({ sort: sp.sort }, {})}>ล้างทั้งหมด</Link>
+          </BlockEmpty>
+        )}
+        <p className="tdr-models-src-line">ราคาจาก Price Ledger ของ TDR (ราคาขายปลีกที่ประกาศ) · รุ่นที่ไม่มีราคาจะแสดง &ldquo;ยังไม่ประกาศราคา&rdquo; · สเปกจาก TDR Vehicle Master</p>
       </div>
     </div>
-  </>;
+  </div>;
 }

@@ -60,7 +60,9 @@ jobs:
               cat "$log"
               exit 1
             fi
-            status=$(curl -sS --max-time 20 -o "$html" -w '%{http_code}' "http://127.0.0.1:3000/models?media-smoke=${GITHUB_SHA}" || true)
+            # /models loads 12 cars per step (page=N shows the first N x 12); page=100 loads every step, so this
+            # still checks that the whole catalogue renders its canonical media, not just the first screen.
+            status=$(curl -sS --max-time 20 -o "$html" -w '%{http_code}' "http://127.0.0.1:3000/models?page=100&media-smoke=${GITHUB_SHA}" || true)
             echo "Local production /models status=${status} (attempt ${attempt})"
             [ "$status" = "200" ] && break
             sleep 2
