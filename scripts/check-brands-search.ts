@@ -165,10 +165,11 @@ check("the Upcoming card draws nothing without rows", /if \(!rows\.length\) retu
 check("the search page H1 is ผลการค้นหา \"q\" (straight quotes)", /`ผลการค้นหา "\$\{q\}"`/.test(readFileSync("app/search/page.tsx", "utf8")), true);
 check("the suggest route never uses a service role", /service_role|SERVICE_ROLE|adminDb/i.test(route), false);
 
-console.log(failed ? `\n${failed} check(s) failed` : "\nall brands and search checks passed");
-process.exit(failed ? 1 : 0);
-
 console.log("\nheader at small phones (360 regression)");
 const shell = readFileSync("app/shell.css", "utf8");
-check("shell.css compacts the header at <=400px and drops Sign up (still in the drawer) at <=340px", [/@media \(max-width: 400px\)[^{]*\{[^}]*\.tdr-logo img \{ height: 26px/.test(shell), /@media \(max-width: 340px\)[^{]*\{[^}]*\.tdr-signup \{ display: none/.test(shell)], [true, true]);
-check("the phone header keeps its controls on the right edge (nav + acts rule is overridden)", /\.tdr-nav \+ \.tdr-acts \{ margin-left: auto; \}/.test(shell), true);
+check("header compaction guard: <=400px shrinks the logo and tightens the controls", /@media \(max-width: 400px\)[^{]*\{[^@]*?\.tdr-logo img \{ height: 26px/.test(shell), true);
+check("Sign up / drawer guard: <=340px hides the header Sign up (the drawer still carries it)", /@media \(max-width: 340px\)[^{]*\{[^@]*?\.tdr-signup \{ display: none/.test(shell) && /tdr-signup/.test(readFileSync("components/MobileNav.tsx", "utf8")), true);
+check("right-alignment guard: the phone header keeps its controls on the right edge (nav + acts rule overridden)", /\.tdr-nav \+ \.tdr-acts \{ margin-left: auto; \}/.test(shell), true);
+
+console.log(failed ? `\n${failed} check(s) failed` : "\nall brands and search checks passed");
+process.exit(failed ? 1 : 0);
