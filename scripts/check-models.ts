@@ -198,8 +198,8 @@ const familyLiteral = /["']SEDAN["']\s*,\s*["']COUPE["']\s*,\s*["']WAGON["']|["'
 for (const file of [...files.filter((f) => f !== "lib/body-families.ts"), "app/page.tsx"]) {
   check(`${file}: does not redefine a body family`, familyLiteral.test(readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "")), false);
 }
-const list = readFileSync("app/models/page.tsx", "utf8");
-check("/models builds its tiles from BODY_FAMILIES", /BODY_FAMILIES\.map/.test(list), true);
+const list = readFileSync("components/models/ModelsExplorer.tsx", "utf8");
+check("the catalogue explorer (/models and brand pages) builds its tiles from BODY_FAMILIES", /BODY_FAMILIES\.map/.test(list), true);
 const trayFiles = ["components/models/CompareTray.tsx", "components/models/ModelCard.tsx"].map((f) => strip(readFileSync(f, "utf8"))).join("\n");
 check("the tray never resolves or sends a trim", /api\/compare\/trims|[?&]trims=|current_market_trims/.test(trayFiles), false);
 const trimPage = strip(readFileSync("app/models/[slug]/[trim]/page.tsx", "utf8")) + strip(readFileSync("lib/models/trim-specs.ts", "utf8"));

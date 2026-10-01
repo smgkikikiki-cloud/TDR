@@ -242,3 +242,16 @@ button.tdr-models-src::before { content: ""; position: absolute; inset: -8px -6p
   .tdr-models-trimhead__price strong { font-size: 26px; }
   .tdr-models-specgroup .tdr-table th[scope="row"] { width: 42%; }
 }
+
+/* Upcoming cards (P06 strip, P07 group): small, text-first */
+.tdr-upcoming { padding: 32px 0 8px; }
+.tdr-upcoming h2 { margin: 0 0 16px; font: var(--type-h2); font-size: 22px; line-height: 1.4; color: var(--brand-navy); }
+.tdr-upcoming__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.tdr-upcoming__card { display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-page); min-width: 0; }
+.tdr-upcoming__card h3 { margin: 0; font: var(--type-h3); font-size: 18px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.tdr-upcoming__card h3 a { color: var(--ink); }
+.tdr-upcoming__card figure { margin: 0; }
+.tdr-upcoming__card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-md); display: block; }
+.tdr-upcoming__card figcaption { font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
+@media (max-width: 1023px) { .tdr-upcoming__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .tdr-upcoming__grid { grid-template-columns: minmax(0, 1fr); } }

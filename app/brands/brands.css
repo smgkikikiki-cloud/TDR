@@ -1,0 +1,29 @@
+/* Brand index (P05) and brand pages (P06). Tokens only. The catalogue explorer styles live in app/models/models.css. */
+.tdr-brands-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; margin-top: 8px; }
+.tdr-brands-filter { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 420px; }
+.tdr-brands-filter__label { font: var(--type-label); color: var(--ink); }
+.tdr-brands-count { font-size: 14px; color: var(--ink-muted); }
+.tdr-brands-jump { position: sticky; top: 84px; z-index: 4; display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 0; margin: 12px 0 8px; background: var(--surface-page); border-bottom: 1px solid var(--border); }
+.tdr-brands-jump a, .tdr-brands-jump span { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border-radius: var(--radius-md); font: 600 14px/1 var(--font-mono); }
+.tdr-brands-jump a { color: var(--brand-navy); border: 1px solid var(--border); }
+.tdr-brands-jump a:hover { border-color: var(--brand-blue); }
+.tdr-brands-jump span { color: var(--ink-muted); opacity: .5; }
+.tdr-brands a:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-brands .tdr-table th[scope="row"] { font-weight: 600; color: var(--ink); white-space: normal; }
+.tdr-brands .tdr-table th[scope="row"] a { color: var(--brand-navy); }
+.tdr-brands-letter th { background: var(--surface-raised); color: var(--brand-navy); font: 700 16px/1.4 var(--font-mono); padding: 8px 10px; scroll-margin-top: 150px; }
+tbody[id^="brand-"] { scroll-margin-top: 150px; }
+.tdr-brands-go { width: 1%; text-align: right; white-space: nowrap; }
+.tdr-brands-go a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: var(--red-text); font-weight: 700; }
+.tdr-brands-miss { color: var(--ink-muted); font-style: italic; font-family: var(--font-sans); }
+.tdr-brands-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.tdr-brands-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 8px; }
+.tdr-brands-kpis .tdr-kpi { min-width: 0; }
+.tdr-brands-kpis .tdr-kpi__value { overflow-wrap: anywhere; }
+.tdr-brands-sk-rows { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+@media (max-width: 767px) {
+  .tdr-brands-jump { top: 64px; }
+  .tdr-brands-jump a, .tdr-brands-jump span { min-width: 40px; min-height: 40px; }
+  .tdr-brands-letter th, tbody[id^="brand-"] { scroll-margin-top: 130px; }
+  .tdr-brands-kpis { grid-template-columns: minmax(0, 1fr); }
+}

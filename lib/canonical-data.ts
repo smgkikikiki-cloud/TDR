@@ -1,5 +1,6 @@
 import { publicDb } from "@/lib/supabase";
 import { filterToCurrentTrims } from "@/lib/canonical-trim-status";
+import { searchCatalog } from "@/lib/search/catalog";
 
 const BODY: Record<string, string> = {
   HATCHBACK: "HATCHBACK", SEDAN: "SEDAN", CROSSOVER: "CROSSOVER",
@@ -438,13 +439,12 @@ export async function getCanonicalRelatedModels(model: any, limit = 8) {
     .slice(0, limit);
 }
 
-export async function searchCanonicalCatalog(query: string) {
-  const term = query.trim().toLocaleLowerCase();
-  if (!term) return { brands: [], models: [] };
-  const [brands, models] = await Promise.all([getCanonicalBrands(), getCanonicalModels()]);
-  const hit = (row: any) => [row.name_en, row.name_th, row.slug, row.canonical_id]
-    .some((value) => String(value || "").toLocaleLowerCase().includes(term));
-  return { brands: brands.filter(hit).slice(0, 10), models: models.filter(hit).slice(0, 20) };
+/** Catalogue search over the canonical brands and models. The matching, ranking and the CURRENT-only rule live in
+ *  lib/search/catalog.ts so the overlay's suggestions and /search share exactly one algorithm. */
+export async function searchCanonicalCatalog(query: string, limits?: { models: number; brands: number }) {
+  const [brands, models] = await Promise.all([getCanonicalBrands(250), getCanonicalModels(600)]);
+  const found = searchCatalog(models as any[], brands as any[], query, limits);
+  return { brands: found.brands, models: found.models };
 }
 
 export async function getModelMarketTeasers(canonicalModelId: string, limit = 4) {

@@ -1,0 +1,10 @@
+/* /search (P07). Tokens only; the card grid and tiles come from app/models/models.css. */
+.tdr-search-page .tdr-search-form { display: flex; gap: 8px; width: 100%; max-width: 620px; margin-top: 8px; }
+.tdr-search-page .tdr-search-form .tdr-input { flex: 1; min-width: 0; }
+.tdr-search-group { padding: 32px 0 8px; }
+.tdr-search-group h2 { margin: 0 0 16px; font: var(--type-h2); font-size: 22px; line-height: 1.4; color: var(--brand-navy); }
+.tdr-search-group h2 .tdr-models-mono { color: var(--ink-muted); font-size: 16px; font-weight: 500; }
+.tdr-search-suggest { margin-top: 24px; }
+.tdr-search-suggest h2 { margin: 24px 0 12px; font: 600 15px/1.4 var(--font-sans); color: var(--ink); }
+.tdr-search-sk { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.tdr-search-page .tdr-chip { min-height: 44px; }
