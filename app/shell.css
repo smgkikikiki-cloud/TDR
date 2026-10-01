@@ -85,6 +85,7 @@
   .tdr-logo img { height: 30px; }
   .tdr-header__row { gap: 8px; }
   .tdr-acts { gap: 4px; }
+  .tdr-nav + .tdr-acts { margin-left: auto; } /* the desktop rule above (nav + acts = 0) outranks the generic auto; keep the controls on the right edge */
   .tdr-acts .tdr-signup { padding: 0 12px; }
   .tdr-acts .tdr-theme { display: none; }
   .tdr-footer { padding-bottom: 64px; }
@@ -92,6 +93,21 @@
   .tdr-bottom a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: var(--ink-muted); }
   .tdr-bottom a b { font-size: 18px; line-height: 1; }
   .tdr-bottom a.on { color: var(--brand-navy); }
+}
+/* Small phones (360 and below): logo + Search + Sign up + burger must fit between the gutters, so no page scrolls sideways. */
+@media (max-width: 400px) {
+  .tdr-header__row { gap: 6px; }
+  .tdr-acts { gap: 2px; }
+  .tdr-logo img { height: 26px; }
+  :root[data-theme="dark"] .tdr-logo { padding: 3px 6px; }
+  .tdr-acts .tdr-signup { padding: 0 8px; font-size: 13px; }
+}
+@media (max-width: 400px) and (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .tdr-logo { padding: 3px 6px; }
+}
+/* 340 and below cannot hold the Sign up button as well; it stays one tap away in the burger drawer. */
+@media (max-width: 340px) {
+  .tdr-acts .tdr-signup { display: none; }
 }
 
 /* Burger drawer */

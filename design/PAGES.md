@@ -7,7 +7,8 @@ Read `DESIGN.md` (rules), `DATA_MAP.md` (where every number comes from), `refere
 - **Block states — implement all four for every data block:** *loading* (skeleton with final dimensions, no spinners) · *empty* (dashed card, "ยังไม่มี…", never a blank area) · *locked* (see §0.1) · *error* (inline card + retry; a failing block must not blank the page).
 - **§0.1 Locked content:** blurred **decorative placeholder** + `tdr-tier` badge + CTA. The DOM/JSON must contain **no real values** of locked data (no blurred real numbers, no CSS-blurred real image). Only a server-generated blurred derivative may be shown for images (see Analysis Report).
 - **CTA hierarchy:** ≤1 solid `--accent` button per viewport; everything else outline/ghost.
-- **Numbers** mono + tabular; source line under every chart/table; % change only when base ≥30.
+- **Numbers** mono + tabular; % change only when base ≥30.
+- **Source / provenance** is shown where attribution is meaningful to the customer: DLT registration data, ECO Sticker or OEM evidence, any externally sourced data, estimates, and analytical or derived figures whose methodology or source matters. Do not mechanically add a source line to ordinary internal catalogue tables or UI generated directly from TDR's own database (brand lists, model counts, catalogue price ranges, filters). Source requirements stated on a specific page (Market, Intelligence, P04 spec badges, Compare, Upcoming, Analysis) still apply as written.
 - **Responsive/dark:** all 4 breakpoints × 2 themes (DESIGN §6). Tap targets ≥44px. No horizontal page scroll at 1440/1366/1280/1024/834/390.
 - **Ref** = the file to copy structure from. If Ref is a PNG, open only that PNG.
 

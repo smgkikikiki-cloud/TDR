@@ -16,6 +16,7 @@ tbody[id^="brand-"] { scroll-margin-top: 150px; }
 .tdr-brands-go { width: 1%; text-align: right; white-space: nowrap; }
 .tdr-brands-go a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: var(--red-text); font-weight: 700; }
 .tdr-brands-miss { color: var(--ink-muted); font-style: italic; font-family: var(--font-sans); }
+.tdr-brands .tdr-table-wrap { position: relative; } /* the visually-hidden header cell is positioned: keep it inside the scroll box, never the page */
 .tdr-brands-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tdr-brands-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 8px; }
 .tdr-brands-kpis .tdr-kpi { min-width: 0; }

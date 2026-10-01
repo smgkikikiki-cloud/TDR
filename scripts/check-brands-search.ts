@@ -59,6 +59,21 @@ check("name match; Thai name match", [searchCatalog(sModels, sBrands, "yaris").m
 check("the old contract still holds: slug and canonical_id match", [searchCatalog(sModels, sBrands, "honda-jazz").models.map((r) => r.id), searchCatalog(sModels, sBrands, "ora_goodcat").models.map((r) => r.id)], [["2"], ["5"]]);
 check("a name that starts with the query ranks before one that merely contains it", searchCatalog(sModels, sBrands, "ea").models.map((r) => r.id), ["6", "3"]);
 check("a word-start match ranks before a mid-word match", searchCatalog(sModels, sBrands, "cat").models.map((r) => r.id), ["5"]);
+const ids = (q: string) => searchCatalog(sModels, sBrands, q).models.map((r) => r.id);
+check("brand + model phrase: 'Toyota Yaris' finds Yaris; case does not matter", [ids("Toyota Yaris"), ids("toyota yaris"), ids("TOYOTA YARIS")], [["1"], ["1"], ["1"]]);
+check("brand + model phrase: a partial phrase still finds it", [ids("toyota yar"), ids("tesla model")], [["1"], ["7"]]);
+check("brand + model phrase: the wrong brand does not match", [ids("Honda Yaris"), ids("Toyota Jazz")], [[], []]);
+const phraseRows = [
+  { id: "a", status: "CURRENT", slug: "a", name_en: "Corolla Cross", brands: { name_en: "Toyota", slug: "toyota" } },
+  { id: "b", status: "CURRENT", slug: "b", name_en: "Crosstoyota", brands: { name_en: "Other", slug: "other" } },
+  { id: "c", status: "CURRENT", slug: "c", name_en: "Yaris", name_th: "ยาริส", brands: { name_en: "Toyota", name_th: "โตโยต้า", slug: "toyota" } },
+];
+check("ranking is unchanged: name starts-with 0, word-start / brand+model phrase 1, contains 2", [
+  searchCatalog(phraseRows, [], "cross").models.map((r) => r.id), // b starts with it (0), a has a word starting with it (1)
+  searchCatalog(phraseRows, [], "toyota").models.map((r) => r.id), // a, c: phrase starts with it (1); b: name contains it (2)
+  searchCatalog(phraseRows, [], "oyota").models.map((r) => r.id), // contains only (2): ties fall back to the name
+], [["b", "a"], ["a", "c", "b"], ["a", "b", "c"]]);
+check("the Thai brand + model phrase is searchable", searchCatalog(phraseRows, [], "โตโยต้า ยาริส").models.map((r) => r.id), ["c"]);
 check("brands are searched too", searchCatalog(sModels, sBrands, "te").brands.map((b) => b.slug), ["tesla"]);
 const many = Array.from({ length: 40 }, (_, i) => ({ id: String(i), status: "CURRENT", slug: `m${i}`, name_en: `Model ${String(i).padStart(2, "0")}`, brands: { name_en: "B" } }));
 check("suggestions are capped at 6 models and 4 brands; the page at 24 and 12", [SUGGEST_MODELS, SUGGEST_BRANDS, PAGE_MODELS, PAGE_BRANDS], [6, 4, 24, 12]);
@@ -152,3 +167,8 @@ check("the suggest route never uses a service role", /service_role|SERVICE_ROLE|
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall brands and search checks passed");
 process.exit(failed ? 1 : 0);
+
+console.log("\nheader at small phones (360 regression)");
+const shell = readFileSync("app/shell.css", "utf8");
+check("shell.css compacts the header at <=400px and drops Sign up (still in the drawer) at <=340px", [/@media \(max-width: 400px\)[^{]*\{[^}]*\.tdr-logo img \{ height: 26px/.test(shell), /@media \(max-width: 340px\)[^{]*\{[^}]*\.tdr-signup \{ display: none/.test(shell)], [true, true]);
+check("the phone header keeps its controls on the right edge (nav + acts rule is overridden)", /\.tdr-nav \+ \.tdr-acts \{ margin-left: auto; \}/.test(shell), true);

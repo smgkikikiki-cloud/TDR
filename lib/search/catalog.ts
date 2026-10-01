@@ -21,14 +21,16 @@ type Row = { status?: unknown; slug?: string | null; canonical_id?: string | nul
 
 function rank(row: Row, q: string): number | null {
   const term = q.toLocaleLowerCase();
-  const fields = [row.name_en, row.name_th, row.slug, row.canonical_id].map((v) => String(v || "").toLocaleLowerCase());
+  const lower = (v: unknown) => String(v || "").toLocaleLowerCase();
+  // "brand model" is a searchable field of its own, in English and in Thai, so "Toyota Yaris" finds Yaris
+  // while "Honda Yaris" (a brand the model does not have) finds nothing.
+  const phrases = [`${lower(row.brands?.name_en)} ${lower(row.name_en)}`, `${lower(row.brands?.name_th)} ${lower(row.name_th)}`];
+  const fields = [row.name_en, row.name_th, row.slug, row.canonical_id].map(lower).concat(phrases);
   if (!fields.some((f) => f.includes(term))) return null;
   const name = displayName(row).toLocaleLowerCase();
   if (name.startsWith(term)) return 0;
   if (name.split(/[\s\-_/]+/).some((w) => w.startsWith(term))) return 1;
-  // "brand model" typed as one phrase
-  const full = `${displayName(row.brands)} ${displayName(row)}`.toLocaleLowerCase();
-  if (full.startsWith(term)) return 1;
+  if (phrases.some((f) => f.startsWith(term))) return 1;
   return 2;
 }
 
