@@ -50,6 +50,22 @@
     "components/models/SortSelect.tsx",
     "components/models/SourceBadge.tsx",
     "components/models/states.tsx",
-    "components/models/ListSkeleton.tsx"
+    "components/models/ListSkeleton.tsx",
+    "app/brands/layout.tsx",
+    "app/brands/page.tsx",
+    "app/brands/brands.css",
+    "app/brands/[slug]/page.tsx",
+    "app/search/layout.tsx",
+    "app/search/page.tsx",
+    "app/search/search.css",
+    "app/api/search/suggest/route.ts",
+    "components/search/SearchOverlay.tsx",
+    "components/models/ModelsExplorer.tsx",
+    "lib/brands/index.ts",
+    "lib/search/catalog.ts",
+    "components/brands/BrandIndex.tsx",
+    "components/brands/BrandIndexSkeleton.tsx",
+    "lib/upcoming/boundary.ts",
+    "components/upcoming/UpcomingCards.tsx"
   ]
 }

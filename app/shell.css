@@ -83,13 +83,31 @@
   :root { --tdr-gutter: 16px; }
   .tdr-header__row { height: 64px; }
   .tdr-logo img { height: 30px; }
-  .tdr-acts .tdr-signup { padding: 0 14px; }
+  .tdr-header__row { gap: 8px; }
+  .tdr-acts { gap: 4px; }
+  .tdr-nav + .tdr-acts { margin-left: auto; } /* the desktop rule above (nav + acts = 0) outranks the generic auto; keep the controls on the right edge */
+  .tdr-acts .tdr-signup { padding: 0 12px; }
   .tdr-acts .tdr-theme { display: none; }
   .tdr-footer { padding-bottom: 64px; }
   .tdr-bottom { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--surface-page); border-top: 1px solid var(--border); z-index: 6; }
   .tdr-bottom a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: var(--ink-muted); }
   .tdr-bottom a b { font-size: 18px; line-height: 1; }
   .tdr-bottom a.on { color: var(--brand-navy); }
+}
+/* Small phones (360 and below): logo + Search + Sign up + burger must fit between the gutters, so no page scrolls sideways. */
+@media (max-width: 400px) {
+  .tdr-header__row { gap: 6px; }
+  .tdr-acts { gap: 2px; }
+  .tdr-logo img { height: 26px; }
+  :root[data-theme="dark"] .tdr-logo { padding: 3px 6px; }
+  .tdr-acts .tdr-signup { padding: 0 8px; font-size: 13px; }
+}
+@media (max-width: 400px) and (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .tdr-logo { padding: 3px 6px; }
+}
+/* 340 and below cannot hold the Sign up button as well; it stays one tap away in the burger drawer. */
+@media (max-width: 340px) {
+  .tdr-acts .tdr-signup { display: none; }
 }
 
 /* Burger drawer */
@@ -102,3 +120,27 @@
 .tdr-drawer .tdr-btn { margin-top: 8px; }
 .tdr-drawer__close { align-self: flex-end; margin-bottom: 8px; font-size: 22px; }
 .tdr-drawer__theme { align-self: flex-start; width: 44px; height: 44px; margin-top: 8px; border-radius: var(--radius-md); border: 1px solid var(--border); background: transparent; color: var(--ink); font-size: 18px; cursor: pointer; }
+
+/* Header search (P07): icon button + overlay with live suggestions */
+.tdr-search-btn { flex: none; }
+.tdr-header .tdr-search-overlay, .tdr-search-overlay { position: fixed; inset: 0; z-index: 25; background: color-mix(in srgb, var(--ink) 40%, transparent); display: flex; justify-content: center; align-items: flex-start; padding: 84px 16px 16px; }
+.tdr-search { width: min(680px, 100%); max-height: calc(100vh - 100px); overflow: auto; background: var(--surface-page); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-pop); padding: 16px; }
+.tdr-search__form { display: flex; gap: 8px; align-items: center; }
+.tdr-search__form .tdr-input { flex: 1; min-width: 0; }
+.tdr-search__close { flex: none; font-size: 22px; }
+.tdr-search__body { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
+.tdr-search__group h2 { margin: 0 0 6px; font: 600 13px/1.4 var(--font-sans); color: var(--ink-muted); }
+.tdr-search__group ul { margin: 0; padding: 0; list-style: none; }
+.tdr-search__group li a { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-height: 44px; padding: 8px 10px; border-radius: var(--radius-md); color: var(--ink); }
+.tdr-search__group li a:hover { background: var(--surface-raised); }
+.tdr-search__group li small { color: var(--ink-muted); font-size: 13px; }
+.tdr-search__note { margin: 0; color: var(--ink-muted); }
+.tdr-search__retry { background: none; border: 0; padding: 0; color: var(--brand-blue); font: inherit; text-decoration: underline; cursor: pointer; }
+.tdr-search__all { align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--red-text); }
+.tdr-search__sk { display: flex; flex-direction: column; gap: 8px; }
+.tdr-search__sk span { display: block; height: 44px; border-radius: var(--radius-md); background: var(--surface-raised); border: 1px solid var(--border); animation: tdr-pulse 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .tdr-search__sk span { animation: none; } }
+.tdr-search a:focus-visible, .tdr-search button:focus-visible, .tdr-search input:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-search button:not(:disabled), .tdr-search button:not(:disabled):hover, .tdr-search button:not(:disabled):active { transform: none; box-shadow: none; transition: none; }
+@media (max-width: 767px) { .tdr-search-overlay { padding-top: 72px; } .tdr-search { max-height: calc(100vh - 88px); } }
+.tdr-search .tdr-chip { min-height: 44px; }

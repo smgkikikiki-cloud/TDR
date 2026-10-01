@@ -123,9 +123,9 @@ export function matchesFilters(r: ModelListRow, sp: ModelsParams, skip?: FilterK
 
 /* ---------- URLs ---------- */
 
-/** Rebuild /models?... with some keys changed. `null` removes a key. Any change other than `page` itself goes back
+/** Rebuild <basePath>?... (default /models; a brand page passes its own path) with some keys changed. `null` removes a key. Any change other than `page` itself goes back
  *  to the first load step, so a new filter or sort never lands on page 4 of a different list. */
-export function modelsHref(sp: ModelsParams, patch: Partial<Record<keyof ModelsParams, string | null>>): string {
+export function modelsHref(sp: ModelsParams, patch: Partial<Record<keyof ModelsParams, string | null>>, basePath = "/models"): string {
   const next = new URLSearchParams();
   const merged: Record<string, string | null | undefined> = { ...sp };
   const changesPage = "page" in patch;
@@ -133,7 +133,7 @@ export function modelsHref(sp: ModelsParams, patch: Partial<Record<keyof ModelsP
   if (!changesPage) delete merged.page;
   for (const [key, value] of Object.entries(merged)) if (value) next.set(key, value);
   const q = next.toString();
-  return q ? `/models?${q}` : "/models";
+  return q ? `${basePath}?${q}` : basePath;
 }
 
 /* ---------- labels ---------- */

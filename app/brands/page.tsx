@@ -1,37 +1,41 @@
-import Link from "next/link";
-import { getCanonicalBrands } from "@/lib/canonical-data";
-import { displayName, initials } from "@/lib/display-name";
+import { Suspense } from "react";
+import { PageHead } from "@/components/design";
+import { BrandIndex } from "@/components/brands/BrandIndex";
+import { BrandIndexSkeleton } from "@/components/brands/BrandIndexSkeleton";
+import { BlockEmpty, BlockError } from "@/components/models/states";
+import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
+import { buildBrandIndex } from "@/lib/brands";
 
-export default async function Brands() {
-  const rows: any[] = await getCanonicalBrands(250);
-  return <>
-    <section className="sfPageHead">
-      <div>
-        <div className="sfEyebrow">แบรนด์</div>
-        <h1>แบรนด์รถในตลาดไทย</h1>
-        <p>แบรนด์รถยนต์ที่มีจำหน่ายในประเทศไทย</p>
-      </div>
-      <div className="sfPageHeadAside">
-        <div className="sfEyebrow ink">ในฐานข้อมูล</div>
-        <b className="sfNum">{rows.length.toLocaleString()}</b>
-        <span>แบรนด์</span>
-      </div>
-    </section>
+export const metadata = { title: "แบรนด์รถในตลาดไทย · Vehicle Database" };
 
-    {rows.length ? (
-      <div className="sfBrandGrid" style={{ marginTop: 28 }}>
-        {rows.map((r: any) => (
-          <Link href={`/brands/${r.slug}`} className="sfBrandCard" key={r.id}>
-            <div className="sfBrandLogo">
-              {r.logo_url ? <img src={r.logo_url} alt="" /> : <span>{initials(r)}</span>}
-            </div>
-            <b>{displayName(r)}</b>
-            {r.country_origin ? <small>{r.country_origin}</small> : <small className="sfMissing">ไม่ระบุประเทศ</small>}
-          </Link>
-        ))}
-      </div>
-    ) : (
-      <div className="sfEmpty" style={{ marginTop: 28 }}><b>ยังไม่มีข้อมูลแบรนด์</b></div>
-    )}
-  </>;
+function Head() {
+  return (
+    <PageHead
+      eyebrow="Vehicle Database"
+      eyebrowLang="en"
+      title="แบรนด์รถในตลาดไทย"
+      lead="แบรนด์รถยนต์ที่มีจำหน่ายในประเทศไทย"
+    />
+  );
+}
+
+async function Index() {
+  let rows;
+  try {
+    const [brands, models] = await Promise.all([getCanonicalBrands(250), getCanonicalModels(600)]);
+    rows = buildBrandIndex(brands, (models as any[]).filter((m) => isCurrentLifecycleStatus(m.status)));
+  } catch {
+    return <div className="tdr-wrap"><Head /><BlockError title="แบรนด์รถ" retryHref="/brands" /></div>;
+  }
+  return (
+    <div className="tdr-wrap">
+      <Head />
+      {rows.length ? <BrandIndex rows={rows} /> : <BlockEmpty title="ยังไม่มีข้อมูลแบรนด์" text="ยังไม่มีแบรนด์ที่มีรุ่นจำหน่ายอยู่ในฐานข้อมูล" />}
+    </div>
+  );
+}
+
+export default function BrandsPage() {
+  return <Suspense fallback={<BrandIndexSkeleton />}><Index /></Suspense>;
 }

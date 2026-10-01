@@ -60,7 +60,7 @@ No horizontal overflow at 1440/1366/1280/1024/834/390 (header has overflowed at 
 - No Auto News, no Industrial Update.
 
 ## 8. Data display
-- Every page with numbers: small source line "ที่มา: กรมการขนส่งทางบก (Open Data Common)".
+- Every page with registration numbers: small source line "ที่มา: กรมการขนส่งทางบก (Open Data Common)". Other pages show a source only where design/PAGES.md §0 says attribution is meaningful (not on plain internal catalogue tables).
 - Bangkok note: place of registration, not place of use.
 - Wheel/tyre values: `tdr-flag--estimate` "ประมาณการ" + "ครอบคลุม X%".
 - % change only when base ≥30, else "–".
@@ -94,6 +94,6 @@ No horizontal overflow at 1440/1366/1280/1024/834/390 (header has overflowed at 
 - [ ] Matches reference (structure, order, components, copy) at 4 widths × 2 themes
 - [ ] `npm run check` passes; changed files listed in `design/migrated.json`
 - [ ] No horizontal overflow at the 6 widths
-- [ ] No car logos; source line present; deltas have arrow + sign
+- [ ] No car logos; source line present where PAGES.md §0 requires one; deltas have arrow + sign
 - [ ] ≤1 solid red button per viewport
 - [ ] PR has 8 preview screenshots + changed-file list
