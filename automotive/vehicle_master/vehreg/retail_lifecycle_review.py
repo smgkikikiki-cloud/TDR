@@ -1,14 +1,10 @@
 """HUMAN-reviewed retail lifecycle dispositions for MarketTrim identity.
 
-MarketTrim identity can come from ECO/homologation evidence without proving that
-that grade is in today's Thai retail lineup. These dispositions are workflow
-metadata consumed by the serving release enrichment; they do not mutate the
-MarketTrim identity schema itself.
-
-Precedence is intentionally asymmetric in the release layer: a historical
-parent model/generation always wins; otherwise an explicit HUMAN trim review
-wins over open-ended price inference; absent a review, a current LIST_PRICE may
-still establish CURRENT.
+Ordinary CURRENT/HISTORICAL reviews require http(s) evidence. Retail Lineup
+Bootstrap is owner-authoritative and may intentionally store an empty
+``source_ref`` through its dedicated helper; reviewer/date/notes and the
+immutable bootstrap plan are the audit trail. Parent/approved-set safeguards
+remain identical on both paths.
 """
 from __future__ import annotations
 
@@ -48,8 +44,12 @@ def _validated_date(value: str, label: str) -> str:
         raise RetailLifecycleReviewError(f"{label} must be YYYY-MM-DD") from exc
 
 
-def _validated_source_ref(value: str) -> str:
+def _validated_source_ref(value: str, *, required: bool = False) -> str:
     source_ref = str(value or "").strip()
+    if not source_ref:
+        if required:
+            raise RetailLifecycleReviewError("source_ref must be an http(s) URL")
+        return ""
     if not source_ref.startswith(("https://", "http://")):
         raise RetailLifecycleReviewError("source_ref must be an http(s) URL")
     return source_ref
@@ -85,8 +85,7 @@ def validate_trim_lifecycle_decisions(payload: dict[str, Any], *,
     if not isinstance(rows, list):
         raise RetailLifecycleReviewError("trim lifecycle decisions must be an array")
     catalog = Catalog.load(data_dir, year)
-    seen: set[str] = set()
-    checked: list[dict[str, Any]] = []
+    seen, checked = set(), []
     allowed = {"trim_id", "status", "reviewer", "reviewed_at", "source_ref", "notes"}
     for index, raw in enumerate(rows):
         if not isinstance(raw, dict):
@@ -126,15 +125,9 @@ def load_trim_lifecycle_decisions(*, data_dir: Path | str = DATA_DIR,
     return validate_trim_lifecycle_decisions(payload, data_dir=data_dir, year=year)
 
 
-def upsert_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
-                                      year: int = DEFAULT_YEAR,
-                                      trim_id: str,
-                                      action: str,
-                                      reviewer: str,
-                                      reviewed_at: str,
-                                      source_ref: str = "",
-                                      notes: str = "",
-                                      write: bool = False) -> dict[str, Any]:
+def _upsert(*, data_dir: Path | str, year: int, trim_id: str, action: str,
+            reviewer: str, reviewed_at: str, source_ref: str, notes: str,
+            write: bool, require_source_ref: bool) -> dict[str, Any]:
     action = str(action or "").strip().lower()
     if action not in _ALLOWED_ACTIONS:
         raise RetailLifecycleReviewError("trim lifecycle action must be current, historical or reopen")
@@ -144,74 +137,77 @@ def upsert_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
         raise RetailLifecycleReviewError(f"unknown MarketTrim {trim_id!r}")
     reviewer = _validated_reviewer(reviewer)
     reviewed_at = _validated_date(reviewed_at, "reviewed_at")
+    source_ref = "" if action == "reopen" else _validated_source_ref(
+        source_ref, required=require_source_ref)
 
-    # Keep the parent invariant inside the workflow store so advanced/admin
-    # batches cannot bypass the web action. Reopen is exempt because stale
-    # sidecar state must remain removable after a parent becomes historical.
     if action != "reopen":
         model_id, parent_status = _parent_model(catalog, trim_id)
         if parent_status != "CURRENT":
-            # A raw HISTORICAL parent already forces every one of its trims
-            # HISTORICAL at the release layer (tdr_bridge.lifecycle); a
-            # per-trim review on top of that is not the supported path, so it
-            # stays refused exactly as before -- `approved` is never consulted
-            # for this case.
-            approved = (
-                None if parent_status == "HISTORICAL"
-                else resolve_approved_current_trim_ids(model_id, data_dir=data_dir, year=year)
-            )
-            # A raw non-CURRENT (e.g. UNVERIFIED) parent with an explicit
-            # approved current-retail set (vehreg/current_retail.py) is
-            # different: for such a model that set is the SOLE CURRENT
-            # authority in the release layer, so a trim excluded from it is
-            # already never served as CURRENT regardless of this review.
-            # Recording a HUMAN historical disposition for exactly that
-            # excluded trim only makes an already-non-current trim's
-            # admin/history status explicit, so allow it -- and only it: a
-            # model with no approved set at all keeps the original refusal
-            # unchanged, and "current" stays refused too since it would
-            # contradict the model having no canonical-CURRENT status.
+            approved = None if parent_status == "HISTORICAL" else resolve_approved_current_trim_ids(
+                model_id, data_dir=data_dir, year=year)
             if approved is None or action != "historical":
                 raise RetailLifecycleReviewError(
-                    "parent model must be canonical CURRENT before trim lifecycle review"
-                )
+                    "parent model must be canonical CURRENT before trim lifecycle review")
             if trim_id in approved:
                 raise RetailLifecycleReviewError(
                     "trim is a member of the approved current-retail set; "
-                    "cannot record a contradictory historical disposition"
-                )
+                    "cannot record a contradictory historical disposition")
 
     existing = load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
     merged = [row for row in existing if row["trim_id"] != trim_id]
     if action != "reopen":
         merged.append({
-            "trim_id": trim_id,
-            "status": action.upper(),
-            "reviewer": reviewer,
-            "reviewed_at": reviewed_at,
-            "source_ref": _validated_source_ref(source_ref),
+            "trim_id": trim_id, "status": action.upper(), "reviewer": reviewer,
+            "reviewed_at": reviewed_at, "source_ref": source_ref,
             "notes": str(notes or "").strip(),
         })
-    candidate = {"schema_version": 1, "decisions": merged}
-    checked = validate_trim_lifecycle_decisions(candidate, data_dir=data_dir, year=year)
-    canonical = {"schema_version": 1, "decisions": checked}
-    before = {"schema_version": 1, "decisions": existing}
+    checked = validate_trim_lifecycle_decisions(
+        {"schema_version": 1, "decisions": merged}, data_dir=data_dir, year=year)
+    canonical, before = {"schema_version": 1, "decisions": checked}, {
+        "schema_version": 1, "decisions": existing}
     changed = canonical != before
     destination = review_path(data_dir, year)
     if write and changed:
         _atomic_json(destination, canonical)
     return {
-        "written": bool(write and changed),
-        "changed": changed,
-        "path": str(destination),
-        "decisions": len(checked),
-        "trim_id": trim_id,
+        "written": bool(write and changed), "changed": changed,
+        "path": str(destination), "decisions": len(checked), "trim_id": trim_id,
         "status": action.upper() if action != "reopen" else "UNVERIFIED",
         "reopened": 1 if action == "reopen" and changed else 0,
     }
 
 
+def upsert_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
+                                      year: int = DEFAULT_YEAR, trim_id: str,
+                                      action: str, reviewer: str, reviewed_at: str,
+                                      source_ref: str = "", notes: str = "",
+                                      write: bool = False) -> dict[str, Any]:
+    """Ordinary evidence-backed path; CURRENT/HISTORICAL require a real URL."""
+    return _upsert(
+        data_dir=data_dir, year=year, trim_id=trim_id, action=action,
+        reviewer=reviewer, reviewed_at=reviewed_at, source_ref=source_ref,
+        notes=notes, write=write, require_source_ref=True)
+
+
+def upsert_bootstrap_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
+                                                year: int = DEFAULT_YEAR,
+                                                trim_id: str, action: str,
+                                                reviewer: str, reviewed_at: str,
+                                                source_ref: str = "", notes: str = "",
+                                                write: bool = False) -> dict[str, Any]:
+    """Owner-authoritative bootstrap archive/reopen path; never creates CURRENT review."""
+    action = str(action or "").strip().lower()
+    if action not in {"historical", "reopen"}:
+        raise RetailLifecycleReviewError(
+            "bootstrap lifecycle action must be historical or reopen; CURRENT membership belongs to current_retail")
+    return _upsert(
+        data_dir=data_dir, year=year, trim_id=trim_id, action=action,
+        reviewer=reviewer, reviewed_at=reviewed_at, source_ref=source_ref,
+        notes=notes, write=write, require_source_ref=False)
+
+
 __all__ = [
     "RetailLifecycleReviewError", "load_trim_lifecycle_decisions", "review_path",
+    "upsert_bootstrap_trim_lifecycle_disposition",
     "upsert_trim_lifecycle_disposition", "validate_trim_lifecycle_decisions",
 ]

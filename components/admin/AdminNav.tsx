@@ -3,15 +3,9 @@ import { logoutAction } from "@/app/admin/actions";
 import { currentEditor } from "@/lib/admin-auth";
 
 /**
- * The admin sidebar: six doors, one per thing somebody actually does.
- *
- * Every entry that used to live here and does not now -- ECO review, price
- * coverage, retail lifecycle, data quality, raw canonical input, the batch
- * queue, releases, crosswalk teaching -- was a view onto machinery, not a
- * job. The machinery still runs; it just runs behind a save instead of
- * asking an operator to drive it. What is left is a car (Vehicles), a pile
- * of cars arriving at once (Import), the few the machinery could not place
- * (Exceptions), and the things read rather than edited.
+ * The admin sidebar: routine work stays compact; the Retail Lineup Bootstrap
+ * sits in its own explicit Level-0 section because it is an owner-authoritative
+ * identity reset, not another daily import/review queue.
  */
 export async function AdminNav() {
   const editor = await currentEditor();
@@ -33,6 +27,9 @@ export async function AdminNav() {
       <Link href="/admin/exceptions">รายการที่ต้องตัดสิน</Link>
       <Link href="/admin/market">ข้อมูลตลาด</Link>
       <Link href="/admin/research">ไฟล์งานวิจัย</Link>
+
+      <span className="adminNavHeading">LEVEL 0 · ใช้เมื่อ reset lineup</span>
+      <Link href="/admin/retail-lineup-bootstrap">Retail Lineup Bootstrap</Link>
 
       <Link href="/" target="_blank">เปิดเว็บ Public ↗</Link>
     </nav>
