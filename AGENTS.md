@@ -37,4 +37,5 @@ Rules:
 - Editorial tables (upcoming, analysis) may link canonical IDs but never redefine vehicle facts.
 - One PR per row of `design/GRAFT_PLAN.md`, on `design/<name>` (features: `feat/<name>`). Nothing in a later row starts without the owner's go.
 - No data, permission, or payment logic in design PRs.
+- Roadmap (owner, 1 Oct 2569): this graft IS the overhaul. Never keep an old page or leave a temporary old UX because an overhaul was "scheduled for later"; UI is built to its final design now behind an explicit data contract, and the unready data source (e.g. the replacement market engine, blocker 11) plugs in later. See `design/GRAFT_PLAN.md` §0.
 - Colours only through `var(--token)` from `design/tokens.css`; edit `design/tokens.json` and run `npm run build:design-tokens` (never hand-edit `tokens.css`). Files migrated to the design system are listed in `design/migrated.json` and enforced by `npm run check:design`.
