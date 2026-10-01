@@ -4,9 +4,7 @@ import { Card, CardHead, Chip } from "@/components/design";
 import { CompareToggle } from "@/components/models/CompareTray";
 import { ModelCard } from "@/components/models/ModelCard";
 import { BlockEmpty } from "@/components/models/states";
-import {
-  getCanonicalHistoricalTrims, getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTeasers,
-} from "@/lib/canonical-data";
+import { getCanonicalHistoricalTrims, getCanonicalModelBundle, getCanonicalRelatedModels } from "@/lib/canonical-data";
 import { getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { familyOfBody } from "@/lib/body-families";
@@ -15,6 +13,7 @@ import { formatNumber } from "@/lib/design/format";
 import { modelRangeSummary, preferredRangeForTrim } from "@/lib/model-range-summary";
 import { trimSummarySpecs } from "@/lib/model-trim-summary";
 import { POWERTRAIN_LABEL, bahtRangeText, pictureCredit } from "@/lib/models/list";
+import { presentSpecText, tokenLabel } from "@/lib/models/spec-display";
 import { formatThaiDate } from "@/lib/models/trim-specs";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 import { trimLocalId } from "@/lib/trim-editor-state";
@@ -52,7 +51,7 @@ function TrimRow({ t, ptById, specFields, slug }: { t: any; ptById: Map<any, any
           <small>{linked.map((p: any) => ptSummary(p)).join(" / ")}</small>
         </span>
         <span className="tdr-models-trim__nums">
-          {range ? <span className="tdr-models-mono">{range.value.toLocaleString("en-US")} km {range.cycle}</span> : null}
+          {range ? <span className="tdr-models-mono">{range.value.toLocaleString("en-US")} กม. {tokenLabel(range.cycle)}</span> : null}
           {price ? <strong className="tdr-models-mono">{price}</strong> : <span className="tdr-models-miss">ไม่ระบุราคา</span>}
           {offers.length ? <span className="tdr-models-promo">ราคาโปรโมชัน{ends ? ` · ถึง ${formatThaiDate(ends) || ends}` : ""}</span> : null}
         </span>
@@ -60,7 +59,7 @@ function TrimRow({ t, ptById, specFields, slug }: { t: any; ptById: Map<any, any
       <div className="tdr-models-trim__body">
         {summarySpecs.length ? (
           <dl className="tdr-models-specgrid">
-            {summarySpecs.map((spec) => <div key={spec.key}><dt>{spec.label}</dt><dd>{spec.value}</dd></div>)}
+            {summarySpecs.map((spec) => <div key={spec.key}><dt>{presentSpecText(spec.label)}</dt><dd>{presentSpecText(spec.value)}</dd></div>)}
           </dl>
         ) : null}
         {t.description ? <p>{t.description}</p> : summarySpecs.length ? null : <p className="tdr-models-miss">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
@@ -97,10 +96,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
   if (!r) notFound();
 
   // The three optional blocks fail open (their absence never blanks the page); the model itself throws to error.tsx.
-  const [programs, related, teasers, historical] = await Promise.all([
+  const [programs, related, historical] = await Promise.all([
     r.editorial_id ? getProductionProgramsByModel(r.editorial_id).catch(() => []) : [],
     getCanonicalRelatedModels(r, 6),
-    getModelMarketTeasers(r.id).catch(() => null),
     getCanonicalHistoricalTrims(r.id).catch(() => []),
   ]);
   const ptById = new Map((r.powertrains_detail || []).map((p: any) => [p.id, p]));
@@ -134,7 +132,6 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     r.production_type ? { k: "รูปแบบการนำเข้า/ประกอบ", v: r.production_type } : null,
   ].filter(Boolean) as { k: string; v: string }[];
   const powertrains = (r.powertrains_detail || []) as any[];
-  const teaserCount = Array.isArray(teasers) ? teasers.length : 0;
 
   return <div className="tdr-wrap tdr-models-detail">
     <nav className="tdr-models-crumbs" aria-label="เส้นทาง">
@@ -163,8 +160,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
           {heroRange ? (
             <div>
               <dt>ระยะทางที่ผู้ผลิตประกาศ</dt>
-              <dd><strong className="tdr-models-mono">{heroRange.range}</strong></dd>
-              <small>{heroRange.cycle}</small>
+              <dd><strong className="tdr-models-mono">{presentSpecText(heroRange.range)}</strong></dd>
+              <small>{presentSpecText(heroRange.cycle)}</small>
             </div>
           ) : null}
         </dl>
@@ -230,15 +227,12 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
 
     <section className="tdr-models-blk" aria-labelledby="model-market">
       <div className="tdr-models-sechead"><div><div className="tdr-eyebrow">ตลาด</div><h2 id="model-market">ยอดจดของรุ่นนี้</h2></div></div>
-      {/* Blocker 11: the 12-month line and share come from the market engine that is being replaced, so nothing is read
-          from it here. getModelMarketTeasers (a separate public teaser table) is kept for the one line below. Tier
-          gating is decided client-side, so a single neutral card serves every viewer and holds no market values. */}
+      {/* Blocker 11: the 12-month line and share belong to the market engine being replaced, and the Pro / non-Pro
+          split is part of that overhaul. Until then this block is fully static: nothing market-related is queried or
+          rendered here, so no market value can reach the DOM for any viewer. */}
       <Card tone="dashed" className="tdr-models-state">
         <b className="tdr-card__title">อยู่ระหว่างปรับปรุงระบบวิเคราะห์ตลาด</b>
-        <p className="tdr-models-muted">
-          {teaserCount ? `มีข้อมูลตลาดสำหรับรุ่นนี้ · ครอบคลุม ${formatNumber(teaserCount)} ช่วงเวลาล่าสุด · ` : ""}
-          <Link href="/market">เปิด Automotive Intelligence →</Link>
-        </p>
+        <p className="tdr-models-muted"><Link href="/market">เปิด Automotive Intelligence →</Link></p>
       </Card>
     </section>
 

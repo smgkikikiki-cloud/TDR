@@ -17,7 +17,8 @@ import {
   COMPARE_MAX, PAGE_SIZE, SORTS, bahtRangeText, compareHref, matchesFilters, modelsHref, normalizeParams, pageWindow, parsePage, parseSort,
   pictureCredit, sortModels, visibleOption, type ModelListRow,
 } from "../lib/models/list.ts";
-import { formatThaiDate, keyFacts, sourceBadge, trimSpecGroups, TRIM_SPEC_GROUPS } from "../lib/models/trim-specs.ts";
+import { formatThaiDate, keyFacts, sourceBadge, trimSpecGroups, unmappedFields, TRIM_SPEC_GROUPS } from "../lib/models/trim-specs.ts";
+import { hasInternalToken, isNoValue, presentSpecText, tokenLabel } from "../lib/models/spec-display.ts";
 import { loadSpecFieldRegistry } from "../lib/spec-field-registry.ts";
 
 let failed = 0;
@@ -108,8 +109,8 @@ console.log("\ntrim spec table (P04)");
 const registry = loadSpecFieldRegistry(new Date().getFullYear());
 check("the canonical registry loads", registry.length > 50, true);
 check("seven groups, in the approved order", TRIM_SPEC_GROUPS.map((g) => g.title), ["ขนาดและน้ำหนัก", "ระบบขับเคลื่อน", "แบตเตอรี่และการชาร์จ", "ล้อและยาง", "ความปลอดภัย", "ความสะดวกและเทคโนโลยี", "ภาษีและกฎระเบียบ"]);
-const registryGroups = new Set(registry.map((f) => f.group));
-check("every registry group lands in some P04 group (no field is silently dropped)", [...registryGroups].every((g) => TRIM_SPEC_GROUPS.some((t) => (t.registry as readonly string[]).includes(g))), true);
+check("the only registry field with no P04 group is the factory (a production fact, not tax or regulation)", unmappedFields(registry), ["manufacturing.factory"]);
+check("ภาษีและกฎระเบียบ takes the excise rate field only, not the whole manufacturing group", TRIM_SPEC_GROUPS.find((g) => g.title === "ภาษีและกฎระเบียบ")?.fields, ["manufacturing.excise_tax_rate"]);
 const fact = (field_key: string, value: unknown, extra: Record<string, unknown> = {}) => ({
   field_key, value, value_state: "KNOWN", unit: "", qualifiers: {}, source: "ecosticker", fact_id: `eco:x:${field_key}`,
   observed_at: "2026-04-01", source_ref: "https://car.ecosticker.go.th/landing-page/detail/abc", ...extra,
@@ -123,6 +124,7 @@ const trim: any = {
     fact("safety.airbag_count", 6), fact("safety.aeb", true, { source: "", fact_id: "admin:t1:safety.aeb", source_ref: "", observed_at: null }),
     fact("safety.abs", null), fact("safety.esc", "", {}), fact("comfort.auto_climate", true, { value_state: "UNKNOWN" }),
     fact("manufacturing.excise_tax_rate", 0.02, { source: "", fact_id: "x", source_ref: "" }),
+    fact("manufacturing.factory", "Factory A", { source: "ecosticker" }),
   ],
 };
 const groups = trimSpecGroups(trim, registry);
@@ -134,10 +136,12 @@ check("no row value is a dash or blank", allRows.every((r) => r.value.trim() !==
 check("labels come from the registry", allRows.find((r) => r.key.startsWith("spec:vehicle.curb_weight_kg"))?.label, registry.find((f) => f.key === "vehicle.curb_weight_kg")?.labelTh);
 const dims = groups[0].rows.map((r) => r.key.replace("spec:", "").split("::")[0]);
 check("row order follows the registry order", dims, [...dims].sort((a, b) => registry.findIndex((f) => f.key === a) - registry.findIndex((f) => f.key === b)));
-check("every row has a source badge; ECO Sticker, OEM, TDR, unknown", [
+check("every row has a source badge; ECO Sticker, OEM, and none recorded -> ไม่ระบุที่มา (fact_id never infers a source)", [
   allRows.find((r) => r.key.includes("battery.gross"))?.source.label, allRows.find((r) => r.key.includes("charging.dc_max"))?.source.label,
   allRows.find((r) => r.key.includes("safety.aeb"))?.source.label, allRows.find((r) => r.key.includes("excise"))?.source.label,
-], ["ECO Sticker", "OEM", "TDR", "ไม่ระบุที่มา"]);
+], ["ECO Sticker", "OEM", "ไม่ระบุที่มา", "ไม่ระบุที่มา"]);
+check("a fact factory is not shown on the trim page", allRows.some((r) => r.fieldKey === "manufacturing.factory"), false);
+check("the excise rate is under ภาษีและกฎระเบียบ", groups.find((g) => g.title === "ภาษีและกฎระเบียบ")?.rows.map((r) => r.fieldKey), ["manufacturing.excise_tax_rate"]);
 check("observed date is Buddhist-era", allRows.find((r) => r.key.includes("battery.gross"))?.observedAt, "1 เม.ย. 2569");
 check("a fact with no date has none", allRows.find((r) => r.key.includes("safety.aeb"))?.observedAt, null);
 check("only http(s) source links survive", trimSpecGroups({ ...trim, comparable_specs: [fact("vehicle.length_mm", 1, { source_ref: "javascript:x" })] }, registry)[0].rows[0].sourceUrl, null);
@@ -145,7 +149,34 @@ check("a trim with no facts and no columns has no groups", trimSpecGroups({ id: 
 check("a trim with no ledger at all has no groups", trimSpecGroups({ id: "e" } as any, registry), []);
 check("flat MarketTrim columns still show (length_mm) when there is no ledger fact", trimSpecGroups({ id: "f", length_mm: 4400 } as any, registry).flatMap((g) => g.rows).some((r) => r.value.includes("4,400")), true);
 check("date formatting", [formatThaiDate("2026-09-30"), formatThaiDate("nope"), formatThaiDate(null)], ["30 ก.ย. 2569", null, null]);
-check("source badge without a source says so", sourceBadge({ source: "", fact_id: "eco:1" }), { label: "ไม่ระบุที่มา", known: false });
+check("source badge without a source says so", sourceBadge({ source: "" }), { label: "ไม่ระบุที่มา", known: false });
+check("an admin fact_id or an admin write path is not an evidence source", [sourceBadge({ source: "", fact_id: "admin:t:x" } as any), sourceBadge({ source: "admin" })], [{ label: "ไม่ระบุที่มา", known: false }, { label: "ไม่ระบุที่มา", known: false }]);
+check("named sources still get their badge", [sourceBadge({ source: "ecosticker" }).label, sourceBadge({ source: "oem_official_website" }).label], ["ECO Sticker", "OEM"]);
+
+console.log("\ndisplay text (P03 / P04): no internal tokens, qualifiers kept");
+check("count and non-SI units are words", [presentSpecText("5 seat"), presentSpecText("8 year"), presentSpecText("6 airbag"), presentSpecText("1 gear"), presentSpecText("1 motor"), presentSpecText("7.9 s"), presentSpecText("18.5 L/100km"), presentSpecText("120 km/h"), presentSpecText("480 km")], ["5 ที่นั่ง", "8 ปี", "6 ใบ", "1 เกียร์", "1 มอเตอร์", "7.9 วินาที", "18.5 ลิตร/100 กม.", "120 กม./ชม.", "480 กม."]);
+check("SI symbols and the number are untouched", [presentSpecText("4,310 mm"), presentSpecText("60.5 kWh"), presentSpecText("130 kW"), presentSpecText("215/60 R17"), presentSpecText("10→80% SOC @150kW")], ["4,310 mm", "60.5 kWh", "130 kW", "215/60 R17", "10→80% SOC @150kW"]);
+check("every qualifier is kept, in words", presentSpecText("130 kW (FRONT_MOTOR, DECLARED)"), "130 kW (มอเตอร์หน้า, ตามที่ผู้ผลิตประกาศ)");
+check("distinct qualifiers stay distinct", [tokenLabel("DECLARED"), tokenLabel("AS_DECLARED"), tokenLabel("FRONT_MOTOR"), tokenLabel("REAR_MOTOR")].every((v, i, a) => a.indexOf(v) === i), true);
+check("an unknown SCREAMING_SNAKE token is humanized, never shown raw", presentSpecText("(SOME_NEW_VALUE)"), "(some new value)");
+check("enum values are words; free text is never rewritten", [presentSpecText("GASOLINE"), presentSpecText("AUTOMATIC"), presentSpecText("MANUAL"), presentSpecText("DIESEL"), presentSpecText("TOYOTA MOTOR CORPORATION"), presentSpecText("FWD"), presentSpecText("PMSM")], ["เบนซิน", "อัตโนมัติ", "เกียร์ธรรมดา", "ดีเซล", "TOYOTA MOTOR CORPORATION", "FWD", "PMSM"]);
+check("UNKNOWN / NOT_APPLICABLE placeholders are not values", [isNoValue("UNKNOWN"), isNoValue("not_applicable"), isNoValue("FWD")], [true, true, false]);
+check("standard names (NEDC, WLTP, BEV) are left alone", presentSpecText("480 km (NEDC, FULL)"), "480 กม. (NEDC, ระยะรวม)");
+const tokenFixture: any = { id: "tok", comparable_specs: [
+  fact("vehicle.seats", 5, { unit: "seat" }), fact("battery.warranty_years", 8, { unit: "year" }), fact("safety.airbag_count", 6, { unit: "airbag" }),
+  fact("powertrain.max_power_kw", 130, { unit: "kW", qualifiers: { output_scope: "FRONT_MOTOR", rating_basis: "DECLARED" } }),
+  fact("powertrain.max_power_kw", 260, { unit: "kW", qualifiers: { output_scope: "SYSTEM", rating_basis: "PEAK" } }),
+  fact("performance.acceleration_0_100_s", 7.9, { unit: "s", qualifiers: { measurement_basis: "DECLARED" } }),
+  fact("ev.rated_range_km", 480, { unit: "km", qualifiers: { measurement_basis: "NEDC", range_scope: "ELECTRIC_ONLY" } }),
+  fact("powertrain.drivetrain", "UNKNOWN"), fact("powertrain.transmission", "AUTOMATIC"), fact("engine.fuel_type", "GASOLINE"),
+  fact("battery.chemistry", "LI_ION_UNSPECIFIED"), fact("charging.port_type", "ONBOARD_AC"), fact("vehicle.curb_weight_kg", 1500, { unit: "kg", qualifiers: { measurement_basis: "AS_DECLARED" } }),
+] };
+const tokenRows = trimSpecGroups(tokenFixture, registry).flatMap((g) => g.rows);
+check("a placeholder UNKNOWN value makes no row", tokenRows.some((r) => r.fieldKey === "powertrain.drivetrain"), false);
+check("enum values render in words (AUTOMATIC, GASOLINE)", tokenRows.filter((r) => ["powertrain.transmission", "engine.fuel_type"].includes(r.fieldKey)).map((r) => r.value).sort(), ["อัตโนมัติ", "เบนซิน"].sort());
+check("no rendered label or value holds a SCREAMING_SNAKE token", tokenRows.filter((r) => hasInternalToken(r.label) || hasInternalToken(r.value)).map((r) => [r.label, r.value]), []);
+check("the two power figures remain two rows with their qualifiers visible", tokenRows.filter((r) => r.fieldKey === "powertrain.max_power_kw").map((r) => r.label).every((l) => /มอเตอร์หน้า|ทั้งระบบ/.test(l)), true);
+check("counts read as words in the table", Object.fromEntries(tokenRows.filter((r) => ["vehicle.seats", "battery.warranty_years", "safety.airbag_count"].includes(r.fieldKey)).map((r) => [r.fieldKey, r.value])), { "vehicle.seats": "5 ที่นั่ง", "battery.warranty_years": "8 ปี", "safety.airbag_count": "6 ใบ" });
 check("key facts list only the known ones, price first", keyFacts({ ...trim, price_baht: 1000000, battery_kwh: 60.5 } as any, registry).map((f) => f.key), ["price", "battery", "seats"]);
 check("no key facts for an empty trim", keyFacts({ id: "z" } as any, registry), []);
 
@@ -175,7 +206,7 @@ const trimPage = strip(readFileSync("app/models/[slug]/[trim]/page.tsx", "utf8")
 check("no dash fallback for a missing spec value", /\|\|\s*["'](?:-|–|—)["']|\?\?\s*["'](?:-|–|—)["']/.test(trimPage), false);
 const modelPage = strip(readFileSync("app/models/[slug]/page.tsx", "utf8"));
 check("the model page has no news block or dark industry band", /getRelatedEvents|sfIndZone|sfNewsList/.test(modelPage), false);
-check("the model page keeps the independent teaser reader only", /getModelMarketTeasers/.test(modelPage), true);
+check("the model page queries and renders no market teaser while blocker 11 is active", /getModelMarketTeasers|public_model_market_teaser|teaser/i.test(modelPage), false);
 const compare = readFileSync("app/compare/page.tsx", "utf8");
 check("/compare still reads ?trims= and now ?models=", /getAll\("trims"\)/.test(compare) && /getAll\("models"\)/.test(compare), true);
 
