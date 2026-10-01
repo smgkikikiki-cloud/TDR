@@ -52,10 +52,10 @@ Upcoming (PR 12) and the other feature PRs stay independent and may run in paral
 | 14 | feat/omise | Checkout P20, `tdr_entitlements`, renewal reminders (7 days) | Omise 3DS answer |
 | 15 | feat/ice-import | Ice Panels 1–4, Info builder, CSV (P11, P13) | separate go |
 
-Rows 12 and 13 can run in parallel after 4, and row 13 may run before rows 9–11. Migrations: repo is at v52 → Upcoming = **v53**, Analysis = **v54** (owner decision, 1 Oct 2569). These are feature reservations that prevent parallel-PR collisions, not a requirement that migrations merge in numeric order:
-- If Analysis merges before Upcoming, v53 stays temporarily absent/reserved. Do NOT rename Analysis to v53 by merge order and do NOT create an empty/dummy v53 migration.
-- When Upcoming merges it uses its reserved v53. v54 must stay independent of v53 and must not reference schema created by Upcoming.
-- If Upcoming is cancelled, v53 may stay an unused gap permanently. Never renumber already-merged migrations.
+Rows 12 and 13 can run in parallel after 4, and row 13 may run before rows 9–11. Migrations: Retail Lineup Bootstrap already owns merged migrations **v53–v56** (never rename or renumber them) → Upcoming = **v57**, Analysis = **v58** (owner decision, 1 Oct 2569, corrected the same day). This supersedes the earlier v53/v54 reservation, which was made before Retail Lineup Bootstrap landed v53–v56 on `main`. These are feature reservations that prevent parallel-PR collisions, not merge-order numbering:
+- If Analysis merges before Upcoming, v57 stays temporarily absent/reserved. Do NOT rename Analysis to v57 by merge order and do NOT create an empty/dummy v57 migration.
+- When Upcoming merges it uses its reserved v57. v58 must stay independent of v57 and must not reference schema created by Upcoming.
+- If Upcoming is cancelled, v57 may stay an unused gap permanently. Never renumber already-merged migrations.
 
 ## AGENTS.md design block must also say
 Read `docs/WORK_STATE.md` before multi-step work. Design PRs never touch the active repair batch or `automotive/vehicle_master/`. Editorial tables (upcoming/analysis) may link canonical IDs but never redefine vehicle facts.

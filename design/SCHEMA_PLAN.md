@@ -1,6 +1,6 @@
 # SCHEMA_PLAN.md — new tables, storage, pipelines (drafts for review; migrations are written in the feature PRs)
 
-Repo posture (keep): RLS enabled with **no policies**; every read/write goes through the service-role client server-side; migrations are new files `supabase/migration_vNN_*.sql` (latest is **v52**; this plan uses **v53 = upcoming**, **v54 = analysis**, fixed up front so parallel PRs don't collide). Never edit `automotive/vehicle_master/**` or canonical tables. `research_articles` was never deployed to production, so it is replaced, not migrated.
+Repo posture (keep): RLS enabled with **no policies**; every read/write goes through the service-role client server-side; migrations are new files `supabase/migration_vNN_*.sql` (Retail Lineup Bootstrap owns merged **v53–v56**, never renumbered; this plan uses **v57 = upcoming**, **v58 = analysis**, fixed up front so parallel PRs don't collide. This supersedes the earlier v53/v54 reservation, made before Retail Lineup landed v53–v56; see docs/MERGE_DECISIONS.md). Never edit `automotive/vehicle_master/**` or canonical tables. `research_articles` was never deployed to production, so it is replaced, not migrated.
 
 ## 1. `upcoming_vehicles` (editorial; not Vehicle Master)
 ```sql
