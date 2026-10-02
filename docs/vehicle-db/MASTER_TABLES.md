@@ -182,6 +182,13 @@ The old reads returned those rows only because of the projection's index order (
 production on 2 Oct 2026). Over the master tables, an unordered capped read would return 40
 different trims. The 1,000-row cap is M4 debt (SERVING_CONTRACT §7.11).
 
+## Engine rules (Phase 0 step 4)
+
+`supabase/migration_v59_vehicle_engine_rules.sql` ports the engine's validation rules onto these tables as
+constraints and triggers. The rules that need the spec registry, the resolution chain or write planning live in
+`lib/vehicle-engine/`. The rule-by-rule map, what is deferred and why, and the computed-value decisions are in
+[`ENGINE_RULES.md`](ENGINE_RULES.md). On a fresh database, seed before applying v59 (ENGINE_RULES.md F5).
+
 ## Left for later steps (not decided here)
 
 - `authority`, `locked`, `vat_included` and the typed v3 §7 promotion columns (`scope`, `type`,
