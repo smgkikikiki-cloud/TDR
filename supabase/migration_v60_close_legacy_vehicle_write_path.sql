@@ -26,7 +26,7 @@ declare
 begin
   select seed_release_id into seeded_release
     from public.vehicle_master_state
-   where scope = 'vehicle_catalog';
+   where scope = 'vehicle_master';
 
   select active_release_id into active_release
     from public.canonical_vehicle_state
