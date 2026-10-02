@@ -57,7 +57,11 @@ def _release(db, release_id: str, *, as_of: str, list_price: int, status: str):
 
 @pytest.fixture
 def db(pg):
-    apply_production_schema(pg)
+    # The release-keyed serving these tests describe is the schema through
+    # v57. From v58 on, current_* read the Vehicle Master and the release
+    # pointer is pinned to its seed (test_vehicle_serving_parity_migration_v58.py);
+    # the projections themselves stay keyed by release exactly as below.
+    apply_production_schema(pg, through=57)
     # Last year's release is still there, as it always is, and this year's
     # is the one being served.
     _release(pg, OLD, as_of="2025-06-01", list_price=1_799_000, status="SUPERSEDED")

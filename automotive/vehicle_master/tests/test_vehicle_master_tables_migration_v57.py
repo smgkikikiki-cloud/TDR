@@ -157,7 +157,10 @@ def _check(db) -> dict[tuple[str, str], tuple[str, bool]]:
 
 @pytest.fixture
 def db(pg):
-    apply_production_schema(pg)
+    # v57's own contract: seeding leaves serving untouched and a later release
+    # still activates. From v58 on, current_* read the master and activation
+    # is pinned (test_vehicle_serving_parity_migration_v58.py).
+    apply_production_schema(pg, through=57)
     _publish(pg, _release())
     return pg
 
