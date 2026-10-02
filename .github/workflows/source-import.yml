@@ -1,191 +1,21 @@
-name: Run uploaded source imports
+name: Run uploaded source imports (legacy writer closed)
 
+# Vehicle DB v3 Phase 0 step 5. Keep repository_dispatch temporarily so an old
+# deployed uploader fails visibly; there is no schedule and no canonical-file
+# or release write in this workflow anymore.
 on:
-  # An upload dispatches this directly; the schedule is only a sweeper for a
-  # dispatch that never arrived. Nobody waits on the clock.
   repository_dispatch:
     types: [source-import]
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: canonical-vehicle-input
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  import:
+  closed:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-    defaults:
-      run:
-        working-directory: automotive/vehicle_master
     steps:
-      - uses: actions/checkout@v4
-        with:
-          # Pinned rather than left to default to whatever ref triggered
-          # the run: this is a production writer that pushes straight to
-          # main (git push origin HEAD:main below) regardless of what it
-          # started from, so starting anywhere else is never correct --
-          # and workflow_dispatch lets a human pick an arbitrary branch in
-          # the UI. Pinning also guarantees actions/checkout creates
-          # refs/remotes/origin/main locally, which pricefeed.yml's own
-          # checkout comment covers in more detail (pricefeed_guard.py
-          # reads `origin/main` directly).
-          ref: main
-      # tools.publish_canonical computes `git rev-list --count` on this
-      # commit to guard the publish RPC against an older commit's publish
-      # racing a newer one's (migration_v44). That guard only needs this
-      # commit's own complete ancestry -- never any other branch or tag.
-      #
-      # `fetch-depth: 0` used to be how this got a full history, but per
-      # actions/checkout's own docs that fetches "all history for all
-      # branches and tags", i.e. every historical feature/fix/consolidation
-      # branch this repo has ever had, every run. Once there were enough of
-      # them, that full-repository fetch started failing outright ("pack
-      # has 2 unresolved deltas" / "invalid index-pack output" from
-      # actions/checkout@v4, repeatable on retry) -- before Python,
-      # Supabase, or any canonical write ever ran. A plain shallow checkout
-      # (the default above, same as "Test TDR" uses) then a `git fetch
-      # --depth=<huge> origin <the exact commit just checked out>` gets
-      # identical ancestry for `git rev-list --count` on that commit --
-      # deepening one already-fetched commit, not fetching every ref in
-      # the repository.
-      - name: Deepen this commit's history for the publish ordinal guard
-        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
-      # tools/publish_canonical.py's _revision_ordinal() silently returns
-      # None (no ordinal, guard skipped) for a shallow repo rather than
-      # erroring -- exactly the failure mode that would make a broken
-      # deepen step invisible. Fail the job outright instead so migration_v44's
-      # staleness guard is never quietly disabled by a future change here.
-      - name: Fail loudly if the deepen fetch left the checkout shallow
+      - name: Legacy writer is closed
         run: |
-          set -euo pipefail
-          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
-            echo "::error::Checkout is still shallow after the deepen fetch -- migration_v44's ordinal guard would be silently disabled."
-            exit 1
-          fi
-      - name: Preflight
-        id: preflight
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
-            echo "::warning::Source import is paused until Supabase credentials are configured."
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "ready=true" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-python@v5
-        if: steps.preflight.outputs.ready == 'true'
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: automotive/vehicle_master/requirements.txt
-      - if: steps.preflight.outputs.ready == 'true'
-        run: python -m pip install -r requirements.txt
-      # Retail Lineup Bootstrap is a compile-only source kind at this stage:
-      # consume every queued workbook before the generic worker can see it.
-      # The dedicated worker persists one immutable PREVIEW_READY plan and
-      # never writes canonical files. A crash after preview persistence is
-      # recovered through the unique import_run_id link on the next sweep.
-      - name: Compile Retail Lineup Bootstrap workbooks
-        if: steps.preflight.outputs.ready == 'true'
-        run: PYTHONPATH=. python tools/retail_lineup_compile_worker.py --limit 1000
-      # A run whose write pushed cleanly but whose publish then failed (or
-      # the job was cancelled between the two) used to stay
-      # WRITTEN_PENDING_PUBLISH forever: the next tick saw a clean working
-      # tree -- nothing of ITS OWN to commit -- and skipped publishing
-      # entirely, so nothing ever republished the commit that was already
-      # sitting on main. This recovers it before anything else runs, so it
-      # is fixed on the very next tick regardless of whether this tick has
-      # any new upload of its own.
-      - name: Runs stuck since a previous publish failed
-        if: steps.preflight.outputs.ready == 'true'
-        id: stuck
-        run: echo "runs=$(PYTHONPATH=. python tools/import_worker.py stuck-runs)" >> "$GITHUB_OUTPUT"
-      - name: Recover a publish that failed after a successful push
-        if: steps.preflight.outputs.ready == 'true' && steps.stuck.outputs.runs != ''
-        id: recover
-        run: |
-          set -euo pipefail
-          sha="$(git rev-parse HEAD)"
-          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "$sha")
-          echo "$result"
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
-      - name: Complete the runs the recovery published
-        if: steps.preflight.outputs.ready == 'true' && steps.stuck.outputs.runs != ''
-        run: |
-          set -euo pipefail
-          args=""
-          for run in ${{ steps.stuck.outputs.runs }}; do args="$args --run-id $run"; done
-          PYTHONPATH=. python tools/import_worker.py finalize $args \
-            --commit-sha "${{ steps.recover.outputs.sha }}" \
-            --release-id "${{ steps.recover.outputs.release_id }}"
-      - name: Import every uploaded file
-        if: steps.preflight.outputs.ready == 'true'
-        run: PYTHONPATH=. python tools/import_worker.py run --limit 5
-      # Which runs this publish will carry, captured before the push so the
-      # finalize afterwards names them instead of sweeping whatever happens
-      # to be pending -- another run's work is not this run's to complete.
-      - name: Which runs are waiting on this publish
-        if: steps.preflight.outputs.ready == 'true'
-        id: pending
-        run: echo "runs=$(PYTHONPATH=. python tools/import_worker.py pending-runs)" >> "$GITHUB_OUTPUT"
-      - name: Commit what the import wrote
-        if: steps.preflight.outputs.ready == 'true'
-        id: commit
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "$(git status --porcelain vehreg/data)" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          git config user.name "TDR source import"
-          git config user.email "noreply@github.com"
-          git add vehreg/data
-          git commit -m "Apply uploaded source import"
-          git pull --rebase origin main
-          git push origin HEAD:main
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-      # The commit is recorded the moment the push succeeds, not the moment
-      # publish does -- that gap is exactly what left a run stuck with no
-      # record of what it had pushed if publish below fails. This is what
-      # "Runs stuck since a previous publish failed" above finds next tick.
-      - name: Record the commit these runs landed in
-        if: steps.preflight.outputs.ready == 'true' && steps.commit.outputs.changed == 'true'
-        run: |
-          set -euo pipefail
-          args=""
-          for run in ${{ steps.pending.outputs.runs }}; do args="$args --run-id $run"; done
-          PYTHONPATH=. python tools/import_worker.py mark-committed $args \
-            --commit-sha "${{ steps.commit.outputs.sha }}"
-      # Publish here, in this job, for the exact commit just pushed. Pushing
-      # and trusting vehicle-release.yml to notice is not a publish path:
-      # nothing fails if it never fires, and the run would report success
-      # over data nobody is serving.
-      - name: Publish the pushed revision
-        if: steps.preflight.outputs.ready == 'true' && steps.commit.outputs.changed == 'true'
-        id: publish
-        run: |
-          set -euo pipefail
-          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}")
-          echo "$result"
-          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
-      - name: Complete the runs this publish carried
-        if: steps.preflight.outputs.ready == 'true' && steps.commit.outputs.changed == 'true'
-        run: |
-          set -euo pipefail
-          args=""
-          for run in ${{ steps.pending.outputs.runs }}; do args="$args --run-id $run"; done
-          PYTHONPATH=. python tools/import_worker.py finalize $args \
-            --commit-sha "${{ steps.commit.outputs.sha }}" \
-            --release-id "${{ steps.publish.outputs.release_id }}"
+          echo "::error::Legacy Vehicle DB write path is closed (Phase 0 step 5). Source imports must use the DB-master pipeline, not vehreg/data releases."
+          exit 1
