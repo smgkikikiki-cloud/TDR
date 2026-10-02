@@ -41,35 +41,32 @@ check("and can close one",
 check("a canonical run waits for its push before it claims to be done",
   worker.includes("WRITTEN_PENDING_PUBLISH") && worker.includes("CANONICAL_SOURCES"));
 const importFlow = read(".github/workflows/source-import.yml");
-// lastIndexOf on both sides: a stuck-publish recovery step (added for
-// blocker 7A) legitimately finalizes an EARLIER commit's runs before
-// this run's own push happens; what still has to hold is that THIS
-// run's own finalize (the last one in the file) comes after THIS run's
-// own push (also the last one in the file).
-check("finalize runs after the push, not before",
-  importFlow.lastIndexOf("git push origin HEAD:main") < importFlow.lastIndexOf("import_worker.py finalize"));
 
-console.log("\nno human approval in a deterministic write path");
-check("uploaded imports go to main rather than a pull request",
-  !importFlow.includes("gh pr create"));
+console.log("\nlegacy deterministic writers are closed in Phase 0 step 5");
 const pricefeed = read(".github/workflows/pricefeed.yml");
 const canonicalInput = read(".github/workflows/canonical-input.yml");
-check("the price tracker publishes instead of opening a PR to merge",
-  !pricefeed.includes("gh pr create") && pricefeed.includes("git push origin HEAD:main"));
-// `market price-run` is an evidence report and rejects --write; the workflow
-// called it with --write anyway, so it failed on every tick and no harvested
-// price ever reached the ledger.
-check("the price tracker calls a writer that can write",
-  pricefeed.includes("tools.pricefeed_write")
-    && !/(?<!`)python -m vehreg market price-run/.test(pricefeed)
-    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
-for (const flow of [importFlow, pricefeed, canonicalInput]) {
-  check("what is pushed is published in the same job",
+for (const [name, flow] of [
+  ["source import", importFlow],
+  ["price feed", pricefeed],
+  ["canonical input", canonicalInput],
+] as const) {
+  check(`${name} workflow fails loudly as a closed legacy writer`,
+    flow.includes("Legacy Vehicle DB write path is closed (Phase 0 step 5)"));
+  check(`${name} workflow has no scheduled writer`, !flow.includes("schedule:"));
+  check(`${name} workflow cannot push or publish a file-backed release`,
     !flow.includes("git push origin HEAD:main")
-      || (flow.includes("tools.publish_canonical") && flow.includes("--revision")));
+      && !flow.includes("tools.publish_canonical")
+      && !flow.includes("tdr_bridge.publish"));
 }
-check("a saved canonical edit is not held behind a merge",
-  !canonicalInput.includes("gh pr create"));
+check("source import no longer finalizes a file-backed canonical run",
+  !importFlow.includes("import_worker.py finalize"));
+check("price feed no longer calls the legacy file writer",
+  !pricefeed.includes("tools.pricefeed_write")
+    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
+check("legacy workflows do not open replacement PRs",
+  !importFlow.includes("gh pr create")
+    && !pricefeed.includes("gh pr create")
+    && !canonicalInput.includes("gh pr create"));
 
 console.log("\nprice: the owner's fields, the ledger's bookkeeping");
 const priceAction = read("app/admin/trim-price-actions.ts");
