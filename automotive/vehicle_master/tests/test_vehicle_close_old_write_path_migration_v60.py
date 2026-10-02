@@ -36,6 +36,12 @@ CLOSED_RPCS = (
     ("prune_vehicle_releases", "1, interval '6 hours'"),
 )
 
+BOOTSTRAP_WRITERS = (
+    "vehicle_master_seed_from_release(text,date)",
+    "vehicle_master_seed_supplemental(text,date,text,jsonb)",
+    "vehicle_master_finish_supplemental(text,date,jsonb)",
+)
+
 STUB_WORKFLOWS = (
     ".github/workflows/canonical-input.yml",
     ".github/workflows/enqueue-canonical-batch.yml",
@@ -75,6 +81,17 @@ def test_service_role_old_tables_are_select_only(db):
     # Phase 1 explicitly reuses this as the DB-master change log.
     assert db.scalar(
         "select has_table_privilege('service_role','public.canonical_write_revisions','INSERT')"
+    ) == "t"
+
+
+def test_bootstrap_release_seed_writers_are_no_longer_executable(db):
+    for signature in BOOTSTRAP_WRITERS:
+        assert db.scalar(
+            f"select has_function_privilege('service_role','public.{signature}','EXECUTE')"
+        ) == "f", signature
+    # The read-only validation helper stays available to the service role.
+    assert db.scalar(
+        "select has_function_privilege('service_role','public.vehicle_master_seed_check()','EXECUTE')"
     ) == "t"
 
 
