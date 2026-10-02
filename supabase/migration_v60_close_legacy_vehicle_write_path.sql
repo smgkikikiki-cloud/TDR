@@ -117,6 +117,14 @@ begin
 end
 $$;
 
+-- The release-seed functions were bootstrap writers for Phase 0 step 2.  They
+-- are not a normal DB-master write API: leaving them executable would keep a
+-- release/file-derived mutation route into the master after cutover.  Read-only
+-- seed checks remain executable; only the three seed writers are closed.
+revoke execute on function public.vehicle_master_seed_from_release(text, date) from service_role;
+revoke execute on function public.vehicle_master_seed_supplemental(text, date, text, jsonb) from service_role;
+revoke execute on function public.vehicle_master_finish_supplemental(text, date, jsonb) from service_role;
+
 -- Keep the old RPC names alive only to fail loudly.  This matters because the
 -- old publishers are SECURITY DEFINER: revoking table DML from service_role by
 -- itself would not stop a granted RPC from mutating tables as its owner.
