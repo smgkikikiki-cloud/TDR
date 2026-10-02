@@ -119,6 +119,27 @@ def test_v60_refuses_to_strand_a_queued_batch(pre_v60):
     ) == "t"
 
 
+def test_v60_reads_vehicle_master_scope_and_refuses_release_drift(pre_v60):
+    pre_v60.sql("""
+      insert into public.vehicle_master_state
+        (scope, seed_release_id, seed_as_of, seed_source_hash,
+         seed_canonical_revision, release_counts)
+      values
+        ('vehicle_master', 'seed-release', date '2026-10-01',
+         repeat('a', 64), 'seed-revision', '{}'::jsonb);
+    """)
+    ok, err = pre_v60.try_sql(V60.read_text(encoding="utf-8"))
+    assert not ok
+    assert (
+        "Vehicle Master seed release seed-release does not match active legacy release <null>"
+        in err
+    )
+    # The cutover gate fires before any legacy permissions are frozen.
+    assert pre_v60.scalar(
+        "select has_table_privilege('service_role','public.canonical_input_batches','INSERT')"
+    ) == "t"
+
+
 def test_legacy_writer_workflows_are_fail_fast_stubs():
     for relative in STUB_WORKFLOWS:
         text = (ROOT / relative).read_text(encoding="utf-8")
