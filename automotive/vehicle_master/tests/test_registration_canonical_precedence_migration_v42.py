@@ -13,6 +13,8 @@ the one place the precedence has to hold: what Postgres actually returns.
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from tests.pg_cluster import apply_production_schema, pg  # noqa: F401
@@ -116,17 +118,33 @@ def test_the_legacy_reverse_crosswalk_still_works_when_canonical_model_id_is_not
        where release_id = '{RELEASE}' and canonical_id = '{NEW_MODEL_CANONICAL}';
     """)
     # Since v58 current_vehicle_models (which the crosswalk reads) serves the
-    # Vehicle Master, so the same model and its legacy id live there too.
+    # Vehicle Master, so the same model and its legacy id live there too --
+    # as rows the v59 engine rules accept: a declared-incomplete model (a stub
+    # awaiting research) with its one generation, written together.
+    brand = {"id": "newbrand", "name_en": "New Brand", "name_th": "", "brand_segment": "UNKNOWN",
+             "oem_group": "UNKNOWN", "brand_origin": "UNKNOWN", "trim_detail": False, "aliases": [], "overrides": {}}
+    model = {"id": NEW_MODEL_CANONICAL, "brand_id": "newbrand", "name_en": "New Model", "name_th": "",
+             "nameplate": "New Model", "body_type": "OTHER", "cab_type": "NOT_APPLICABLE",
+             "registration_type": "RY1", "market_scope": "CORE", "aliases": [], "notes": "", "incomplete": True,
+             "powertrain_checked": False, "retail_status": "UNVERIFIED", "retail_checked_at": None,
+             "retail_source": "", "overrides": {}}
+    generation = {"id": f"{NEW_MODEL_CANONICAL}.gen1", "model_id": NEW_MODEL_CANONICAL, "code": "",
+                  "segment": "UNKNOWN", "seats": None, "launched": None, "ended": None, "overrides": {}}
     db.sql(f"""
+      begin;
       insert into public.vehicle_master_state
         (scope, seed_release_id, seed_as_of, seed_source_hash, seed_canonical_revision, release_counts)
         values ('vehicle_master', '{RELEASE}', '2026-09-01', 'hash', 'rev', '{{}}'::jsonb);
       insert into public.vehicle_brands (canonical_id, slug, name_en, payload, served_as_of, seed_release_id)
-        values ('newbrand', 'newbrand', 'New Brand', '{{}}'::jsonb, '2026-09-01', '{RELEASE}');
+        values ('newbrand', 'newbrand', 'New Brand', '{json.dumps(brand)}'::jsonb, '2026-09-01', '{RELEASE}');
       insert into public.vehicle_models
-        (canonical_id, brand_id, tdr_model_id, slug, name_en, status, payload, served_as_of, seed_release_id)
+        (canonical_id, brand_id, tdr_model_id, slug, name_en, status, body_type, payload, served_as_of, seed_release_id)
         values ('{NEW_MODEL_CANONICAL}', 'newbrand', '{legacy_model_id}', 'newbrand-newmodel',
-                'New Model', 'CURRENT', '{{}}'::jsonb, '2026-09-01', '{RELEASE}');
+                'New Model', 'CURRENT', 'OTHER', '{json.dumps(model)}'::jsonb, '2026-09-01', '{RELEASE}');
+      insert into public.vehicle_generations (canonical_id, model_id, code, segment, payload, seed_release_id)
+        values ('{NEW_MODEL_CANONICAL}.gen1', '{NEW_MODEL_CANONICAL}', '', 'UNKNOWN',
+                '{json.dumps(generation)}'::jsonb, '{RELEASE}');
+      commit;
     """)
     _insert_registration(db, canonical_model_id=None, model_id=f"'{legacy_model_id}'",
                         model_name_raw="LEGACY BRIDGE ROW", registrations=50)
