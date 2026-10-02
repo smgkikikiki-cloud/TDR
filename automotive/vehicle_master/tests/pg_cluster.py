@@ -27,7 +27,10 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[3]
 SUPABASE = REPO_ROOT / "supabase"
 
+#: TDR_PG_BIN points at a server outside the Debian layout (a local
+#: workstation without root); CI uses the runner's own install.
 PG_BIN = next((p for p in (
+    *((Path(os.environ["TDR_PG_BIN"]),) if os.environ.get("TDR_PG_BIN") else ()),
     Path("/usr/lib/postgresql/16/bin"),
     Path("/usr/lib/postgresql/15/bin"),
     Path("/usr/lib/postgresql/14/bin"),

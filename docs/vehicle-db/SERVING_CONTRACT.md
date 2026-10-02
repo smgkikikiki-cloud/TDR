@@ -252,7 +252,7 @@ Query parameters of `/api/report/market`: `dimension, period, window, compare, p
 | `current_vehicle_generations` | `release_id, canonical_id, model_id, code, segment, launched date, ended date, payload jsonb` | `market-price-state` |
 | `current_market_trims` | `release_id, canonical_id, model_id, generation_id, variant_id, name, powertrain, status, payload jsonb, current_list_price jsonb, campaign_quote jsonb, price_history jsonb, source_refs jsonb` | `canonical-data`, `compare-canonical-data`, `market-price-state` |
 | `current_spec_facts` | `release_id, fact_id, trim_id, field_key, verification_status, payload jsonb` | admin only (`canonical-editor`) |
-| `current_price_ledger` | `release_id, record_id, trim_id, amount_thb bigint, price_type, effective_from, effective_to, observed_at, campaign_id, option_id, source, source_ref, payload jsonb` | **no reader** |
+| `current_price_ledger` | `release_id, record_id, trim_id, amount_thb bigint, price_type, effective_from, effective_to, observed_at, campaign_id, option_id, source, source_ref, payload jsonb` | `market-price-state` (since Phase 0 step 3) |
 | `vehicle_media_bindings`, `vehicle_media_assets` (tables) | see schema | `canonical-data`, `compare-canonical-data` |
 
 Payload keys pages depend on (must survive Phase 0): model `payload.brand{id,slug,name_en,name_th}`, `generation_id`, `generation`, `powertrains[]`, `production_type`, `production_country`, `market_scope`, `market_position`, `seats`, `cab_type`, `launch_year`, `launch_quarter`, dimension keys; brand `payload.oem_group`, `brand_origin`; trim `payload.specs{…}`, `payload.comparable_specs[]`, `payload.brand`, `payload.model`, `payload.current_list_price`; `campaign_quote.campaign_options[].status_as_of`.
@@ -313,7 +313,7 @@ Shape stays the same: `PublicMarket`, `MarketSliceRow`, `MarketMovementRow`, the
 
 Facts found while checking the §15.1 starting list against the code. None needs a code change in M1; each is input for the step named.
 
-1. **`current_price_ledger` has no reader.** The price engine (`lib/market-price-state.ts`) reads the projection table `canonical_price_projection` filtered by `release_id`, not the `current_price_ledger` view. → **Phase 0 step 3:** this must be repointed to the master (or to `current_price_ledger`) together with the views, or price-band market cuts silently keep reading the old projection.
+1. **`current_price_ledger` has no reader.** The price engine (`lib/market-price-state.ts`) reads the projection table `canonical_price_projection` filtered by `release_id`, not the `current_price_ledger` view. → **Phase 0 step 3:** this must be repointed to the master (or to `current_price_ledger`) together with the views, or price-band market cuts silently keep reading the old projection. **Done in Phase 0 step 3** (`migration_v58`): it reads `current_price_ledger` and `current_market_trims`, keyed by the served `release_id`, with the old effective 1,000-row windows kept exactly (see 11).
 2. **Market engine reads release-only state.** `getActiveHistoricalModelState` reads `canonical_vehicle_releases.payload.historical_model_state`, and both state loaders key their caches on `canonical_vehicle_state.active_release_id`. → **Phase 0 steps 3/5:** once releases stop being a write path, these need a source in the master, or must be retired in M4 (Ice brings its own history).
 3. **`public_model_market_teaser` / `getModelMarketTeasers` have no caller.** The table exists, but no page reads it. → **M4/M5:** either wire it to Ice data or remove it; it is not a live contract today.
 4. **`getCanonicalCompareTrims` has no caller.** It was superseded by `lib/compare-canonical-data.ts`. → Engine PRs do not need to keep its parity. A cleanup PR can remove it.
@@ -323,3 +323,14 @@ Facts found while checking the §15.1 starting list against the code. None needs
 8. **Legacy uuid dependencies on public pages.** `/models/[slug]` calls `getProductionProgramsByModel(editorial_id)` (legacy `production_programs` keyed by `tdr_model_id`). `getCanonicalBrands` reads `logo_url` from legacy `brands` via `tdr_brand_id`. → **Phase 0 step 2:** `tdr_model_id` / `tdr_brand_id` must stay populated in the master views (V3 §2 keeps every ID unchanged; these uuids are part of that).
 9. **`modelRow` hard-codes `brands.logo_url = null`.** Pages that need a logo join `getCanonicalBrands()` themselves. This is existing behaviour and is part of the contract.
 10. **Not in the starting list, but part of the contract:** `getCanonicalBrand`, `getCanonicalModelsByBrand`, `getCurrentTrimCountsByModel`, `getCanonicalHistoricalTrims`, `searchCanonicalCatalog`, all of `compare-canonical-data.ts`, `getHomeMarket`, `lib/member-market.ts`, and the market and compare HTTP endpoints. All of these are listed above.
+11. **Known M4 debt: the price state only sees 1,000 trims and 1,000 prices.** PostgREST caps every request at 1,000 rows. `getActiveMarketPriceState` has always read trims and prices in a single request each. On 2 Oct 2026 it saw:
+    - 1,000 of 1,569 trims (222 of 323 models)
+    - 1,000 of 1,004 price rows (2 LIST_PRICE rows missed)
+
+    Models whose trims fall past the window resolve to `UNKNOWN`, so `price_coverage` under-counts. Paging every read would change the September 2026 figures:
+    - priced models: 27 → 36
+    - mixed models: 1 → 5
+    - bands changed: 13 models
+    - coverage: 8.4 % → 11.1 %, still below the 80 % gate
+
+    This is a market-visible change, so Phase 0 step 3 keeps the old windows exactly: trims ordered by `canonical_id`, prices by `record_id`, each limited to 1,000. → **M4:** fix it together with the market acceptance tests, and list it among the expected differences (§6).

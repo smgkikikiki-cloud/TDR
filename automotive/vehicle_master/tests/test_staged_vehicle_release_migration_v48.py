@@ -34,6 +34,14 @@ def db(pg):
     return pg
 
 
+@pytest.fixture
+def db_v57(pg):
+    """Serving still following the release pointer (before v58 moved current_*
+    onto the Vehicle Master)."""
+    apply_production_schema(pg, through=57)
+    return pg
+
+
 def _manifest(release_id: str, *, counts: dict[str, int] | None = None,
               ordinal: int | None = None, as_of: str = "2026-09-23") -> dict:
     counts = counts or {"brands": 0, "models": 0, "generations": 0,
@@ -354,7 +362,8 @@ def test_activate_refuses_an_incompletely_staged_release_by_recounting_itself(db
     assert "brands: 1/2" in err
 
 
-def test_activate_flips_the_serving_pointer_and_supersedes_the_old_release(db):
+def test_activate_flips_the_serving_pointer_and_supersedes_the_old_release(db_v57):
+    db = db_v57
     old_ok, old_err = _begin(db, _manifest("vehicle-2026-bbbbbbbbbbbbbbbb",
                                             counts={"brands": 0, "models": 0, "generations": 0,
                                                     "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))

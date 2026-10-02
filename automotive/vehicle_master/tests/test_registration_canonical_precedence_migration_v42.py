@@ -115,6 +115,19 @@ def test_the_legacy_reverse_crosswalk_still_works_when_canonical_model_id_is_not
          set tdr_model_id = '{legacy_model_id}'
        where release_id = '{RELEASE}' and canonical_id = '{NEW_MODEL_CANONICAL}';
     """)
+    # Since v58 current_vehicle_models (which the crosswalk reads) serves the
+    # Vehicle Master, so the same model and its legacy id live there too.
+    db.sql(f"""
+      insert into public.vehicle_master_state
+        (scope, seed_release_id, seed_as_of, seed_source_hash, seed_canonical_revision, release_counts)
+        values ('vehicle_master', '{RELEASE}', '2026-09-01', 'hash', 'rev', '{{}}'::jsonb);
+      insert into public.vehicle_brands (canonical_id, slug, name_en, payload, served_as_of, seed_release_id)
+        values ('newbrand', 'newbrand', 'New Brand', '{{}}'::jsonb, '2026-09-01', '{RELEASE}');
+      insert into public.vehicle_models
+        (canonical_id, brand_id, tdr_model_id, slug, name_en, status, payload, served_as_of, seed_release_id)
+        values ('{NEW_MODEL_CANONICAL}', 'newbrand', '{legacy_model_id}', 'newbrand-newmodel',
+                'New Model', 'CURRENT', '{{}}'::jsonb, '2026-09-01', '{RELEASE}');
+    """)
     _insert_registration(db, canonical_model_id=None, model_id=f"'{legacy_model_id}'",
                         model_name_raw="LEGACY BRIDGE ROW", registrations=50)
 

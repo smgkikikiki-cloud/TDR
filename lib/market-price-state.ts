@@ -99,24 +99,34 @@ export function resolveModelPriceBand(state: MarketPriceState | null, modelId: s
 }
 
 export async function getActiveMarketPriceState(db: any): Promise<MarketPriceState | null> {
+  // Keyed by the release_id the serving views carry (the Vehicle Master's
+  // seed pin since Phase 0 step 3), not by the release pointer.
   const { data: stateRow, error: stateError } = await db
-    .from("canonical_vehicle_state")
-    .select("active_release_id")
+    .from("current_market_trims")
+    .select("release_id")
     .limit(1)
     .maybeSingle();
   if (stateError) throw new Error(`canonical price state query failed: ${stateError.message}`);
-  const releaseId = String(stateRow?.active_release_id || "");
+  const releaseId = String(stateRow?.release_id || "");
   if (!releaseId) return null;
   if (cache?.releaseId === releaseId) return cache.promise;
 
   const promise = (async () => {
+    // Reads the master-backed serving views, never a release projection.
+    // The 1,000-row windows reproduce exactly what the projection reads
+    // returned (PostgREST caps every request at 1,000 rows; the projection's
+    // index order made that the first 1,000 trims by canonical_id and the
+    // first 1,000 prices by record_id). Dropping the cap would change
+    // market-visible price coverage, so it is deferred to M4
+    // (SERVING_CONTRACT.md §7.11) and must not be "fixed" here.
     const [trimResult, generationResult, priceResult] = await Promise.all([
-      db.from("current_market_trims").select("canonical_id,model_id,generation_id").limit(1000),
+      db.from("current_market_trims").select("canonical_id,model_id,generation_id")
+        .order("canonical_id").limit(1000),
       db.from("current_vehicle_generations").select("canonical_id,launched,ended").limit(1000),
-      db.from("canonical_price_projection")
+      db.from("current_price_ledger")
         .select("trim_id,amount_thb,price_type,effective_from,effective_to,observed_at,payload")
-        .eq("release_id", releaseId)
-        .limit(5000),
+        .order("record_id")
+        .limit(1000),
     ]);
     if (trimResult.error) throw new Error(`canonical trim price map query failed: ${trimResult.error.message}`);
     if (generationResult.error) throw new Error(`canonical generation price map query failed: ${generationResult.error.message}`);
