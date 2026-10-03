@@ -25,17 +25,17 @@ def test_v61_replays_and_is_idempotent(db):
 
 def test_bucket_exists_and_is_private(db):
     assert db.scalar(
-        "select public::text from storage.buckets where id = 'vehicle-master-backups'"
+        "select public from storage.buckets where id = 'vehicle-master-backups'"
     ) == "f"
 
 
 def test_bucket_has_a_size_limit_and_restricted_mime_types(db):
     assert db.scalar(
-        "select (file_size_limit is not null)::text from storage.buckets "
+        "select (file_size_limit is not null) from storage.buckets "
         "where id = 'vehicle-master-backups'"
     ) == "t"
     assert db.scalar(
-        "select (allowed_mime_types is not null)::text from storage.buckets "
+        "select (allowed_mime_types is not null) from storage.buckets "
         "where id = 'vehicle-master-backups'"
     ) == "t"
 
