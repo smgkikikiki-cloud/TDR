@@ -1,133 +1,19 @@
-name: Publish canonical vehicle release
+name: Publish canonical vehicle release (closed)
 
+# Vehicle DB v3 Phase 0 step 5. Git/releases are no longer a write path. There
+# is deliberately no push trigger; manual invocation remains only to explain why
+# the old publisher cannot be used.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "automotive/vehicle_master/vehreg/**"
-      - "automotive/vehicle_master/integration_data/**"
-      - "automotive/vehicle_master/tdr_bridge/**"
-      - ".github/workflows/vehicle-release.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  # Shared with source-import and pricefeed: this job activates a canonical
-  # vehicle release exactly like they do, and a separate concurrency group
-  # is what let an older commit's publish here race a newer commit's
-  # publish from one of them (or vice versa) and roll the active release
-  # backward. migration_v44's ordinal guard is the second line of defense,
-  # for an out-of-order queue a shared group alone cannot prevent.
-  # canonical-input.yml deliberately left this group (see its own
-  # concurrency comment) so a dispatched admin save reacts in seconds
-  # instead of waiting behind these slower jobs; the ordinal guard is what
-  # still protects the active release from that decoupling.
-  group: canonical-vehicle-input
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  publish:
+  closed:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-    defaults:
-      run:
-        working-directory: automotive/vehicle_master
     steps:
-      - uses: actions/checkout@v4
-        with:
-          # The push trigger above is already restricted to main; this
-          # only changes workflow_dispatch, which otherwise lets a human
-          # pick a different branch in the UI -- never correct for a
-          # workflow that publishes straight to production. See
-          # source-import.yml's checkout comment for the same reasoning.
-          ref: main
-      # Full ancestry of this one commit, needed to compute the
-      # revision-ordinal below -- not every branch/tag in the repo. See
-      # source-import.yml's checkout comment for why `fetch-depth: 0` was
-      # failing here with "pack has 2 unresolved deltas".
-      - name: Deepen this commit's history for the revision ordinal
-        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
-      - name: Fail loudly if the deepen fetch left the checkout shallow
+      - name: Legacy publisher is closed
         run: |
-          set -euo pipefail
-          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
-            echo "::error::Checkout is still shallow after the deepen fetch -- migration_v44's ordinal guard would be silently disabled."
-            exit 1
-          fi
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: automotive/vehicle_master/requirements.txt
-      - run: python -m pip install -r requirements.txt
-      - name: Build release once
-        run: |
-          set -euo pipefail
-          python -m tdr_bridge.release_enriched \
-            --inventory integration_data/tdr_2026-09-09.json \
-            --overrides integration_data/crosswalk_overrides.json \
-            --out /tmp/vehicle-release.json \
-            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)" \
-            --revision-ordinal "$(git rev-list --count "${GITHUB_SHA}")"
-          python -m tdr_bridge.publish /tmp/vehicle-release.json
-      - name: Preserve validated canonical release
-        uses: actions/upload-artifact@v4
-        with:
-          name: canonical-vehicle-release-${{ github.sha }}
-          path: /tmp/vehicle-release.json
-          if-no-files-found: error
-          retention-days: 14
-      - name: Stage recovery copy
-        working-directory: ${{ github.workspace }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "TDR canonical release"
-          git config user.email "noreply@github.com"
-          # release-staging must be a normal commit on top of this exact
-          # main/GITHUB_SHA tree -- vercel.json included -- not an orphan
-          # one-file tree. An orphan tree has no Next.js app at all, so
-          # Vercel's push-triggered Preview build failed immediately with
-          # missing_pages_app; carrying the real vercel.json
-          # (git.deploymentEnabled: main only, "*": false) instead makes
-          # Vercel skip this branch the same way it already skips every
-          # other non-main branch.
-          cp /tmp/vehicle-release.json vehicle-release.json
-          git add vehicle-release.json
-          git commit -m "Stage canonical release ${GITHUB_SHA}"
-          git push --force origin HEAD:refs/heads/release-staging
-          # This commit must never become part of main's own history --
-          # restore the checkout exactly to what it was for the remaining
-          # steps.
-          git reset --hard "${GITHUB_SHA}"
-      - name: Preflight deployment secrets
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "${SUPABASE_URL}" ]; then
-            echo "::error::Set repository Actions secret SUPABASE_URL before publishing canonical releases."
-            exit 1
-          fi
-          if [ -z "${SUPABASE_SECRET_KEY}" ] && [ -z "${SUPABASE_SERVICE_ROLE_KEY}" ]; then
-            echo "::error::Set SUPABASE_SECRET_KEY (preferred) or SUPABASE_SERVICE_ROLE_KEY in repository Actions secrets."
-            exit 1
-          fi
-          if ! probe=$(PYTHONPATH=. python tools/canonical_input_worker.py check 2>&1); then
-            echo "::error::Configured Supabase URL/key cannot access the TDR canonical input table: ${probe}"
-            exit 1
-          fi
-      # No mark-published call here: this job publishes whatever commit
-      # touched vehreg/** as a safety net, with no view of which specific
-      # canonical_input_batches rows (if any) that commit carried. Marking
-      # arbitrary STAGED batches PUBLISHED without that context is exactly
-      # the "sweep everything" bookkeeping mark-published (invoked from
-      # canonical-input.yml, which DOES have that context) was rewritten
-      # to stop doing. Publishing itself -- and migration_v44's staleness
-      # guard against activating it out of order -- still applies here.
-      - name: Publish atomically to TDR Supabase
-        run: python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
+          echo "::error::Legacy Vehicle DB write path is closed (Phase 0 step 5). current_* serving is backed by the DB Vehicle Master; file-backed releases are read-only history."
+          exit 1

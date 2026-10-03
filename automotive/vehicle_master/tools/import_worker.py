@@ -264,7 +264,16 @@ def _import_dlt(source_file: Path, original_name: str, workdir: Path,
 HANDLERS = {"ECO": _import_eco, "DLT": _import_dlt, "VEHICLE_SPECS": _import_vehicle_specs}
 
 
-def process(limit: int) -> int:
+#: Vehicle DB v3 Phase 0 step 5: the only source kind the worker still imports.
+#: DLT lands in `registrations` through tdr_replace_registration_period and
+#: never touches vehreg/data or a release; every other kind wrote the legacy
+#: file-backed Vehicle Master, which is closed.
+REGISTRATION_KINDS = {"DLT"}
+LEGACY_WRITER_CLOSED = ("{kind} import wrote the legacy file-backed Vehicle Master, which is closed "
+                        "(Vehicle DB v3 Phase 0 step 5); this file was not imported")
+
+
+def process(limit: int, *, registration_only: bool = False) -> int:
     rows = _rest("GET", "import_runs?select=id,storage_path,original_name,source_kind,created_at"
                         f"&status=eq.UPLOADED&order=created_at.asc&limit={limit}") or []
     if not rows:
@@ -278,6 +287,10 @@ def process(limit: int) -> int:
         if not _patch(run_id, {"status": "PROCESSING",
                                "started_at": datetime.now(timezone.utc).isoformat()},
                       expected_status="UPLOADED"):
+            continue
+
+        if registration_only and source_kind not in REGISTRATION_KINDS:
+            _finish_failed(run_id, LEGACY_WRITER_CLOSED.format(kind=source_kind))
             continue
 
         handler = HANDLERS.get(source_kind)
@@ -446,6 +459,8 @@ def main(argv=None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     p_run = sub.add_parser("run")
     p_run.add_argument("--limit", type=int, default=5)
+    p_run.add_argument("--registration-only", action="store_true",
+                       help="import DLT registration files only; fail every legacy canonical kind (Phase 0 step 5)")
     sub.add_parser("pending-runs")
     sub.add_parser("stuck-runs")
     p_mark = sub.add_parser("mark-committed")
@@ -466,7 +481,7 @@ def main(argv=None) -> int:
         return mark_committed(args.run_id, args.commit_sha)
     if args.command == "finalize":
         return finalize(args.run_id, args.commit_sha, args.release_id)
-    return process(max(1, min(args.limit, 20)))
+    return process(max(1, min(args.limit, 20)), registration_only=args.registration_only)
 
 
 if __name__ == "__main__":

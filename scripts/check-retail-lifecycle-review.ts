@@ -26,9 +26,15 @@ check("browser cannot supply actor in review action", action.includes("actor:") 
 check("registered evidence target is resolved server-side against model", action.includes("resolveOemTarget(targetId, modelId)"), true);
 check("invalid cross-model registry target is rejected", action.includes("registered OEM evidence target ไม่ตรงกับ canonical model นี้"), true);
 check("registry URL overrides browser source value", action.includes("target?.url || evidenceUrl"), true);
-check("queue injects authenticated editor actor", queue.includes("currentEditor") && queue.includes("actor,") && queue.includes("commands.map"), true);
-check("queue only accepts ADMIN review source", queue.includes('kind !== "ADMIN"'), true);
-check("queue keeps idempotent batch hash", queue.includes("payload_sha256") && queue.includes('error?.code === "23505"'), true);
+// Phase 0 step 5 intentionally closes the old canonical_input_batches writer.
+// Keep the old export temporarily so callers fail loudly until Phase 1 replaces it,
+// but prove this compatibility boundary cannot authenticate, insert, or dispatch.
+check("legacy queue is an explicit Step 5 compatibility failure",
+  queue.includes("Legacy Vehicle DB write path is closed") && queue.includes("throw new Error"), true);
+check("legacy queue no longer imports admin auth or Supabase",
+  !queue.includes('from "@/lib/admin-auth"') && !queue.includes('from "@/lib/supabase"'), true);
+check("legacy queue cannot insert or dispatch",
+  !queue.includes(".insert(") && !queue.includes("api.github.com/repos") && !queue.includes("dispatchWorker("), true);
 
 console.log("\nbulk model lifecycle review — trust boundary");
 check("bulk review caps one atomic batch", action.includes("MAX_BULK_REVIEW = 20") && action.includes("bulk review รองรับสูงสุด"), true);

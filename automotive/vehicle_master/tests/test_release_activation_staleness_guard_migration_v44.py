@@ -50,7 +50,11 @@ def _publish(db, release: dict) -> tuple[bool, str]:
 
 @pytest.fixture
 def db(pg):
-    apply_production_schema(pg)
+    # The legacy release RPCs this file exercises were closed by migration_v60
+    # (Vehicle DB v3 Phase 0 step 5); their behaviour before the cutover is
+    # tested on the schema through v59. The closure itself is
+    # test_vehicle_close_old_write_path_migration_v60.py.
+    apply_production_schema(pg, through=59)
     return pg
 
 

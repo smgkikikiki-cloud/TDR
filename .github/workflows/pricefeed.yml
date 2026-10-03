@@ -1,210 +1,22 @@
-name: Price feed
+name: Price feed (legacy writer closed)
 
+# Vehicle DB v3 Phase 0 step 5. Scheduled file-backed price writes are stopped
+# until the DB-master feed is introduced in the later v3 phases.
 on:
-  schedule:
-    - cron: "0 */12 * * *"
   workflow_dispatch:
     inputs:
       since:
-        description: "ISO timestamp to poll from (default: 13 hours ago)"
+        description: "Legacy option (writer is closed)"
         required: false
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-
-concurrency:
-  # Shared with source-import and vehicle-release, so no two of them can
-  # publish concurrently -- see migration_v44's ordinal guard for the case
-  # a shared group alone cannot fully prevent (an out-of-order queue, not
-  # true concurrency). canonical-input.yml deliberately left this group
-  # (see its own concurrency comment) so a dispatched admin save reacts in
-  # seconds instead of waiting behind this job's 12-hour cadence;
-  # migration_v44's guard is what still protects the active release from
-  # that decoupling.
-  group: canonical-vehicle-input
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  harvest:
+  closed:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-    defaults:
-      run:
-        working-directory: automotive/vehicle_master
     steps:
-      - uses: actions/checkout@v4
-        with:
-          # Pinned, not left to whatever ref triggered the run. Two
-          # reasons: this is a production writer that pushes straight to
-          # main regardless of what it started from, so workflow_dispatch
-          # picking a different branch in the UI is never correct here;
-          # and actions/checkout only creates a local remote-tracking ref
-          # for the branch it actually checks out. `fetch-depth: 0` used to
-          # fetch every branch unconditionally, so `origin/main` -- which
-          # `tools/pricefeed_guard.py --base origin/main` reads directly,
-          # further down -- happened to always exist regardless of which
-          # ref was checked out. Pinning main here is what makes
-          # actions/checkout create refs/remotes/origin/main, so that read
-          # stays correct without fetching every other branch/tag to get it.
-          ref: main
-      # Full ancestry of this one commit, not every branch/tag in the repo
-      # -- see source-import.yml's checkout comment for why `fetch-depth: 0`
-      # was failing here with "pack has 2 unresolved deltas".
-      - name: Deepen this commit's history for the publish ordinal guard
-        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
-      - name: Fail loudly if the deepen fetch left the checkout shallow
+      - name: Legacy writer is closed
         run: |
-          set -euo pipefail
-          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
-            echo "::error::Checkout is still shallow after the deepen fetch -- migration_v44's ordinal guard would be silently disabled."
-            exit 1
-          fi
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: automotive/vehicle_master/requirements.txt
-      - run: python -m pip install -r requirements.txt pytest
-      - name: Choose polling window
-        id: window
-        run: |
-          if [ -n "${{ inputs.since }}" ]; then
-            echo "since=${{ inputs.since }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "since=$(date -u -d '13 hours ago' +%Y-%m-%dT%H:%M:%S)" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Harvest price news
-        run: |
-          python tools/pricefeed_harvest.py \
-            --since "${{ steps.window.outputs.since }}" --limit 60 --delay 1.0 \
-            --out vehreg/data/2026/market/pricefeed/batch-$(date -u +%Y-%m-%dT%H%M).json
-      # The writer, not the evidence report. The old command here read a
-      # batch and said what it thought of it; it has never been able to
-      # write, so this step failed on every tick and no harvested price has
-      # ever reached the ledger. This applies them through the same
-      # canonical pipeline a Save in the admin goes through -- evidence in,
-      # canonical OR exception out, deterministically. No --decisions file:
-      # that let a person's earlier call on an unrelated claim silently
-      # promote a single-source price to canonical on a later, unattended
-      # run. Manual review of a batch is still possible with the legacy,
-      # evidence-only `vehreg market price-run --decisions`, which was
-      # never wired to write.
-      - name: Write the resolved prices into the ledger
-        run: |
-          set -euo pipefail
-          latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
-          PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
-            --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
-      # Harvest creates a timestamped batch on every poll, and the writer
-      # also creates an exception artifact even when there are zero
-      # exceptions. Those artifacts are useful only when the run produced a
-      # real canonical write or new unresolved work. Otherwise they must not
-      # dirty main: a no-op poll is not a production change and must not
-      # trigger another frontend deployment.
-      - name: Classify semantic change and drop no-op artifacts
-        id: semantic
-        run: |
-          set -euo pipefail
-          written=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(int(d.get('planned', {}).get('WRITTEN', 0)))")
-          exceptions=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(int(d.get('exceptions_stored', {}).get('count', 0)))")
-          exception_file=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(d.get('exceptions_stored', {}).get('file') or '')")
-
-          # Never keep an empty exception report in git, even when the same
-          # run did write a real price.
-          if [ "$exceptions" -eq 0 ] && [ -n "$exception_file" ]; then
-            rm -f "$exception_file"
-          fi
-
-          if [ "$written" -eq 0 ] && [ "$exceptions" -eq 0 ]; then
-            latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
-            rm -f "$latest"
-            echo "meaningful=false" >> "$GITHUB_OUTPUT"
-            echo "No semantic price change; harvest artifacts discarded."
-          else
-            echo "meaningful=true" >> "$GITHUB_OUTPUT"
-            echo "Semantic price change detected: written=$written exceptions=$exceptions"
-          fi
-      - name: Guard price-feed changes
-        if: steps.semantic.outputs.meaningful == 'true'
-        run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
-      # Unit tests must not inherit the production Supabase credentials from
-      # the harvest job. Pricefeed writer tests intentionally use temporary
-      # local data; exposing SUPABASE_URL makes exception cases POST into the
-      # live import_runs table and turns deterministic tests into 409 conflicts.
-      - name: Test without production database access
-        if: steps.semantic.outputs.meaningful == 'true'
-        env:
-          SUPABASE_URL: ""
-          SUPABASE_SECRET_KEY: ""
-          SUPABASE_SERVICE_ROLE_KEY: ""
-        run: pytest -q
-      # A deterministic price the resolver already accepted has nothing left
-      # for a person to decide, so it goes to main and publishes. What the
-      # resolver could not settle -- an ambiguous identity, a genuine
-      # conflict -- is a durable exception row by the time this runs; it
-      # waits for the owner instead of holding every other price behind it.
-      - name: Commit the resolved prices
-        id: commit
-        run: |
-          set -euo pipefail
-          if [ "${{ steps.semantic.outputs.meaningful }}" != "true" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          # Untracked too: a canonical write's price file, batch marker and
-          # exception report are all new files, and `git diff` cannot see
-          # them -- which is how a run reports "nothing changed" over a
-          # price it just wrote.
-          if [ -z "$(git status --porcelain vehreg/data)" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          git config user.name "TDR price watcher"
-          git config user.email "noreply@github.com"
-          git add vehreg/data
-          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-write.json')); p=d['planned']; print(f\"{p['WRITTEN']} written, {p['UNCHANGED']} unchanged, {d['exceptions_stored']['count']} unresolved\")")"
-          git pull --rebase origin main
-          git push origin HEAD:main
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-      # The one place this workflow actively tells anyone anything: every
-      # other artifact just sits in git for whoever looks. A PRICE_IDENTITY
-      # exception means a grade name a real source used right now does not
-      # match any canonical MarketTrim -- a new, renamed, or discontinued
-      # trim, not routine price drift a person needs to see every tick.
-      # Silence on purpose means nothing here: an unchanged trim's price is
-      # not re-announced by news outlets every 12 hours, so no exception
-      # this run is not evidence the lineup is still the same, only that
-      # nothing new was harvested about it.
-      - name: Notify on unmatched trim names
-        if: steps.semantic.outputs.meaningful == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          exceptions=$(python -c "import json; print(int(json.load(open('/tmp/price-write.json')).get('exceptions_stored', {}).get('count', 0)))")
-          if [ "$exceptions" -eq 0 ]; then
-            echo "no exceptions this run"; exit 0
-          fi
-          exception_file=$(python -c "import json; print(json.load(open('/tmp/price-write.json')).get('exceptions_stored', {}).get('file') or '')")
-          if ! python tools/notify_price_exceptions.py "$exception_file" > /tmp/notice.md; then
-            echo "no PRICE_IDENTITY exceptions this run (only price conflicts, if any)"; exit 0
-          fi
-          title="Price feed: unmatched trim names need review"
-          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-            --search "in:title \"$title\"" --json number --jq '.[0].number // empty')
-          if [ -n "$existing" ]; then
-            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body-file /tmp/notice.md
-          else
-            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" \
-              --assignee smgkikikiki-cloud --body-file /tmp/notice.md
-          fi
-      # A price nobody is serving is not a price change. Publish the exact
-      # commit here and wait for it, rather than pushing and hoping another
-      # workflow picks it up.
-      - name: Publish the pushed revision
-        if: steps.commit.outputs.changed == 'true'
-        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"
+          echo "::error::Legacy Vehicle DB write path is closed (Phase 0 step 5). Price updates may no longer write vehreg/data or publish file-backed releases."
+          exit 1

@@ -41,35 +41,46 @@ check("and can close one",
 check("a canonical run waits for its push before it claims to be done",
   worker.includes("WRITTEN_PENDING_PUBLISH") && worker.includes("CANONICAL_SOURCES"));
 const importFlow = read(".github/workflows/source-import.yml");
-// lastIndexOf on both sides: a stuck-publish recovery step (added for
-// blocker 7A) legitimately finalizes an EARLIER commit's runs before
-// this run's own push happens; what still has to hold is that THIS
-// run's own finalize (the last one in the file) comes after THIS run's
-// own push (also the last one in the file).
-check("finalize runs after the push, not before",
-  importFlow.lastIndexOf("git push origin HEAD:main") < importFlow.lastIndexOf("import_worker.py finalize"));
 
-console.log("\nno human approval in a deterministic write path");
-check("uploaded imports go to main rather than a pull request",
-  !importFlow.includes("gh pr create"));
+console.log("\nlegacy deterministic writers are closed in Phase 0 step 5");
 const pricefeed = read(".github/workflows/pricefeed.yml");
 const canonicalInput = read(".github/workflows/canonical-input.yml");
-check("the price tracker publishes instead of opening a PR to merge",
-  !pricefeed.includes("gh pr create") && pricefeed.includes("git push origin HEAD:main"));
-// `market price-run` is an evidence report and rejects --write; the workflow
-// called it with --write anyway, so it failed on every tick and no harvested
-// price ever reached the ledger.
-check("the price tracker calls a writer that can write",
-  pricefeed.includes("tools.pricefeed_write")
-    && !/(?<!`)python -m vehreg market price-run/.test(pricefeed)
-    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
-for (const flow of [importFlow, pricefeed, canonicalInput]) {
-  check("what is pushed is published in the same job",
+const lineupApply = read(".github/workflows/retail-lineup-bootstrap-apply.yml");
+const batchStatus = read(".github/workflows/mark-canonical-batch-status.yml");
+for (const [name, flow] of [
+  ["price feed", pricefeed],
+  ["canonical input", canonicalInput],
+  ["retail lineup apply", lineupApply],
+  ["canonical batch status", batchStatus],
+] as const) {
+  check(`${name} workflow fails loudly as a closed legacy writer`,
+    flow.includes("Legacy Vehicle DB write path is closed (Phase 0 step 5)"));
+  check(`${name} workflow has no scheduled writer`, !flow.includes("schedule:"));
+  check(`${name} workflow cannot push or publish a file-backed release`,
     !flow.includes("git push origin HEAD:main")
-      || (flow.includes("tools.publish_canonical") && flow.includes("--revision")));
+      && !flow.includes("tools.publish_canonical")
+      && !flow.includes("tdr_bridge.publish"));
 }
-check("a saved canonical edit is not held behind a merge",
-  !canonicalInput.includes("gh pr create"));
+// Source import keeps one job that is not a Vehicle DB writer: DLT
+// registration uploads land in `registrations` (out of scope for step 5).
+check("source import only imports registrations", importFlow.includes("import_worker.py run --limit 5 --registration-only"));
+check("source import cannot push or publish a file-backed release",
+  !importFlow.includes("git push") && !importFlow.includes("tools.publish_canonical")
+    && !importFlow.includes("tdr_bridge.publish") && importFlow.includes("contents: read")
+    && !importFlow.includes("contents: write"));
+check("source import no longer compiles or finalizes a file-backed canonical run",
+  !importFlow.includes("import_worker.py finalize") && !importFlow.includes("retail_lineup_compile_worker"));
+const lineupActions = read("app/admin/retail-lineup-actions.ts");
+check("retail lineup apply is refused before a plan can be moved to APPLYING",
+  !lineupActions.includes(`rpc("tdr_begin_retail_lineup_plan_apply"`)
+    && lineupActions.includes("Legacy Vehicle DB write path is closed (Phase 0 step 5)"));
+check("price feed no longer calls the legacy file writer",
+  !pricefeed.includes("tools.pricefeed_write")
+    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
+check("legacy workflows do not open replacement PRs",
+  !importFlow.includes("gh pr create")
+    && !pricefeed.includes("gh pr create")
+    && !canonicalInput.includes("gh pr create"));
 
 console.log("\nprice: the owner's fields, the ledger's bookkeeping");
 const priceAction = read("app/admin/trim-price-actions.ts");
