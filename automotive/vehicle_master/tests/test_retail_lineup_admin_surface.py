@@ -31,16 +31,16 @@ def test_upload_is_xlsx_only_and_does_not_compile_in_vercel_request():
     assert "subprocess" not in actions
 
 
-def test_apply_submits_the_exact_reviewed_identity_not_a_recompiled_workbook():
+def test_apply_is_closed_and_never_reaches_the_legacy_apply_rpc():
+    # Vehicle DB v3 Phase 0 step 5: applying a plan used to submit the exact
+    # reviewed identity (plan_hash/baseline_hash) to tdr_begin_retail_lineup_plan_apply
+    # and dispatch the apply worker. That write path is now closed -- the action
+    # must refuse before any of that, not recompile or resubmit anything.
     actions = read("app/admin/retail-lineup-actions.ts")
     detail = read("app/admin/(secure)/retail-lineup-bootstrap/[planId]/page.tsx")
-    assert 'field(formData, "confirm") !== "YES"' in actions
-    assert 'field(formData, "plan_hash")' in actions
-    assert 'field(formData, "baseline_hash")' in actions
-    assert 'db.rpc("tdr_begin_retail_lineup_plan_apply"' in actions
-    assert "p_expected_plan_hash: planHash" in actions
-    assert "p_expected_baseline_hash: baselineHash" in actions
-    assert 'dispatchWorker("retail-lineup-bootstrap-apply"' in actions
+    assert "Legacy Vehicle DB write path is closed (Phase 0 step 5)" in actions
+    assert 'db.rpc("tdr_begin_retail_lineup_plan_apply"' not in actions
+    assert 'dispatchWorker("retail-lineup-bootstrap-apply"' not in actions
     assert 'name="plan_hash"' in detail
     assert 'name="baseline_hash"' in detail
     assert "stored compiled_plan" in detail
