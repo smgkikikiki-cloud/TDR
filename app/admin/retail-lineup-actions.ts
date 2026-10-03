@@ -8,7 +8,6 @@ import { IMPORT_BUCKET, safeImportName } from "@/lib/import-runs";
 import { adminDb } from "@/lib/supabase";
 
 const MAX_BYTES = 4 * 1024 * 1024;
-const HEX64 = /^[0-9a-f]{64}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function parseModelIds(raw: string): string[] {
@@ -145,45 +144,11 @@ export async function uploadRetailLineupWorkbookAction(formData: FormData) {
   redirect("/admin/retail-lineup-bootstrap?upload=queued");
 }
 
-export async function applyRetailLineupPlanAction(formData: FormData) {
+export async function applyRetailLineupPlanAction(_formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
-  const editor = await currentEditor();
-  const planId = field(formData, "plan_id");
-  const planHash = field(formData, "plan_hash").toLowerCase();
-  const baselineHash = field(formData, "baseline_hash").toLowerCase();
-  if (field(formData, "confirm") !== "YES") throw new Error("ต้องยืนยัน Preview ก่อน Apply");
-  if (!UUID.test(planId)) throw new Error("plan id ไม่ถูกต้อง");
-  if (!HEX64.test(planHash) || !HEX64.test(baselineHash)) throw new Error("reviewed hash ไม่ถูกต้อง");
-
-  const db = adminDb();
-  if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
-  const { data: row, error: readError } = await db.from("retail_lineup_plans")
-    .select("id,status,plan_hash,baseline_hash").eq("id", planId).maybeSingle();
-  if (readError) throw readError;
-  if (!row) throw new Error("หา preview plan ไม่เจอ");
-  if (String(row.plan_hash) !== planHash || String(row.baseline_hash) !== baselineHash) {
-    throw new Error("Preview เปลี่ยนจาก hash ที่หน้า Admin แสดง กรุณา reload ก่อน Apply");
-  }
-  if (!["PREVIEW_READY", "FAILED"].includes(String(row.status))) {
-    throw new Error(`plan สถานะ ${row.status} กด Apply ไม่ได้`);
-  }
-
-  // This is the only mutation the Admin request performs: atomically freeze
-  // approval against both hashes that were rendered for review. Chunk 7's
-  // worker will decode the stored compiled_plan and execute that exact object.
-  const { data, error } = await db.rpc("tdr_begin_retail_lineup_plan_apply", {
-    p_plan_id: planId,
-    p_actor: editor?.name || "tdr-admin",
-    p_expected_plan_hash: planHash,
-    p_expected_baseline_hash: baselineHash,
-  });
-  if (error) throw error;
-  if (!Array.isArray(data) || data.length !== 1 || data[0]?.status !== "APPLYING") {
-    throw new Error("ยืนยัน Apply ไม่สำเร็จ");
-  }
-
-  await dispatchWorker("retail-lineup-bootstrap-apply", { plan_id: planId });
-  revalidatePath("/admin/retail-lineup-bootstrap");
-  revalidatePath(`/admin/retail-lineup-bootstrap/${planId}`);
-  redirect(`/admin/retail-lineup-bootstrap/${planId}?apply=queued`);
+  // Vehicle DB v3 Phase 0 step 5: applying a plan wrote vehreg/data, pushed to
+  // main and published a file-backed release -- the legacy Vehicle Master
+  // write path, which is closed. Refuse before tdr_begin_retail_lineup_plan_apply
+  // would move the plan to APPLYING with no worker left to finish it.
+  throw new Error("Legacy Vehicle DB write path is closed (Phase 0 step 5): retail lineup plans can no longer be applied to the file-backed catalog.");
 }

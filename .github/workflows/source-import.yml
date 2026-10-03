@@ -1,21 +1,62 @@
-name: Run uploaded source imports (legacy writer closed)
+name: Run uploaded registration imports
 
-# Vehicle DB v3 Phase 0 step 5. Keep repository_dispatch temporarily so an old
-# deployed uploader fails visibly; there is no schedule and no canonical-file
-# or release write in this workflow anymore.
+# Vehicle DB v3 Phase 0 step 5: the legacy Vehicle Master writer is closed.
+# This workflow no longer writes vehreg/data, commits, or publishes releases
+# (read-only checkout, no push, no release RPC). It still imports DLT
+# registration uploads, which land in `registrations` through
+# tdr_replace_registration_period and are out of scope for the cutover. Any
+# other uploaded kind (ECO, VEHICLE_SPECS, Retail Lineup Bootstrap) is marked
+# FAILED with an explicit "closed" message instead of being imported.
 on:
+  # An upload dispatches this directly; the schedule is only a sweeper for a
+  # dispatch that never arrived.
   repository_dispatch:
     types: [source-import]
+  schedule:
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: registration-import
+  cancel-in-progress: false
+
 jobs:
-  closed:
+  import:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
     steps:
-      - name: Legacy writer is closed
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Preflight
+        id: preflight
+        shell: bash
         run: |
-          echo "::error::Legacy Vehicle DB write path is closed (Phase 0 step 5). Source imports must use the DB-master pipeline, not vehreg/data releases."
-          exit 1
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::warning::Registration import is paused until Supabase credentials are configured."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        if: steps.preflight.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - if: steps.preflight.outputs.ready == 'true'
+        run: python -m pip install -r requirements.txt
+      - name: Import uploaded DLT registration files (other kinds fail as closed)
+        if: steps.preflight.outputs.ready == 'true'
+        run: PYTHONPATH=. python tools/import_worker.py run --limit 5 --registration-only

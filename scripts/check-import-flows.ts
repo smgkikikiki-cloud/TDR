@@ -45,10 +45,13 @@ const importFlow = read(".github/workflows/source-import.yml");
 console.log("\nlegacy deterministic writers are closed in Phase 0 step 5");
 const pricefeed = read(".github/workflows/pricefeed.yml");
 const canonicalInput = read(".github/workflows/canonical-input.yml");
+const lineupApply = read(".github/workflows/retail-lineup-bootstrap-apply.yml");
+const batchStatus = read(".github/workflows/mark-canonical-batch-status.yml");
 for (const [name, flow] of [
-  ["source import", importFlow],
   ["price feed", pricefeed],
   ["canonical input", canonicalInput],
+  ["retail lineup apply", lineupApply],
+  ["canonical batch status", batchStatus],
 ] as const) {
   check(`${name} workflow fails loudly as a closed legacy writer`,
     flow.includes("Legacy Vehicle DB write path is closed (Phase 0 step 5)"));
@@ -58,8 +61,19 @@ for (const [name, flow] of [
       && !flow.includes("tools.publish_canonical")
       && !flow.includes("tdr_bridge.publish"));
 }
-check("source import no longer finalizes a file-backed canonical run",
-  !importFlow.includes("import_worker.py finalize"));
+// Source import keeps one job that is not a Vehicle DB writer: DLT
+// registration uploads land in `registrations` (out of scope for step 5).
+check("source import only imports registrations", importFlow.includes("import_worker.py run --limit 5 --registration-only"));
+check("source import cannot push or publish a file-backed release",
+  !importFlow.includes("git push") && !importFlow.includes("tools.publish_canonical")
+    && !importFlow.includes("tdr_bridge.publish") && importFlow.includes("contents: read")
+    && !importFlow.includes("contents: write"));
+check("source import no longer compiles or finalizes a file-backed canonical run",
+  !importFlow.includes("import_worker.py finalize") && !importFlow.includes("retail_lineup_compile_worker"));
+const lineupActions = read("app/admin/retail-lineup-actions.ts");
+check("retail lineup apply is refused before a plan can be moved to APPLYING",
+  !lineupActions.includes(`rpc("tdr_begin_retail_lineup_plan_apply"`)
+    && lineupActions.includes("Legacy Vehicle DB write path is closed (Phase 0 step 5)"));
 check("price feed no longer calls the legacy file writer",
   !pricefeed.includes("tools.pricefeed_write")
     && !/\bpython\s.*price-run.*--write/.test(pricefeed));

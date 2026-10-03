@@ -1,189 +1,23 @@
-name: Apply approved retail lineup bootstrap
+name: Apply Retail Lineup Bootstrap plan (closed)
 
+# Vehicle DB v3 Phase 0 step 5. This workflow applied stored lineup plans to
+# vehreg/data, pushed to main and published a file-backed release -- the
+# legacy Vehicle Master write path, which is closed. The event hooks stay only
+# so a stale caller gets an explicit failure; there is no schedule and no
+# write permission.
 on:
   repository_dispatch:
     types: [retail-lineup-bootstrap-apply]
-  # Recovery sweep: an APPLYING plan survives a lost repository_dispatch.
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: canonical-vehicle-input
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  apply:
+  closed:
     runs-on: ubuntu-latest
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      DISPATCH_PLAN_ID: ${{ github.event.client_payload.plan_id }}
-    defaults:
-      run:
-        working-directory: automotive/vehicle_master
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - name: Deepen this commit's history for the publish ordinal guard
-        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
-      - name: Fail loudly if the checkout is still shallow
+      - name: Legacy writer is closed
         run: |
-          set -euo pipefail
-          test "$(git rev-parse --is-shallow-repository)" = "false"
-      - name: Preflight
-        id: preflight
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
-            echo "::warning::Retail Lineup Bootstrap apply is paused until Supabase credentials are configured."
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "ready=true" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-python@v5
-        if: steps.preflight.outputs.ready == 'true'
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: automotive/vehicle_master/requirements.txt
-      - if: steps.preflight.outputs.ready == 'true'
-        run: python -m pip install -r requirements.txt
-
-      # Exact recovery for the normal failure gap: push + mark-written succeeded,
-      # but publish did not. We only republish automatically while main is still
-      # that exact recorded commit; if main has advanced, an older revision must
-      # not be forced active behind migration_v44's staleness guard.
-      - name: Find written plan awaiting publish
-        if: steps.preflight.outputs.ready == 'true'
-        id: written
-        run: echo "plan_id=$(PYTHONPATH=. python tools/retail_lineup_apply_worker.py next --status WRITTEN_PENDING_PUBLISH)" >> "$GITHUB_OUTPUT"
-      - name: Recover exact written revision
-        if: steps.preflight.outputs.ready == 'true' && steps.written.outputs.plan_id != ''
-        id: recover_written
-        shell: bash
-        run: |
-          set -euo pipefail
-          meta=$(PYTHONPATH=. python tools/retail_lineup_apply_worker.py describe --plan-id "${{ steps.written.outputs.plan_id }}")
-          sha=$(printf '%s' "$meta" | python -c 'import json,sys; print(json.load(sys.stdin)["applied_commit_sha"] or "")')
-          head=$(git rev-parse HEAD)
-          if [ -z "$sha" ] || [ "$sha" != "$head" ]; then
-            echo "::warning::Written retail-lineup plan cannot be auto-republished exactly because main moved (recorded=$sha head=$head)."
-            echo "recovered=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "$sha")
-          echo "$result"
-          release_id=$(printf '%s' "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')
-          PYTHONPATH=. python tools/retail_lineup_apply_worker.py complete \
-            --plan-id "${{ steps.written.outputs.plan_id }}" \
-            --commit-sha "$sha" --release-id "$release_id"
-          echo "recovered=true" >> "$GITHUB_OUTPUT"
-
-      - name: Select approved plan
-        if: steps.preflight.outputs.ready == 'true'
-        id: select
-        shell: bash
-        run: |
-          set -euo pipefail
-          plan_id="${DISPATCH_PLAN_ID:-}"
-          if [ -z "$plan_id" ]; then
-            plan_id=$(PYTHONPATH=. python tools/retail_lineup_apply_worker.py next --status APPLYING)
-          fi
-          echo "plan_id=$plan_id" >> "$GITHUB_OUTPUT"
-
-      - name: Apply immutable plan to canonical tree
-        if: steps.preflight.outputs.ready == 'true' && steps.select.outputs.plan_id != ''
-        id: prepare
-        shell: bash
-        run: |
-          set -euo pipefail
-          result_file="$RUNNER_TEMP/retail-lineup-apply.json"
-          PYTHONPATH=. python tools/retail_lineup_apply_worker.py prepare \
-            --plan-id "${{ steps.select.outputs.plan_id }}" --result-file "$result_file"
-          prepared=$(python -c 'import json,sys; print(str(json.load(open(sys.argv[1]))["prepared"]).lower())' "$result_file")
-          echo "prepared=$prepared" >> "$GITHUB_OUTPUT"
-          echo "result_file=$result_file" >> "$GITHUB_OUTPUT"
-
-      - name: Verify transaction changed only its declared canonical files
-        if: steps.prepare.outputs.prepared == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - "${{ steps.prepare.outputs.result_file }}" <<'PY'
-          import json, subprocess, sys
-          result = json.load(open(sys.argv[1], encoding="utf-8"))
-          expected = {"vehreg/data/" + path for path in result["changed_files"]}
-          raw = subprocess.check_output(
-              ["git", "status", "--porcelain=v1", "--untracked-files=all", "--", "vehreg/data"],
-              text=True,
-          )
-          actual = {line[3:] for line in raw.splitlines() if line.strip()}
-          if actual != expected:
-              raise SystemExit(f"transaction diff mismatch: expected={sorted(expected)} actual={sorted(actual)}")
-          PY
-
-      - name: Commit and push exact transaction
-        if: steps.prepare.outputs.prepared == 'true'
-        id: commit
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "$(git status --porcelain --untracked-files=all -- vehreg/data)" ]; then
-            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          git config user.name "TDR retail lineup bootstrap"
-          git config user.email "noreply@github.com"
-          git add vehreg/data
-          git commit -m "Apply approved retail lineup bootstrap"
-          git pull --rebase origin main
-          # After rebasing onto any intervening non-conflicting main commit,
-          # execute the stored plan once more. A matching post-state becomes
-          # an idempotent no-op; a stale/mismatched state fails before push.
-          PYTHONPATH=. python tools/retail_lineup_apply_worker.py prepare \
-            --plan-id "${{ steps.select.outputs.plan_id }}" \
-            --result-file "$RUNNER_TEMP/retail-lineup-rebase-check.json"
-          python - "$RUNNER_TEMP/retail-lineup-rebase-check.json" <<'PY'
-          import json, sys
-          result = json.load(open(sys.argv[1], encoding="utf-8"))
-          if not result.get("prepared") or result.get("changed_files"):
-              raise SystemExit(f"post-rebase plan verification failed: {result}")
-          PY
-          git push origin HEAD:main
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Record repository write
-        if: steps.prepare.outputs.prepared == 'true'
-        run: |
-          set -euo pipefail
-          PYTHONPATH=. python tools/retail_lineup_apply_worker.py mark-written \
-            --plan-id "${{ steps.select.outputs.plan_id }}" \
-            --commit-sha "${{ steps.commit.outputs.sha }}"
-
-      - name: Publish exact written revision
-        if: steps.prepare.outputs.prepared == 'true'
-        id: publish
-        shell: bash
-        run: |
-          set -euo pipefail
-          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}")
-          echo "$result"
-          echo "release_id=$(printf '%s' "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
-
-      - name: Complete durable plan
-        if: steps.prepare.outputs.prepared == 'true'
-        run: |
-          set -euo pipefail
-          PYTHONPATH=. python tools/retail_lineup_apply_worker.py complete \
-            --plan-id "${{ steps.select.outputs.plan_id }}" \
-            --commit-sha "${{ steps.commit.outputs.sha }}" \
-            --release-id "${{ steps.publish.outputs.release_id }}"
+          echo "::error::Legacy Vehicle DB write path is closed (Phase 0 step 5). Retail lineup plans may no longer be applied to vehreg/data or published as file-backed releases."
+          exit 1

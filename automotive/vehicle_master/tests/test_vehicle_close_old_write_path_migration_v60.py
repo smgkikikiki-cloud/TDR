@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from tests.pg_cluster import SUPABASE, apply_production_schema, pg  # noqa: F401
+from tests.test_vehicle_engine_rules_migration_v59 import V59, seeded, tree  # noqa: F401
 
 V60 = SUPABASE / "migration_v60_close_legacy_vehicle_write_path.sql"
 ROOT = Path(__file__).resolve().parents[3]
@@ -45,9 +46,10 @@ BOOTSTRAP_WRITERS = (
 STUB_WORKFLOWS = (
     ".github/workflows/canonical-input.yml",
     ".github/workflows/enqueue-canonical-batch.yml",
-    ".github/workflows/source-import.yml",
     ".github/workflows/pricefeed.yml",
     ".github/workflows/vehicle-release.yml",
+    ".github/workflows/retail-lineup-bootstrap-apply.yml",
+    ".github/workflows/mark-canonical-batch-status.yml",
 )
 
 
@@ -148,3 +150,78 @@ def test_legacy_writer_workflows_are_fail_fast_stubs():
         assert "git push" not in text, relative
         assert "tdr_bridge.publish" not in text, relative
         assert "canonical_input_worker.py pull" not in text, relative
+
+
+def test_source_import_keeps_only_registration_ingest():
+    """DLT registration uploads are out of scope for the cutover and keep
+    importing; the workflow can no longer write vehreg/data or publish."""
+    text = (ROOT / ".github/workflows/source-import.yml").read_text(encoding="utf-8")
+    assert "import_worker.py run --limit 5 --registration-only" in text
+    assert "contents: read" in text and "contents: write" not in text
+    for forbidden in ("git push", "git commit", "publish_canonical", "tdr_bridge.publish",
+                      "retail_lineup_compile_worker", "mark-committed", "finalize"):
+        assert forbidden not in text, forbidden
+
+
+_REGISTRATION_PRIVILEGES = """
+  select 'table', c.relname, r.rolname, p.privilege,
+         has_table_privilege(r.rolname, c.oid, p.privilege)
+    from pg_class c join pg_namespace n on n.oid = c.relnamespace and n.nspname = 'public'
+    cross join (values ('service_role'), ('authenticated'), ('anon')) r(rolname)
+    cross join (values ('SELECT'), ('INSERT'), ('UPDATE'), ('DELETE')) p(privilege)
+   where c.relkind in ('r', 'v') and (c.relname like 'registration%' or c.relname like 'import_run%')
+  union all
+  select 'function', p.oid::regprocedure::text, r.rolname, 'EXECUTE',
+         has_function_privilege(r.rolname, p.oid, 'EXECUTE')
+    from pg_proc p join pg_namespace n on n.oid = p.pronamespace and n.nspname = 'public'
+    cross join (values ('service_role'), ('authenticated'), ('anon')) r(rolname)
+   where p.proname like '%registration%'
+   order by 1, 2, 3, 4
+"""
+
+
+def test_registration_paths_are_untouched_by_v60(pre_v60):
+    before = pre_v60.rows(_REGISTRATION_PRIVILEGES)
+    assert len(before) > 50
+    ok, err = pre_v60.try_sql(V60.read_text(encoding="utf-8"))
+    assert ok, err
+    assert pre_v60.rows(_REGISTRATION_PRIVILEGES) == before
+    for signature in ("tdr_replace_registration_period(text,text,jsonb,uuid,text)",
+                      "ingest_registration_snapshot(text,date,text)"):
+        assert pre_v60.scalar(
+            f"select has_function_privilege('service_role','public.{signature}','EXECUTE')") == "t", signature
+    # The DLT importer's write call still runs end to end as service_role.
+    row = ('[{"registration_type": "RY1", "brand_name_raw": "TOYOTA", "model_name_raw": "YARIS ATIV", '
+           '"registrations": 42, "mapping_method": "unmapped"}]')
+    ok, err = pre_v60.try_sql("set role service_role; "
+                              f"select public.tdr_replace_registration_period('2026-08', 'RY1', '{row}'::jsonb); reset role;")
+    assert ok, err
+    assert pre_v60.scalar("select sum(registrations) from registrations where period = '2026-08-01'") == "42"
+
+
+def test_the_non_definer_projection_writer_is_closed_by_privileges(db):
+    # apply_vehicle_serving_projection is not SECURITY DEFINER, so the table
+    # privileges revoked above are what stop it.
+    assert db.scalar("select prosecdef from pg_proc where proname = 'apply_vehicle_serving_projection'") == "f"
+    assert db.scalar(
+        "select has_table_privilege('service_role','public.canonical_object_map','INSERT')") == "f"
+
+
+def test_v60_applies_cleanly_on_a_seeded_master(seeded):
+    """Production's order: seeded master, v58 serving, v59 rules, then v60."""
+    ok, err = seeded.try_sql(V59.read_text(encoding="utf-8"))
+    assert ok, err
+    views = ("current_vehicle_brands", "current_vehicle_models", "current_vehicle_generations",
+             "current_market_trims", "current_price_ledger", "current_spec_facts")
+    before = {view: seeded.rows(f"select to_jsonb(v)::text from public.{view} v order by 1") for view in views}
+    active = seeded.scalar("select active_release_id from canonical_vehicle_state")
+    ok, err = seeded.try_sql(V60.read_text(encoding="utf-8"))
+    assert ok, err
+    assert {view: seeded.rows(f"select to_jsonb(v)::text from public.{view} v order by 1") for view in views} == before
+    assert seeded.scalar("select count(*) from vehicle_master_seed_check() where not ok") == "0"
+    assert seeded.scalar("select count(*) from vehicle_serving_parity_check() where not ok") == "0"
+    assert seeded.scalar("select count(*) from vehicle_engine_rules_check()") == "0"
+    ok, err = seeded.try_sql(f"set role service_role; select public.activate_vehicle_release('{active}');")
+    assert not ok and "closed (Phase 0 step 5)" in err
+    ok, err = seeded.try_sql("set role service_role; update canonical_vehicle_state set activated_at = now();")
+    assert not ok and "permission denied" in err

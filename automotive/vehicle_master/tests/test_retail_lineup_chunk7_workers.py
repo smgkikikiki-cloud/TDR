@@ -179,27 +179,26 @@ def test_apply_worker_marks_stale_baseline_terminal(monkeypatch):
 
 
 def test_chunk7_static_wiring_contract():
+    """Since Vehicle DB v3 Phase 0 step 5 the lineup apply chain (apply plan ->
+    vehreg/data -> push -> publish) is closed: the import kind still exists in
+    the schema, the registration-only worker refuses it, and the apply hook is
+    kept only to fail loudly."""
     migration = (ROOT / "supabase/migration_v56_retail_lineup_import_kind.sql").read_text(
         encoding="utf-8"
     )
     assert "'RETAIL_LINEUP_BOOTSTRAP'::text" in migration
 
-    source_workflow_path = ROOT / ".github/workflows/source-import.yml"
-    source_workflow = source_workflow_path.read_text(encoding="utf-8")
+    source_workflow = (ROOT / ".github/workflows/source-import.yml").read_text(encoding="utf-8")
     yaml.safe_load(source_workflow)
-    assert "retail_lineup_compile_worker.py --limit 1000" in source_workflow
-    assert source_workflow.index("retail_lineup_compile_worker.py") < source_workflow.index(
-        "import_worker.py run --limit 5"
-    )
+    assert "retail_lineup_compile_worker" not in source_workflow
+    assert "import_worker.py run --limit 5 --registration-only" in source_workflow
 
     apply_workflow = (ROOT / ".github/workflows/retail-lineup-bootstrap-apply.yml").read_text(
         encoding="utf-8"
     )
     yaml.safe_load(apply_workflow)
     assert "types: [retail-lineup-bootstrap-apply]" in apply_workflow
-    assert 'cron: "*/15 * * * *"' in apply_workflow
-    assert "group: canonical-vehicle-input" in apply_workflow
-    assert "retail_lineup_apply_worker.py next --status APPLYING" in apply_workflow
-    assert "retail_lineup_apply_worker.py mark-written" in apply_workflow
-    assert "tools.publish_canonical --revision" in apply_workflow
-    assert "retail_lineup_apply_worker.py complete" in apply_workflow
+    assert "cron:" not in apply_workflow
+    assert "retail_lineup_apply_worker" not in apply_workflow
+    assert "publish_canonical" not in apply_workflow
+    assert "Phase 0 step 5" in apply_workflow and "exit 1" in apply_workflow
