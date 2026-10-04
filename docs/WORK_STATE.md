@@ -2,6 +2,56 @@
 
 This file is the persistent execution state for long-running TDR work. Agents must read this file before continuing any multi-step TDR data repair, audit, batch, or migration task.
 
+## Vehicle DB v3 platform state (current — read before anything vehicle-related)
+
+Vehicle DB v3 Phase 0 (`docs/vehicle-db/VEHICLE_DB_V3.md`) is **complete in production through
+step 6**; step 7 (this repository-rules update) is in progress.
+
+- **Step 1** (engine inventory, `docs/vehicle-db/ENGINE_INVENTORY.md`) — documentation only.
+- **Step 2** (`migration_v57_vehicle_master_tables.sql`) — added the Vehicle Master tables
+  (`vehicle_brands`/`models`/`generations`/`variants`/`trims`/`facts`/`price_ledger`/
+  `campaigns`/`promotions`/`eco_evidence`/sidecars/`legacy_identities`), seeded from the active
+  release. **Live.**
+- **Step 3** (`migration_v58_vehicle_serving_parity.sql`) — the six `current_*` serving views
+  read from the Vehicle Master tables instead of the old release projections, identical
+  columns/payload shape. **Live — serving is master-backed.**
+- **Step 4** (`migration_v59_vehicle_engine_rules.sql`) — ported the engine's validation rules
+  onto the master tables as constraints/triggers. **Live.**
+- **Step 5** (`migration_v60_close_legacy_vehicle_write_path.sql`) — closed the old
+  `canonical_input_batches → vehreg/data → release` write path. `canonical_input_batches` and
+  every `canonical_*` projection/release table are now **read-only history**; the old
+  enqueue/worker/publish/stage/activate/rollback/prune paths are fail-fast stubs or raise a
+  "closed" error. **Live — the legacy writer is closed.**
+- **Step 6** (`migration_v61_vehicle_master_backups_bucket.sql`) — daily read-only JSON export
+  of the Vehicle Master to the private `vehicle-master-backups` Storage bucket. **Live; the
+  first real production backup succeeded**
+  (`vehicle-master/2026-10-04/vehicle-master-20261004T014601Z.json.gz`). Export/recovery
+  infrastructure only — it is not a write path and is not authority.
+- **Step 7** (this section, plus `AGENTS.md` / `docs/CANONICAL_INPUT.md`) — states the above
+  plainly in repository rules. No code, migration, or data change.
+
+**Vehicle Master DB authority is live now.** The Supabase Vehicle Master tables are the sole
+canonical source of truth for vehicle-market facts; `automotive/vehicle_master/` is engine/
+tooling code, not a file-backed authority. See `docs/CANONICAL_INPUT.md` for what is retired
+and `docs/vehicle-db/VEHICLE_DB_V3.md` for the live rule set.
+
+**Registrations are explicitly out of scope / separate** from all of the above —
+`registrations*` tables, DLT ingestion, and registration analytics are untouched by every step
+above and remain their own system, joined only through reviewed identities.
+
+**Phase 1** (`VEHICLE_DB_V3.md` §12: permission layer, change log + revert, observations, field
+registry) is the next platform phase after step 7, and **has not been implemented**. There is no
+Vehicle Master write layer yet. Do not describe admin/AI/Excel Vehicle Master writes as
+available, do not claim a full production restore from backup has been tested, do not treat a
+backup as authority, and do not reopen the retired path above.
+
+**The repair records later in this file are historical and frozen.** They describe real work
+done through the write path Step 5 has since closed (`enqueue-canonical-batch.yml` →
+`canonical-input.yml` → commit → publish). They are a record of what happened, not current
+instructions — do not read them as license to enqueue a new batch through that path, and do not
+apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
+`docs/CANONICAL_INPUT.md` instead.
+
 ## Non-negotiable execution rules
 
 1. **Do not infer state from chat memory alone.** Read this file first.
@@ -47,7 +97,15 @@ These are **not the same batch**, even if both are casually called “Lot 4” i
 ## Active workflow: Vehicle Master trim / price / promotion repair
 
 Repository target: `smgkikikiki-cloud/TDR`
-Canonical boundary: `automotive/vehicle_master/`
+Canonical boundary: the Supabase Vehicle Master tables (see `docs/CANONICAL_INPUT.md`);
+`automotive/vehicle_master/` is engine/tooling code, not the data authority.
+
+**Step 4 of this process (the actual write) is currently blocked.** The write path it used to
+mean — `enqueue-canonical-batch.yml` → `canonical-input.yml` → publish — was closed in Vehicle
+DB v3 Phase 0 step 5 (`migration_v60`) and must not be revived. Steps 1–3 below (membership,
+inspection, implementation-prompt drafting) remain valid analysis work for a future repair batch;
+do not advance a batch to Step 4 until Phase 1 (`docs/vehicle-db/VEHICLE_DB_V3.md` §12) delivers
+a real Vehicle Master write layer.
 
 ### Repair process
 
@@ -75,9 +133,13 @@ This step is analysis only. Do not write to DB/repo unless the user explicitly a
 - Do not invent additional changes.
 
 **Step 4 — Write**
-- Only after user approval.
-- Use repository-supported edit/write format.
-- Preserve valid existing specs/evidence when identity changes; do not blank a vehicle simply because a trim is renamed/reconciled.
+- **Currently blocked** (see the note above the "Repair process" heading): the retired
+  `canonical_input_batches` queue is closed, and no Vehicle Master write layer exists yet. Do
+  not enqueue, publish, or otherwise write canonical vehicle data through it or through any
+  improvised alternative; wait for Phase 1 (`docs/vehicle-db/VEHICLE_DB_V3.md`).
+- Once a supported write layer exists: only after user approval; preserve valid existing
+  specs/evidence when identity changes; do not blank a vehicle simply because a trim is
+  renamed/reconciled.
 
 ## Historical audit record
 
