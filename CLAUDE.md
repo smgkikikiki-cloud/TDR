@@ -3,4 +3,4 @@
 
 Vehicle identity and market engine work follows docs/vehicle-db/VEHICLE_DB_V3.md.
 
-ก่อนทำ PR ใดๆ ในแผน graft ของ design system (แถวใน `design/GRAFT_PLAN.md`) ให้อ่าน `.claude/skills/tdr-design-graft/SKILL.md` ก่อน — ใช้อ่านเฉพาะแถว/หัวข้อที่เกี่ยวข้องและยึด `design/GRAFT_PLAN.md` เป็นหลัก ไม่ลดหรือเปลี่ยนข้อกำหนดใด ๆ ของแผน
+งาน UI overhaul / พัฒนาหน้า / design graft ตาม `design/GRAFT_PLAN.md` (รวมส่วน UI ของแถว `feat/*` เช่น Intelligence, Analysis) ให้อ่าน `.claude/skills/tdr-design-graft/SKILL.md` ก่อน — ใช้อ่านเฉพาะแถว/หัวข้อที่เกี่ยวข้องและยึด `design/GRAFT_PLAN.md` เป็นหลัก ไม่ลดหรือเปลี่ยนข้อกำหนดใด ๆ · ไม่ใช้กับงาน backend / schema / data / payment / import ที่แถว feature ต้องทำ และไม่จำกัดงานเหล่านั้น (ถ้าแถวระบุให้พึ่ง `docs/vehicle-db/*` หรือเอกสารอื่น ให้อ่านตามปกติ)
