@@ -1,21 +1,15 @@
-# Canonical vehicle publishing
+# Canonical vehicle publishing — retired (Vehicle DB v3 Phase 0 step 5)
 
-Vehicle identity, generations, MarketTrim, powertrain, specifications, tyres,
-wheels, batteries, list prices and campaigns are authored under `automotive/vehicle_master/`.
-TDR Supabase UUIDs remain editorial/industry links only.
+The file-backed release flow this README used to describe (`python -m tdr_bridge.release` →
+the service-role-only `publish_vehicle_release` RPC) is **retired**, as of Vehicle DB v3 Phase 0
+step 5 (`supabase/migration_v60_close_legacy_vehicle_write_path.sql`). `publish_vehicle_release`
+and the other release RPCs now unconditionally raise a "closed (Phase 0 step 5)" error — do not
+invoke them, and do not edit `vehreg/data/` as a write path.
 
-One edit flows through one release:
+The Supabase **Vehicle Master** tables (`migration_v57` onward) are the canonical source of
+truth now; the `current_*` views serve from them. See `docs/CANONICAL_INPUT.md` for exactly
+what is retired and `docs/vehicle-db/VEHICLE_DB_V3.md` for the live rule set — there is no
+supported Vehicle Master write layer yet (Phase 1 is not implemented).
 
-1. edit canonical files or approve through the bundled Vehicle Workbench;
-2. run the full Python test suite;
-3. build one immutable release with `python -m tdr_bridge.release`;
-4. publish through the service-role-only `publish_vehicle_release` RPC;
-5. all public catalog views flip to the new release in one transaction.
-
-The TDR repository must define `SUPABASE_URL` and
-`SUPABASE_SERVICE_ROLE_KEY` as Actions secrets. A missing secret fails the
-release job visibly; it never reports success without publishing.
-
-Registration rows never create MarketTrim records. They are a separate paid
-analytics input joined through the reviewed canonical-to-TDR crosswalk.
-
+Registration rows never create MarketTrim records. They are a separate paid analytics input
+joined through the reviewed canonical-to-TDR crosswalk.

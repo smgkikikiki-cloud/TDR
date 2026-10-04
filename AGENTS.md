@@ -4,9 +4,21 @@
 
 ## Canonical vehicle boundary
 
-All vehicle market facts belong under `automotive/vehicle_master/`, including Brand, Model, Generation, Variant, MarketTrim, exact powertrain, specifications, fitment, source evidence, Price Ledger, campaigns, ECO ingestion, DLT resolution, canonical releases, and price harvesting.
+Vehicle-market facts — Brand, Model, Generation, Variant, MarketTrim, exact powertrain, specifications, fitment, source evidence, Price Ledger, campaigns, ECO ingestion, DLT resolution, price harvesting — are authoritative in the **Supabase Vehicle Master tables** (`vehicle_brands`, `vehicle_models`, `vehicle_generations`, `vehicle_variants`, `vehicle_trims`, `vehicle_facts`, `vehicle_price_ledger`, `vehicle_campaigns`, `vehicle_promotions`, and related tables — `migration_v57` onward). The Vehicle Master DB is the **sole canonical source of truth** for these facts. All future editing/writer work for it follows `docs/vehicle-db/VEHICLE_DB_V3.md`.
 
-Registration facts remain separate from MarketTrim and join only through reviewed identities. TDR editorial, news, industry, plant, company, and analytical surfaces may reference canonical vehicle IDs but must not redefine canonical vehicle facts.
+`automotive/vehicle_master/` remains the **engine, tooling and code boundary** — validation rules, release/backup/check tooling, tests — and is **not** a file-backed canonical data authority. `vehreg/data/` is retained read-only history.
+
+`current_vehicle_brands`, `current_vehicle_models`, `current_vehicle_generations`, `current_market_trims`, `current_price_ledger`, `current_spec_facts` are **serving views** read from the Vehicle Master. They are a read target for pages and APIs, never a write target.
+
+The legacy file/release write path is **retired and read-only history** (Vehicle DB v3 Phase 0 step 5, `migration_v60`): `canonical_input_batches`, every `canonical_*` projection/release table, `vehreg/data` release publication, and the old enqueue/worker/publish/stage/activate/rollback/prune workflows and RPCs. Do not enqueue, publish, activate, or otherwise write through any of them — see `docs/CANONICAL_INPUT.md`.
+
+**Do not invent an interim writer.** Phase 1 of `docs/vehicle-db/VEHICLE_DB_V3.md` (the DB-master write layer: permissions, change log, observations → reconcile → apply/propose) is not implemented yet. Until it exists there is no supported path for a new Vehicle Master edit; record the need in `docs/WORK_STATE.md` and wait, rather than reopening the retired path or improvising a new one.
+
+Registration facts remain separate from Vehicle Master and join only through reviewed identities (crosswalk). Do not fold registration ingestion or analytics into Vehicle Master tables or treat them as the same authority.
+
+The daily Vehicle Master backup (Phase 0 step 6; private Storage bucket `vehicle-master-backups`) is export/recovery infrastructure, not authority. Never edit a backup file and re-import it as a normal write path.
+
+TDR editorial, news, industry, plant, company, and analytical surfaces may reference canonical vehicle IDs but must not redefine canonical vehicle facts.
 
 ## Persistent execution state
 

@@ -12,17 +12,22 @@ Canonical engine path: `automotive/vehicle_master/`.
 - Public TDR catalog reads the active canonical release views, not legacy `models`/`trims` as vehicle authority.
 - Vehicle releases include all canonical brands, models, generations, MarketTrims, Price Ledger records, campaign quotes, source references, and comparable spec facts currently present.
 - Registration facts remain in their own entitlement boundary and join through reviewed identities only.
-- TDR model administration no longer writes duplicate vehicle facts. Vehicle facts are edited in the canonical engine; TDR admin retains editorial/news/industry responsibilities.
-- The scheduled price harvester and release publisher run from TDR.
+- TDR model administration no longer writes duplicate vehicle facts. Vehicle facts are authoritative in the Supabase Vehicle Master DB (see the retirement note below); `automotive/vehicle_master/` is engine/tooling code, not a file-backed authority, and no active Vehicle Master writer exists yet (Phase 1 is not started). TDR admin retains editorial/news/industry responsibilities.
+- The legacy scheduled price harvester and release publisher that used to run from TDR are retired/closed (see the retirement note below).
 
-## Active release flow
+## Release flow — retired (Vehicle DB v3 Phase 0 step 5)
 
-1. Change canonical data once under `automotive/vehicle_master/vehreg/data/` or use the canonical tools/workbench.
-2. Validate the complete engine and release projection in CI.
-3. Merge to TDR `main`.
-4. `vehicle-release.yml` builds one release JSON and invokes the service-role-only `publish_vehicle_release` RPC.
-5. Supabase stages all rows and atomically switches `canonical_vehicle_state.active_release_id`.
-6. Every public route sees the same release. Rollback uses `rollback_vehicle_release` and changes only the release pointer.
+The six-step file/release flow this section used to describe (edit `vehreg/data/` → CI → merge
+→ `vehicle-release.yml` → `publish_vehicle_release` RPC → `canonical_vehicle_state` pointer
+switch → rollback via `rollback_vehicle_release`) is **retired**, as of
+`supabase/migration_v60_close_legacy_vehicle_write_path.sql`. Every RPC it named now
+unconditionally raises a "closed (Phase 0 step 5)" error; `vehicle-release.yml` is a fail-fast
+stub. Do not revive any of it.
+
+The Supabase Vehicle Master tables (`migration_v57` onward) are the canonical source of truth
+now, and `current_*` serves from them (`migration_v58`). See `docs/CANONICAL_INPUT.md` for what
+is retired and `docs/vehicle-db/VEHICLE_DB_V3.md` for the live rule set — there is no supported
+Vehicle Master write layer yet (Phase 1 is not implemented).
 
 ## Routing prohibition
 
