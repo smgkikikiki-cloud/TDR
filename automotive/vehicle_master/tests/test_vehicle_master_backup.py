@@ -316,3 +316,74 @@ def test_workflow_does_not_reopen_any_legacy_writer():
     assert "canonical_input_batches" not in text
     assert "publish_vehicle_release" not in text
     assert "contents: read" in text
+
+
+def _preflight_script() -> str:
+    """The exact shell embedded in the workflow's 'Preflight' step."""
+    import yaml
+
+    workflow = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    steps = workflow["jobs"]["backup"]["steps"]
+    preflight = next(step for step in steps if step.get("name") == "Preflight")
+    assert "if" not in preflight, (
+        "the backup/upload step must not be gated behind preflight's own success -- "
+        "missing credentials should fail the job, not quietly skip the rest of it")
+    return preflight["run"]
+
+
+def _run_preflight(tmp_path: Path, **supabase_env: str) -> "subprocess.CompletedProcess[str]":
+    import subprocess
+
+    # GitHub Actions' `env:` block always defines SUPABASE_URL/SUPABASE_SECRET_KEY/
+    # SUPABASE_SERVICE_ROLE_KEY (empty string when the secret is unset) -- it never
+    # leaves them literally unset. Mirror that exactly, since the script runs under
+    # `set -u` and an actually-unset var (as opposed to an empty one) is a different,
+    # unrelated failure mode.
+    env = {
+        "PATH": "/usr/bin:/bin",
+        "SUPABASE_URL": "",
+        "SUPABASE_SECRET_KEY": "",
+        "SUPABASE_SERVICE_ROLE_KEY": "",
+        **supabase_env,
+    }
+    script_path = tmp_path / "preflight.sh"
+    script_path.write_text(_preflight_script(), encoding="utf-8")
+    return subprocess.run(["bash", str(script_path)], env=env, capture_output=True, text=True)
+
+
+def test_missing_credentials_fail_the_preflight_step_loudly(tmp_path):
+    result = _run_preflight(tmp_path)  # nothing set beyond the always-present empty defaults
+    assert result.returncode != 0, (
+        "missing credentials must fail the workflow (Step 6: 'backup failure must fail "
+        "the workflow loudly'), not exit 0 and skip the backup")
+    assert "::error::" in result.stdout + result.stderr
+
+
+def test_url_without_either_key_still_fails_the_preflight_step(tmp_path):
+    result = _run_preflight(tmp_path, SUPABASE_URL="https://example.supabase.co")
+    assert result.returncode != 0
+
+
+def test_present_credentials_pass_the_preflight_step(tmp_path):
+    result = _run_preflight(
+        tmp_path,
+        SUPABASE_URL="https://example.supabase.co",
+        SUPABASE_SECRET_KEY="sb_secret_test_value",
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_present_credentials_via_legacy_service_role_key_also_pass(tmp_path):
+    result = _run_preflight(
+        tmp_path,
+        SUPABASE_URL="https://example.supabase.co",
+        SUPABASE_SERVICE_ROLE_KEY="eyJ-legacy-jwt-test-value",
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_preflight_never_pauses_with_a_warning_instead_of_failing():
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert "::warning::" not in text
+    assert "ready=false" not in text
+    assert "ready == 'true'" not in text
