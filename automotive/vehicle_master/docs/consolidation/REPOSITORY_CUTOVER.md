@@ -12,8 +12,8 @@ Canonical engine path: `automotive/vehicle_master/`.
 - Public TDR catalog reads the active canonical release views, not legacy `models`/`trims` as vehicle authority.
 - Vehicle releases include all canonical brands, models, generations, MarketTrims, Price Ledger records, campaign quotes, source references, and comparable spec facts currently present.
 - Registration facts remain in their own entitlement boundary and join through reviewed identities only.
-- TDR model administration no longer writes duplicate vehicle facts. Vehicle facts are edited in the canonical engine; TDR admin retains editorial/news/industry responsibilities.
-- The scheduled price harvester and release publisher run from TDR.
+- TDR model administration no longer writes duplicate vehicle facts. Vehicle facts are authoritative in the Supabase Vehicle Master DB (see the retirement note below); `automotive/vehicle_master/` is engine/tooling code, not a file-backed authority, and no active Vehicle Master writer exists yet (Phase 1 is not started). TDR admin retains editorial/news/industry responsibilities.
+- The legacy scheduled price harvester and release publisher that used to run from TDR are retired/closed (see the retirement note below).
 
 ## Release flow — retired (Vehicle DB v3 Phase 0 step 5)
 

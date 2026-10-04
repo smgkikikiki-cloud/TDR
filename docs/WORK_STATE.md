@@ -4,8 +4,8 @@ This file is the persistent execution state for long-running TDR work. Agents mu
 
 ## Vehicle DB v3 platform state (current — read before anything vehicle-related)
 
-Vehicle DB v3 Phase 0 (`docs/vehicle-db/VEHICLE_DB_V3.md`) is **complete in production through
-step 6**; step 7 (this repository-rules update) is in progress.
+Vehicle DB v3 **Phase 0 is complete** (`docs/vehicle-db/VEHICLE_DB_V3.md`) — all seven steps,
+1 through 7, are done.
 
 - **Step 1** (engine inventory, `docs/vehicle-db/ENGINE_INVENTORY.md`) — documentation only.
 - **Step 2** (`migration_v57_vehicle_master_tables.sql`) — added the Vehicle Master tables
@@ -28,7 +28,7 @@ step 6**; step 7 (this repository-rules update) is in progress.
   (`vehicle-master/2026-10-04/vehicle-master-20261004T014601Z.json.gz`). Export/recovery
   infrastructure only — it is not a write path and is not authority.
 - **Step 7** (this section, plus `AGENTS.md` / `docs/CANONICAL_INPUT.md`) — states the above
-  plainly in repository rules. No code, migration, or data change.
+  plainly in repository rules. No code, migration, or data change. **Done.**
 
 **Vehicle Master DB authority is live now.** The Supabase Vehicle Master tables are the sole
 canonical source of truth for vehicle-market facts; `automotive/vehicle_master/` is engine/
@@ -40,10 +40,10 @@ and `docs/vehicle-db/VEHICLE_DB_V3.md` for the live rule set.
 above and remain their own system, joined only through reviewed identities.
 
 **Phase 1** (`VEHICLE_DB_V3.md` §12: permission layer, change log + revert, observations, field
-registry) is the next platform phase after step 7, and **has not been implemented**. There is no
-Vehicle Master write layer yet. Do not describe admin/AI/Excel Vehicle Master writes as
-available, do not claim a full production restore from backup has been tested, do not treat a
-backup as authority, and do not reopen the retired path above.
+registry) is the next platform phase, now that Phase 0 is complete, and **has not been
+started**. There is no Vehicle Master write layer yet. Do not describe admin/AI/Excel Vehicle
+Master writes as available, do not claim a full production restore from backup has been tested,
+do not treat a backup as authority, and do not reopen the retired path above.
 
 **The repair records later in this file are historical and frozen.** They describe real work
 done through the write path Step 5 has since closed (`enqueue-canonical-batch.yml` →
