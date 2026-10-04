@@ -1,0 +1,61 @@
+name: Vehicle Master daily backup
+
+# Vehicle DB v3 Phase 0 step 6. Read-only export of the vehicle_* master
+# tables (migration_v57) to a deterministic, checksummed JSON document,
+# uploaded gzip-compressed to the private 'vehicle-master-backups' Storage
+# bucket (migration_v61) at an immutable, timestamped path. Never writes to
+# any table and never touches the closed legacy write path (Phase 0 step 5).
+#
+# Schedule: 18:30 UTC daily (01:30 Asia/Bangkok), after the day's data has
+# settled and outside Bangkok business hours.
+on:
+  schedule:
+    - cron: "30 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      # Unlike source-import.yml (which may legitimately pause before launch),
+      # a daily backup has no safe "paused" state: missing credentials must
+      # fail the job loudly, not produce a quiet green run with no backup.
+      - name: Preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::Vehicle Master backup cannot run: SUPABASE_URL and SUPABASE_SECRET_KEY/SUPABASE_SERVICE_ROLE_KEY are required. Failing the job rather than skipping today's backup."
+            exit 1
+          fi
+
+      # No row data or credentials are ever printed: tools.vehicle_master_backup
+      # only prints the manifest-shaped summary (format, checksum, row counts,
+      # object path). A non-zero exit here fails the job loudly; the upload
+      # step only runs after the full export + checksum has already succeeded,
+      # so a failed/incomplete export is never uploaded.
+      - name: Export and upload Vehicle Master backup
+        run: PYTHONPATH=. python -m tools.vehicle_master_backup --apply

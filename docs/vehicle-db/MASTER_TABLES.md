@@ -189,6 +189,49 @@ constraints and triggers. The rules that need the spec registry, the resolution 
 `lib/vehicle-engine/`. The rule-by-rule map, what is deferred and why, and the computed-value decisions are in
 [`ENGINE_RULES.md`](ENGINE_RULES.md). On a fresh database, seed before applying v59 (ENGINE_RULES.md F5).
 
+## Backups (Phase 0 step 6)
+
+Migration: `supabase/migration_v61_vehicle_master_backups_bucket.sql` (private Storage bucket only).
+Exporter: `automotive/vehicle_master/tools/vehicle_master_backup.py`.
+Verifier: `automotive/vehicle_master/tools/vehicle_master_backup_verify.py`.
+Workflow: `.github/workflows/vehicle-master-backup.yml` (daily at 18:30 UTC / 01:30 Asia/Bangkok, plus
+`workflow_dispatch`).
+Tests: `automotive/vehicle_master/tests/test_vehicle_master_backup.py`,
+`test_vehicle_master_backup_verify.py`, `test_vehicle_master_backups_bucket_migration_v61.py`.
+
+Step 2's rule still applies: Git/releases are not a write path, and this step does not reopen the
+closed legacy write path (step 5) in any form. The daily export is read-only against the master
+tables and is the v3 §2.6 "Daily JSON export of the master to Storage" requirement, implemented as
+a narrow V0:
+
+- **Scope.** All 15 master tables from this document's table list above (identity, facts, price
+  ledger, campaigns/promotions, ECO evidence, the three HUMAN sidecars, legacy identities, and the
+  seed pin `vehicle_master_state`). `vehicle_master_seed_runs` (seed-process bookkeeping) and
+  `canonical_write_revisions` (today still only legacy file/release-path history, since nothing yet
+  writes Vehicle Master mutations through it) are deliberately excluded; Phase 1 should reconsider
+  the latter once it reuses that table as the master change log. No `registration_*` table, no
+  legacy uuid `models`/`trims` table, and no legacy alias table is ever read.
+- **Format.** One UTF-8 JSON document: `format`, `format_version`, `exported_at` (UTC), a
+  `checksum` (sha256 of the canonical JSON of `payload` alone), and `payload` holding
+  `vehicle_master_seed` (the `vehicle_master_state` row), the table list, per-table `row_counts`,
+  and `data` (every table's rows, each table sorted by its own primary key). Canonical JSON =
+  UTF-8, sorted object keys, compact separators -- this makes the checksum, and the whole export,
+  byte-identical for the same underlying rows regardless of fetch order (PostgREST pagination is
+  not guaranteed stable across requests). Compressed with gzip (`.json.gz`).
+- **Storage.** Private bucket `vehicle-master-backups` (migration_v61; no `anon`/`authenticated`
+  grant, same pattern as the existing `source-imports` and `retail-lineup-exports` buckets).
+  Immutable path `vehicle-master/YYYY-MM-DD/vehicle-master-<UTC timestamp>.json.gz`
+  (`x-upsert: false` -- a backup is never overwritten). No pruning/retention deletion in V0; backups
+  accumulate until an owner decision says otherwise.
+- **Safety.** The exporter only ever issues `GET` requests (enforced by tests, not just by
+  convention) and uploads only after the full export and its checksum have been built
+  successfully -- a mid-export failure never uploads a partial backup, and the workflow fails
+  loudly (non-zero exit) rather than succeeding silently. No row data or credential is ever printed
+  to the CI log; only a manifest-shaped summary (format, checksum, row counts, object path).
+- **Restore.** `vehicle_master_backup_verify.py` loads and decompresses a backup, recomputes the
+  checksum, and checks the format tag/version, table list and row counts -- entirely locally, never
+  writing to a database. A full automated production restore is out of scope for step 6.
+
 ## Left for later steps (not decided here)
 
 - `authority`, `locked`, `vat_included` and the typed v3 §7 promotion columns (`scope`, `type`,
