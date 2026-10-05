@@ -8,6 +8,24 @@ with synthetic fixtures, independent of whether a real package is on hand.
 Reference: ``.claude/skills/tdr-package-import/SKILL.md``,
 ``docs/vehicle-db/VEHICLE_DB_V3.md`` §14.1. Nothing here imports anything;
 ``verify_full_package`` only ever reports problems.
+
+UNVERIFIED ASSUMPTION -- isolated here, not left implicit: the exact outer
+``full_package.json`` schema below (the field names ``status``,
+``confirmed_by``, ``panels``, ``files``, ``period``, ``version``,
+``master_version``, ``changelog_since``) has never been observed in a real
+Full Package. Every real delivery inspected for M2 so far was missing that
+file entirely (the two incomplete 2569-08 drops found on the owner's
+filesystem had no ``full_package.json`` at all). This shape is inferred from
+the skill's prose and the owner's own field list, nothing more.
+``OUTER_PACKAGE_SCHEMA_VERIFIED_AGAINST_REAL_FILE`` below is ``False`` for
+exactly that reason -- flip it (and update this note) the first time a real
+``full_package.json`` is actually inspected. If its real field names differ,
+only ``verify_full_package_status``/``verify_panel_set``/
+``verify_package_md5_index``/``verify_changelog_continuity`` and their test
+fixtures need to change -- nothing in the SQL schema (migration_v62) depends
+on this assumption; every table/column there is ground-truthed against the
+real per-panel ``manifest.json``/``panel.json``/CSV headers already
+inspected, independently of what the outer wrapper turns out to look like.
 """
 from __future__ import annotations
 
@@ -23,6 +41,11 @@ PANEL_IDS: tuple[str, ...] = (
 
 REQUIRED_STATUS = "พร้อมส่ง"
 REQUIRED_CONFIRMED_BY = 2
+
+#: See the module docstring's "UNVERIFIED ASSUMPTION" note. Set to True only
+#: once a real full_package.json has actually been read and these field names
+#: confirmed against it.
+OUTER_PACKAGE_SCHEMA_VERIFIED_AGAINST_REAL_FILE = False
 
 #: Ground-truthed against the real Ice delivery inspected for M2 (period 2569-08,
 #: panel version 2) for every panel except reg_powertrain, which was never
