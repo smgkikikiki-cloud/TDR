@@ -95,7 +95,7 @@ def test_dims_model_group_segment_and_body_are_nullable(db):
         "values ('toy.a', 'A', 'TOY', 100);")
     assert ok, err
     assert db.scalar(
-        "select (segment is null and body is null)::text from public.ice_dims_model_group "
+        "select (segment is null and body is null) from public.ice_dims_model_group "
         "where model_group_id = 'toy.a'"
     ) == "t"
 
