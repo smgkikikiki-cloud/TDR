@@ -245,15 +245,19 @@ grant execute on function public.ice_crosswalk_upsert_match(
 -- contains the corrected history (migration_v62); this only moves crosswalk MAPPING
 -- rows and records a redirect fact.
 --
---   เปลี่ยนรหัส / รวม: every crosswalk row under the old id is moved to the new id
---     (a row that would collide with one already under the new id -- the "รวม" case
---     where multiple old ids merge -- is left as-is rather than overwritten; a row that
---     would violate the one-active-group-per-canonical-model rule against some other,
---     unrelated active mapping is deliberately NOT moved and NOT deleted, so it is
---     flagged for manual resolution rather than silently lost). Every row that did move
---     is then deleted from the old id, and the old id ends up with zero rows in the
---     ordinary (non-conflicting) case -- the id_changes test suite's "no orphan crosswalk
---     rows" case. The old id is retired: a redirect row records old -> new.
+--   เปลี่ยนรหัส / รวม: every crosswalk row under the old id is moved to the new id, one
+--     row at a time, deleting the old copy *before* inserting its replacement -- so an
+--     AUTO/APPROVED row's own canonical_model_id is never briefly duplicated across the
+--     old and new id at once, which would otherwise make the active-canonical unique
+--     index reject the move as a false self-conflict. A row that would collide with one
+--     already under the new id (the "รวม" case where multiple old ids merge) is left
+--     as-is rather than duplicated -- its old copy is still deleted. A row that would
+--     violate the one-active-group-per-canonical-model rule against some other,
+--     unrelated active mapping is deliberately left untouched at the old id (the delete
+--     is rolled back together with the failed insert), flagged for manual resolution
+--     rather than silently lost. The old id ends up with zero rows in the ordinary
+--     (non-conflicting) case -- the id_changes test suite's "no orphan crosswalk rows"
+--     case. The old id is retired: a redirect row records old -> new.
 --   แยก: the old id is untouched (not moved, not retired -- it keeps selling/registering
 --     under both going forward per Ice). For every canonical model currently actively
 --     mapped (AUTO/APPROVED) to the old id, this creates one STRUCTURE proposal: a
@@ -276,7 +280,6 @@ set search_path = public, pg_temp
 as $$
 declare
   r record;
-  moved_ids bigint[] := array[]::bigint[];
   moved_count integer := 0;
   conflict_count integer := 0;
   proposal_count integer := 0;
@@ -288,6 +291,18 @@ begin
   if p_type in ('เปลี่ยนรหัส', 'รวม') then
     for r in select * from public.ice_model_crosswalk where model_group_id = p_old_model_group_id loop
       begin
+        -- Delete the old row *before* inserting its replacement, both inside this
+        -- same exception-catching block: an AUTO/APPROVED row's own canonical_model_id
+        -- must not transiently exist twice (once at old_model_group_id, once at
+        -- new_model_group_id) while both are present, or the active-canonical unique
+        -- index (ice_model_crosswalk_active_canonical_uniq) would reject the insert as
+        -- a false self-conflict against the very row being moved. Deleting first means
+        -- that index sees at most one row for this canonical_model_id at every instant.
+        -- If the insert still raises (a genuinely different, unrelated row elsewhere
+        -- holds this canonical_model_id active), PL/pgSQL rolls back the whole block --
+        -- including this delete -- so the row ends up untouched at the old id, not
+        -- deleted-and-lost.
+        delete from public.ice_model_crosswalk where id = r.id;
         if r.canonical_model_id is not null then
           insert into public.ice_model_crosswalk
             (model_group_id, canonical_model_id, match_method, score, status, master_version,
@@ -307,16 +322,11 @@ begin
           on conflict (model_group_id) where canonical_model_id is null
           do nothing;
         end if;
-        moved_ids := moved_ids || r.id;
         moved_count := moved_count + 1;
       exception when unique_violation then
         conflict_count := conflict_count + 1;
       end;
     end loop;
-
-    if array_length(moved_ids, 1) > 0 then
-      delete from public.ice_model_crosswalk where id = any(moved_ids);
-    end if;
 
     insert into public.ice_model_group_redirects
       (old_model_group_id, new_model_group_id, change_type, reason)
