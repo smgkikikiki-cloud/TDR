@@ -59,7 +59,8 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
 - **M1** (serving contract inventory, `docs/vehicle-db/SERVING_CONTRACT.md`) — documentation
   only. **Done.**
 - **M2** (Ice import, `.claude/skills/tdr-package-import/SKILL.md`) — **infrastructure only,
-  in progress. No real Ice package has been imported.**
+  in progress. `migration_v62_ice_market_panels` is applied in production. No real Ice
+  package has been imported, so the live `ice_*` tables hold no real release data.**
   - Built and live in the repo (package-independent, needs no real package to exist):
     `supabase/migration_v62_ice_market_panels.sql` (twelve `ice_*` tables — six fact/dims
     panels plus `ice_package_imports`, the import-event log — service-role-only, same private
@@ -78,7 +79,36 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
   - Still blocking a real import: the complete `TDR_FULL_*.zip` itself (6 panels incl.
     `reg_powertrain`, `full_package.json`, `CHANGELOG.csv`, the release's own
     `validate_package.py`, `status: "พร้อมส่ง"`, `confirmed_by` with 2 names).
-- **M3** (crosswalk, `ice_model_crosswalk`) — **not started.**
+- **M3** (crosswalk, `docs/vehicle-db/VEHICLE_DB_V3.md` §14.2) — **infrastructure
+  implemented, package-independent; no production crosswalk has been generated or
+  approved.** No real Ice Full Package has been imported (M2 state above), so
+  `ice_reg_trend`/`ice_dims_model_group` are empty in production and a real `--match`
+  run would currently find zero candidates.
+  - Built and live in the repo: `supabase/migration_v63_ice_model_crosswalk.sql`
+    (`ice_model_crosswalk`, `ice_brand_aliases` seeded with Deepal↔Changan and MG
+    Maxus↔MAXUS, `ice_model_group_redirects`, `ice_known_model_groups` discovery
+    ledger — all service-role-only, same private pattern as M2; the RPCs
+    `ice_crosswalk_upsert_match` and `ice_crosswalk_apply_id_change`); `vehreg/
+    ice_crosswalk.py` (pure matcher — series correlation/ratio, brand alias and name
+    normalization, the AUTO/PROPOSED acceptance table, Buddhist/Gregorian period
+    conversion, id_changes.csv parsing, discovery flags, the review-sheet
+    formatter); `tools/ice_crosswalk_match.py` (wires the pure matcher to real
+    Supabase data — `--match` and `--process-id-changes`).
+  - Row-identity/PK shape for `ice_model_crosswalk` was not specified by §14.2 and
+    is a documented choice (see the migration's own header comment): a surrogate
+    bigint PK plus three partial unique indexes encoding the required cardinality
+    (many TDR models → one Ice group; one TDR model → at most one *active* Ice
+    group). The id_changes "แยก" case's "STRUCTURE proposal" uses `match_method =
+    'ADMIN'` with `status = 'PROPOSED'` (also a documented choice — §14.2's
+    `match_method` enum has no dedicated value for a system-raised structural
+    review item).
+  - Bookmark/public-link redirection consumption (actually rewriting a saved link
+    to follow a retired `model_group_id`) is **not built** — `ice_model_group_redirects`
+    only records the old→new fact. Any UI/link-rewriting consumer is a handoff to
+    M4/M5, which must read this table rather than inventing a second mechanism.
+  - Do not run `tools/ice_crosswalk_match.py --match` against production, and do not
+    seed or approve any real crosswalk mapping, until a real Ice Full Package has
+    been imported (M2) and the owner has reviewed real candidates.
 - **M4** (market engine on Ice data) — **not started.**
 - **M5** (switch pages, retire old registration views) — **not started.** The existing
   registration/market display engine (`lib/registration-analytics.ts`,
