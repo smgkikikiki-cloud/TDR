@@ -259,7 +259,7 @@ def test_rejected_mapping_with_unchanged_inputs_is_not_reproposed(tmp_path):
     series_eval = xwalk.evaluate_series(values, values)
     fingerprint = xwalk.decision_fingerprint(
         model_group_id="toyota-hilux-travo", canonical_model_id="toyota-hilux-travo-cab",
-        correlation=series_eval.correlation, ratio=None, name_score=0.0, master_version="M5")
+        correlation=series_eval.correlation, ratio=series_eval.ratio, name_score=1.0, master_version="M5")
     rest.tables["ice_model_crosswalk"] = [{
         "id": 1, "model_group_id": "toyota-hilux-travo", "canonical_model_id": "toyota-hilux-travo-cab",
         "match_method": "SERIES", "score": series_eval.correlation, "status": "REJECTED", "master_version": "M4",
@@ -289,6 +289,164 @@ def test_rejected_mapping_is_reevaluated_once_the_master_version_changes(tmp_pat
     assert summary["skipped_unchanged_rejection"] == 0
     assert summary["applied"] == 1
     assert rest.tables["ice_model_crosswalk"][0]["status"] == "AUTO"
+
+
+def test_rejected_mapping_is_reevaluated_when_only_the_ratio_evidence_changed(tmp_path):
+    # Regression for PR #188 review round 2: before the fix, the orchestrator zeroed
+    # out ratio before hashing, so a real-world ratio change (Ice revised a period's
+    # numbers) could never by itself make a REJECTED mapping eligible for review again.
+    rest = _base_rest()
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", values)
+    rest.tables["vehicle_models"] = [_model("toyota-hilux-travo-cab", "Hilux Travo", "toyota")]
+    rest.tables["registrations"] = _legacy_rows("toyota-hilux-travo-cab", values)
+
+    series_eval = xwalk.evaluate_series(values, values)
+    stale_fingerprint = xwalk.decision_fingerprint(
+        model_group_id="toyota-hilux-travo", canonical_model_id="toyota-hilux-travo-cab",
+        correlation=series_eval.correlation, ratio=(series_eval.ratio or 0) + 1.0,  # only the ratio is wrong
+        name_score=1.0, master_version="M5")
+    rest.tables["ice_model_crosswalk"] = [{
+        "id": 1, "model_group_id": "toyota-hilux-travo", "canonical_model_id": "toyota-hilux-travo-cab",
+        "match_method": "SERIES", "score": series_eval.correlation, "status": "REJECTED", "master_version": "M5",
+        "decision_fingerprint": stale_fingerprint, "reason": "admin rejected",
+    }]
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["skipped_unchanged_rejection"] == 0
+    assert summary["applied"] == 1
+
+
+def test_rejected_mapping_is_reevaluated_when_only_the_name_score_evidence_changed(tmp_path):
+    # Same regression, isolating name_score instead of ratio.
+    rest = _base_rest()
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", values)
+    rest.tables["vehicle_models"] = [_model("toyota-hilux-travo-cab", "Hilux Travo", "toyota")]
+    rest.tables["registrations"] = _legacy_rows("toyota-hilux-travo-cab", values)
+
+    series_eval = xwalk.evaluate_series(values, values)
+    stale_fingerprint = xwalk.decision_fingerprint(
+        model_group_id="toyota-hilux-travo", canonical_model_id="toyota-hilux-travo-cab",
+        correlation=series_eval.correlation, ratio=series_eval.ratio,
+        name_score=0.0,  # the real name similarity for this fixture is 1.0 -- only this is wrong
+        master_version="M5")
+    rest.tables["ice_model_crosswalk"] = [{
+        "id": 1, "model_group_id": "toyota-hilux-travo", "canonical_model_id": "toyota-hilux-travo-cab",
+        "match_method": "SERIES", "score": series_eval.correlation, "status": "REJECTED", "master_version": "M5",
+        "decision_fingerprint": stale_fingerprint, "reason": "admin rejected",
+    }]
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["skipped_unchanged_rejection"] == 0
+    assert summary["applied"] == 1
+
+
+# ---------------------------------------------------------------------------
+# Candidate ranking (PR #188 review round 2): never compare a SERIES
+# correlation against a NAME name_score directly.
+# ---------------------------------------------------------------------------
+
+def test_a_strong_series_auto_candidate_beats_a_weak_series_name_only_candidate(tmp_path):
+    rest = _base_rest()
+    ice_values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
+    rest.tables["vehicle_models"] = [
+        _model("candidate-a", "Hilux Travo", "toyota"),   # strong series, name >= 0.8 -> AUTO-eligible
+        _model("candidate-b", "Hilux Travo", "toyota"),   # weak series, name 1.0 -> NAME-only PROPOSED
+    ]
+    rest.tables["registrations"] = (
+        _legacy_rows("candidate-a", ice_values)
+        + _legacy_rows("candidate-b", [5.0, 90.0, 3.0, 150.0, 20.0, 60.0]))
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    rows = {r["canonical_model_id"]: r for r in rest.tables["ice_model_crosswalk"]}
+    assert "candidate-a" in rows and rows["candidate-a"]["status"] == "AUTO"
+    assert "candidate-b" not in rows
+
+
+def test_series_proposed_beats_name_only_proposed_despite_a_numerically_higher_name_score(tmp_path):
+    rest = _base_rest()
+    ice_values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
+    rest.tables["vehicle_models"] = [
+        # Strong series but a name that shares nothing with "Hilux Travo" -- PROPOSED/SERIES.
+        _model("candidate-a", "Zephyr Nomad Expedition", "toyota"),
+        # Weak series but an exact name match (name_score 1.0, numerically higher than
+        # candidate-a's name score) -- PROPOSED/NAME. Must still lose to candidate-a.
+        _model("candidate-b", "Hilux Travo", "toyota"),
+    ]
+    rest.tables["registrations"] = (
+        _legacy_rows("candidate-a", ice_values)
+        + _legacy_rows("candidate-b", [5.0, 90.0, 3.0, 150.0, 20.0, 60.0]))
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    rows = {r["canonical_model_id"]: r for r in rest.tables["ice_model_crosswalk"]}
+    assert rows["candidate-a"]["status"] == "PROPOSED"
+    assert rows["candidate-a"]["match_method"] == "SERIES"
+    assert "candidate-b" not in rows
+
+
+# ---------------------------------------------------------------------------
+# Maxus/Mifa model-name alias, end to end (§14.2 known trap)
+# ---------------------------------------------------------------------------
+
+def test_maxus_7_auto_matches_mifa_7_with_a_strong_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_brand_aliases"] = [
+        {"brand": "MG Maxus", "alias_group": "maxus_mifa"}, {"brand": "MAXUS", "alias_group": "maxus_mifa"}]
+    rest.tables["vehicle_brands"] = [_brand("maxus", "MAXUS")]
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("mg-maxus-7", "7", "MG Maxus")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("mg-maxus-7", values)
+    rest.tables["vehicle_models"] = [_model("maxus-mifa-7", "MAXUS Mifa 7", "maxus")]
+    rest.tables["registrations"] = _legacy_rows("maxus-mifa-7", values)
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "AUTO"
+
+
+def test_maxus_9_auto_matches_mifa_9_with_a_strong_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_brand_aliases"] = [
+        {"brand": "MG Maxus", "alias_group": "maxus_mifa"}, {"brand": "MAXUS", "alias_group": "maxus_mifa"}]
+    rest.tables["vehicle_brands"] = [_brand("maxus", "MAXUS")]
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    rest.tables["ice_dims_model_group"] = [_group("mg-maxus-9", "9", "MG Maxus")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("mg-maxus-9", values)
+    rest.tables["vehicle_models"] = [_model("maxus-mifa-9", "MAXUS Mifa 9", "maxus")]
+    rest.tables["registrations"] = _legacy_rows("maxus-mifa-9", values)
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "AUTO"
+
+
+def test_maxus_7_does_not_auto_match_mifa_9_with_a_weak_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_brand_aliases"] = [
+        {"brand": "MG Maxus", "alias_group": "maxus_mifa"}, {"brand": "MAXUS", "alias_group": "maxus_mifa"}]
+    rest.tables["vehicle_brands"] = [_brand("maxus", "MAXUS")]
+    rest.tables["ice_dims_model_group"] = [_group("mg-maxus-7", "7", "MG Maxus")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("mg-maxus-7", [10.0, 20.0, 15.0, 25.0, 12.0, 30.0])
+    rest.tables["vehicle_models"] = [_model("maxus-mifa-9", "MAXUS Mifa 9", "maxus")]
+    rest.tables["registrations"] = _legacy_rows("maxus-mifa-9", [12.0, 3.0, 40.0, 5.0, 60.0, 8.0])
+
+    summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
+    # The weak series blocks AUTO regardless of how similar "mifa 7"/"mifa 9" look as
+    # short strings -- a PROPOSED row (for human review) is an acceptable outcome, an
+    # AUTO row is not.
+    active_rows = [r for r in rest.tables["ice_model_crosswalk"] if r["status"] == "AUTO"]
+    assert active_rows == []
+    for row in rest.tables["ice_model_crosswalk"]:
+        assert row["status"] != "AUTO"
 
 
 # ---------------------------------------------------------------------------

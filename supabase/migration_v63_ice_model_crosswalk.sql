@@ -340,7 +340,10 @@ begin
       values
         (p_new_model_group_id, r.canonical_model_id, 'ADMIN', null, 'PROPOSED', p_master_version, null,
          coalesce(p_reason, format(
-           'id_changes แยก: %s -> %s -- decide whether %s should also map to %s',
+           'STRUCTURE PROPOSAL -- NOT YET APPROVED: id_changes แยก split %s -> %s. '
+           'A human must decide whether %s should also map to %s; match_method is ''ADMIN'' '
+           'only because this came from an id_changes event rather than the SERIES/NAME '
+           'matcher, not because an admin has reviewed or approved it.',
            p_old_model_group_id, p_new_model_group_id, r.canonical_model_id, p_new_model_group_id)))
       on conflict (model_group_id, canonical_model_id) where canonical_model_id is not null
       do nothing;

@@ -109,6 +109,124 @@ def test_normalize_brand_without_an_alias_entry_is_just_lowercased_and_trimmed()
 
 
 # ---------------------------------------------------------------------------
+# Maxus/Mifa model-name alias (§14.2 "MG Maxus 7/9 <-> MAXUS Mifa 7/9" -- the
+# brand alias alone does not fix this, since the *model names* don't resemble
+# each other textually even once brand is accounted for)
+# ---------------------------------------------------------------------------
+
+def test_maxus_7_aliases_to_mifa_7_within_the_maxus_mifa_group():
+    assert xwalk.apply_model_name_alias("7", "maxus_mifa") == "mifa 7"
+
+
+def test_maxus_9_aliases_to_mifa_9_within_the_maxus_mifa_group():
+    assert xwalk.apply_model_name_alias("9", "maxus_mifa") == "mifa 9"
+
+
+def test_an_already_aliased_name_passes_through_unchanged():
+    assert xwalk.apply_model_name_alias("mifa 7", "maxus_mifa") == "mifa 7"
+
+
+def test_model_name_alias_is_scoped_to_its_own_brand_group_only():
+    # "7" means nothing special outside the maxus_mifa alias_group -- this must
+    # never become a generic fuzzy rule that could merge unrelated models.
+    assert xwalk.apply_model_name_alias("7", "toyota") == "7"
+    assert xwalk.apply_model_name_alias("7", "") == "7"
+
+
+def test_maxus_7_and_mifa_7_become_name_similar_once_aliased():
+    ice_name = xwalk.apply_model_name_alias(xwalk.normalize_model_name("7", "MG Maxus"), "maxus_mifa")
+    tdr_name = xwalk.apply_model_name_alias(xwalk.normalize_model_name("MAXUS Mifa 7", "MAXUS"), "maxus_mifa")
+    assert xwalk.name_similarity(ice_name, tdr_name) == 1.0
+
+
+def test_maxus_7_cannot_auto_match_mifa_9_even_though_the_short_strings_look_similar():
+    # "mifa 7" vs "mifa 9" differ by one digit in a six-character string, so raw
+    # name_similarity alone cannot reliably tell them apart (same situation as the
+    # bmw_3/bmw-x3 trap) -- it is the *series* requirement in decide_match that must
+    # block this, exactly as it does for that trap, not the name score by itself.
+    ice_name = xwalk.apply_model_name_alias(xwalk.normalize_model_name("7", "MG Maxus"), "maxus_mifa")
+    tdr_name = xwalk.apply_model_name_alias(xwalk.normalize_model_name("MAXUS Mifa 9", "MAXUS"), "maxus_mifa")
+    name_score = xwalk.name_similarity(ice_name, tdr_name)
+    weak_series = xwalk.evaluate_series([10.0, 20.0, 15.0], [12.0, 3.0, 40.0])
+    decision = xwalk.decide_match(series=weak_series, name_score=name_score)
+    assert decision is None or decision.status != "AUTO"
+
+
+# ---------------------------------------------------------------------------
+# decision_rank (§14.2 signal priority -- PR #188 review round 2)
+# ---------------------------------------------------------------------------
+
+def test_decision_rank_auto_always_beats_proposed_regardless_of_raw_scores():
+    auto = xwalk.MatchDecision(
+        status="AUTO", match_method="SERIES", correlation=0.981, ratio=1.0, name_score=0.81, reason="r")
+    proposed_name_only = xwalk.MatchDecision(
+        status="PROPOSED", match_method="NAME", correlation=None, ratio=None, name_score=1.0, reason="r")
+    assert xwalk.decision_rank(auto) > xwalk.decision_rank(proposed_name_only)
+
+
+def test_decision_rank_series_proposed_beats_name_proposed_even_with_a_lower_raw_score():
+    series_proposed = xwalk.MatchDecision(
+        status="PROPOSED", match_method="SERIES", correlation=0.99, ratio=1.0, name_score=0.1, reason="r")
+    name_proposed = xwalk.MatchDecision(
+        status="PROPOSED", match_method="NAME", correlation=0.1, ratio=0.1, name_score=1.0, reason="r")
+    assert xwalk.decision_rank(series_proposed) > xwalk.decision_rank(name_proposed)
+
+
+def test_decision_rank_ties_within_the_same_status_and_method_break_on_correlation():
+    stronger = xwalk.MatchDecision(
+        status="PROPOSED", match_method="SERIES", correlation=0.97, ratio=1.0, name_score=0.1, reason="r")
+    weaker = xwalk.MatchDecision(
+        status="PROPOSED", match_method="SERIES", correlation=0.90, ratio=1.0, name_score=0.1, reason="r")
+    assert xwalk.decision_rank(stronger) > xwalk.decision_rank(weaker)
+
+
+def test_match_decision_primary_score_is_correlation_for_series_and_name_score_for_name():
+    series = xwalk.MatchDecision(
+        status="AUTO", match_method="SERIES", correlation=0.99, ratio=1.0, name_score=0.9, reason="r")
+    name = xwalk.MatchDecision(
+        status="PROPOSED", match_method="NAME", correlation=0.1, ratio=0.1, name_score=0.9, reason="r")
+    assert series.primary_score == 0.99
+    assert name.primary_score == 0.9
+
+
+def test_decide_match_always_carries_the_full_evidence_tuple_not_just_the_deciding_signal():
+    # A NAME decision still carries whatever (weak) correlation/ratio the series
+    # comparison produced; a SERIES decision still carries name_score -- nothing
+    # computed during evaluation is silently dropped.
+    weak_series = xwalk.evaluate_series([10.0, 20.0, 15.0], [1.0, 2.0, 50.0])
+    decision = xwalk.decide_match(series=weak_series, name_score=0.9)
+    assert decision.match_method == "NAME"
+    assert decision.correlation == weak_series.correlation
+    assert decision.ratio == weak_series.ratio
+
+    strong_series = xwalk.evaluate_series([100.0 + i for i in range(24)], [100.0 + i for i in range(24)])
+    decision2 = xwalk.decide_match(series=strong_series, name_score=0.1)
+    assert decision2.match_method == "SERIES"
+    assert decision2.name_score == 0.1
+
+
+# ---------------------------------------------------------------------------
+# decision_fingerprint sensitivity (PR #188 review round 2: a change to ratio
+# alone, or name_score alone, must also change the fingerprint)
+# ---------------------------------------------------------------------------
+
+def test_decision_fingerprint_changes_when_only_the_ratio_changes():
+    base = dict(
+        model_group_id="g", canonical_model_id="c", correlation=0.99, name_score=0.9, master_version="M5")
+    fp1 = xwalk.decision_fingerprint(ratio=1.0, **base)
+    fp2 = xwalk.decision_fingerprint(ratio=1.05, **base)
+    assert fp1 != fp2
+
+
+def test_decision_fingerprint_changes_when_only_the_name_score_changes():
+    base = dict(
+        model_group_id="g", canonical_model_id="c", correlation=0.99, ratio=1.0, master_version="M5")
+    fp1 = xwalk.decision_fingerprint(name_score=0.81, **base)
+    fp2 = xwalk.decision_fingerprint(name_score=0.95, **base)
+    assert fp1 != fp2
+
+
+# ---------------------------------------------------------------------------
 # Name normalization / similarity plumbing
 # ---------------------------------------------------------------------------
 

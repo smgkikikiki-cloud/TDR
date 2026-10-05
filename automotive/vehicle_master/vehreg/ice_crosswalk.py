@@ -97,6 +97,26 @@ def name_similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
 
 
+#: §14.2's known Maxus/Mifa trap is a *model-name* mismatch the brand alias alone
+#: cannot fix: after brand normalization, "MG Maxus" and "MAXUS" compare equal, but
+#: the model names themselves do not -- Ice's side is a bare number ("7"/"9") while
+#: the TDR side, once its own brand prefix ("MAXUS") is stripped, is "mifa 7"/"mifa
+#: 9". Scoped to exactly the one brand alias_group this trap concerns, and to exactly
+#: the two model numbers §14.2 names -- never a generic fuzzy rule that could merge
+#: an unrelated pair of models sharing a brand.
+MODEL_NAME_ALIASES: dict[str, dict[str, str]] = {
+    "maxus_mifa": {"7": "mifa 7", "9": "mifa 9"},
+}
+
+
+def apply_model_name_alias(normalized_name: str, brand_alias_group: str) -> str:
+    """Map a known model-name alias onto its counterpart's normalized form, scoped to
+    one brand alias_group. A name with no entry (including an already-aliased one,
+    e.g. "mifa 7") passes through unchanged, so this is safe to call on both sides of
+    a comparison unconditionally."""
+    return MODEL_NAME_ALIASES.get(brand_alias_group, {}).get(normalized_name, normalized_name)
+
+
 # ---------------------------------------------------------------------------
 # Monthly series comparison (§14.2 "1. Monthly series") -- the strongest signal
 # ---------------------------------------------------------------------------
@@ -177,8 +197,25 @@ def evaluate_series(ice_series: list[float], legacy_series: list[float]) -> Seri
 class MatchDecision:
     status: str  # AUTO | PROPOSED
     match_method: str  # SERIES | NAME
-    score: float | None
+    #: The full evidence tuple, always populated regardless of match_method -- a
+    #: NAME decision still carries whatever correlation/ratio the series comparison
+    #: produced (even though it was not strong enough to decide on), and a SERIES
+    #: decision still carries name_score. Nothing computed during evaluation is
+    #: discarded: the orchestrator needs all three for decision_fingerprint and the
+    #: review sheet, not just whichever value happened to drive the decision.
+    correlation: float | None
+    ratio: float | None
+    name_score: float
     reason: str
+
+    @property
+    def primary_score(self) -> float | None:
+        """The single `score` value migration_v63's ice_model_crosswalk.score column
+        stores (§14.2 gives one `score` column, not three) -- correlation for a
+        SERIES decision, name_score for a NAME decision. Never used for ranking two
+        candidates against each other -- see decision_rank -- only for the one
+        number persisted to the row."""
+        return self.correlation if self.match_method == "SERIES" else self.name_score
 
 
 def decide_match(*, series: SeriesEvaluation, name_score: float) -> MatchDecision | None:
@@ -189,21 +226,49 @@ def decide_match(*, series: SeriesEvaluation, name_score: float) -> MatchDecisio
     but this module never produces on its own."""
     if series.strong and name_score >= NAME_AUTO_THRESHOLD:
         return MatchDecision(
-            status="AUTO", match_method="SERIES", score=series.correlation,
+            status="AUTO", match_method="SERIES",
+            correlation=series.correlation, ratio=series.ratio, name_score=name_score,
             reason=f"strong monthly series (corr={series.correlation:.4f}, ratio={series.ratio:.4f}) "
                    f"and name similarity {name_score:.2f} >= {NAME_AUTO_THRESHOLD}")
     if series.strong:
         return MatchDecision(
-            status="PROPOSED", match_method="SERIES", score=series.correlation,
+            status="PROPOSED", match_method="SERIES",
+            correlation=series.correlation, ratio=series.ratio, name_score=name_score,
             reason=f"strong monthly series (corr={series.correlation:.4f}, ratio={series.ratio:.4f}) "
                    f"but name similarity {name_score:.2f} < {NAME_AUTO_THRESHOLD} -- needs review")
     if name_score >= NAME_CANDIDATE_FLOOR:
         return MatchDecision(
-            status="PROPOSED", match_method="NAME", score=name_score,
+            status="PROPOSED", match_method="NAME",
+            correlation=series.correlation, ratio=series.ratio, name_score=name_score,
             reason=f"name similarity {name_score:.2f} candidate but monthly series not strong "
                    f"(corr={series.correlation}, ratio={series.ratio}) -- needs review, name alone "
                    f"is never sufficient for AUTO")
     return None
+
+
+#: §14.2 signal priority, strongest first: monthly series, then brand alias (already
+#: folded into the series/name comparison upstream), then name. Two candidates for the
+#: same Ice group are never ranked by comparing decision.correlation against
+#: decision.name_score directly -- those are different units (a correlation
+#: coefficient vs. a string-similarity ratio) and a NAME-only score of 1.00 must never
+#: outrank a SERIES candidate with correlation 0.99.
+_STATUS_RANK = {"AUTO": 1, "PROPOSED": 0}
+_METHOD_RANK = {"SERIES": 1, "NAME": 0}
+
+
+def decision_rank(decision: MatchDecision) -> tuple[int, int, float, float, float]:
+    """A deterministic ranking key: AUTO beats PROPOSED; within PROPOSED, SERIES
+    (strong-series) evidence beats NAME-only evidence; only once status and method
+    agree do correlation, then ratio, then name_score break the tie. Compare two
+    decisions with ``decision_rank(a) > decision_rank(b)``, never with their raw
+    ``correlation``/``name_score`` fields."""
+    return (
+        _STATUS_RANK[decision.status],
+        _METHOD_RANK[decision.match_method],
+        decision.correlation if decision.correlation is not None else -1.0,
+        decision.ratio if decision.ratio is not None else -1.0,
+        decision.name_score,
+    )
 
 
 def decision_fingerprint(

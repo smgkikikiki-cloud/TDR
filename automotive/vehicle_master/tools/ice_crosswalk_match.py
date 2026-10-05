@@ -19,11 +19,14 @@ then only the owner's explicit go starts seeding real mappings.
    (joined via ``registrations.canonical_model_id``), the brand-alias table, and every
    existing crosswalk row.
 2. For each Ice group, evaluates every brand-matching TDR canonical model as a
-   candidate (skipping one already actively (AUTO/APPROVED) mapped to a *different*
-   group), picks the strongest decision via ``vehreg.ice_crosswalk.decide_match``, and
-   writes it with ``ice_crosswalk_upsert_match`` -- never touching a row the RPC itself
-   protects (APPROVED, or ``match_method = 'ADMIN'``), and never silently re-proposing a
-   REJECTED row whose ``decision_fingerprint`` has not changed.
+   candidate via ``vehreg.ice_crosswalk.decide_match``, picks the best one by
+   ``vehreg.ice_crosswalk.decision_rank`` -- never by comparing raw scores, since a
+   SERIES correlation and a NAME name_score are not the same unit -- and writes it
+   with ``ice_crosswalk_upsert_match``, passing the decision's full evidence tuple
+   (correlation, ratio, name_score) into ``decision_fingerprint``. Never touches a row
+   the RPC itself protects (APPROVED, or ``match_method = 'ADMIN'``), and never
+   silently re-proposes a REJECTED row whose ``decision_fingerprint`` has not changed
+   -- i.e. none of correlation/ratio/name_score actually moved since it was rejected.
 3. Updates the discovery ledger (``ice_known_model_groups``) and writes the one-time
    review sheet (every PROPOSED decision from this run) to ``--review-csv``.
 
@@ -178,14 +181,20 @@ def match_one_group(
         ice_values, legacy_values = xwalk.build_paired_series(periods, ice_series, legacy_combined)
         series_eval = xwalk.evaluate_series(ice_values, legacy_values)
 
-        name_score = xwalk.name_similarity(
-            xwalk.normalize_model_name(model["name_en"], candidate_brand),
-            xwalk.normalize_model_name(group["model_name"], group["brand"]))
+        # apply_model_name_alias is a no-op outside the one scoped alias_group it
+        # knows about (§14.2 Maxus/Mifa trap) -- safe to call unconditionally.
+        candidate_name = xwalk.apply_model_name_alias(
+            xwalk.normalize_model_name(model["name_en"], candidate_brand), group_brand_key)
+        group_name = xwalk.apply_model_name_alias(
+            xwalk.normalize_model_name(group["model_name"], group["brand"]), group_brand_key)
+        name_score = xwalk.name_similarity(candidate_name, group_name)
 
         decision = xwalk.decide_match(series=series_eval, name_score=name_score)
         if decision is None:
             continue
-        if best is None or (decision.score or 0) > (best[1].score or 0):
+        # Ranked, never compared by raw score -- a SERIES correlation and a NAME
+        # name_score are different units (fix for PR #188 review round 2).
+        if best is None or xwalk.decision_rank(decision) > xwalk.decision_rank(best[1]):
             best = (canonical_id, decision)
     return best
 
@@ -230,12 +239,15 @@ def run_match(
             skipped_protected += 1
             continue
 
-        correlation = decision.score if decision.match_method == "SERIES" else None
+        # The full evidence tuple, always -- never zeroed out based on match_method
+        # (fix for PR #188 review round 2): a REJECTED row must become eligible for
+        # re-proposal if correlation, ratio, *or* name_score actually changed, and
+        # the review sheet must show every candidate's real numbers regardless of
+        # which signal decided it.
         fingerprint = xwalk.decision_fingerprint(
             model_group_id=model_group_id, canonical_model_id=canonical_id,
-            correlation=correlation, ratio=None,
-            name_score=decision.score if decision.match_method == "NAME" else 0.0,
-            master_version=master_version)
+            correlation=decision.correlation, ratio=decision.ratio,
+            name_score=decision.name_score, master_version=master_version)
         if (existing_row is not None and existing_row["status"] == "REJECTED"
                 and existing_row.get("decision_fingerprint") == fingerprint):
             skipped_unchanged_rejection += 1
@@ -245,7 +257,7 @@ def run_match(
             "p_model_group_id": model_group_id,
             "p_canonical_model_id": canonical_id,
             "p_match_method": decision.match_method,
-            "p_score": decision.score,
+            "p_score": decision.primary_score,
             "p_status": decision.status,
             "p_master_version": master_version,
             "p_decision_fingerprint": fingerprint,
@@ -261,8 +273,8 @@ def run_match(
                 "model_group_id": model_group_id, "model_name": group["model_name"], "brand": group["brand"],
                 "proposed_canonical_model_id": canonical_id,
                 "proposed_model_name": vehicle_models[canonical_id]["name_en"],
-                "series_correlation": correlation, "total_ratio": None,
-                "name_similarity": decision.score if decision.match_method == "NAME" else None,
+                "series_correlation": decision.correlation, "total_ratio": decision.ratio,
+                "name_similarity": decision.name_score,
                 "proposed_status": decision.status, "match_method": decision.match_method,
                 "master_version": master_version, "reason": decision.reason,
             })

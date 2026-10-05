@@ -94,14 +94,26 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
     conversion, id_changes.csv parsing, discovery flags, the review-sheet
     formatter); `tools/ice_crosswalk_match.py` (wires the pure matcher to real
     Supabase data — `--match` and `--process-id-changes`).
-  - Row-identity/PK shape for `ice_model_crosswalk` was not specified by §14.2 and
-    is a documented choice (see the migration's own header comment): a surrogate
-    bigint PK plus three partial unique indexes encoding the required cardinality
-    (many TDR models → one Ice group; one TDR model → at most one *active* Ice
-    group). The id_changes "แยก" case's "STRUCTURE proposal" uses `match_method =
-    'ADMIN'` with `status = 'PROPOSED'` (also a documented choice — §14.2's
-    `match_method` enum has no dedicated value for a system-raised structural
-    review item).
+  - Row-identity/PK shape for `ice_model_crosswalk` was not specified by §14.2 —
+    **owner-approved**: a surrogate bigint PK plus three partial unique indexes
+    encoding the required cardinality (many TDR models → one Ice group; one TDR
+    model → at most one *active* Ice group). The id_changes "แยก" case's
+    "STRUCTURE proposal" uses `match_method = 'ADMIN'` with `status = 'PROPOSED'`
+    — **owner-approved for M3**; the row's `reason` text is explicit
+    ("STRUCTURE PROPOSAL -- NOT YET APPROVED") precisely so it is never confused
+    with an actual admin-approved mapping.
+  - PR #188 review round 2 (matcher correctness) landed: candidates are ranked by
+    an explicit `decision_rank` (AUTO beats PROPOSED; SERIES evidence beats
+    NAME-only evidence; correlation/ratio/name_score only break ties within the
+    same status+method) rather than comparing a correlation and a name-similarity
+    score as if they were the same unit; `decision_fingerprint`/the review CSV now
+    always carry the full evidence tuple (correlation, ratio, name_score) instead
+    of zeroing out whichever one didn't drive the decision, so a REJECTED mapping
+    becomes eligible for re-review if *any* of the three actually changes; and the
+    MG Maxus/MAXUS Mifa trap has an explicit, narrowly-scoped model-name alias
+    (`vehreg.ice_crosswalk.MODEL_NAME_ALIASES`, "7"↔"Mifa 7"/"9"↔"Mifa 9" only)
+    since the brand alias alone doesn't make those model names resemble each
+    other textually.
   - Bookmark/public-link redirection consumption (actually rewriting a saved link
     to follow a retired `model_group_id`) is **not built** — `ice_model_group_redirects`
     only records the old→new fact. Any UI/link-rewriting consumer is a handoff to
