@@ -37,15 +37,25 @@ def db(pg):
 
 
 def _seed_vehicle_model(db, canonical_id: str, brand_id: str = "toyota") -> None:
+    """Seed a minimal vehicle_brands/vehicle_models row pair that satisfies
+    migration_v59's engine-rule constraints (vm_rule_model_identity/_validate/
+    _segment). canonical_id must already be a valid child id of brand_id --
+    e.g. 'toyota.model_a' (lowercase, underscore-separated, dot-joined; the
+    vehicle_models slug grammar rejects hyphens)."""
+    payload = (
+        '{"id": "%s", "brand_id": "%s", "name_en": "%s", "body_type": "SEDAN", '
+        '"cab_type": "NOT_APPLICABLE", "registration_type": "RY1", '
+        '"market_scope": "CORE", "retail_status": "UNVERIFIED"}'
+    ) % (canonical_id, brand_id, canonical_id)
     db.sql(
         f"insert into public.vehicle_brands "
         f"(canonical_id, slug, name_en, payload, served_as_of, seed_release_id) "
         f"values ('{brand_id}', '{brand_id}', 'Toyota', '{{}}'::jsonb, current_date, 'seed') "
         f"on conflict (canonical_id) do nothing;"
         f"insert into public.vehicle_models "
-        f"(canonical_id, brand_id, slug, name_en, status, payload, served_as_of, seed_release_id) "
-        f"values ('{canonical_id}', '{brand_id}', '{canonical_id}', '{canonical_id}', 'CURRENT', "
-        f"'{{}}'::jsonb, current_date, 'seed') on conflict (canonical_id) do nothing;")
+        f"(canonical_id, brand_id, slug, name_en, status, body_type, payload, served_as_of, seed_release_id) "
+        f"values ('{canonical_id}', '{brand_id}', '{canonical_id}', '{canonical_id}', 'UNVERIFIED', 'SEDAN', "
+        f"'{payload}'::jsonb, current_date, 'seed') on conflict (canonical_id) do nothing;")
 
 
 def _insert_crosswalk_row(db, *, model_group_id, canonical_model_id=None, match_method="SERIES",
@@ -106,24 +116,24 @@ def test_brand_alias_seed_rows_are_present(db):
 # ---------------------------------------------------------------------------
 
 def test_multiple_canonical_models_may_map_to_one_ice_group(db):
-    _seed_vehicle_model(db, "model-a")
-    _seed_vehicle_model(db, "model-b")
-    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="model-a")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _seed_vehicle_model(db, "toyota.model_b")
+    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="toyota.model_a")
     ok, err = db.try_sql(
         "insert into public.ice_model_crosswalk "
         "(model_group_id, canonical_model_id, match_method, score, status, master_version) "
-        "values ('group-1', 'model-b', 'SERIES', 0.99, 'AUTO', 'M5');")
+        "values ('group-1', 'toyota.model_b', 'SERIES', 0.99, 'AUTO', 'M5');")
     assert ok, err
     assert db.scalar("select count(*) from public.ice_model_crosswalk where model_group_id = 'group-1'") == "2"
 
 
 def test_one_canonical_model_cannot_actively_map_to_two_ice_groups(db):
-    _seed_vehicle_model(db, "model-a")
-    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO")
     ok, err = db.try_sql(
         "insert into public.ice_model_crosswalk "
         "(model_group_id, canonical_model_id, match_method, score, status, master_version) "
-        "values ('group-2', 'model-a', 'SERIES', 0.99, 'AUTO', 'M5');")
+        "values ('group-2', 'toyota.model_a', 'SERIES', 0.99, 'AUTO', 'M5');")
     assert not ok
     assert "duplicate key" in err or "violates unique constraint" in err
 
@@ -132,12 +142,12 @@ def test_a_proposed_row_for_an_already_active_canonical_model_elsewhere_is_still
     # PROPOSED/REJECTED rows mentioning an elsewhere-active canonical model are not
     # restricted by the active-canonical unique index (only AUTO/APPROVED are) --
     # a candidate can be proposed for review without the constraint blocking the write.
-    _seed_vehicle_model(db, "model-a")
-    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO")
     ok, err = db.try_sql(
         "insert into public.ice_model_crosswalk "
         "(model_group_id, canonical_model_id, match_method, score, status, master_version) "
-        "values ('group-2', 'model-a', 'NAME', 0.5, 'PROPOSED', 'M5');")
+        "values ('group-2', 'toyota.model_a', 'NAME', 0.5, 'PROPOSED', 'M5');")
     assert ok, err
 
 
@@ -156,50 +166,50 @@ def test_only_one_no_candidate_row_per_model_group(db):
 # ---------------------------------------------------------------------------
 
 def test_upsert_match_inserts_a_fresh_row(db):
-    _seed_vehicle_model(db, "model-a")
-    result = _upsert(db, model_group_id="group-1", canonical_model_id="model-a")
+    _seed_vehicle_model(db, "toyota.model_a")
+    result = _upsert(db, model_group_id="group-1", canonical_model_id="toyota.model_a")
     assert '"applied": true' in result or '"applied":true' in result
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'group-1' and canonical_model_id = 'model-a'") == "AUTO"
+        "where model_group_id = 'group-1' and canonical_model_id = 'toyota.model_a'") == "AUTO"
 
 
 def test_upsert_match_updates_an_existing_proposed_row(db):
-    _seed_vehicle_model(db, "model-a")
-    _upsert(db, model_group_id="group-1", canonical_model_id="model-a", status="PROPOSED", score=0.5)
-    _upsert(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO", score=0.99)
+    _seed_vehicle_model(db, "toyota.model_a")
+    _upsert(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="PROPOSED", score=0.5)
+    _upsert(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO", score=0.99)
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'group-1' and canonical_model_id = 'model-a'") == "AUTO"
+        "where model_group_id = 'group-1' and canonical_model_id = 'toyota.model_a'") == "AUTO"
     assert db.scalar("select count(*) from public.ice_model_crosswalk where model_group_id = 'group-1'") == "1"
 
 
 def test_upsert_match_never_overwrites_an_approved_row(db):
-    _seed_vehicle_model(db, "model-a")
+    _seed_vehicle_model(db, "toyota.model_a")
     _insert_crosswalk_row(
-        db, model_group_id="group-1", canonical_model_id="model-a", status="APPROVED", match_method="ADMIN")
-    result = _upsert(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO", score=0.99)
+        db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="APPROVED", match_method="ADMIN")
+    result = _upsert(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO", score=0.99)
     assert "protected_admin_row" in result
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'group-1' and canonical_model_id = 'model-a'") == "APPROVED"
+        "where model_group_id = 'group-1' and canonical_model_id = 'toyota.model_a'") == "APPROVED"
 
 
 def test_upsert_match_never_overwrites_an_admin_set_row_regardless_of_status(db):
-    _seed_vehicle_model(db, "model-a")
+    _seed_vehicle_model(db, "toyota.model_a")
     _insert_crosswalk_row(
-        db, model_group_id="group-1", canonical_model_id="model-a", status="REJECTED", match_method="ADMIN")
-    result = _upsert(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO", score=0.99)
+        db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="REJECTED", match_method="ADMIN")
+    result = _upsert(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO", score=0.99)
     assert "protected_admin_row" in result
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'group-1' and canonical_model_id = 'model-a'") == "REJECTED"
+        "where model_group_id = 'group-1' and canonical_model_id = 'toyota.model_a'") == "REJECTED"
 
 
 def test_upsert_match_reports_a_conflict_without_raising_when_canonical_is_active_elsewhere(db):
-    _seed_vehicle_model(db, "model-a")
-    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="model-a", status="AUTO")
-    result = _upsert(db, model_group_id="group-2", canonical_model_id="model-a", status="AUTO", score=0.99)
+    _seed_vehicle_model(db, "toyota.model_a")
+    _insert_crosswalk_row(db, model_group_id="group-1", canonical_model_id="toyota.model_a", status="AUTO")
+    result = _upsert(db, model_group_id="group-2", canonical_model_id="toyota.model_a", status="AUTO", score=0.99)
     assert "canonical_model_already_active_elsewhere" in result
     assert db.scalar(
         "select count(*) from public.ice_model_crosswalk where model_group_id = 'group-2'") == "0"
@@ -231,8 +241,8 @@ def _apply_id_change(db, *, old, new, change_type, master_version="M5", reason=N
 
 
 def test_rename_moves_every_row_and_leaves_no_orphan(db):
-    _seed_vehicle_model(db, "model-a")
-    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="model-a", status="AUTO")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="toyota.model_a", status="AUTO")
     _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id=None, status="PROPOSED")
 
     result = _apply_id_change(db, old="old-id", new="new-id", change_type="เปลี่ยนรหัส")
@@ -246,12 +256,12 @@ def test_rename_moves_every_row_and_leaves_no_orphan(db):
 
 
 def test_merge_moves_rows_and_drops_a_colliding_duplicate_without_raising(db):
-    _seed_vehicle_model(db, "model-a")
-    _seed_vehicle_model(db, "model-b")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _seed_vehicle_model(db, "toyota.model_b")
     # new-id already has model-a mapped (e.g. from the other merging old id).
-    _insert_crosswalk_row(db, model_group_id="new-id", canonical_model_id="model-a", status="AUTO")
-    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="model-a", status="PROPOSED")
-    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="model-b", status="AUTO")
+    _insert_crosswalk_row(db, model_group_id="new-id", canonical_model_id="toyota.model_a", status="AUTO")
+    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="toyota.model_a", status="PROPOSED")
+    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="toyota.model_b", status="AUTO")
 
     result = _apply_id_change(db, old="old-id", new="new-id", change_type="รวม")
     assert "conflicts" in result
@@ -262,8 +272,8 @@ def test_merge_moves_rows_and_drops_a_colliding_duplicate_without_raising(db):
 
 
 def test_split_creates_a_structure_proposal_and_leaves_the_old_mapping_untouched(db):
-    _seed_vehicle_model(db, "model-a")
-    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="model-a", status="AUTO")
+    _seed_vehicle_model(db, "toyota.model_a")
+    _insert_crosswalk_row(db, model_group_id="old-id", canonical_model_id="toyota.model_a", status="AUTO")
 
     result = _apply_id_change(db, old="old-id", new="new-id", change_type="แยก")
     assert '"structure_proposals": 1' in result or '"structure_proposals":1' in result
@@ -271,14 +281,14 @@ def test_split_creates_a_structure_proposal_and_leaves_the_old_mapping_untouched
     # The old mapping is untouched.
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'old-id' and canonical_model_id = 'model-a'") == "AUTO"
+        "where model_group_id = 'old-id' and canonical_model_id = 'toyota.model_a'") == "AUTO"
     # A new STRUCTURE proposal exists under the new id, pending human review.
     assert db.scalar(
         "select status from public.ice_model_crosswalk "
-        "where model_group_id = 'new-id' and canonical_model_id = 'model-a'") == "PROPOSED"
+        "where model_group_id = 'new-id' and canonical_model_id = 'toyota.model_a'") == "PROPOSED"
     assert db.scalar(
         "select match_method from public.ice_model_crosswalk "
-        "where model_group_id = 'new-id' and canonical_model_id = 'model-a'") == "ADMIN"
+        "where model_group_id = 'new-id' and canonical_model_id = 'toyota.model_a'") == "ADMIN"
     # No redirect is recorded for a split -- the old id is not retired.
     assert db.scalar(
         "select count(*) from public.ice_model_group_redirects where old_model_group_id = 'old-id'") == "0"
