@@ -37,25 +37,41 @@ def db(pg):
 
 
 def _seed_vehicle_model(db, canonical_id: str, brand_id: str = "toyota") -> None:
-    """Seed a minimal vehicle_brands/vehicle_models row pair that satisfies
-    migration_v59's engine-rule constraints (vm_rule_model_identity/_validate/
-    _segment). canonical_id must already be a valid child id of brand_id --
-    e.g. 'toyota.model_a' (lowercase, underscore-separated, dot-joined; the
-    vehicle_models slug grammar rejects hyphens)."""
-    payload = (
+    """Seed a minimal vehicle_brands/vehicle_models/vehicle_generations row set that
+    satisfies migration_v59's engine-rule constraints -- both the immediate per-row
+    CHECKs (vm_rule_model_identity/_validate/_segment) and the cross-row DEFERRED
+    structure trigger (_vm_check_structure / _vm_structure_problems), which requires
+    every model to have at least one generation. The model and generation inserts
+    are wrapped in one explicit transaction so that deferred check only runs once
+    both rows exist, instead of firing (and failing) after the model insert alone.
+    payload.incomplete = true skips the *other* half of that same rule (a model also
+    needs a variant unless incomplete) -- these tests never need a variant/trim.
+
+    canonical_id must already be a valid child id of brand_id -- e.g.
+    'toyota.model_a' (lowercase, underscore-separated, dot-joined; the vehicle_models
+    slug grammar rejects hyphens)."""
+    generation_id = f"{canonical_id}.gen1"
+    model_payload = (
         '{"id": "%s", "brand_id": "%s", "name_en": "%s", "body_type": "SEDAN", '
         '"cab_type": "NOT_APPLICABLE", "registration_type": "RY1", '
-        '"market_scope": "CORE", "retail_status": "UNVERIFIED"}'
+        '"market_scope": "CORE", "retail_status": "UNVERIFIED", "incomplete": true}'
     ) % (canonical_id, brand_id, canonical_id)
+    generation_payload = '{"id": "%s", "model_id": "%s"}' % (generation_id, canonical_id)
     db.sql(
         f"insert into public.vehicle_brands "
         f"(canonical_id, slug, name_en, payload, served_as_of, seed_release_id) "
         f"values ('{brand_id}', '{brand_id}', 'Toyota', '{{}}'::jsonb, current_date, 'seed') "
         f"on conflict (canonical_id) do nothing;"
+        f"begin;"
         f"insert into public.vehicle_models "
         f"(canonical_id, brand_id, slug, name_en, status, body_type, payload, served_as_of, seed_release_id) "
         f"values ('{canonical_id}', '{brand_id}', '{canonical_id}', '{canonical_id}', 'UNVERIFIED', 'SEDAN', "
-        f"'{payload}'::jsonb, current_date, 'seed') on conflict (canonical_id) do nothing;")
+        f"'{model_payload}'::jsonb, current_date, 'seed') on conflict (canonical_id) do nothing;"
+        f"insert into public.vehicle_generations "
+        f"(canonical_id, model_id, payload, seed_release_id) "
+        f"values ('{generation_id}', '{canonical_id}', '{generation_payload}'::jsonb, 'seed') "
+        f"on conflict (canonical_id) do nothing;"
+        f"commit;")
 
 
 def _insert_crosswalk_row(db, *, model_group_id, canonical_model_id=None, match_method="SERIES",
