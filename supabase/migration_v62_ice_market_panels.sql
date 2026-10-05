@@ -199,46 +199,52 @@ create table if not exists public.ice_tyre_coverage (
 -- --------------------------------------------------------------------------
 
 create table if not exists public.ice_dims_brand_staging (like public.ice_dims_brand);
-alter table public.ice_dims_brand_staging add primary key (brand);
-
 create table if not exists public.ice_dims_province_staging (like public.ice_dims_province);
-alter table public.ice_dims_province_staging add primary key (province);
-
 create table if not exists public.ice_dims_reg_type_staging (like public.ice_dims_reg_type);
-alter table public.ice_dims_reg_type_staging add primary key (reg_type);
-
 create table if not exists public.ice_dims_fuel_staging (like public.ice_dims_fuel);
-alter table public.ice_dims_fuel_staging add primary key (fuel_dlt);
-
 create table if not exists public.ice_dims_tyre_staging (like public.ice_dims_tyre);
-alter table public.ice_dims_tyre_staging add primary key (tyre_size);
-
 create table if not exists public.ice_dims_model_group_staging (like public.ice_dims_model_group);
-alter table public.ice_dims_model_group_staging add primary key (model_group_id);
-
 create table if not exists public.ice_reg_province_staging (like public.ice_reg_province);
-alter table public.ice_reg_province_staging
-  add primary key (period, province, reg_type, brand, fuel_group);
-
 create table if not exists public.ice_reg_trend_staging (like public.ice_reg_trend);
-alter table public.ice_reg_trend_staging
-  add primary key (period, province, reg_type, brand, model_group_id);
-
 create table if not exists public.ice_reg_powertrain_staging (like public.ice_reg_powertrain);
-alter table public.ice_reg_powertrain_staging
-  add primary key (period, province, reg_type, brand, model_group_id, fuel_group);
-
 create table if not exists public.ice_rim_province_staging (like public.ice_rim_province);
-alter table public.ice_rim_province_staging
-  add primary key (period, province, reg_type, brand, rim_bucket);
-
 create table if not exists public.ice_tyre_province_staging (like public.ice_tyre_province);
-alter table public.ice_tyre_province_staging
-  add primary key (period, province, reg_type, brand, tyre_size);
-
 create table if not exists public.ice_tyre_coverage_staging (like public.ice_tyre_coverage);
-alter table public.ice_tyre_coverage_staging
-  add primary key (period, province, reg_type, brand);
+
+-- Postgres has no "ADD PRIMARY KEY IF NOT EXISTS"; add one only when the
+-- table doesn't already have one, so replaying this migration (proven by
+-- test_v62_replays_and_is_idempotent) never tries to add a second primary
+-- key to a staging table that already has one from a prior run.
+do $$
+declare
+  staging_pk record;
+begin
+  for staging_pk in
+    select * from (values
+      ('ice_dims_brand_staging', 'brand'),
+      ('ice_dims_province_staging', 'province'),
+      ('ice_dims_reg_type_staging', 'reg_type'),
+      ('ice_dims_fuel_staging', 'fuel_dlt'),
+      ('ice_dims_tyre_staging', 'tyre_size'),
+      ('ice_dims_model_group_staging', 'model_group_id'),
+      ('ice_reg_province_staging', 'period, province, reg_type, brand, fuel_group'),
+      ('ice_reg_trend_staging', 'period, province, reg_type, brand, model_group_id'),
+      ('ice_reg_powertrain_staging', 'period, province, reg_type, brand, model_group_id, fuel_group'),
+      ('ice_rim_province_staging', 'period, province, reg_type, brand, rim_bucket'),
+      ('ice_tyre_province_staging', 'period, province, reg_type, brand, tyre_size'),
+      ('ice_tyre_coverage_staging', 'period, province, reg_type, brand')
+    ) as t(table_name, pk_columns)
+  loop
+    if not exists (
+      select 1 from pg_constraint
+      where conrelid = ('public.' || staging_pk.table_name)::regclass
+        and contype = 'p'
+    ) then
+      execute format('alter table public.%I add primary key (%s)', staging_pk.table_name, staging_pk.pk_columns);
+    end if;
+  end loop;
+end
+$$;
 
 -- --------------------------------------------------------------------------
 -- Access: server-side only, same pattern as the Vehicle Master tables
