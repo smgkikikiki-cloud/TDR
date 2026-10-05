@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import {
   assemblePublicMarket,
+  assertIceFiltersSupported,
+  distinctSortedPeriods,
+  fetchAllPages,
   resolveIcePowertrainRow,
   resolveModelGroupRedirect,
   resolveWheelTyreAvailability,
@@ -14,7 +17,10 @@ import {
   sliceIceByTyreSize,
   wheelTyreCoverage,
   iceUnitChangePct,
+  isIceMarketDimension,
   UNMAPPED_LABEL,
+  IceUnsupportedFilterError,
+  PaginationLimitExceededError,
   type IceCrosswalkLink,
   type IceRegPowertrainRow,
   type IceRegProvinceRow,
@@ -180,6 +186,53 @@ const disagreeingBody = sliceIceByBodyType(disagreeingTrend, disagreeingCrosswal
 check("siblings that DO agree on body_type still aggregate normally",
   disagreeingBody.map((r) => [r.entity_key, r.registrations]), [["HATCHBACK", 50]]);
 
+console.log("\nfilters -- modelGroupIds narrows every dimension whose source panel carries it");
+const modelFiltered = sliceIceByModel(regTrendP3, crosswalk, { modelGroupIds: ["toyota.model-x"] });
+check("modelGroupIds narrows the model dimension",
+  modelFiltered.map((r) => r.entity_key), ["toyota.model-x"]);
+check("the narrowed model slice's own total reflects only the requested group, not the whole market",
+  modelFiltered[0]?.market_total, 80);
+
+const segmentFiltered = sliceIceBySegment(regTrendP3, crosswalk, vehicleModels, { modelGroupIds: ["toyota.model-x", "toyota.model-y"] });
+check("modelGroupIds narrows the segment dimension",
+  segmentFiltered.map((r) => [r.entity_key, r.registrations]).sort(),
+  [["C", 80], [UNMAPPED_LABEL, 90]].sort());
+
+const bodyFiltered = sliceIceByBodyType(regTrendP3, crosswalk, vehicleModels, { modelGroupIds: ["honda.model-z"] });
+check("modelGroupIds narrows the body_type dimension",
+  bodyFiltered.map((r) => [r.entity_key, r.registrations]), [["CROSSOVER", 110]]);
+
+const powertrainFiltered = sliceIceByPowertrain(regPowertrainP3, { modelGroupIds: ["toyota.model-x"] });
+check("modelGroupIds narrows the powertrain dimension (ice_reg_powertrain carries model_group_id too)",
+  powertrainFiltered.map((r) => [r.entity_key, r.registrations]).sort(), [["BEV", 15], ["ICE", 45]].sort());
+
+console.log("\nfilters -- an impossible filter/dimension combination throws rather than being ignored");
+check("modelGroupIds on the brand dimension (ice_reg_province has no model_group_id) throws",
+  (() => { try { assertIceFiltersSupported("brand", { modelGroupIds: ["x"] }); return "did not throw"; }
+    catch (error) { return error instanceof IceUnsupportedFilterError ? "threw IceUnsupportedFilterError" : "threw something else"; } })(),
+  "threw IceUnsupportedFilterError");
+check("modelGroupIds on the registration_type dimension also throws",
+  (() => { try { assertIceFiltersSupported("registration_type", { modelGroupIds: ["x"] }); return "did not throw"; }
+    catch (error) { return error instanceof IceUnsupportedFilterError; } })(),
+  true);
+check("modelGroupIds on model/segment/body_type/powertrain never throws -- all four panels carry it",
+  ["model", "segment", "body_type", "powertrain"].every((dimension) => {
+    try { assertIceFiltersSupported(dimension as Parameters<typeof assertIceFiltersSupported>[0], { modelGroupIds: ["x"] }); return true; }
+    catch { return false; }
+  }),
+  true);
+check("province/registrationTypes/brands never throw on any dimension -- every panel carries them",
+  (["brand", "model", "segment", "body_type", "powertrain", "registration_type"] as const).every((dimension) => {
+    try {
+      assertIceFiltersSupported(dimension, { provinces: ["x"], registrationTypes: ["y"], brands: ["z"] });
+      return true;
+    } catch { return false; }
+  }),
+  true);
+check("no filter is silently dropped: an empty modelGroupIds array never throws (nothing to narrow by)",
+  (() => { try { assertIceFiltersSupported("brand", { modelGroupIds: [] }); return true; } catch { return false; } })(),
+  true);
+
 console.log("\npowertrain (ice_reg_powertrain + fuel_group ONLY -- never Vehicle DB regrouping)");
 const resolvedExact = resolveIcePowertrainRow(regPowertrainP3[0]);
 check("exact certainty uses reg_est", resolvedExact, { value: 15, certainty: "exact", reg_min: null, reg_max: null, note: null });
@@ -191,10 +244,79 @@ const resolvedRange = resolveIcePowertrainRow(regPowertrainP3[2]);
 check("range certainty exposes reg_min/reg_max", resolvedRange, { value: 70, certainty: "range", reg_min: 60, reg_max: 80, note: null });
 
 const powertrainSlice = sliceIceByPowertrain(regPowertrainP3);
-check("powertrain totals equal the synthetic ice_reg_powertrain rows exactly",
+check("powertrain totals equal the synthetic ice_reg_powertrain rows exactly (ranking value, midpoint-summed)",
   powertrainSlice.reduce((s, r) => s + Number(r.registrations), 0), 130);
 check("powertrain grouping is by fuel_group, not a Vehicle DB taxonomy",
   powertrainSlice.map((r) => [r.entity_key, r.registrations]).sort(), [["BEV", 15], ["ICE", 115]].sort());
+
+const bevBucket = powertrainSlice.find((r) => r.entity_key === "BEV");
+check("a bucket fed only by an exact row reports certainty exact with min=max",
+  bevBucket && { certainty: bevBucket.certainty, min: bevBucket.registrations_min, max: bevBucket.registrations_max, note: bevBucket.note },
+  { certainty: "exact", min: 15, max: 15, note: null });
+
+// The ICE bucket mixes a family row (45) and a range row (60..80): the range
+// metadata MUST survive -- this is the exact bug class the review flagged
+// ("a true 60-80 range silently reported as registrations=70 with no range
+// metadata downstream"). Grouped min/max sum each row's own honest
+// contribution (family/exact contribute their single number to both min and
+// max; range contributes its real reg_min/reg_max) -- never an average.
+const iceBucket = powertrainSlice.find((r) => r.entity_key === "ICE");
+check("the range survives sliceIceByPowertrain instead of collapsing to a midpoint",
+  iceBucket && { certainty: iceBucket.certainty, min: iceBucket.registrations_min, max: iceBucket.registrations_max },
+  { certainty: "range", min: 105, max: 125 });
+check("grouped min/max sum each row's own contribution correctly (45+60=105, 45+80=125)",
+  iceBucket && [iceBucket.registrations_min, iceBucket.registrations_max], [105, 125]);
+check("a bucket containing any range row is never reported as exact",
+  iceBucket?.certainty !== "exact");
+
+console.log("\npowertrain -- a pure family-only bucket (no range mixed in) keeps its note");
+const familyOnlySlice = sliceIceByPowertrain([
+  { period: P3, province: BKK, reg_type: "RY1", brand: "Toyota", model_group_id: "toyota.model-x", model_name: "Model X",
+    fuel_group: "HEV", reg_est: 20, reg_min: null, reg_max: null, certainty: "family" },
+]);
+check("a family-only bucket reports certainty family with the required note and min=max=reg_est",
+  familyOnlySlice[0] && {
+    certainty: familyOnlySlice[0].certainty, min: familyOnlySlice[0].registrations_min,
+    max: familyOnlySlice[0].registrations_max, note: familyOnlySlice[0].note,
+  },
+  { certainty: "family", min: 20, max: 20, note: "แบ่งระหว่างรุ่นในตระกูลโดย TDR" });
+
+console.log("\npowertrain -- a pure range-only bucket keeps its real range, not a midpoint");
+const rangeOnlySlice = sliceIceByPowertrain([
+  { period: P3, province: BKK, reg_type: "RY1", brand: "Honda", model_group_id: "honda.model-z", model_name: "Model Z",
+    fuel_group: "PHEV", reg_est: null, reg_min: 40, reg_max: 60, certainty: "range" },
+]);
+check("a range-only bucket's ranking value is a midpoint, but min/max expose the real range",
+  rangeOnlySlice[0] && {
+    registrations: rangeOnlySlice[0].registrations, min: rangeOnlySlice[0].registrations_min,
+    max: rangeOnlySlice[0].registrations_max, certainty: rangeOnlySlice[0].certainty,
+  },
+  { registrations: 50, min: 40, max: 60, certainty: "range" });
+
+console.log("\npublic market adapter -- powertrain range metadata (option A: carried through as optional fields)");
+const publicPowertrainRows: ReturnType<typeof sliceIceByPowertrain> = [
+  { entity_key: "ICE", entity_label: "ICE", registrations: 115, market_total: 130, market_share_pct: 88.46,
+    market_rank: 1, window_raw_units: 130, window_mapped_units: 130, window_mapping_coverage_pct: 100,
+    certainty: "range", registrations_min: 105, registrations_max: 125, note: null },
+  { entity_key: "BEV", entity_label: "BEV", registrations: 15, market_total: 130, market_share_pct: 11.54,
+    market_rank: 2, window_raw_units: 130, window_mapped_units: 130, window_mapping_coverage_pct: 100,
+    certainty: "exact", registrations_min: 15, registrations_max: 15, note: null },
+];
+const assembledPowertrain = assemblePublicMarket({
+  dimension: "powertrain" as PublicMarket["dimension"],
+  period: P3, previousPeriod: P2,
+  currentRows: publicPowertrainRows, currentTotal: 130, previousRows: [],
+  brandLimit: 8, trend: [],
+});
+const publicIceEntry = assembledPowertrain.brands.find((b) => b.key === "ICE") as typeof assembledPowertrain.brands[number] & {
+  certainty?: string; registrations_min?: number; registrations_max?: number; note?: string | null;
+};
+check("PublicMarket's required fields (key/label/registrations/sharePct) are untouched",
+  { key: publicIceEntry.key, label: publicIceEntry.label, registrations: publicIceEntry.registrations, sharePct: publicIceEntry.sharePct },
+  { key: "ICE", label: "ICE", registrations: 115, sharePct: 88.46 });
+check("the range survives into the public adapter rather than being silently published as an exact 115",
+  { certainty: publicIceEntry.certainty, min: publicIceEntry.registrations_min, max: publicIceEntry.registrations_max },
+  { certainty: "range", min: 105, max: 125 });
 
 console.log("\nwheel / tyre (\"TDR Wheel & Tyre Index\")");
 const rimSlice = sliceIceByRimBucket(rimProvinceP3);
@@ -305,6 +427,88 @@ check("M4 does not switch the live /member/market API route to the Ice engine ye
   !fs.readFileSync("app/api/report/market/route.ts", "utf8").includes("ice-market-data"));
 check("lib/registration-market.ts is untouched by M4 (reused, not modified)",
   !fs.readFileSync("lib/registration-market.ts", "utf8").includes("ice_"));
+
+// ---------------------------------------------------------------------------
+// Pagination (fix 3) -- the generic page-walking loop, with a fake
+// `fetchPage` standing in for "a correctly, deterministically ordered page
+// source" (the ordering itself is a static property of lib/ice-market-data.ts's
+// query-building code, checked separately below).
+// ---------------------------------------------------------------------------
+
+console.log("\npagination -- many equal-key rows cannot be skipped or duplicated across pages");
+async function runPaginationChecks() {
+  const manyEqualPeriodRows = Array.from({ length: 257 }, (_, i) => ({ id: i, period: P3 }));
+  const fetchPage = async (offset: number, limit: number) => manyEqualPeriodRows.slice(offset, offset + limit);
+  const walked = await fetchAllPages(fetchPage, 50, 10_000);
+  check("every row is retrieved exactly once across page boundaries that don't align with the dataset size",
+    walked.length, 257);
+  check("no row id is skipped or duplicated", new Set(walked.map((r) => r.id)).size, 257);
+  check("row order is preserved exactly (proves no off-by-one at a page boundary)",
+    walked.every((r, i) => r.id === i), true);
+
+  const exactMultipleRows = Array.from({ length: 100 }, (_, i) => ({ id: i }));
+  const walkedExact = await fetchAllPages(async (offset, limit) => exactMultipleRows.slice(offset, offset + limit), 25, 10_000);
+  check("a dataset size that is an exact multiple of the page size is still walked completely (no phantom final page)",
+    walkedExact.length, 100);
+
+  let threwCeiling = false;
+  try {
+    await fetchAllPages(async (offset, limit) => Array.from({ length: limit }, (_, i) => offset + i), 50, 120);
+  } catch (error) {
+    threwCeiling = error instanceof PaginationLimitExceededError;
+  }
+  check("exceeding the safety ceiling raises loudly rather than silently truncating", threwCeiling, true);
+}
+await runPaginationChecks();
+
+console.log("\nordering -- every panel fetch orders by its table's full primary key, never period alone");
+const orderingSource = stripComments(dataSource);
+const pkByFetcher: [string, string[]][] = [
+  ["fetchIceRegProvince", ["period", "province", "reg_type", "brand", "fuel_group"]],
+  ["fetchIceRegTrend", ["period", "province", "reg_type", "brand", "model_group_id"]],
+  ["fetchIceRegPowertrain", ["period", "province", "reg_type", "brand", "model_group_id", "fuel_group"]],
+  ["fetchIceRimProvince", ["period", "province", "reg_type", "brand", "rim_bucket"]],
+  ["fetchIceTyreProvince", ["period", "province", "reg_type", "brand", "tyre_size"]],
+  ["fetchIceTyreCoverage", ["period", "province", "reg_type", "brand"]],
+];
+for (const [fetcherName, pkColumns] of pkByFetcher) {
+  const fnStart = orderingSource.indexOf(`export async function ${fetcherName}`);
+  const fnBody = fnStart >= 0 ? orderingSource.slice(fnStart, orderingSource.indexOf("\n}", fnStart)) : "";
+  check(`${fetcherName} orders by its full primary key, not period alone`,
+    pkColumns.every((column) => fnBody.includes(`"${column}"`)));
+}
+check("MAX_ROWS is well above an arbitrary small cap (raised from the original 100,000)",
+  /MAX_ROWS = 2_000_000/.test(dataSource));
+
+// ---------------------------------------------------------------------------
+// Available periods (fix 2) -- come from live panel coverage, never from
+// ice_package_imports' one-row-per-release-event log.
+// ---------------------------------------------------------------------------
+
+console.log("\navailable periods -- derived from live panel data, not import events");
+check("ice-market-data.ts's iceAvailablePeriods no longer sources from ice_package_imports",
+  !/iceAvailablePeriods[\s\S]*?\.from\("ice_package_imports"\)/.test(orderingSource));
+check("iceAvailablePeriods instead pages the live ice_reg_province panel",
+  /iceAvailablePeriods[\s\S]*?"ice_reg_province"/.test(orderingSource));
+
+check("distinctSortedPeriods dedupes and sorts", distinctSortedPeriods(["2569-08", "2569-06", "2569-07", "2569-06"]),
+  ["2569-06", "2569-07", "2569-08"]);
+// Regression fixture: one accepted import's headline period is "2569-08", but
+// its replace-whole-set payload (as every real Ice delivery does) carries
+// Ice's full published history underneath it -- many periods, not one. A
+// correct "available periods" answer must recognize every one of them, not
+// just the single period the release happened to be labeled with.
+const oneImportsFullHistoricalCoverage = [
+  "2568-01", "2568-02", "2568-03", "2568-04", "2568-05", "2568-06",
+  "2568-07", "2568-08", "2568-09", "2568-10", "2568-11", "2568-12",
+  "2569-01", "2569-02", "2569-03", "2569-04", "2569-05", "2569-06", "2569-07", "2569-08",
+];
+const rowsFromOneImportEvent = oneImportsFullHistoricalCoverage.flatMap((period) =>
+  Array.from({ length: 5 }, (_, i) => ({ period, row: i }))); // 5 rows/period, same shape as a real reg_province page
+check("all periods inside one import event's panel coverage are recognized, not just its headline period",
+  distinctSortedPeriods(rowsFromOneImportEvent.map((r) => r.period)), oneImportsFullHistoricalCoverage);
+check("a single headline period claim (the old ice_package_imports-only bug) would have reported just 1 period -- this reports all 20",
+  distinctSortedPeriods(rowsFromOneImportEvent.map((r) => r.period)).length, 20);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall Ice market engine checks passed");
 process.exit(failed ? 1 : 0);

@@ -122,6 +122,53 @@ function passesIceFilters(
     && (!filters.brands?.length || filters.brands.includes(row.brand));
 }
 
+function passesModelGroupFilter(row: { model_group_id: string }, filters: IceMarketFilters): boolean {
+  return !filters.modelGroupIds?.length || filters.modelGroupIds.includes(row.model_group_id);
+}
+
+// ---------------------------------------------------------------------------
+// Dimension/filter support matrix (PR #189 review round 2, fix 4): every
+// IceMarketFilters field must be honored exactly wherever the source panel
+// backing a dimension actually carries that column, and refused loudly
+// everywhere it does not -- never silently ignored, which would return a
+// broader-than-requested slice that still looks like a valid, narrowed one.
+//
+// model_group_id exists on ice_reg_trend and ice_reg_powertrain (so "model",
+// "segment", "body_type" and "powertrain" all honor modelGroupIds below) but
+// NOT on ice_reg_province (so "brand" and "registration_type" cannot).
+// province/reg_type/brand exist on every panel, so those three filters are
+// always supported regardless of dimension.
+// ---------------------------------------------------------------------------
+
+export type IceMarketDimension = "brand" | "model" | "segment" | "body_type" | "powertrain" | "registration_type";
+
+export function isIceMarketDimension(value: string): value is IceMarketDimension {
+  return value === "brand" || value === "model" || value === "segment"
+    || value === "body_type" || value === "powertrain" || value === "registration_type";
+}
+
+const MODEL_GROUP_ID_DIMENSIONS: ReadonlySet<IceMarketDimension> = new Set(["model", "segment", "body_type", "powertrain"]);
+
+export class IceUnsupportedFilterError extends Error {
+  constructor(filterName: string, dimension: IceMarketDimension) {
+    super(
+      `the "${filterName}" filter has no matching column on the Ice panel backing the `
+      + `"${dimension}" dimension (ice_reg_province has no model_group_id) -- refused rather `
+      + "than silently returning a broader slice than requested.",
+    );
+  }
+}
+
+/** Throws IceUnsupportedFilterError rather than letting an unsupported filter
+ * be silently ignored. Call this before slicing with any (dimension, filters)
+ * pair reached from outside this module (lib/ice-market-data.ts's
+ * getIceMarketSlice) -- the slicers below assume it has already been checked. */
+export function assertIceFiltersSupported(dimension: IceMarketDimension, filters: IceMarketFilters): void {
+  if (filters.modelGroupIds?.length && !MODEL_GROUP_ID_DIMENSIONS.has(dimension)) {
+    throw new IceUnsupportedFilterError("modelGroupIds", dimension);
+  }
+}
+
 function rankedSliceRows(
   grouped: Map<string, { label: string; units: number }>,
   limit: number,
@@ -222,9 +269,7 @@ function primaryLinkedModel(ids: string[] | undefined): string | null {
 export function sliceIceByModel(
   rows: IceRegTrendRow[], crosswalk: IceCrosswalkLink[], filters: IceMarketFilters = {}, limit = 100,
 ): IceModelSliceRow[] {
-  const filtered = rows.filter((row) =>
-    passesIceFilters(row, filters)
-    && (!filters.modelGroupIds?.length || filters.modelGroupIds.includes(row.model_group_id)));
+  const filtered = rows.filter((row) => passesIceFilters(row, filters) && passesModelGroupFilter(row, filters));
   const links = activeLinksByGroup(crosswalk);
   const grouped = new Map<string, { label: string; units: number }>();
   let raw = 0;
@@ -273,7 +318,7 @@ function sliceIceByTdrDimension(
   pick: (model: VehicleModelDim) => string | null,
   filters: IceMarketFilters = {}, limit = 100,
 ): MarketSliceRow[] {
-  const filtered = rows.filter((row) => passesIceFilters(row, filters));
+  const filtered = rows.filter((row) => passesIceFilters(row, filters) && passesModelGroupFilter(row, filters));
   const links = activeLinksByGroup(crosswalk);
   const modelById = new Map(models.map((model) => [model.canonical_id, model]));
   const grouped = new Map<string, { label: string; units: number }>();
@@ -342,19 +387,69 @@ export function resolveIcePowertrainRow(row: IceRegPowertrainRow): ResolvedPower
   };
 }
 
+// ---------------------------------------------------------------------------
+// PR #189 review round 2, fix 1: a grouped fuel_group bucket must never
+// collapse a range row's min/max into an indistinguishable "exact" number --
+// that is false precision (e.g. a true 60..80 range silently reported as a
+// plain registrations=70). IcePowertrainSliceRow extends the frozen
+// MarketSliceRow with optional fields only (§15.2) so it remains assignable
+// anywhere a MarketSliceRow is expected; `registrations` stays a single
+// number for ranking/sorting/share math (the midpoint when the bucket's
+// certainty is "range"), but `certainty`/`registrations_min`/
+// `registrations_max`/`note` are what a consumer MUST read before displaying
+// a powertrain number as if it were exact.
+// ---------------------------------------------------------------------------
+
+export type IcePowertrainSliceRow = MarketSliceRow & {
+  certainty: IcePowertrainCertainty;
+  registrations_min: number;
+  registrations_max: number;
+  note: string | null;
+};
+
 export function sliceIceByPowertrain(
   rows: IceRegPowertrainRow[], filters: IceMarketFilters = {}, limit = 100,
-): MarketSliceRow[] {
-  const filtered = rows.filter((row) => passesIceFilters(row, filters));
-  const grouped = new Map<string, { label: string; units: number }>();
+): IcePowertrainSliceRow[] {
+  const filtered = rows.filter((row) => passesIceFilters(row, filters) && passesModelGroupFilter(row, filters));
+  const grouped = new Map<string, { label: string; units: number; min: number; max: number; hasRange: boolean; hasFamily: boolean }>();
   let raw = 0;
   for (const row of filtered) {
-    const { value } = resolveIcePowertrainRow(row);
-    raw += value;
-    const previous = grouped.get(row.fuel_group);
-    grouped.set(row.fuel_group, { label: row.fuel_group, units: (previous?.units || 0) + value });
+    const resolved = resolveIcePowertrainRow(row);
+    raw += resolved.value;
+    const previous = grouped.get(row.fuel_group)
+      ?? { label: row.fuel_group, units: 0, min: 0, max: 0, hasRange: false, hasFamily: false };
+    // exact/family contribute their one number to both min and max (nothing
+    // to range over); range contributes its own reg_min/reg_max -- never the
+    // midpoint -- so a grouped bucket that mixes certainties still carries a
+    // real, honest aggregate range rather than an average of averages.
+    const isRange = resolved.certainty === "range";
+    previous.units += resolved.value;
+    previous.min += isRange ? (resolved.reg_min ?? resolved.value) : resolved.value;
+    previous.max += isRange ? (resolved.reg_max ?? resolved.value) : resolved.value;
+    if (isRange) previous.hasRange = true;
+    if (resolved.certainty === "family") previous.hasFamily = true;
+    grouped.set(row.fuel_group, previous);
   }
-  return rankedSliceRows(grouped, limit, { raw, mapped: raw });
+  const base = rankedSliceRows(
+    new Map([...grouped].map(([key, value]) => [key, { label: value.label, units: value.units }])),
+    limit, { raw, mapped: raw },
+  );
+  return base.map((row) => {
+    const group = grouped.get(row.entity_key);
+    if (!group) return { ...row, certainty: "exact", registrations_min: row.registrations as number, registrations_max: row.registrations as number, note: null };
+    // A bucket is only ever reported "exact" when EVERY row that fed it was
+    // exact. Any range component forces the bucket to "range" (never claim
+    // exactness once any input was a range); a family component (with no
+    // range) forces "family" and the required note -- never "ประมาณการ".
+    const certainty: IcePowertrainCertainty = group.hasRange ? "range" : group.hasFamily ? "family" : "exact";
+    return {
+      ...row,
+      certainty,
+      registrations_min: group.min,
+      registrations_max: group.max,
+      note: certainty === "family" ? FAMILY_NOTE : null,
+    };
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -464,24 +559,53 @@ export function resolveModelGroupRedirect(
 // Supabase client) so the output shape is identical by construction.
 // ---------------------------------------------------------------------------
 
-export function assemblePublicMarket(args: {
+// PR #189 review round 2, fix 1 (option A): PublicMarket's frozen `brands`/
+// `movers` entry shape is `{ key, label, registrations, sharePct }` with no
+// range field, and that return type is preserved exactly (§15.2: a contract
+// function's existing required fields are never renamed/removed). But
+// TypeScript's excess-property check only applies to a FRESH object literal
+// assigned directly to a typed location -- `named`/`movers` below are built
+// via `.map()` into plain variables, so attaching the extra, OPTIONAL
+// certainty/registrations_min/registrations_max/note fields (present only
+// when `Row` is IcePowertrainSliceRow) onto each entry is a legal "new
+// metadata = new optional addition" per §15.2: a caller typed against
+// PublicMarket still sees exactly its frozen shape, while a caller that
+// knows it asked for the powertrain dimension can read the extra fields
+// directly off the same object. This is the chosen fix for "do not silently
+// publish a range's midpoint as if it were an exact number" -- never done by
+// narrowing precision, only by carrying the fuller shape through when it exists.
+function extendedPublicMarketEntry<Row extends MarketSliceRow>(row: Row) {
+  const maybeRangeRow = row as Partial<IcePowertrainSliceRow>;
+  const extra = maybeRangeRow.certainty !== undefined
+    ? {
+      certainty: maybeRangeRow.certainty,
+      registrations_min: maybeRangeRow.registrations_min,
+      registrations_max: maybeRangeRow.registrations_max,
+      note: maybeRangeRow.note ?? null,
+    }
+    : {};
+  return {
+    key: row.entity_key,
+    label: row.entity_label,
+    registrations: Number(row.registrations || 0),
+    sharePct: Number(row.market_share_pct || 0),
+    ...extra,
+  };
+}
+
+export function assemblePublicMarket<Row extends MarketSliceRow = MarketSliceRow>(args: {
   dimension: PublicMarket["dimension"];
   period: string;
   previousPeriod: string;
-  currentRows: MarketSliceRow[];
+  currentRows: Row[];
   currentTotal: number;
-  previousRows: MarketSliceRow[];
+  previousRows: Row[];
   brandLimit: number;
   moverLimit?: number;
   trend: { period: string; total: number | null }[];
 }): PublicMarket {
   const moverLimit = args.moverLimit ?? 10;
-  const named = args.currentRows.slice(0, args.brandLimit).map((row) => ({
-    key: row.entity_key,
-    label: row.entity_label,
-    registrations: Number(row.registrations || 0),
-    sharePct: Number(row.market_share_pct || 0),
-  }));
+  const named = args.currentRows.slice(0, args.brandLimit).map(extendedPublicMarketEntry);
   const tail = args.currentRows.slice(args.brandLimit);
   const tailUnits = tail.reduce((sum, row) => sum + Number(row.registrations || 0), 0);
   const others = tail.length
@@ -509,4 +633,61 @@ export function assemblePublicMarket(args: {
     movers,
     trend: args.trend,
   };
+}
+
+// ---------------------------------------------------------------------------
+// PR #189 review round 2, fix 3: deterministic pagination. The *generic*
+// page-walking loop lives here (pure, DB-agnostic, directly unit-testable
+// with a fake `fetchPage` -- see scripts/check-ice-market-engine.ts); the
+// Supabase-specific half (lib/ice-market-data.ts's pagedSelect) only has to
+// build one page's query correctly -- ordered by a table's FULL primary-key
+// column list, never by `period` alone, which is not unique and therefore
+// not a deterministic sort key on its own (Postgres does not guarantee a
+// stable tie-break across repeated reads of an ORDER BY with ties). This
+// loop's own job -- walk offset/pageSize until a short page, accumulate,
+// never skip or duplicate a row -- is independent of what the ordering is,
+// so it is tested here with a plain in-memory array standing in for "a
+// correctly, deterministically ordered page source".
+// ---------------------------------------------------------------------------
+
+export class PaginationLimitExceededError extends Error {
+  constructor(maxRows: number) {
+    super(
+      `result exceeds the ${maxRows.toLocaleString()}-row safety ceiling -- this must be `
+      + "reported loudly, never silently truncated. Raise the ceiling if this is a genuine "
+      + "real window, after confirming it is not an ordering/filter bug inflating the count.",
+    );
+  }
+}
+
+export async function fetchAllPages<T>(
+  fetchPage: (offset: number, limit: number) => Promise<T[]>,
+  pageSize: number,
+  maxRows: number,
+): Promise<T[]> {
+  const rows: T[] = [];
+  for (let offset = 0; offset < maxRows; offset += pageSize) {
+    const page = await fetchPage(offset, pageSize);
+    rows.push(...page);
+    if (page.length < pageSize) return rows;
+  }
+  throw new PaginationLimitExceededError(maxRows);
+}
+
+// ---------------------------------------------------------------------------
+// PR #189 review round 2, fix 2: "available report periods" must reflect
+// every period actually present in the live, already-committed panel data
+// (migration_v62's atomic ice_commit_staged_import makes a post-commit read
+// safe), not the headline period of each accepted import event
+// (ice_package_imports.period) -- a single replace-whole-set release can
+// carry many historical periods' worth of rows under one import-log row.
+// This is the pure half: deduplicate and sort whatever period strings were
+// actually read off a panel table. lib/ice-market-data.ts's iceAvailablePeriods
+// is the thin I/O wrapper that pages ice_reg_province's `period` column
+// (paginated via fetchAllPages, same determinism/ceiling rules as every
+// other fetch) and calls this.
+// ---------------------------------------------------------------------------
+
+export function distinctSortedPeriods(periods: Iterable<string>): string[] {
+  return [...new Set(periods)].sort();
 }
