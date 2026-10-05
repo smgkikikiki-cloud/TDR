@@ -476,10 +476,121 @@ def test_update_package_version_log_appends_a_second_import_without_a_second_bom
     assert latest["master_version"] == "M2"  # the second write is the one that stuck
 
 
-def test_apply_without_a_repo_root_skips_the_version_log_entirely(tmp_path):
+# ---------------------------------------------------------------------------
+# Same-period old-version archiving (fix #2, SKILL.md §6.2 step 2)
+# ---------------------------------------------------------------------------
+
+def test_a_new_version_of_the_same_period_archives_the_old_active_folder(tmp_path):
+    repo_root = tmp_path / "repo_archive"
+    repo_root.mkdir()
+    path_v1 = _build_full_package(tmp_path, master_version="1")
+    path_v2 = _build_full_package(tmp_path, master_version="2")
+
+    index_v1 = cli.load_package(path_v1).index
+    index_v2 = cli.load_package(path_v2).index
+    cli.update_package_version_log(repo_root, index_v1, path_v1, imported_by="a")
+
+    packages_dir = repo_root / cli.PACKAGES_DIR_NAME
+    old_active = packages_dir / "2569-08" / "v1_M1"
+    assert old_active.is_dir()
+    assert (old_active / path_v1.name).exists()
+
+    cli.update_package_version_log(repo_root, index_v2, path_v2, imported_by="b")
+
+    # The old active folder is gone from its original location...
+    assert not old_active.exists()
+    # ...moved (never deleted) under <period>/เวอร์ชันเก่า/<old_folder>_เก่า/,
+    # with its archive content intact.
+    archived = packages_dir / "2569-08" / "เวอร์ชันเก่า" / "v1_M1_เก่า"
+    assert archived.is_dir()
+    assert (archived / path_v1.name).exists()
+    # The new version is now the active folder.
+    new_active = packages_dir / "2569-08" / "v1_M2"
+    assert new_active.is_dir()
+    assert (new_active / path_v2.name).exists()
+    latest = json.loads((packages_dir / "ล่าสุด.json").read_text(encoding="utf-8"))
+    assert latest["master_version"] == "2"
+
+
+def test_archiving_a_name_collision_gets_a_unique_suffix_never_an_overwrite(tmp_path):
+    repo_root = tmp_path / "repo_collision"
+    repo_root.mkdir()
+    packages_dir = repo_root / cli.PACKAGES_DIR_NAME
+
+    path_v1 = _build_full_package(tmp_path, master_version="1")
+    path_v2 = _build_full_package(tmp_path, master_version="2")
+    index_v1 = cli.load_package(path_v1).index
+    index_v2 = cli.load_package(path_v2).index
+
+    # v1 active, then superseded by v2 -> archived to v1_M1_เก่า (first archive).
+    cli.update_package_version_log(repo_root, index_v1, path_v1, imported_by="a")
+    cli.update_package_version_log(repo_root, index_v2, path_v2, imported_by="b")
+    first_archive = packages_dir / "2569-08" / "เวอร์ชันเก่า" / "v1_M1_เก่า"
+    assert (first_archive / path_v1.name).exists()
+
+    # v1 reappears (e.g. Ice re-sends an old version) with different content,
+    # distinguishable by a marker file, and becomes active again under the
+    # exact same folder name "v1_M1" the first archive already used.
+    reappeared_v1_dir = packages_dir / "2569-08" / "v1_M1"
+    reappeared_v1_dir.mkdir(parents=True)
+    (reappeared_v1_dir / "MARKER_SECOND_V1.txt").write_text("second", encoding="utf-8")
+
+    # Now a real v3 supersedes both the still-active v2 folder AND the
+    # reappeared "v1_M1" -- archiving "v1_M1" a second time must NOT
+    # overwrite the first archive; it must get a unique suffix instead.
+    path_v3 = _build_full_package(tmp_path, master_version="3")
+    index_v3 = cli.load_package(path_v3).index
+    cli.update_package_version_log(repo_root, index_v3, path_v3, imported_by="c")
+
+    old_versions_dir = packages_dir / "2569-08" / "เวอร์ชันเก่า"
+    # The original first archive is untouched -- still v1's real content,
+    # never clobbered by the reappeared marker.
+    assert (first_archive / path_v1.name).exists()
+    assert not (first_archive / "MARKER_SECOND_V1.txt").exists()
+    # The reappeared, colliding "v1_M1" landed at a distinct, suffixed path.
+    second_archive = old_versions_dir / "v1_M1_เก่า_2"
+    assert second_archive.is_dir()
+    assert (second_archive / "MARKER_SECOND_V1.txt").exists()
+    # v2's own (unrelated) folder is archived too, under its own name -- no
+    # collision there, so no suffix needed.
+    assert (old_versions_dir / "v1_M2_เก่า").is_dir()
+    # Exactly these three archived folders exist; nothing was overwritten.
+    archived_names = sorted(p.name for p in old_versions_dir.iterdir())
+    assert archived_names == ["v1_M1_เก่า", "v1_M1_เก่า_2", "v1_M2_เก่า"]
+
+
+def test_the_very_first_import_of_a_period_has_nothing_to_archive(tmp_path):
+    repo_root = tmp_path / "repo_first"
+    repo_root.mkdir()
+    path = _build_full_package(tmp_path, master_version="1")
+    index = cli.load_package(path).index
+    cli.update_package_version_log(repo_root, index, path, imported_by="a")  # must not raise
+    old_versions_dir = repo_root / cli.PACKAGES_DIR_NAME / "2569-08" / "เวอร์ชันเก่า"
+    assert not old_versions_dir.exists()
+
+
+def test_main_refuses_apply_without_repo_root_and_touches_nothing(tmp_path, monkeypatch, capsys):
+    # A real --apply must never be allowed to silently skip the versioning
+    # state: the CLI itself enforces --repo-root, before check()/staging/
+    # commit ever runs -- not just apply_package()'s own optional parameter,
+    # which other programmatic callers may still use directly (see below).
+    path = _build_full_package(tmp_path)
+    called = []
+    monkeypatch.setattr(cli, "apply_package", lambda *a, **k: called.append(True))
+    code = cli.main(["--apply", str(path), "--imported-by", "tester"])
+    assert code == 1
+    assert called == [], "apply_package must never run without --repo-root"
+    assert "--repo-root is required" in capsys.readouterr().out
+
+
+def test_apply_package_itself_still_allows_an_optional_repo_root_for_other_callers(tmp_path):
+    # apply_package() (not the CLI) may still be used programmatically without
+    # a repo_root -- e.g. by a future caller that persists the version log
+    # somewhere other than a git checkout. Only tools.ice_package_import.main
+    # enforces --repo-root for a real --apply.
     path = _build_full_package(tmp_path)
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")  # no repo_root
+    cli.apply_package(path, rest=rest, imported_by="tester")  # no repo_root; does not raise
     assert not (tmp_path / cli.PACKAGES_DIR_NAME).exists()
 
 

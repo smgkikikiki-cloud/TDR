@@ -2,7 +2,7 @@
 
     python -m tools.ice_package_import --check path/to/TDR_FULL_<period>_v<n>_M<ver>.zip
     python -m tools.ice_package_import --apply path/to/TDR_FULL_<period>_v<n>_M<ver>.zip \\
-        --imported-by "name"
+        --imported-by "name" --repo-root /path/to/this/repo
 
 ``--check`` is fully offline: it only reads the local zip file and reports
 every problem found via ``vehreg.ice_package`` -- status/confirmed_by, the
@@ -33,10 +33,17 @@ the legacy ``SUPABASE_SERVICE_ROLE_KEY``) and performs a transactional
    path, not a formality.
 5. Only after a successful commit *and* a clean readback does the importer
    update the package-versioning log (``data/packages/ล่าสุด.json``,
-   ``ประวัติการนำเข้า.csv``, and the archived package copy) --
-   tdr-package-import/SKILL.md §6. A failed import (at any step 1-4) never
-   reaches this step, so ``ล่าสุด.json``/history never advance as though a
-   failed import had succeeded.
+   ``ประวัติการนำเข้า.csv``, and the archived package copy, archiving any
+   other active version folder for the same period first --
+   tdr-package-import/SKILL.md §6/§6.2) -- never on any failure path, so
+   ``ล่าสุด.json``/history never advance as though a failed import had
+   succeeded.
+
+``--repo-root`` is **required** with ``--apply`` at the CLI: a real import
+must never be allowed to silently skip the versioning state. (The
+``apply_package``/``update_package_version_log`` functions themselves still
+accept an optional ``repo_root`` for other programmatic callers and tests --
+only the CLI enforces that a production ``--apply`` always provides one.)
 """
 from __future__ import annotations
 
@@ -299,6 +306,12 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+#: SKILL.md §6: "<period>/เวอร์ชันเก่า/<old_folder>_เก่า/" for a superseded
+#: version of the same period, never deleted.
+OLD_VERSIONS_DIR_NAME = "เวอร์ชันเก่า"
+OLD_VERSION_SUFFIX = "_เก่า"
+
+
 def package_folder_name(index: dict) -> str:
     """SKILL.md §6's folder template is literally ``v<n>_M<master_version>``.
     Whether the real ``master_version`` value Ice sends already includes the
@@ -310,11 +323,34 @@ def package_folder_name(index: dict) -> str:
     return f"v{index.get('version')}_{master_label}"
 
 
+def _archive_superseded_version_folders(packages_dir: Path, period: str, new_folder_name: str) -> None:
+    """SKILL.md §6.2 step 2: if this period already has a different active
+    version folder, move it (never delete, never overwrite) under
+    ``<period>/เวอร์ชันเก่า/<old_folder>_เก่า/``. A name collision at the
+    destination (e.g. the same old folder name superseded twice) gets a safe,
+    unique numbered suffix instead of clobbering the earlier archive."""
+    period_dir = packages_dir / period
+    if not period_dir.is_dir():
+        return
+    old_versions_dir = period_dir / OLD_VERSIONS_DIR_NAME
+    for entry in sorted(period_dir.iterdir()):
+        if not entry.is_dir() or entry.name in (OLD_VERSIONS_DIR_NAME, new_folder_name):
+            continue
+        old_versions_dir.mkdir(parents=True, exist_ok=True)
+        dest = old_versions_dir / f"{entry.name}{OLD_VERSION_SUFFIX}"
+        suffix = 2
+        while dest.exists():
+            dest = old_versions_dir / f"{entry.name}{OLD_VERSION_SUFFIX}_{suffix}"
+            suffix += 1
+        shutil.move(str(entry), str(dest))
+
+
 def update_package_version_log(repo_root: Path, index: dict, package_path: Path, *, imported_by: str) -> None:
-    """Write data/packages/ล่าสุด.json, append to ประวัติการนำเข้า.csv, and copy
-    the package archive into its period/version folder -- SKILL.md §6.2 step 1
-    and §6. Only ever called after apply_package's commit + readback succeed;
-    never on any failure path, so a failed import cannot advance these.
+    """Write data/packages/ล่าสุด.json, append to ประวัติการนำเข้า.csv, archive
+    any superseded same-period version folder, and copy the package archive
+    into its new period/version folder -- SKILL.md §6/§6.2. Only ever called
+    after apply_package's commit + readback succeed; never on any failure
+    path, so a failed import cannot advance these.
 
     No real TDR_FULL_*.zip has existed yet to exercise the archive copy
     against in production; this path is implemented and tested against the
@@ -325,6 +361,9 @@ def update_package_version_log(repo_root: Path, index: dict, package_path: Path,
     packages_dir = repo_root / PACKAGES_DIR_NAME
     period = index.get("period")
     folder_name = package_folder_name(index)
+
+    _archive_superseded_version_folders(packages_dir, period, folder_name)
+
     period_dir = packages_dir / period / folder_name
     period_dir.mkdir(parents=True, exist_ok=True)
 
@@ -415,7 +454,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--imported-by", default="", help="actor recorded on ice_package_imports (--apply only)")
     parser.add_argument(
         "--repo-root", type=Path, default=None,
-        help="repo root to write data/packages/ into (--apply only; omit to skip the version log)")
+        help="repo root to write data/packages/ into -- required with --apply, "
+             "so a real import can never silently skip the versioning state")
     args = parser.parse_args(argv)
 
     if args.check is not None:
@@ -429,6 +469,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if not args.imported_by:
         print("INVALID: --imported-by is required with --apply")
+        return 1
+    if args.repo_root is None:
+        print("INVALID: --repo-root is required with --apply -- a real import must always "
+              "update data/packages/ล่าสุด.json and ประวัติการนำเข้า.csv, never skip them")
         return 1
     try:
         summary = apply_package(
