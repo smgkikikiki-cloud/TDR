@@ -52,6 +52,39 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
+## Market Track state (current — Ice Full Package / market engine)
+
+Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can run in parallel.
+
+- **M1** (serving contract inventory, `docs/vehicle-db/SERVING_CONTRACT.md`) — documentation
+  only. **Done.**
+- **M2** (Ice import, `.claude/skills/tdr-package-import/SKILL.md`) — **infrastructure only,
+  in progress. No real Ice package has been imported.**
+  - Built and live in the repo (package-independent, needs no real package to exist):
+    `supabase/migration_v62_ice_market_panels.sql` (twelve `ice_*` tables — six fact/dims
+    panels plus `ice_package_imports`, the import-event log — service-role-only, same private
+    pattern as the Vehicle Master tables); `vehreg/ice_package.py` (pure structural validation:
+    status/`confirmed_by`/md5-index/changelog-continuity/column-schema checks, plus the §2
+    step-4 post-import reconciliation checks); `tools/ice_package_import.py` (`--check`,
+    fully offline; `--apply`, replace-whole-set, refuses to write unless `--check` is clean and
+    the package's own shipped `validate_package.py` passes).
+  - **Two real delivery attempts inspected and rejected as not import-ready**, both found on
+    the owner's filesystem (`/mnt/e/TDR web/...`), neither moved/imported: a 5-of-6-panel
+    `2569-08` set (missing `reg_powertrain`, no `full_package.json`/`CHANGELOG.csv`, no shipped
+    validator, `confirmed_by: []` in every panel manifest) at two versions (v1 superseded by
+    v2); a request for the complete, confirmed `TDR_FULL_<period>_v<n>_M<master_version>.zip`
+    was sent back. **No `data/packages/` directory exists in the repo; no file has been moved
+    into one.**
+  - Still blocking a real import: the complete `TDR_FULL_*.zip` itself (6 panels incl.
+    `reg_powertrain`, `full_package.json`, `CHANGELOG.csv`, the release's own
+    `validate_package.py`, `status: "พร้อมส่ง"`, `confirmed_by` with 2 names).
+- **M3** (crosswalk, `ice_model_crosswalk`) — **not started.**
+- **M4** (market engine on Ice data) — **not started.**
+- **M5** (switch pages, retire old registration views) — **not started.** The existing
+  registration/market display engine (`lib/registration-analytics.ts`,
+  `lib/public-market.ts`, `app/market/`, `app/member/market/`, etc.) is **untouched** and still
+  live; M2's new `ice_*` tables are not read by it or by anything else yet.
+
 ## Non-negotiable execution rules
 
 1. **Do not infer state from chat memory alone.** Read this file first.
