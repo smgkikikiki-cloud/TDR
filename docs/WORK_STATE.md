@@ -54,6 +54,24 @@ apply "Step 4 — Write: use repository-supported edit/write format" below to a 
 
 ## Market Track state (current — Ice Full Package / market engine)
 
+**Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
+**Current gate:** `R1_M2_1_METADATA_AND_RELEASE_GATE`.  
+**Production import:** blocked. **Production crosswalk:** blocked. **Live cutover:** blocked.
+
+**Trial package state (2026-10-06):** owner supplied `TDR_FULL_2569-09_v1_M6.0.zip` as a
+trial / near-final compatibility package only. It was inspected read-only and **was not
+imported**. It confirms the real six-panel outer/package metadata shape, including per-panel
+`period_from`/`period_to` and `access`/`free_scope`. It must remain fixture-only even
+though its outer metadata presents `status = "พร้อมส่ง"` and two sign-offs. The inspected
+trial also lacks the README/contract's `id_changes.csv` while carrying identity/crosswalk
+changes, and its CHANGELOG contains one still-`เสนอ` row; these are release-gate inputs, not
+things TDR may guess around.
+
+The next implementation step is **M2.1 metadata persistence + outer release hardening**, then
+a read-only trial compatibility pass, then finish/merge M4. Do not start a production import
+or M3 real matching until the owner explicitly declares a later package final and the roadmap
+R4 gate is satisfied.
+
 Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can run in parallel.
 
 - **M1** (serving contract inventory, `docs/vehicle-db/SERVING_CONTRACT.md`) — documentation
@@ -76,9 +94,10 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
     v2); a request for the complete, confirmed `TDR_FULL_<period>_v<n>_M<master_version>.zip`
     was sent back. **No `data/packages/` directory exists in the repo; no file has been moved
     into one.**
-  - Still blocking a real import: the complete `TDR_FULL_*.zip` itself (6 panels incl.
-    `reg_powertrain`, `full_package.json`, `CHANGELOG.csv`, the release's own
-    `validate_package.py`, `status: "พร้อมส่ง"`, `confirmed_by` with 2 names).
+  - Still blocking a real import: an **owner-declared final** `TDR_FULL_*.zip` that passes
+    both the package's shipped validator and TDR's outer release gate. The 2026-10-06 M6.0
+    package is specifically fixture-only and does not satisfy production authority merely by
+    carrying six panels, `status: "พร้อมส่ง"`, and two sign-offs.
 - **M3** (crosswalk, `docs/vehicle-db/VEHICLE_DB_V3.md` §14.2) — **infrastructure
   implemented, package-independent; no production crosswalk has been generated or
   approved.** No real Ice Full Package has been imported (M2 state above), so
@@ -121,7 +140,7 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
   - Do not run `tools/ice_crosswalk_match.py --match` against production, and do not
     seed or approve any real crosswalk mapping, until a real Ice Full Package has
     been imported (M2) and the owner has reviewed real candidates.
-- **M4** (market engine on Ice data) — **not started.**
+- **M4** (market engine on Ice data) — **implemented package-independently in draft PR #189, not merged and not live.** It must be finished only after M2.1 persists real package metadata and the trial compatibility pass is clean; see `docs/market-track/ROADMAP.md`.
 - **M5** (switch pages, retire old registration views) — **not started.** The existing
   registration/market display engine (`lib/registration-analytics.ts`,
   `lib/public-market.ts`, `app/market/`, `app/member/market/`, etc.) is **untouched** and still
