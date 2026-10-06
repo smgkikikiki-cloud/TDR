@@ -122,11 +122,13 @@ class LoadedPackage:
     def __init__(
         self, *, index: dict, panel_zip_bytes: dict[str, bytes],
         validator_source: bytes | None, changelog_csv: bytes | None, raw_names: list[str],
+        id_changes_csv: bytes | None = None,
     ):
         self.index = index
         self.panel_zip_bytes = panel_zip_bytes  # "panels/<name>.zip" -> bytes
         self.validator_source = validator_source
         self.changelog_csv = changelog_csv
+        self.id_changes_csv = id_changes_csv
         self.raw_names = raw_names
 
     def open_panel(self, panel_id: str) -> zipfile.ZipFile | None:
@@ -152,9 +154,11 @@ def load_package(path: Path) -> LoadedPackage:
             if name.startswith("panels/") and name.endswith(".zip")}
         validator_source = outer.read("validate_package.py") if "validate_package.py" in names else None
         changelog_csv = outer.read("CHANGELOG.csv") if "CHANGELOG.csv" in names else None
+        id_changes_csv = outer.read("id_changes.csv") if "id_changes.csv" in names else None
     return LoadedPackage(
         index=index, panel_zip_bytes=panel_zip_bytes,
-        validator_source=validator_source, changelog_csv=changelog_csv, raw_names=names)
+        validator_source=validator_source, changelog_csv=changelog_csv,
+        id_changes_csv=id_changes_csv, raw_names=names)
 
 
 # ---------------------------------------------------------------------------
@@ -193,48 +197,116 @@ def _read_csv_rows(zf: zipfile.ZipFile, filename: str) -> list[dict[str, str]]:
         return list(csv.DictReader(text))
 
 
-def check(path: Path, *, previous_master_version: str | None = None) -> list[str]:
-    problems: list[str] = []
+def check_split(
+    path: Path, *, previous_master_version: str | None = None,
+    previous_model_group_ids: set[str] | None = None, owner_declared_final: str | None = None,
+) -> tuple[list[str], list[str], list[dict]]:
+    """Returns ``(structural_problems, authority_problems, panel_releases)``.
+
+    Structural: the package is intact, self-consistent and reconciles.
+    Authority: the package may be released to production -- owner declaration,
+    release status, sign-offs, CHANGELOG, identity redirects, changelog
+    continuity. A structurally valid package can still have no authority, and
+    the status fields alone never supply it.
+
+    ``previous_model_group_ids`` / ``previous_master_version`` are the last
+    imported state; ``None`` means nothing has been imported yet.
+    """
     try:
         package = load_package(path)
     except (IceImportError, ice_package.IcePackageError, zipfile.BadZipFile) as exc:
-        return [str(exc)]
+        return [str(exc)], [], []
 
-    problems += ice_package.verify_full_package_status(package.index)
-    problems += ice_package.verify_panel_set(package.index)
-    problems += ice_package.verify_package_md5_index(package.index, package.panel_zip_bytes)
-    problems += ice_package.verify_changelog_continuity(package.index, previous_master_version)
+    structural: list[str] = []
+    authority: list[str] = []
 
+    authority += ice_package.verify_release_authority(path.name, owner_declared_final)
+    authority += ice_package.verify_full_package_status(package.index)
+    authority += ice_package.verify_changelog_continuity(package.index, previous_master_version)
+    structural += ice_package.verify_panel_set(package.index)
+    structural += ice_package.verify_package_md5_index(package.index, package.panel_zip_bytes)
+
+    changelog_problems, entity_change = ice_package.verify_changelog(package.changelog_csv)
+    authority += changelog_problems
+
+    panel_releases: list[dict] = []
     reconciliation_rows: dict[str, list[dict]] = {}
+    coverage: dict[str, tuple[str, str]] = {}
+    package_model_group_ids: set[str] = set()
     for panel_id in ice_package.PANEL_IDS:
         zf = package.open_panel(panel_id)
         if zf is None:
-            problems.append(f"panel {panel_id!r} not found among the package's panel zips")
+            structural.append(f"panel {panel_id!r} not found among the package's panel zips")
             continue
         with zf:
-            problems += ice_package.verify_panel_internal(panel_id, zf)
+            structural += ice_package.verify_panel_internal(panel_id, zf)
+            manifest = ice_package.parse_panel_manifest(zf)
+            authority += ice_package.verify_panel_signoffs(panel_id, manifest)
+            if isinstance(manifest.get("period_from"), str) and isinstance(manifest.get("period_to"), str):
+                coverage[panel_id] = (manifest["period_from"], manifest["period_to"])
+            if "panel.json" in zf.namelist():
+                panel_meta = ice_package.parse_full_package_index(zf.read("panel.json"))
+                release, release_problems = ice_package.parse_panel_release(panel_id, manifest, panel_meta)
+                structural += release_problems
+                if release is not None:
+                    panel_releases.append(release)
+            if panel_id == "dims":
+                try:
+                    package_model_group_ids = {
+                        row["model_group_id"]
+                        for row in _read_csv_rows(zf, TABLES["ice_dims_model_group"]["source"])}
+                except Exception as exc:
+                    structural.append(f"dims: could not read model_group_id values: {exc}")
             if panel_id in _RECONCILIATION_TABLES:
                 table = _RECONCILIATION_TABLES[panel_id]
                 try:
                     reconciliation_rows[panel_id] = _read_csv_rows(zf, TABLES[table]["source"])
                 except Exception as exc:
-                    problems.append(f"{panel_id}: could not read rows for reconciliation: {exc}")
+                    structural.append(f"{panel_id}: could not read rows for reconciliation: {exc}")
+
+    authority += ice_package.verify_id_changes(
+        package.id_changes_csv,
+        entity_change_declared=entity_change,
+        package_model_group_ids=package_model_group_ids,
+        previous_model_group_ids=previous_model_group_ids,
+    )
 
     # §2 step 4: reg_province == reg_trend; reg_powertrain ~= reg_trend ±0.5.
     # Run fully offline, over the package's own rows -- before anything is
     # staged, let alone committed.
     if "reg_province" in reconciliation_rows and "reg_trend" in reconciliation_rows:
-        problems += ice_package.check_reg_province_matches_reg_trend(
+        structural += ice_package.check_reg_province_matches_reg_trend(
             reconciliation_rows["reg_province"], reconciliation_rows["reg_trend"])
+    # Only over the overlap of the two panels' declared manifest coverage. Periods one
+    # panel does not cover are outside its contract, not reconciliation failures.
     if "reg_powertrain" in reconciliation_rows and "reg_trend" in reconciliation_rows:
-        problems += ice_package.check_reg_powertrain_matches_reg_trend(
-            reconciliation_rows["reg_powertrain"], reconciliation_rows["reg_trend"])
+        if "reg_powertrain" not in coverage or "reg_trend" not in coverage:
+            structural.append("reg_powertrain / reg_trend: manifest period_from/period_to missing; cannot scope reconciliation")
+        else:
+            window = ice_package.coverage_intersection(coverage["reg_powertrain"], coverage["reg_trend"])
+            if window is None:
+                structural.append("reg_powertrain / reg_trend declared coverage ranges do not overlap")
+            else:
+                powertrain_rows = [r for r in reconciliation_rows["reg_powertrain"] if ice_package.in_coverage(r["period"], window)]
+                trend_rows = [r for r in reconciliation_rows["reg_trend"] if ice_package.in_coverage(r["period"], window)]
+                structural += ice_package.check_reg_powertrain_matches_reg_trend(powertrain_rows, trend_rows)
 
     ok, output = run_shipped_validator(package, path)
     if not ok:
-        problems.append(f"shipped validate_package.py failed:\n{output.strip()}")
+        structural.append(f"shipped validate_package.py failed:\n{output.strip()}")
 
-    return problems
+    return structural, authority, panel_releases
+
+
+def check(
+    path: Path, *, previous_master_version: str | None = None,
+    previous_model_group_ids: set[str] | None = None, owner_declared_final: str | None = None,
+) -> list[str]:
+    """Every problem, structural and authority together. See ``check_split``."""
+    structural, authority, _ = check_split(
+        path, previous_master_version=previous_master_version,
+        previous_model_group_ids=previous_model_group_ids, owner_declared_final=owner_declared_final)
+    return structural + authority
 
 
 # ---------------------------------------------------------------------------
@@ -260,16 +332,25 @@ def stage_table(table: str, rows: list[dict], *, rest: RestCall = _request) -> N
         rest("POST", staging, chunk, prefer="return=minimal")
 
 
-def commit_staged_import(index: dict, *, rest: RestCall = _request, imported_by: str) -> dict:
-    """The one atomic RPC call: staging -> live + import log, or nothing."""
+def commit_staged_import(
+    index: dict, *, rest: RestCall = _request, imported_by: str, panel_releases: list[dict],
+) -> dict:
+    """The one atomic RPC call: staging -> live + import log, or nothing.
+
+    ``p_panels`` carries the per-panel release metadata (panel_id, version,
+    period_from, period_to, access, free_scope, confirmed_by), stored on the
+    ``ice_package_imports`` row for this import. The row already links the
+    package, period, package version and master_version, so the metadata stays
+    tied to exactly the import that produced it.
+    """
     payload = {
         "p_period": index.get("period"),
         "p_package_version": index.get("version"),
         "p_master_version": index.get("master_version"),
         "p_status": index.get("status"),
         "p_confirmed_by": index.get("confirmed_by"),
-        "p_md5_index": index.get("files"),
-        "p_panels": index.get("panels"),
+        "p_md5_index": ice_package.declared_panel_files(index),
+        "p_panels": panel_releases,
         "p_imported_by": imported_by,
     }
     result = rest("POST", "rpc/ice_commit_staged_import", payload)
@@ -402,11 +483,21 @@ def update_package_version_log(repo_root: Path, index: dict, package_path: Path,
 
 def apply_package(
     path: Path, *, rest: RestCall = _request, imported_by: str, repo_root: Path | None = None,
+    owner_declared_final: str | None = None,
 ) -> dict:
     last = rest("GET", "ice_package_imports?select=master_version&order=imported_at.desc&limit=1") or []
     previous_master_version = last[0]["master_version"] if last else None
+    # Only a previous import can have retired model groups, so the live ids are
+    # read only then. Read-only, like the GET above.
+    previous_model_group_ids = None
+    if last:
+        live_groups = rest("GET", "ice_dims_model_group?select=model_group_id") or []
+        previous_model_group_ids = {row["model_group_id"] for row in live_groups}
 
-    problems = check(path, previous_master_version=previous_master_version)
+    structural, authority, panel_releases = check_split(
+        path, previous_master_version=previous_master_version,
+        previous_model_group_ids=previous_model_group_ids, owner_declared_final=owner_declared_final)
+    problems = structural + authority
     if problems:
         raise IceImportError("refusing to import: " + "; ".join(problems))
 
@@ -426,7 +517,7 @@ def apply_package(
     try:
         for table, rows in panel_rows.items():
             stage_table(table, rows, rest=rest)
-        commit_staged_import(index, rest=rest, imported_by=imported_by)
+        commit_staged_import(index, rest=rest, imported_by=imported_by, panel_releases=panel_releases)
         _readback_sanity_check({table: len(rows) for table, rows in panel_rows.items()}, rest=rest)
     except IceImportError:
         raise
@@ -456,16 +547,25 @@ def main(argv: list[str] | None = None) -> int:
         "--repo-root", type=Path, default=None,
         help="repo root to write data/packages/ into -- required with --apply, "
              "so a real import can never silently skip the versioning state")
+    parser.add_argument(
+        "--owner-declared-final", default=None, metavar="FILENAME",
+        help="the exact package file name the owner has declared final. Without it the "
+             "package is structurally checked but refused as production authority, and "
+             "--apply refuses to import")
     args = parser.parse_args(argv)
 
     if args.check is not None:
-        problems = check(args.check)
-        if problems:
-            for problem in problems:
-                print(f"INVALID: {problem}")
-            return 1
-        print(json.dumps({"valid": True, "path": str(args.check)}, ensure_ascii=False))
-        return 0
+        structural, authority, _ = check_split(args.check, owner_declared_final=args.owner_declared_final)
+        for problem in structural + authority:
+            print(f"INVALID: {problem}")
+        report = {
+            "path": str(args.check),
+            "structurally_valid": not structural,
+            "production_authorized": not authority,
+            "valid": not structural and not authority,
+        }
+        print(json.dumps(report, ensure_ascii=False))
+        return 0 if report["valid"] else 1
 
     if not args.imported_by:
         print("INVALID: --imported-by is required with --apply")
@@ -476,7 +576,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     try:
         summary = apply_package(
-            args.apply, imported_by=args.imported_by, repo_root=args.repo_root)
+            args.apply, imported_by=args.imported_by, repo_root=args.repo_root,
+            owner_declared_final=args.owner_declared_final)
     except IceImportError as exc:
         print(f"INVALID: {exc}")
         return 1

@@ -3,7 +3,7 @@
 **Owner:** กี้  
 **Execution date:** 2026-10-06  
 **Scope:** Ice Full Package → TDR production market engine  
-**Current gate:** `R1_M2_1_METADATA_AND_RELEASE_GATE`
+**Current gate:** `R3_FINISH_MERGE_M4` (not started; owner go required)
 
 > This file is the fixed execution order for the Market Track.  
 > `docs/WORK_STATE.md` records the live state. This roadmap records the order and stop conditions.  
@@ -15,7 +15,7 @@
 - `PRODUCTION_CROSSWALK_ALLOWED = false`
 - `LIVE_CUTOVER_ALLOWED = false`
 - `TRIAL_PACKAGE_AUTHORITY = fixture_only`
-- `CURRENT_GATE = R1_M2_1_METADATA_AND_RELEASE_GATE`
+- `CURRENT_GATE = R3_FINISH_MERGE_M4`
 
 These flags are descriptive instructions for agents, not application config. Do not flip them by inference. Only update them when the corresponding gate below is actually completed and the owner has authorized the transition.
 
@@ -70,7 +70,7 @@ Exit condition: trial is explicitly recorded as fixture-only in `WORK_STATE.md` 
 
 ### R1 — M2.1: persist panel metadata + harden the outer release gate
 
-**Status: ACTIVE — this is the next implementation step.**
+**Status: DONE (2026-10-06).** Implemented in `vehreg/ice_package.py` and `tools/ice_package_import.py`; see `WORK_STATE.md`. Metadata persists through `ice_package_imports.panels`. Real-Postgres migration tests not run locally; they run in CI.
 
 Implement package-independent support for the real metadata now confirmed by the trial:
 
@@ -110,7 +110,7 @@ Exit condition:
 
 ### R2 — Trial compatibility pass
 
-**Status: BLOCKED by R1**
+**Status: DONE (2026-10-06).** The trial is a passing read-only fixture: structurally valid, not production-authorized. See WORK_STATE.md.
 
 Run the real trial package through the updated **offline/read-only** path.
 
