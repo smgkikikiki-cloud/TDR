@@ -273,23 +273,28 @@ def check_split(
 
     # §2 step 4: reg_province == reg_trend; reg_powertrain ~= reg_trend ±0.5.
     # Run fully offline, over the package's own rows -- before anything is
-    # staged, let alone committed.
-    if "reg_province" in reconciliation_rows and "reg_trend" in reconciliation_rows:
-        structural += ice_package.check_reg_province_matches_reg_trend(
-            reconciliation_rows["reg_province"], reconciliation_rows["reg_trend"])
-    # Only over the overlap of the two panels' declared manifest coverage. Periods one
-    # panel does not cover are outside its contract, not reconciliation failures.
-    if "reg_powertrain" in reconciliation_rows and "reg_trend" in reconciliation_rows:
-        if "reg_powertrain" not in coverage or "reg_trend" not in coverage:
-            structural.append("reg_powertrain / reg_trend: manifest period_from/period_to missing; cannot scope reconciliation")
-        else:
-            window = ice_package.coverage_intersection(coverage["reg_powertrain"], coverage["reg_trend"])
-            if window is None:
-                structural.append("reg_powertrain / reg_trend declared coverage ranges do not overlap")
+    # staged, let alone committed. Without a period column nothing can be
+    # grouped, so that is a refusal, never a KeyError or a sort over None.
+    unscoped = [name for name, rows in reconciliation_rows.items() if any("period" not in r for r in rows)]
+    if unscoped:
+        structural.append(f"{'/'.join(sorted(unscoped))}: rows have no period column; cannot reconcile")
+    else:
+        if "reg_province" in reconciliation_rows and "reg_trend" in reconciliation_rows:
+            structural += ice_package.check_reg_province_matches_reg_trend(
+                reconciliation_rows["reg_province"], reconciliation_rows["reg_trend"])
+        # Only over the overlap of the two panels' declared manifest coverage. Periods one
+        # panel does not cover are outside its contract, not reconciliation failures.
+        if "reg_powertrain" in reconciliation_rows and "reg_trend" in reconciliation_rows:
+            if "reg_powertrain" not in coverage or "reg_trend" not in coverage:
+                structural.append("reg_powertrain / reg_trend: manifest period_from/period_to missing; cannot scope reconciliation")
             else:
-                powertrain_rows = [r for r in reconciliation_rows["reg_powertrain"] if ice_package.in_coverage(r["period"], window)]
-                trend_rows = [r for r in reconciliation_rows["reg_trend"] if ice_package.in_coverage(r["period"], window)]
-                structural += ice_package.check_reg_powertrain_matches_reg_trend(powertrain_rows, trend_rows)
+                window = ice_package.coverage_intersection(coverage["reg_powertrain"], coverage["reg_trend"])
+                if window is None:
+                    structural.append("reg_powertrain / reg_trend declared coverage ranges do not overlap")
+                else:
+                    powertrain_rows = [r for r in reconciliation_rows["reg_powertrain"] if ice_package.in_coverage(r["period"], window)]
+                    trend_rows = [r for r in reconciliation_rows["reg_trend"] if ice_package.in_coverage(r["period"], window)]
+                    structural += ice_package.check_reg_powertrain_matches_reg_trend(powertrain_rows, trend_rows)
 
     ok, output = run_shipped_validator(package, path)
     if not ok:
@@ -458,7 +463,7 @@ def update_package_version_log(repo_root: Path, index: dict, package_path: Path,
         "version": index.get("version"),
         "master_version": index.get("master_version"),
         "folder": f"{period}/{folder_name}",
-        "md5": index.get("files"),
+        "md5": ice_package.declared_panel_files(index),
         "imported_at": _now_iso(),
     }
     latest_path.write_text(json.dumps(latest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -474,7 +479,7 @@ def update_package_version_log(repo_root: Path, index: dict, package_path: Path,
             writer.writerow(["วันที่", "งวด", "version", "master_version", "md5", "ผลตรวจ", "ผู้นำเข้า"])
         writer.writerow([
             _now_iso(), period, index.get("version"), index.get("master_version"),
-            json.dumps(index.get("files"), ensure_ascii=False), "ผ่าน", imported_by])
+            json.dumps(ice_package.declared_panel_files(index), ensure_ascii=False), "ผ่าน", imported_by])
 
 
 # ---------------------------------------------------------------------------

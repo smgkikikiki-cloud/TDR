@@ -712,3 +712,31 @@ def test_cli_check_passes_only_when_structure_and_authority_are_both_clean(tmp_p
     out = capsys.readouterr().out
     assert code == 0
     assert '"production_authorized": true' in out and '"valid": true' in out
+
+
+# ---------------------------------------------------------------------------
+# R2 PR review fixes
+# ---------------------------------------------------------------------------
+
+def test_the_version_log_records_the_real_md5_index_not_null(tmp_path):
+    # The real outer index has no top-level "files" key; the audit trail must still record the md5s.
+    path = _build_full_package(tmp_path)
+    index = {
+        "period": "2569-09", "version": 1, "master_version": "6.0", "status": "พร้อมส่ง",
+        "panels": {"reg_trend": {"file": "reg_trend_2569-09_v1.zip", "md5": "abc", "bytes": 3}},
+    }
+    cli.update_package_version_log(tmp_path, index, path, imported_by="tester")
+    latest = json.loads((tmp_path / cli.PACKAGES_DIR_NAME / "ล่าสุด.json").read_text(encoding="utf-8"))
+    assert latest["md5"] == {"panels/reg_trend_2569-09_v1.zip": {"file": "reg_trend_2569-09_v1.zip", "md5": "abc", "bytes": 3}}
+    history = (tmp_path / cli.PACKAGES_DIR_NAME / "ประวัติการนำเข้า.csv").read_text(encoding="utf-8-sig")
+    assert "null" not in history
+
+
+def test_a_reconciliation_csv_without_a_period_column_is_a_refusal_not_a_crash(tmp_path):
+    rows = dict(_PANEL_CSV_ROWS)
+    rows["reg_trend"] = {"data/reg_trend.csv": (
+        "pd,province,reg_type,brand,model_group_id,model_name,reg_count\n"
+        "2569-08,x,รย.1,TOY,toy.a,A,10\n")}
+    path = _build_full_package(tmp_path, panel_rows=rows)
+    structural, authority, _ = cli.check_split(path, owner_declared_final=path.name)
+    assert any("period column" in p for p in structural)
