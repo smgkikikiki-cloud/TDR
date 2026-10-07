@@ -23,11 +23,33 @@ TRIM = "jaecoo.jaecoo_5_ev.j5.trim.long_range_dynamic_bev"
 TODAY = date(2026, 9, 8)
 
 
+def clear_committed_prices(root, trim_id, price_type):
+    """Make the fixture independent of the repository's real prices for this trim.
+
+    The tests below copy the committed data so the catalogue is real, but they assert
+    on exactly the rows they write. The trim now carries a real list price of its own
+    (an admin lot, 629,000), which leaked into every assertion on this trim. The
+    copy's rows of this one (trim, price type) are dropped; nothing else is touched,
+    and the committed data is never modified.
+    """
+    for path in (root / "2026" / "market" / "prices").glob("*.json"):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rows = payload.get("prices")
+        if not isinstance(rows, list):
+            continue
+        kept = [r for r in rows
+                if not (r.get("trim_id") == trim_id and r.get("price_type") == price_type)]
+        if len(kept) != len(rows):
+            payload["prices"] = kept
+            path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+
 class EditingTests(unittest.TestCase):
 
     def setUp(self):
         self.root = Path(self.enterContext(TemporaryDirectory()))
         shutil.copytree(DATA_DIR / "2026", self.root / "2026")
+        clear_committed_prices(self.root, TRIM, "LIST_PRICE")
         append_prices(self.root, 2026, {"prices": [{
             "trim_id": TRIM, "amount_thb": 700_000, "price_type": "LIST_PRICE",
             "effective_from": "2026-09-01", "observed_at": "2026-09-01",
@@ -51,6 +73,11 @@ class EditingTests(unittest.TestCase):
                        as_of=TODAY, write=True)
         payload.update(changes)
         return correct_price(self.root, 2026, **payload)
+
+    def test_the_fixture_does_not_read_the_repositorys_own_prices_for_this_trim(self):
+        """Regression: a committed list price on the trim (629,000) broke four tests."""
+        self.assertEqual([700_000], [r.amount_thb for r in self.rows()])
+        self.assertEqual(700_000, self.amount())
 
     # ------------------------------------------------------------------ modes
     def test_a_retracted_row_stops_counting_but_stays_readable(self):

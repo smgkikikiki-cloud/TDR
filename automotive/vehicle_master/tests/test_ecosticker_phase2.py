@@ -27,6 +27,18 @@ TRIM_ID = "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev"
 SNAPSHOT_DATE = "2026-09-08"
 
 
+#: Resolved catalogue rows added after this snapshot test was written. Each is an
+#: owner-approved new model from REPAIR-04 (batch ev-retail-repair-lot-04-2026-09-27,
+#: commit 48f9326d8, recorded in market/trims/current_retail.json): BYD ATTO 1
+#: ("BYD Seagull->ATTO 1") and the FOTON Miler iBlue 65 split out of the generic
+#: FOTON truck. A further new row must be named here deliberately, not absorbed
+#: by a bumped total.
+ADDED_AFTER_ECO_SNAPSHOT = frozenset({
+    "byd.atto1.gen1.bev",
+    "foton.miler_iblue_65.gen1.bev",
+})
+
+
 def raw_row(**changes):
     row = {
         "source_id": SOURCE_ID,
@@ -298,7 +310,9 @@ def test_committed_1640_record_snapshot_and_reference_review_are_self_consistent
     assert ProductMaster.load().prices.coverage()["eco_sticker_price_records"] == 643
     # Restoring the former AION Y Plus 410 Premium as a historical identity
     # adds one resolved catalog row while preserving its ECO Sticker provenance.
-    assert len(list(Catalog.load(year=2026).iter_resolved())) == 368
+    resolved = {row.variant_id for row in Catalog.load(year=2026).iter_resolved()}
+    assert len(resolved) == 368 + len(ADDED_AFTER_ECO_SNAPSHOT)
+    assert ADDED_AFTER_ECO_SNAPSHOT <= resolved
 
 
 def _decision(**changes):
