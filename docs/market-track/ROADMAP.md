@@ -1,9 +1,9 @@
 # Ice Market Track — Execution Roadmap
 
 **Owner:** กี้  
-**Execution date:** 2026-10-06  
+**Execution date:** 2026-10-06, R3 completed 2026-10-07  
 **Scope:** Ice Full Package → TDR production market engine  
-**Current gate:** `R3_FINISH_MERGE_M4` (not started; owner go required)
+**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (hard stop; owner must declare a final package before R5)
 
 > This file is the fixed execution order for the Market Track.  
 > `docs/WORK_STATE.md` records the live state. This roadmap records the order and stop conditions.  
@@ -15,7 +15,7 @@
 - `PRODUCTION_CROSSWALK_ALLOWED = false`
 - `LIVE_CUTOVER_ALLOWED = false`
 - `TRIAL_PACKAGE_AUTHORITY = fixture_only`
-- `CURRENT_GATE = R3_FINISH_MERGE_M4`
+- `CURRENT_GATE = R4_WAIT_FOR_ICE_FINAL`
 
 These flags are descriptive instructions for agents, not application config. Do not flip them by inference. Only update them when the corresponding gate below is actually completed and the owner has authorized the transition.
 
@@ -24,7 +24,7 @@ These flags are descriptive instructions for agents, not application config. Do 
 - **M1 — Serving contract:** done.
 - **M2 — Ice importer infrastructure:** implemented and production schema `migration_v62` is live; no production Ice Full Package has been imported.
 - **M3 — Crosswalk infrastructure:** implemented and production schema `migration_v63` is live; no production crosswalk has been generated or approved.
-- **M4 — Ice market engine:** implemented in draft PR #189, package-independent, not merged and not wired to live pages.
+- **M4 — Ice market engine:** implementation and tests complete (R3, 2026-10-07); draft PR #189 rebased onto current main and pushed, CI pending, package-independent, not merged and not wired to live pages. The GitHub merge is an owner/CI action, not performed by this session.
 - **M5 — Cutover:** not started; legacy registration display remains live.
 
 ### Trial package inspected
@@ -129,27 +129,40 @@ Exit condition: trial package is a passing compatibility fixture while remaining
 
 ### R3 — Finish and merge M4 (#189)
 
-**Status: BLOCKED by R1–R2**
+**Status: DONE (implementation + tests, 2026-10-07).** PR #189 rebased onto current main
+(after R1/R2 + #192), wired to R1's persisted panel metadata, tests expanded, pushed to
+`feat/ice-market-engine-m4`. CI pending; **the actual GitHub merge is an owner/CI action and
+has not happened yet** — do not treat this status as "PR #189 merged."
 
 Before merge:
 
-- wire M4 to persisted metadata instead of an unavailable/hard-coded `period_from`;
-- access/free-scope enforcement must consume persisted package metadata;
-- remove/resolve M4 comments that say the M2 metadata does not exist;
-- keep panel separation intact;
-- keep Ice `model_group_id` as market identity;
-- unmatched Ice models remain visible;
-- powertrain certainty remains exact/family/range without false precision;
-- wheel/tyre outputs retain coverage;
-- Buddhist `YYYY-MM` period strings remain strings.
+- wire M4 to persisted metadata instead of an unavailable/hard-coded `period_from` — **done**:
+  `lib/ice-market-engine.ts`'s `findPanelRelease` + `lib/ice-market-data.ts`'s
+  `latestIcePanelRelease`/`iceWheelTyreAvailability` read the real per-panel
+  `period_from` from `ice_package_imports.panels`;
+- access/free-scope enforcement must consume persisted package metadata — **done**:
+  `iceAccessAllows(access, capability, tier)` reads the persisted capability->tier[]
+  object with no invented tiers; `free_scope` is passed through exactly as persisted
+  (including `null` when Ice omits it), never defaulted;
+- remove/resolve M4 comments that say the M2 metadata does not exist — **done**, including
+  `scripts/ice-market-acceptance.ts`'s wheel/tyre section;
+- keep panel separation intact — unchanged;
+- keep Ice `model_group_id` as market identity — unchanged;
+- unmatched Ice models remain visible — unchanged;
+- powertrain certainty remains exact/family/range without false precision — unchanged;
+- wheel/tyre outputs retain coverage — unchanged;
+- Buddhist `YYYY-MM` period strings remain strings — unchanged.
 
 Required checks:
-- M4 synthetic engine checks pass;
-- TypeScript passes;
-- full repo check passes;
-- trial compatibility does not reveal a serving-contract mismatch.
+- M4 synthetic engine checks pass — **119 checks, all pass** (`npm run check` includes
+  `scripts/check-ice-market-engine.ts`);
+- TypeScript passes — **`npx tsc --noEmit` clean**;
+- full repo check passes — **`npm run check` exits 0**;
+- trial compatibility does not reveal a serving-contract mismatch — no change to the
+  frozen contract surface; M4 remains unwired to any live page/route.
 
-Exit condition: PR #189 merged, still not wired live.
+Exit condition: PR #189 merged, still not wired live. **Implementation/tests side of this
+exit condition is met; the merge itself is still pending (owner/CI).**
 
 ---
 

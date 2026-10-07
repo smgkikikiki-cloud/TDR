@@ -55,7 +55,10 @@ apply "Step 4 — Write: use repository-supported edit/write format" below to a 
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
-**Current gate:** `R3_FINISH_MERGE_M4` (R1 and R2 complete 2026-10-06; R3 not started, owner go required).  
+**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (R1-R3 complete; R3 implementation/tests done 2026-10-07,
+PR #189 pushed to `feat/ice-market-engine-m4` with CI pending — the GitHub merge itself is an
+owner/CI action, not performed by this session). R4 is a hard stop: no M5, no production import,
+no production crosswalk, no live cutover until the owner declares a final package.  
 **Production import:** blocked. **Production crosswalk:** blocked. **Live cutover:** blocked.
 
 **R2 — DONE, 2026-10-06 (read-only).** Fixture: the original `/Users/kiki_mac/Downloads/TDR_FULL_2569-09_v1_M6.0.zip` (md5 `4d64402cfe524c253b2bc07fa55a0831`). The extracted copy was not used. Result: **structurally valid, not production-authorized.**
@@ -140,10 +143,12 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
     package is specifically fixture-only and does not satisfy production authority merely by
     carrying six panels, `status: "พร้อมส่ง"`, and two sign-offs.
 - **M3** (crosswalk, `docs/vehicle-db/VEHICLE_DB_V3.md` §14.2) — **infrastructure
-  implemented, package-independent; no production crosswalk has been generated or
-  approved.** No real Ice Full Package has been imported (M2 state above), so
+  implemented (PR #188, merged) and `migration_v63_ice_model_crosswalk` is applied in
+  production (migration version `20261005083712`, verified: all 4 tables, both RPCs,
+  RLS/grants). No real Ice Full Package has been imported (M2 state above), so
   `ice_reg_trend`/`ice_dims_model_group` are empty in production and a real `--match`
-  run would currently find zero candidates.
+  run would currently find zero candidates. No real crosswalk mapping has been
+  generated or approved.**
   - Built and live in the repo: `supabase/migration_v63_ice_model_crosswalk.sql`
     (`ice_model_crosswalk`, `ice_brand_aliases` seeded with Deepal↔Changan and MG
     Maxus↔MAXUS, `ice_model_group_redirects`, `ice_known_model_groups` discovery
@@ -181,7 +186,78 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
   - Do not run `tools/ice_crosswalk_match.py --match` against production, and do not
     seed or approve any real crosswalk mapping, until a real Ice Full Package has
     been imported (M2) and the owner has reviewed real candidates.
-- **M4** (market engine on Ice data) — **implemented package-independently in draft PR #189, not merged and not live.** It must be finished only after M2.1 persists real package metadata and the trial compatibility pass is clean; see `docs/market-track/ROADMAP.md`.
+- **M4** (market engine on Ice data, `feat/ice-market-engine-m4`, PR #189) — **R3 done
+  (2026-10-07): wired to R1's persisted panel metadata, rebased onto main after R2,
+  tests expanded, pushed. Package-independent infrastructure; real-data acceptance
+  still pending.** No real Ice data or
+  real crosswalk exists yet (M2/M3 state above), so every M4 test uses synthetic fixtures;
+  `scripts/ice-market-acceptance.ts` (`npm run ice:acceptance`, read-only) is the
+  entry point to run once real data exists. **Not wired into any live page or API route**
+  — `app/market/`, `app/member/market/`, `lib/registration-market.ts`,
+  `lib/registration-analytics.ts`, `lib/public-market.ts` are all untouched and still
+  the live serving path; M5 performs the cutover.
+  - Built: `lib/ice-market-engine.ts` (pure aggregation — brand/registration_type from
+    `ice_reg_province`; model from `ice_reg_trend` with the Ice `model_group_id` as
+    market identity, `canonical_model_id` an optional link via an AUTO/APPROVED
+    crosswalk row, unmatched groups always visible/counted; segment/body_type via the
+    TDR crosswalk with a real, counted "ไม่ระบุ" bucket for unmapped or sibling-disagreeing
+    units; powertrain from `ice_reg_powertrain` + `fuel_group` only, with the
+    exact/family/range certainty display rule and the required family note; wheel/tyre
+    slicing + coverage; the §14.3 unit percent-change-at-≥30 rule; a cycle-safe
+    `ice_model_group_redirects` resolver; `assemblePublicMarket`, the pure top-8/
+    others/movers/trend algorithm behind the public adapter); `lib/ice-market-data.ts`
+    (I/O layer, service-role only, per-panel fetchers — CLAUDE.md rule 1: panels are
+    never joined into one combined fact row — plus `getIceMarketSlice`/
+    `getIceMarketReport`, the "member market engine" entry point); `lib/ice-public-market.ts`
+    (`getPublicMarketIce`, the Ice equivalent of `getPublicMarket`, same `PublicMarket`
+    type reused directly).
+  - §14.3-defined dimensions implemented: brand, model, segment, body_type, powertrain,
+    registration_type. **Deliberately unsupported — §14.3 does not define their Ice/TDR
+    source**: `oem_group`, `market_position`, `import_type`, `origin_country`,
+    `brand_origin`, `market_scope`. Requesting one of these from the Ice engine raises
+    `IceMarketDimensionError` rather than silently reusing Vehicle Master payload fields
+    or legacy registration data. Resolving these (if ever) needs an owner decision on
+    what, if anything, Ice or TDR defines for them — not a code change alone.
+  - **R3 (2026-10-07): wired to R1's persisted panel metadata, replacing the earlier
+    "M2 metadata not persisted" placeholder.** `lib/ice-market-engine.ts` gained
+    `findPanelRelease(panels, panelId)` — a pure parser/validator over the raw
+    `ice_package_imports.panels` jsonb array (the exact shape
+    `vehreg/ice_package.py`'s `parse_panel_release` persists: `period_from`,
+    `period_to`, `access`, `free_scope`, `confirmed_by`, `version`) — and
+    `iceAccessAllows(access, capability, tier)`, a pure capability check with no
+    fixed tier/capability enum (tiers and capabilities are read exactly as Ice
+    supplied them, never invented). `lib/ice-market-data.ts` gained
+    `latestIceImportRelease` (the one authoritative read of period/master_version/
+    panels — ROADMAP R3 item 4: never inferred by scanning fact rows),
+    `latestIcePanelRelease(db, panelId)`, and `iceWheelTyreAvailability(db, panelId,
+    period)`, which calls `resolveWheelTyreAvailability` with the REAL persisted
+    `period_from` of the specific panel (`rim_province`/`tyre_province` persist
+    their own `period_from` independently and may differ — each is read from its
+    own entry, never shared or hard-coded). `free_scope` is passed through exactly
+    as persisted (including `null` when Ice omits it, per R2); nothing in M4
+    fabricates a default or interprets its semantics, since those remain an open
+    question for Ice (see R2 notes above). All three functions return `null`
+    only for the legitimate "no import yet" state; a present-but-malformed or
+    missing panel entry throws `IcePanelMetadataError` rather than guessing.
+    `scripts/ice-market-acceptance.ts`'s wheel/tyre section was rewired the same
+    way (previously reported `available: null` unconditionally with a "not yet
+    persisted" note; now reads each panel's real metadata and reports a per-panel
+    refusal reason only when that panel's own metadata is actually missing/bad).
+    New synthetic tests in `scripts/check-ice-market-engine.ts` cover: parsing a
+    well-formed `panels` fixture; rim/tyre `period_from` differing and each panel
+    using its own; wheel/tyre availability following the relevant panel;
+    missing-panel/non-array/malformed-`period_from`/malformed-`access` all
+    throwing `IcePanelMetadataError`; `access` tier checks (including a
+    capability Ice never declared returning `false`, not a throw, and tiers
+    that differ per panel rather than a fixed TDR enum); `free_scope` staying
+    `null` when absent and surviving exactly when present.
+  - Deliberate, documented visible differences beyond the ones already listed in
+    `SERVING_CONTRACT.md` §6: Ice's `PublicMarket.period`/`previousPeriod`/`trend[].period`
+    are kept as Ice's own Buddhist "YYYY-MM" strings (never converted to a fake Gregorian
+    "YYYY-MM-01" — §14.1 forbids treating period as a SQL date); the model dimension's
+    `entity_key` is always the Ice `model_group_id` (already listed in §6 as expected).
+  - No new migration was needed or added — M4 reads only the `ice_*`/`vehicle_models`
+    objects migration_v62/v63 already created; no new DB object.
 - **M5** (switch pages, retire old registration views) — **not started.** The existing
   registration/market display engine (`lib/registration-analytics.ts`,
   `lib/public-market.ts`, `app/market/`, `app/member/market/`, etc.) is **untouched** and still
