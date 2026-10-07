@@ -54,6 +54,65 @@ apply "Step 4 — Write: use repository-supported edit/write format" below to a 
 
 ## Market Track state (current — Ice Full Package / market engine)
 
+**Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
+**Current gate:** `R3_FINISH_MERGE_M4` (R1 and R2 complete 2026-10-06; R3 not started, owner go required).  
+**Production import:** blocked. **Production crosswalk:** blocked. **Live cutover:** blocked.
+
+**R2 — DONE, 2026-10-06 (read-only).** Fixture: the original `/Users/kiki_mac/Downloads/TDR_FULL_2569-09_v1_M6.0.zip` (md5 `4d64402cfe524c253b2bc07fa55a0831`). The extracted copy was not used. Result: **structurally valid, not production-authorized.**
+- Six panel schemas and internal manifest/md5/header checks parse with no problems. The shipped `validate_package.py` passes.
+- Metadata round-trips exactly against each panel's raw `manifest.json` and `panel.json`. `access` is a per-capability tier object (`view`/`info`/`csv`). `free_scope` is present for `reg_*` and absent (None) for `dims`, `rim_province` and `tyre_province`. Nothing is defaulted.
+- Reconciliation runs over the declared coverage intersection, `reg_powertrain` ∩ `reg_trend` = 2567-01..2569-09. Result: 0 problems, 146,497 powertrain rows and 128,385 trend rows in the window. reg_province = reg_trend: 0 problems.
+- Outer-gate refusals for production: no owner declaration of this exact file; CHANGELOG row C0062 still `เสนอ`; 13 released crosswalk rows (`entity = crosswalk`, `status = ออกเวอร์ชัน`) with no `id_changes.csv` at the root.
+- Corrections made during R2, all R2-discovered compatibility fixes: md5 index reads the real `panels` object shape; `access` validated as an object (malformed input is a refusal, not a crash); `free_scope` optional; CHANGELOG parsed by its real header with `entity = crosswalk` detection; reconciliation scoped to the coverage intersection; the filename-specific trial refusal removed (authority comes only from the owner declaration).
+- Tests: 152 Ice tests pass (61 real-Postgres migration tests skipped locally, as before).
+- **Remaining debt (before R5):** real-Postgres migration tests not run locally; `id_changes.csv` expected at the zip root (not yet seen in a real package); `access` tiers and `free_scope` contract to be confirmed by Ice; the one-per-panel sign-off reading of SKILL §2.2; CHANGELOG `confirmed_by` contains blank and `ระบบ` values (not used by any gate yet).
+- **Open non-blocking questions (owner / Ice to confirm; none is a gate today):**
+  - `access` tier values and `free_scope` semantics must be confirmed by Ice before any live access enforcement reads them.
+  - The per-panel two-sign-off reading of SKILL §2.2 needs confirmation.
+  - The `id_changes.csv` root-file contract has not yet been tested against a package that actually contains the file.
+  - CHANGELOG `confirmed_by` values are not currently a gate.
+
+**R1 (M2.1) — DONE, 2026-10-06.** Package-independent, offline; no production write, no flag flipped.
+- Per-panel release metadata is read and persisted with each import: `period_from`/`period_to`
+  (manifest.json), `access`/`free_scope` (panel.json), `confirmed_by` (manifest.json), and `version`.
+  Missing or malformed values are refused, never defaulted. The metadata is stored in the
+  existing `ice_package_imports.panels` jsonb column via the unchanged `ice_commit_staged_import`
+  RPC, so it stays tied to the import row that carries the package, period, version and
+  master_version. No migration was added.
+- Structurally valid is now separate from production-authorized (`tools/ice_package_import.py`
+  `check_split`; `--check` prints `structurally_valid` and `production_authorized` separately).
+  Authority requires an explicit `--owner-declared-final <exact file name>`; status and sign-off
+  fields alone do not grant it. Authority is never inferred from the file name (R2 removed the earlier
+  M6.0 name refusal). Any `_ร่าง` file name is refused.
+- Refused as authority: any CHANGELOG row still `เสนอ`; a missing CHANGELOG; an entity change or a
+  retired model_group_id without `id_changes.csv` (never inferred from prose); an `id_changes.csv`
+  with the wrong columns or unknown types, or one that does not cover every retired group; a
+  panel manifest with fewer than two `confirmed_by` names; changelog-continuity failures.
+- Also structural: declared `bytes` sizes are checked alongside md5.
+- Tests: 145 Ice-related tests pass (`test_ice_package`, `test_ice_package_import`,
+  `test_ice_crosswalk`, `test_ice_crosswalk_match`) under Python 3.12. The real-Postgres migration
+  tests (`test_ice_market_panels_migration_v62`, `test_ice_crosswalk_migration_v63`) could not run
+  locally: the available Postgres build lacks the `pgcrypto` extension the production schema replay
+  needs. The RPC is unchanged, so they still cover the commit path. They must run in CI before R5.
+- **Unverified assumptions, recorded in code:** the real `access`/`free_scope` location (panel.json)
+  and the `CHANGELOG.csv` column layout (matched by cell value) are confirmed only in R2 against the
+  real trial package. `id_changes.csv` is expected at the zip root. Requiring two sign-offs on each
+  panel manifest, not only the outer package, is this implementation's reading of SKILL §2.2.
+
+**Trial package state (2026-10-06):** owner supplied `TDR_FULL_2569-09_v1_M6.0.zip` as a
+trial / near-final compatibility package only. It was inspected read-only and **was not
+imported**. It confirms the real six-panel outer/package metadata shape, including per-panel
+`period_from`/`period_to` and `access`/`free_scope`. It must remain fixture-only even
+though its outer metadata presents `status = "พร้อมส่ง"` and two sign-offs. The inspected
+trial also lacks the README/contract's `id_changes.csv` while carrying identity/crosswalk
+changes, and its CHANGELOG contains one still-`เสนอ` row; these are release-gate inputs, not
+things TDR may guess around.
+
+The next implementation step is the **R2 read-only trial compatibility pass** (M2.1 is done, see
+above), then finish/merge M4. Do not start a production import
+or M3 real matching until the owner explicitly declares a later package final and the roadmap
+R4 gate is satisfied.
+
 Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can run in parallel.
 
 - **M1** (serving contract inventory, `docs/vehicle-db/SERVING_CONTRACT.md`) — documentation
@@ -76,9 +135,10 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
     v2); a request for the complete, confirmed `TDR_FULL_<period>_v<n>_M<master_version>.zip`
     was sent back. **No `data/packages/` directory exists in the repo; no file has been moved
     into one.**
-  - Still blocking a real import: the complete `TDR_FULL_*.zip` itself (6 panels incl.
-    `reg_powertrain`, `full_package.json`, `CHANGELOG.csv`, the release's own
-    `validate_package.py`, `status: "พร้อมส่ง"`, `confirmed_by` with 2 names).
+  - Still blocking a real import: an **owner-declared final** `TDR_FULL_*.zip` that passes
+    both the package's shipped validator and TDR's outer release gate. The 2026-10-06 M6.0
+    package is specifically fixture-only and does not satisfy production authority merely by
+    carrying six panels, `status: "พร้อมส่ง"`, and two sign-offs.
 - **M3** (crosswalk, `docs/vehicle-db/VEHICLE_DB_V3.md` §14.2) — **infrastructure
   implemented (PR #188, merged) and `migration_v63_ice_model_crosswalk` is applied in
   production (migration version `20261005083712`, verified: all 4 tables, both RPCs,

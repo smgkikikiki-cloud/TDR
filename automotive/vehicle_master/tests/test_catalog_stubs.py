@@ -18,9 +18,11 @@ from vehreg.db import connect, rebuild_dimension
 #: in review before the stub was added.
 LABELS = {
     ("BYD", "BYD ATTO 2 PREMIUM"): "atto2",
-    # Atto 1 is Dolphin Mini renamed, confirmed by the owner: an alias on
-    # the existing model rather than a model of its own.
-    ("BYD", "BYD ATTO 1 PREMIUM"): "seagull",
+    # Atto 1 was first an alias on the Dolphin Mini (seagull) model. REPAIR-04
+    # (ev-retail-repair-lot-04-2026-09-27, owner-approved "BYD Seagull->ATTO 1",
+    # market/trims/current_retail.json) made it a model of its own, with Dolphin
+    # Mini kept as the HISTORICAL identity. The DLT label reaches the live model.
+    ("BYD", "BYD ATTO 1 PREMIUM"): "atto1",
     ("BYD", "BYD SEALION5 DM-i PREMIUM"): "sealion5",
     ("MG", "MG URBAN"): "mg_urban",
     ("MG", "MG IM5"): "mg_im5",
@@ -36,7 +38,9 @@ LABELS = {
     ("HONDA", "e:N2"): "en2",
 }
 
-STUB_IDS = sorted(set(LABELS.values()) - {"seagull"})
+#: Models in LABELS that are finished catalogue entries, not DLT stubs.
+FINISHED_IDS = {"seagull", "atto1"}
+STUB_IDS = sorted(set(LABELS.values()) - FINISHED_IDS)
 
 
 @pytest.fixture(scope="module")
@@ -110,6 +114,14 @@ class TestDeclaredIncompleteness:
         reported = catalog.incomplete_models()
         for model_id in STUB_IDS:
             assert any(model_id in line for line in reported), model_id
+
+    def test_atto_1_is_its_own_model_and_dolphin_mini_is_the_historical_one(self, catalog):
+        """REPAIR-04: the label must not fall back to the retired Dolphin Mini identity."""
+        from vehreg.catalog import RetailStatus
+        models = {k.split(".", 1)[1]: m for k, m in catalog.models.items()}
+        assert models["seagull"].retail_status is RetailStatus.HISTORICAL
+        assert models["atto1"].name_en == "BYD ATTO 1"
+        assert models["atto1"].incomplete is False
 
     def test_dolphin_mini_is_finished_and_not_reported(self, catalog):
         # It has a price and a body type, so it is not a hole even though the

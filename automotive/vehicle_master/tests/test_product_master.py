@@ -57,7 +57,14 @@ def test_product_query_separates_price_specs_and_source():
     assert master.detail(TRIM, as_of=date(2026, 9, 7))['current_list_price'] is None
     ultra = master.detail(GEN + '.trim.ultra_bev', as_of=date(2026, 9, 8))
     assert ultra['current_list_price'] is None
-    assert ultra['price_history'][0]['price_type'] == 'ESTIMATED_PRICE'
+    # An estimate is history, never a current list price. Other price types (an
+    # owner-approved campaign price recorded later) may sit beside it, and the history
+    # is ordered by when each price started (effective_from, else observed_at), so the
+    # estimate is found by type, not by position.
+    history = ultra['price_history']
+    assert 'ESTIMATED_PRICE' in {row['price_type'] for row in history}
+    starts = [row['effective_from'] or row['observed_at'] for row in history]
+    assert starts == sorted(starts)
     assert master.validate() == []
     assert [r.as_row() for r in master.catalog.iter_resolved()] == before
     assert len(master.rows(model_id='jaecoo.jaecoo_5_ev', powertrain='BEV')) == 4

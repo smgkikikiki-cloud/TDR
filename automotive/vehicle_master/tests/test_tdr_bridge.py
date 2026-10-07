@@ -17,16 +17,35 @@ def build_release():
     )
 
 
+#: Canonical models added after the 2026-09-09 TDR inventory snapshot. They are
+#: owner-approved new models (REPAIR-04, batch ev-retail-repair-lot-04-2026-09-27,
+#: commit 48f9326d8) that the snapshot predates. The snapshot's "Dolphin Mini" and
+#: "Foton Truck" rows map to the older byd.seagull / foton.foton_truck identities, so
+#: no TDR model matches the new ones: they count as models and as review items
+#: (UNMATCHED), not as mapped models. Mapping them (an override or a refreshed
+#: inventory) is a separate owner decision; until then they stay in review.
+MODELS_NEWER_THAN_INVENTORY = frozenset({"byd.atto1", "foton.miler_iblue_65"})
+
+
 def test_all_canonical_models_crosswalk_without_creating_registration_trims():
     release = build_release()
-    assert release["counts"]["models"] == 321
+    assert release["counts"]["models"] == 321 + len(MODELS_NEWER_THAN_INVENTORY)
+    unmatched = {
+        item["canonical_id"] for item in release["crosswalk"]["review"]
+        if item["entity_type"] == "model" and item["status"] == "UNMATCHED"
+    }
+    assert unmatched == MODELS_NEWER_THAN_INVENTORY
     assert release["crosswalk"]["counts"] == {
         "mapped_brands": 62,
         "mapped_models": 321,
-        "review_items": 6,
+        "review_items": 6 + len(MODELS_NEWER_THAN_INVENTORY),
     }
     assert "registrations" not in release
-    assert all(trim["model_id"] in release["crosswalk"]["models"] for trim in release["market_trims"])
+    # Every published market trim belongs to a crosswalked model, except the trims of
+    # the two named models above, which are visible in the review queue instead.
+    crosswalked = set(release["crosswalk"]["models"]) | MODELS_NEWER_THAN_INVENTORY
+    assert all(trim["model_id"] in crosswalked for trim in release["market_trims"])
+    assert {trim["model_id"] for trim in release["market_trims"]} >= MODELS_NEWER_THAN_INVENTORY
 
 
 def test_market_trim_price_campaign_and_status_are_distinct_fields():

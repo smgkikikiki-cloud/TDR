@@ -33,6 +33,20 @@ Rules:
 - do not silently add scope, repeat research already completed for the active step, or guess unresolved batch membership;
 - after completing a step, update `docs/WORK_STATE.md` so the next agent inherits the correct state.
 
+## Ice Market Track execution gate
+
+For any Ice Full Package, Ice market-engine, crosswalk, or market-cutover work, `docs/market-track/ROADMAP.md` defines the fixed execution order and stop conditions. Read it together with `docs/WORK_STATE.md` before changing code.
+
+Rules:
+- execute only the roadmap's `CURRENT_GATE`; do not work ahead because a later step appears easy;
+- the owner-supplied M6.0 package inspected on 2026-10-06 is trial/fixture-only and is never production authority;
+- a structurally valid package is not automatically an authorized production release;
+- no production Ice import, production crosswalk generation/approval, or M5 cutover while the corresponding roadmap flag is false;
+- never infer missing redirects, access scope, release state, `period_from`, or other package metadata;
+- after finishing a gate, run its tests and update `docs/WORK_STATE.md` in the same session.
+
+Claude Code users should run `/market-next` from the repository root to apply this protocol explicitly.
+
 ## Retired repository prohibition
 
 `smgkikikiki-cloud/vehicle-market-master` is historical only. Do not route implementation tasks, fixes, data updates, workflows, repository dispatches, scheduled jobs, pull requests, issues, or agent commands to it. Do not revive automation there.
