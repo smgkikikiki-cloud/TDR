@@ -3,6 +3,7 @@ from datetime import date
 import json
 from pathlib import Path
 import shutil
+import warnings
 
 import pytest
 
@@ -435,6 +436,42 @@ def test_the_volvo_xc40_has_no_suggestion_because_none_matches_the_car():
 # Bulk source import may materialise a deterministic grade, but never unsourced.
 # ---------------------------------------------------------------------------
 
+ECO_IMPORT_REASON = "bulk import from TDR EcoSticker"
+
+
+def creation_revision(trim_id):
+    """The canonical revision that first put this trim into its model, or None.
+
+    Read from the append-only revision log (canonical_state/revisions.jsonl), so the
+    answer is who created the grade and under what batch reason, not a guess from
+    the trim's own fields. A model bundle's `after` lists full trim ids; its `before`
+    is the raw model record with generation-local ids.
+    """
+    model_id = trim_id.split(".trim.")[0].rsplit(".", 1)[0]
+    local_id = trim_id.split(".trim.", 1)[1]
+    path = DATA_DIR / "2026" / "canonical_state" / "revisions.jsonl"
+
+    def after_ids(bundle):
+        return {t.get("id") for t in bundle.get("trims", [])} if isinstance(bundle, dict) else set()
+
+    def before_ids(record):
+        if not isinstance(record, dict):
+            return set()
+        return {f"{model_id}.{g.get('id')}.trim.{t.get('id')}"
+                for g in record.get("generations", []) for t in g.get("trims", [])}
+
+    with path.open(encoding="utf-8") as lines:
+        for line in lines:
+            if f'"{model_id}"' not in line or local_id not in line:
+                continue  # cheap filter: only the few lines that name this grade are parsed
+            row = json.loads(line)
+            if row.get("operation") != "UPSERT_MODEL_BUNDLE" or row.get("entity_id") != model_id:
+                continue
+            if trim_id in after_ids(row.get("after")) and trim_id not in before_ids(row.get("before")):
+                return row
+    return None
+
+
 def test_pilot_trims_materialised_by_eco_are_source_backed():
     """A deterministic bulk import may create identity; provenance is mandatory.
 
@@ -442,6 +479,13 @@ def test_pilot_trims_materialised_by_eco_are_source_backed():
     importer is a separate path: when every existing grade in a model/powertrain
     has already been accounted for, an unmatched exact ECO grade may be created.
     Such a row must carry the filing UUID that justified that creation.
+
+    A grade the owner added through an approved ADMIN batch (for example the REPAIR-02b
+    current-retail set, which created GEELY EX5 MAX+) is not an ECO creation: its
+    provenance is that batch, traceable in the revision log, and it has no ECO filing
+    to cite. Every pilot grade must therefore either carry ECO refs or be traceable to
+    a non-ECO creation; an ECO-created grade without refs, or one with no trace at all,
+    still fails.
     """
     catalog = Catalog.load(year=2026)
     pilot = set(ComparableCohort.load().pilot_model_ids)
@@ -449,8 +493,24 @@ def test_pilot_trims_materialised_by_eco_are_source_backed():
                 if catalog.model_for_trim(trim.id).id in pilot]
     assert promoted
     for trim in promoted:
-        eco_refs = trim.source_refs.get("eco", ())
-        assert eco_refs, f"{trim.id}: bulk-created pilot trim lacks ECO provenance"
+        if trim.source_refs.get("eco", ()):
+            continue
+        created = creation_revision(trim.id)
+        assert created is not None, f"{trim.id}: pilot trim has no ECO provenance and no traceable creation"
+        assert not str(created.get("reason", "")).startswith(ECO_IMPORT_REASON), (
+            f"{trim.id}: bulk-created pilot trim lacks ECO provenance")
+        assert created.get("actor"), f"{trim.id}: creation revision names no actor"
+
+
+def test_the_creation_trace_separates_admin_grades_from_eco_grades():
+    """Regression for the provenance guard: GEELY EX5 MAX+ is owner-created, MAX is ECO."""
+    admin = creation_revision("geely.geely_ex5.gen1.trim.max_plus")
+    assert admin is not None and not admin["reason"].startswith(ECO_IMPORT_REASON)
+    assert admin["actor"] == "smgkikikiki-cloud"
+    assert "ev-retail-repair-lot-02" in admin["reason"]
+    eco = creation_revision("geely.geely_ex5.gen1.trim.max_bev")
+    assert eco is not None and eco["reason"].startswith(ECO_IMPORT_REASON)
+    assert creation_revision("geely.geely_ex5.gen1.trim.no_such_grade") is None
 
 
 def test_the_gap_has_an_address_rather_than_being_a_silence():
@@ -527,19 +587,101 @@ def test_pcd_and_battery_group_are_free_form_codes_not_numbers():
         assert definition.validate_value(ValueState.KNOWN, "5x114.3", "") == []
 
 
-def test_no_fitment_value_has_been_invented_for_any_pilot_trim():
-    """The schema exists; the evidence to populate it does not yet.
+REFUSED, UNREVIEWED, EVIDENCED = "REFUSED", "UNREVIEWED", "EVIDENCED"
 
-    Phase 6 was asked for as a fitment database, not a set of numbers this code
-    made up to fill the new columns. No source in this pipeline has ever
-    reported a PCD, an offset, a load index, a speed rating or a 12V battery
-    group -- only a tyre size string -- so every fact ledger in the repository
-    must carry zero facts against these keys until a real source is wired in.
+
+def fitment_status(fact_row):
+    """How far a fitment fact may be trusted. Provenance decides; who imported it does not.
+
+    * REFUSED     -- not shaped like an owner/admin entry (`admin:<trim>:<field>`): some other
+                     writer produced a fitment value. No evidence source in this pipeline has
+                     ever reported one, so it is invented.
+    * UNREVIEWED  -- an admin entry with no recorded source. The Vehicle Specs workbook is a
+                     deliberately source-free editor (docs/vehicle-spec-excel-import), so
+                     arriving through it proves nothing about the value, whatever the import
+                     stamped on it (`verification_status: VERIFIED` is infrastructure, not a
+                     review). It is reviewable, never accepted as correct.
+    * EVIDENCED   -- carries both a `source` and an http(s) `source_ref` to check it against.
     """
+    key = fact_row.get("field_key")
+    if fact_row.get("fact_id") != f"admin:{fact_row.get('trim_id')}:{key}":
+        return REFUSED
+    ref = str(fact_row.get("source_ref") or "")
+    if fact_row.get("source") and ref.startswith(("https://", "http://")):
+        return EVIDENCED
+    return UNREVIEWED
+
+
+def committed_fitment_facts():
+    """(path, fact_row) for every fitment fact in every committed ledger."""
+    found = []
     for path in (DATA_DIR / "2026" / "product" / "comparable_specs").rglob("*.json"):
         if path.name in ("registry.json", "profiles.json", "oem_sources.json"):
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         for fact_row in payload.get("facts", []):
-            assert fact_row.get("field_key") not in FITMENT_FIELDS, (
-                f"{path}: invented a value for {fact_row.get('field_key')}")
+            if fact_row.get("field_key") in FITMENT_FIELDS:
+                found.append((path, fact_row))
+    return found
+
+
+def test_no_fitment_value_has_been_invented_for_any_pilot_trim():
+    """The schema exists; nothing in this code may invent a value for it.
+
+    Phase 6 was asked for as a fitment database, not a set of numbers this code
+    made up to fill the new columns. No evidence source in this pipeline (ECO, OEM,
+    candidate store, importers) has ever reported a PCD, an offset, a load index, a
+    speed rating or a 12V battery group -- only a tyre size string -- so no ledger
+    may hold a machine-derived fact against these keys.
+
+    Owner/admin entries from the source-free Vehicle Specs workbook are not invented by
+    this code, but they are not evidence either: they are reported here as UNREVIEWED
+    (a warning naming each one) so the gap stays visible until a source-backed change
+    supplies `source` and `source_ref`. An unreviewed value is never treated as confirmed.
+    """
+    unreviewed = []
+    for path, fact_row in committed_fitment_facts():
+        status = fitment_status(fact_row)
+        assert status != REFUSED, f"{path}: invented a value for {fact_row.get('field_key')}"
+        if status == UNREVIEWED:
+            unreviewed.append(f"{fact_row['fact_id']} = {fact_row.get('value')!r}")
+    if unreviewed:
+        warnings.warn(
+            f"{len(unreviewed)} source-free admin fitment value(s) are UNREVIEWED, not confirmed: "
+            + "; ".join(sorted(unreviewed)), stacklevel=1)
+
+
+def test_an_admin_workbook_import_alone_does_not_establish_a_fitment_value():
+    """Regression: arriving through the admin import, even stamped VERIFIED, is not evidence."""
+    trim = "example.model.gen1.trim.any_grade"
+    entry = {"fact_id": f"admin:{trim}:fitment.wheel_pcd", "trim_id": trim,
+             "field_key": "fitment.wheel_pcd", "value_state": "KNOWN", "value": "5x100",
+             "verification_status": "VERIFIED", "observed_at": "2026-09-30"}
+    assert fitment_status(entry) == UNREVIEWED
+    # An import that records a source but no checkable reference, or the reverse, is still not evidence.
+    assert fitment_status({**entry, "source": "vehicle-spec-excel"}) == UNREVIEWED
+    assert fitment_status({**entry, "source_ref": "https://example.test/spec"}) == UNREVIEWED
+    assert fitment_status({**entry, "source_ref": "vehicle-spec-excel"}) == UNREVIEWED
+    # Only a value that can be checked against a source is EVIDENCED.
+    sourced = {**entry, "source": "oem_official_website", "source_ref": "https://example.test/spec"}
+    assert fitment_status(sourced) == EVIDENCED
+
+
+def test_a_machine_written_fitment_fact_is_still_refused_as_invented():
+    """The guard did not stop looking: anything not shaped like an admin entry is invented."""
+    trim = "example.model.gen1.trim.any_grade"
+    entry = {"fact_id": f"admin:{trim}:fitment.wheel_pcd", "trim_id": trim, "field_key": "fitment.wheel_pcd"}
+    assert fitment_status({**entry, "fact_id": f"eco:{trim}:fitment.wheel_pcd"}) == REFUSED
+    assert fitment_status({**entry, "fact_id": "test.some.fact"}) == REFUSED
+    assert fitment_status({**entry, "fact_id": f"admin:{trim}:fitment.wheel_offset_mm"}) == REFUSED
+    assert fitment_status({**entry, "trim_id": "example.other.gen1.trim.grade"}) == REFUSED
+    # A fake source on a machine-shaped fact does not rescue it.
+    assert fitment_status({**entry, "fact_id": f"eco:{trim}:fitment.wheel_pcd", "source": "x",
+                           "source_ref": "https://example.test/spec"}) == REFUSED
+
+
+def test_unreviewed_fitment_values_are_listed_and_never_counted_as_confirmed():
+    """Whatever the committed data holds, nothing source-free is ever EVIDENCED."""
+    for _path, fact_row in committed_fitment_facts():
+        if not (fact_row.get("source") and str(fact_row.get("source_ref") or "").startswith(("http://", "https://"))):
+            assert fitment_status(fact_row) != EVIDENCED
