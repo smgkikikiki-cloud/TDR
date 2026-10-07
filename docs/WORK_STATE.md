@@ -55,7 +55,10 @@ apply "Step 4 — Write: use repository-supported edit/write format" below to a 
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
-**Current gate:** `R3_FINISH_MERGE_M4` (R1 and R2 complete 2026-10-06; R3 not started, owner go required).  
+**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (R1-R3 complete; R3 implementation/tests done 2026-10-07,
+PR #189 pushed to `feat/ice-market-engine-m4` with CI pending — the GitHub merge itself is an
+owner/CI action, not performed by this session). R4 is a hard stop: no M5, no production import,
+no production crosswalk, no live cutover until the owner declares a final package.  
 **Production import:** blocked. **Production crosswalk:** blocked. **Live cutover:** blocked.
 
 **R2 — DONE, 2026-10-06 (read-only).** Fixture: the original `/Users/kiki_mac/Downloads/TDR_FULL_2569-09_v1_M6.0.zip` (md5 `4d64402cfe524c253b2bc07fa55a0831`). The extracted copy was not used. Result: **structurally valid, not production-authorized.**
@@ -183,8 +186,10 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
   - Do not run `tools/ice_crosswalk_match.py --match` against production, and do not
     seed or approve any real crosswalk mapping, until a real Ice Full Package has
     been imported (M2) and the owner has reviewed real candidates.
-- **M4** (market engine on Ice data, `feat/ice-market-engine-m4`) — **package-independent
-  infrastructure implemented; real-data acceptance still pending.** No real Ice data or
+- **M4** (market engine on Ice data, `feat/ice-market-engine-m4`, PR #189) — **R3 done
+  (2026-10-07): wired to R1's persisted panel metadata, rebased onto main after R2,
+  tests expanded, pushed. Package-independent infrastructure; real-data acceptance
+  still pending.** No real Ice data or
   real crosswalk exists yet (M2/M3 state above), so every M4 test uses synthetic fixtures;
   `scripts/ice-market-acceptance.ts` (`npm run ice:acceptance`, read-only) is the
   entry point to run once real data exists. **Not wired into any live page or API route**
@@ -213,14 +218,39 @@ Separate track from Phase 0 above (`VEHICLE_DB_V3.md` §12 "Market track"), can 
     `IceMarketDimensionError` rather than silently reusing Vehicle Master payload fields
     or legacy registration data. Resolving these (if ever) needs an owner decision on
     what, if anything, Ice or TDR defines for them — not a code change alone.
-  - **M2 metadata gap, not fixed in M4 (out of M4's scope; flagged for a future M2
-    PR):** panel.json's `access`/`free_scope` fields and manifest.json's `period_from`
-    are parsed during `--check`/`--apply` validation but never persisted anywhere by
-    M2's importer (`ice_package_imports.panels` stores only the outer panel-name list).
-    `resolveWheelTyreAvailability`/the access-enforcement path are built pure and fully
-    tested against a passed-in `periodFrom`/access value, but the real DB-wired path has
-    no real stored value to read yet — M4 fails explicit rather than inventing a default
-    (see `lib/ice-market-engine.ts`'s wheel/tyre section and `scripts/ice-market-acceptance.ts`).
+  - **R3 (2026-10-07): wired to R1's persisted panel metadata, replacing the earlier
+    "M2 metadata not persisted" placeholder.** `lib/ice-market-engine.ts` gained
+    `findPanelRelease(panels, panelId)` — a pure parser/validator over the raw
+    `ice_package_imports.panels` jsonb array (the exact shape
+    `vehreg/ice_package.py`'s `parse_panel_release` persists: `period_from`,
+    `period_to`, `access`, `free_scope`, `confirmed_by`, `version`) — and
+    `iceAccessAllows(access, capability, tier)`, a pure capability check with no
+    fixed tier/capability enum (tiers and capabilities are read exactly as Ice
+    supplied them, never invented). `lib/ice-market-data.ts` gained
+    `latestIceImportRelease` (the one authoritative read of period/master_version/
+    panels — ROADMAP R3 item 4: never inferred by scanning fact rows),
+    `latestIcePanelRelease(db, panelId)`, and `iceWheelTyreAvailability(db, panelId,
+    period)`, which calls `resolveWheelTyreAvailability` with the REAL persisted
+    `period_from` of the specific panel (`rim_province`/`tyre_province` persist
+    their own `period_from` independently and may differ — each is read from its
+    own entry, never shared or hard-coded). `free_scope` is passed through exactly
+    as persisted (including `null` when Ice omits it, per R2); nothing in M4
+    fabricates a default or interprets its semantics, since those remain an open
+    question for Ice (see R2 notes above). All three functions return `null`
+    only for the legitimate "no import yet" state; a present-but-malformed or
+    missing panel entry throws `IcePanelMetadataError` rather than guessing.
+    `scripts/ice-market-acceptance.ts`'s wheel/tyre section was rewired the same
+    way (previously reported `available: null` unconditionally with a "not yet
+    persisted" note; now reads each panel's real metadata and reports a per-panel
+    refusal reason only when that panel's own metadata is actually missing/bad).
+    New synthetic tests in `scripts/check-ice-market-engine.ts` cover: parsing a
+    well-formed `panels` fixture; rim/tyre `period_from` differing and each panel
+    using its own; wheel/tyre availability following the relevant panel;
+    missing-panel/non-array/malformed-`period_from`/malformed-`access` all
+    throwing `IcePanelMetadataError`; `access` tier checks (including a
+    capability Ice never declared returning `false`, not a throw, and tiers
+    that differ per panel rather than a fixed TDR enum); `free_scope` staying
+    `null` when absent and surviving exactly when present.
   - Deliberate, documented visible differences beyond the ones already listed in
     `SERVING_CONTRACT.md` §6: Ice's `PublicMarket.period`/`previousPeriod`/`trend[].period`
     are kept as Ice's own Buddhist "YYYY-MM" strings (never converted to a fake Gregorian

@@ -32,7 +32,10 @@ import {
   assertIceFiltersSupported,
   distinctSortedPeriods,
   fetchAllPages,
+  findPanelRelease,
+  iceAccessAllows,
   isIceMarketDimension,
+  resolveWheelTyreAvailability,
   sliceIceByBodyType,
   sliceIceByBrand,
   sliceIceByModel,
@@ -44,6 +47,8 @@ import {
   type IceMarketFilters,
   type IceModelGroupRedirectRow,
   type IceModelSliceRow,
+  type IcePanelAccess,
+  type IcePanelRelease,
   type IcePowertrainSliceRow,
   type IceRegPowertrainRow,
   type IceRegProvinceRow,
@@ -52,10 +57,11 @@ import {
   type IceTyreCoverageRow,
   type IceTyreProvinceRow,
   type VehicleModelDim,
+  type WheelTyreAvailability,
 } from "@/lib/ice-market-engine";
 
-export { isIceMarketDimension };
-export type { IceMarketDimension };
+export { isIceMarketDimension, findPanelRelease, iceAccessAllows };
+export type { IceMarketDimension, IcePanelAccess, IcePanelRelease, WheelTyreAvailability };
 
 type Db = ReturnType<typeof adminDb>;
 
@@ -194,20 +200,61 @@ export async function fetchVehicleModelDims(db: NonNullable<Db>): Promise<Vehicl
   return pagedSelectAll<VehicleModelDim>(db, "vehicle_models", "canonical_id,segment,body_type", ["canonical_id"]);
 }
 
-/** The latest accepted import's period, per ice_package_imports (M2's
- * append-only log of each accepted replace) -- the authoritative answer to
- * "what release are we currently showing", which is this field's actual
- * semantics (the release's own headline period), not a scan for the
- * chronologically-latest period any panel table happens to contain -- see
- * iceAvailablePeriods below for that different question. */
-export async function latestIcePeriod(db: NonNullable<Db>): Promise<string | null> {
+/** The latest accepted import's release identity -- period, master_version
+ * and the full per-panel metadata array, per ice_package_imports (M2's
+ * append-only log of each accepted replace; R1/M2.1 persists period_from/
+ * period_to/access/free_scope/confirmed_by per panel in the `panels` jsonb
+ * column). This is the authoritative release source (ROADMAP R3 item 4):
+ * period/master_version/panel metadata are read from this one row, never
+ * inferred by scanning fact rows. `panels` is returned raw (validated lazily,
+ * per panel, by findPanelRelease) since not every caller needs every panel's
+ * metadata. Returns null only when no import has ever been accepted yet --
+ * a real, legitimate "no data" state, not a malformed-metadata refusal. */
+export type IceImportRelease = { period: string; master_version: string; panels: unknown };
+
+export async function latestIceImportRelease(db: NonNullable<Db>): Promise<IceImportRelease | null> {
   const { data, error } = await db
     .from("ice_package_imports")
-    .select("period")
+    .select("period,master_version,panels")
     .order("imported_at", { ascending: false })
     .limit(1);
   if (error) throw new Error(`ice_package_imports query failed: ${error.message}`);
-  return data?.length ? String(data[0].period) : null;
+  if (!data?.length) return null;
+  const row = data[0] as { period: unknown; master_version: unknown; panels: unknown };
+  return { period: String(row.period), master_version: String(row.master_version), panels: row.panels };
+}
+
+/** The latest accepted import's period alone -- kept for callers (e.g.
+ * lib/ice-public-market.ts) that only need "what release are we currently
+ * showing", not the full panel metadata. */
+export async function latestIcePeriod(db: NonNullable<Db>): Promise<string | null> {
+  const release = await latestIceImportRelease(db);
+  return release ? release.period : null;
+}
+
+/** One panel's persisted release metadata from the latest accepted import
+ * (ROADMAP R3 items 1-3: real period_from/access/free_scope, never
+ * hard-coded or defaulted). null when no import exists yet; throws
+ * IcePanelMetadataError (via findPanelRelease) when an import exists but
+ * this panel's metadata is missing or malformed -- never guessed. */
+export async function latestIcePanelRelease(db: NonNullable<Db>, panelId: string): Promise<IcePanelRelease | null> {
+  const release = await latestIceImportRelease(db);
+  if (!release) return null;
+  return findPanelRelease(release.panels, panelId);
+}
+
+/** Wheel/tyre availability against the real persisted period_from of the
+ * named panel. rim_province and tyre_province persist their own period_from
+ * independently and may differ, so each call reads its own panel's entry --
+ * never a value shared between them, never hard-coded. null when no import
+ * exists yet; throws when the import exists but this panel's period_from is
+ * missing/malformed. */
+export async function iceWheelTyreAvailability(
+  db: NonNullable<Db>, panelId: "rim_province" | "tyre_province", period: string,
+): Promise<WheelTyreAvailability | null> {
+  const release = await latestIcePanelRelease(db, panelId);
+  if (!release) return null;
+  return resolveWheelTyreAvailability(release.period_from, period);
 }
 
 // ---------------------------------------------------------------------------

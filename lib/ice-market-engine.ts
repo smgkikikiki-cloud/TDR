@@ -453,11 +453,114 @@ export function sliceIceByPowertrain(
 }
 
 // ---------------------------------------------------------------------------
+// Persisted panel release metadata (ice_package_imports.panels, R1/M2.1).
+// Each accepted import persists one entry per panel with exactly the shape
+// vehreg/ice_package.py's parse_panel_release produces: period_from/period_to
+// (manifest.json), access/free_scope (panel.json), confirmed_by (manifest.json).
+// M4 reads this instead of inferring or hard-coding any start period or
+// access/free_scope default. lib/ice-market-data.ts's latestIcePanelRelease
+// is the I/O wrapper that fetches the latest accepted import and calls
+// findPanelRelease below; this module stays pure/DB-free.
+// ---------------------------------------------------------------------------
+
+const ICE_PERIOD_PATTERN = /^\d{4}-\d{2}$/;
+
+/** panel.json's access object: capability ("view"/"info"/"csv" as Ice
+ * supplies them) -> tier[] ("free"/"pro"/"enterprise" as Ice supplies them).
+ * Never a fixed enum here -- the tier/capability vocabulary is Ice's package
+ * data, not something M4 invents (ROADMAP R3: "do not invent access tiers"). */
+export type IcePanelAccess = Record<string, string[]>;
+
+export type IcePanelRelease = {
+  panel_id: string;
+  version: string | number | null;
+  period_from: string;
+  period_to: string;
+  access: IcePanelAccess;
+  /** Exactly as persisted, including absent (null). R2 confirmed free_scope
+   * can legitimately be absent for some panels (dims, rim_province,
+   * tyre_province) -- absence is never converted into a guessed default, and
+   * its semantics beyond presence/absence are not yet contract-defined (see
+   * docs/WORK_STATE.md's R2 open questions), so nothing here interprets it. */
+  free_scope: unknown;
+  confirmed_by: string[];
+};
+
+export class IcePanelMetadataError extends Error {
+  constructor(panelId: string, reason: string) {
+    super(
+      `persisted release metadata for Ice panel "${panelId}" is missing or malformed: ${reason} -- `
+      + "refused rather than guessed (see ice_package_imports.panels).",
+    );
+  }
+}
+
+function isValidIcePanelAccess(value: unknown): value is IcePanelAccess {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (!entries.length) return false;
+  return entries.every(([capability, tiers]) =>
+    typeof capability === "string" && capability.length > 0
+    && Array.isArray(tiers) && tiers.every((tier) => typeof tier === "string" && tier.length > 0));
+}
+
+/** Finds `panelId`'s release entry in the raw `ice_package_imports.panels`
+ * jsonb array (as persisted by tools/ice_package_import.py's
+ * commit_staged_import / parse_panel_release) and validates its shape.
+ * Throws IcePanelMetadataError -- never returns a guessed/defaulted value --
+ * when the panel entry is absent, or when period_from/period_to/access are
+ * missing or malformed. `free_scope` is passed through exactly as persisted. */
+export function findPanelRelease(panels: unknown, panelId: string): IcePanelRelease {
+  if (!Array.isArray(panels)) {
+    throw new IcePanelMetadataError(panelId, `ice_package_imports.panels is not an array (got ${JSON.stringify(panels)})`);
+  }
+  const entry = panels.find((candidate) =>
+    typeof candidate === "object" && candidate !== null && (candidate as { panel_id?: unknown }).panel_id === panelId,
+  ) as Record<string, unknown> | undefined;
+  if (!entry) {
+    throw new IcePanelMetadataError(panelId, "no entry for this panel_id in the latest accepted import");
+  }
+  const periodFrom = entry.period_from;
+  const periodTo = entry.period_to;
+  const access = entry.access;
+  if (typeof periodFrom !== "string" || !ICE_PERIOD_PATTERN.test(periodFrom)) {
+    throw new IcePanelMetadataError(panelId, `period_from is ${JSON.stringify(periodFrom)}, must be a persisted 'YYYY-MM' string`);
+  }
+  if (typeof periodTo !== "string" || !ICE_PERIOD_PATTERN.test(periodTo)) {
+    throw new IcePanelMetadataError(panelId, `period_to is ${JSON.stringify(periodTo)}, must be a persisted 'YYYY-MM' string`);
+  }
+  if (!isValidIcePanelAccess(access)) {
+    throw new IcePanelMetadataError(panelId, `access is ${JSON.stringify(access)}, must be a non-empty object of capability -> tier[]`);
+  }
+  const confirmedBy = entry.confirmed_by;
+  return {
+    panel_id: panelId,
+    version: (typeof entry.version === "string" || typeof entry.version === "number") ? entry.version : null,
+    period_from: periodFrom,
+    period_to: periodTo,
+    access,
+    free_scope: entry.free_scope ?? null,
+    confirmed_by: Array.isArray(confirmedBy) ? confirmedBy.filter((name): name is string => typeof name === "string") : [],
+  };
+}
+
+/** Pure capability check over a persisted access object. A capability Ice
+ * did not declare for this panel is simply not granted to anyone (false),
+ * not an error -- panel.json's access object is the full, explicit grant
+ * list (ROADMAP R3: "do not silently fall back to legacy TDR access
+ * assumptions"). Never invents a tier or capability beyond what was persisted. */
+export function iceAccessAllows(access: IcePanelAccess, capability: string, tier: string): boolean {
+  return access[capability]?.includes(tier) ?? false;
+}
+
+// ---------------------------------------------------------------------------
 // Wheel / tyre -- "TDR Wheel & Tyre Index". Always exposes coverage. Publish
-// start comes from the panel manifest's period_from, passed in by the caller
-// -- never hard-coded (§14.3: never hard-code any particular calendar start
-// period). See docs/WORK_STATE.md for the M2 metadata-persistence gap this
-// depends on for a REAL period_from.
+// start comes from the panel's own persisted period_from (findPanelRelease
+// above, reading ice_package_imports.panels) -- never hard-coded (§14.3:
+// never hard-code any particular calendar start period). rim_province and
+// tyre_province persist their own period_from independently and may differ;
+// lib/ice-market-data.ts reads each panel's own entry rather than sharing one
+// value between them.
 // ---------------------------------------------------------------------------
 
 export type WheelTyreAvailability = { available: boolean; periodFrom: string };

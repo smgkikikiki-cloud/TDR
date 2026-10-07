@@ -4,6 +4,8 @@ import {
   assertIceFiltersSupported,
   distinctSortedPeriods,
   fetchAllPages,
+  findPanelRelease,
+  iceAccessAllows,
   resolveIcePowertrainRow,
   resolveModelGroupRedirect,
   resolveWheelTyreAvailability,
@@ -20,6 +22,7 @@ import {
   isIceMarketDimension,
   UNMAPPED_LABEL,
   IceUnsupportedFilterError,
+  IcePanelMetadataError,
   PaginationLimitExceededError,
   type IceCrosswalkLink,
   type IceRegPowertrainRow,
@@ -334,6 +337,101 @@ check("published start controls availability -- at/after period_from",
   resolveWheelTyreAvailability("2567-01", "2567-01").available, true);
 check("no start period is hard-coded in the engine module",
   !fs.readFileSync("lib/ice-market-engine.ts", "utf8").includes("2564-01"));
+
+// ---------------------------------------------------------------------------
+// Persisted panel release metadata (ice_package_imports.panels, R1/M2.1) --
+// ROADMAP R3: real period_from/access/free_scope, read via findPanelRelease,
+// never hard-coded or defaulted; missing/malformed metadata refuses
+// explicitly rather than guessing.
+// ---------------------------------------------------------------------------
+
+console.log("\npersisted panel release metadata (ice_package_imports.panels) -- parsed, never guessed");
+
+const rimPanelEntry = {
+  panel_id: "rim_province", version: "1", period_from: "2567-01", period_to: "2569-09",
+  access: { view: ["free", "pro"], info: ["pro"], csv: [] }, free_scope: null,
+  confirmed_by: ["คนที่ 1", "คนที่ 2"],
+};
+const tyrePanelEntry = {
+  panel_id: "tyre_province", version: "1", period_from: "2568-04", period_to: "2569-09",
+  access: { view: ["free", "pro", "enterprise"], info: ["enterprise"], csv: ["enterprise"] }, free_scope: null,
+  confirmed_by: ["คนที่ 1", "คนที่ 2"],
+};
+const regProvincePanelEntry = {
+  panel_id: "reg_province", version: "1", period_from: "2567-01", period_to: "2569-09",
+  access: { view: ["free", "pro"], info: ["free", "pro"], csv: ["pro"] },
+  free_scope: { province: ["กรุงเทพมหานคร"] },
+  confirmed_by: ["คนที่ 1", "คนที่ 2"],
+};
+const panelsFixture = [rimPanelEntry, tyrePanelEntry, regProvincePanelEntry];
+
+const rimRelease = findPanelRelease(panelsFixture, "rim_province");
+check("findPanelRelease reads period_from/period_to/access/confirmed_by exactly as persisted",
+  rimRelease, { panel_id: "rim_province", version: "1", period_from: "2567-01", period_to: "2569-09",
+    access: { view: ["free", "pro"], info: ["pro"], csv: [] }, free_scope: null, confirmed_by: ["คนที่ 1", "คนที่ 2"] });
+
+console.log("\nrim and tyre persist their own period_from independently -- never one shared value");
+const tyreRelease = findPanelRelease(panelsFixture, "tyre_province");
+check("rim_province and tyre_province period_from differ in this fixture, and each panel reads its own",
+  { rim: rimRelease.period_from, tyre: tyreRelease.period_from }, { rim: "2567-01", tyre: "2568-04" });
+check("wheel/tyre availability follows the RELEVANT panel's own period_from, not a shared/hard-coded one",
+  {
+    rimAtTyreStart: resolveWheelTyreAvailability(rimRelease.period_from, "2568-04").available,
+    tyreAtTyreStart: resolveWheelTyreAvailability(tyreRelease.period_from, "2568-04").available,
+    tyreBeforeTyreStart: resolveWheelTyreAvailability(tyreRelease.period_from, "2568-03").available,
+  },
+  { rimAtTyreStart: true, tyreAtTyreStart: true, tyreBeforeTyreStart: false });
+
+console.log("\nmissing/malformed persisted panel metadata refuses explicitly, never guesses");
+check("a panel_id with no entry in the latest import's panels array throws",
+  (() => { try { findPanelRelease(panelsFixture, "dims"); return "no throw"; } catch (e) { return e instanceof IcePanelMetadataError; } })());
+check("panels that isn't an array throws rather than silently returning nothing",
+  (() => { try { findPanelRelease(null, "rim_province"); return "no throw"; } catch (e) { return e instanceof IcePanelMetadataError; } })());
+check("a malformed period_from (wrong shape) throws rather than being parsed loosely",
+  (() => {
+    try { findPanelRelease([{ ...rimPanelEntry, period_from: "2567-01-01" }], "rim_province"); return "no throw"; }
+    catch (e) { return e instanceof IcePanelMetadataError; }
+  })());
+check("a missing period_from throws",
+  (() => {
+    const { period_from, ...withoutPeriodFrom } = rimPanelEntry;
+    try { findPanelRelease([withoutPeriodFrom], "rim_province"); return "no throw"; }
+    catch (e) { return e instanceof IcePanelMetadataError; }
+  })());
+check("an access value that isn't a non-empty object of capability -> tier[] throws",
+  (() => {
+    try { findPanelRelease([{ ...rimPanelEntry, access: {} }], "rim_province"); return "no throw"; }
+    catch (e) { return e instanceof IcePanelMetadataError; }
+  })());
+check("an access object with a non-string-array tier list throws",
+  (() => {
+    try { findPanelRelease([{ ...rimPanelEntry, access: { view: "free" } }], "rim_province"); return "no throw"; }
+    catch (e) { return e instanceof IcePanelMetadataError; }
+  })());
+
+console.log("\naccess enforcement (capability -> tier[]) -- follows the persisted tiers exactly, never invented");
+check("view/free is allowed for rim_province per this fixture", iceAccessAllows(rimRelease.access, "view", "free"), true);
+check("csv is allowed for no tier on rim_province (persisted as an empty list)", iceAccessAllows(rimRelease.access, "csv", "free"), false);
+check("info/pro is allowed for rim_province", iceAccessAllows(rimRelease.access, "info", "pro"), true);
+check("info/free is NOT allowed for rim_province (only pro was granted)", iceAccessAllows(rimRelease.access, "info", "free"), false);
+check("a capability Ice never declared for this panel is simply not granted (false, not a throw)",
+  iceAccessAllows(rimRelease.access, "export", "enterprise"), false);
+check("tiers come from the persisted data, not a fixed TDR enum -- csv/enterprise is allowed for tyre_province, denied for rim_province",
+  { tyre: iceAccessAllows(tyreRelease.access, "csv", "enterprise"), rim: iceAccessAllows(rimRelease.access, "csv", "enterprise") },
+  { tyre: true, rim: false });
+
+console.log("\nfree_scope -- consumed exactly as persisted, absence never fabricated into a default");
+check("free_scope is absent (null) for rim_province in this fixture and stays null, never defaulted to an object",
+  rimRelease.free_scope, null);
+const regProvinceRelease = findPanelRelease(panelsFixture, "reg_province");
+check("free_scope is preserved exactly when Ice does supply it",
+  regProvinceRelease.free_scope, { province: ["กรุงเทพมหานคร"] });
+
+console.log("\nno hard-coded start period or panel-metadata shortcut in the I/O layer either");
+check("no start period is hard-coded in the data layer",
+  !fs.readFileSync("lib/ice-market-data.ts", "utf8").includes("2564-01"));
+check("the real wheel/tyre wiring reads findPanelRelease + resolveWheelTyreAvailability, not a stub",
+  /findPanelRelease[\s\S]*resolveWheelTyreAvailability/.test(fs.readFileSync("lib/ice-market-data.ts", "utf8")));
 
 console.log("\npercent-change display rule (base < 30 units -> no percentage)");
 check("comparison base below 30 -> no percentage-change output", iceUnitChangePct(25, 40), null);

@@ -23,6 +23,7 @@
  */
 import { createClient } from "@supabase/supabase-js";
 import {
+  findPanelRelease,
   resolveIcePowertrainRow,
   resolveWheelTyreAvailability,
   sliceIceByBodyType,
@@ -31,6 +32,7 @@ import {
   sliceIceByPowertrain,
   sliceIceBySegment,
   wheelTyreCoverage,
+  IcePanelMetadataError,
   type IceCrosswalkLink,
   type IceRegPowertrainRow,
   type IceRegProvinceRow,
@@ -64,7 +66,7 @@ async function main() {
 
   const { data: imports, error: importError } = await db
     .from("ice_package_imports")
-    .select("period,master_version,imported_at")
+    .select("period,master_version,panels,imported_at")
     .order("imported_at", { ascending: false })
     .limit(1);
   if (importError) throw new Error(`ice_package_imports query failed: ${importError.message}`);
@@ -74,6 +76,7 @@ async function main() {
   }
   const period = requestedPeriod || String(imports[0].period);
   const masterVersion = String(imports[0].master_version);
+  const panels = imports[0].panels;
 
   const [province, trend, powertrain, crosswalkRows, modelRows, coverageRows] = await Promise.all([
     fetchAll<IceRegProvinceRow>("ice_reg_province", "period,province,reg_type,brand,fuel_group,reg_count", period),
@@ -124,10 +127,21 @@ async function main() {
   }
 
   const coverage = wheelTyreCoverage(coverageRows);
-  // period_from is not yet persisted by M2 (see docs/WORK_STATE.md's metadata
-  // gap) -- reported explicitly as unavailable rather than guessed.
-  const wheelTyreAvailability = { available: null as boolean | null, note: "period_from is not yet persisted by M2 -- see docs/WORK_STATE.md" };
-  void resolveWheelTyreAvailability; // kept imported/visible for when period_from becomes available
+  // period_from/access/free_scope are persisted per panel in ice_package_imports.panels
+  // (R1/M2.1) -- read via findPanelRelease, never hard-coded. rim_province and
+  // tyre_province persist their own period_from independently, so each is read
+  // and reported on its own panel entry, not shared. A panel whose metadata is
+  // missing/malformed is reported explicitly (error), never guessed around.
+  function wheelTyrePanelReport(panelId: "rim_province" | "tyre_province") {
+    try {
+      const release = findPanelRelease(panels, panelId);
+      return { ...resolveWheelTyreAvailability(release.period_from, period), access: release.access, free_scope: release.free_scope, error: null };
+    } catch (error) {
+      if (error instanceof IcePanelMetadataError) return { available: null, periodFrom: null, access: null, free_scope: null, error: error.message };
+      throw error;
+    }
+  }
+  const wheelTyreAvailability = { rim_province: wheelTyrePanelReport("rim_province"), tyre_province: wheelTyrePanelReport("tyre_province") };
 
   const report = {
     period,
