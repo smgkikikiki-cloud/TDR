@@ -25,6 +25,10 @@ from vehreg import ice_package
 
 _unique = itertools.count()
 
+TRIAL_NAME = "TDR_FULL_2569-09_v1_M6.0.zip"
+CHANGELOG_HEADER = (
+    "change_id,date,level,entity,key,before,after,reason,impact_units,status,confirmed_by,released_in\n")
+
 FAKE_VALIDATOR_OK = b"""
 import sys
 print("OK", sys.argv[1:])
@@ -43,13 +47,17 @@ def _manifest(panel_id: str, version: int, files: dict[str, bytes]) -> bytes:
         "panel_id": panel_id, "version": version,
         "period_from": "2564-01", "period_to": "2569-08",
         "files": {name: {"md5": hashlib.md5(data).hexdigest(), "bytes": len(data)} for name, data in files.items()},
-        "qc_passed": True, "confirmed_by": [],
+        "qc_passed": True, "confirmed_by": ["Owner A", "Owner B"],
     }).encode("utf-8")
 
 
 def _panel_zip_bytes(panel_id: str, rows_csv: dict[str, str], *, tamper: bool = False) -> bytes:
     data_files = {name: content.encode("utf-8") for name, content in rows_csv.items()}
-    all_files = {**data_files, "panel.json": json.dumps({"panel_id": panel_id, "version": 1}).encode("utf-8")}
+    all_files = {**data_files, "panel.json": json.dumps({
+        "panel_id": panel_id, "version": 1,
+        "access": {"view": ["free", "pro", "enterprise"], "info": ["pro"], "csv": ["enterprise"]},
+        "free_scope": "latest_period",
+    }).encode("utf-8")}
     # manifest.json's declared md5s are computed from the ORIGINAL bytes; a tamper
     # rewrites what actually goes into the zip afterwards, so the two disagree --
     # the real-world "corrupted in transit" shape, not just trailing junk that a
@@ -110,6 +118,7 @@ def _build_full_package(
     panels: list[str] | None = None, validator: bytes | None = FAKE_VALIDATOR_OK,
     master_version: str = "M1", changelog_since: str | None = None,
     tamper_panel: str | None = None, panel_rows: dict[str, dict[str, str]] | None = None,
+    changelog: bytes = CHANGELOG_HEADER.encode("utf-8"), id_changes: bytes | None = None, name: str | None = None,
 ) -> Path:
     confirmed_by = ["Owner A", "Owner B"] if confirmed_by is None else confirmed_by
     panels = list(ice_package.PANEL_IDS) if panels is None else panels
@@ -127,10 +136,12 @@ def _build_full_package(
         "files": {name: {"md5": hashlib.md5(data).hexdigest()} for name, data in panel_zip_bytes.items()},
     }
 
-    out = tmp_path / f"TDR_FULL_2569-08_v1_M1_{next(_unique)}.zip"
+    out = tmp_path / (name or f"TDR_FULL_2569-08_v1_M1_{next(_unique)}.zip")
     with zipfile.ZipFile(out, "w") as zf:
         zf.writestr("full_package.json", json.dumps(index).encode("utf-8"))
-        zf.writestr("CHANGELOG.csv", b"col1,col2\n")
+        zf.writestr("CHANGELOG.csv", changelog)
+        if id_changes is not None:
+            zf.writestr("id_changes.csv", id_changes)
         if validator is not None:
             zf.writestr("validate_package.py", validator)
         for name, data in panel_zip_bytes.items():
@@ -199,7 +210,7 @@ class FakeRest:
 
 def test_a_fully_valid_synthetic_package_has_no_problems(tmp_path):
     path = _build_full_package(tmp_path)
-    assert cli.check(path) == []
+    assert cli.check(path, owner_declared_final=path.name) == []
 
 
 def test_check_catches_empty_confirmed_by(tmp_path):
@@ -315,7 +326,7 @@ def test_apply_refuses_and_stages_nothing_when_reconciliation_fails(tmp_path):
 def test_apply_stages_every_table_before_the_single_commit_call(tmp_path):
     path = _build_full_package(tmp_path)
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
 
     commit_index = next(i for i, c in enumerate(rest.calls) if c[1] == "rpc/ice_commit_staged_import")
     readback_index = next(i for i, c in enumerate(rest.calls) if c[1] == "rpc/ice_live_table_counts")
@@ -334,7 +345,7 @@ def test_apply_stages_every_table_before_the_single_commit_call(tmp_path):
 def test_apply_commits_the_real_row_data_through_staging_to_live(tmp_path):
     path = _build_full_package(tmp_path)
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
     assert rest._live["ice_dims_brand"] == [{"brand": "TOY"}]
     assert len(rest._live["ice_reg_trend"]) == 3
 
@@ -343,7 +354,7 @@ def test_apply_chunks_staging_inserts_for_large_tables(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "CHUNK_SIZE", 1)
     path = _build_full_package(tmp_path)
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
     inserts = [c for c in rest.calls if c[0] == "POST" and c[1] == "ice_reg_trend_staging"]
     assert len(inserts) == 3, inserts
     for payload in (c[2] for c in inserts):
@@ -354,7 +365,7 @@ def test_apply_chunks_staging_inserts_for_large_tables(tmp_path, monkeypatch):
 def test_apply_does_not_over_chunk_when_rows_fit_in_one_page(tmp_path):
     path = _build_full_package(tmp_path)  # default CHUNK_SIZE; 3 reg_trend rows
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
     inserts = [c for c in rest.calls if c[0] == "POST" and c[1] == "ice_reg_trend_staging"]
     assert len(inserts) == 1
     assert len(inserts[0][2]) == 3
@@ -363,7 +374,7 @@ def test_apply_does_not_over_chunk_when_rows_fit_in_one_page(tmp_path):
 def test_apply_passes_the_import_metadata_into_the_commit_rpc(tmp_path):
     path = _build_full_package(tmp_path, master_version="M7")
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
     commit_calls = [c for c in rest.calls if c[1] == "rpc/ice_commit_staged_import"]
     assert len(commit_calls) == 1
     payload = commit_calls[0][2]
@@ -379,7 +390,7 @@ def test_a_commit_rpc_failure_propagates_as_a_clean_error_and_never_calls_the_ve
     called = []
     monkeypatch.setattr(cli, "update_package_version_log", lambda *a, **k: called.append(True))
     with pytest.raises(cli.IceImportError, match="simulated commit failure"):
-        cli.apply_package(path, rest=rest, imported_by="tester", repo_root=path.parent)
+        cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester", repo_root=path.parent)
     assert called == [], "a failed commit must never advance the version log"
     assert rest._imports == []
 
@@ -391,7 +402,7 @@ def test_a_readback_mismatch_is_reported_loudly_after_commit(tmp_path, monkeypat
     called = []
     monkeypatch.setattr(cli, "update_package_version_log", lambda *a, **k: called.append(True))
     with pytest.raises(cli.IceImportError, match="READBACK MISMATCH"):
-        cli.apply_package(path, rest=rest, imported_by="tester", repo_root=path.parent)
+        cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester", repo_root=path.parent)
     # The commit itself already happened (this is a post-commit check) --
     # but the version log must still never advance on top of a flagged mismatch.
     assert len(rest._imports) == 1
@@ -402,13 +413,13 @@ def test_apply_passes_the_last_recorded_master_version_into_the_changelog_check(
     path = _build_full_package(tmp_path, changelog_since="M3")
     rest = FakeRest()
     rest._imports.append({"master_version": "M3"})
-    cli.apply_package(path, rest=rest, imported_by="tester")  # M3 matches -> ok
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")  # M3 matches -> ok
 
     path2 = _build_full_package(tmp_path, changelog_since="M3", master_version="M4")
     rest2 = FakeRest()
     rest2._imports.append({"master_version": "M9"})  # a version was skipped
     with pytest.raises(cli.IceImportError, match="changelog_since"):
-        cli.apply_package(path2, rest=rest2, imported_by="tester")
+        cli.apply_package(path2, rest=rest2, owner_declared_final=path2.name, imported_by="tester")
 
 
 # ---------------------------------------------------------------------------
@@ -428,7 +439,7 @@ def test_successful_apply_writes_the_package_version_log(tmp_path):
     repo_root = tmp_path / "repo"
     repo_root.mkdir()
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester", repo_root=repo_root)
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester", repo_root=repo_root)
 
     packages_dir = repo_root / cli.PACKAGES_DIR_NAME
     folder = packages_dir / "2569-08" / "v1_M5"
@@ -451,7 +462,7 @@ def test_failed_apply_never_touches_the_package_version_log(tmp_path):
     repo_root.mkdir()
     rest = FakeRest()
     with pytest.raises(cli.IceImportError):
-        cli.apply_package(path, rest=rest, imported_by="tester", repo_root=repo_root)
+        cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester", repo_root=repo_root)
     assert not (repo_root / cli.PACKAGES_DIR_NAME).exists()
 
 
@@ -590,7 +601,7 @@ def test_apply_package_itself_still_allows_an_optional_repo_root_for_other_calle
     # enforces --repo-root for a real --apply.
     path = _build_full_package(tmp_path)
     rest = FakeRest()
-    cli.apply_package(path, rest=rest, imported_by="tester")  # no repo_root; does not raise
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")  # no repo_root; does not raise
     assert not (tmp_path / cli.PACKAGES_DIR_NAME).exists()
 
 
@@ -603,3 +614,129 @@ def test_the_outer_package_schema_is_explicitly_marked_unverified():
         "this must only ever be flipped to True deliberately, the first time a real "
         "full_package.json has actually been inspected -- see vehreg/ice_package.py's "
         "module docstring")
+
+
+# ---------------------------------------------------------------------------
+# Market Track R1: structurally valid is not the same as production-authorized
+# ---------------------------------------------------------------------------
+
+def test_a_structurally_valid_package_without_a_declaration_is_refused_as_authority(tmp_path):
+    path = _build_full_package(tmp_path)
+    structural, authority, _ = cli.check_split(path)
+    assert structural == []
+    assert any("no owner declaration" in p for p in authority)
+
+
+def test_the_trial_package_is_refused_for_production_by_the_outer_gate_not_by_its_name(tmp_path):
+    # Same shape as the owner's M6.0 trial: six panels, status "พร้อมส่ง", two sign-offs,
+    # a released crosswalk change and no id_changes.csv. Refused by the release rules alone.
+    released_crosswalk = (CHANGELOG_HEADER + "C1,2569-09,Major,crosswalk,k,a,b,r,1,ออกเวอร์ชัน,Ice,6.0\n").encode("utf-8")
+    path = _build_full_package(tmp_path, name=TRIAL_NAME, changelog=released_crosswalk)
+    structural, authority, releases = cli.check_split(path, owner_declared_final=TRIAL_NAME)
+    assert structural == []
+    assert any("id_changes.csv" in p for p in authority)
+    assert len(releases) == 6
+    assert not any("trial" in p for p in authority), "trial authority must never be inferred from the filename"
+
+
+def test_a_proposed_changelog_row_blocks_authority_but_not_structure(tmp_path):
+    path = _build_full_package(
+        tmp_path, changelog=(CHANGELOG_HEADER + "C1,2569-09,Major,crosswalk,k,a,b,r,1,เสนอ,Ice,\n").encode("utf-8"))
+    structural, authority, _ = cli.check_split(path, owner_declared_final=path.name)
+    assert structural == []
+    assert any("เสนอ" in p for p in authority)
+
+
+def test_a_released_crosswalk_change_without_id_changes_csv_refuses_the_release(tmp_path):
+    released_crosswalk = (CHANGELOG_HEADER + "C1,2569-09,Major,crosswalk,k,a,b,r,1,ออกเวอร์ชัน,Ice,6.0\n").encode("utf-8")
+    path = _build_full_package(tmp_path, changelog=released_crosswalk)
+    structural, authority, _ = cli.check_split(path, owner_declared_final=path.name)
+    assert structural == []
+    assert any("identity change" in p and "id_changes.csv is absent" in p for p in authority)
+
+
+def test_a_missing_id_changes_csv_for_a_retired_model_group_blocks_authority(tmp_path):
+    path = _build_full_package(tmp_path)
+    structural, authority, _ = cli.check_split(
+        path, owner_declared_final=path.name, previous_model_group_ids={"toy.a", "toy.retired"})
+    assert structural == []
+    assert any("previously imported" in p and "toy.retired" in p for p in authority)
+
+
+def test_an_id_changes_csv_that_covers_the_retired_group_clears_that_refusal(tmp_path):
+    id_changes = (
+        "old_model_group_id,new_model_group_id,reg_moved_all_periods,share_of_old_pct,type\n"
+        "toy.retired,toy.a,1,100,เปลี่ยนรหัส\n").encode("utf-8")
+    path = _build_full_package(tmp_path, id_changes=id_changes)
+    structural, authority, _ = cli.check_split(
+        path, owner_declared_final=path.name, previous_model_group_ids={"toy.a", "toy.retired"})
+    assert structural == [] and authority == []
+
+
+def test_apply_commits_the_panel_release_metadata_with_the_import(tmp_path):
+    path = _build_full_package(tmp_path)
+    rest = FakeRest()
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
+    commit = [c for c in rest.calls if c[1] == "rpc/ice_commit_staged_import"][0][2]
+    releases = commit["p_panels"]
+    assert [r["panel_id"] for r in releases] == list(ice_package.PANEL_IDS)
+    for release in releases:
+        assert release["period_from"] == "2564-01"
+        assert release["period_to"] == "2569-08"
+        assert release["access"] == {"view": ["free", "pro", "enterprise"], "info": ["pro"], "csv": ["enterprise"]}
+        assert release["free_scope"] == "latest_period"
+        assert release["confirmed_by"] == ["Owner A", "Owner B"]
+
+
+def test_apply_refuses_a_package_with_no_owner_declaration_and_stages_nothing(tmp_path):
+    path = _build_full_package(tmp_path)
+    rest = FakeRest()
+    with pytest.raises(cli.IceImportError, match="no owner declaration"):
+        cli.apply_package(path, rest=rest, imported_by="tester")
+    assert not [c for c in rest.calls if c[1].endswith("_staging") or c[1].startswith("rpc/")]
+
+
+def test_cli_check_reports_structural_and_authority_separately(tmp_path, capsys):
+    path = _build_full_package(tmp_path)
+    code = cli.main(["--check", str(path)])
+    out = capsys.readouterr().out
+    assert code == 1
+    assert '"structurally_valid": true' in out
+    assert '"production_authorized": false' in out
+    assert "no owner declaration" in out
+
+
+def test_cli_check_passes_only_when_structure_and_authority_are_both_clean(tmp_path, capsys):
+    path = _build_full_package(tmp_path)
+    code = cli.main(["--check", str(path), "--owner-declared-final", path.name])
+    out = capsys.readouterr().out
+    assert code == 0
+    assert '"production_authorized": true' in out and '"valid": true' in out
+
+
+# ---------------------------------------------------------------------------
+# R2 PR review fixes
+# ---------------------------------------------------------------------------
+
+def test_the_version_log_records_the_real_md5_index_not_null(tmp_path):
+    # The real outer index has no top-level "files" key; the audit trail must still record the md5s.
+    path = _build_full_package(tmp_path)
+    index = {
+        "period": "2569-09", "version": 1, "master_version": "6.0", "status": "พร้อมส่ง",
+        "panels": {"reg_trend": {"file": "reg_trend_2569-09_v1.zip", "md5": "abc", "bytes": 3}},
+    }
+    cli.update_package_version_log(tmp_path, index, path, imported_by="tester")
+    latest = json.loads((tmp_path / cli.PACKAGES_DIR_NAME / "ล่าสุด.json").read_text(encoding="utf-8"))
+    assert latest["md5"] == {"panels/reg_trend_2569-09_v1.zip": {"file": "reg_trend_2569-09_v1.zip", "md5": "abc", "bytes": 3}}
+    history = (tmp_path / cli.PACKAGES_DIR_NAME / "ประวัติการนำเข้า.csv").read_text(encoding="utf-8-sig")
+    assert "null" not in history
+
+
+def test_a_reconciliation_csv_without_a_period_column_is_a_refusal_not_a_crash(tmp_path):
+    rows = dict(_PANEL_CSV_ROWS)
+    rows["reg_trend"] = {"data/reg_trend.csv": (
+        "pd,province,reg_type,brand,model_group_id,model_name,reg_count\n"
+        "2569-08,x,รย.1,TOY,toy.a,A,10\n")}
+    path = _build_full_package(tmp_path, panel_rows=rows)
+    structural, authority, _ = cli.check_split(path, owner_declared_final=path.name)
+    assert any("period column" in p for p in structural)
