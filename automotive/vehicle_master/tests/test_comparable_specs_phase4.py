@@ -435,6 +435,42 @@ def test_the_volvo_xc40_has_no_suggestion_because_none_matches_the_car():
 # Bulk source import may materialise a deterministic grade, but never unsourced.
 # ---------------------------------------------------------------------------
 
+ECO_IMPORT_REASON = "bulk import from TDR EcoSticker"
+
+
+def creation_revision(trim_id):
+    """The canonical revision that first put this trim into its model, or None.
+
+    Read from the append-only revision log (canonical_state/revisions.jsonl), so the
+    answer is who created the grade and under what batch reason, not a guess from
+    the trim's own fields. A model bundle's `after` lists full trim ids; its `before`
+    is the raw model record with generation-local ids.
+    """
+    model_id = trim_id.split(".trim.")[0].rsplit(".", 1)[0]
+    local_id = trim_id.split(".trim.", 1)[1]
+    path = DATA_DIR / "2026" / "canonical_state" / "revisions.jsonl"
+
+    def after_ids(bundle):
+        return {t.get("id") for t in bundle.get("trims", [])} if isinstance(bundle, dict) else set()
+
+    def before_ids(record):
+        if not isinstance(record, dict):
+            return set()
+        return {f"{model_id}.{g.get('id')}.trim.{t.get('id')}"
+                for g in record.get("generations", []) for t in g.get("trims", [])}
+
+    with path.open(encoding="utf-8") as lines:
+        for line in lines:
+            if f'"{model_id}"' not in line or local_id not in line:
+                continue  # cheap filter: only the few lines that name this grade are parsed
+            row = json.loads(line)
+            if row.get("operation") != "UPSERT_MODEL_BUNDLE" or row.get("entity_id") != model_id:
+                continue
+            if trim_id in after_ids(row.get("after")) and trim_id not in before_ids(row.get("before")):
+                return row
+    return None
+
+
 def test_pilot_trims_materialised_by_eco_are_source_backed():
     """A deterministic bulk import may create identity; provenance is mandatory.
 
@@ -442,6 +478,13 @@ def test_pilot_trims_materialised_by_eco_are_source_backed():
     importer is a separate path: when every existing grade in a model/powertrain
     has already been accounted for, an unmatched exact ECO grade may be created.
     Such a row must carry the filing UUID that justified that creation.
+
+    A grade the owner added through an approved ADMIN batch (for example the REPAIR-02b
+    current-retail set, which created GEELY EX5 MAX+) is not an ECO creation: its
+    provenance is that batch, traceable in the revision log, and it has no ECO filing
+    to cite. Every pilot grade must therefore either carry ECO refs or be traceable to
+    a non-ECO creation; an ECO-created grade without refs, or one with no trace at all,
+    still fails.
     """
     catalog = Catalog.load(year=2026)
     pilot = set(ComparableCohort.load().pilot_model_ids)
@@ -449,8 +492,24 @@ def test_pilot_trims_materialised_by_eco_are_source_backed():
                 if catalog.model_for_trim(trim.id).id in pilot]
     assert promoted
     for trim in promoted:
-        eco_refs = trim.source_refs.get("eco", ())
-        assert eco_refs, f"{trim.id}: bulk-created pilot trim lacks ECO provenance"
+        if trim.source_refs.get("eco", ()):
+            continue
+        created = creation_revision(trim.id)
+        assert created is not None, f"{trim.id}: pilot trim has no ECO provenance and no traceable creation"
+        assert not str(created.get("reason", "")).startswith(ECO_IMPORT_REASON), (
+            f"{trim.id}: bulk-created pilot trim lacks ECO provenance")
+        assert created.get("actor"), f"{trim.id}: creation revision names no actor"
+
+
+def test_the_creation_trace_separates_admin_grades_from_eco_grades():
+    """Regression for the provenance guard: GEELY EX5 MAX+ is owner-created, MAX is ECO."""
+    admin = creation_revision("geely.geely_ex5.gen1.trim.max_plus")
+    assert admin is not None and not admin["reason"].startswith(ECO_IMPORT_REASON)
+    assert admin["actor"] == "smgkikikiki-cloud"
+    assert "ev-retail-repair-lot-02" in admin["reason"]
+    eco = creation_revision("geely.geely_ex5.gen1.trim.max_bev")
+    assert eco is not None and eco["reason"].startswith(ECO_IMPORT_REASON)
+    assert creation_revision("geely.geely_ex5.gen1.trim.no_such_grade") is None
 
 
 def test_the_gap_has_an_address_rather_than_being_a_silence():
@@ -527,19 +586,59 @@ def test_pcd_and_battery_group_are_free_form_codes_not_numbers():
         assert definition.validate_value(ValueState.KNOWN, "5x114.3", "") == []
 
 
+def _applied_vehicle_spec_batches():
+    """Trims touched by an APPLIED ADMIN `vehicle-spec-excel` batch (the Vehicle Specs workbook)."""
+    folder = DATA_DIR / "2026" / "canonical_state" / "input_batches"
+    touched = set()
+    for path in folder.glob("vehicle-spec-*.json"):
+        batch = json.loads(path.read_text(encoding="utf-8"))
+        source = batch.get("source") or {}
+        if (batch.get("status") == "APPLIED" and source.get("kind") == "ADMIN"
+                and source.get("ref") == "vehicle-spec-excel"):
+            touched.update(r.get("entity_id") for r in batch.get("results", []))
+    return touched
+
+
+def _is_owner_entered(fact_row, workbook_trims):
+    key = fact_row.get("field_key")
+    return (fact_row.get("fact_id") == f"admin:{fact_row.get('trim_id')}:{key}"
+            and fact_row.get("trim_id") in workbook_trims)
+
+
 def test_no_fitment_value_has_been_invented_for_any_pilot_trim():
-    """The schema exists; the evidence to populate it does not yet.
+    """The schema exists; nothing in this code may invent a value for it.
 
     Phase 6 was asked for as a fitment database, not a set of numbers this code
-    made up to fill the new columns. No source in this pipeline has ever
-    reported a PCD, an offset, a load index, a speed rating or a 12V battery
-    group -- only a tyre size string -- so every fact ledger in the repository
-    must carry zero facts against these keys until a real source is wired in.
+    made up to fill the new columns. No evidence source in this pipeline (ECO, OEM,
+    candidate store, importers) has ever reported a PCD, an offset, a load index, a
+    speed rating or a 12V battery group -- only a tyre size string -- so every fact
+    ledger in the repository must carry zero machine-derived facts against these keys.
+
+    The one sanctioned writer is the owner's Vehicle Specs workbook (docs/vehicle-spec-excel-import):
+    a direct, deliberately source-free admin editor, so its facts are the owner's own
+    entries, not evidence this code produced. Such a fact is accepted only when it is
+    an `admin:` fact for its own trim and field AND an applied ADMIN vehicle-spec-excel
+    input batch touched that trim; anything else is still an invented value.
     """
+    workbook_trims = _applied_vehicle_spec_batches()
     for path in (DATA_DIR / "2026" / "product" / "comparable_specs").rglob("*.json"):
         if path.name in ("registry.json", "profiles.json", "oem_sources.json"):
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         for fact_row in payload.get("facts", []):
-            assert fact_row.get("field_key") not in FITMENT_FIELDS, (
-                f"{path}: invented a value for {fact_row.get('field_key')}")
+            key = fact_row.get("field_key")
+            if key not in FITMENT_FIELDS:
+                continue
+            assert _is_owner_entered(fact_row, workbook_trims), f"{path}: invented a value for {key}"
+
+
+def test_a_machine_written_fitment_fact_is_still_refused_as_invented():
+    """The guard did not simply stop looking: only the traceable owner path passes."""
+    workbook_trims = _applied_vehicle_spec_batches()
+    trim = "aion.aion_v.av.trim.602_luxury_bev"
+    assert trim in workbook_trims
+    real = {"fact_id": f"admin:{trim}:fitment.wheel_pcd", "trim_id": trim, "field_key": "fitment.wheel_pcd"}
+    assert _is_owner_entered(real, workbook_trims)
+    assert not _is_owner_entered({**real, "fact_id": f"eco:{trim}:fitment.wheel_pcd"}, workbook_trims)
+    assert not _is_owner_entered({**real, "trim_id": "geely.geely_ex5.gen1.trim.max_plus"}, workbook_trims)
+    assert not _is_owner_entered({**real, "fact_id": f"admin:{trim}:fitment.wheel_offset_mm"}, workbook_trims)
