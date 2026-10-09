@@ -564,9 +564,9 @@ const orderingSource = stripComments(dataSource);
 const pkByFetcher: [string, string[]][] = [
   ["fetchIceRegProvince", ["period", "province", "reg_type", "brand", "fuel_group"]],
   ["fetchIceRegTrend", ["period", "province", "reg_type", "brand", "model_group_id"]],
-  ["fetchIceRegPowertrain", ["period", "province", "reg_type", "brand", "model_group_id", "fuel_group"]],
+  ["fetchIceRegPowertrain", ["period", "province", "reg_type", "brand", "model_group_id", "fuel_group", "certainty"]],
   ["fetchIceRimProvince", ["period", "province", "reg_type", "brand", "rim_bucket"]],
-  ["fetchIceTyreProvince", ["period", "province", "reg_type", "brand", "tyre_size"]],
+  ["fetchIceTyreProvince", ["period", "province", "reg_type", "brand", "tyre_size", "rim_inch"]],
   ["fetchIceTyreCoverage", ["period", "province", "reg_type", "brand"]],
 ];
 for (const [fetcherName, pkColumns] of pkByFetcher) {

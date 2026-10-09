@@ -143,8 +143,14 @@ function iceWindow(window: MarketPeriodWindow): MarketPeriodWindow {
 }
 
 // ---------------------------------------------------------------------------
-// Per-panel fetchers -- column lists and ordering match migration_v62's
-// primary keys exactly.
+// Per-panel fetchers -- column lists and ordering match migration_v62 +
+// migration_v64's primary keys exactly. reg_powertrain's order includes
+// certainty and tyre_province's includes rim_inch (migration_v64, R5
+// compatibility fix for the real TDR_FULL_2569-09_v3_M7.0.zip contract) --
+// without them, two rows sharing every other PK column (e.g. the same
+// model_group_id/fuel_group at certainty=exact and certainty=range) have no
+// deterministic tie-break between them, which is exactly the pagedSelect
+// doc comment's non-determinism risk above, not merely a theoretical one.
 // ---------------------------------------------------------------------------
 
 export async function fetchIceRegProvince(db: NonNullable<Db>, window: MarketPeriodWindow): Promise<IceRegProvinceRow[]> {
@@ -163,7 +169,7 @@ export async function fetchIceRegPowertrain(db: NonNullable<Db>, window: MarketP
   return pagedSelect<IceRegPowertrainRow>(
     db, "ice_reg_powertrain",
     "period,province,reg_type,brand,model_group_id,model_name,fuel_group,reg_est,reg_min,reg_max,certainty",
-    ["period", "province", "reg_type", "brand", "model_group_id", "fuel_group"], iceWindow(window));
+    ["period", "province", "reg_type", "brand", "model_group_id", "fuel_group", "certainty"], iceWindow(window));
 }
 
 export async function fetchIceRimProvince(db: NonNullable<Db>, window: MarketPeriodWindow): Promise<IceRimProvinceRow[]> {
@@ -175,7 +181,7 @@ export async function fetchIceRimProvince(db: NonNullable<Db>, window: MarketPer
 export async function fetchIceTyreProvince(db: NonNullable<Db>, window: MarketPeriodWindow): Promise<IceTyreProvinceRow[]> {
   return pagedSelect<IceTyreProvinceRow>(
     db, "ice_tyre_province", "period,province,reg_type,brand,tyre_size,rim_inch,reg_est",
-    ["period", "province", "reg_type", "brand", "tyre_size"], iceWindow(window));
+    ["period", "province", "reg_type", "brand", "tyre_size", "rim_inch"], iceWindow(window));
 }
 
 export async function fetchIceTyreCoverage(db: NonNullable<Db>, window: MarketPeriodWindow): Promise<IceTyreCoverageRow[]> {

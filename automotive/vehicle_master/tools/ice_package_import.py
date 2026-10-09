@@ -67,9 +67,18 @@ RestCall = Callable[..., Any]
 
 #: table name -> (declared panel_id this table belongs to, the CSV file(s) inside
 #: that panel's inner zip that feed it, the table's primary-key columns, matching
-#: migration_v62 exactly -- including fuel_group in ice_reg_powertrain's PK). A
-#: panel may feed more than one table (dims; rim/tyre_province also feed the
-#: shared coverage table).
+#: migration_v62 + migration_v64 exactly). A panel may feed more than one table
+#: (dims; rim/tyre_province also feed the shared coverage table).
+#:
+#: ice_reg_powertrain includes certainty (migration_v64): the real Ice contract
+#: (TDR_FULL_2569-09_v3_M7.0.zip's shipped validate_package.py and
+#: tdr-package-import/SKILL.md) allows the same period/province/reg_type/brand/
+#: model_group_id/fuel_group to carry two rows at different certainty (e.g.
+#: exact + range) -- proven against the real M7.0 data: 254 such keys, 508 rows,
+#: every one a 2-row exact+range or exact+family pair. ice_tyre_province /
+#: ice_dims_tyre include rim_inch (migration_v64) to match the same package's
+#: declared key, even though tyre_size already functionally determines rim_inch
+#: in every real row seen so far (see migration_v64's own comment).
 TABLES: dict[str, dict[str, Any]] = {
     "ice_reg_province": {
         "panel_id": "reg_province", "source": "data/reg_province.csv",
@@ -79,13 +88,13 @@ TABLES: dict[str, dict[str, Any]] = {
         "pk": ("period", "province", "reg_type", "brand", "model_group_id")},
     "ice_reg_powertrain": {
         "panel_id": "reg_powertrain", "source": "data/reg_powertrain.csv",
-        "pk": ("period", "province", "reg_type", "brand", "model_group_id", "fuel_group")},
+        "pk": ("period", "province", "reg_type", "brand", "model_group_id", "fuel_group", "certainty")},
     "ice_rim_province": {
         "panel_id": "rim_province", "source": "data/rim_province.csv",
         "pk": ("period", "province", "reg_type", "brand", "rim_bucket")},
     "ice_tyre_province": {
         "panel_id": "tyre_province", "source": "data/tyre_province.csv",
-        "pk": ("period", "province", "reg_type", "brand", "tyre_size")},
+        "pk": ("period", "province", "reg_type", "brand", "tyre_size", "rim_inch")},
     "ice_tyre_coverage": {
         "panel_id": "rim_province", "source": "data/coverage.csv",
         "pk": ("period", "province", "reg_type", "brand")},
@@ -93,7 +102,7 @@ TABLES: dict[str, dict[str, Any]] = {
     "ice_dims_province": {"panel_id": "dims", "source": "dims/province.csv", "pk": ("province",)},
     "ice_dims_reg_type": {"panel_id": "dims", "source": "dims/reg_type.csv", "pk": ("reg_type",)},
     "ice_dims_fuel": {"panel_id": "dims", "source": "dims/fuel.csv", "pk": ("fuel_dlt",)},
-    "ice_dims_tyre": {"panel_id": "dims", "source": "dims/tyre.csv", "pk": ("tyre_size",)},
+    "ice_dims_tyre": {"panel_id": "dims", "source": "dims/tyre.csv", "pk": ("tyre_size", "rim_inch")},
     "ice_dims_model_group": {"panel_id": "dims", "source": "dims/model_group.csv", "pk": ("model_group_id",)},
 }
 

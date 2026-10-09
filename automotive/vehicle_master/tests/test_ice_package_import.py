@@ -350,6 +350,44 @@ def test_apply_commits_the_real_row_data_through_staging_to_live(tmp_path):
     assert len(rest._live["ice_reg_trend"]) == 3
 
 
+# R5 compatibility (migration_v64): TDR_FULL_2569-09_v3_M7.0.zip proved the
+# real reg_powertrain key includes certainty -- the same model_group_id can
+# legitimately carry two rows (e.g. exact + range) for the same period/
+# province/reg_type/brand/fuel_group. The importer must preserve both rows,
+# never collapse or pick one, all the way from the package CSV to the staged
+# payload that becomes live.
+def test_reg_powertrain_tyre_province_dims_tyre_pk_match_the_m7_contract():
+    assert cli.TABLES["ice_reg_powertrain"]["pk"] == (
+        "period", "province", "reg_type", "brand", "model_group_id", "fuel_group", "certainty")
+    assert cli.TABLES["ice_tyre_province"]["pk"] == (
+        "period", "province", "reg_type", "brand", "tyre_size", "rim_inch")
+    assert cli.TABLES["ice_dims_tyre"]["pk"] == ("tyre_size", "rim_inch")
+
+
+def test_apply_preserves_two_certainty_rows_for_the_same_powertrain_key(tmp_path):
+    # toy.a: exact 6 + range (reg_est 4, reg_min 3.5, reg_max 4.5) -> sums to
+    # 10, matching reg_trend's toy.a row, so this still passes the real
+    # reconciliation gate. reg_est is populated on the range row too, matching
+    # the real M7.0 package (never blank, even at certainty=range).
+    panel_rows = {
+        **_PANEL_CSV_ROWS,
+        "reg_powertrain": {"data/reg_powertrain.csv": (
+            "period,province,reg_type,brand,model_group_id,model_name,fuel_group,reg_est,reg_min,reg_max,certainty\n"
+            "2569-08,x,รย.1,TOY,toy.a,A,ICE,6,,,exact\n"
+            "2569-08,x,รย.1,TOY,toy.a,A,ICE,4,3.5,4.5,range\n"
+            "2569-08,x,รย.1,TOY,toy.b,B,ICE,6,,,exact\n"
+            "2569-08,x,รย.1,TOY,toy.c,C,ICE,4,,,exact\n")},
+    }
+    path = _build_full_package(tmp_path, panel_rows=panel_rows)
+    rest = FakeRest()
+    cli.apply_package(path, rest=rest, owner_declared_final=path.name, imported_by="tester")
+
+    assert len(rest._live["ice_reg_powertrain"]) == 4, "no row dropped or merged"
+    toy_a_rows = [r for r in rest._live["ice_reg_powertrain"] if r["model_group_id"] == "toy.a"]
+    assert len(toy_a_rows) == 2
+    assert {r["certainty"] for r in toy_a_rows} == {"exact", "range"}
+
+
 def test_apply_chunks_staging_inserts_for_large_tables(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "CHUNK_SIZE", 1)
     path = _build_full_package(tmp_path)
