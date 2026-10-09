@@ -55,11 +55,80 @@ apply "Step 4 — Write: use repository-supported edit/write format" below to a 
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
-**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (R1-R3 complete; R3 implementation/tests done 2026-10-07,
-PR #189 pushed to `feat/ice-market-engine-m4` with CI pending — the GitHub merge itself is an
-owner/CI action, not performed by this session). R4 is a hard stop: no M5, no production import,
-no production crosswalk, no live cutover until the owner declares a final package.  
+**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (R1-R3 complete and PR #189/M4 merged to main
+2026-10-07. The owner declared `TDR_FULL_2569-09_v3_M7.0.zip` the final Ice package on
+2026-10-09 and a TDR-side compatibility patch for its grain is complete — see the R4
+compatibility entry immediately below — but **R5's actual production `--apply` has not been
+run**. This session did not advance `CURRENT_GATE` past R4 and did not flip any safety flag:
+R5 is not DONE until a real production import succeeds, per the roadmap and this task's own
+explicit instruction). R4 is a hard stop: no M5, no production import, no production crosswalk,
+no live cutover until a real `--apply` is run as its own explicit, separate action.  
 **Production import:** blocked. **Production crosswalk:** blocked. **Live cutover:** blocked.
+
+**R4 compatibility patch for the real M7.0 grain — DONE, 2026-10-09 (code + tests only, no
+production write).** Owner-declared final package: `TDR_FULL_2569-09_v3_M7.0.zip`
+(`~/Downloads/TDR_FULL_2569-09_v3_M7.0.zip`, 9,775,218 bytes, md5
+`04b3c2509ef2e82ee5eadeb5bff7effb`, sha256
+`c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d`). Supersedes the M6.0 trial
+(R2 above); M6.0 remains fixture-only/historical.
+- **Re-verified from the M7.0 ZIP itself (not assumed from the prior trial or the task's own
+  summary):** all six panels present and shipped-`validate_package.py`-clean; every panel
+  manifest `confirmed_by: ["Ice", "กี้"]` (2 names) and `qc_passed: true`; `full_package.json`
+  `status: "พร้อมส่ง"`, `confirmed_by: ["Ice", "กี้"]`, `changelog_since: "5.0"`; `CHANGELOG.csv`
+  41 rows, **all `ออกเวอร์ชัน`, none `เสนอ`** (the R2-found blocker is gone in this package);
+  `id_changes.csv` present at the zip root, 81 well-formed rows (31 `แยก`, 31 `รวม`, 19
+  `เปลี่ยนรหัส`); `dims/model_group.csv` `model_group_id` now genuinely unique (1,200 rows,
+  1,200 distinct ids, 0 duplicates — the M6.0-era MAXUS/MG duplicate is resolved); `dims/
+  method.md` present.
+- **Real TDR-side bug found and fixed:** `migration_v62`'s `ice_reg_powertrain` primary key
+  was one column narrower than Ice's own declared contract. Proven against the real M7.0 CSV
+  (146,483 rows): 254 keys under the old `(period, province, reg_type, brand, model_group_id,
+  fuel_group)` key hold more than one row (508 rows total) — every one is a 2-row
+  `certainty=exact`+`certainty=range` (234) or `exact`+`family` (20) pair; 0 collide at the
+  real 7-column key (`..., certainty`). Under the old schema, a real `--apply` of this package
+  would have failed outright with a unique-violation on `ice_reg_powertrain_staging`'s second
+  colliding row — not merely mis-aggregated.
+- `ice_tyre_province`/`ice_dims_tyre` were similarly one column narrower
+  (missing `rim_inch`). Empirically, in the real M7.0 data, `tyre_size` already functionally
+  determines `rim_inch` (it's the size string's own trailing "R<nn>", e.g. `205/55R16` ->
+  `rim_inch=16`) — 0 collisions either way (520,685 tyre_province rows, 175 dims/tyre rows —
+  checked both with and without `rim_inch`). Fixed anyway to match Ice's explicitly declared
+  compound key exactly (its shipped `validate_package.py`, `tdr-package-import/SKILL.md`, and
+  `dims/method.md`/`reg_powertrain/method.md` all independently declare the same keys), rather
+  than relying on an invariant Ice's own contract does not promise for a future delivery.
+- **Fix:** new `supabase/migration_v64_ice_panel_grain_fix.sql` (purely additive; `migration_v62`
+  not edited in place) adds `certainty` to `ice_reg_powertrain`/`_staging`'s PK and `rim_inch`
+  (marked `NOT NULL`, proven safe: 0 blank cells in the real data and both live tables are
+  still empty in production) to `ice_tyre_province`/`ice_dims_tyre` and their `_staging` twins,
+  via an idempotent drop-and-recreate loop (replay-safe, same convention as `migration_v62`'s
+  own staging-PK guard). `automotive/vehicle_master/tools/ice_package_import.py`'s `TABLES[...]
+  ["pk"]` updated to match exactly. `lib/ice-market-data.ts`'s `fetchIceRegPowertrain`/
+  `fetchIceTyreProvince` pagination `ORDER BY` column lists updated to include
+  `certainty`/`rim_inch` — the reg_powertrain one was a real latent pagination-determinism gap
+  (two rows tied on every other PK column), not just a cosmetic mismatch.
+- **Not changed, and why:** `vehreg/ice_package.py`'s own structural validator already declares
+  the correct columns (`PANEL_SCHEMAS`) and already delegates PK-duplicate detection to Ice's
+  shipped `validate_package.py` (always run, mandatory, always replaced with the package's own
+  copy) rather than duplicating that logic — adding a second, independent PK-uniqueness check
+  there would only create a drift risk against the one Ice already ships and TDR already runs
+  unconditionally. `ice_commit_staged_import`/`ice_live_table_counts` copy/count whole rows
+  (`select *`/`count(*)`), never a column list — no change needed. No foreign key references
+  the three changed tables. No index, grant, or RLS policy changes.
+- **Tests:** `tests/test_ice_market_panels_migration_v64.py` (new, real-Postgres, same
+  skip-without-local-binaries convention as `_v62`/`_v63` — did not run locally here, must run
+  in CI) proves both certainty values and both rim_inch values coexist, a full literal
+  duplicate at the real key is still rejected, `rim_inch` is NOT NULL, live/staging PKs agree,
+  `migration_v62` still replays cleanly after `v64`, and the commit RPC moves both certainty
+  rows atomically. `tests/test_ice_package_import.py` gained two fully offline tests (TABLES pk
+  tuples match the real contract; `apply_package` preserves both certainty rows for one
+  powertrain key end-to-end through the fake staging/commit layer) — both pass locally.
+  `scripts/check-ice-market-engine.ts`'s `pkByFetcher` static assertion updated to match.
+- **Offline `--check` against the real M7.0 package, exact owner declaration
+  `TDR_FULL_2569-09_v3_M7.0.zip`:** 0 structural problems, 0 authority problems
+  (`structurally_valid: true, production_authorized: true, valid: true`) — unchanged by this
+  patch, since `--check` never touches the DB schema or `TABLES[...]["pk"]`.
+- **Not done in this task, on purpose:** no `--apply`, no production write, no production
+  crosswalk `--match`, no live page/API wiring, no M5 work, no merge of the compatibility PR.
 
 **R2 — DONE, 2026-10-06 (read-only).** Fixture: the original `/Users/kiki_mac/Downloads/TDR_FULL_2569-09_v1_M6.0.zip` (md5 `4d64402cfe524c253b2bc07fa55a0831`). The extracted copy was not used. Result: **structurally valid, not production-authorized.**
 - Six panel schemas and internal manifest/md5/header checks parse with no problems. The shipped `validate_package.py` passes.

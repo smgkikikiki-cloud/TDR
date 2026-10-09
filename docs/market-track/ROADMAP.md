@@ -24,7 +24,7 @@ These flags are descriptive instructions for agents, not application config. Do 
 - **M1 — Serving contract:** done.
 - **M2 — Ice importer infrastructure:** implemented and production schema `migration_v62` is live; no production Ice Full Package has been imported.
 - **M3 — Crosswalk infrastructure:** implemented and production schema `migration_v63` is live; no production crosswalk has been generated or approved.
-- **M4 — Ice market engine:** implementation and tests complete (R3, 2026-10-07); draft PR #189 rebased onto current main and pushed, CI pending, package-independent, not merged and not wired to live pages. The GitHub merge is an owner/CI action, not performed by this session.
+- **M4 — Ice market engine:** implementation and tests complete (R3, 2026-10-07); PR #189 merged to main 2026-10-07 (CI green), package-independent, not wired to live pages.
 - **M5 — Cutover:** not started; legacy registration display remains live.
 
 ### Trial package inspected
@@ -44,6 +44,26 @@ The trial also exposed release-hygiene gaps that must be handled before a produc
 - README/contract describes `id_changes.csv`, but the inspected trial did not contain it;
 - the trial CHANGELOG contained one still-`เสนอ` row among released rows;
 - a package can present `status = พร้อมส่ง` and two sign-offs while still being a trial by owner intent, so TDR must not treat those fields alone as sufficient authority.
+
+### Final package declared (2026-10-09)
+
+The owner declared **`TDR_FULL_2569-09_v3_M7.0.zip`** (md5 `04b3c2509ef2e82ee5eadeb5bff7effb`,
+sha256 `c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d`) the final Ice package,
+superseding the M6.0 trial above. Re-verified directly from this exact ZIP (not assumed from
+the trial or from any summary): all six panels shipped-validator-clean; every manifest
+`confirmed_by: ["Ice", "กี้"]`; `CHANGELOG.csv` has 41 rows, all `ออกเวอร์ชัน` (the trial's one
+`เสนอ` row is gone); `id_changes.csv` present at the zip root (81 rows); `dims/model_group.csv`
+`model_group_id` now genuinely unique (the trial's duplicate is gone). Offline `--check` with
+`--owner-declared-final TDR_FULL_2569-09_v3_M7.0.zip`: 0 structural problems, 0 authority
+problems.
+
+This package also proved a real TDR-side schema gap (`ice_reg_powertrain`'s primary key was one
+column narrower than Ice's own declared contract — 254 real collisions in the M7.0 data, which
+would have made a real `--apply` fail outright). A compatibility patch
+(`migration_v64_ice_panel_grain_fix.sql` + importer/engine updates) was prepared on a dedicated
+branch to fix this — see `docs/WORK_STATE.md`'s "R4 compatibility patch" entry for full detail.
+**This did not run `--apply` and did not advance `CURRENT_GATE` past R4** — R5 (below) is the
+actual production import, still a separate, explicit, not-yet-taken action.
 
 ## Fixed execution order
 
