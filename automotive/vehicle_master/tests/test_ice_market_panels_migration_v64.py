@@ -30,14 +30,16 @@ def db(pg):
 
 
 def _pk_columns(db, table: str) -> str:
-    row = db.sql(
+    # db.scalar (not db.sql) -- db.sql returns psql's default aligned table
+    # output (header/dashes/"(N rows)" footer included), which .strip() does
+    # not remove; db.scalar runs -t -A and returns just the one cell value.
+    return db.scalar(
         "select string_agg(a.attname, ', ' order by k.ord) "
         "from pg_constraint c "
         "cross join lateral unnest(c.conkey) with ordinality as k(attnum, ord) "
         "join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum "
         f"where c.conrelid = 'public.{table}'::regclass and c.contype = 'p';"
-    ).strip()
-    return row
+    )
 
 
 def test_v64_replays_and_is_idempotent(db):
