@@ -32,6 +32,11 @@ then only the owner's explicit go starts seeding real mappings.
 
 ``--process-id-changes PATH`` reads an Ice ``id_changes.csv`` (SKILL.md §3) and calls
 ``ice_crosswalk_apply_id_change`` once per row.
+
+``--check-live-import`` is read-only (one GET): it fails unless the latest
+``ice_package_imports`` row is the ``--master-version`` this run is evaluated against. The
+R6 workflow calls it as its preflight, so the workflow itself never has to reach into the
+REST client.
 """
 from __future__ import annotations
 
@@ -307,6 +312,32 @@ def write_review_csv(path: Path, records: list[dict[str, Any]]) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Read-only preflight
+# ---------------------------------------------------------------------------
+
+class LiveImportMismatch(RuntimeError):
+    """The live Ice import is not the master_version this crosswalk run is for."""
+
+
+def check_live_import(rest: RestCall, *, master_version: str) -> dict[str, Any]:
+    """Read-only: the latest ``ice_package_imports`` row must be ``master_version``.
+
+    One GET, no write. A crosswalk run evaluated against the wrong (or no) live import
+    would match one package's groups against another's evidence, so it refuses first."""
+    rows = rest(
+        "GET",
+        "ice_package_imports?select=master_version,period,package_version&order=imported_at.desc&limit=1",
+    ) or []
+    if not rows:
+        raise LiveImportMismatch("no ice_package_imports row: nothing has been imported to match against")
+    latest = rows[0]
+    if latest.get("master_version") != master_version:
+        raise LiveImportMismatch(
+            f"latest ice_package_imports is {latest!r}, expected master_version {master_version!r}")
+    return latest
+
+
+# ---------------------------------------------------------------------------
 # id_changes.csv (SKILL.md §3)
 # ---------------------------------------------------------------------------
 
@@ -336,6 +367,8 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--match", action="store_true", help="run the auto-match pass")
     mode.add_argument("--process-id-changes", metavar="PATH", type=Path,
                        help="apply an Ice id_changes.csv (SKILL.md §3)")
+    mode.add_argument("--check-live-import", action="store_true",
+                       help="read-only preflight: the latest live import must be --master-version")
     parser.add_argument("--master-version", default="", help="Ice master_version this run is evaluated against")
     parser.add_argument("--review-csv", type=Path, default=None,
                          help="where to write the one-time review sheet (--match only; required with --match)")
@@ -344,6 +377,15 @@ def main(argv: list[str] | None = None) -> int:
     if not args.master_version:
         print("INVALID: --master-version is required")
         return 1
+
+    if args.check_live_import:
+        try:
+            latest = check_live_import(_request, master_version=args.master_version)
+        except LiveImportMismatch as exc:
+            print(f"INVALID: {exc}")
+            return 1
+        print(json.dumps({"live_import": latest}, ensure_ascii=False))
+        return 0
 
     if args.match:
         if args.review_csv is None:

@@ -87,20 +87,13 @@ jobs:
           print(f"id_changes rows: {len(rows)} (splits: {len(splits)})")
           PY
 
-      - name: Preflight - the live import is the package this run is for
+      - name: Preflight - the live import is the package this run is for (read-only)
         working-directory: automotive/vehicle_master
         shell: bash
         run: |
           set -euo pipefail
-          PYTHONPATH=. python - <<'PY'
-          import os, sys
-          from tools.canonical_input_worker import _request
-          rows = _request("GET", "ice_package_imports?select=master_version,period,package_version&order=imported_at.desc&limit=1") or []
-          if not rows or rows[0]["master_version"] != os.environ["MASTER_VERSION"]:
-              print(f"::error::latest ice_package_imports is {rows!r}, expected master_version {os.environ['MASTER_VERSION']}")
-              sys.exit(1)
-          print("live import:", rows[0])
-          PY
+          PYTHONPATH=. python -m tools.ice_crosswalk_match \
+            --check-live-import --master-version "${MASTER_VERSION}"
 
       - name: Phase 1 - record Ice's id_changes (redirects) first
         working-directory: automotive/vehicle_master

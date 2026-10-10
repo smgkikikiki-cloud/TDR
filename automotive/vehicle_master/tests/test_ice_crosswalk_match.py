@@ -575,3 +575,59 @@ def test_process_id_changes_csv_dispatches_one_rpc_call_per_row():
     assert len(results) == 1
     assert results[0]["moved"] == 1
     assert rest.tables["ice_model_crosswalk"][0]["model_group_id"] == "new-id"
+
+
+# ---------------------------------------------------------------------------
+# --check-live-import: the read-only preflight the R6 workflow calls
+# ---------------------------------------------------------------------------
+
+class ImportsRest:
+    """Answers only the one GET the preflight may make; records every call."""
+
+    def __init__(self, rows):
+        self.rows = rows
+        self.calls: list[tuple] = []
+
+    def __call__(self, method, path, payload=None, *, prefer=None):
+        self.calls.append((method, path, payload))
+        assert method == "GET" and path.startswith("ice_package_imports?"), (method, path)
+        return self.rows
+
+
+def test_check_live_import_accepts_the_matching_master_version_with_one_read():
+    rest = ImportsRest([{"master_version": "7.0", "period": "2569-09", "package_version": 3}])
+    assert matcher.check_live_import(rest, master_version="7.0")["period"] == "2569-09"
+    assert [call[0] for call in rest.calls] == ["GET"]  # read-only: a single GET, no write
+
+
+def test_check_live_import_refuses_another_master_version_or_no_import():
+    import pytest
+
+    with pytest.raises(matcher.LiveImportMismatch, match="expected master_version '7.0'"):
+        matcher.check_live_import(
+            ImportsRest([{"master_version": "6.0", "period": "2569-08", "package_version": 1}]),
+            master_version="7.0")
+    with pytest.raises(matcher.LiveImportMismatch, match="nothing has been imported"):
+        matcher.check_live_import(ImportsRest([]), master_version="7.0")
+
+
+def test_check_live_import_cli_exit_codes_and_it_needs_no_review_csv(monkeypatch, capsys):
+    ok = ImportsRest([{"master_version": "7.0", "period": "2569-09", "package_version": 3}])
+    monkeypatch.setattr(matcher, "_request", ok)
+    assert matcher.main(["--check-live-import", "--master-version", "7.0"]) == 0
+    assert '"live_import"' in capsys.readouterr().out
+
+    monkeypatch.setattr(matcher, "_request", ImportsRest([{"master_version": "6.0"}]))
+    assert matcher.main(["--check-live-import", "--master-version", "7.0"]) == 1
+    assert capsys.readouterr().out.startswith("INVALID:")
+
+    monkeypatch.setattr(matcher, "_request", ImportsRest([]))
+    assert matcher.main(["--check-live-import", "--master-version", "7.0"]) == 1
+
+
+def test_the_preflight_mode_cannot_be_combined_with_a_writing_mode():
+    import pytest
+
+    with pytest.raises(SystemExit) as caught:
+        matcher.main(["--check-live-import", "--match", "--master-version", "7.0"])
+    assert caught.value.code == 2
