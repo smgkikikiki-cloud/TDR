@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-bootstrap:v1:input",
+  "title": "Identity Bootstrap v1 -- input snapshot",
+  "description": "One consistent batch. Every subject MUST carry its Identity Resolution result: Bootstrap never runs on raw provider subjects. Periods are Gregorian 'YYYY-MM'. `units` is queue ordering only and never affects an outcome.",
+  "$comment": "Validated by identity_bootstrap/contract/schema_subset.py; only keywords that validator supports may appear here.",
+  "$defs": {
+    "period": {"type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"},
+    "nonempty": {"type": "string", "minLength": 1},
+    "brand": {
+      "type": "object",
+      "description": "The provider brand as Identity Resolution resolved it. brand_id is a TDR vehicle_brands.canonical_id and is non-null only when relation is EXACT, ALIAS_SAME or ALIAS_RELABEL.",
+      "required": ["raw", "brand_id", "relation"],
+      "additionalProperties": false,
+      "properties": {
+        "raw": {"type": "string"},
+        "brand_id": {"type": ["string", "null"]},
+        "relation": {"enum": ["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED", "UNKNOWN", "NOT_IN_TDR"]},
+        "spellings": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence_item": {
+      "type": "object",
+      "required": ["kind", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"type": "string"},
+        "ref": {"type": "string"},
+        "attests": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "description": "The projection of an Identity Resolution v1 resolution record that Bootstrap needs. outcome is IR's outcome vocabulary (PR #200 SPEC section 8.2).",
+      "required": ["outcome", "reason_codes"],
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {"enum": ["AUTO", "PROPOSE", "AMBIGUOUS", "STRUCTURAL_REVIEW", "NO_CANDIDATE", "INSUFFICIENT_DATA", "PROTECTED_HOLD", "SUPPRESSED"]},
+        "reason_codes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "identity_state": {"enum": ["DISCOVERED", "ENRICHING", "VERIFIED", "PUBLISHED", "WITHDRAWN"]},
+    "name_relation": {"enum": ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY", "SUBJECT_COARSER", "SUBJECT_FINER", "SIBLING", "CONTRADICTION", "UNAVAILABLE"]},
+    "relation": {
+      "type": "object",
+      "description": "Subject-to-peer name relation, oriented subject->peer exactly as IR SPEC section 5.3 (SUBJECT_FINER = the subject's name contains the peer's). Supplied by Identity Resolution's lexical layer; Bootstrap does not recompute it.",
+      "required": ["peer_kind", "peer_id", "name_relation"],
+      "additionalProperties": false,
+      "properties": {
+        "peer_kind": {"enum": ["TARGET", "SUBJECT"]},
+        "peer_id": {"$ref": "#/$defs/nonempty"},
+        "peer_provider": {"type": "string"},
+        "identity_state": {"anyOf": [{"$ref": "#/$defs/identity_state"}, {"type": "null"}]},
+        "name_relation": {"$ref": "#/$defs/name_relation"}
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": ["provider", "entity_id", "display_name", "brand", "identity_status", "first_seen_period", "resolution"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"$ref": "#/$defs/nonempty"},
+        "entity_id": {"$ref": "#/$defs/nonempty"},
+        "display_name": {"type": "string"},
+        "brand": {"$ref": "#/$defs/brand"},
+        "identity_status": {"enum": ["settled", "provisional", "unmapped_name"]},
+        "first_seen_period": {"$ref": "#/$defs/period"},
+        "units": {"type": ["number", "null"], "minimum": 0},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence_item"}},
+        "provider_hints": {"type": "object"},
+        "resolution": {"$ref": "#/$defs/resolution"},
+        "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "description": "An existing row of vehicle_models, in any state, deleted or not. identity_state null = a legacy canonical model (treated as PUBLISHED). Withdrawn and deleted rows are included so their ids stay reserved.",
+      "required": ["canonical_id", "brand_id", "name_en", "identity_state", "deleted"],
+      "additionalProperties": false,
+      "properties": {
+        "canonical_id": {"$ref": "#/$defs/nonempty"},
+        "brand_id": {"$ref": "#/$defs/nonempty"},
+        "name_en": {"type": "string"},
+        "slug": {"type": "string"},
+        "identity_state": {"anyOf": [{"$ref": "#/$defs/identity_state"}, {"type": "null"}]},
+        "deleted": {"type": "boolean"}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "description": "An existing external alias: a provider id bound to a canonical id.",
+      "required": ["provider", "external_id", "canonical_id", "state"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"$ref": "#/$defs/nonempty"},
+        "external_id": {"$ref": "#/$defs/nonempty"},
+        "canonical_id": {"$ref": "#/$defs/nonempty"},
+        "state": {"enum": ["ACTIVE", "RETIRED"]}
+      }
+    },
+    "lineage_event": {
+      "type": "object",
+      "required": ["event_type", "old_id", "new_id"],
+      "additionalProperties": false,
+      "properties": {
+        "event_type": {"enum": ["RENAME", "MERGE", "SPLIT"]},
+        "old_id": {"$ref": "#/$defs/nonempty"},
+        "new_id": {"$ref": "#/$defs/nonempty"}
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "required": ["declared_identity_change", "source_present", "events"],
+      "additionalProperties": false,
+      "properties": {
+        "declared_identity_change": {"type": "boolean"},
+        "source_present": {"type": "boolean"},
+        "events": {"type": "array", "items": {"$ref": "#/$defs/lineage_event"}}
+      }
+    },
+    "directive": {
+      "type": "object",
+      "description": "A recorded admin answer to an IDENTITY_REVIEW. It binds to the review fingerprint of the question it answers, so changed evidence invalidates it.",
+      "required": ["provider", "entity_id", "action", "review_fingerprint", "decided_by", "decision_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"$ref": "#/$defs/nonempty"},
+        "entity_id": {"$ref": "#/$defs/nonempty"},
+        "action": {"enum": ["CREATE_IDENTITY", "DO_NOT_CREATE"]},
+        "review_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "decided_by": {"$ref": "#/$defs/nonempty"},
+        "decision_ref": {"$ref": "#/$defs/nonempty"}
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "required": ["contract_version", "policy_version", "provider", "source_version", "as_of_period", "subjects", "identities", "bindings", "lineage"],
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {"const": 1},
+        "policy_version": {"type": "integer", "minimum": 1},
+        "provider": {"$ref": "#/$defs/nonempty"},
+        "source_version": {
+          "type": "object",
+          "required": ["label"],
+          "additionalProperties": false,
+          "properties": {"label": {"type": "string"}}
+        },
+        "as_of_period": {"$ref": "#/$defs/period"},
+        "subjects": {"type": "array", "items": {"$ref": "#/$defs/subject"}},
+        "identities": {"type": "array", "items": {"$ref": "#/$defs/identity"}},
+        "bindings": {"type": "array", "items": {"$ref": "#/$defs/binding"}},
+        "lineage": {"$ref": "#/$defs/lineage"},
+        "admin_directives": {"type": "array", "items": {"$ref": "#/$defs/directive"}}
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "description": "Supplied by the writer at apply time. Never part of a decision or a fingerprint.",
+      "required": ["run_id", "created_at", "actor"],
+      "additionalProperties": false,
+      "properties": {
+        "run_id": {"$ref": "#/$defs/nonempty"},
+        "created_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+        "actor": {"$ref": "#/$defs/nonempty"}
+      }
+    }
+  },
+  "$ref": "#/$defs/snapshot"
+}

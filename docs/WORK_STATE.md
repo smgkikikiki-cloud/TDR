@@ -2,6 +2,19 @@
 
 This file is the persistent execution state for long-running TDR work. Agents must read this file before continuing any multi-step TDR data repair, audit, batch, or migration task.
 
+## Identity Bootstrap Contract v1 — DRAFT for owner review (2026-10-10)
+
+`automotive/vehicle_master/identity_bootstrap/` holds a **contract-only** design for creating a minimal `DISCOVERED` canonical vehicle identity when Identity
+Resolution finds no TDR counterpart, and handing it to a separate enrichment process: `contract/v1/SPEC.md`, `policy.yaml`, `reason_codes.yaml`, `taxonomy.yaml`,
+`lifecycle.yaml`, four JSON schemas, a 127-case golden corpus, `README.md` (architecture, owner decisions) and `INTEGRATION.md` (live-schema conflicts, proposed schema change,
+proposed amendments to the Identity Resolution draft). Tests: `automotive/vehicle_master/tests/identity_bootstrap/`.
+
+- **No engine, adapter, persistence, migration, workflow or database access; no vehicle was created or published; no serving or catalog change.** Nothing in production imports it
+  (a test enforces it). `PRODUCTION_*` flags, the roadmap gate, R6 and R7 are untouched; PR #200 (Identity Resolution) was read, not modified.
+- **Finding:** the live `vehicle_models` cannot hold a null-attribute `DISCOVERED` row (v59 model rules, the generation requirement, an unfiltered `current_vehicle_models` view, a closed `status`
+  set), and no governed write path exists until Phase 1 — see `INTEGRATION.md` §1. VEHICLE_DB_V3 §4 also lets AI only *propose* model creation, so the plan defaults to `apply_mode: PROPOSE`.
+- **Next step:** owner review of `identity_bootstrap/README.md` §6 ("Decisions for the owner"). The engine, any migration and any write need their own explicit go and gates.
+
 ## Vehicle DB v3 platform state (current — read before anything vehicle-related)
 
 Vehicle DB v3 **Phase 0 is complete** (`docs/vehicle-db/VEHICLE_DB_V3.md`) — all seven steps,

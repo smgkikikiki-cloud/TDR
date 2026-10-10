@@ -1,0 +1,120 @@
+# Identity Bootstrap v1 -- the known edge cases, as data. Every entry is covered by at least one corpus case (tests enforce it);
+# every reason code appears in at least one entry; a bug becomes a new entry plus a failing corpus line, never a Python special case.
+version: 1
+
+areas:
+  NEW: Genuinely new identities
+  VOL: Volume is not authority
+  ACT: Activation from Identity Resolution
+  SUBJ: The external identity itself
+  BRND: Brand
+  REL: Relation to existing or pending identities
+  GRAN: Provider granularity
+  SHP: Shape suspicions (trim, code, body, generation, powertrain)
+  EVD: Evidence tiers
+  STATE: Idempotency, concurrency and existing state
+  ID: Canonical id allocation
+  BATCH: Cross-subject arbitration
+  LIN: Provider lineage (rename, merge, split)
+  ADM: Admin structure decisions
+  INP: Refusals
+  PERSIST: Write plan and persistence semantics
+  LIFE: Lifecycle
+  EVT: Hand-off event
+
+entries:
+  - {id: NEW-01, area: NEW, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Genuinely new clean model with a known brand}
+  - {id: NEW-02, area: NEW, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: New model with very low (or zero or unknown) registration volume}
+  - {id: NEW-03, area: NEW, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Same nameplate under another brand (rebadge) is a separate identity}
+  - {id: NEW-04, area: NEW, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Canonical name derivation (whole-token brand prefix, never character stripping)}
+  - {id: NEW-05, area: NEW, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Spelling variants of one nameplate produce one identity key}
+
+  - {id: VOL-01, area: VOL, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Low volume never prevents creation}
+  - {id: VOL-02, area: VOL, outcome: HOLD, codes: [PROVIDER_RAW_NAME], title: High volume never causes creation of a raw identity; it only raises the alert band}
+
+  - {id: ACT-01, area: ACT, outcome: HOLD, codes: [NOT_ACTIVATED], title: Identity Resolution found, proposed, contested, protected or suppressed a target}
+  - {id: ACT-02, area: ACT, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT], title: Identity Resolution raised a structural review}
+
+  - {id: SUBJ-01, area: SUBJ, outcome: HOLD, codes: [PROVIDER_IDENTITY_PROVISIONAL], title: Provisional provider identity}
+  - {id: SUBJ-02, area: SUBJ, outcome: HOLD, codes: [PROVIDER_RAW_NAME], title: Raw registration name or code}
+  - {id: SUBJ-03, area: SUBJ, outcome: HOLD, codes: [NAME_UNSPECIFIED], title: Blank, 'ไม่ระบุ', unknown or placeholder name}
+  - {id: SUBJ-04, area: SUBJ, outcome: HOLD, codes: [NAME_UNSPECIFIED], title: A name the TDR slug rule reduces to nothing}
+
+  - {id: BRND-01, area: BRND, outcome: HOLD, codes: [BRAND_UNKNOWN], title: Blank or unresolved brand}
+  - {id: BRND-02, area: BRND, outcome: IDENTITY_REVIEW, codes: [BRAND_NOT_IN_TDR], title: Clean brand that TDR does not have}
+  - {id: BRND-03, area: BRND, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT], title: Only a RELATED brand attribution (Maxus vans filed under MG)}
+
+  - {id: REL-01, area: REL, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED], title: Exact duplicate of an existing canonical model}
+  - {id: REL-02, area: REL, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED], title: Spelling or format variant}
+  - {id: REL-03, area: REL, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED], title: Alias under a relabelled brand}
+  - {id: REL-04, area: REL, outcome: IDENTITY_REVIEW, codes: [PROVIDER_FINER_THAN_TDR], title: Subject name contains an existing model (trim, generation, body variant of it)}
+  - {id: REL-05, area: REL, outcome: IDENTITY_REVIEW, codes: [PROVIDER_COARSER_THAN_TDR], title: Subject name is contained in existing model names}
+  - {id: REL-06, area: REL, outcome: IDENTITY_REVIEW, codes: [EXISTING_IDENTITY_SUSPECTED], title: Sibling names sharing a nameplate stem with an existing model}
+  - {id: REL-07, area: REL, outcome: IDENTITY_REVIEW, codes: [EXISTING_IDENTITY_SUSPECTED], title: Sibling of a DISCOVERED or ENRICHING identity}
+  - {id: REL-08, area: REL, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Brand is part of identity, so an identical name under another brand is no relation}
+
+  - {id: GRAN-01, area: GRAN, outcome: IDENTITY_REVIEW, codes: [PROVIDER_FINER_THAN_TDR, STRUCTURAL_CONFLICT], title: Provider finer than TDR (City / City Hatchback)}
+  - {id: GRAN-02, area: GRAN, outcome: IDENTITY_REVIEW, codes: [PROVIDER_COARSER_THAN_TDR], title: Provider coarser than TDR (Hilux Travo vs Cab / Double Cab)}
+
+  - {id: SHP-01, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_TRIM_NOT_MODEL], title: Trim or grade mistaken for a model}
+  - {id: SHP-02, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_MODEL_CODE], title: Model or displacement code mistaken for a model}
+  - {id: SHP-03, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_POWERTRAIN_DERIVATIVE], title: Engine, powertrain or displacement derivative}
+  - {id: SHP-04, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_BODY_VARIANT], title: Body-style or cab variant}
+  - {id: SHP-05, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_GENERATION_VARIANT], title: Generation, facelift or model-year marker}
+
+  - {id: EVD-01, area: EVD, outcome: HOLD, codes: [INSUFFICIENT_IDENTITY_EVIDENCE], title: No citable evidence}
+  - {id: EVD-02, area: EVD, outcome: HOLD, codes: [INSUFFICIENT_IDENTITY_EVIDENCE], title: Provider not onboarded as a creation basis}
+  - {id: EVD-03, area: EVD, outcome: CREATE_IDENTITY, codes: [FLAG_CLEARED_BY_EVIDENCE], title: Tier-2 evidence attesting a nameplate clears a lexical suspicion (and only that)}
+  - {id: EVD-04, area: EVD, outcome: IDENTITY_REVIEW, codes: [EXISTING_IDENTITY_SUSPECTED], title: Evidence about the real world cannot settle TDR's own structure or a hard flag}
+  - {id: EVD-05, area: EVD, outcome: CREATE_IDENTITY, codes: [MULTI_PROVIDER_CORROBORATION], title: Two providers name the same identity}
+
+  - {id: STATE-01, area: STATE, outcome: HOLD, codes: [IDENTITY_ALREADY_DISCOVERED], title: Same external identity seen again}
+  - {id: STATE-02, area: STATE, outcome: HOLD, codes: [IDENTITY_ALREADY_DISCOVERED], title: Different external id for an identity that already exists}
+  - {id: STATE-03, area: STATE, outcome: HOLD, codes: [IDENTITY_ALREADY_DISCOVERED], title: Simultaneous discovery of the same identity by two workers}
+  - {id: STATE-04, area: STATE, outcome: IDENTITY_REVIEW, codes: [IDENTITY_PREVIOUSLY_WITHDRAWN], title: Same key as a WITHDRAWN identity}
+  - {id: STATE-05, area: STATE, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Source version changes; decision, id and fingerprint do not}
+  - {id: STATE-06, area: STATE, outcome: HOLD, codes: [IDENTITY_ALREADY_DISCOVERED], title: Canonical identity created after discovery began (stale plan)}
+
+  - {id: ID-01, area: ID, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Id is brand + '.' + the one TDR slug of the canonical name}
+  - {id: ID-02, area: ID, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Id never depends on the provider id, source version, order or clock}
+  - {id: ID-03, area: ID, outcome: IDENTITY_REVIEW, codes: [CANONICAL_ID_COLLISION], title: Slug collision between different names}
+  - {id: ID-04, area: ID, outcome: IDENTITY_REVIEW, codes: [CANONICAL_ID_COLLISION], title: Deleted, withdrawn or slug-only reservations still collide}
+  - {id: ID-05, area: ID, outcome: IDENTITY_REVIEW, codes: [CANONICAL_ID_COLLISION], title: Two creatable subjects derive the same id in one batch}
+  - {id: ID-06, area: ID, outcome: HOLD, codes: [NAME_UNSPECIFIED], title: Degenerate slug}
+  - {id: ID-07, area: ID, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Different spellings keep different id strings but share one identity key}
+
+  - {id: BATCH-01, area: BATCH, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT], title: Containment between subjects in one batch}
+  - {id: BATCH-02, area: BATCH, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT], title: Sibling subjects in one batch}
+  - {id: BATCH-03, area: BATCH, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT, DUPLICATE_CANONICAL_SUSPECTED], title: Equal names from one provider}
+  - {id: BATCH-04, area: BATCH, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Junk peers never block a clean subject}
+  - {id: BATCH-05, area: BATCH, outcome: HOLD, codes: [IDENTITY_COALESCED], title: Cross-provider duplicates coalesce into one plan}
+  - {id: BATCH-06, area: BATCH, outcome: IDENTITY_REVIEW, codes: [CANONICAL_ID_COLLISION], title: Order inside the batch never picks a winner}
+
+  - {id: LIN-01, area: LIN, outcome: HOLD, codes: [LINEAGE_CONTINUITY_EXISTING_IDENTITY], title: Rename of a bound id}
+  - {id: LIN-02, area: LIN, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Rename of an unbound id}
+  - {id: LIN-03, area: LIN, outcome: HOLD, codes: [LINEAGE_CONTINUITY_EXISTING_IDENTITY], title: Merge whose old ids are bound to one identity}
+  - {id: LIN-04, area: LIN, outcome: IDENTITY_REVIEW, codes: [PROVIDER_LINEAGE_AMBIGUOUS], title: Merge whose old ids are bound to several identities}
+  - {id: LIN-05, area: LIN, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Merge of ids TDR never bound}
+  - {id: LIN-06, area: LIN, outcome: IDENTITY_REVIEW, codes: [PROVIDER_LINEAGE_AMBIGUOUS], title: Split (parent or child)}
+  - {id: LIN-07, area: LIN, outcome: HOLD, codes: [LINEAGE_UNRESOLVED], title: Split cycle}
+  - {id: LIN-08, area: LIN, outcome: HOLD, codes: [], title: Declared identity changes without a machine-readable source (refusal INPUT_LINEAGE_SOURCE_MISSING)}
+
+  - {id: ADM-01, area: ADM, outcome: CREATE_IDENTITY, codes: [ADMIN_STRUCTURE_DECISION_APPLIED], title: Admin CREATE_IDENTITY bound to the review fingerprint}
+  - {id: ADM-02, area: ADM, outcome: IDENTITY_REVIEW, codes: [EXISTING_IDENTITY_SUSPECTED], title: A directive bound to another fingerprint is ignored}
+  - {id: ADM-03, area: ADM, outcome: HOLD, codes: [ADMIN_DECLINED], title: Admin DO_NOT_CREATE is remembered}
+  - {id: ADM-04, area: ADM, outcome: HOLD, codes: [ADMIN_DECISION_CANNOT_CLEAR_HARD_FLAG], title: No directive clears a hard flag or a duplicate}
+
+  - {id: INP-01, area: INP, outcome: HOLD, codes: [], title: Refusal INPUT_SOURCE_VERSION_MISSING}
+  - {id: INP-02, area: INP, outcome: HOLD, codes: [], title: Refusal INPUT_DUPLICATE_SUBJECT_ID}
+  - {id: INP-03, area: INP, outcome: HOLD, codes: [], title: Refusal INPUT_POLICY_VERSION_UNSUPPORTED}
+  - {id: INP-04, area: INP, outcome: HOLD, codes: [], title: Refusal INPUT_RESOLUTION_MISSING}
+  - {id: INP-05, area: INP, outcome: HOLD, codes: [], title: Refusal INPUT_SCHEMA_INVALID (contradictory relation records)}
+
+  - {id: PERSIST-01, area: PERSIST, outcome: CREATE_IDENTITY, codes: [], title: Applying a plan twice writes once}
+  - {id: PERSIST-02, area: PERSIST, outcome: CREATE_IDENTITY, codes: [], title: Concurrent plans cannot create two identities}
+  - {id: PERSIST-03, area: PERSIST, outcome: CREATE_IDENTITY, codes: [], title: Preconditions make a plan stale; staleness means re-decide, never overwrite}
+
+  - {id: LIFE-01, area: LIFE, outcome: CREATE_IDENTITY, codes: [], title: Lifecycle transitions and who may perform them}
+
+  - {id: EVT-01, area: EVT, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: VEHICLE_IDENTITY_CREATED carries everything the enrichment subsystem needs}
+  - {id: EVT-02, area: EVT, outcome: CREATE_IDENTITY, codes: [ADMIN_STRUCTURE_DECISION_APPLIED], title: Excluded neighbours travel with the event}
