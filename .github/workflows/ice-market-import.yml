@@ -48,7 +48,6 @@ jobs:
       EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
       OWNER_DECLARED_FINAL: ${{ inputs.owner_declared_final }}
       IMPORTED_BY: ${{ inputs.imported_by }}
-      ICE_PACKAGE_PATH: ${{ runner.temp }}/ice-package.zip
 
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +59,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The runner context is not available in job-level env, so the package path is set here.
+          # The file keeps its real, declared name: the importer's owner-declaration gate compares
+          # --owner-declared-final with the package file's basename and refuses any other name.
+          echo "ICE_PACKAGE_PATH=${RUNNER_TEMP}/${OWNER_DECLARED_FINAL}" >> "${GITHUB_ENV}"
           if [ -z "${SUPABASE_URL}" ]; then
             echo "::error::SUPABASE_URL is not configured in GitHub Actions secrets."
             exit 1
@@ -150,9 +153,9 @@ jobs:
           {
             echo "## Ice Market R5 import"
             echo
-            echo "- Package: `${OWNER_DECLARED_FINAL}`"
-            echo "- Storage object: `source-imports/${ICE_OBJECT_PATH}`"
-            echo "- SHA256: `${EXPECTED_SHA256}`"
+            echo "- Package: \`${OWNER_DECLARED_FINAL}\`"
+            echo "- Storage object: \`source-imports/${ICE_OBJECT_PATH}\`"
+            echo "- SHA256: \`${EXPECTED_SHA256}\`"
             echo "- Importer completed its built-in post-commit live-table readback."
             echo "- R6 crosswalk is not run by this workflow."
           } >> "${GITHUB_STEP_SUMMARY}"
