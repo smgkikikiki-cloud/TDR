@@ -1,0 +1,389 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-resolution:v1:decision",
+  "title": "Identity Resolution v1 — engine output record",
+  "description": "Every engine output is exactly one of: a `resolution` (a decision about one subject), a `structural_operation` (a provider-lineage action), or a `refusal` (the engine declined to run). The resolver may emit proposed_status AUTO, PROPOSED or NONE — never APPROVED, LOCKED or REJECTED, which are human actions that appear only inside existing_state.",
+  "$comment": "Validated by identity_resolution/contract/schema_subset.py. Cross-checks that JSON Schema cannot express (reason codes exist in reason_codes.yaml, exactly one primary code, primary code matches the outcome) are enforced by tests/identity_resolution.",
+  "oneOf": [
+    {"$ref": "#/$defs/resolution"},
+    {"$ref": "#/$defs/structural_operation"},
+    {"$ref": "#/$defs/refusal"}
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "period": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]+$"
+    },
+    "code_ref": {
+      "type": "object",
+      "required": ["code", "role"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {"$ref": "#/$defs/code"},
+        "role": {"enum": ["primary", "blocking", "supporting", "info"]}
+      }
+    },
+    "unit_interval": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "object",
+      "description": "The evidence tuple. Every member is present; a class that could not be computed is null (or has state UNAVAILABLE) and the reason is carried by a reason code, never silently defaulted.",
+      "required": ["brand", "name", "series", "attributes", "structure", "margin"],
+      "additionalProperties": false,
+      "properties": {
+        "brand": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["relation", "subject_key", "target_key", "alias_id"],
+              "additionalProperties": false,
+              "properties": {
+                "relation": {"enum": ["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED", "MISMATCH", "UNKNOWN"]},
+                "subject_key": {"type": ["string", "null"]},
+                "target_key": {"type": ["string", "null"]},
+                "alias_id": {"type": ["string", "null"]}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["relation", "score", "subject_tokens", "target_tokens"],
+              "additionalProperties": false,
+              "properties": {
+                "relation": {"enum": ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY", "SUBJECT_COARSER", "SUBJECT_FINER", "SIBLING", "CONTRADICTION", "UNAVAILABLE"]},
+                "score": {"$ref": "#/$defs/unit_interval"},
+                "subject_tokens": {"type": "array", "items": {"type": "string"}},
+                "target_tokens": {"type": "array", "items": {"type": "string"}}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "series": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["state", "unavailable_reason", "correlation", "ratio", "monthly_fit_share", "common_months", "joint_nonzero_months", "subject_units", "target_units"],
+              "additionalProperties": false,
+              "properties": {
+                "state": {"enum": ["STRONG", "WEAK", "UNAVAILABLE"]},
+                "unavailable_reason": {"type": ["string", "null"], "description": "Set exactly when state is UNAVAILABLE: the reason code that made the series unusable."},
+                "correlation": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+                "ratio": {"type": ["number", "null"], "minimum": 0},
+                "monthly_fit_share": {"$ref": "#/$defs/unit_interval"},
+                "common_months": {"type": "integer", "minimum": 0},
+                "joint_nonzero_months": {"type": "integer", "minimum": 0},
+                "subject_units": {"type": "number", "minimum": 0},
+                "target_units": {"type": "number", "minimum": 0}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "attributes": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["body", "lifecycle", "lifecycle_share", "target_status"],
+              "additionalProperties": false,
+              "properties": {
+                "body": {"enum": ["MATCH", "MISMATCH", "UNKNOWN"]},
+                "lifecycle": {"enum": ["WITHIN", "PARTIAL", "DISJOINT", "UNKNOWN"]},
+                "lifecycle_share": {"$ref": "#/$defs/unit_interval"},
+                "target_status": {"enum": ["CURRENT", "HISTORICAL", "UNVERIFIED"]}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "structure": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["quarantined", "lineage_event_keys"],
+              "additionalProperties": false,
+              "properties": {
+                "quarantined": {"type": "boolean"},
+                "lineage_event_keys": {"type": "array", "items": {"type": "string"}}
+              }
+            },
+            {"type": "null"}
+          ]
+        },
+        "margin": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": ["runner_up_target_ids", "correlation_delta", "abs_ln_ratio_delta"],
+              "additionalProperties": false,
+              "properties": {
+                "runner_up_target_ids": {"type": "array", "items": {"type": "string"}},
+                "correlation_delta": {"type": ["number", "null"]},
+                "abs_ln_ratio_delta": {"type": ["number", "null"]}
+              }
+            },
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "description": "Exactly which months the series evidence was computed from. engine_zero_filled_periods is ALWAYS empty: the engine never turns an unobserved month into zero (SPEC §6.2).",
+      "required": ["requested_max_months", "subject_coverage", "target_coverage", "common_window", "periods", "excluded_periods", "engine_zero_filled_periods"],
+      "additionalProperties": false,
+      "properties": {
+        "requested_max_months": {"type": "integer", "minimum": 1},
+        "subject_coverage": {"anyOf": [{"$ref": "#/$defs/span"}, {"type": "null"}]},
+        "target_coverage": {"anyOf": [{"$ref": "#/$defs/span"}, {"type": "null"}]},
+        "common_window": {"anyOf": [{"$ref": "#/$defs/window"}, {"type": "null"}]},
+        "periods": {"type": "array", "items": {"$ref": "#/$defs/period"}},
+        "excluded_periods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["period", "reason"],
+            "additionalProperties": false,
+            "properties": {
+              "period": {"$ref": "#/$defs/period"},
+              "reason": {"enum": ["outside_common_coverage", "leading_inactive", "trailing_inactive", "partial_period", "outside_max_window", "unobserved_in_subject", "unobserved_in_target"]}
+            }
+          }
+        },
+        "engine_zero_filled_periods": {"type": "array", "maxItems": 0}
+      }
+    },
+    "span": {
+      "type": "object",
+      "required": ["from", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"$ref": "#/$defs/period"},
+        "to": {"$ref": "#/$defs/period"}
+      }
+    },
+    "window": {
+      "type": "object",
+      "required": ["from", "to", "months"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"$ref": "#/$defs/period"},
+        "to": {"$ref": "#/$defs/period"},
+        "months": {"type": "integer", "minimum": 1}
+      }
+    },
+    "existing_state": {
+      "type": "object",
+      "required": ["pair_state", "subject_has_protected", "protected_target_ids", "evidence_agreement", "prior_evidence_fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "pair_state": {"enum": ["NONE", "PROPOSED", "AUTO", "APPROVED", "LOCKED", "REJECTED"]},
+        "subject_has_protected": {"type": "boolean"},
+        "protected_target_ids": {"type": "array", "items": {"type": "string"}},
+        "evidence_agreement": {"enum": ["CONFIRMS", "CONTRADICTS", "INCONCLUSIVE", "NOT_APPLICABLE"]},
+        "prior_evidence_fingerprint": {"type": ["string", "null"]}
+      }
+    },
+    "alternative": {
+      "type": "object",
+      "required": ["target_ids", "candidate_status", "excluded_by", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "target_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "candidate_status": {"enum": ["AUTO", "PROPOSED", "EXCLUDED"]},
+        "excluded_by": {"type": "array", "items": {"$ref": "#/$defs/code"}},
+        "evidence": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "write": {
+      "type": "object",
+      "required": ["target_id", "action", "to_status"],
+      "additionalProperties": false,
+      "properties": {
+        "target_id": {"type": ["string", "null"]},
+        "action": {"enum": ["INSERT_AUTO", "INSERT_PROPOSED", "PROMOTE_TO_AUTO", "REFRESH_EVIDENCE", "DEMOTE_TO_PROPOSED", "MARK_STALE", "BLOCK_REPORT", "SUPPRESS", "REOPEN_AS_PROPOSED", "KEEP", "NOOP"]},
+        "to_status": {"enum": ["AUTO", "PROPOSED", "UNCHANGED"]}
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["required", "queue", "priority", "question"],
+      "additionalProperties": false,
+      "properties": {
+        "required": {"type": "boolean"},
+        "queue": {"enum": ["crosswalk_review", "structure_review", "discovery", "none"]},
+        "priority": {"enum": ["low", "normal", "high"]},
+        "question": {"type": ["string", "null"]}
+      }
+    },
+    "policy_ref": {
+      "type": "object",
+      "required": ["version", "digest"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "source_version": {
+      "type": "object",
+      "required": ["label"],
+      "additionalProperties": false,
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "attributes": {"type": "object"}
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "required": [
+        "record_type", "contract_version", "policy", "provider", "source_version", "subject",
+        "outcome", "proposed_status", "method", "target", "reason_codes", "evidence", "comparison",
+        "existing_state", "alternatives", "review", "writes", "fingerprints"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {"const": "resolution"},
+        "contract_version": {"const": "v1"},
+        "policy": {"$ref": "#/$defs/policy_ref"},
+        "provider": {"type": "string", "minLength": 1},
+        "source_version": {"$ref": "#/$defs/source_version"},
+        "subject": {
+          "type": "object",
+          "required": ["entity_kind", "entity_id"],
+          "additionalProperties": false,
+          "properties": {
+            "entity_kind": {"type": "string", "minLength": 1},
+            "entity_id": {"type": "string", "minLength": 1}
+          }
+        },
+        "outcome": {"enum": ["AUTO", "PROPOSE", "AMBIGUOUS", "STRUCTURAL_REVIEW", "NO_CANDIDATE", "INSUFFICIENT_DATA", "PROTECTED_HOLD", "SUPPRESSED"]},
+        "proposed_status": {"enum": ["AUTO", "PROPOSED", "NONE"]},
+        "method": {"enum": ["SERIES", "NAME", "NONE"]},
+        "target": {
+          "type": "object",
+          "required": ["kind", "ids"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"type": "string", "minLength": 1},
+            "ids": {"type": "array", "maxItems": 3, "items": {"type": "string", "minLength": 1}}
+          }
+        },
+        "reason_codes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/code_ref"}},
+        "evidence": {"$ref": "#/$defs/evidence"},
+        "comparison": {"anyOf": [{"$ref": "#/$defs/comparison"}, {"type": "null"}]},
+        "existing_state": {"anyOf": [{"$ref": "#/$defs/existing_state"}, {"type": "null"}]},
+        "alternatives": {"type": "array", "items": {"$ref": "#/$defs/alternative"}},
+        "review": {"$ref": "#/$defs/review"},
+        "writes": {"type": "array", "items": {"$ref": "#/$defs/write"}},
+        "fingerprints": {
+          "type": "object",
+          "required": ["decision", "evidence"],
+          "additionalProperties": false,
+          "properties": {
+            "decision": {"$ref": "#/$defs/sha256"},
+            "evidence": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"outcome": {"const": "AUTO"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "proposed_status": {"const": "AUTO"},
+              "method": {"const": "SERIES"},
+              "target": {"properties": {"ids": {"minItems": 1, "maxItems": 1}}},
+              "review": {"properties": {"required": {"const": false}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "PROPOSE"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "proposed_status": {"const": "PROPOSED"},
+              "method": {"enum": ["SERIES", "NAME"]},
+              "target": {"properties": {"ids": {"minItems": 1}}},
+              "review": {"properties": {"required": {"const": true}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"enum": ["AMBIGUOUS", "STRUCTURAL_REVIEW", "NO_CANDIDATE", "INSUFFICIENT_DATA", "PROTECTED_HOLD", "SUPPRESSED"]}}, "required": ["outcome"]},
+          "then": {"properties": {"proposed_status": {"const": "NONE"}}}
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "AMBIGUOUS"}}, "required": ["outcome"]},
+          "then": {"properties": {"alternatives": {"minItems": 2}, "target": {"properties": {"ids": {"maxItems": 0}}}}}
+        },
+        {
+          "if": {"properties": {"outcome": {"enum": ["NO_CANDIDATE", "INSUFFICIENT_DATA", "SUPPRESSED"]}}, "required": ["outcome"]},
+          "then": {"properties": {"target": {"properties": {"ids": {"maxItems": 0}}}}}
+        }
+      ]
+    },
+    "structural_operation": {
+      "type": "object",
+      "required": [
+        "record_type", "contract_version", "policy", "provider", "source_version", "op", "event_type",
+        "old_id", "new_id", "hint_target_ids", "reason_codes", "authority", "affects_protected",
+        "requires_owner_ack", "fingerprint"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {"const": "structural_operation"},
+        "contract_version": {"const": "v1"},
+        "policy": {"$ref": "#/$defs/policy_ref"},
+        "provider": {"type": "string", "minLength": 1},
+        "source_version": {"$ref": "#/$defs/source_version"},
+        "op": {"enum": ["REDIRECT", "MOVE_MAPPINGS", "FLAG_MAPPING_REVIEW", "QUARANTINE", "CANDIDATE_HINT", "NOOP", "ERROR"]},
+        "event_type": {"enum": ["RENAME", "MERGE", "SPLIT"]},
+        "old_id": {"type": "string", "minLength": 1},
+        "new_id": {"type": ["string", "null"]},
+        "hint_target_ids": {"type": "array", "items": {"type": "string"}},
+        "reason_codes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/code_ref"}},
+        "authority": {"const": "PROVIDER_STRUCTURE"},
+        "affects_protected": {
+          "type": "object",
+          "required": ["approved", "locked"],
+          "additionalProperties": false,
+          "properties": {
+            "approved": {"type": "integer", "minimum": 0},
+            "locked": {"type": "integer", "minimum": 0}
+          }
+        },
+        "requires_owner_ack": {"type": "boolean"},
+        "fingerprint": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "refusal": {
+      "type": "object",
+      "required": ["record_type", "contract_version", "policy", "provider", "code", "detail"],
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {"const": "refusal"},
+        "contract_version": {"const": "v1"},
+        "policy": {"$ref": "#/$defs/policy_ref"},
+        "provider": {"type": "string", "minLength": 1},
+        "code": {"$ref": "#/$defs/code"},
+        "detail": {"type": "string"}
+      }
+    }
+  }
+}

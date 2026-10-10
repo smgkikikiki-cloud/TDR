@@ -52,6 +52,24 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
+## Identity Resolution Contract v1 — DRAFT for owner review (2026-10-10)
+
+`automotive/vehicle_master/identity_resolution/` now holds a provider-agnostic identity-resolution **contract**: `contract/v1/SPEC.md`,
+`policy.yaml`, `reason_codes.yaml`, `taxonomy.yaml`, the input/output/case JSON schemas and a golden corpus (`cases.jsonl`), plus its
+contract tests (`automotive/vehicle_master/tests/identity_resolution/`) and `README.md` (architecture, evidence base, owner decisions).
+
+- **Documentation, corpus and test tooling only.** There is no resolver, adapter, CLI, persistence, migration, workflow or database access, and
+  nothing in production imports the package (a test enforces it). `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain
+  the live matcher. No `ice_*` row, mapping, `PRODUCTION_*` flag or roadmap gate was touched; R6 was not re-run and R7 was not started.
+- **Why:** the owner reported that the first R6 run exposed design flaws (time-window bias, granularity mismatches, weak brand normalization, bad
+  proposals such as D-Max → MU-X). The contract makes TDR own the identity-resolution policy — Ice's package guidance covers only Ice-internal id
+  continuity (`id_changes.csv`), not an Ice → TDR mapping.
+- **State discrepancy, left as is:** the Market Track section below still says R6 "has not been started"; the owner reports it ran once and produced candidate
+  rows. The R6 review rows are not in the repository, so the corpus reproduces that run's defect classes from the code and the real M7.0 package rather
+  than from rows. Reconcile this file when the owner decides how the first run is recorded.
+- **Next step:** owner review of `identity_resolution/README.md` §6 ("Decisions for the owner"). The engine (phase 1) and everything after it need an explicit go
+  and their own gates (README §5); none of it may precede the R6 decision.
+
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  

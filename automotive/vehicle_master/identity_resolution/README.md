@@ -1,0 +1,162 @@
+# TDR Identity Resolution
+
+A permanent, provider-agnostic subsystem that decides how an **external vehicle identity** (provider #1: an Ice `model_group`) relates to a
+**TDR canonical entity** (`vehicle_models`), with evidence a human can audit and a machine can replay.
+
+> **Status: Contract v1 is a DRAFT for owner review.** This directory holds the contract, the golden corpus, the architecture and the
+> contract-level tooling. There is **no resolver**, nothing reads this in production, no database state was touched, R6 was not re-run
+> and R7 was not started. `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain the live matcher.
+> (A test fails if any production module imports this package.)
+
+## Reading order
+
+1. This file — architecture, evidence base, decisions for the owner.
+2. [`contract/v1/SPEC.md`](contract/v1/SPEC.md) — the normative contract (sections 0–17 + generated appendices).
+3. [`contract/v1/policy.yaml`](contract/v1/policy.yaml) — every tunable, with provenance (inherited / observed / proposal / assumption).
+4. [`contract/v1/taxonomy.yaml`](contract/v1/taxonomy.yaml) and [`reason_codes.yaml`](contract/v1/reason_codes.yaml) — the edge cases and the code registry.
+5. [`contract/v1/cases.jsonl`](contract/v1/cases.jsonl) — the golden corpus (the engine's executable specification).
+6. [`contract/v1/decision.schema.json`](contract/v1/decision.schema.json), [`record.schema.json`](contract/v1/record.schema.json), [`case.schema.json`](contract/v1/case.schema.json).
+
+## 1. Architecture
+
+```
+                         ┌───────────────────────────── contract/v1 (versioned, immutable once adopted) ─────────────────────────────┐
+                         │ SPEC.md   policy.yaml   reason_codes.yaml   taxonomy.yaml   *.schema.json   cases.jsonl (golden corpus)    │
+                         └───────────────▲───────────────────────────────▲───────────────────────────────────────────▲───────────────┘
+                                         │ reads (no numbers in code)    │ validates                                  │ regression suite
+   provider package                      │                               │                                            │
+   (Ice TDR_FULL zip) ──► providers/ice.py ──► SNAPSHOT ──► engine/ ───────┴──► DECISION / STRUCTURAL_OPERATION / REFUSAL ───┘
+                         adapter: all provider      (generic input:      normalize → lineage → candidates → evidence →     (generic output: reason codes,
+                         meaning is converted       subjects, targets,   decision → arbitration → write planning            evidence tuple, comparison periods,
+                         here, nothing else         series, lineage)     (pure, deterministic, no I/O, no clock)           policy+source version, fingerprints)
+                                                                                                    │
+                                                                                                    ▼  a WRITE PLAN, never a write
+                                                                       writer (separate, later) ──► candidate store / mapping store
+                                                                       the DB RPC stays the last line of defence for APPROVED/LOCKED
+```
+
+| Layer | Responsibility | Knows about Ice? | Status |
+|---|---|---|---|
+| `contract/v1/` | Policy, registries, schemas, corpus. The only place a number, alias or threshold may live. | No (Ice appears only as data) | **this deliverable** |
+| `contract/loader.py`, `schema_subset.py`, `render.py` | Strict loading (duplicate keys are errors), a stdlib validator for the schema subset the contract uses, SPEC appendix generation | No | **this deliverable** |
+| `providers/base.py` | The generic adapter interface: `SubjectSource` (provider side) and `TargetSource` (TDR side) protocols, and `assemble_snapshot`, which validates the result against `record.schema.json` at the boundary | No | **this deliverable** (interface only) |
+| `providers/ice.py` | Ice package → snapshot (Buddhist→Gregorian, sparse→dense with zero-fill only inside declared coverage, `__provisional`/`BRAND\|MODEL` → `identity_status`, `id_changes.csv` → lineage events) | **Yes — the only place** | planned |
+| `engine/normalize.py` | brand keys, name tokens, relations (SPEC §5) | No | planned |
+| `engine/candidates.py` | pool, bundles, provider-finer detection (SPEC §7) | No | planned |
+| `engine/evidence.py` | common window, statistics, attributes (SPEC §6) | No | planned |
+| `engine/decision.py` | flags, outcome, ranking, margin, review routing (SPEC §8) | No | planned |
+| `engine/resolver.py` | lineage → per-subject → arbitration → write plan → fingerprints | No | planned |
+| `cli.py` | `resolve --snapshot … --policy …`, `check-corpus` | No | planned |
+| writer / persistence | applies a write plan to the stores | No | out of scope; needs its own gate |
+
+The two providers of a comparison are symmetric in shape: the **subject** side (Ice) and the **counterpart** side (TDR's own registrations and catalog) both arrive as series with declared coverage; the engine treats neither as special.
+
+**Separation, concretely.** The engine takes `(snapshot, policy)` and returns records. It has no Supabase client, no file I/O, no clock, no Ice column names. Everything that changes a decision is a key in `policy.yaml`; a test sweep (§4) shows that flipping any single behaviour-bearing key fails at least one golden case, so "a number hiding in Python" cannot go unnoticed.
+
+**Candidate rows change; mappings do not.** The write matrix (SPEC §10.2) is data: an existing AUTO row may be refreshed, demoted or promoted; a PROPOSED row may go stale; an APPROVED or LOCKED row is only ever `BLOCK_REPORT`ed. `AUTO` is a revocable machine link and is never `APPROVED`.
+
+## 2. How the first-run R6 flaws map to the contract
+
+| Defect (owner report) | Mechanism (verified against the repo) | Where it is handled | Corpus |
+|---|---|---|---|
+| Time-window bias | `tools/ice_crosswalk_match._recent_periods` takes the newest 24 *Ice* months, and `build_paired_series` turns any month the TDR side lacks into 0 | SPEC §6.2: newest 24 months of the **common** window; null ≠ 0; trim inactive edges; minimums | `SER-01..06`, `window.*`, `resolve.window-*` |
+| Granularity mismatch | candidates are scored one TDR model at a time (`match_one_group`), so `cab + double_cab → travo` is undiscoverable; one TDR model ↔ two Ice groups (`City` / `City Hatchback`) is silently resolved to one | SPEC §7.3 bundles, §7.4 provider-finer → `STRUCTURAL_REVIEW` | `SER-17`, `GRAN-01`, `resolve.hilux-travo-*`, `resolve.provider-finer-*` |
+| Weak brand normalization | `normalize_model_name` strips the brand by `startswith` on the exact brand string: `MG4 EV` → `4 ev`; `Mercedes GLC` is not stripped under `MERCEDES BENZ` | SPEC §5.1–5.2: compact keys, alias classes, whole-token prefix removal | `BRND-01..07`, `brand_relation.*`, `name_tokens.*` |
+| `D-Max → MU-X` | reproduced offline: `'d max'` vs `'mu x'` scores **0.44** with `SequenceMatcher`, above `NAME_CANDIDATE_FLOOR = 0.35`, so a NAME-only PROPOSED row is written | SPEC §5.3: `CONTRADICTION` is a veto; a strong series cannot rescue it (`series_only.allow_with_name_veto = false`) | `NAME-02`, `name_relation.dmax-vs-mux`, `resolve.dmax-not-mux` |
+| `Hilux Revo ≈ Hilux Travo` | legacy score **0.86** ≥ the 0.8 AUTO threshold | `SIBLING` veto | `NAME-04` |
+| Conflicting candidates | the best candidate is kept and the rest dropped without a trace | SPEC §8.3: tie inside the margin → `AMBIGUOUS`, all listed | `CARD-01`, `classify.ambiguous-*` |
+| Retired split parents have no redirect | `ice_model_group_redirects.change_type` admits only RENAME/MERGE; M7.0 has 3 such ids (15 rows) | SPEC §9.2: redirect to the largest-share successor (Ice's published rule) | `LIN-04`, `lineage.split-retired-*` |
+| Split "STRUCTURE proposals" copy the parent's target onto the child | `ice_crosswalk_apply_id_change` inserts `(new_id, same canonical)` as `PROPOSED/ADMIN` | SPEC §9.5: a review question (STRUCTURE card), not a mapping row | `LIN-03`, `lineage.split-live-parent-corolla` |
+| A REJECTED row is re-proposed every package | `decision_fingerprint` includes `master_version` | SPEC §11.2: a banded evidence fingerprint with no window and no source version | `FP-02`, `STATE-05/06` |
+
+## 3. Evidence base (all verified from the repository's own copy of the R5-imported package)
+
+`data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip` (sha256 `c558d2d4…94677d`, the package live since R5). Read-only; nothing was imported or written.
+
+- **1,200** `model_group`s: **495** normal ids, **114** `__provisional`, **591** `BRAND|MODEL`. `model_name` is not a key (38 groups are named `ไม่ระบุ`).
+- Data sufficiency: **735** groups have rows in fewer than 6 months (87 in 6–11, 98 in 12–23, 280 in ≥ 24); **912** groups hold < 120 lifetime units yet only **0.21 %** of all 4,141,987 units; **239** groups first appear in the last 24 months; **518** have months with no row between their first and last month; **0 of 262,985** `reg_trend` rows have a count ≤ 0 (Ice ships no zero rows).
+- `id_changes.csv`: **81** rows (31 รวม, 31 แยก, 19 เปลี่ยนรหัส), **63** distinct old ids — **53 retired, 10 still live**; **15** SPLIT rows come from **3 retired** ids (`…-amg-g` ×6, `…-amg-cls` ×6, `toyota-toyota-gr` ×3); **3** ids are both old and new in the file (`mini-mini-cooper-ev`, `-jcw-rhd`, `-jcw-convertible`), and `mini-mini-cooper-ev` ↔ `mini-mini-jcw-convertible` split into each other.
+- Brands: `MERCEDES BENZ` / `MERCEDES` / `BENZ` / `MERCEDES AMG` / `MERCEDESBENZ MAYBACH`; `ZXAUTO` / `ZX AUTO`; `DFSK` / `DSFK` (typo); Deepal models are filed under `CHANGAN`; Maxus vans are registered under **MG** (`maxus-mifa-7`: 934 units, all MG; `maxus-mifa-9`: 1,961 MG + 2 MAXUS; `maxus-maxus-v80`: 119 MG + 16 MAXUS).
+- Body: 649 of 1,200 groups have a blank `body`.
+- Ice's own guidance (`สำหรับ_AI/tdr-package-import/SKILL.md` §3) covers only Ice-internal id continuity; it states the DLT raw-name table is *not* in the package.
+
+To re-check these yourself (extract to a fresh directory; the interpreter runs isolated):
+
+```bash
+D=$(mktemp -d) && python3 -I -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" \
+  data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip "$D" && ls "$D"        # id_changes.csv, panels/, …
+```
+
+**State discrepancy, not resolved here.** `docs/WORK_STATE.md` and `docs/market-track/ROADMAP.md` still say *R6 has not been started*. The owner reports that R6 ran once and produced candidate rows. The review rows are not in the repository, so the `owner_report_r6` corpus cases are **reproduced from the stated mechanism and the repo code**, not from row data; replace them with real rows when the review sheet is available. This task did not edit R6/R7 gate state.
+
+## 4. Verification performed — and what it does not prove
+
+Committed (`tests/identity_resolution/`, run by the existing `vehicle-master-engine` CI job: PyYAML + pytest only):
+
+- schemas use only keywords the stdlib validator implements, every `$ref` resolves, and (when `jsonschema` is installed) the real validator agrees on all cases;
+- policy, registry and taxonomy are internally consistent (provenance on every key, complete write matrix, protected rows are `BLOCK_REPORT`, every reason code belongs to a taxonomy entry, …);
+- the corpus validates, covers **every taxonomy id**, asserts **every reason code**, names every defect class the task listed with an end-to-end case, and its arithmetic expectations (windows, gates, bands, lifecycle, body, write matrix, fingerprints) are **recomputed by an independent reference** (`ir_reference.py`);
+- SPEC.md cannot drift: its appendices are generated from the YAML and compared, and prose mentions of reason codes / policy keys must exist;
+- no production module imports the subsystem; an `engine/` directory cannot appear without a conformance runner.
+
+Not committed (throwaway, in the working scratchpad): a prototype of the SPEC's decision procedure. All corpus cases agree with it, and a sweep of **195 single-key policy mutations** (every behaviour-bearing key flipped, halved, doubled or dropped, one at a time) was run against the committed corpus — 193 were caught and the 2 survivors are equivalent mutants (dropping the last element of an ordering list changes nothing). That sweep is how the policy was pruned to behaviour-bearing keys and how the gaps in the corpus were found. **It proves the SPEC and the corpus are consistent with each other, not that the rules are right** — it has the same author. The rules need the owner's review and, for thresholds, calibration on real data.
+
+**Not verified:** how TDR files Range Rover / GWM sub-brands (alias provenance `assumption`); whether TDR's `body_type` and generation dates are populated; any behaviour on production data; Ice's reading of an absent `reg_trend` row as zero.
+
+## 5. Compatibility and migration path
+
+Each step needs its own owner gate. None is part of this deliverable.
+
+| Phase | What | Gate |
+|---|---|---|
+| 0 | **Contract + corpus + tooling (this)** | owner review |
+| 1 | `engine/` + `providers/ice.py` + the conformance runner; offline, no DB; the corpus passes 100 % | owner approves the contract |
+| 2 | **Shadow mode**: run on a fixture of the R6 inputs, write nothing, diff against the legacy review sheet; calibrate the `proposal` thresholds | owner reads the diff |
+| 3 | Persistence: a writer applying write plans; storage for candidate/evidence rows vs mappings; `LOCKED`; redirects for retired splits; the evidence fingerprint column | schema/migration gate (never before R6's own gate) |
+| 4 | Facades: `vehreg/ice_crosswalk.py` / `tools/ice_crosswalk_match.py` delegate to the engine; the legacy review CSV is generated from decisions | cutover gate |
+
+Mapping to the v63 tables (no change made):
+
+| v63 | v1 |
+|---|---|
+| `ice_model_crosswalk.status` AUTO/APPROVED/PROPOSED/REJECTED | same states; **LOCKED** is new (v63's de-facto lock is `match_method = 'ADMIN'`) |
+| `match_method` SERIES/NAME/ADMIN | `method` SERIES/NAME/NONE; ADMIN means "a human set it" and is no longer used to label machine STRUCTURE proposals |
+| `score` (one number) | the evidence tuple |
+| `decision_fingerprint` | two fingerprints (`decision`, `evidence`) |
+| `reason` (text) | reason codes + roles |
+| `master_version` | `source_version.label` |
+| `ice_model_group_redirects` (RENAME/MERGE only) | needs a SPLIT-successor kind |
+| `ice_brand_aliases` | superseded by `policy.aliases` (git-reviewed); the table could become a read model |
+
+Naming note: `vehreg/retail_lineup_*` already has an unrelated *field* called `identity_resolution`; there is no module or package of that name, so nothing collides.
+
+## 6. Decisions for the owner
+
+Numbered for reference; each says what v1 assumes and what I recommend.
+
+1. **Accept the deliberate deviations D1–D13 in SPEC §15.** The two that change owner-approved text are D2 (token relations replace the §14.2 similarity score; "name ≥ 0.8" becomes "name relation is EQUAL-class") and D5 (a split raises a review question instead of copying a row). *Recommend: accept.*
+2. **Calibrate the `proposal` thresholds on the real R6 review sheet before adoption** (minimums, monthly-fit tolerances, margins, lifecycle shares, the 0.5 / 2.0 "decisively wrong" band, discovery floors). They are defensible defaults, not measured values. *Recommend: share the R6 review CSV; it replaces the reproduced `owner_report_r6` cases.*
+3. **Alias authority.** v1 makes `policy.yaml` the source and treats the DB table as a read model. Please confirm the `assumption` aliases (Range Rover/Land Rover, GWM sub-brands) and the token equivalences (`ev`=`electric`, `hatch`=`hatchback`, `hev`=`hybrid`).
+4. **MG-registered Maxus vans.** v1 treats MG↔MAXUS as RELATED (PROPOSED at most) because Ice files `maxus-mifa-7/9`, `maxus-v80` under **MG** while TDR's brand is MAXUS. Do you want a scoped rule that makes exactly those AUTO-eligible?
+5. **`LOCKED`.** Add it as a real state (recommended) or keep `ADMIN` as the lock?
+6. **Protected rows and a rename.** v1 lets an APPROVED mapping follow a rename as a recorded lineage move and makes a LOCKED one wait for the owner (`policy.lineage.protected`). Prefer owner acknowledgement for APPROVED too?
+7. **Provider finer than TDR** (`honda-city` + `honda-city-hatchback` vs one TDR `City`). v1 raises a structure review because §14.2 allows a target at most one active group. If you want it expressed as data, that rule needs to relax (for example allow a display-only many-subjects→one-target link) — a schema decision.
+8. **Retired split parents** (3 ids in M7.0) need a place for their redirect (`ice_model_group_redirects` rejects them today).
+9. **Trim-code groups** (`mercedes-benz-e300`, `-c350`, …; 4,473 units for E300 alone). v1 refuses to link `E300` to `E-Class` and flags it for discovery. Add family rules later (recommended) or scope them now?
+10. **Questions for Ice (not blockers):** is an absent `reg_trend` row inside `reg_range` a true zero? What does an id_changes RENAME/MERGE mean when the old id is still in `dims`? Is `share_of_old_pct` ever to be shown?
+11. **State docs.** `WORK_STATE.md` still says R6 is not started; reconcile it when you decide how the first run is recorded.
+
+## 7. Not done, deliberately
+
+No engine, adapter, CLI, persistence, migration or workflow; no change to `vehreg/ice_crosswalk.py`, `tools/ice_crosswalk_match.py`, `supabase/`, `.github/`, any `ice_*` table, any mapping, `PRODUCTION_*` flag or roadmap gate; no R6 re-run; no R7; no database or network access beyond reading the repository.
+
+## 8. Working with the contract
+
+```bash
+cd automotive/vehicle_master
+python -m pytest -q tests/identity_resolution                       # the contract suite
+python -m identity_resolution.contract.render --write               # regenerate SPEC appendices after editing policy/registry/taxonomy
+python -m identity_resolution.contract.render --check               # CI-style check
+```
+
+**Adding an edge case** (SPEC §14.4): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change policy (or, later, the engine) until it passes → bump `policy.version` if behaviour moved → regenerate the appendices. Never a Python special case.

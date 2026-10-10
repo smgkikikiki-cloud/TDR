@@ -1,0 +1,658 @@
+# TDR Identity Resolution — Reason-code registry v1 (DRAFT, pending owner review)
+#
+# Every decision, structural operation and refusal explains itself with codes from THIS file and nothing
+# else. A code that is not here is a contract violation (the schema + tests reject it). A decision carries
+# exactly ONE `primary` code (why the outcome is what it is) plus any number of `blocking` (stopped a
+# stronger outcome), `supporting` (evidence in favour) and `info` (context) codes.
+#
+# Fields
+#   area      grouping prefix
+#   kind      decision | structural | both | refusal   (which record types may carry it; `both` = a structural
+#             operation names it as primary and a resolution carries it as a blocking/info code)
+#   roles     which roles this code may take (primary | blocking | supporting | info)
+#   effect    what the code DOES to the decision (SPEC §8):
+#               none              informational only
+#               cap_proposed      the candidate may not be AUTO; PROPOSED at most
+#               veto_candidate    the candidate is excluded from selection
+#               series_unavailable  no series evidence is available for this candidate
+#               name_unavailable  no name evidence is available
+#               forces_review     routes the record to a review queue
+#               blocks_write      the writer may not change the mapping (protection)
+#               suppresses        the candidate is not re-proposed
+#               refuses_run       the engine refuses the run / stage (no decision is emitted)
+#               emits_operation   a structural operation is produced
+#   primary_for  outcomes (decision) or ops (structural) for which this code may be the primary code
+#   summary   one line
+
+version: v1
+
+outcomes: [AUTO, PROPOSE, AMBIGUOUS, STRUCTURAL_REVIEW, NO_CANDIDATE, INSUFFICIENT_DATA, PROTECTED_HOLD, SUPPRESSED]
+operations: [REDIRECT, MOVE_MAPPINGS, FLAG_MAPPING_REVIEW, QUARANTINE, CANDIDATE_HINT, NOOP, ERROR]
+roles: [primary, blocking, supporting, info]
+
+codes:
+  # ------------------------------------------------------------------ outcome explainers (primary only)
+  AUTO_ALL_GATES_PASSED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [AUTO]
+    summary: Every AUTO gate passed (SPEC §8.4). AUTO is a revocable machine link, never an approval.
+  PROPOSE_SERIES_STRONG_CAPPED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [PROPOSE]
+    summary: Series evidence is strong but at least one blocking code keeps the candidate from AUTO.
+  PROPOSE_NAME_MATCH_SERIES_NOT_STRONG:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [PROPOSE]
+    summary: Name and brand agree but the series is weak or unavailable. Name alone is never AUTO.
+  PROPOSE_BUNDLE:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [PROPOSE]
+    summary: No single TDR model fits but a bundle of 2..max_members TDR models does. Bundles are PROPOSED at most.
+  AMBIGUOUS_CANDIDATES_WITHIN_MARGIN:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: forces_review
+    primary_for: [AMBIGUOUS]
+    summary: Two or more candidates tie at the top tier inside the policy margin; none is selected.
+  AMBIGUOUS_TARGET_CONTESTED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: forces_review
+    primary_for: [AMBIGUOUS]
+    summary: Two subjects would each take the same TDR target as their active mapping; neither is auto-linked.
+  STRUCTURAL_PROVIDER_FINER:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: forces_review
+    primary_for: [STRUCTURAL_REVIEW]
+    summary: The provider splits what TDR holds as one model (e.g. sedan + hatchback); the one-target-one-group rule cannot express it.
+  STRUCTURAL_APPROVED_CLAIM_CONFLICT:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: forces_review
+    primary_for: [STRUCTURAL_REVIEW]
+    summary: This subject strongly fits a TDR target already held APPROVED/LOCKED by another subject. Nothing is changed; the owner decides.
+  NO_CANDIDATE_ALL_EXCLUDED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [NO_CANDIDATE]
+    summary: Every brand-compatible candidate is excluded by affirmative evidence.
+  NO_CANDIDATE_EMPTY_POOL:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [NO_CANDIDATE]
+    summary: The TDR brand exists but offers no eligible model.
+  INSUFFICIENT_DATA_NO_BASIS:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: none
+    primary_for: [INSUFFICIENT_DATA]
+    summary: A candidate survives but no evidence reaches PROPOSE; re-evaluate when data accrues.
+  PROTECTED_HOLD_APPROVED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: blocks_write
+    primary_for: [PROTECTED_HOLD]
+    summary: The subject has an APPROVED mapping. The engine reports evidence and changes nothing.
+  PROTECTED_HOLD_LOCKED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: blocks_write
+    primary_for: [PROTECTED_HOLD]
+    summary: The subject has a LOCKED mapping. The engine reports evidence and changes nothing.
+  SUPPRESSED_REJECTED_UNCHANGED:
+    area: OUTCOME
+    kind: decision
+    roles: [primary]
+    effect: suppresses
+    primary_for: [SUPPRESSED]
+    summary: A human REJECTED this pair and its evidence fingerprint has not moved; it is not re-proposed.
+
+  # ------------------------------------------------------------------ subject quality
+  SUBJ_PROVISIONAL:
+    area: SUBJ
+    kind: decision
+    roles: [blocking, info]
+    effect: cap_proposed
+    summary: The subject id is provisional (provider expects to replace it); never AUTO.
+  SUBJ_UNMAPPED_NAME:
+    area: SUBJ
+    kind: decision
+    roles: [blocking, info]
+    effect: cap_proposed
+    summary: The subject is a raw-name group the provider has not assigned to a principal model; never AUTO.
+  SUBJ_UNSPECIFIED_NAME:
+    area: SUBJ
+    kind: decision
+    roles: [info]
+    effect: name_unavailable
+    summary: The subject's display name is a non-name ("ไม่ระบุ"/blank); name evidence is unavailable.
+  SUBJ_DUPLICATE_DISPLAY_NAME:
+    area: SUBJ
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: Another subject in the snapshot shares this display name; the display name is not a key.
+  SUBJ_MULTI_BRAND:
+    area: SUBJ
+    kind: decision
+    roles: [info, supporting]
+    effect: none
+    summary: The provider registered this subject under several brands; any observed brand may satisfy brand matching.
+
+  # ------------------------------------------------------------------ brand
+  BRND_EXACT:
+    area: BRND
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Brand compact keys are identical.
+  BRND_ALIAS_SAME:
+    area: BRND
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Brands are spelling variants of one marque (alias relation SAME).
+  BRND_ALIAS_RELABEL:
+    area: BRND
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Brands are one marque under two labels (alias relation RELABEL, e.g. Deepal/Changan).
+  BRND_ALIAS_RELATED:
+    area: BRND
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Brands are related (parent/child/joint venture) but not equivalent; PROPOSED at most.
+  BRND_MISMATCH:
+    area: BRND
+    kind: decision
+    roles: [info]
+    effect: veto_candidate
+    summary: Brands are unrelated; the target is not a candidate.
+  BRND_UNKNOWN:
+    area: BRND
+    kind: decision
+    roles: [primary, info]
+    effect: veto_candidate
+    primary_for: [NO_CANDIDATE]
+    summary: The subject has no usable brand; no candidate pool can be formed.
+  BRND_NOT_IN_TDR:
+    area: BRND
+    kind: decision
+    roles: [primary, info]
+    effect: none
+    primary_for: [NO_CANDIDATE]
+    summary: The subject's brand has no counterpart in the TDR catalog.
+  BRND_PREFIX_STRIPPED:
+    area: BRND
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: A leading brand-spelling token sequence was removed from a model name before comparison.
+
+  # ------------------------------------------------------------------ name
+  NAME_EQUAL:
+    area: NAME
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Normalized token sets (or compact forms) are identical.
+  NAME_EQUAL_VIA_MODEL_ALIAS:
+    area: NAME
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Equal only through a scoped model-name alias (aliases.model).
+  NAME_EQUAL_VIA_TOKEN_EQUIV:
+    area: NAME
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Equal only through a declared token equivalence (e.g. ev = electric).
+  NAME_FUZZY_TOKEN:
+    area: NAME
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Equal only through a one-edit typo tolerance on a long token; PROPOSED at most.
+  NAME_CONTAINMENT_SUBJECT_COARSER:
+    area: NAME
+    kind: decision
+    roles: [blocking, info]
+    effect: cap_proposed
+    summary: The subject's name tokens are a proper subset of the target's (the subject is the broader nameplate).
+  NAME_CONTAINMENT_SUBJECT_FINER:
+    area: NAME
+    kind: decision
+    roles: [blocking, info]
+    effect: cap_proposed
+    summary: The target's name tokens are a proper subset of the subject's (the subject is the narrower nameplate).
+  NAME_SIBLING_VARIANT:
+    area: NAME
+    kind: decision
+    roles: [info]
+    effect: veto_candidate
+    summary: Both names share a stem but each carries a distinguishing token the other lacks (Hilux Revo / Hilux Travo).
+  NAME_CONTRADICTION:
+    area: NAME
+    kind: decision
+    roles: [info]
+    effect: veto_candidate
+    summary: Names carry disjoint distinguishing tokens (D-Max / MU-X, 3 Series / X3).
+  NAME_UNAVAILABLE:
+    area: NAME
+    kind: decision
+    roles: [blocking, info]
+    effect: name_unavailable
+    summary: One side has no usable name (blocking when a strong series would otherwise have been AUTO).
+  NAME_ONLY_NOT_AUTO:
+    area: NAME
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Lexical agreement without strong series evidence can never be AUTO (§14.2).
+
+  # ------------------------------------------------------------------ series
+  SER_STRONG:
+    area: SER
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Correlation, ratio and monthly-fit gates all pass over the common window.
+  SER_CORRELATION_BELOW_STRONG:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Correlation is below series.strong.correlation_min.
+  SER_RATIO_OUT_OF_BAND:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Target/subject unit ratio is outside [ratio_min, ratio_max].
+  SER_MONTHLY_FIT_FAIL:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Shape and level pass but too few individual months track within tolerance (outlier-driven correlation).
+  SER_NO_COMMON_WINDOW:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: The two series share no observed period after trimming and exclusions.
+  SER_COVERAGE_UNDECLARED:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: A series arrived without declared coverage; its absent months cannot be read as zero or as unobserved.
+  SER_COVERAGE_ASYMMETRIC:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: The two sources cover different spans; only the common observation window was compared.
+  SER_WINDOW_TRIMMED_INACTIVE:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: Leading and/or trailing months where both sides are zero were dropped from the window.
+  SER_PARTIAL_PERIOD_EXCLUDED:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: One or more periods flagged partial by a source were excluded from the window.
+  SER_OVERLAP_BELOW_AUTO_MIN:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Common months or joint non-zero months are below the AUTO minimums.
+  SER_OVERLAP_BELOW_PROPOSE_MIN:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: Common months or joint non-zero months are below the PROPOSE minimums; series evidence is unusable.
+  SER_VOLUME_BELOW_AUTO_MIN:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Units on at least one side of the window are below the AUTO minimum.
+  SER_VOLUME_BELOW_PROPOSE_MIN:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: Units on at least one side of the window are below the PROPOSE minimum; series evidence is unusable.
+  SER_ZERO_VARIANCE:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: One side is constant over the window; correlation is undefined.
+  SER_ZERO_TOTAL:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: series_unavailable
+    summary: The subject has zero units in the window; the ratio is undefined.
+  SER_UNOBSERVED_NOT_ZERO:
+    area: SER
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: Unobserved months (null) inside a series were left out of the comparison, not read as zero.
+  SER_BUNDLE_STRONG:
+    area: SER
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: The summed series of a TDR bundle passes the strong gates against the subject.
+  SER_BUNDLE_OVERSHOOT:
+    area: SER
+    kind: decision
+    roles: [blocking]
+    effect: veto_candidate
+    summary: Adding a member pushes the bundle ratio above ratio_max; that bundle is rejected.
+
+  # ------------------------------------------------------------------ attributes / lifecycle
+  ATTR_BODY_MISMATCH:
+    area: ATTR
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Both sides state a body type and they are not compatible.
+  ATTR_BODY_UNKNOWN:
+    area: ATTR
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: At least one side has no usable body type; body is not used.
+  ATTR_TARGET_UNVERIFIED:
+    area: ATTR
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: The TDR target has status UNVERIFIED.
+  GEN_LIFECYCLE_DISJOINT:
+    area: GEN
+    kind: decision
+    roles: [info]
+    effect: veto_candidate
+    summary: Almost none of the subject's units fall inside the target's lifetime (generation mismatch).
+  GEN_LIFECYCLE_PARTIAL:
+    area: GEN
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: Only part of the subject's units fall inside the target's lifetime.
+  GEN_LIFECYCLE_UNKNOWN:
+    area: GEN
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: The target has no generation dates; lifecycle is not used.
+  GEN_SAME_NAMEPLATE_MULTI_TARGET:
+    area: GEN
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: Several TDR models share the same normalized nameplate (e.g. one per generation).
+
+  # ------------------------------------------------------------------ cardinality / catalog
+  CARD_MANY_TO_ONE_ALLOWED:
+    area: CARD
+    kind: decision
+    roles: [supporting, info]
+    effect: none
+    summary: Several TDR models may map to one provider subject (the TDR side is finer).
+  CARD_TARGET_ACTIVE_ELSEWHERE:
+    area: CARD
+    kind: decision
+    roles: [info]
+    effect: veto_candidate
+    summary: The TDR target is actively mapped (APPROVED/LOCKED) to a different subject.
+  CARD_TARGET_MISSING:
+    area: CARD
+    kind: decision
+    roles: [blocking, info]
+    effect: forces_review
+    summary: An existing mapping points at a TDR target that is deleted or absent.
+  CARD_BUNDLE_EXTENDS_PROTECTED:
+    area: CARD
+    kind: decision
+    roles: [blocking]
+    effect: cap_proposed
+    summary: The candidate would add a member to a subject that already holds a protected mapping; PROPOSED at most.
+  DISCOVERY_CATALOG_GAP:
+    area: CARD
+    kind: decision
+    roles: [info]
+    effect: forces_review
+    summary: A sizeable subject has no TDR counterpart; probably a catalog gap, routed to discovery.
+
+  # ------------------------------------------------------------------ lineage (provider structure)
+  LIN_RENAME_FOLLOWED:
+    area: LIN
+    kind: structural
+    roles: [primary, info]
+    effect: emits_operation
+    primary_for: [REDIRECT, MOVE_MAPPINGS]
+    summary: A provider RENAME retires the old id; mappings and the redirect follow the new id.
+  LIN_MERGE_FOLLOWED:
+    area: LIN
+    kind: structural
+    roles: [primary, info]
+    effect: emits_operation
+    primary_for: [REDIRECT, MOVE_MAPPINGS]
+    summary: A provider MERGE retires the old id into one surviving id; mappings and the redirect follow.
+  LIN_SPLIT_PARENT_RETAINED:
+    area: LIN
+    kind: structural
+    roles: [primary, info]
+    effect: none
+    primary_for: [NOOP]
+    summary: A provider SPLIT leaves the old id live; it is not redirected.
+  LIN_REDIRECT_RETIRED_SPLIT:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: emits_operation
+    primary_for: [REDIRECT]
+    summary: A retired id split to several successors is redirected to the successor chosen by successor_selection.
+  LIN_TIE_BREAK_ID_ASC:
+    area: LIN
+    kind: structural
+    roles: [info]
+    effect: none
+    summary: Successor shares tied; the lexicographically first new id was chosen.
+  LIN_NO_CHAIN:
+    area: LIN
+    kind: structural
+    roles: [info]
+    effect: none
+    summary: An id is both old and new in the batch; every event was read against the pre-change state, none chained.
+  LIN_CYCLE_NO_REDIRECT:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: emits_operation
+    primary_for: [ERROR]
+    summary: Retired ids redirect to each other in a cycle; no redirect is written.
+  LIN_TARGET_NOT_LIVE:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: emits_operation
+    primary_for: [ERROR]
+    summary: The redirect target is not present in the live snapshot; redirects are never chained to find one.
+  LIN_SOURCE_MISSING:
+    area: LIN
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: The provider declares an identity change but ships no machine-readable lineage source; nothing is inferred.
+  LIN_ALREADY_APPLIED:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: none
+    primary_for: [NOOP]
+    summary: This exact event was applied in an earlier snapshot; re-applying is a no-op.
+  LIN_PROTECTED_FOLLOWED_WITH_LINEAGE:
+    area: LIN
+    kind: structural
+    roles: [info]
+    effect: none
+    summary: An APPROVED mapping followed the identity change as a recorded lineage move, not a silent rewrite.
+  LIN_PROTECTED_NEEDS_OWNER_ACK:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: forces_review
+    primary_for: [FLAG_MAPPING_REVIEW]
+    summary: An identity change touches a protected mapping whose policy is require_owner_ack (LOCKED by default); nothing moves until the owner acknowledges.
+  LIN_MOVE_TARGET_CONFLICT:
+    area: LIN
+    kind: structural
+    roles: [primary, info]
+    effect: forces_review
+    primary_for: [FLAG_MAPPING_REVIEW]
+    summary: Moving this mapping would break one-active-group-per-TDR-model; it stays on the old id and is flagged.
+  LIN_EVIDENCE_QUARANTINE:
+    area: LIN
+    kind: both
+    roles: [primary, blocking]
+    effect: cap_proposed
+    primary_for: [QUARANTINE]
+    summary: The subject's history was restated by an identity change this snapshot; AUTO is withheld.
+  LIN_PROVISIONAL_PROMOTED:
+    area: LIN
+    kind: structural
+    roles: [info]
+    effect: none
+    summary: A provisional id was replaced by its principal id.
+  LIN_PARENT_MAPPING_REVIEW:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: forces_review
+    primary_for: [FLAG_MAPPING_REVIEW]
+    summary: A split parent's existing mapping needs review because part of its units moved away.
+  LIN_SPLIT_CHILD_INHERITED_CANDIDATE:
+    area: LIN
+    kind: structural
+    roles: [primary]
+    effect: forces_review
+    primary_for: [CANDIDATE_HINT]
+    summary: A split raises a STRUCTURE card (review question) asking whether the parent's TDR target also covers the new child. It is a hint, never a mapping row.
+
+  # ------------------------------------------------------------------ state / persistence
+  STATE_EVIDENCE_CONFIRMS:
+    area: STATE
+    kind: decision
+    roles: [supporting]
+    effect: none
+    summary: Fresh evidence agrees with the existing protected mapping.
+  STATE_EVIDENCE_CONTRADICTS:
+    area: STATE
+    kind: decision
+    roles: [info]
+    effect: forces_review
+    summary: Fresh evidence disagrees with an existing protected mapping. Reported, never applied.
+  STATE_REJECTED_REOPENED:
+    area: STATE
+    kind: decision
+    roles: [blocking, info]
+    effect: cap_proposed
+    summary: A rejected pair's evidence fingerprint moved; it may be re-proposed, never auto-linked.
+  STATE_AUTO_DEMOTED:
+    area: STATE
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: An existing AUTO mapping no longer passes the AUTO gates and is demoted to PROPOSED.
+  STATE_CANDIDATE_STALE:
+    area: STATE
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: An existing PROPOSED candidate is no longer produced by the engine and is marked stale.
+
+  # ------------------------------------------------------------------ authority
+  AUTH_STRUCTURE_OVER_STATISTICS:
+    area: AUTH
+    kind: decision
+    roles: [info]
+    effect: none
+    summary: Provider-supplied structure decided where statistics disagree; the statistics were recorded, not obeyed.
+  AUTH_HUMAN_OVER_ENGINE:
+    area: AUTH
+    kind: decision
+    roles: [info]
+    effect: blocks_write
+    summary: A human decision outranks the engine's finding; the engine's finding is recorded only.
+
+  # ------------------------------------------------------------------ input refusals
+  INPUT_SOURCE_VERSION_MISSING:
+    area: INPUT
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: The snapshot has no source version label; decisions could not be traced.
+  INPUT_DUPLICATE_SUBJECT_ID:
+    area: INPUT
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: Two subjects share an id within one snapshot.
+  INPUT_PERIOD_CALENDAR_INVALID:
+    area: INPUT
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: A series period is outside time.valid_year_range (e.g. a Buddhist year in a Gregorian series).
+  INPUT_NEGATIVE_COUNT:
+    area: INPUT
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: A series contains a negative count.
+  INPUT_POLICY_VERSION_UNSUPPORTED:
+    area: INPUT
+    kind: refusal
+    roles: [primary]
+    effect: refuses_run
+    summary: The requested policy version is not the one this engine build implements.
