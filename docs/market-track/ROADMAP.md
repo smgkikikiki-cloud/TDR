@@ -224,7 +224,7 @@ For the explicitly approved final package:
 
 Exit condition: one real final package is live and independently reconciled. **Met.**
 
-Not closed by R5 (carried forward, none blocks R6): step 1 (replace the repo's package-import AI/SOP files from `สำหรับ_AI/`) was deliberately not applied -- the package's `CLAUDE.md`/`AGENTS.md` would overwrite repo-specific sections, so it needs an owner decision; the importer's `data/packages/` version log was not written; step 9 (notify Ice) is an owner action.
+Close-out 2026-10-10 (details in `docs/WORK_STATE.md`): the package version log was restored (PR #198), the one-click workflow was fixed (PR #197), and the temporary upload infrastructure was restored (bucket limit back to 4 MiB; the upload function is an inert stub that the owner should delete). Still open, none blocks R6: step 1 (replace the repo's package-import AI/SOP files from `สำหรับ_AI/`) was deliberately not applied -- the package's `CLAUDE.md`/`AGENTS.md` would overwrite repo-specific sections, so it is a separate owner reconciliation decision; step 9 (notify Ice) is an owner action.
 
 ---
 
