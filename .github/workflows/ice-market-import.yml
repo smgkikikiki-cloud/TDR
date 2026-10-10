@@ -1,0 +1,158 @@
+name: Import Ice market package
+
+on:
+  workflow_dispatch:
+    inputs:
+      object_path:
+        description: "Private source-imports object path"
+        required: true
+        default: "ice-market/TDR_FULL_2569-09_v3_M7.0.zip"
+        type: string
+      expected_sha256:
+        description: "Expected SHA256 for the exact package"
+        required: true
+        default: "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        type: string
+      owner_declared_final:
+        description: "Exact owner-declared final filename"
+        required: true
+        default: "TDR_FULL_2569-09_v3_M7.0.zip"
+        type: string
+      imported_by:
+        description: "Actor recorded on ice_package_imports"
+        required: true
+        default: "smgkikikiki@gmail.com"
+        type: string
+      confirm_production:
+        description: "I confirm this exact package may be imported to production"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ice-market-production-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: ${{ inputs.confirm_production }}
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      ICE_OBJECT_PATH: ${{ inputs.object_path }}
+      EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+      OWNER_DECLARED_FINAL: ${{ inputs.owner_declared_final }}
+      IMPORTED_BY: ${{ inputs.imported_by }}
+      ICE_PACKAGE_PATH: ${{ runner.temp }}/ice-package.zip
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Preflight credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ]; then
+            echo "::error::SUPABASE_URL is not configured in GitHub Actions secrets."
+            exit 1
+          fi
+          if [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is required."
+            exit 1
+          fi
+          if [ "$(basename "${ICE_OBJECT_PATH}")" != "${OWNER_DECLARED_FINAL}" ]; then
+            echo "::error::Storage object basename must exactly match owner_declared_final."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install storage client
+        run: npm ci --ignore-scripts
+
+      - name: Download exact package from private source-imports bucket
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("fs");
+          const { createClient } = require("@supabase/supabase-js");
+
+          (async () => {
+            const url = process.env.SUPABASE_URL;
+            const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+            const objectPath = process.env.ICE_OBJECT_PATH;
+            const outputPath = process.env.ICE_PACKAGE_PATH;
+
+            const supabase = createClient(url, key, {
+              auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+            });
+
+            const { data, error } = await supabase.storage
+              .from("source-imports")
+              .download(objectPath);
+
+            if (error) throw new Error(`Storage download failed: ${error.message}`);
+
+            const bytes = Buffer.from(await data.arrayBuffer());
+            fs.writeFileSync(outputPath, bytes);
+            console.log(`downloaded ${bytes.length} bytes from source-imports/${objectPath}`);
+          })().catch((error) => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Verify exact SHA256
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "${EXPECTED_SHA256}  ${ICE_PACKAGE_PATH}" | sha256sum -c -
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Offline package check
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.ice_package_import \
+            --check "${ICE_PACKAGE_PATH}" \
+            --owner-declared-final "${OWNER_DECLARED_FINAL}"
+
+      - name: Apply package to production
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.ice_package_import \
+            --apply "${ICE_PACKAGE_PATH}" \
+            --owner-declared-final "${OWNER_DECLARED_FINAL}" \
+            --imported-by "${IMPORTED_BY}" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: R5 result summary
+        shell: bash
+        run: |
+          {
+            echo "## Ice Market R5 import"
+            echo
+            echo "- Package: `${OWNER_DECLARED_FINAL}`"
+            echo "- Storage object: `source-imports/${ICE_OBJECT_PATH}`"
+            echo "- SHA256: `${EXPECTED_SHA256}`"
+            echo "- Importer completed its built-in post-commit live-table readback."
+            echo "- R6 crosswalk is not run by this workflow."
+          } >> "${GITHUB_STEP_SUMMARY}"
