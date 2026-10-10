@@ -1,9 +1,9 @@
 # Ice Market Track — Execution Roadmap
 
 **Owner:** กี้  
-**Execution date:** 2026-10-06, R3 completed 2026-10-07  
+**Execution date:** 2026-10-06, R3 completed 2026-10-07, R5 completed 2026-10-10  
 **Scope:** Ice Full Package → TDR production market engine  
-**Current gate:** `R4_WAIT_FOR_ICE_FINAL` (hard stop; owner must declare a final package before R5)
+**Current gate:** `R6_PRODUCTION_CROSSWALK` (R5 is DONE; R6 has not been started and needs the owner's explicit go)
 
 > This file is the fixed execution order for the Market Track.  
 > `docs/WORK_STATE.md` records the live state. This roadmap records the order and stop conditions.  
@@ -11,11 +11,11 @@
 
 ## Machine-readable safety state
 
-- `PRODUCTION_IMPORT_ALLOWED = false`
+- `PRODUCTION_IMPORT_ALLOWED = false` (the single owner-authorized R5 import has run; any further import needs fresh owner authorization)
 - `PRODUCTION_CROSSWALK_ALLOWED = false`
 - `LIVE_CUTOVER_ALLOWED = false`
 - `TRIAL_PACKAGE_AUTHORITY = fixture_only`
-- `CURRENT_GATE = R4_WAIT_FOR_ICE_FINAL`
+- `CURRENT_GATE = R6_PRODUCTION_CROSSWALK`
 
 These flags are descriptive instructions for agents, not application config. Do not flip them by inference. Only update them when the corresponding gate below is actually completed and the owner has authorized the transition.
 
@@ -206,7 +206,7 @@ only after explicit owner authorization.
 
 ### R5 — M2 production import
 
-**Status: BLOCKED by R4**
+**Status: DONE (2026-10-10).** `TDR_FULL_2569-09_v3_M7.0.zip` (sha256 `c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d`) is live and independently reconciled. Details and evidence: `docs/WORK_STATE.md` "R5 production import".
 
 For the explicitly approved final package:
 
@@ -222,13 +222,15 @@ For the explicitly approved final package:
 8. record `master_version`;
 9. notify Ice of the accepted import.
 
-Exit condition: one real final package is live and independently reconciled.
+Exit condition: one real final package is live and independently reconciled. **Met.**
+
+Not closed by R5 (carried forward, none blocks R6): step 1 (replace the repo's package-import AI/SOP files from `สำหรับ_AI/`) was deliberately not applied -- the package's `CLAUDE.md`/`AGENTS.md` would overwrite repo-specific sections, so it needs an owner decision; the importer's `data/packages/` version log was not written; step 9 (notify Ice) is an owner action.
 
 ---
 
 ### R6 — M3 production crosswalk
 
-**Status: BLOCKED by R5**
+**Status: NEXT, not started (R5 is done; waits for the owner's explicit go -- `PRODUCTION_CROSSWALK_ALLOWED` stays false until then).**
 
 Order:
 
