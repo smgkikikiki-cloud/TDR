@@ -1,0 +1,154 @@
+name: Run Ice crosswalk (R6)
+
+# Market Track R6: records Ice's id_changes redirects, runs the real crosswalk matcher against the
+# live M7 data, and creates STRUCTURE proposals for splits. It writes ONLY the crosswalk tables
+# (ice_model_crosswalk, ice_model_group_redirects, ice_known_model_groups). It never approves a row:
+# every result is AUTO (strong series + name) or PROPOSED, and review / approve / lock stay manual.
+# It does not touch the live ice_* data tables, the serving path, or Vehicle Master.
+
+on:
+  workflow_dispatch:
+    inputs:
+      master_version:
+        description: "Ice master_version this run is evaluated against (must equal the live import)"
+        required: true
+        default: "7.0"
+        type: string
+      package_path:
+        description: "Archived package in the repo that holds id_changes.csv"
+        required: true
+        default: "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip"
+        type: string
+      expected_sha256:
+        description: "Expected SHA256 of that archived package"
+        required: true
+        default: "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        type: string
+      confirm_production:
+        description: "I confirm this may write the production crosswalk tables (candidates only, nothing approved)"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ice-crosswalk-production
+  cancel-in-progress: false
+
+jobs:
+  crosswalk:
+    if: ${{ inputs.confirm_production }}
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      MASTER_VERSION: ${{ inputs.master_version }}
+      PACKAGE_PATH: ${{ inputs.package_path }}
+      EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ]; then echo "::error::SUPABASE_URL is not configured."; exit 1; fi
+          if [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is required."; exit 1
+          fi
+          echo "${EXPECTED_SHA256}  ${PACKAGE_PATH}" | sha256sum -c -
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Extract id_changes.csv from the archived package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import csv, io, os, zipfile
+          z = zipfile.ZipFile(os.environ["PACKAGE_PATH"])
+          raw = z.read("id_changes.csv")
+          temp = os.environ["RUNNER_TEMP"]
+          open(os.path.join(temp, "id_changes.csv"), "wb").write(raw)
+          rows = list(csv.DictReader(io.TextIOWrapper(io.BytesIO(raw), encoding="utf-8-sig")))
+          splits = [r for r in rows if r["type"] == "แยก"]
+          with open(os.path.join(temp, "id_changes_splits.csv"), "w", encoding="utf-8-sig", newline="") as fh:
+              w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+              w.writeheader(); w.writerows(splits)
+          print(f"id_changes rows: {len(rows)} (splits: {len(splits)})")
+          PY
+
+      - name: Preflight - the live import is the package this run is for
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python - <<'PY'
+          import os, sys
+          from tools.canonical_input_worker import _request
+          rows = _request("GET", "ice_package_imports?select=master_version,period,package_version&order=imported_at.desc&limit=1") or []
+          if not rows or rows[0]["master_version"] != os.environ["MASTER_VERSION"]:
+              print(f"::error::latest ice_package_imports is {rows!r}, expected master_version {os.environ['MASTER_VERSION']}")
+              sys.exit(1)
+          print("live import:", rows[0])
+          PY
+
+      - name: Phase 1 - record Ice's id_changes (redirects) first
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.ice_crosswalk_match \
+            --process-id-changes "${RUNNER_TEMP}/id_changes.csv" \
+            --master-version "${MASTER_VERSION}" | tee "${RUNNER_TEMP}/phase1_id_changes.json"
+
+      - name: Phase 2 - run the real matcher against the live M7 data
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.ice_crosswalk_match --match \
+            --master-version "${MASTER_VERSION}" \
+            --review-csv "${RUNNER_TEMP}/crosswalk_review_${MASTER_VERSION}.csv" \
+            | tee "${RUNNER_TEMP}/phase2_match.json"
+
+      - name: Phase 3 - STRUCTURE proposals for splits (PROPOSED only, never approved)
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.ice_crosswalk_match \
+            --process-id-changes "${RUNNER_TEMP}/id_changes_splits.csv" \
+            --master-version "${MASTER_VERSION}" | tee "${RUNNER_TEMP}/phase3_splits.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ice-crosswalk-r6-${{ inputs.master_version }}
+          path: |
+            ${{ runner.temp }}/crosswalk_review_*.csv
+            ${{ runner.temp }}/phase1_id_changes.json
+            ${{ runner.temp }}/phase2_match.json
+            ${{ runner.temp }}/phase3_splits.json
+          retention-days: 90
+
+      - name: Summary
+        shell: bash
+        run: |
+          {
+            echo "## Ice crosswalk R6 (candidates only)"
+            echo
+            echo "- master_version: \`${MASTER_VERSION}\`"
+            echo "- Phases run: id_changes redirects, matcher, split STRUCTURE proposals."
+            echo "- Nothing is approved by this workflow; review/approve/lock stay manual."
+            echo "- R7 and live serving are not touched."
+          } >> "${GITHUB_STEP_SUMMARY}"
