@@ -60,7 +60,9 @@ jobs:
         run: |
           set -euo pipefail
           # The runner context is not available in job-level env, so the package path is set here.
-          echo "ICE_PACKAGE_PATH=${RUNNER_TEMP}/ice-package.zip" >> "${GITHUB_ENV}"
+          # The file keeps its real, declared name: the importer's owner-declaration gate compares
+          # --owner-declared-final with the package file's basename and refuses any other name.
+          echo "ICE_PACKAGE_PATH=${RUNNER_TEMP}/${OWNER_DECLARED_FINAL}" >> "${GITHUB_ENV}"
           if [ -z "${SUPABASE_URL}" ]; then
             echo "::error::SUPABASE_URL is not configured in GitHub Actions secrets."
             exit 1
