@@ -87,7 +87,7 @@ codes:
     roles: [primary]
     effect: forces_review
     primary_for: [STRUCTURAL_REVIEW]
-    summary: The subject's stored active claims break the cardinality rules (SPEC §7.0), or a stored COMPOSED_OF link set is incomplete or mixed-state. The engine changes nothing for the subject and never repairs a set.
+    summary: The subject's stored active claims break the cardinality rules (SPEC §7.0) -- two of its own, or an overlap with another subject's -- or a stored COMPOSED_OF link set is incomplete, mixed-state or mis-identified. Reported on every subject involved; the engine writes nothing and never repairs (I18).
   STRUCTURAL_APPROVED_CLAIM_CONFLICT:
     area: OUTCOME
     kind: decision

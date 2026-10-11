@@ -305,6 +305,53 @@ def test_no_source_has_confirmed_that_a_missing_row_is_zero():
     assert any("262,985" in line for line in ice["evidence"]), "the Ice evidence must keep the observed counts"
 
 
+def test_tdr_registrations_stay_unknown_because_the_traced_pipeline_guarantees_no_complete_grid():
+    """Owner decision 2026-10-11: do not assume for TDR registrations -- trace the pipeline; declare absent=zero only if complete month x dimension coverage is
+    contractually guaranteed. The trace found no such guarantee at any stage; this test keeps that verdict tied to its evidence."""
+    cap = S.capabilities()["sources"]["tdr_registrations"]["series.absent_row"]
+    assert (cap["value"], cap["status"]) == ("UNKNOWN", "unconfirmed") and cap["hypothesis"] is None
+    trace = cap["trace"]
+    assert trace["verdict"].startswith("UNKNOWN stays")
+    assert {s["guarantee"] for s in trace["stages"]} == {"none"}, "a stage that DOES guarantee coverage must change the verdict, not just the list"
+    assert len(trace["stages"]) >= 5 and len(trace["upgrade_requires"]) >= 4
+    for stage in trace["stages"]:
+        for ref in stage["refs"]:
+            assert (S.IR_ROOT.parents[2] / ref).exists(), f"trace ref {ref} must exist in the repository"
+    assert "coverage_guarantee" not in cap
+
+
+def test_the_trace_evidence_in_the_committed_dlt_snapshots_still_holds():
+    """Tripwire on the facts the TDR verdict stands on. If a DLT export ever carries an explicit zero row, or the month chain becomes gap-free, re-read the trace."""
+    import csv
+    import glob
+
+    raw = S.IR_ROOT.parent / "data" / "raw"
+    files = sorted(glob.glob(str(raw / "dlt_????-??.csv")))
+    if not files:
+        pytest.skip("DLT snapshots are not present in this checkout")
+    months, labels, zero_rows = [], {}, 0
+    for path in files:
+        month = path[-11:-4]
+        months.append(month)
+        with open(path, encoding="utf-8-sig", newline="") as handle:
+            reader = csv.reader(handle)
+            next(reader)
+            for row in reader:
+                if len(row) >= 5 and row[4].strip().isdigit():
+                    zero_rows += int(row[4]) == 0
+                    labels.setdefault((row[2], row[3]), set()).add(month)
+    index = [int(m[:4]) * 12 + int(m[5:]) for m in months]
+    assert zero_rows == 0, "DLT now publishes explicit zero rows: the 'absent = ?' evidence in provider_capabilities.yaml must be re-read"
+    assert set(range(index[0], index[-1] + 1)) - set(index), "the API-export month chain has no missing calendar month any more: re-read the month-coverage stage of the trace"
+    loaded = set(index)
+    with_holes = 0
+    for seen in labels.values():
+        ids = sorted(int(m[:4]) * 12 + int(m[5:]) for m in seen)
+        if len(ids) > 1 and any(x not in ids for x in loaded if ids[0] <= x <= ids[-1]):
+            with_holes += 1
+    assert with_holes > 0, "labels no longer have interior months without a row: re-read the source stage of the trace"
+
+
 def test_a_confirmed_capability_names_who_when_and_where():
     from identity_resolution.contract import schema_subset
     registry = S.schemas()
@@ -312,7 +359,11 @@ def test_a_confirmed_capability_names_who_when_and_where():
     base = {"evidence": ["x"], "status": "confirmed", "value": "ABSENT_IS_ZERO"}
     assert schema_subset.validate(base, schema, registry=registry, root=registry["capabilities.schema.json"]), "confirmed without who/when/reference must be rejected"
     ok = {**base, "confirmed_by": "Ice", "confirmed_on": "2026-10-20", "reference": "mail"}
+    assert schema_subset.validate(ok, schema, registry=registry, root=registry["capabilities.schema.json"]), "ABSENT_IS_ZERO needs the contractual coverage guarantee, not just a confirmation"
+    ok = {**ok, "coverage_guarantee": "Ice contract clause naming every (period, province, reg_type, brand, model_group) cell"}
     assert not schema_subset.validate(ok, schema, registry=registry, root=registry["capabilities.schema.json"])
+    unobserved = {"evidence": ["x"], "status": "confirmed", "value": "ABSENT_IS_UNOBSERVED", "confirmed_by": "Ice", "confirmed_on": "2026-10-20", "reference": "mail"}
+    assert not schema_subset.validate(unobserved, schema, registry=registry, root=registry["capabilities.schema.json"]), "only a ZERO confirmation needs the coverage guarantee"
     unconfirmed_zero = {"evidence": ["x"], "status": "unconfirmed", "value": "ABSENT_IS_ZERO", "confirm_with": "Ice", "question_id": "q", "question": "?", "hypothesis": None}
     assert schema_subset.validate(unconfirmed_zero, schema, registry=registry, root=registry["capabilities.schema.json"]), "a hypothesis must be UNKNOWN, never an unconfirmed ABSENT_IS_ZERO"
 
@@ -335,11 +386,36 @@ def _covers(key: str, path: str) -> bool:
 def test_adoption_is_not_binding_and_cannot_become_so_while_anything_is_pending():
     adoption = S.adoption()
     assert adoption["binding"] is False and adoption["status"] == "provisional_not_frozen"
+    decisions = {d["id"]: d for d in adoption["owner_decisions"]}
+    if adoption["binding"]:
+        assert decisions["od_binding_false"]["status"] == "lifted" and decisions["od_not_frozen"]["status"] == "lifted", "binding: true needs the standing decisions lifted by the owner"
     statuses = [entry["status"] for entry in adoption["entries"]]
     assert set(statuses) <= {"pending", "calibrated", "owner_accepted"}
     if adoption["binding"]:
         assert set(statuses) <= {"calibrated", "owner_accepted"}, "binding: true requires every entry to be calibrated or owner_accepted"
     assert "pending" in statuses, "revision 2 is the draft that does NOT adopt the uncalibrated proposal thresholds"
+
+
+def test_owner_decisions_are_recorded_and_the_standing_ones_hold():
+    adoption = S.adoption()
+    decisions = {d["id"]: d for d in adoption["owner_decisions"]}
+    assert len(decisions) == len(adoption["owner_decisions"])
+    assert set(decisions) >= {"od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity", "od_ice_absent_row_unknown",
+                              "od_tdr_absent_row_traced", "od_binding_false", "od_not_frozen"}
+    for item in decisions.values():
+        assert item["status"] in {"accepted", "standing", "lifted"} and re.fullmatch(r"\d{4}-\d{2}-\d{2}", item["decided_on"]), item["id"]
+        assert item["decision"].strip() and item["refs"], item["id"]
+    for name in ("od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity"):
+        assert decisions[name]["status"] == "accepted", name
+    for name in ("od_ice_absent_row_unknown", "od_tdr_absent_row_traced", "od_binding_false", "od_not_frozen"):
+        assert decisions[name]["status"] == "standing", f"{name}: lifting a standing owner decision is the owner's act, recorded with a dated note"
+    for entry in adoption["entries"]:
+        if entry["status"] == "owner_accepted":
+            assert entry.get("owner_decision") in decisions, f"{entry['id']} is owner_accepted but cites no recorded owner decision"
+    assert S.policy()["policy"]["status"] == "draft_not_frozen"
+    spec = S.spec_text()
+    for name in decisions:
+        assert f"`{name}`" in spec, f"SPEC must cite the owner decision {name} (Appendix E lists it)"
 
 
 def test_every_proposal_or_assumption_value_has_exactly_one_adoption_entry():

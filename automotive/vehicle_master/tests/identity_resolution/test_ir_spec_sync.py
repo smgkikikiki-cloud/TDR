@@ -52,7 +52,7 @@ def test_spec_prose_mentions_only_real_policy_keys():
 
 def test_spec_invariants_are_numbered_without_gaps():
     numbers = [int(n) for n in re.findall(r"\*\*I(\d+) —", S.spec_text())]
-    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 17
+    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 18
     assert "**I4a — No assumed zero.**" in S.spec_text(), "invariant I4a (owner review, rev 2) must stay"
 
 
@@ -73,7 +73,7 @@ def test_spec_declares_itself_a_draft_not_in_force():
 def test_spec_states_the_three_owner_review_resolutions():
     """Rev 2: missing-row semantics are capability data; identity/aggregation/granularity are link types; bundles are link sets."""
     text = S.spec_text()
-    for needle in ("series.absent_row", "Q-ICE-ABSENT-ROW", "ABSENT_IS_ZERO", "`EQUIVALENT`", "`COMPOSED_OF`", "`PART_OF`", "C1", "C2", "link set", "set_id",
+    for needle in ("I18", "never auto-repaired", "od_atomic_link_sets", "coverage_guarantee", "trace.upgrade_requires", "series.absent_row", "Q-ICE-ABSENT-ROW", "ABSENT_IS_ZERO", "`EQUIVALENT`", "`COMPOSED_OF`", "`PART_OF`", "C1", "C2", "link set", "set_id",
                    "I17", "I16", "binding", "STRUCTURAL_STORED_CLAIMS_INCONSISTENT", "10.5", "10.6"):
         assert needle in text, needle
 

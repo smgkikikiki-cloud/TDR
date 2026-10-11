@@ -98,7 +98,10 @@ def render_capabilities(capabilities: dict) -> str:
 
 def render_adoption(adoption: dict) -> str:
     rows = [f"`binding: {str(adoption['binding']).lower()}` — status `{adoption['status']}`.", "",
-            "| Entry | Class | Policy keys | Status | Settled by |", "|---|---|---|---|---|"]
+            "Owner decisions about the contract:", "", "| Decision | Decided | Status | Decision |", "|---|---|---|---|"]
+    for item in adoption["owner_decisions"]:
+        rows.append("| `{}` | {} | {} | {} |".format(item["id"], item["decided_on"], item["status"], _cell(item["decision"])))
+    rows += ["", "Policy values:", "", "| Entry | Class | Policy keys | Status | Settled by |", "|---|---|---|---|---|"]
     for entry in adoption["entries"]:
         rows.append("| `{}` | {} | {} | {} | {} |".format(
             entry["id"], entry["class"], ", ".join(f"`{k}`" for k in entry["keys"]), entry["status"],

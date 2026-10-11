@@ -3,6 +3,17 @@
 Contract v1 is a **draft and is not frozen**. Nothing reads it in production. Entries are newest first; each names the
 files it touched and the corpus rows that pin the change (SPEC §14.4).
 
+## rev 3 — owner decisions (2026-10-11)
+
+The owner decided the open points. Recorded as `owner_decisions` in `adoption.yaml`; **still a draft, NOT frozen**, `binding: false`.
+
+- **Accepted:** the three link types, the two cardinality rules (C1, C2) as v1, bundles as real atomic link sets (not review-only), and `link_type` in the persistence identity — logical contract only, no DDL/migration/write path.
+- **New invariant I18 — stored overlaps are reported, never auto-repaired.** Decision-procedure step 0 (SPEC §8.2) now also covers a stored overlap *between two subjects* contrary to C2 (previously only C1 within one subject and broken sets): every subject involved gets `STRUCTURAL_REVIEW` / `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` and nothing is written — a stored AUTO row overlapping a protected claim is no longer demoted by the write matrix. Corpus: `resolve.stored-overlap-*`, `resolve.stored-parts-sharing-a-target-are-not-an-overlap`; taxonomy `CARD-14`.
+- **Ice absent-row semantics stay UNKNOWN** until Ice explicitly confirms (standing decision, tripwire test).
+- **TDR registrations traced instead of assumed:** `provider_capabilities.yaml` gains a `trace` (five pipeline stages, each `guarantee: none`) and `upgrade_requires`; verdict **UNKNOWN stays**. A confirmed `ABSENT_IS_ZERO` must now carry a `coverage_guarantee` (schema + test). A test re-reads the committed DLT snapshots and fails if they ever contradict the evidence (explicit zero row; gap-free month chain; no interior label holes). `Q-TDR-ABSENT-ROW` is answered by the trace.
+- **Adoption bookkeeping:** `owner_decisions` (8 entries, tests tie `binding: true` to lifting the standing ones); `candidates_bundle_rules` split into `candidates_bundle_enabled` (`owner_accepted`) and `candidates_bundle_members` (`pending`); `provisional_keys` now lists only `pending` entries.
+- Counts: 508 cases (was 505), 112 taxonomy entries (was 111), 104 reason codes; 312 contract tests; policy sweep 198 mutations (196 caught + 2 equivalent); 27 structural controls, all caught.
+
 ## rev 2 — owner review (2026-10-11)
 
 The owner accepted the architecture in principle and asked for three contract-level fixes before adoption, a wording

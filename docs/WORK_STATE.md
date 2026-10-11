@@ -52,13 +52,14 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
-## Identity Resolution Contract v1 — DRAFT, revision 2, NOT FROZEN (2026-10-10; owner review addressed 2026-10-11)
+## Identity Resolution Contract v1 — DRAFT, revision 3, NOT FROZEN (2026-10-10; owner decisions recorded 2026-10-11)
 
 `automotive/vehicle_master/identity_resolution/` now holds a provider-agnostic identity-resolution **contract**: `contract/v1/SPEC.md`,
 `policy.yaml`, `adoption.yaml`, `provider_capabilities.yaml`, `reason_codes.yaml`, `taxonomy.yaml`, the input/output/case/capability JSON schemas, a
 `CHANGELOG.md` and a golden corpus (`cases.jsonl`), plus its contract tests (`automotive/vehicle_master/tests/identity_resolution/`) and `README.md`
 (architecture, evidence base, owner decisions).
 
+- **Revision 3 (owner decisions, 2026-10-11).** Accepted: link types `EQUIVALENT`/`PART_OF`/`COMPOSED_OF`, the two cardinality rules (C1/C2), bundles as real atomic link sets, and `link_type` in the persistence identity (logical contract only; legacy overlapping claims are reported, never auto-repaired — invariant I18). Ice absent-row semantics stay UNKNOWN until Ice confirms. TDR registrations were **traced, not assumed**: no pipeline stage guarantees complete month × dimension coverage, so they stay UNKNOWN (`provider_capabilities.yaml` → `trace`). `adoption.yaml` keeps `binding: false`; all provisional thresholds stay non-authoritative until calibrated against the real R6 review data. **Not frozen; the next step is the threshold / data-semantics calibration.**
 - **Revision 2 (owner review: architecture accepted in principle, contract not frozen).** (1) What a missing row means is now **capability data**
   (`provider_capabilities.yaml`): Ice and TDR registrations are both *UNKNOWN / unconfirmed* (`Q-ICE-ABSENT-ROW`, `Q-TDR-ABSENT-ROW`), so an absent row is
   never assumed zero; unconfirmed gaps are counted and cap AUTO. (2) Cardinality separates identity (`EQUIVALENT`), aggregation (`COMPOSED_OF`) and

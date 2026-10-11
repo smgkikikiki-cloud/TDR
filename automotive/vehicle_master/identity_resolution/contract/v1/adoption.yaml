@@ -1,4 +1,4 @@
-# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN)
+# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 3)
 #
 # The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
 # production data (the first R6 run's review rows are not in the repository) and have not been signed off.
@@ -25,10 +25,58 @@
 # when that report exists and the owner has read it; "no AUTO row the owner labels wrong" is the bar for any AUTO gate.
 #
 # Status values: pending | calibrated | owner_accepted.
+#
+# `owner_decisions` records what the owner has decided about the CONTRACT (as opposed to the numbers). They are not thresholds and need no
+# calibration. `accepted` = adopted into the draft contract; `standing` = a condition that stays in force until the owner lifts it
+# (status `lifted`, with a dated note). A test refuses `binding: true` unless the standing decisions about it were lifted.
 
 version: v1
 binding: false
 status: provisional_not_frozen
+
+owner_decisions:
+  - id: od_link_types
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept the three link types: EQUIVALENT, PART_OF, COMPOSED_OF."
+    refs: ["SPEC §7.0"]
+  - id: od_cardinality_rules
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept the two cardinality rules as v1: C1 (one active claim per subject) and C2 (a target claimed whole is claimed once; PART_OF claims may share a target)."
+    refs: ["SPEC §7.0", "SPEC I12"]
+  - id: od_atomic_link_sets
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Keep bundles as real atomic link sets, not review-only evidence."
+    refs: ["SPEC §7.3", "SPEC §10.5", "SPEC I17"]
+  - id: od_persistence_link_type_identity
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired."
+    refs: ["SPEC §10.6", "SPEC §8.2 step 0", "SPEC I18"]
+    note: "Logical contract only. No DDL, migration or write path is authorised by this decision."
+  - id: od_ice_absent_row_unknown
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Keep Ice absent-row semantics UNKNOWN until Ice explicitly confirms them."
+    refs: ["provider_capabilities.yaml sources.ice", "SPEC I4a", "SPEC §3.2"]
+  - id: od_tdr_absent_row_traced
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "For TDR registrations do not assume: trace the actual source pipeline, and declare absent=zero only if complete month x dimension coverage is contractually guaranteed; otherwise keep UNKNOWN."
+    refs: ["provider_capabilities.yaml sources.tdr_registrations.trace", "SPEC §3.2"]
+    result: "Traced 2026-10-11 (repository read only): no stage guarantees complete month x dimension coverage. Stays UNKNOWN; trace.upgrade_requires lists what would have to become contractual."
+  - id: od_binding_false
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Keep adoption binding=false and every provisional threshold non-authoritative until calibration against the real R6 review data."
+    refs: ["SPEC §14.6", "SPEC I16"]
+  - id: od_not_frozen
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Do not freeze Contract v1. Wait for CI, incorporate the decisions above, then stop for threshold and data-semantics calibration."
+    refs: ["SPEC §16", "CHANGELOG.md"]
 
 entries:
   # ----------------------------------------------------------------------------------- representation
@@ -52,7 +100,7 @@ entries:
     class: calibration
     keys: [series.absent_row]
     status: pending
-    settles_with: "Answers to Q-ICE-ABSENT-ROW and Q-TDR-ABSENT-ROW (provider_capabilities.yaml) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then."
+    settles_with: "Ice's explicit answer to Q-ICE-ABSENT-ROW and, for TDR, the contractual guarantees listed in provider_capabilities.yaml (trace.upgrade_requires) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then."
   - id: lexical_fuzzy_min_length
     class: calibration
     keys: [lexical.fuzzy_token.min_token_length]
@@ -129,16 +177,22 @@ entries:
     keys: [candidates.brand_relations_allowed, candidates.brand_relations_auto_eligible, candidates.target_statuses_in_pool, candidates.exclude_deleted_targets]
     status: pending
     decision: "Confirm the candidate pool and which brand relations are AUTO-eligible (RELATED is capped)."
-  - id: candidates_bundle_rules
+  - id: candidates_bundle_enabled
     class: design_choice
-    keys: [candidates.bundle.enabled, candidates.bundle.member_name_relations]
-    status: pending
-    decision: "Confirm COMPOSED_OF link sets exist, and which name relations may be members. If the owner prefers review-only bundles, this entry and SPEC §10.5 change together."
+    keys: [candidates.bundle.enabled]
+    status: owner_accepted
+    owner_decision: od_atomic_link_sets
+    decision: "COMPOSED_OF link sets exist (the owner chose real atomic link sets over review-only bundles on 2026-10-11)."
   - id: candidates_ranking
     class: design_choice
     keys: [candidates.ranking]
     status: pending
     decision: "Confirm the lexicographic ranking order (never a weighted sum)."
+  - id: candidates_bundle_members
+    class: design_choice
+    keys: [candidates.bundle.member_name_relations]
+    status: pending
+    decision: "Confirm which name relations may be members of a link set (the existence of link sets is decided: od_atomic_link_sets)."
   - id: granularity_part_of_rules
     class: design_choice
     keys: [granularity.part_of.subject_name_relations, granularity.part_of.arbitration_sum_check]

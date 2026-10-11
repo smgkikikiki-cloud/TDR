@@ -454,7 +454,13 @@ entries:
     title: Stored active claims break the cardinality rules
     origin: design
     evidence: "v63 rows carry no link type; a subject with two AUTO rows to two targets is two EQUIVALENT claims, which C1 forbids (it is a COMPOSED_OF set or an error)."
-    handling: STRUCTURAL_REVIEW for the subject; nothing is changed or repaired.
+    handling: STRUCTURAL_REVIEW for the subject; nothing is changed or repaired (I18).
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
+  - id: CARD-14
+    title: Stored active claims of two subjects overlap contrary to C2
+    origin: owner_report_r6
+    evidence: "Owner decision 2026-10-11: legacy overlapping claims must be reported and never auto-repaired. The v63 unique index prevents two AUTO/APPROVED identity rows on one target, but not an overlap that involves a PART_OF / COMPOSED_OF claim, a LOCKED row, or data loaded before the index."
+    handling: "STRUCTURAL_REVIEW on every subject involved, high priority; no write for any of them -- in particular a stored AUTO row that overlaps a protected claim is not demoted."
     codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
 
   # ------------------------------------------------------------------------------------------- LIN

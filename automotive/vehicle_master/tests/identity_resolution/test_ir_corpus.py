@@ -563,20 +563,35 @@ def test_a_confirmed_zero_or_unobserved_fixture_never_counts_toward_the_gap():
     assert case("window.absent-row-unconfirmed-gap-counted")["expect"]["common_window"]["months"] == 20, "unconfirmed gaps are dropped, not zero-filled"
 
 
-def test_provisional_keys_name_real_adoption_entries_and_every_provisional_entry_is_pinned():
+def test_provisional_keys_name_pending_adoption_entries_and_every_pending_entry_is_pinned():
     ids = {e["id"] for e in S.adoption()["entries"]}
+    pending = {e["id"] for e in S.adoption()["entries"] if e["status"] == "pending"}
     cited = collections.Counter()
     for item in CASES:
         keys = item.get("provisional_keys", [])
         assert keys == sorted(set(keys)), item["id"]
         assert set(keys) <= ids, (item["id"], set(keys) - ids)
+        assert set(keys) <= pending, f"{item['id']} cites an entry that is no longer pending (recalibrated or owner-accepted): {sorted(set(keys) - pending)}"
         if keys:
             assert "ADOPT-02" in item["taxonomy"], item["id"]
         cited.update(keys)
-    unpinned = [e["id"] for e in S.adoption()["entries"] if not cited[e["id"]] and not all(k.startswith("alias_provenance.") for k in e["keys"])]
+    unpinned = [e["id"] for e in S.adoption()["entries"] if e["status"] == "pending" and not cited[e["id"]] and not all(k.startswith("alias_provenance.") for k in e["keys"])]
     assert not unpinned, f"adoption entries no case depends on (the sweep found nothing that moves): {unpinned}"
 
 
 def test_the_dry_run_case_follows_the_adoption_flag():
     exp = case("resolve.dry-run-while-the-policy-is-provisional")["expect"]["decisions"]["honda-city"]
     assert exp["policy_binding"] is S.adoption()["binding"] is False
+
+
+def test_stored_overlaps_are_reported_on_every_subject_involved_and_nothing_is_written():
+    """Owner decision 2026-10-11 (I18): legacy overlapping claims are reported and never auto-repaired."""
+    for case_id in ("resolve.stored-overlap-approved-vs-auto-is-not-repaired", "resolve.stored-overlap-part-vs-whole-is-not-repaired",
+                    "resolve.legacy-two-active-rows-break-c1", "resolve.link-set-incomplete-is-not-repaired", "resolve.link-set-mixed-state-is-not-repaired"):
+        for subject, exp in case(case_id)["expect"]["decisions"].items():
+            assert exp["outcome"] == "STRUCTURAL_REVIEW" and exp["primary_code"] == "STRUCTURAL_STORED_CLAIMS_INCONSISTENT", (case_id, subject)
+            assert exp["writes"] == [] and exp["target_ids"] == [], (case_id, subject)
+    both = case("resolve.stored-overlap-approved-vs-auto-is-not-repaired")["expect"]["decisions"]
+    assert set(both) == {"toyota-yaris-a", "toyota-yaris-b"}, "both subjects of an overlap are reported"
+    legal = case("resolve.stored-parts-sharing-a-target-are-not-an-overlap")["expect"]["decisions"]
+    assert all("STRUCTURAL_STORED_CLAIMS_INCONSISTENT" in d.get("exclude", []) for d in legal.values()), "parts may share a target: not an overlap"

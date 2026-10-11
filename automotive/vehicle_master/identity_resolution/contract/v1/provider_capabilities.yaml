@@ -18,13 +18,17 @@
 #   * Changing a value (for example UNKNOWN -> ABSENT_IS_ZERO after Ice answers) is a contract change: edit this
 #     file, add or update the corpus cases that pin the new behaviour, and record it in CHANGELOG.md.
 #   * A source that is not listed here has no confirmed capabilities: its absent rows are unobserved.
+#   * ABSENT_IS_ZERO needs more than a statement: the confirmation must name the CONTRACTUAL GUARANTEE of complete month x dimension coverage
+#     (`coverage_guarantee`). "No row has ever been seen with zero units" is an observation, not a guarantee.
+#   * A `trace` records a pipeline investigation (owner decision 2026-10-11 for TDR registrations: trace the actual source pipeline instead of assuming);
+#     its verdict stays UNKNOWN unless a stage-by-stage guarantee exists. `upgrade_requires` lists what would have to become true.
 
 version: v1
 
 capability_keys:
   series.absent_row:
     values: [ABSENT_IS_ZERO, ABSENT_IS_UNOBSERVED, UNKNOWN]
-    zero_fill_allowed_only_when: "value == ABSENT_IS_ZERO and status == confirmed"
+    zero_fill_allowed_only_when: "value == ABSENT_IS_ZERO and status == confirmed and the confirmation names a contractual month x dimension coverage guarantee"
 
 sources:
   ice:
@@ -44,14 +48,45 @@ sources:
       question: "In reg_trend.csv, does a model_group with no row for a month inside reg_range mean zero registrations that month, or no data?"
   tdr_registrations:
     role: target_side
-    description: TDR registrations table (supabase registrations), one row per (period, brand_name_raw, model_name_raw), attributed to canonical models by TDR's own resolution.
+    description: TDR registrations (supabase `registrations` / the DLT v2 serving projection), attributed to canonical models by TDR's own reviewed resolution; the per-model monthly series is a sum of attributed rows.
     series.absent_row:
       value: UNKNOWN
       status: unconfirmed
       hypothesis: null
       evidence:
-        - "supabase/schema.sql: registrations has unique(period, brand_name_raw, model_name_raw) and `registrations integer not null`; no rule says a month without a row is zero."
-        - "docs/REGISTRATION_MARKET_CONTRACT.md (Time windows): TDR's own serving layer REJECTS a window with a missing calendar month rather than reading it as zero."
+        - "Traced 2026-10-11 through the whole pipeline (see `trace`): no stage guarantees complete month x dimension coverage, so a canonical-model month with no attributed row is not known to be zero."
+        - "DLT never publishes a zero row (0 of 25,379 rows in the 48 monthly exports under automotive/vehicle_master/data/raw); that is an observation, not a guarantee, and the repo has recorded DLT serving the wrong month and a part-published month."
+        - "TDR's own serving contract treats a missing calendar month as missing (rejected, never zero) and keeps unattributed units as coverage diagnostics."
+      trace:
+        traced_on: "2026-10-11"
+        method: "Repository read only: code, migrations, docs and the committed DLT snapshots. No database or network access; production table contents were not queried."
+        verdict: "UNKNOWN stays. Absent != zero at canonical-model grain: the source omits unregistered combinations without promising completeness, month coverage is a chain of different sources, and attribution is open by design."
+        stages:
+          - stage: source (DLT CKAN datastore, one resource per month)
+            guarantee: none
+            finding: "Rows are (class, brand, model label, count). Only classes RY1/RY2/RY3 are kept; the rest is skipped by design (2026-01: 609 of 1,421 rows kept; motorcycles, tractors, taxis...). Zero is never published (0 zero-unit rows in 48 exports) and 1,307 of 1,639 labels seen in two or more months have interior months with no row. DLT states no completeness promise, and the repo holds evidence of defects: the 2023-12 resource returned December 2022's payload; the 2026-02 resource was published part-filled (6 rows)."
+            refs: [automotive/vehicle_master/vehreg/dlt.py, automotive/vehicle_master/data/raw/withdrawn/README.md, automotive/vehicle_master/data/raw/dlt_2026-01.meta.json]
+          - stage: month coverage (source chain)
+            guarantee: none
+            finding: "The source differs by month: API export 2022-01..2026-01 except 2023-12; long-form workbook snapshots for 2021, 2023-12 and 2026-02..07; a classless pivot for 2026-08 that cannot split class-dependent nameplates (they stay unmapped for that month). Period-level coverage is only a readiness gate (--required-periods) and a window check that rejects a missing calendar month; there is no model x month grid."
+            refs: [docs/registration-analytics.md, docs/vehicle-platform/PHASE3_CUTOVER.md, docs/REGISTRATION_MARKET_CONTRACT.md, lib/registration-market.ts]
+          - stage: loader (ingest_registration_snapshot, tools/registration_v2_dlt_ingest.py)
+            guarantee: none
+            finding: "Validates format, the expected period and a non-negative integer count, then replaces the whole period atomically. It checks nothing against a declared grid of expected (class, brand, model) combinations."
+            refs: [supabase/migration_v26_registration_snapshot_csv_parser.sql, supabase/migration_v41_registration_canonical_and_exceptions.sql]
+          - stage: attribution to a canonical model
+            guarantee: none
+            finding: "model_id / canonical_model_id are set only through reviewed alias tables; ambiguous or unknown labels stay NULL and are never redistributed. About 98-99% of units mapped for 2026-01..07, lower for the pivot month; v2 is intentionally more conservative than v1 and 100% identity agreement is explicitly not required. A canonical model can therefore have no row in a month because its units sit at brand grain or unresolved."
+            refs: [docs/vehicle-platform/INVARIANTS.md, docs/vehicle-platform/DLT_V2_ARCHITECTURE.md, supabase/migration_v42_registration_canonical_precedence.sql]
+          - stage: series construction and serving
+            guarantee: none
+            finding: "The legacy matcher sums `registrations` rows with a non-null canonical_model_id by (model, period). Serving can come from two sources (legacy | v2, registration_serving_state) with a period ownership boundary, and the serving table holds less history than the warehouse."
+            refs: [automotive/vehicle_master/tools/ice_crosswalk_match.py, supabase/migration_v31_registration_v2_serving_and_cutover.sql, docs/REGISTRATION_MARKET_CONTRACT.md]
+        upgrade_requires:
+          - "A written guarantee (DLT's, or a TDR-owned import contract) that each monthly resource lists every class x brand x model combination with at least one registration, so that an omitted combination had zero, with the class filter declared per series."
+          - "A per-month load manifest proving every month inside the series' coverage was loaded from a verified-complete export (rows and units reconciled to a declared total; not a part-published current-month resource; not a classless pivot for class-dependent models)."
+          - "Attribution closure for the target: a closed, reviewed alias set such that no unresolved or ambiguous units in that month could belong to it; or the capability declared at a coarser grain where closure does hold."
+          - "One serving source per series (legacy or v2), or proof that the two agree for the target."
       confirm_with: TDR owner (registrations import contract)
       question_id: Q-TDR-ABSENT-ROW
-      question: "Does the registrations import ever store zero rows? If not, is a model-month with no rows zero, or unreported?"
+      question: "Which contract guarantees that a canonical-model month with no attributed registration row had zero registrations? Traced: none does; the four upgrade_requires items would have to become contractual first."

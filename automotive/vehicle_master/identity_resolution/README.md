@@ -3,13 +3,42 @@
 A permanent, provider-agnostic subsystem that decides how an **external vehicle identity** (provider #1: an Ice `model_group`) relates to a
 **TDR canonical entity** (`vehicle_models`), with evidence a human can audit and a machine can replay.
 
-> **Status: Contract v1 is a DRAFT, revision 2 — NOT FROZEN.** The owner accepted the architecture in principle and asked for three contract-level
+> **Status: Contract v1 is a DRAFT, revision 3 — NOT FROZEN.** The owner accepted the architecture in principle and asked for three contract-level
 > fixes (below) before adoption; they are made here, the contract is **not** frozen, and the uncalibrated `proposal` thresholds are **not adopted**
 > (`contract/v1/adoption.yaml`, `binding: false`). This directory holds the contract, the golden corpus, the architecture and the contract-level tooling.
 > There is **no resolver**, nothing reads this in production, no database state was touched, R6 was not re-run and R7 was not started.
 > `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain the live matcher. (A test fails if any production module imports this package.)
 
-## What revision 2 changes (owner review)
+## What revision 3 adds (owner decisions of 2026-10-11)
+
+The owner answered the open points. They are recorded as `owner_decisions` in [`adoption.yaml`](contract/v1/adoption.yaml) (and listed in SPEC Appendix E); the contract is **still not frozen**.
+
+| Decision | Status | Effect |
+|---|---|---|
+| Accept the three link types `EQUIVALENT`, `PART_OF`, `COMPOSED_OF` | accepted | SPEC §7.0 is part of the draft contract, no longer a proposal |
+| Accept the two cardinality rules as v1 (C1 one active claim per subject; C2 a target claimed whole is claimed once, parts may share) | accepted | pinned by `claim_conflict.*` and a brute-force grid test |
+| Keep bundles as real atomic link sets, not review-only | accepted | `candidates.bundle.enabled` is `owner_accepted`; the review-only branch is closed |
+| Extend persistence identity with `link_type`; legacy overlapping claims are **reported, never auto-repaired** | accepted (logical contract only — no DDL, migration or write path) | new invariant **I18**; step 0 of the decision procedure now also reports a stored overlap **between two subjects** (e.g. a stored AUTO row overlapping a protected claim is no longer demoted by the write matrix); `resolve.stored-overlap-*` |
+| Ice absent-row semantics stay `UNKNOWN` until Ice explicitly confirms | standing | tripwire test; `Q-ICE-ABSENT-ROW` remains the only open provider question |
+| TDR registrations: do not assume — **trace the source pipeline**; declare absent = zero only if complete month × dimension coverage is contractually guaranteed | standing; **result: stays `UNKNOWN`** | `provider_capabilities.yaml` → `trace` (five stages, none guarantees coverage) and `upgrade_requires`; a confirmed `ABSENT_IS_ZERO` must now name its `coverage_guarantee` |
+| `binding` stays `false`; every provisional threshold is non-authoritative until calibrated against the real R6 review data | standing | `provisional_keys` now lists only still-`pending` entries |
+| Do not freeze; wait for CI; then stop for threshold and data-semantics calibration | standing | this revision stops there |
+
+### The TDR registrations trace (why it stays UNKNOWN)
+
+Repository read only — no database was queried, so production table contents are not evidenced. Stage by stage, with references in `provider_capabilities.yaml`:
+
+1. **Source.** DLT's CKAN dataset publishes one resource per month with rows `(class, brand, model label, count)`. Only classes RY1/RY2/RY3 are kept (2026-01: 609 of 1,421 rows). DLT never publishes a zero row (0 of 25,379 rows across the 48 committed monthly exports) and 1,307 of 1,639 labels seen in two or more months have interior months with no row. DLT states no completeness promise, and the repo holds two defects: the 2023-12 resource returned December 2022's payload and the 2026-02 resource was part-published (6 rows).
+2. **Month coverage.** The source differs by month — API export, long-form workbook snapshots, a classless pivot for 2026-08 that cannot split class-dependent nameplates. TDR's own market contract treats a missing calendar month as missing (rejected, never zero); there is no model × month grid anywhere.
+3. **Loader.** `ingest_registration_snapshot` validates format, period and a non-negative count and replaces the period atomically; it checks nothing against an expected grid.
+4. **Attribution.** A canonical model is attributed only through reviewed aliases; ambiguous or unknown labels stay `NULL` and are never redistributed (98–99 % of units mapped in 2026-01..07, lower for the pivot month; v2 is "intentionally more conservative" than v1). A model-month can be absent because its units sit at brand grain or unresolved.
+5. **Series and serving.** The matcher sums attributed rows by (model, period); serving can come from the legacy table or the v2 projection, and holds less history than the warehouse.
+
+A statement that DLT omits unregistered combinations would make *label-level* absence meaningful; it would not make *canonical-model-month* absence meaningful, because attribution is open. `trace.upgrade_requires` lists the four things that would have to become contractual (a DLT/TDR completeness guarantee, a per-month load manifest, attribution closure, a single serving source). The test `test_the_trace_evidence_in_the_committed_dlt_snapshots_still_holds` fails if the committed snapshots ever contradict the evidence (e.g. an explicit zero row).
+
+**Practical consequence, unchanged:** until Ice and TDR meet a guarantee like that, a pair with an in-coverage hole in the last 24 months can be PROPOSED but never AUTO (`series.absent_row.auto_max_unconfirmed_gap_months = 0`, itself still provisional).
+
+## What revision 2 changed (owner review)
 
 | Owner point | Before (rev 1) | Now (rev 2) | Where |
 |---|---|---|---|
@@ -111,16 +140,16 @@ Committed (`tests/identity_resolution/`, run by the existing `vehicle-master-eng
 - schemas use only keywords the stdlib validator implements, every `$ref` resolves, and (when `jsonschema` is installed) the real validator agrees on all cases;
 - policy, registry and taxonomy are internally consistent (provenance on every key, complete write matrix, protected rows are `BLOCK_REPORT`, every reason code belongs to a taxonomy entry, …);
 - **capability data and the adoption gate** (rev 2): `provider_capabilities.yaml` validates against its schema and a test is the tripwire that fails if any source is marked as having confirmed "absent row = zero"; every `proposal`/`assumption` value belongs to exactly one `adoption.yaml` entry; `binding: true` is impossible while an entry is `pending`; the adapter boundary (`providers/base.py`) refuses a series that claims unconfirmed semantics or zero-fills an unconfirmed gap;
-- the corpus (**505 cases**, 15 kinds, including `densify` for adapter obligation A2 and `claim_conflict` for the C1/C2 cardinality rules) validates, covers **every taxonomy id** (111) and asserts **every reason code** (104), names every defect class the task listed with an end-to-end case, and its arithmetic expectations (windows incl. the semantics gap, gates, bands, lifecycle, body, write matrix, fingerprints and link-set ids, densification, claim conflicts — a brute-force check of the C1/C2 grid) are **recomputed by an independent reference** (`ir_reference.py`);
+- the corpus (**508 cases**, 15 kinds, including `densify` for adapter obligation A2 and `claim_conflict` for the C1/C2 cardinality rules) validates, covers **every taxonomy id** (112) and asserts **every reason code** (104), names every defect class the task listed with an end-to-end case, and its arithmetic expectations (windows incl. the semantics gap, gates, bands, lifecycle, body, write matrix, fingerprints and link-set ids, densification, claim conflicts — a brute-force check of the C1/C2 grid) are **recomputed by an independent reference** (`ir_reference.py`);
 - SPEC.md cannot drift: its appendices are generated from the YAML and compared, and prose mentions of reason codes / policy keys must exist;
 - no production module imports the subsystem; an `engine/` directory cannot appear without a conformance runner.
 
-Not committed (throwaway, in the working scratchpad): a prototype of the SPEC's decision procedure, revised for link types, link sets and capability data. All 505 corpus cases agree with it. Two sweeps were run against the committed corpus:
+Not committed (throwaway, in the working scratchpad): a prototype of the SPEC's decision procedure, revised for link types, link sets and capability data. All 508 corpus cases agree with it. Two sweeps were run against the committed corpus:
 
-- **198 single-key policy mutations** (every behaviour-bearing key flipped, halved, doubled, incremented or dropped, one at a time): 196 caught; the 2 survivors are equivalent mutants (dropping the last element of an ordering list changes nothing). The sweep also produced each case's `provisional_keys` — **306 of 505 cases depend on at least one provisional value**, which is the honest size of "the corpus pins mechanics, not calibrated numbers".
-- **26 structural controls** (rule-level mutations that are not policy keys — e.g. "the sum rule ignores an individually STRONG member", "parts conflict with parts", "an incomplete stored set is tolerated", "a confirmed gap counts", "a PART_OF claim can be AUTO"): every one is caught by at least one case. One survivor from the first pass (the set-size check was masked by the set-id check) was fixed by changing the case, not the rule.
+- **198 single-key policy mutations** (every behaviour-bearing key flipped, halved, doubled, incremented or dropped, one at a time): 196 caught; the 2 survivors are equivalent mutants (dropping the last element of an ordering list changes nothing). The sweep also produced each case's `provisional_keys` — **309 of 508 cases depend on at least one still-pending value**, which is the honest size of "the corpus pins mechanics, not calibrated numbers".
+- **27 structural controls** (rule-level mutations that are not policy keys — e.g. "the sum rule ignores an individually STRONG member", "parts conflict with parts", "an incomplete stored set is tolerated", "a confirmed gap counts", "a PART_OF claim can be AUTO", "a stored overlap between two subjects is not reported"): every one is caught by at least one case. One survivor from the first pass (the set-size check was masked by the set-id check) was fixed by changing the case, not the rule.
 
-**It proves the SPEC and the corpus are consistent with each other, not that the rules are right** — it has the same author. The rules need the owner's review and, for thresholds, calibration on real data. With `jsonschema` installed the suite additionally checks that the real Draft 2020-12 validator agrees with the stdlib one on every case (verified for this revision: 308 tests pass, 1 skipped = the engine gate).
+**It proves the SPEC and the corpus are consistent with each other, not that the rules are right** — it has the same author. The rules need the owner's review and, for thresholds, calibration on real data. With `jsonschema` installed the suite additionally checks that the real Draft 2020-12 validator agrees with the stdlib one on every case (verified for this revision: 312 tests pass, 1 skipped = the engine gate).
 
 **Not verified:** how TDR files Range Rover / GWM sub-brands (alias provenance `assumption`); whether TDR's `body_type` and generation dates are populated; any behaviour on production data; **whether an absent Ice or TDR row means zero** (`Q-ICE-ABSENT-ROW`, `Q-TDR-ABSENT-ROW` — unconfirmed capability data, so the contract treats it as unobserved and caps AUTO).
 
@@ -155,7 +184,7 @@ Naming note: `vehreg/retail_lineup_*` already has an unrelated *field* called `i
 
 ## 6. Decisions for the owner
 
-Numbered for reference; each says what v1 assumes and what I recommend. **Nothing here is decided by this revision** — the contract stays a draft and `adoption.yaml` stays non-binding until these are answered.
+Numbered for reference; each says what v1 assumes and what I recommend. Items 7–9 were decided on 2026-10-11 (struck through). The rest is open: the contract stays a draft and `adoption.yaml` stays non-binding until they — and the threshold calibration — are settled.
 
 1. **Accept the deliberate deviations D1–D15 in SPEC §15.** The two that change owner-approved text are D2 (token relations replace the §14.2 similarity score; "name ≥ 0.8" becomes "name relation is EQUAL-class") and D5 (a split raises a review question instead of copying a row). New in rev 2: D14 (no assumed zero) and D15 (cardinality by link type). *Recommend: accept.*
 2. **Calibrate before adopting — the thresholds are provisional, not adopted.** `adoption.yaml` lists every `proposal`/`assumption` value (11 `calibration` entries, 1 `representation`, 14 `design_choice`) as `pending`. They are defensible defaults, not measured values. *Recommend: share the R6 review CSV and your APPROVED rows (the "label set" described in `adoption.yaml`); it also replaces the reproduced `owner_report_r6` cases.*
@@ -163,12 +192,12 @@ Numbered for reference; each says what v1 assumes and what I recommend. **Nothin
 4. **MG-registered Maxus vans.** v1 treats MG↔MAXUS as RELATED (PROPOSED at most) because Ice files `maxus-mifa-7/9`, `maxus-v80` under **MG** while TDR's brand is MAXUS. Do you want a scoped rule that makes exactly those AUTO-eligible?
 5. **`LOCKED`.** Add it as a real state (recommended) or keep `ADMIN` as the lock?
 6. **Protected rows and a rename.** v1 lets an APPROVED mapping follow a rename as a recorded lineage move and makes a LOCKED one wait for the owner (`policy.lineage.protected`). Prefer owner acknowledgement for APPROVED too?
-7. **Link types and cardinality (rev 2).** Confirm the three relationships and the two rules (SPEC §7.0): `EQUIVALENT` 1:1; `COMPOSED_OF` one subject = a set of targets; `PART_OF` many subjects may share one target; C1 one active claim per subject, C2 a target claimed whole is claimed once. Confirm that `PART_OF` and `COMPOSED_OF` are **never AUTO** in v1. *Recommend: accept — it removes the forced "TDR must split City" question; the review question may still offer a split as an option.*
-8. **Bundle persistence (rev 2).** v1 persists a bundle as a **link set** (one decision, one deterministic `set_id`, one action on every row, humans act on the set). The alternative you named — **review-only, non-mappable evidence** — is simpler to store but leaves a composed subject (`toyota-hilux-travo` = cab + double cab) unrecordable. If you prefer it, `candidates.bundle` becomes evidence on an `INSUFFICIENT_DATA`/hint record, SPEC §10.5 shrinks to "no rows", and `adoption.yaml: candidates_bundle_rules` changes with it. *Recommend: link sets.*
-9. **Storage contract and legacy rows (rev 2).** A future migration must widen the row key with `link_type`, add `set_id`/`set_size`, and enforce C1/C2 when a row becomes active (SPEC §10.6) — none of that is made here. Legacy subjects with two active rows are C1 violations the engine reports; converting them to a `COMPOSED_OF` set is your call.
+7. ~~**Link types and cardinality.**~~ **Decided 2026-10-11: accepted** (`od_link_types`, `od_cardinality_rules`).
+8. ~~**Bundle persistence.**~~ **Decided 2026-10-11: real atomic link sets, not review-only** (`od_atomic_link_sets`).
+9. ~~**Storage contract and legacy rows.**~~ **Decided 2026-10-11: `link_type` joins the persistence identity; legacy overlapping claims are reported and never auto-repaired** (`od_persistence_link_type_identity`, I18). Still open and out of scope: the actual migration — widening the row key with `link_type`, adding `set_id`/`set_size`, and the active-claim constraints (SPEC §10.6) — needs its own schema/migration gate.
 10. **Retired split parents** (3 ids in M7.0) need a place for their redirect (`ice_model_group_redirects` rejects them today).
 11. **Trim-code groups** (`mercedes-benz-e300`, `-c350`, …; 4,473 units for E300 alone). v1 refuses to link `E300` to `E-Class` and flags it for discovery. Add family rules later (recommended) or scope them now?
-12. **Questions for Ice and for TDR (not blockers, but they decide how many pairs can ever be AUTO).** `Q-ICE-ABSENT-ROW`: in `reg_trend.csv`, does a model_group with no row for a month inside `reg_range` mean zero registrations or no data? `Q-TDR-ABSENT-ROW`: does the registrations import ever store zero rows, and is a model-month with no rows zero or unreported? Until answered, any pair with an in-coverage hole in the last 24 months is capped at PROPOSED (`series.absent_row.auto_max_unconfirmed_gap_months = 0`, itself provisional). Also: what does an id_changes RENAME/MERGE mean when the old id is still in `dims`? Is `share_of_old_pct` ever to be shown?
+12. **Questions for Ice and for TDR (not blockers, but they decide how many pairs can ever be AUTO).** `Q-ICE-ABSENT-ROW` (open; stays `UNKNOWN` until Ice explicitly confirms): in `reg_trend.csv`, does a model_group with no row for a month inside `reg_range` mean zero registrations or no data? `Q-TDR-ABSENT-ROW` is **answered by the trace**: `UNKNOWN`; only a contractual month × dimension guarantee (the four `upgrade_requires` items) would change it. Until then any pair with an in-coverage hole in the last 24 months is capped at PROPOSED (`series.absent_row.auto_max_unconfirmed_gap_months = 0`, itself provisional). Also: what does an id_changes RENAME/MERGE mean when the old id is still in `dims`? Is `share_of_old_pct` ever to be shown?
 13. **State docs.** `WORK_STATE.md` still says R6 is not started; reconcile it when you decide how the first run is recorded.
 
 ## 7. Not done, deliberately

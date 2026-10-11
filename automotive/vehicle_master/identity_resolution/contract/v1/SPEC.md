@@ -1,8 +1,8 @@
 # TDR Identity Resolution Contract — SPEC v1
 
-**Status: DRAFT, revision 2 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
+**Status: DRAFT, revision 3 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
 The policy values tagged `proposal` / `assumption` are provisional and are **not adopted** (§14.6, `adoption.yaml`,
-`binding: false`). `CHANGELOG.md` lists what changed after the owner's first review.
+`binding: false`). `CHANGELOG.md` lists what changed after the owner's reviews; the owner's decisions of 2026-10-11 (link types, the two cardinality rules, atomic link sets, `link_type` in persistence identity, UNKNOWN missing-row semantics, `binding: false`, no freeze) are recorded in `adoption.yaml` under `owner_decisions` (Appendix E).
 Companion files in this directory: `policy.yaml` (every tunable), `provider_capabilities.yaml` (what each source's data means),
 `adoption.yaml` (the adoption gate), `reason_codes.yaml` (the code registry), `taxonomy.yaml` (the edge-case taxonomy as data),
 `record.schema.json` (engine input), `decision.schema.json` (engine output), `capabilities.schema.json`, `case.schema.json` +
@@ -118,6 +118,8 @@ These hold for every conforming engine, whatever the policy says.
 - **I16 — A non-binding policy is a dry run.** While `adoption.yaml` has `binding: false`, the engine's `writes` are advisory: nothing may be persisted from them, no AUTO row may be created, and no
   APPROVED / LOCKED row may rest on them. Every record carries `policy.binding` so a consumer can tell.
 - **I17 — A link set is one unit.** The rows of a `COMPOSED_OF` claim are written, refreshed, demoted, staled, suppressed, approved, rejected and locked together or not at all (§10.5).
+- **I18 — Stored overlaps are reported, never auto-repaired.** Stored active claims that break the cardinality rules (§7.0) — two active claims of one subject (C1), two subjects whose active claims overlap on a target contrary to C2, or an incomplete / mixed-state / mis-identified link set — are reported on every subject involved
+  (`STRUCTURAL_STORED_CLAIMS_INCONSISTENT`, §8.2 step 0) and nothing is written for them: the engine, and any writer acting on its output, never demotes, moves, merges, splits, retypes, completes or deletes such rows. Only a human decision changes them. (Owner decision 2026-10-11.)
 
 ---
 
@@ -155,8 +157,10 @@ no source row inside the source's declared coverage means.
 | `UNKNOWN` (unconfirmed) | nobody has confirmed either reading; a *hypothesis* may be recorded but never licenses a zero | `null` |
 
 - **Today:** Ice `UNKNOWN` (hypothesis `ABSENT_IS_ZERO`; evidence: 0 of 262,985 M7.0 `reg_trend` rows have a count ≤ 0 and 518 of 1,200 groups have in-coverage months with no row, which fits both
-  readings; open question `Q-ICE-ABSENT-ROW`). TDR registrations `UNKNOWN` (`Q-TDR-ABSENT-ROW`; TDR's own serving contract *rejects* a window with a missing calendar month rather than reading it as zero).
-  The generated Appendix D lists the current values.
+  readings; open question `Q-ICE-ABSENT-ROW`; the owner's decision is that it stays `UNKNOWN` until Ice explicitly confirms). TDR registrations `UNKNOWN`: the owner asked for the source pipeline to be **traced instead of assumed**, and declared `ABSENT_IS_ZERO` only if complete month × dimension coverage is
+  contractually guaranteed. It is not — the trace (2026-10-11, repository read only; `provider_capabilities.yaml` → `trace`) found no stage that guarantees it: DLT publishes only registered combinations and states no completeness promise (and the repo records a wrong-month payload and a part-published month); the source chain differs by month
+  (API export, long-form workbook, a classless pivot); the loader checks format and period, not a grid; attribution to a canonical model is open by design, so a model-month can be absent because its units sit at brand grain or unresolved; and serving can come from two sources. `trace.upgrade_requires` lists the four things that would have to become contractual first.
+  The generated Appendix D lists the current values. **A confirmation of `ABSENT_IS_ZERO` must name the contractual guarantee of complete month × dimension coverage** (`coverage_guarantee`); "no zero row has ever been seen" is an observation, not a guarantee.
 - A series carries the declaration it was built under as `absent_rows {source, semantics, confirmed, months}` (`record.schema.json`). The engine checks the block against the capability file and **refuses**
   the run when it claims more than the contract grants (`INPUT_CAPABILITY_MISMATCH`) or when a listed absent month carries a number without a confirmed `ABSENT_IS_ZERO`
   (`INPUT_ABSENT_ROW_ZERO_UNCONFIRMED`). A source not listed has no confirmed capabilities.
@@ -348,6 +352,8 @@ provider that is finer than TDR, nor one that is coarser, without forcing a rest
 | `COMPOSED_OF` | the subject **is the sum of** these targets (TDR is the finer side) | one set of 2..`candidates.bundle.max_members` targets | each member wholly claimed by this subject | `PROPOSED` | a **link set**: N rows sharing a `set_id` (§10.5) |
 | `PART_OF` | the subject **is one part of** the target (the provider is the finer side) | exactly 1 target | **many** `PART_OF` subjects may share it | `PROPOSED` | 1 row |
 
+The three link types and the two rules below are **accepted by the owner as v1** (decisions `od_link_types`, `od_cardinality_rules`, 2026-10-11).
+
 Two **active** claims (state `AUTO`, `APPROVED` or `LOCKED`; a `PROPOSED` row is a candidate, not a claim in force) conflict under exactly two fixed rules. They are part of the contract, not of the policy, and are pinned by
 `claim_conflict` corpus cases:
 
@@ -383,7 +389,7 @@ a split wider than `max_members` is out of v1 scope and surfaces as `NO_CANDIDAT
 This is the only way the engine can discover `hilux_travo_cab + hilux_travo_double_cab → toyota-hilux-travo`: each part alone has a ratio near 0.5.
 
 **A bundle is a link set, not N independent candidates.** It has one `set_id` (§10.5), one state, one evidence fingerprint and one write action that applies to every member row (I17). The decision lists all members in `target.ids`; approving, rejecting or
-locking it is a decision about the set. (The alternative the owner may prefer — bundles as review-only evidence that is never persisted as a mapping — is recorded as a decision in `adoption.yaml`; it would make a composed subject unrecordable, which is why v1 does not choose it.)
+locking it is a decision about the set. **Decided (`od_atomic_link_sets`, 2026-10-11):** bundles are real atomic link sets, **not** review-only evidence. (Review-only would have made a composed subject — `toyota-hilux-travo` = cab + double cab — unrecordable; it is not built and not offered as a switch.)
 
 ### 7.4 Provider finer than TDR — link type `PART_OF`
 
@@ -425,8 +431,8 @@ For each candidate (a single-target claim, or a bundle — a `COMPOSED_OF` set):
 
 ### 8.2 Outcome, in this order
 
-0. The subject's stored active claims break C1, or a stored `COMPOSED_OF` set is incomplete or mixed-state (§10.5 S4) → `STRUCTURAL_REVIEW` / `STRUCTURAL_STORED_CLAIMS_INCONSISTENT`, high priority. Nothing is written and nothing is repaired. This runs before
-   protection: a protected claim the engine cannot read unambiguously is not "held", it is unreadable.
+0. The subject's stored active claims break C1, **overlap another subject's stored active claim contrary to C2**, or a stored `COMPOSED_OF` set is incomplete, mixed-state or mis-identified (§10.5 S4) → `STRUCTURAL_REVIEW` / `STRUCTURAL_STORED_CLAIMS_INCONSISTENT`, high priority — on **every** subject involved. Nothing is written and nothing is repaired (I18); in particular a stored AUTO row
+   that overlaps a protected claim is not demoted. This runs before protection: a protected claim the engine cannot read unambiguously is not "held", it is unreadable.
 1. The subject has an APPROVED/LOCKED mapping → `PROTECTED_HOLD` (§10.3).
 2. No candidates → `NO_CANDIDATE` (primary per §7.2).
 3. No proposable candidate:
@@ -556,8 +562,8 @@ the old set becomes `ABSENT` and the matrix demotes or stales it; it is never ed
 - **S1** A set has between 2 and `candidates.bundle.max_members` rows, one `set_id`, and every row carries `set_size`.
 - **S2** The rows of a set share state and evidence fingerprint and change together (I17). A persistence layer that cannot write the whole set MUST NOT write any of it.
 - **S3** Humans act on the set: approve, reject or lock a set, never a member. APPROVED/LOCKED protects the whole set; REJECTED suppresses the whole set (its evidence fingerprint covers the sorted members).
-- **S4** A stored set is *consistent* iff it has exactly `set_size` rows, all in one state, and its `set_id` recomputes from (provider, subject, members). An inconsistent set — or a subject whose stored active claims break C1 — is `STRUCTURAL_REVIEW` /
-  `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` (§8.2 step 0): reported, never repaired.
+- **S4** A stored set is *consistent* iff it has exactly `set_size` rows, all in one state, and its `set_id` recomputes from (provider, subject, members). An inconsistent set — or a subject whose stored active claims break C1, or overlap another subject's contrary to C2 — is `STRUCTURAL_REVIEW` /
+  `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` (§8.2 step 0): reported, never repaired (I18).
 - **S5** If one member target is deleted or missing, the set is a `CARD_TARGET_MISSING` case (§7.5); the other rows are not touched. A lineage move of the owning subject re-derives the `set_id` and moves all rows or none (§9.3).
 
 ### 10.6 Logical storage contract (no DDL, no migration is made here)
@@ -568,7 +574,8 @@ the evidence and decision fingerprints, the `source_version` label and the polic
 - **Row key** `(provider, subject_id, target_id, link_type)`. The v63 key `(subject, target)` has no `link_type`; widening it is a future migration and is **not** made here.
 - **Active-claim uniqueness (C1, C2) is enforced when a row becomes active** (AUTO, APPROVED, LOCKED): activating a row that would conflict MUST fail. The v63 unique index (one active group per TDR model) implements C2 for `EQUIVALENT` only; `PART_OF` and `COMPOSED_OF` need constraints of their own.
 - **Set-level actions are transactional** (I17).
-- **Legacy rows** carry no link type and read as `EQUIVALENT` (A12). A legacy subject with two active rows is therefore a C1 violation the engine reports (§8.2 step 0) instead of tolerating; converting it to a `COMPOSED_OF` set is an owner decision.
+- **Legacy rows** carry no link type and read as `EQUIVALENT` (A12). A legacy subject with two active rows is therefore a C1 violation, and legacy rows of two subjects on one target a C2 violation; the engine reports both (§8.2 step 0) instead of tolerating them. **Extending the persistence identity with `link_type` is accepted (`od_persistence_link_type_identity`, 2026-10-11); legacy overlapping claims are reported and never auto-repaired** — converting
+  such rows (for example to a `COMPOSED_OF` set) is a human decision, row by row. That decision authorises the logical contract only: no DDL, migration or write path.
 - **Non-binding policy** (I16): while `adoption.yaml` has `binding: false`, nothing in this section is exercised against a live table.
 
 ---
@@ -672,11 +679,11 @@ Every behaviour-bearing policy key must be pinned: flipping any single value mus
 
 ### 14.6 The adoption gate and provisional keys
 
-Revision 2 does not adopt the uncalibrated proposal thresholds. `adoption.yaml` lists every `proposal` / `assumption` value of `policy.yaml` in exactly one entry — `calibration` (a numeric tunable), `representation` (a definition) or `design_choice` (a switch, list, order or route) — each `pending`, with what would settle it
+Revisions 2 and 3 do not adopt the uncalibrated proposal thresholds (standing owner decision `od_binding_false`, 2026-10-11: `binding` stays false and every provisional threshold stays non-authoritative until calibrated against the real R6 review data). `adoption.yaml` lists every `proposal` / `assumption` value of `policy.yaml` in exactly one entry — `calibration` (a numeric tunable), `representation` (a definition) or `design_choice` (a switch, list, order or route) — each `pending`, with what would settle it
 (Appendix E). `binding` is `false` and a test refuses `true` while any entry is `pending`. Consequences:
 
 - Every record carries `policy.binding`; under `false` the run is a dry run (I16).
-- A golden case whose expectation moves when a provisional value moves carries `provisional_keys` (generated by the mutation sweep). The case is still a valid specification of the *current draft*; it is **not** evidence that the value is right. Recalibrating an entry means re-deriving the cases that cite it, in the same change.
+- A golden case whose expectation moves when a still-`pending` value moves carries `provisional_keys` (generated by the mutation sweep; entries the owner has accepted or calibrated are no longer listed). The case is still a valid specification of the *current draft*; it is **not** evidence that the value is right. Recalibrating an entry means re-deriving the cases that cite it, in the same change.
 - The corpus pins *mechanics* (a gate fires at its threshold; a boundary is inclusive) — not the *values*. Where a value is `inherited` (§14.2 of VEHICLE_DB_V3: correlation ≥ 0.98, ratio 0.9–1.1, 24 months) or `observed` (M7.0 data), no entry exists.
 
 ---
@@ -712,7 +719,7 @@ from VEHICLE_DB_V3 §14.2, each needing the owner's decision (README "Decisions 
 - `policy.version` (SemVer): **MAJOR** — an outcome class can change for existing input; **MINOR** — a new alias/allow-list entry or a new key with a no-op default; **PATCH** — comments/wording only.
 - A policy change MUST ship with the corpus rows that pin it (§14.4, §14.5) and an owner decision. A `policy.digest` mismatch against `policy.version` is a release blocker (engine milestone).
 - The engine refuses a policy version it does not implement (`INPUT_POLICY_VERSION_UNSUPPORTED`).
-- **Freeze.** Contract v1 is frozen only when (a) the owner records the freeze in `CHANGELOG.md`, and (b) `adoption.yaml` has `binding: true`, which requires every entry to be `calibrated` or `owner_accepted`. Until then `contract/v1/` may change in place, each change logged in `CHANGELOG.md`, and `policy.version` stays `1.0.0`.
+- **Freeze.** Contract v1 is frozen only when (a) the owner records the freeze in `CHANGELOG.md` (the standing decision `od_not_frozen` is then lifted), and (b) `adoption.yaml` has `binding: true`, which requires every entry to be `calibrated` or `owner_accepted` and `od_binding_false` to be lifted. Until then `contract/v1/` may change in place, each change logged in `CHANGELOG.md`, and `policy.version` stays `1.0.0`.
 - Confirming a provider capability (e.g. `Q-ICE-ABSENT-ROW`) edits `provider_capabilities.yaml` and its pinning cases; it is a policy MINOR/MAJOR per the rule above (it can change outcome classes), logged in `CHANGELOG.md`.
 
 ---
@@ -720,7 +727,7 @@ from VEHICLE_DB_V3 §14.2, each needing the owner's decision (README "Decisions 
 ## 17. Open questions for the owner
 
 See `README.md` → "Decisions for the owner". The thresholds marked `proposal` in the policy provenance are **not calibrated on production data** (the first R6 run's review rows are not in the repository) and are **not adopted** (§14.6); `adoption.yaml` is the checklist.
-Open provider questions: `Q-ICE-ABSENT-ROW` and `Q-TDR-ABSENT-ROW` (Appendix D).
+Open provider question: `Q-ICE-ABSENT-ROW` (Appendix D). `Q-TDR-ABSENT-ROW` was answered by the pipeline trace — `UNKNOWN`, with the four contractual requirements that would have to exist first.
 
 ---
 
@@ -816,7 +823,7 @@ Generated from `reason_codes.yaml`.
 | `PROPOSE_PART_OF` | decision | primary | none | PROPOSE | The provider subject is a finer part of one TDR model (link type PART_OF; several subjects may be parts of one target). Never AUTO. |
 | `AMBIGUOUS_CANDIDATES_WITHIN_MARGIN` | decision | primary | forces_review | AMBIGUOUS | Two or more candidates tie at the top tier inside the policy margin; none is selected. |
 | `AMBIGUOUS_TARGET_CONTESTED` | decision | primary | forces_review | AMBIGUOUS | Two subjects would each take the same TDR target as their active mapping; neither is auto-linked. |
-| `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` | decision | primary | forces_review | STRUCTURAL_REVIEW | The subject's stored active claims break the cardinality rules (SPEC §7.0), or a stored COMPOSED_OF link set is incomplete or mixed-state. The engine changes nothing for the subject and never repairs a set. |
+| `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` | decision | primary | forces_review | STRUCTURAL_REVIEW | The subject's stored active claims break the cardinality rules (SPEC §7.0) -- two of its own, or an overlap with another subject's -- or a stored COMPOSED_OF link set is incomplete, mixed-state or mis-identified. Reported on every subject involved; the engine writes nothing and never repairs (I18). |
 | `STRUCTURAL_APPROVED_CLAIM_CONFLICT` | decision | primary | forces_review | STRUCTURAL_REVIEW | This subject strongly fits a TDR target already held APPROVED/LOCKED by another subject. Nothing is changed; the owner decides. |
 | `NO_CANDIDATE_ALL_EXCLUDED` | decision | primary | none | NO_CANDIDATE | Every brand-compatible candidate is excluded by affirmative evidence. |
 | `NO_CANDIDATE_EMPTY_POOL` | decision | primary | none | NO_CANDIDATE | The TDR brand exists but offers no eligible model. |
@@ -990,6 +997,7 @@ Generated from `taxonomy.yaml`.
 | `CARD-11` | A proposed claim conflicts with another subject's AUTO claim | design | `CARD_CLAIM_CONFLICTS_AUTO` |
 | `CARD-12` | Candidate claims a protected subject under a different link type | design | `CARD_LINK_TYPE_CONFLICTS_PROTECTED`, `PROTECTED_HOLD_APPROVED` |
 | `CARD-13` | Stored active claims break the cardinality rules | design | `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` |
+| `CARD-14` | Stored active claims of two subjects overlap contrary to C2 | owner_report_r6 | `STRUCTURAL_STORED_CLAIMS_INCONSISTENT` |
 | `LIN-01` | Rename (เปลี่ยนรหัส) | ice_m7_data | `LIN_RENAME_FOLLOWED` |
 | `LIN-02` | Merge (รวม) | ice_m7_data | `LIN_MERGE_FOLLOWED` |
 | `LIN-03` | Split where the parent stays live | ice_m7_data | `LIN_SPLIT_PARENT_RETAINED`, `LIN_EVIDENCE_QUARANTINE`, `LIN_PARENT_MAPPING_REVIEW`, `LIN_SPLIT_CHILD_INHERITED_CANDIDATE` |
@@ -1043,7 +1051,7 @@ Generated from `provider_capabilities.yaml`. Evidence and the exact open questio
 | Source | Role | `series.absent_row` | Status | Hypothesis | Open question |
 |---|---|---|---|---|---|
 | `ice` | provider | `UNKNOWN` | unconfirmed | `ABSENT_IS_ZERO` | `Q-ICE-ABSENT-ROW` In reg_trend.csv, does a model_group with no row for a month inside reg_range mean zero registrations that month, or no data? |
-| `tdr_registrations` | target_side | `UNKNOWN` | unconfirmed | — | `Q-TDR-ABSENT-ROW` Does the registrations import ever store zero rows? If not, is a model-month with no rows zero, or unreported? |
+| `tdr_registrations` | target_side | `UNKNOWN` | unconfirmed | — | `Q-TDR-ABSENT-ROW` Which contract guarantees that a canonical-model month with no attributed registration row had zero registrations? Traced: none does; the four upgrade_requires items would have to become contractual first. |
 <!-- END GENERATED:capabilities -->
 
 ## Appendix E — Adoption gate
@@ -1053,12 +1061,27 @@ Generated from `adoption.yaml` (§14.6).
 <!-- BEGIN GENERATED:adoption -->
 `binding: false` — status `provisional_not_frozen`.
 
+Owner decisions about the contract:
+
+| Decision | Decided | Status | Decision |
+|---|---|---|---|
+| `od_link_types` | 2026-10-11 | accepted | Accept the three link types: EQUIVALENT, PART_OF, COMPOSED_OF. |
+| `od_cardinality_rules` | 2026-10-11 | accepted | Accept the two cardinality rules as v1: C1 (one active claim per subject) and C2 (a target claimed whole is claimed once; PART_OF claims may share a target). |
+| `od_atomic_link_sets` | 2026-10-11 | accepted | Keep bundles as real atomic link sets, not review-only evidence. |
+| `od_persistence_link_type_identity` | 2026-10-11 | accepted | Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired. |
+| `od_ice_absent_row_unknown` | 2026-10-11 | standing | Keep Ice absent-row semantics UNKNOWN until Ice explicitly confirms them. |
+| `od_tdr_absent_row_traced` | 2026-10-11 | standing | For TDR registrations do not assume: trace the actual source pipeline, and declare absent=zero only if complete month x dimension coverage is contractually guaranteed; otherwise keep UNKNOWN. |
+| `od_binding_false` | 2026-10-11 | standing | Keep adoption binding=false and every provisional threshold non-authoritative until calibration against the real R6 review data. |
+| `od_not_frozen` | 2026-10-11 | standing | Do not freeze Contract v1. Wait for CI, incorporate the decisions above, then stop for threshold and data-semantics calibration. |
+
+Policy values:
+
 | Entry | Class | Policy keys | Status | Settled by |
 |---|---|---|---|---|
 | `representation_constants` | representation | `quantization`, `time.valid_year_range`, `lexical.token_boundary_characters` | pending | Confirm: 6-place half-even quantization, 1900-2200 calendar sanity range, and the token boundary character set. |
 | `series_minimums` | calibration | `series.minimums` | pending | Label set: distribution of common months / joint non-zero months / units for owner-accepted vs owner-rejected rows; choose the lowest AUTO minimum with no wrong AUTO on the held-out brands. |
 | `series_monthly_fit` | calibration | `series.monthly_fit` | pending | Label set: monthly-fit share of accepted vs rejected strong-looking pairs (the outlier-driven correlation cases). |
-| `series_absent_row_gap` | calibration | `series.absent_row` | pending | Answers to Q-ICE-ABSENT-ROW and Q-TDR-ABSENT-ROW (provider_capabilities.yaml) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then. |
+| `series_absent_row_gap` | calibration | `series.absent_row` | pending | Ice's explicit answer to Q-ICE-ABSENT-ROW and, for TDR, the contractual guarantees listed in provider_capabilities.yaml (trace.upgrade_requires) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then. |
 | `lexical_fuzzy_min_length` | calibration | `lexical.fuzzy_token.min_token_length` | pending | Label set: one-edit name pairs the owner accepted vs rejected, by token length. |
 | `attributes_lifecycle` | calibration | `attributes.lifecycle` | pending | TDR generation dates vs owner-labelled generation mismatches (grace months, within/disjoint shares). |
 | `subject_discovery_thresholds` | calibration | `subject_quality.discovery` | pending | Size of the discovery queue the owner can actually review; units of subjects the owner later added to the catalog. |
@@ -1074,8 +1097,9 @@ Generated from `adoption.yaml` (§14.6).
 | `attributes_target_status` | design_choice | `attributes.target_status` | pending | Confirm that UNVERIFIED targets are capped at PROPOSED. |
 | `subject_never_auto_statuses` | design_choice | `subject_quality.never_auto_identity_statuses` | pending | Confirm that provisional and raw-name subjects are never AUTO. |
 | `candidates_pool_rules` | design_choice | `candidates.brand_relations_allowed`, `candidates.brand_relations_auto_eligible`, `candidates.target_statuses_in_pool`, `candidates.exclude_deleted_targets` | pending | Confirm the candidate pool and which brand relations are AUTO-eligible (RELATED is capped). |
-| `candidates_bundle_rules` | design_choice | `candidates.bundle.enabled`, `candidates.bundle.member_name_relations` | pending | Confirm COMPOSED_OF link sets exist, and which name relations may be members. If the owner prefers review-only bundles, this entry and SPEC §10.5 change together. |
+| `candidates_bundle_enabled` | design_choice | `candidates.bundle.enabled` | owner_accepted | COMPOSED_OF link sets exist (the owner chose real atomic link sets over review-only bundles on 2026-10-11). |
 | `candidates_ranking` | design_choice | `candidates.ranking` | pending | Confirm the lexicographic ranking order (never a weighted sum). |
+| `candidates_bundle_members` | design_choice | `candidates.bundle.member_name_relations` | pending | Confirm which name relations may be members of a link set (the existence of link sets is decided: od_atomic_link_sets). |
 | `granularity_part_of_rules` | design_choice | `granularity.part_of.subject_name_relations`, `granularity.part_of.arbitration_sum_check` | pending | Confirm that a narrower provider name plus a clearly larger target means PART_OF, and that several subjects whose sum fits one target are all parts. |
 | `lineage_rules` | design_choice | `lineage` | pending | Confirm quarantine scope, the STRUCTURE card instead of copied rows, and how identity changes treat APPROVED / LOCKED rows. |
 | `state_write_matrix` | design_choice | `state.write_matrix` | pending | Confirm the action for each (existing state x engine decision) cell. |

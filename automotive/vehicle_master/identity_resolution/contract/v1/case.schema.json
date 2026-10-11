@@ -221,7 +221,7 @@
         "brand_known": {"type": "boolean"},
         "brand_in_tdr": {"type": "boolean"},
         "pool_size": {"type": "integer", "minimum": 0},
-        "stored_claims": {"enum": ["CONSISTENT", "INCONSISTENT"], "description": "Whether the subject's stored active claims obey C1 and its stored link sets are complete and uniform (SPEC §10.5 S4). Default CONSISTENT."},
+        "stored_claims": {"enum": ["CONSISTENT", "INCONSISTENT"], "description": "Whether the subject's stored active claims obey C1 and C2 (no stored overlap with another subject's) and its stored link sets are complete and uniform (SPEC §8.2 step 0, §10.5 S4). Default CONSISTENT."},
         "candidates": {"type": "array", "items": {"$ref": "#/$defs/classify_candidate"}},
         "absent_existing": {
           "type": "array",
