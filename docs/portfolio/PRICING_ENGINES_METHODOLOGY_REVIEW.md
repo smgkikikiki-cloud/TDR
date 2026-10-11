@@ -23,6 +23,8 @@ Event dedupe + corrections + frozen universe + quality/missingness
 
 Every observation must distinguish `observed_at`, `effective_from`, `effective_to?`, `recorded_at` and corrections. A posted online price observed today could have been in force since an earlier effective date; **unknown effective date remains null**, not necessarily today's price action.
 
+**Live coverage observation (2026-10-11):** [CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md](CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md) found only 273/1,431 CURRENT Trims with a matching LIST_PRICE ledger row, all 320 LIST_PRICE observations in one month (September 2026), and no normalized promotion amounts across 48 options. Consequently **the following formulas remain proposed only**; current whole-market PDI/monthly discount trend cannot be published from these inputs. Do not backfill `VERIFIED_ZERO` or manufacture dated price actions.
+
 ## P1. PDI construct — not a general price war mood gauge
 
 **Owner-locked inclusion universe** (2026-10-08 owner product decisions):
