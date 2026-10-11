@@ -1,0 +1,34 @@
+{
+  "contract": "PDI-OEM-OFFER-PILOT-2026-10-S07-v1",
+  "status": "ANALYST_VERIFIED_PILOT_NOT_HEADLINE",
+  "asOf": "2026-10-11",
+  "observedAt": "2026-10-11",
+  "effectiveFrom": "2026-10-01",
+  "effectiveTo": "2026-10-31",
+  "sourceUrl": "https://www.changan.co.th/th/promotion/campaign-oct-2026-th/",
+  "sourceExcerptSummary": "OEM October campaign states Deepal New S07 special price 1,099,000 THB (from 1,219,000 THB). This is a trim-specific general retail promotional selling price, rather than a finance or noncash benefit.",
+  "market": "TH",
+  "territory": "NATIONWIDE",
+  "sourceClass": "OFFICIAL_OEM",
+  "vehicleMaster": {
+    "seedReleaseId": "vehicle-2026-a8e647b7db765c78",
+    "seedAsOf": "2026-10-01",
+    "modelId": "deepal.deepal_s07",
+    "reviewedRetailSetAt": "2026-09-27"
+  },
+  "trims": [
+    {
+      "trimId": "deepal.deepal_s07.gen1.trim.new_bev",
+      "powertrain": "BEV",
+      "msrpThb": 1219000,
+      "cashDiscountThb": 120000,
+      "advertisedNetPriceThb": 1099000
+    }
+  ],
+  "scoringNotes": [
+    "OEM promotional selling price plus explicit official reference price; formula uses verified delta",
+    "Only single CURRENT trim in TDR reviewed retail set; unverified overlays excluded",
+    "No assumption of additional cash or finance stacking",
+    "This is an October pilot model, not a nationwide benchmark; structural MSRP repricing must be re-reviewed if observed"
+  ]
+}
