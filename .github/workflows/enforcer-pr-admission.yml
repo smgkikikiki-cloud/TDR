@@ -55,14 +55,12 @@ jobs:
         with:
           node-version: '22'
       - name: Verify authentic PR diff using base policy
-        env:
-          EVENT_PATH: ${{ github.event_path }}
         run: |
           if [ ! -f policy/orchestration/pr-admission.mjs ]; then
             echo "::notice::Stage 1 bootstrap PR: BASE has no trusted checker yet. No managed task is authorized by this check."
             exit 0
           fi
           node policy/orchestration/pr-admission.mjs \
-            --event "$EVENT_PATH" \
+            --event "$GITHUB_EVENT_PATH" \
             --policy-root "$PWD/policy" \
             --candidate-root "$PWD/candidate"
