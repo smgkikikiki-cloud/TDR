@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 from dataclasses import asdict
+import tempfile
 
 from .eligibility import evaluate_model
 from .gap_inventory import gaps_for_model
@@ -495,6 +496,37 @@ def _validate_report(report: ReplayReport) -> None:
             raise ReplayContractError("candidate quote/locator contract is invalid")
         if candidate.candidate_status not in {"ACCEPTED_CANDIDATE", "HELD"}:
             raise ReplayContractError("invalid candidate disposition")
+
+
+def validate_cached_source_document(snapshot: dict, document: dict) -> dict:
+    """Re-admit cached bytes through the same fixture and replay contracts.
+
+    The returned coverage contains only exact claims the deterministic replay
+    pipeline accepts against this snapshot. Metadata on its own never grants
+    cache coverage.
+    """
+    validate_fixture(snapshot)
+    _valid_document(document)
+    with tempfile.TemporaryDirectory(prefix="catalog-evidence-replay-") as directory:
+        root = Path(directory)
+        snapshot_path = root / "snapshot.json"
+        document_path = root / "document.json"
+        output_path = root / "out"
+        snapshot_path.write_text(json.dumps(snapshot, ensure_ascii=False), encoding="utf-8")
+        document_path.write_text(json.dumps(document, ensure_ascii=False), encoding="utf-8")
+        replay(snapshot_path, [document_path], output_path)
+        candidates = [json.loads(line) for line in (output_path / "field_candidates.jsonl").read_text(encoding="utf-8").splitlines()]
+    accepted = [row for row in candidates if row.get("candidate_status") == "ACCEPTED_CANDIDATE"]
+    if document.get("source_kind") == "RETAIL_LINEUP":
+        from .retail_reconcile import validate_source_completeness
+        complete = validate_source_completeness(document)["complete"]
+        if not complete or document.get("market") != "TH" or document.get("source_authority") != "OFFICIAL":
+            raise ReplayContractError("cached retail evidence is not a validated complete official Thai lineup")
+    return {"source_document": document,
+            "accepted_claims": [{"model_id": row["model_id"], "generation_id": row["generation_id"],
+                                 "trim_id": row["trim_id"], "field_key": row["field_key"],
+                                 "document_sha256": row["document_sha256"]} for row in accepted],
+            "retail_lineup_validated": document.get("source_kind") == "RETAIL_LINEUP"}
 
 
 def _count_reasons(rows: list[dict]) -> dict[str, int]:

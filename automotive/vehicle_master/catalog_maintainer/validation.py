@@ -38,6 +38,8 @@ def validate_policy(policy: dict) -> None:
     audit_slots = int(q.get("audit_anti_starvation_slots_per_cycle", -1))
     if audit_cycle <= 0 or audit_slots < 0 or audit_slots >= audit_cycle:
         raise ValueError("invalid Retail Audit anti-starvation cycle/slot policy")
+    if slots * audit_cycle + audit_slots * q["cycle_size"] > q["cycle_size"] * audit_cycle:
+        raise ValueError("queue anti-starvation guarantees conflict: reserved service exceeds capacity")
     for path in ("allow_external_http", "allow_paid_ai", "allow_paid_search", "enable_prod_writer", "enable_cron"):
         if policy["autonomy"].get(path) is not False:
             raise ValueError(f"autonomy.{path} must remain false in MOCK")

@@ -75,13 +75,52 @@ class OfflineRunnerTests(unittest.TestCase):
                 "content_sha256":"a"*64,"document_id":"doc-fixture"}
         cached_plan=build_offline_plan(snap,self.policy,now=DAY,cached_documents=[cached])
         cached_task=next(x for x in cached_plan["tasks"] if x["target_key"]==task["target_key"])
-        self.assertEqual(cached_task["payload"]["source_action"],"REPLAY_CACHED")
-        self.store.record_evidence(target_key=task["target_key"],content_sha256="a"*64,
-                                   result=cached,at=DAY)
+        self.assertEqual(cached_task["payload"]["source_action"],"PLAN_RETRIEVAL")
+        with self.assertRaisesRegex(ValueError,"validated SourceDocument"):
+            self.store.record_evidence(target_key=task["target_key"],content_sha256="a"*64,result=cached,at=DAY)
         unchanged=build_offline_plan(snap,self.policy,now=DAY,cached_documents=[cached],
-                                    known_hashes=self.store.cached_hashes())
-        self.assertFalse(any(x["target_key"]==task["target_key"] for x in unchanged["tasks"]))
-        self.assertIn("UNCHANGED_DOCUMENT_HASH",{x["reason"] for x in unchanged["dispositions"]})
+                                    known_hashes={task["target_key"]:{"a"*64}})
+        self.assertTrue(any(x["target_key"]==task["target_key"] for x in unchanged["tasks"]))
+        self.assertNotIn("UNCHANGED_DOCUMENT_HASH",{x["reason"] for x in unchanged["dispositions"]})
+
+    def test_cache_requires_content_bound_exact_trim_and_field_coverage(self):
+        snap=fixture()
+        doc=json.loads((ROOT/"fixtures/recorded_docs/th-spec-complete.json").read_text())
+        doc["trim_ids"].append("atto.extended")
+        doc["content"] += "\nclaim|safety.aeb|atto.extended|included"
+        doc["content_sha256"]=hashlib.sha256(doc["content"].encode()).hexdigest()
+        record={"source_document":doc,"content_sha256":doc["content_sha256"],"document_id":doc["document_id"]}
+        valid=build_offline_plan(snap,self.policy,now=DAY,cached_documents=[record])
+        safety=next(t for t in valid["tasks"] if t["target_key"]=="SPEC_ENRICH:byd.atto_3:safety")
+        self.assertEqual(safety["payload"]["source_action"],"REPLAY_CACHED")
+        for mutate in ("wrong_trim","wrong_field","partial_scope","unverified","bad_hash","forged_metadata"):
+            with self.subTest(mutate=mutate):
+                bad=copy.deepcopy(record)
+                if mutate=="wrong_trim":
+                    bad["source_document"]["content"]=bad["source_document"]["content"].replace("atto.extended","fake.trim")
+                    bad["source_document"]["trim_ids"]=["fake.trim"]
+                    bad["source_document"]["content_sha256"]=hashlib.sha256(bad["source_document"]["content"].encode()).hexdigest()
+                    bad["content_sha256"]=bad["source_document"]["content_sha256"]
+                elif mutate=="wrong_field":
+                    bad["source_document"]["content"]=bad["source_document"]["content"].replace("safety.aeb","powertrain.max_power_kw")
+                    bad["source_document"]["content_sha256"]=hashlib.sha256(bad["source_document"]["content"].encode()).hexdigest()
+                    bad["content_sha256"]=bad["source_document"]["content_sha256"]
+                elif mutate=="partial_scope":
+                    bad["source_document"]["content"]="\n".join(line for line in bad["source_document"]["content"].splitlines()
+                        if "atto.extended" not in line)
+                    bad["source_document"]["content_sha256"]=hashlib.sha256(bad["source_document"]["content"].encode()).hexdigest()
+                    bad["content_sha256"]=bad["source_document"]["content_sha256"]
+                elif mutate=="unverified":
+                    bad["source_document"]["source_authority"]="UNVERIFIED"
+                elif mutate=="bad_hash":
+                    bad["content_sha256"]="0"*64
+                else:
+                    bad={"model_id":"byd.atto_3","generation_id":"atto_3.g1","trim_ids":["atto.standard"],
+                         "market":"TH","source_authority":"OFFICIAL","field_groups":["safety"],
+                         "content_sha256":"a"*64}
+                planned=build_offline_plan(snap,self.policy,now=DAY,cached_documents=[bad])
+                actual=next(t for t in planned["tasks"] if t["target_key"]=="SPEC_ENRICH:byd.atto_3:safety")
+                self.assertEqual(actual["payload"]["source_action"],"PLAN_RETRIEVAL")
 
     def test_duplicate_enqueue_is_idempotent_and_payload_mismatch_fails_closed(self):
         job=make_job("stable","RETAIL_AUDIT")
@@ -123,13 +162,39 @@ class OfflineRunnerTests(unittest.TestCase):
             self.store.enqueue(make_job(f"s{i:02}","SPEC_ENRICH"),at=DAY,max_attempts=1)
         observed=[]
         for _ in range(15):
-            job=self.store.claim_next(now=DAY,owner="test",lease_seconds=100,cycle_size=5,spec_slots=1)
+            job=self.store.claim_next(now=DAY,owner="test",lease_seconds=100,cycle_size=5,spec_slots=1,
+                                      audit_cycle_size=5,audit_slots=1)
             self.assertIsNotNone(job)
             observed.append(job["queue"])
             self.store.finish(job["idempotency_key"],owner="test",status="COMPLETED",now=DAY,result={})
-        self.assertEqual(observed[:5],["RETAIL_AUDIT"]*4+["SPEC_ENRICH"])
-        self.assertEqual(observed[5:10],["RETAIL_AUDIT"]*4+["SPEC_ENRICH"])
-        self.assertEqual(observed[14],"SPEC_ENRICH")
+        self.assertEqual(observed[0],"RETAIL_AUDIT")
+        self.assertIn("SPEC_ENRICH",observed[:5])
+        self.assertIn("SPEC_ENRICH",observed[5:10])
+        self.assertIn("SPEC_ENRICH",observed[10:15])
+
+    def test_independent_service_guarantees_with_different_windows_and_conflict_validation(self):
+        for i in range(30):
+            self.store.enqueue(make_job(f"audit-{i}","RETAIL_AUDIT"),at=DAY,max_attempts=1)
+            self.store.enqueue(make_job(f"spec-{i}","SPEC_ENRICH"),at=DAY,max_attempts=1)
+        observed=[]
+        for _ in range(24):
+            if _ == 12:
+                self.store.close()
+                self.store=SQLiteJobStore(self.db_path)
+            job=self.store.claim_next(now=DAY,owner="test",lease_seconds=100,cycle_size=4,spec_slots=1,
+                                      audit_cycle_size=3,audit_slots=1)
+            observed.append(job["queue"])
+            self.store.finish(job["idempotency_key"],owner="test",status="COMPLETED",now=DAY,result={})
+        for start in range(0,24,4):
+            self.assertIn("SPEC_ENRICH",observed[start:start+4])
+        for start in range(0,24,3):
+            self.assertIn("RETAIL_AUDIT",observed[start:start+3])
+        conflicted=copy.deepcopy(self.policy)
+        conflicted["queue_policy"].update(cycle_size=2,spec_enrich_slots_per_cycle=1,
+                                          audit_anti_starvation_cycle_size=3,
+                                          audit_anti_starvation_slots_per_cycle=2)
+        with self.assertRaisesRegex(ValueError,"guarantees conflict"):
+            validate_policy(conflicted)
 
     def test_worker_interruption_checkpoint_persists_and_restart_recovers_after_stale_lease(self):
         self.enqueue_one("crash")
@@ -147,7 +212,7 @@ class OfflineRunnerTests(unittest.TestCase):
 
         self.clock.advance(self.policy["runner"]["lease_seconds"]+1)
         self.store=SQLiteJobStore(self.db_path)
-        second_provider=OfflineFakeProvider(default={"state":"COMPLETED","source_hash":"b"*64},clock=self.clock)
+        second_provider=OfflineFakeProvider(default={"state":"COMPLETED"},clock=self.clock)
         second=OfflineRunner(self.store,self.policy,self.clock,second_provider)
         result=self.explicit_step(second)
         self.assertEqual(result["status"],"COMPLETED")
@@ -213,12 +278,29 @@ class OfflineRunnerTests(unittest.TestCase):
         runner,provider=self.runner({"state":"COMPLETED"})
         self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
         result=self.explicit_step(runner)
-        self.assertEqual(result["status"],"BUDGET_EXHAUSTED")
+        self.assertEqual(result["status"],"DAILY_QUOTA_DEFERRED")
         self.assertEqual(len(provider.calls),1)
-        self.enqueue_one("request-3","RETAIL_AUDIT")
+        deferred=next(row for row in self.store.list_jobs() if row["target_key"]=="SPEC_ENRICH:request-2")
+        self.assertEqual((deferred["status"],deferred["attempt_count"]),("QUEUED",0))
         self.clock.advance(86400)
         self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
+        resumed=next(row for row in self.store.list_jobs() if row["target_key"]=="SPEC_ENRICH:request-2")
+        self.assertEqual((resumed["status"],resumed["attempt_count"]),("COMPLETED",1))
         self.assertEqual(self.store.usage("2026-10-12")["offline_requests"],1)
+
+    def test_elapsed_daily_quota_defers_unclaimed_job_until_next_day(self):
+        self.policy["runner"]["max_elapsed_seconds_per_day"]=10
+        validate_policy(self.policy)
+        self.enqueue_one("elapsed-1","RETAIL_AUDIT")
+        self.enqueue_one("elapsed-2","SPEC_ENRICH")
+        runner,provider=self.runner({"state":"COMPLETED","elapsed_seconds":10})
+        self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
+        self.assertEqual(self.explicit_step(runner)["status"],"DAILY_QUOTA_DEFERRED")
+        deferred=next(row for row in self.store.list_jobs() if row["target_key"]=="SPEC_ENRICH:elapsed-2")
+        self.assertEqual((deferred["status"],deferred["attempt_count"]),("QUEUED",0))
+        self.clock.advance(86400)
+        self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
+        self.assertEqual(len(provider.calls),2)
 
     def test_zero_token_spend_and_elapsed_budgets_fail_closed_on_measured_mock_usage(self):
         cases=[
@@ -244,16 +326,53 @@ class OfflineRunnerTests(unittest.TestCase):
                 temp.close()
 
     def test_duplicate_evidence_hash_is_ignored_and_conflicts_are_terminal_dispositions(self):
-        digest="c"*64
-        target="SPEC_ENRICH:model:powertrain"
-        self.assertTrue(self.store.record_evidence(target_key=target,content_sha256=digest,result={"value":1},at=DAY))
-        self.assertFalse(self.store.record_evidence(target_key=target,content_sha256=digest,result={"value":1},at=DAY+1))
+        with self.assertRaisesRegex(ValueError,"validated SourceDocument"):
+            self.store.record_evidence(target_key="SPEC_ENRICH:model:powertrain",content_sha256="c"*64,
+                                       result={"value":1},at=DAY)
+        document=json.loads((ROOT/"fixtures/recorded_docs/th-spec-complete.json").read_text())
+        digest=hashlib.sha256(document["content"].encode()).hexdigest()
+        record={"source_document":document}
+        self.assertTrue(self.store.record_evidence(target_key="SPEC_ENRICH:model:powertrain",
+            content_sha256=digest,result=record,at=DAY))
+        self.assertFalse(self.store.record_evidence(target_key="SPEC_ENRICH:model:powertrain",
+            content_sha256=digest,result=record,at=DAY+1))
         snap=fixture()
         snap["facts"].append({"trim_id":"atto.standard","field_key":"engine.displacement_cc",
             "value_state":"ABSENT","value":None,"verification_status":None})
         result=build_offline_plan(snap,self.policy,now=DAY)
         self.assertIn("CONFLICT",{x["status"] for x in result["dispositions"]})
         self.assertEqual(self.store.report()["external_http_calls"],0)
+
+    def test_invalid_hash_and_cache_persistence_failure_never_complete_even_after_restart(self):
+        self.enqueue_one("malformed-hash")
+        runner,_=self.runner({"state":"COMPLETED","source_hash":"not-a-hash"})
+        self.assertEqual(self.explicit_step(runner)["status"],"SOURCE_BROKEN")
+        self.assertEqual(self.store.list_jobs()[0]["status"],"SOURCE_BROKEN")
+
+        doc=json.loads((ROOT/"fixtures/recorded_docs/th-spec-complete.json").read_text())
+        source_hash=hashlib.sha256(doc["content"].encode()).hexdigest()
+        self.enqueue_one("cache-failure")
+        self.store.db.execute("CREATE TRIGGER fail_evidence BEFORE INSERT ON evidence_cache BEGIN SELECT RAISE(ABORT, 'cache down'); END")
+        runner,_=self.runner({"state":"COMPLETED","source_hash":source_hash,"source_document":doc})
+        self.assertEqual(self.explicit_step(runner)["status"],"SOURCE_BROKEN")
+        job=next(row for row in self.store.list_jobs() if row["target_key"]=="SPEC_ENRICH:cache-failure")
+        self.assertNotEqual(job["status"],"COMPLETED")
+        self.store.close()
+        self.store=SQLiteJobStore(self.db_path)
+        self.clock.advance(self.policy["runner"]["lease_seconds"]+1)
+        self.store.recover_stale_leases(self.clock.now())
+        self.assertNotEqual(next(row for row in self.store.list_jobs() if row["target_key"]=="SPEC_ENRICH:cache-failure")["status"],"COMPLETED")
+
+    def test_default_lease_renews_during_901_second_mock_and_survives_restart(self):
+        self.enqueue_one("long-step")
+        runner,provider=self.runner({"state":"COMPLETED","elapsed_seconds":901})
+        self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
+        self.assertEqual(self.store.list_jobs()[0]["attempt_count"],1)
+        self.assertTrue(any(e["event_type"]=="LEASE_RENEWED" for e in self.store.report()["events"]))
+        self.store.close()
+        self.store=SQLiteJobStore(self.db_path)
+        self.assertEqual(self.store.list_jobs()[0]["status"],"COMPLETED")
+        self.assertEqual(self.store.usage("2026-10-11")["elapsed_seconds"],901)
 
     def test_identity_ambiguity_is_a_terminal_planning_disposition(self):
         snap=fixture()

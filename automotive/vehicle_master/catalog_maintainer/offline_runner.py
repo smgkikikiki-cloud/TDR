@@ -255,8 +255,14 @@ class SQLiteJobStore:
             "SELECT * FROM negative_cache ORDER BY target_key")}
 
     def record_evidence(self, *, target_key: str, content_sha256: str, result: dict, at: int) -> bool:
-        if len(content_sha256) != 64 or any(c not in "0123456789abcdef" for c in content_sha256):
-            raise ValueError("evidence content hash must be a lowercase SHA-256")
+        document = result.get("source_document") if isinstance(result,dict) else None
+        if not isinstance(document,dict):
+            raise ValueError("evidence cache requires a validated SourceDocument")
+        from .replay import _valid_document
+        _valid_document(document)
+        actual = hashlib.sha256(document["content"].encode("utf-8")).hexdigest()
+        if content_sha256 != actual or document.get("content_sha256") != actual:
+            raise ValueError("evidence content hash must match validated SourceDocument bytes")
         with self._tx():
             cursor = self.db.execute(
                 "INSERT OR IGNORE INTO evidence_cache(target_key,content_sha256,result_json,recorded_at) VALUES(?,?,?,?)",
@@ -265,6 +271,39 @@ class SQLiteJobStore:
             self.event(at, None, "EVIDENCE_CACHED" if inserted else "UNCHANGED_DOCUMENT_HASH",
                        {"target_key": target_key, "content_sha256": content_sha256})
             return inserted
+
+    def finish_with_evidence(self, key: str, *, owner: str, now: int, result: dict,
+                             source_document: dict | None = None, content_sha256: str | None = None) -> None:
+        # Completion and cache insertion share one SQLite transaction. Evidence
+        # is admitted through the established replay document contract.
+        if source_document is not None:
+            from .replay import _valid_document
+            _valid_document(source_document)
+            actual = hashlib.sha256(source_document["content"].encode("utf-8")).hexdigest()
+            if content_sha256 != actual or source_document["content_sha256"] != actual:
+                raise ValueError("source document hash does not match validated content")
+        with self._tx():
+            row = self.db.execute("SELECT * FROM jobs WHERE idempotency_key=?", (key,)).fetchone()
+            if not row or row["status"] != "LEASED" or row["lease_owner"] != owner or row["lease_until"] <= now:
+                raise ValueError("completion rejected: lease is missing, stale, or owned by another worker")
+            if source_document is not None:
+                self.db.execute("INSERT OR IGNORE INTO evidence_cache(target_key,content_sha256,result_json,recorded_at) VALUES(?,?,?,?)",
+                    (row["target_key"], actual, _json({"source_document": source_document}), now))
+            self.db.execute("UPDATE jobs SET status='COMPLETED',updated_at=?,not_before=?,lease_owner=NULL,lease_until=NULL,result_json=?,failure_code=NULL WHERE idempotency_key=?",
+                             (now, now, _json(result), key))
+            self.event(now, key, "JOB_COMPLETED", result)
+            if source_document is not None:
+                self.event(now, key, "EVIDENCE_CACHED", {"target_key": row["target_key"], "content_sha256": actual})
+
+    def renew_lease(self, key: str, *, owner: str, now: int, lease_seconds: int) -> int:
+        until = now + lease_seconds
+        with self._tx():
+            cur = self.db.execute("UPDATE jobs SET lease_until=?,updated_at=? WHERE idempotency_key=? AND status='LEASED' AND lease_owner=? AND lease_until>?",
+                                  (until, now, key, owner, now))
+            if cur.rowcount != 1:
+                raise ValueError("lease renewal rejected: lease is missing, stale, or owned by another worker")
+            self.event(now, key, "LEASE_RENEWED", {"owner": owner, "lease_until": until})
+        return until
 
     def enqueue(self, job: dict, *, at: int, max_attempts: int) -> bool:
         if job.get("queue") not in QUEUES or job.get("status", "QUEUED") not in ALL_STATES:
@@ -348,7 +387,8 @@ class SQLiteJobStore:
             return self._recover_stale_in_tx(now)
 
     def claim_next(self, *, now: int, owner: str, lease_seconds: int,
-                   cycle_size: int, spec_slots: int) -> dict | None:
+                   cycle_size: int, spec_slots: int,
+                   audit_cycle_size: int | None = None, audit_slots: int = 0) -> dict | None:
         with self._tx():
             self._recover_stale_in_tx(now)
             ready = list(self.db.execute(
@@ -358,8 +398,23 @@ class SQLiteJobStore:
                 return None
             state = self.db.execute("SELECT schedule_cursor FROM runner_state WHERE singleton=1").fetchone()
             cursor = int(state["schedule_cursor"])
-            slot = cursor % cycle_size
-            preferred = "SPEC_ENRICH" if slot >= cycle_size - spec_slots else "RETAIL_AUDIT"
+            audit_cycle_size = audit_cycle_size or cycle_size
+            # Each queue has an independent service deadline. At every slot,
+            # serve the guarantee with the greatest fraction of its window used.
+            events = list(self.db.execute("SELECT detail_json FROM runner_events WHERE event_type='JOB_LEASED'"))
+            leased = [json.loads(e["detail_json"]) for e in events]
+            def urgency(queue: str, window: int, quota: int) -> float:
+                if quota <= 0:
+                    return 0.0
+                start = cursor - cursor % window
+                used = sum(1 for e in leased if e.get("schedule_cursor", -1) >= start
+                           and e.get("schedule_cursor", -1) < start + window and e.get("queue") == queue)
+                remaining = window - (cursor - start)
+                needed = max(0, quota - used)
+                return needed / max(1, remaining)
+            spec_urgency = urgency("SPEC_ENRICH", cycle_size, spec_slots)
+            audit_urgency = urgency("RETAIL_AUDIT", audit_cycle_size, audit_slots)
+            preferred = "SPEC_ENRICH" if spec_urgency > audit_urgency and spec_urgency > 0 else "RETAIL_AUDIT"
             chosen = next((r for r in ready if r["queue"] == preferred), ready[0])
             until = now + lease_seconds
             self.db.execute("""UPDATE jobs SET status='LEASED',attempt_count=attempt_count+1,
@@ -367,7 +422,8 @@ class SQLiteJobStore:
               (owner, until, now, chosen["idempotency_key"]))
             self.db.execute("UPDATE runner_state SET schedule_cursor=? WHERE singleton=1", (cursor + 1,))
             self.event(now, chosen["idempotency_key"], "JOB_LEASED",
-                       {"owner": owner, "lease_until": until, "queue": chosen["queue"], "slot": slot})
+                       {"owner": owner, "lease_until": until, "queue": chosen["queue"],
+                        "slot": cursor % cycle_size, "schedule_cursor": cursor})
             row = self.db.execute("SELECT * FROM jobs WHERE idempotency_key=?", (chosen["idempotency_key"],)).fetchone()
             return self._job_dict(row)
 
@@ -492,7 +548,7 @@ def build_offline_plan(snapshot: dict, policy: dict, *, now: int,
                     continue
                 cache = next((doc for doc in sorted(cached_documents,
                     key=lambda d:(d.get("content_sha256",""),d.get("document_id","")))
-                    if _cache_covers(doc,item["model_id"],group)),None)
+                    if _cache_covers(snapshot,doc,item["model_id"],item.get("generation_ids",[]),group,field_subset)),None)
                 if cache and cache.get("content_sha256") in known_hashes.get(target_key,set()):
                     dispositions.append({"idempotency_key":key,"target_key":target_key,"queue":queue,
                                          "status":"COMPLETED","reason":"UNCHANGED_DOCUMENT_HASH",
@@ -521,13 +577,37 @@ def build_offline_plan(snapshot: dict, policy: dict, *, now: int,
     return result
 
 
-def _cache_covers(document: dict, model_id: str, group: str) -> bool:
-    digest=document.get("content_sha256")
-    return (document.get("model_id") == model_id and document.get("market") == "TH"
-            and document.get("source_authority") == "OFFICIAL"
-            and group in document.get("field_groups", [])
-            and isinstance(digest, str) and len(digest) == 64
-            and all(c in "0123456789abcdef" for c in digest))
+def _cache_covers(snapshot: dict, cache_record: dict, model_id: str, generation_ids: list[str],
+                  group: str, field_subset: dict) -> bool:
+    """Only replay-admitted content with exact target coverage can serve cache."""
+    from .registry_adapter import load_registry, resolve_key
+    from .replay import validate_cached_source_document
+    document = cache_record.get("source_document") if isinstance(cache_record,dict) else None
+    digest = cache_record.get("content_sha256") if isinstance(cache_record,dict) else None
+    if not isinstance(document,dict) or document.get("model_id") != model_id:
+        return False
+    if document.get("generation_id") not in generation_ids or document.get("market") != "TH":
+        return False
+    if not isinstance(digest,str) or digest != document.get("content_sha256"):
+        return False
+    try:
+        validated = validate_cached_source_document(snapshot,document)
+    except Exception:
+        return False
+    if group == "RETAIL_LINEUP":
+        return validated["retail_lineup_validated"] is True
+    registry=load_registry()
+    required={(trim, resolve_key(field,registry) or field)
+              for field, trims in field_subset.get("trim_ids_by_field",{}).items()
+              for trim in trims}
+    covered={(row["trim_id"],row["field_key"]) for row in validated["accepted_claims"]
+             if row["model_id"] == model_id and row["generation_id"] in generation_ids}
+    # Some normalized gap aliases are intentionally shorter than the pinned
+    # canonical registry key (for example `aeb` -> `safety.aeb`).
+    covered |= {(trim, alias) for trim, canonical in list(covered)
+                for alias, target in registry["aliases"].items() if target == canonical}
+    covered |= {(trim, canonical.rsplit(".",1)[-1]) for trim, canonical in list(covered)}
+    return bool(required) and required.issubset(covered)
 
 
 class OfflineFakeProvider:
@@ -543,7 +623,7 @@ class OfflineFakeProvider:
         self.clock = clock
         self.calls: list[dict] = []
 
-    def retrieve(self, job: dict, checkpoint: dict, save_checkpoint) -> dict:
+    def retrieve(self, job: dict, checkpoint: dict, save_checkpoint, renew_lease) -> dict:
         self.calls.append({"idempotency_key":job["idempotency_key"],"attempt":job["attempt_count"],
                            "checkpoint":checkpoint})
         scripted = self.responses.get(job["idempotency_key"],
@@ -556,7 +636,16 @@ class OfflineFakeProvider:
             save_checkpoint(response["checkpoint"])
         elapsed = int(response.get("elapsed_seconds",0))
         if self.clock and elapsed:
-            self.clock.advance(elapsed)
+            # Simulate deterministic progress and renew before the current
+            # lease expires; interruption remains recoverable at checkpoints.
+            lease = max(1, int(job.get("lease_until", self.clock.now()) - self.clock.now()))
+            remaining = elapsed
+            while remaining:
+                step = min(remaining, max(1, lease // 2))
+                self.clock.advance(step)
+                remaining -= step
+                if remaining:
+                    renew_lease()
         if response.get("interrupt_after_checkpoint"):
             raise WorkerInterrupted("fixture interruption after checkpoint")
         return response
@@ -619,6 +708,8 @@ class OfflineRunner:
         now=self.clock.now()
         self.store.recover_stale_leases(now)
         job=self._claim_with_budget(now,owner)
+        if job and job.get("daily_quota_deferred"):
+            return {"status":"DAILY_QUOTA_DEFERRED","reason":job["daily_quota_deferred"]}
         if job is None:
             return {"status":"IDLE","reason":"NO_READY_JOBS"}
         if job.get("budget_exhausted"):
@@ -628,7 +719,9 @@ class OfflineRunner:
             response=self.provider.retrieve(
                 job,job["checkpoint"],
                 lambda checkpoint:self.store.checkpoint(job["idempotency_key"],owner=owner,
-                                                        checkpoint=checkpoint,now=self.clock.now()))
+                                                        checkpoint=checkpoint,now=self.clock.now()),
+                lambda:self.store.renew_lease(job["idempotency_key"],owner=owner,now=self.clock.now(),
+                                               lease_seconds=self.policy["runner"]["lease_seconds"]))
         except WorkerInterrupted:
             elapsed=max(0,self.clock.now()-started)
             self.store.add_usage(utc_day(started),requests=1,tokens=0,spend=0,elapsed=elapsed)
@@ -664,18 +757,15 @@ class OfflineRunner:
         usage=self.store.usage(utc_day(now))
         if (usage["offline_requests"] >= cfg["max_offline_requests_per_day"]
                 or usage["elapsed_seconds"] >= cfg["max_elapsed_seconds_per_day"]):
-            job=self.store.claim_next(now=now,owner=owner,lease_seconds=cfg["lease_seconds"],
-                                      cycle_size=self.policy["queue_policy"]["cycle_size"],
-                                      spec_slots=self.policy["queue_policy"]["spec_enrich_slots_per_cycle"])
-            if job:
-                self.store.finish(job["idempotency_key"],owner=owner,status="BUDGET_EXHAUSTED",now=now,
-                    result={"reason":"DAILY_BUDGET_ALREADY_EXHAUSTED"},
-                    failure_code="DAILY_BUDGET_ALREADY_EXHAUSTED")
-                return {"budget_exhausted": True}
-            return None
+            reason = "DAILY_REQUEST_QUOTA" if usage["offline_requests"] >= cfg["max_offline_requests_per_day"] else "DAILY_ELAPSED_QUOTA"
+            self.store.event(now,None,"DAILY_QUOTA_DEFERRED",{"reason":reason,"day":utc_day(now)})
+            return {"daily_quota_deferred":reason}
+        queue=self.policy["queue_policy"]
         return self.store.claim_next(now=now,owner=owner,lease_seconds=cfg["lease_seconds"],
-                                    cycle_size=self.policy["queue_policy"]["cycle_size"],
-                                    spec_slots=self.policy["queue_policy"]["spec_enrich_slots_per_cycle"])
+                                    cycle_size=queue["cycle_size"],
+                                    spec_slots=queue["spec_enrich_slots_per_cycle"],
+                                    audit_cycle_size=queue["audit_anti_starvation_cycle_size"],
+                                    audit_slots=queue["audit_anti_starvation_slots_per_cycle"])
 
     def _apply_response(self, job: dict, owner: str, response: dict, elapsed: int) -> dict:
         state=response.get("state")
@@ -683,6 +773,17 @@ class OfflineRunner:
             state="SOURCE_BROKEN"
             response={"state":state,"reason":"INVALID_FAKE_PROVIDER_RESPONSE"}
         now=self.clock.now()
+        source_document=response.get("source_document")
+        source_hash=response.get("source_hash")
+        if state == "COMPLETED" and source_hash is not None and not isinstance(source_document,dict):
+            state="SOURCE_BROKEN"
+            response={"state":state,"reason":"SOURCE_HASH_WITHOUT_SOURCE_DOCUMENT"}
+            source_hash=None
+        if source_hash is not None and (not isinstance(source_hash,str) or len(source_hash)!=64
+                or any(c not in "0123456789abcdef" for c in source_hash)):
+            state="SOURCE_BROKEN"
+            response={"state":state,"reason":"INVALID_SOURCE_HASH"}
+            source_document=None
         attempts=job["attempt_count"]
         retryable=state=="RETRY" or (state=="SOURCE_BROKEN" and response.get("retryable") is True)
         if retryable and attempts < job["max_attempts"]:
@@ -694,15 +795,22 @@ class OfflineRunner:
         final_state="SOURCE_BROKEN" if state=="RETRY" else state
         result={k:v for k,v in response.items() if k!="interrupt_after_checkpoint"}
         result["elapsed_seconds"]=elapsed
-        self.store.finish(job["idempotency_key"],owner=owner,status=final_state,now=now,result=result,
-                          failure_code=response.get("reason"))
+        if final_state == "COMPLETED":
+            try:
+                self.store.finish_with_evidence(job["idempotency_key"],owner=owner,now=now,result=result,
+                    source_document=source_document,content_sha256=source_hash)
+            except Exception as exc:
+                self.store.finish(job["idempotency_key"],owner=owner,status="SOURCE_BROKEN",now=now,
+                    result={"reason":"EVIDENCE_CACHE_COMMIT_FAILED","error_type":type(exc).__name__},
+                    failure_code="EVIDENCE_CACHE_COMMIT_FAILED")
+                return {"status":"SOURCE_BROKEN","job_key":job["idempotency_key"]}
+        else:
+            self.store.finish(job["idempotency_key"],owner=owner,status=final_state,now=now,result=result,
+                              failure_code=response.get("reason"))
         if final_state in {"SOURCE_EXHAUSTED","SOURCE_BROKEN"}:
             days=self.policy["research"]["negative_cache_days"]
             self.store.add_negative_cache(job["target_key"],final_state,
                 expires_at=now+int(days)*86400,source_hash=response.get("source_hash"),at=now)
-        if final_state=="COMPLETED" and response.get("source_hash"):
-            self.store.record_evidence(target_key=job["target_key"],content_sha256=response["source_hash"],
-                                       result=result,at=now)
         return {"status":final_state,"job_key":job["idempotency_key"]}
 
     def report(self) -> dict:
