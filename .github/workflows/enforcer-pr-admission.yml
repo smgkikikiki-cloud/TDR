@@ -1,7 +1,7 @@
 name: TDR Enforcer PR Admission
 
-# Stage 1: PR evidence checker only. No secrets, service accounts, paid APIs,
-# agent dispatch, merges, deployments, data writes or scheduled runs.
+# Central Stage-1 read-only CI. Candidate code never supplies the operational
+# Enforcer self-test runner, trusted BASE policy, or historical checker.
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -13,55 +13,156 @@ jobs:
   enforcer-stage1-tests:
     name: enforcer-stage1-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout trusted central Enforcer implementation
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted-enforcer
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run offline pure unit tests
+      - name: Run central versioned Enforcer self-tests
+        working-directory: trusted-enforcer
         run: |
+          echo "Trusted Enforcer commit: $(git rev-parse HEAD)"
           node --test orchestration/preflight.test.mjs
           node --test orchestration/pr-admission.test.mjs
           node --test orchestration/pr-admission.integration.test.mjs
-      - name: Verify Stage-0 plan remains disabled
+          # During this compatibility PR the new test does not yet exist on
+          # main; the separate non-authoritative PR review job validates it.
+          # After adoption it executes centrally on ALL PRs, including legacy.
+          if [ -f orchestration/historical-pr-audit.test.mjs ]; then
+            node --test orchestration/historical-pr-audit.test.mjs
+          else
+            echo "::notice::Central historical tests will begin after reviewed compatibility merge."
+          fi
+      - name: Verify central preflight still disallows autonomous execution
+        working-directory: trusted-enforcer
         run: node orchestration/preflight.mjs --check-repo
 
   enforcer-pr-admission:
     name: enforcer-pr-admission
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
-      # Critical trust split: approved master & checker from PR BASE, NEVER from
-      # the PR candidate. This first bootstrap PR predates checker in its BASE.
-      - name: Checkout trusted base-commit policy
+      # Central compatibility checker is trusted main only; if a modern BASE
+      # has its own Stage-1 checker that exact BASE implementation takes precedence.
+      - name: Checkout trusted central compatibility implementation
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted-enforcer
+          persist-credentials: false
+      - name: Checkout immutable PR BASE policy
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           path: policy
           fetch-depth: 0
           persist-credentials: false
-      - name: Checkout candidate HEAD as untrusted input
+      - name: Checkout untrusted candidate HEAD as data only
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: candidate
           fetch-depth: 0
           persist-credentials: false
-      - name: Node 22
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify authentic PR diff using base policy
+      - name: Check exact-base policy or fail-closed historical compatibility
         run: |
-          if [ ! -f policy/orchestration/pr-admission.mjs ]; then
-            echo "::notice::Stage 1 bootstrap PR: BASE has no trusted checker yet. No managed task is authorized by this check."
-            exit 0
+          echo "Central Enforcer commit: $(git -C trusted-enforcer rev-parse HEAD)"
+          echo "Trusted PR BASE: $(git -C policy rev-parse HEAD)"
+          echo "Untrusted PR HEAD: $(git -C candidate rev-parse HEAD)"
+          if [ -f policy/orchestration/pr-admission.mjs ]; then
+            node policy/orchestration/pr-admission.mjs \
+              --event "$GITHUB_EVENT_PATH" \
+              --policy-root "$PWD/policy" \
+              --candidate-root "$PWD/candidate"
+          else
+            # ABSENCE of modern policy never means task authorization.
+            # Missing central compatibility implementation fails the job.
+            node trusted-enforcer/orchestration/historical-pr-audit.mjs \
+              --event "$GITHUB_EVENT_PATH" \
+              --policy-root "$PWD/policy" \
+              --candidate-root "$PWD/candidate"
           fi
-          node policy/orchestration/pr-admission.mjs \
-            --event "$GITHUB_EVENT_PATH" \
-            --policy-root "$PWD/policy" \
-            --candidate-root "$PWD/candidate"
+
+  # Review candidate code only on THIS governance correction PR.
+  # This is non-authoritative QA, never substituted for the above trusted jobs.
+  enforcer-compat-change-qa:
+    name: enforcer-compat-change-qa
+    if: ${{ github.event.pull_request.head.repo.full_name == 'smgkikikiki-cloud/TDR' && github.head_ref == 'governance/enforcer-ci-compat-isolated-20261011' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout proposed compatibility implementation for QA only
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: proposal
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run new compatibility regressions (proposal QA, not admission)
+        working-directory: proposal
+        run: |
+          node --check orchestration/historical-pr-audit.mjs
+          node --test orchestration/historical-pr-audit.test.mjs
+      - name: Checkout actual historical BASE at immutable SHA
+        uses: actions/checkout@v4
+        with:
+          ref: 7963ebf0072154d2fde429ff9567ff6311718fcf
+          path: historic-base
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout unchanged PR 201 HEAD at immutable SHA
+        uses: actions/checkout@v4
+        with:
+          ref: b132a86c0bf2f17f53d80b70b4c158efe4b9e69d
+          path: legacy-201
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout unchanged PR 203 HEAD at immutable SHA
+        uses: actions/checkout@v4
+        with:
+          ref: 38a6d1ac583c3a34b8d92de134ff72a6ad601209
+          path: legacy-203
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Replay actual historical PRs without modifying either branch
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const base = '7963ebf0072154d2fde429ff9567ff6311718fcf';
+          const targets = [
+            { n:201, ref:'claude/fervent-wozniak-ld6lo4', sha:'b132a86c0bf2f17f53d80b70b4c158efe4b9e69d', dir:'legacy-201' },
+            { n:203, ref:'codex/vehicle-catalog-maintainer', sha:'38a6d1ac583c3a34b8d92de134ff72a6ad601209', dir:'legacy-203' },
+          ];
+          for (const {n,ref,sha,dir} of targets) {
+            const event = { repository:{ full_name:'smgkikikiki-cloud/TDR' },
+              pull_request:{ number:n, base:{ ref:'main',sha:base }, head:{ ref,sha } } };
+            const eventFile = process.cwd() + '/legacy-'+n+'.json';
+            fs.writeFileSync(eventFile, JSON.stringify(event));
+            const output = execFileSync('node', [
+              'proposal/orchestration/historical-pr-audit.mjs', '--event',eventFile,
+              '--policy-root',process.cwd()+'/historic-base',
+              '--candidate-root',process.cwd()+'/'+dir,
+            ], { encoding:'utf8', timeout:45000 });
+            const result = JSON.parse(output);
+            if(!result.ok || result.admission!=='UNMANAGED_AUDIT_ONLY'
+              || result.enforcerAuthorized!==false || result.baseSha!==base
+              || result.headSha!==sha || result.prNumber!==n)
+              throw new Error('Legacy PR #'+n+' gate result invalid: '+output);
+            console.log('PR #'+n+' read-only verified: '+result.admission
+              +' / authorized='+result.enforcerAuthorized+' / base='+result.baseSha
+              +' / head='+result.headSha);
+          }
+          NODE
