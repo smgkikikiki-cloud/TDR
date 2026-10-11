@@ -1,0 +1,574 @@
+{
+ "$defs": {
+  "file_entry": {
+   "additionalProperties": false,
+   "properties": {
+    "bytes": {
+     "minimum": 1,
+     "type": "integer"
+    },
+    "lines": {
+     "minimum": 1,
+     "type": "integer"
+    },
+    "sha256": {
+     "pattern": "^[0-9a-f]{64}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "sha256",
+    "bytes",
+    "lines"
+   ],
+   "type": "object"
+  },
+  "ice_ice_pair": {
+   "additionalProperties": false,
+   "description": "One evaluated Ice x Ice pair. a < b by model_group_id; k = a + '|' + b (ids may themselves contain '|': use a and b, never split k).",
+   "properties": {
+    "a": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "b": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "k": {
+     "minLength": 3,
+     "type": "string"
+    },
+    "n": {
+     "description": "[subject brand prefix stripped, peer brand prefix stripped, subject name unavailable, peer name unavailable]",
+     "items": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "maxItems": 4,
+     "minItems": 4,
+     "type": "array"
+    },
+    "r": {
+     "$ref": "#/$defs/relation"
+    },
+    "s": {
+     "description": "Dice score quantized to 6 places; null only for UNAVAILABLE.",
+     "type": [
+      "number",
+      "null"
+     ]
+    },
+    "ta": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "tb": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "k",
+    "a",
+    "b",
+    "r",
+    "s",
+    "ta",
+    "tb",
+    "n"
+   ],
+   "type": "object"
+  },
+  "ice_subject": {
+   "additionalProperties": false,
+   "properties": {
+    "best_relation": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/relation"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "description": "Best relation over the pool in SPEC 5.3 ladder order; null if the pool is empty."
+    },
+    "best_targets": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "brand": {
+     "type": "string"
+    },
+    "brands_observed": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "id": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "name_available": {
+     "type": "boolean"
+    },
+    "outcome": {
+     "additionalProperties": false,
+     "description": "The reference evaluator's dry-run decision (binding false). Present only in a build that had the package.",
+     "properties": {
+      "codes": {
+       "items": {
+        "items": {
+         "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+       },
+       "type": "array"
+      },
+      "link_type": {
+       "type": "string"
+      },
+      "outcome": {
+       "type": "string"
+      },
+      "primary_code": {
+       "type": "string"
+      },
+      "target_ids": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      }
+     },
+     "required": [
+      "outcome",
+      "primary_code",
+      "target_ids",
+      "link_type",
+      "codes"
+     ],
+     "type": "object"
+    },
+    "pool": {
+     "description": "Every TDR canonical id compared with this subject, sorted. Equals the b of its rows in pairs_ice_tdr.jsonl.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "pool_excluded": {
+     "additionalProperties": false,
+     "properties": {
+      "brand_not_allowed": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "deleted": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "status_not_in_pool": {
+       "minimum": 0,
+       "type": "integer"
+      }
+     },
+     "required": [
+      "brand_not_allowed",
+      "deleted",
+      "status_not_in_pool"
+     ],
+     "type": "object"
+    },
+    "prefix_stripped": {
+     "type": "boolean"
+    },
+    "related": {
+     "additionalProperties": {
+      "items": {
+       "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+     },
+     "description": "relation -> sorted target ids, for every relation except CONTRADICTION and UNAVAILABLE.",
+     "type": "object"
+    },
+    "tokens": {
+     "description": "The subject's own normalized tokens (brand prefix stripped from its own brand spellings only).",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "name",
+    "brand",
+    "brands_observed",
+    "tokens",
+    "prefix_stripped",
+    "name_available",
+    "pool",
+    "pool_excluded",
+    "best_relation",
+    "best_targets",
+    "related"
+   ],
+   "type": "object"
+  },
+  "ice_tdr_pair": {
+   "additionalProperties": false,
+   "description": "One evaluated Ice x TDR pair (a member of the subject's candidate pool). a = Ice model_group_id, b = TDR canonical id; k = a + '|' + b (b never contains '|': split k on the LAST '|').",
+   "properties": {
+    "a": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "b": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "br": {
+     "description": "Brand relation that admitted the target to the pool.",
+     "enum": [
+      "EXACT",
+      "ALIAS_SAME",
+      "ALIAS_RELABEL",
+      "ALIAS_RELATED"
+     ]
+    },
+    "k": {
+     "minLength": 3,
+     "type": "string"
+    },
+    "n": {
+     "description": "[subject brand prefix stripped, peer brand prefix stripped, subject name unavailable, peer name unavailable]",
+     "items": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "maxItems": 4,
+     "minItems": 4,
+     "type": "array"
+    },
+    "r": {
+     "$ref": "#/$defs/relation"
+    },
+    "s": {
+     "type": [
+      "number",
+      "null"
+     ]
+    },
+    "ta": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "tb": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "k",
+    "a",
+    "b",
+    "br",
+    "r",
+    "s",
+    "ta",
+    "tb",
+    "n"
+   ],
+   "type": "object"
+  },
+  "manifest": {
+   "additionalProperties": false,
+   "properties": {
+    "consumer_contract_version": {
+     "const": "ir-relation-export-consumer/1"
+    },
+    "contract": {
+     "properties": {
+      "adoption_binding": {
+       "const": false
+      },
+      "policy_version": {
+       "type": "string"
+      },
+      "revision": {
+       "type": "integer"
+      },
+      "status": {
+       "const": "draft_not_frozen"
+      },
+      "version": {
+       "const": "v1"
+      }
+     },
+     "required": [
+      "version",
+      "revision",
+      "policy_version",
+      "status",
+      "adoption_binding"
+     ],
+     "type": "object"
+    },
+    "evaluator": {
+     "type": "object"
+    },
+    "export_id": {
+     "type": "string"
+    },
+    "files": {
+     "additionalProperties": {
+      "$ref": "#/$defs/file_entry"
+     },
+     "type": "object"
+    },
+    "ordering": {
+     "type": "string"
+    },
+    "outcomes_included": {
+     "type": "boolean"
+    },
+    "policy_echo": {
+     "type": "object"
+    },
+    "populations": {
+     "additionalProperties": false,
+     "properties": {
+      "ice_ice": {
+       "$ref": "#/$defs/population"
+      },
+      "ice_tdr": {
+       "$ref": "#/$defs/population"
+      }
+     },
+     "required": [
+      "ice_ice",
+      "ice_tdr"
+     ],
+     "type": "object"
+    },
+    "relation_order": {
+     "items": {
+      "$ref": "#/$defs/relation"
+     },
+     "maxItems": 9,
+     "minItems": 9,
+     "type": "array"
+    },
+    "schema_version": {
+     "const": "ir-relation-export/1"
+    },
+    "sources": {
+     "required": [
+      "ice_package",
+      "tdr_inputs",
+      "evaluator_and_contract"
+     ],
+     "type": "object"
+    },
+    "static_files": {
+     "additionalProperties": {
+      "additionalProperties": false,
+      "properties": {
+       "bytes": {
+        "minimum": 1,
+        "type": "integer"
+       },
+       "sha256": {
+        "$ref": "#/$defs/sha256"
+       }
+      },
+      "required": [
+       "sha256",
+       "bytes"
+      ],
+      "type": "object"
+     },
+     "description": "sha256 and size of the hand-written files shipped with the export (this schema and CONSUMER_CONTRACT.md).",
+     "type": "object"
+    },
+    "universes": {
+     "required": [
+      "ice",
+      "tdr"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "schema_version",
+    "export_id",
+    "consumer_contract_version",
+    "contract",
+    "universes",
+    "sources",
+    "evaluator",
+    "policy_echo",
+    "relation_order",
+    "ordering",
+    "populations",
+    "outcomes_included",
+    "files",
+    "static_files"
+   ],
+   "type": "object"
+  },
+  "population": {
+   "properties": {
+    "expected_pairs": {
+     "minimum": 1,
+     "type": "integer"
+    },
+    "file": {
+     "type": "string"
+    },
+    "key_digest_sha256": {
+     "pattern": "^[0-9a-f]{64}$",
+     "type": "string"
+    },
+    "pairs": {
+     "minimum": 1,
+     "type": "integer"
+    },
+    "relation_counts": {
+     "additionalProperties": false,
+     "properties": {
+      "CONTRADICTION": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "EQUAL": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "EQUAL_VIA_MODEL_ALIAS": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "EQUAL_VIA_TOKEN_EQUIV": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "FUZZY": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "SIBLING": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "SUBJECT_COARSER": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "SUBJECT_FINER": {
+       "minimum": 0,
+       "type": "integer"
+      },
+      "UNAVAILABLE": {
+       "minimum": 0,
+       "type": "integer"
+      }
+     },
+     "required": [
+      "EQUAL",
+      "EQUAL_VIA_MODEL_ALIAS",
+      "EQUAL_VIA_TOKEN_EQUIV",
+      "FUZZY",
+      "SUBJECT_COARSER",
+      "SUBJECT_FINER",
+      "SIBLING",
+      "CONTRADICTION",
+      "UNAVAILABLE"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "file",
+    "pairs",
+    "expected_pairs",
+    "relation_counts",
+    "key_digest_sha256"
+   ],
+   "type": "object"
+  },
+  "relation": {
+   "description": "The nine name-relation kinds, SPEC 5.3 ladder order.",
+   "enum": [
+    "EQUAL",
+    "EQUAL_VIA_MODEL_ALIAS",
+    "EQUAL_VIA_TOKEN_EQUIV",
+    "FUZZY",
+    "SUBJECT_COARSER",
+    "SUBJECT_FINER",
+    "SIBLING",
+    "CONTRADICTION",
+    "UNAVAILABLE"
+   ]
+  },
+  "sha256": {
+   "pattern": "^[0-9a-f]{64}$",
+   "type": "string"
+  },
+  "tdr_target": {
+   "additionalProperties": false,
+   "properties": {
+    "brand": {
+     "type": "string"
+    },
+    "deleted": {
+     "type": "boolean"
+    },
+    "id": {
+     "minLength": 1,
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "brand",
+    "name",
+    "status",
+    "deleted"
+   ],
+   "type": "object"
+  }
+ },
+ "$id": "ir-relation-export/1",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "description": "Record schemas for MANIFEST.json and the four JSONL files of calibration/relation_export/. Written in the stdlib-validatable subset used by contract/schema_subset.py.",
+ "title": "Identity Resolution relation export, schema version ir-relation-export/1"
+}

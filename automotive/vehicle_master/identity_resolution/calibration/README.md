@@ -18,6 +18,7 @@ Read first: [`CALIBRATION_REPORT.md`](CALIBRATION_REPORT.md) (the numbers), then
 | `sensitivity_results.json` | For each provisional value: how many real decisions change when that one value moves (and two hypotheses about absent-row semantics, labelled as hypotheses). |
 | `adapters.py`, `legacy.py`, `pairs.py`, `review.py`, `report.py`, `render_report.py`, `sensitivity.py`, `build.py` | The tooling. Offline, stdlib + PyYAML, no network, no database. |
 | `lexical_pass.py`, `lexical_pass/` | The M7 lexical-relation measurement of the rev 4 correction pass: `before_rev3.json` (the rev 3 rules re-derived live), `after_rev4.json`, `comparison.json` and `LEXICAL_PASS_REPORT.md` (FUZZY / SIBLING counts, structural conflicts, decisions, newly exposed CREATE risk). Regenerate with `python -m identity_resolution.calibration.lexical_pass measure …` / `report`. |
+| `relation_export.py`, `relation_export/` | The **complete pair-level relation export** (all nine kinds, both populations, candidate pools, tokens, outcomes) for consumers such as PR #201, with its manifest, schema and `CONSUMER_CONTRACT.md`. `python -m identity_resolution.calibration.relation_export build` (needs the package) / `verify` (offline). |
 | `ref_eval_core.py`, `ref_eval_resolve.py` | The **reference evaluator**: a transcription of SPEC sections 5-9 that says what Contract v1 would conclude. **It is not the engine** (see below). |
 
 ## How to rebuild

@@ -3,6 +3,10 @@
 Contract v1 is a **draft and is not frozen**. Nothing reads it in production. Entries are newest first; each names the
 files it touched and the corpus rows that pin the change (SPEC §14.4).
 
+## relation export for PR #201 (2026-10-11) — no contract change
+
+**No contract file changed** (policy, capabilities, registry, taxonomy, schemas, SPEC and corpus are exactly rev 4; `binding: false`, not frozen). Added `identity_resolution/calibration/relation_export/`: the complete, deterministic, versioned pair-level export of the M7.0 name relations (Ice × Ice 26,505 pairs, Ice × TDR 12,412, all nine relation kinds), the subjects' candidate pools and tokens, the reference evaluator's dry-run outcomes, a manifest pinning the source blobs, a schema and `CONSUMER_CONTRACT.md` (the hand-off: keys, ordering, pinning, pool reading, replacing `ir_rev4.adjudicate` with lookups, when `IR_PARITY_UNRESOLVED` may clear). `lexical_pass.ice_ice_population` was factored out so the population is defined once (no behaviour change). New tests: `test_ir_relation_export.py` (coverage, nine-kind parity, pair-for-pair against the evaluator, byte stability, provenance; runs without the package). No rule, policy value, corpus case or sensitivity run changed.
+
 ## rev 4 — lexical-relation correction (2026-10-11)
 
 The owner authorised a correction pass on the name-relation ladder after the M7 lexical/relation analysis. Recorded as the accepted owner decision `od_lexical_relation_correction`; **still a draft, NOT frozen**, `binding: false`. Production, DB state, mappings, R6/R7, migrations, engine wiring, PR #201, adoption binding and the freeze state were not touched.

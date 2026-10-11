@@ -114,18 +114,25 @@ def _pair_stats(pairs: list[tuple], oracle: Oracle) -> dict:
     }
 
 
-def ice_ice(ice: dict, oracle: Oracle):
+def ice_ice_population(ice: dict):
+    """The Ice × Ice population, defined once: every pair of Ice groups with the same Ice brand string, the smaller model_group_id first.
+    Yields (first group, second group, the first group's observed brands). Used by the measurement below and by the pair-level export."""
     groups = sorted(ice["groups"], key=lambda g: g["model_group_id"])
     by_brand = collections.defaultdict(list)
     for g in groups:
         by_brand[g["brand"]].append(g)
-    out = []
     for gs in by_brand.values():
         for i, a in enumerate(gs):
             obs = tuple(ice["brands_observed"].get(a["model_group_id"], []))
             for c in gs[i + 1:]:
-                rel, _score, ta, tc = P.name_relation(a["model_name"], a["brand"], c["model_name"], c["brand"], obs)
-                out.append((rel, ta, tc, a["model_group_id"], c["model_group_id"]))
+                yield a, c, obs
+
+
+def ice_ice(ice: dict, oracle: Oracle):
+    out = []
+    for a, c, obs in ice_ice_population(ice):
+        rel, _score, ta, tc = P.name_relation(a["model_name"], a["brand"], c["model_name"], c["brand"], obs)
+        out.append((rel, ta, tc, a["model_group_id"], c["model_group_id"]))
     return out
 
 
