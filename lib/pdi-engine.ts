@@ -155,6 +155,11 @@ export function calculatePdi(input:PdiInput):PdiResult {
     if(model.brandOrigin==="JP" && model.japaneseAdmission!=="APPROVED") {
       modelResults.push(emptyModel(model,"CANDIDATE","JAPAN_RULE_NOT_APPROVED",trims));continue;
     }
+    // Disputed official MSRP is a real conflict, not simply a failed price
+    // trigger. Evaluate before deciding candidate/not-eligible.
+    if(trims.some(t=>conflictingMsrp(t,input.asOf))) {
+      modelResults.push(emptyModel(model,"CONFLICT","MSRP_EVIDENCE_CONFLICT",trims));continue;
+    }
     const msrps=trims.map(t=>resolveMsrp(t,input.asOf));
     const confirmedUnderThreshold=msrps.some(p=>p!==null && p.amountThb<2_000_000);
     if(!confirmedUnderThreshold) {
