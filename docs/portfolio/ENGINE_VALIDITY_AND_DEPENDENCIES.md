@@ -1,6 +1,6 @@
 # Engine Review Gates — how a TDR analytic engine earns the right to be deployed
 
-**State:** G0 proposal only. This is a **review checklist** for owner adoption, NOT active CI or an Enforcer permission.  
+**State:** ENGINE VALIDITY DOCTRINE APPROVED within portfolio roadmap v1.0 (2026-10-11). This is now the intended **review criteria**, but **not active CI**, an Enforcer authorization, proof any numeric engine passed, or approval of specific unvalidated formula/thresholds.  
 **Scope:** PR200, PR201, PR203, PDI, CTPDI, Competitive Pressure, Geography/Network Watch and their Layer 3 interpretation. UI rendering and sales launch are separately gated.
 
 ## Six-test methodology envelope (M0–M5)
