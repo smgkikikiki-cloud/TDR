@@ -28,6 +28,19 @@ An analytic engine is ready to use only when it can answer all six questions.
 | Network Watch | audited network change with detected vs actual effective time | reviewed event lifecycle, event dedupe, before/after relationship, revised histories | no candidate-only public closures or branch-sales causality |
 | Layer 3 | account-specific evidence prioritization, own represented models, selected authorized region | org server-side ACL, actual evidence drilldown, immutable snapshot/report, no-data states | no fabricated forecast or cross-tenant access |
 
+
+## Non-interchangeable relationship graphs — three different questions
+
+| Relationship | Graph edge answers | Allowed target/authority | Forbidden inference |
+| --- | --- | --- | --- |
+| **Ice→TDR Identity Resolution** (PR200) | “Which canonical Model(s) explain this Ice model_group_id?” | Versioned, reviewed group/Model identity link (`EQUIVALENT/PART_OF/COMPOSED_OF`) | A matching Ice group is not automatically a rival or a separately priced trim |
+| **CN→TH CTPDI Crosswalk** | “Are these China and Thailand-market vehicle definitions sufficiently equivalent for cross-market retail price measurement?” | Admin-approved locked comparable pair; match method, generation/spec/price-basis evidence | A shared model/family name neither proves equivalence nor defines a Thai-market substitute |
+| **TH reference→TH competitor Substitution Graph** | “Would these *distinct* available Thai-market models plausibly compete for the same buyer/use case?” | Reviewable conditional directed pair/context, even if both vehicles belong to different brands/segments | A substitute is not identical across Ice/CN data; confirmed product presence does not measure diversion ratio |
+
+**Separate graph storage/keys and review policies.** Do not call a single generic `vehicle_match` result sufficient for all three economic questions. None of the three automatically sets the others to approved.
+
+**Universe distinction:** PDI's strict any-trim MSRP <THB 2m inclusion rule governs **PDI computation only**. It must NOT trim Competitive Pressure's pool of relevant substitutes; a buyer may cross-shop a relevant vehicle outside that index universe. Likewise, CTPDI `NO_COMPARABLE_PAIR` does not mean a Thai competitor is irrelevant. A Competitive Pressure rival may have `PDI_NOT_ELIGIBLE` and `CTPDI_NO_PAIR` yet remain a valid observed price/market competitor if other evidence supports it.
+
 ## Shared data consistency laws
 
 ### D1. Identity
