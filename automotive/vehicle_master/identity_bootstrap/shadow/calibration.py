@@ -204,6 +204,7 @@ def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: di
             "review_routing_evidence": "; ".join(_ev(e) for e in m4["routing"]["reviews"][g]["evidence"]) or "none",
             "mandatory_owner_review": "YES" if m4["routing"]["reviews"][g]["mandatory_owner_review"] else "no",
             "dispatch_lane": next(r["lane"] for r in m4["routing"]["dispatch"] if r["external_id"] == g),
+            "current_discovery_activation_authorized": "NO (projection only; blocked by " + "|".join(next(r["activation_blockers"] for r in m4["routing"]["dispatch"] if r["external_id"] == g)) + ")",
             "activity_class_informational": cls,
             "machine_suggested_discovery_class_NON_AUTHORITATIVE": SUGGESTED_DISCOVERY[cls],
             "analyst_note_NON_AUTHORITATIVE": (f"{notes_row['kind']}: {notes_row['why']}" if notes_row else ""),
@@ -218,7 +219,7 @@ def _ev(e: dict) -> str:
 COLUMNS = ["provider", "external_id", "provider_model_name", "provider_brand", "proposed_canonical_name", "proposed_canonical_id", "first_seen", "last_seen", "lifetime_units", "last12_units",
            "identity_status", "lineage_state", "retired_aliases_in_plan", "nearest_existing_canonical_identities", "relation_evidence", "brand_relation", "shape_flags", "lexical_flags",
            "evidence_tier", "evidence_kinds", "bootstrap_decision", "bootstrap_reason_codes", "legacy_r6_candidate_status", "changed_by_pr200_rev4_relations", "pr200_relation_changes",
-           "in_previous_set_milestone3", "ir_parity_status", "ir_parity_reasons", "review_routing_flags", "review_routing_evidence", "mandatory_owner_review", "dispatch_lane", "market_activity_state_actual", "market_activity_lane_actual", "market_activity_state_what_if_NON_AUTHORITATIVE", "activity_class_informational",
+           "in_previous_set_milestone3", "ir_parity_status", "ir_parity_reasons", "review_routing_flags", "review_routing_evidence", "mandatory_owner_review", "dispatch_lane", "current_discovery_activation_authorized", "market_activity_state_actual", "market_activity_lane_actual", "market_activity_state_what_if_NON_AUTHORITATIVE", "activity_class_informational",
            "machine_suggested_discovery_class_NON_AUTHORITATIVE", "analyst_note_NON_AUTHORITATIVE", *OWNER_FIELDS]
 HEADER = ("# PROVISIONAL candidate set (not the final truth set; QA pending). Owner fields are blank and must be filled only by the owner: "
           "owner_verdict in " + " | ".join(OWNER_VERDICTS) + "; owner_discovery_class (only when VALID_MISSING_CANONICAL) in " + " | ".join(OWNER_DISCOVERY_CLASSES) + ". "

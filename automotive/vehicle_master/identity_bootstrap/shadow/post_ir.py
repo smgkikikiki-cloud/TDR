@@ -130,13 +130,13 @@ def market(A: dict, creates: list[str]) -> dict:
     return {"actual": res["actual"], "what_if": res["what_if_absent_is_zero"]}
 
 
-def build_routing(A: dict, creates: list[str], mk: dict, r6: dict) -> dict:
+def build_routing(A: dict, creates: list[str], mk: dict, r6: dict, parity: dict[str, str] | None = None) -> dict:
     subjects = A["snapshot"]["subjects"]
     pol = signals.load_policy()
     reviews = signals.review_flags(subjects, A["catalog"], r6, creates, pol)
     general = signals.provider_id_label_evidence(subjects, A["catalog"], pol)
     dec = _dec(A)
-    dispatched = routing.dispatch_all(A["decisions"], {g: v["state"] for g, v in mk["actual"].items()}, reviews)
+    dispatched = routing.dispatch_all(A["decisions"], {g: v["state"] for g, v in mk["actual"].items()}, reviews, parity)
     cur = routing.current_dispatch(dispatched)
     lanes = collections.Counter(r["lane"] for r in dispatched)
     return {"reviews": reviews, "general_cross_brand_list": {g: {"bootstrap_outcome": dec[g]["outcome"], "evidence": e} for g, e in sorted(general.items())},
@@ -145,6 +145,7 @@ def build_routing(A: dict, creates: list[str], mk: dict, r6: dict) -> dict:
 
 def build_m4(A: dict, B: dict, A0: dict, ir: dict, base: dict[str, dict], baseline_ids: set[str], creates: list[str], r6: dict | None = None) -> dict:
     mk = market(A, creates)
+    ps = parity_status(A, A0, ir, relation_parity(A, A0, ir))
     summ = lambda r: {"states": dict(collections.Counter(v["state"] for v in r.values())), "lanes": dict(collections.Counter(v["lane"] for v in r.values()))}
     return {
         "pr200": ir["provenance"], "baseline": "shadow/baseline_m3 (milestone 3: policy v2, stand-in relations, same package and TDR universe)",
@@ -160,8 +161,8 @@ def build_m4(A: dict, B: dict, A0: dict, ir: dict, base: dict[str, dict], baseli
         "market_activity": {"complete_through": activity_report.complete_through(A["package"]), "actual": summ(mk["actual"]), "what_if_NOT_AUTHORITATIVE": summ(mk["what_if"]),
                             "per_group": {g: {"actual": mk["actual"][g]["state"], "lane": mk["actual"][g]["lane"], "what_if": mk["what_if"][g]["state"]} for g in creates}},
         "activity_classes_informational": None,
-        "routing": build_routing(A, creates, mk, r6 or {}),
-        "ir_parity_status": parity_status(A, A0, ir, relation_parity(A, A0, ir)),
+        "routing": build_routing(A, creates, mk, r6 or {}, {g: v["status"] for g, v in ps.items()}),
+        "ir_parity_status": ps,
     }
 
 

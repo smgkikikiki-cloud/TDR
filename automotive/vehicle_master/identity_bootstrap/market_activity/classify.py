@@ -25,13 +25,15 @@ def resolve_series(counts: dict[str, float], periods: list[str], capability: dic
     """One value per observed period: the registered count, a TRUE zero (guaranteed), or None (unknown).
 
     `complete_through` is the last period the provider has finished publishing. A later (incomplete) period can never supply a true zero: an unfinished month is
-    unknown whatever the capability says. A registered count in an incomplete month is still a registration (it can only show activity, never inactivity)."""
+    unknown whatever the capability says, and that holds for an EXPLICIT zero row as much as for a missing one: an unfinished month never contributes a qualifying zero.
+    A positive count in an incomplete month is still a registration (it can only show activity, never inactivity)."""
     out: list[float | None] = []
     for p in periods:
+        incomplete = complete_through is not None and p > complete_through
         if p in counts:
-            out.append(float(counts[p]))
+            v = float(counts[p])
+            out.append(None if incomplete and v == 0 else v)
         else:
-            incomplete = complete_through is not None and p > complete_through
             out.append(0.0 if absent_is_zero(capability, p, policy) and not incomplete else None)
     return out
 

@@ -1,3 +1,11 @@
+# Small correction after `cac76d6`: explicit zero in an incomplete month; projection is not authorization
+
+- **Market activity:** an *explicit* zero-registration row in an incomplete trailing month was still counted as a zero (only missing rows were guarded). `resolve_series` now makes any zero — explicit or inferred — in a period after `complete_through` unknown; positive counts there still show activity. Synthetic regression tests added. No M7 result moved (the package has no explicit zero rows): routing stays 9 current / 62 unclassified / 2 owner-review.
+- **Current-discovery lane = projection only.** Every dispatch record, `dispatch_manifest.csv` row and adjudication row now carries `activation_authorized = NO` and the blockers `IR_PARITY_UNRESOLVED | OWNER_APPROVAL_PENDING | GOVERNED_WRITER_NOT_BUILT`; no code path can set it true, and a test enforces that.
+- **Separate issue, not fixed here:** the central *TDR Enforcer PR Admission* workflow fails on this legacy PR head because its Stage-1 test files are absent. PR #201 neither copies Enforcer scripts nor disables the check; this is a central Enforcer compatibility issue.
+
+---
+
 # QA correction round after `2d56112` (partial parity, cross-brand risk, dispatch boundary, portable tests)
 
 All shadow measurements and the provisional adjudication rows are unchanged; owner fields stay blank. Added, not changed: labels, a routing layer and tests.

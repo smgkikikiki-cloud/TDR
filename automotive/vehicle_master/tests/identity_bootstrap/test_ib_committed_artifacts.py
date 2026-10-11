@@ -198,3 +198,16 @@ def test_market_activity_keeps_absent_rows_unknown_and_states_the_completeness_a
 def test_activity_age_and_volume_columns_do_not_appear_in_any_decision_file(dec):
     """The decision file carries volume for the reader, but the activity STATE/LANE columns live only in the routing outputs, never in a decision column."""
     assert not [c for c in next(iter(dec.values())) if "lane" in c or "activity" in c]
+
+
+def test_every_committed_current_discovery_projection_is_marked_not_authorized(adj):
+    man = rows(RESULTS / "dispatch_manifest.csv")
+    assert len(man) == 73 and sum(1 for r in man if r["lane"] == "CURRENT_DISCOVERY") == 9
+    lanes = collections.Counter(r["lane"] for r in man)
+    assert lanes == {"ACTIVITY_UNCLASSIFIED": 62, "CURRENT_DISCOVERY": 9, "OWNER_REVIEW": 2}
+    for r in man:
+        assert r["activation_authorized"] == "NO"
+        assert r["activation_blockers"].split("|") == ["IR_PARITY_UNRESOLVED", "OWNER_APPROVAL_PENDING", "GOVERNED_WRITER_NOT_BUILT"]
+    assert all(r["current_discovery_activation_authorized"].startswith("NO (projection only") for r in adj)
+    text = (RESULTS / "REPORT.md").read_text(encoding="utf-8")
+    assert "projections, NOT authorizations" in text

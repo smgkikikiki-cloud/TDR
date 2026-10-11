@@ -146,7 +146,7 @@ Informational activity classes of the CREATE set: RECENT_DISCOVERY 6; DORMANT_LE
 
 ### 0.8 Review routing and the dispatch boundary (pure projection after the engine; outcomes and write plans untouched)
 
-Lanes over all 1200 decisions: {'NOT_DISPATCHED': 1127, 'ACTIVITY_UNCLASSIFIED': 62, 'CURRENT_DISCOVERY': 9, 'OWNER_REVIEW': 2}. **Current-discovery dispatch output: 9 ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. Latest-period completeness assumption: 2569-09 treated as complete (an incomplete month can never supply a true zero).
+Lanes over all 1200 decisions: {'NOT_DISPATCHED': 1127, 'ACTIVITY_UNCLASSIFIED': 62, 'CURRENT_DISCOVERY': 9, 'OWNER_REVIEW': 2}. **Current-discovery projection: 9 ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. **These are projections, NOT authorizations: `activation_authorized` is NO for every record while `IR_PARITY_UNRESOLVED`, owner approval and the governed writer remain outstanding.** Latest-period completeness assumption: 2569-09 treated as complete (an incomplete month can never supply a true zero).
 
 Mandatory `OWNER_REVIEW` (POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND — the provider id's label is a token of an existing TDR identity under the resolved brand; evidence below, no brand or model is named in code):
 

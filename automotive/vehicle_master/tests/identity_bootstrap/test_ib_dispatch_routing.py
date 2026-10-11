@@ -154,3 +154,48 @@ def test_the_routing_layer_names_no_brand_or_model():
     text = "".join(p.read_text(encoding="utf-8").casefold() for p in root.glob("*") if p.suffix in (".py", ".yaml"))
     for needle in ("maxus", "mifa", "mg.", "honda", "toyota", "mazda", "jazz"):
         assert needle not in text, needle
+
+
+# ---- an EXPLICIT zero row in an incomplete month is not a qualifying zero either
+def test_an_explicit_zero_row_in_an_incomplete_month_cannot_establish_a_true_zero_streak():
+    explicit = {**{p: 20.0 for p in PERIODS[:-4]}, **{p: 0.0 for p in PERIODS[-4:]}}        # four EXPLICIT zero rows, no capability needed
+    full = classify(explicit, PERIODS, {"absent_row": "UNKNOWN"}, APOL, complete_through=PERIODS[-1])
+    assert full["state"] == "INACTIVE_INFERRED", "four explicit zeros in complete months are true zeros"
+    partial = classify(explicit, PERIODS, {"absent_row": "UNKNOWN"}, APOL, complete_through=PERIODS[-2])
+    assert partial["state"] != "INACTIVE_INFERRED" and partial["unknown_months_in_trailing_window"] == 1
+    assert partial["trailing_months"][PERIODS[-1]] is None, "the unfinished month's explicit zero is unknown, not zero"
+    assert project(create(), partial["state"])["lane"] != "HISTORICAL_INACTIVE"
+    # also when the unfinished tail is longer, and under a confirmed capability
+    assert classify(explicit, PERIODS, CONFIRMED, APOL, complete_through=PERIODS[-3])["state"] != "INACTIVE_INFERRED"
+    assert classify(explicit, PERIODS, CONFIRMED, APOL, complete_through=PERIODS[-1])["state"] == "INACTIVE_INFERRED"
+
+
+def test_a_positive_count_in_an_incomplete_month_is_still_activity_and_a_complete_explicit_zero_is_unchanged():
+    c = {**{p: 20.0 for p in PERIODS[:-4]}, **{p: 0.0 for p in PERIODS[-4:-1]}, PERIODS[-1]: 6.0}
+    out = classify(c, PERIODS, CONFIRMED, APOL, complete_through=PERIODS[-2])
+    assert out["state"] in ("ACTIVE", "DECLINING", "REACTIVATED") and out["trailing_months"][PERIODS[-1]] == 6.0
+    from identity_bootstrap.market_activity import resolve_series
+    assert resolve_series({PERIODS[0]: 0.0}, PERIODS[:2], None, APOL, complete_through=PERIODS[0])[0] == 0.0
+
+
+# ---- the current-discovery lane is a projection, never an authorization
+def test_no_dispatch_record_is_ever_an_activation_authorization():
+    ds = [create(f"g{i}") for i in range(4)]
+    out = dispatch_all(ds, {"g0": "ACTIVE", "g1": "REACTIVATED", "g2": "UNKNOWN", "g3": "DECLINING"}, {})
+    assert any(r["lane"] == "CURRENT_DISCOVERY" for r in out)
+    for r in out:
+        assert r["activation_authorized"] is False
+        assert r["activation_blockers"] == ["IR_PARITY_UNRESOLVED", "OWNER_APPROVAL_PENDING", "GOVERNED_WRITER_NOT_BUILT"]
+    for r in current_dispatch(out):
+        assert r["activation_authorized"] is False and "OWNER_APPROVAL_PENDING" in r["activation_blockers"]
+    # even a resolved parity cannot authorize: owner approval and the governed writer are still outstanding
+    r = project(create(), "ACTIVE", parity_status="IR_PARITY_RESOLVED")
+    assert r["activation_authorized"] is False and r["activation_blockers"] == ["OWNER_APPROVAL_PENDING", "GOVERNED_WRITER_NOT_BUILT"]
+
+
+def test_no_code_path_sets_activation_authorized_true():
+    from pathlib import Path
+    root = Path(signals.__file__).parent.parent
+    for f in root.rglob("*.py"):
+        text = f.read_text(encoding="utf-8")
+        assert '"activation_authorized": True' not in text and "activation_authorized=True" not in text and "activation_authorized'] = True" not in text, f

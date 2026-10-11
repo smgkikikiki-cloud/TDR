@@ -352,10 +352,10 @@ def write_routing(summary: dict, out: Path) -> None:
     rt, par = m["routing"], m["ir_parity_status"]
     with (out / "dispatch_manifest.csv").open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["external_id", "bootstrap_outcome", "activity_state", "review_flags", "lane", "why"])
+        w.writerow(["external_id", "bootstrap_outcome", "activity_state", "review_flags", "lane", "activation_authorized", "activation_blockers", "why"])
         for r in rt["dispatch"]:
             if r["bootstrap_outcome"] == "CREATE_IDENTITY":
-                w.writerow([r["external_id"], r["bootstrap_outcome"], r["activity_state"], "|".join(r["review_flags"]), r["lane"], r["why"]])
+                w.writerow([r["external_id"], r["bootstrap_outcome"], r["activity_state"], "|".join(r["review_flags"]), r["lane"], "NO" if not r["activation_authorized"] else "YES", "|".join(r["activation_blockers"]), r["why"]])
     with (out / "cross_brand_review.csv").open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["external_id", "bootstrap_outcome", "flag", "mandatory_owner_review", "evidence"])
@@ -465,7 +465,7 @@ def _m4_md(s: dict, m: dict) -> str:
     L.append("Informational activity classes of the CREATE set: " + "; ".join(f"{c} {v['groups']}" for c, v in m["activity_classes_informational"].items()) + ". Age or low volume never decides an outcome; dormant legacy models are valid HISTORICAL_BACKFILL candidates, not false CREATEs.\n")
     rt = m["routing"]
     L.append("### 0.8 Review routing and the dispatch boundary (pure projection after the engine; outcomes and write plans untouched)\n")
-    L.append(f"Lanes over all {sum(rt['lane_counts'].values())} decisions: {rt['lane_counts']}. **Current-discovery dispatch output: {len(rt['current_dispatch_ids'])} ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. "
+    L.append(f"Lanes over all {sum(rt['lane_counts'].values())} decisions: {rt['lane_counts']}. **Current-discovery projection: {len(rt['current_dispatch_ids'])} ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. **These are projections, NOT authorizations: `activation_authorized` is NO for every record while `IR_PARITY_UNRESOLVED`, owner approval and the governed writer remain outstanding.** "
              f"Latest-period completeness assumption: {m['market_activity']['complete_through']} treated as complete (an incomplete month can never supply a true zero).\n")
     L.append("Mandatory `OWNER_REVIEW` (POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND — the provider id's label is a token of an existing TDR identity under the resolved brand; evidence below, no brand or model is named in code):\n")
     L.append(_table(["Group", "Evidence"], [[g, "; ".join(f"{e['kind']}: " + ", ".join(f"{k}={v}" for k, v in e.items() if k != "kind") for e in r["evidence"])] for g, r in rt["reviews"].items() if r["mandatory_owner_review"]]))
