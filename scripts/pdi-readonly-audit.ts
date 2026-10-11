@@ -10,10 +10,22 @@
 import {adminDb} from "../lib/supabase.ts";
 import {calculatePdi,type PdiModel,type PdiMsrp,type PdiTrim,type PdiCashBundle} from "../lib/pdi-engine.ts";
 type Row=Record<string,any>;
+const PRIMARY_KEYS:Record<string,string[]>={
+  vehicle_brands:["canonical_id"],vehicle_models:["canonical_id"],
+  vehicle_trims:["canonical_id"],vehicle_current_retail_sets:["model_id"],
+  vehicle_price_ledger:["record_id"],vehicle_promotions:["campaign_id","option_id"],
+  vehicle_campaigns:["campaign_id"]
+};
 async function readAll(db:any,table:string,fields:string):Promise<Row[]> {
+  const keys=PRIMARY_KEYS[table];
+  if(!keys)throw new Error("unknown audited table: "+table);
   const result:Row[]=[];
   for(let offset=0;offset<100_000;offset+=500) {
-    const {data,error}=await db.from(table).select(fields).range(offset,offset+499);
+    // Stable full-PK ordering is mandatory across range pages; otherwise
+    // PostgREST may skip/duplicate tied rows as the page boundary shifts.
+    let query=db.from(table).select(fields);
+    for(const key of keys)query=query.order(key,{ascending:true});
+    const {data,error}=await query.range(offset,offset+499);
     if(error)throw new Error(table+" read failure: "+error.message);
     const page=(data||[]) as Row[];
     result.push(...page);
