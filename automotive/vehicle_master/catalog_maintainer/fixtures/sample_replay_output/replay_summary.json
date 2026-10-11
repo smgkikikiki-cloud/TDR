@@ -3,14 +3,15 @@
     "EXACT_TRIM_SOURCE_MATCH": 3
   },
   "accepted_candidates": 3,
+  "accepted_candidates_not_resolving_priority_gaps": 3,
   "applicable_gaps_after_replay": 2,
   "applicable_gaps_before": 2,
-  "cache_suppressions": 2,
+  "cache_suppressions": 0,
   "candidates_total": 11,
   "canonical_registry_sha256": "2e2f344005aaba99ea613e47b45af14e72a42e3029d942d21bda4a0be34c6d2b",
   "canonical_registry_year": 2026,
   "documents_seen": 11,
-  "duplicate_hash_suppressions": 2,
+  "duplicate_hash_suppressions": 0,
   "external_http_calls": 0,
   "held_by_reason": {
     "CONFLICTING_SOURCE_VALUES": 3,
@@ -20,7 +21,7 @@
     "UNIT_MISMATCH": 1
   },
   "held_candidates": 7,
-  "held_documents": 4,
+  "held_documents": 6,
   "lineage_independent_source_count": 2,
   "lineage_note": "Documents sharing lineage_id count as one source; replay does not infer source independence.",
   "matched_candidates": 3,
@@ -28,18 +29,20 @@
   "paid_model_calls": 0,
   "paid_spend_thb": 0,
   "paid_tokens": 0,
+  "priority_gap_items_after_replay": 2,
+  "priority_gap_items_before_replay": 2,
+  "priority_gap_items_proposed": 0,
   "priority_overlay_fields": 4,
   "production_writes": 0,
   "proposed_canonical_writes": 0,
   "reason_counts": {
     "CONFLICTING_SOURCE_VALUES": 6,
-    "DUPLICATE_DOCUMENT_HASH": 2,
+    "DUPLICATE_HASH_METADATA_CONFLICT": 3,
     "EXACT_TRIM_SOURCE_MATCH": 3,
     "MISSING_MEASUREMENT_QUALIFIER": 1,
     "P3_NO_STANDALONE_RETRIEVAL": 1,
     "POWERTRAIN_NOT_APPLICABLE": 1,
     "PRICE_LEDGER_OWNED": 1,
-    "SOURCE_STALE": 1,
     "TRIM_MISMATCH": 1,
     "TRIM_NOT_EXPLICITLY_ADMITTED": 1,
     "UNIT_MISMATCH": 1,
@@ -51,5 +54,5 @@
   "rejected_candidates": 1,
   "rejected_documents": 0,
   "schema_version": "1.0",
-  "unique_documents": 9
+  "unique_documents": 8
 }

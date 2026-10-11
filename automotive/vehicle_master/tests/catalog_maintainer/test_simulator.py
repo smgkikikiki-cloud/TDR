@@ -40,6 +40,106 @@ class CatalogMaintainerTests(unittest.TestCase):
     def recorded(self, name):
         return json.loads((ROOT / "fixtures" / "recorded_docs" / name).read_text(encoding="utf-8"))
 
+    def run_replay(self, snapshot, docs):
+        with tempfile.TemporaryDirectory() as temp:
+            snapshot_path = Path(temp) / "snapshot.json"
+            snapshot_path.write_text(json.dumps(snapshot), encoding="utf-8")
+            paths = []
+            for index, doc in enumerate(docs):
+                path = Path(temp) / f"doc-{index}.json"
+                path.write_text(json.dumps(doc), encoding="utf-8")
+                paths.append(path)
+            out = Path(temp) / "out"
+            summary = replay(snapshot_path, paths, out, root=REPOSITORY_ROOT)
+            return summary, json.loads((out / "gap_diff.json").read_text()), [
+                json.loads(line) for line in (out / "field_candidates.jsonl").read_text().splitlines()]
+
+    def claim_doc(self, content, *, document_id="doc-regression"):
+        doc = self.recorded("th-spec-complete.json")
+        doc["document_id"] = document_id
+        doc["local_source_id"] = f"fixture://{document_id}"
+        doc["content"] = content
+        doc["content_sha256"] = hashlib.sha256(content.encode()).hexdigest()
+        return doc
+
+    def test_replay_reconciles_canonicalized_existing_values_at_all_payload_layers(self):
+        for layer, key, value in (("trim", "length_mm", 4400), ("generation", "width_mm", 1800),
+                                  ("model", "height_mm", 1600)):
+            with self.subTest(layer=layer):
+                snap = fixture()
+                snap["facts"] = [fact for fact in snap["facts"] if fact["field_key"] != key]
+                owner = next(row for row in snap[{"trim":"trims", "generation":"generations", "model":"models"}[layer]]
+                             if row["id"] == {"trim":"atto.standard", "generation":"atto_3.g1", "model":"byd.atto_3"}[layer])
+                owner["specs"] = {key: value}
+                canonical_key = {"length_mm":"vehicle.length_mm", "width_mm":"vehicle.width_mm", "height_mm":"vehicle.height_mm"}[key]
+                same = self.claim_doc(f"claim|{canonical_key}|atto.standard|{value} mm")
+                _, _, rows = self.run_replay(snap, [same])
+                row = next(r for r in rows if r["field_key"] == canonical_key)
+                self.assertEqual((row["candidate_status"], row["reason_code"]), ("HELD", "ALREADY_PRESENT"))
+                conflict = self.claim_doc(f"claim|{canonical_key}|atto.standard|{value + 1} mm")
+                _, _, rows = self.run_replay(snap, [conflict])
+                row = next(r for r in rows if r["field_key"] == canonical_key)
+                self.assertEqual((row["candidate_status"], row["reason_code"]), ("HELD", "CONFLICT_WITH_CURRENT_VALUE"))
+
+    def test_replay_qualifiers_separate_range_facts_and_candidates(self):
+        snap = fixture()
+        snap["facts"] = [f for f in snap["facts"] if f["field_key"] not in {"rated_range_km", "ev.rated_range_km"}]
+        for basis, scope, value in (("NEDC", "FULL", 420), ("WLTP", "FULL", 500), ("CLTC", "ELECTRIC_ONLY", 450)):
+            snap["facts"].append({"trim_id":"atto.standard", "field_key":"rated_range_km", "value":value,
+                                  "value_state":"KNOWN", "verification_status":"VERIFIED", "source_ref":"fixture://range",
+                                  "qualifiers":{"measurement_basis":basis,"range_scope":scope}})
+        docs = [self.claim_doc(f"claim|rated_range_km|atto.standard|{value} km|measurement_basis={basis};range_scope={scope}",
+                               document_id=f"range-{basis}-{scope}-{value}")
+                for basis, scope, value in (("NEDC", "FULL", 420), ("WLTP", "FULL", 600),
+                                            ("CLTC", "ELECTRIC_ONLY", 450), ("WLTP", "ELECTRIC_ONLY", 350))]
+        _, gap, rows = self.run_replay(snap, docs)
+        self.assertNotIn("CONFLICT", {d["state"] for d in gap["dispositions"] if d["field_key"] == "ev.rated_range_km"})
+        statuses = {(r["qualifiers"]["measurement_basis"], r["qualifiers"]["range_scope"]): (r["candidate_status"], r["reason_code"])
+                    for r in rows if r["field_key"] == "ev.rated_range_km"}
+        self.assertEqual(statuses[("NEDC", "FULL")], ("HELD", "ALREADY_PRESENT"))
+        self.assertEqual(statuses[("WLTP", "FULL")], ("HELD", "CONFLICT_WITH_CURRENT_VALUE"))
+        self.assertEqual(statuses[("CLTC", "ELECTRIC_ONLY")], ("HELD", "ALREADY_PRESENT"))
+        self.assertEqual(statuses[("WLTP", "ELECTRIC_ONLY")], ("HELD", "CURRENT_VALUE_QUALIFIERS_DIFFER"))
+
+    def test_replay_requires_explicit_units_for_dimensional_numbers(self):
+        doc = self.claim_doc("claim|battery_kwh|atto.standard|60.48\nclaim|max_power_kw|atto.standard|150|output_scope=TOTAL;rating_basis=PEAK\nclaim|seats|atto.standard|5")
+        _, gap, rows = self.run_replay(fixture(), [doc])
+        held = {(x.get("source_field"), x["reason_code"]) for x in gap["held_or_rejected"] if x["reason_code"] == "UNIT_EVIDENCE_MISSING"}
+        self.assertEqual(held, {("battery_kwh", "UNIT_EVIDENCE_MISSING"), ("max_power_kw", "UNIT_EVIDENCE_MISSING")})
+        seats = next(r for r in rows if r["field_key"] == "vehicle.seats")
+        self.assertNotEqual(seats.get("reason_code"), "UNIT_EVIDENCE_MISSING")
+        self.assertIsNone(seats["unit"])
+
+    def test_same_hash_with_conflicting_scope_is_held_not_deduplicated(self):
+        first = self.recorded("th-spec-complete.json")
+        second = copy.deepcopy(first)
+        second.update(document_id="same-bytes-other-market", local_source_id="fixture://other-market", market="OTHER")
+        summary, gap, rows = self.run_replay(fixture(), [first, second])
+        held = [r for r in gap["held_or_rejected"] if r["reason_code"] == "DUPLICATE_HASH_METADATA_CONFLICT"]
+        self.assertEqual({r["document_id"] for r in held}, {first["document_id"], second["document_id"]})
+        self.assertEqual(summary["duplicate_hash_suppressions"], 0)
+        self.assertEqual(rows, [])
+
+    def test_not_available_is_not_search_exhaustion(self):
+        snap = fixture()
+        for variant in snap["variants"]:
+            if variant["id"] == "atto.bev":
+                variant["specs"].pop("battery_kwh", None)
+        snap["facts"] = [f for f in snap["facts"] if not (f["trim_id"] == "atto.standard" and f["field_key"] == "battery_kwh")]
+        snap["facts"].append({"trim_id":"atto.standard", "field_key":"battery_kwh", "value":None,
+                              "value_state":"NOT_AVAILABLE", "verification_status":"VERIFIED"})
+        result = gaps_for_model(snap, ("atto.standard",))
+        states = {d["state"] for d in result["dispositions"] if d["field_key"] == "battery_kwh"}
+        self.assertEqual(states, {"NOT_AVAILABLE"})
+        self.assertIn("battery_kwh", result["groups"]["electrification"]["field_keys"])
+        self.assertNotIn("SOURCE_EXHAUSTED", states)
+
+    def test_replay_validates_normalized_snapshot_before_indexing(self):
+        snap = fixture()
+        snap["trims"].append(copy.deepcopy(snap["trims"][0]))
+        with self.assertRaisesRegex(ValueError, "identifiers must be present and unique"):
+            self.run_replay(snap, [self.recorded("th-spec-complete.json")])
+
     def test_canonical_registry_adapter_is_pinned_and_aliases_are_canonical(self):
         registry = load_registry(root=REPOSITORY_ROOT)
         self.assertEqual(registry["schema_version"], 1)

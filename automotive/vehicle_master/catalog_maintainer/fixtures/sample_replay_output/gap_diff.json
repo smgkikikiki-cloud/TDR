@@ -203,7 +203,7 @@
     },
     {
       "document_id": "doc-old",
-      "reason_code": "SOURCE_STALE",
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
       "status": "HELD"
     },
     {
@@ -224,13 +224,14 @@
       "document_id": "doc-unit",
       "locator": "line:1",
       "reason_code": "UNIT_MISMATCH",
+      "source_field": "length_mm",
       "status": "HELD",
       "trim_id": "city.sv"
     },
     {
       "document_id": "doc-wrong-market",
-      "reason_code": "DUPLICATE_DOCUMENT_HASH",
-      "status": "SUPPRESSED"
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
+      "status": "HELD"
     },
     {
       "document_id": "doc-wrong-powertrain",
@@ -241,8 +242,8 @@
     },
     {
       "document_id": "doc-wrong-variant",
-      "reason_code": "DUPLICATE_DOCUMENT_HASH",
-      "status": "SUPPRESSED"
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
+      "status": "HELD"
     }
   ],
   "schema_version": "1.0"

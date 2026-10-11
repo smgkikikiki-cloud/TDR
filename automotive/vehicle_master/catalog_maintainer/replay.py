@@ -12,6 +12,7 @@ from .eligibility import evaluate_model
 from .gap_inventory import gaps_for_model
 from .registry_adapter import adapt_snapshot, load_registry, resolve_key
 from .replay_contracts import FieldCandidate, FieldDisposition, ReplayReport, ReplaySummary, SourceClaim, SourceDocument
+from .validation import validate_fixture
 
 SCHEMA_VERSION = "1.0"
 LINE_RE = re.compile(r"^claim\|([^|]+)\|([^|]+)\|([^|]+)(?:\|(.*))?$")
@@ -118,9 +119,14 @@ def _parse_value(raw: str, definition: dict) -> tuple[object, str | None]:
         if found_unit and unit and found_unit.lower() != unit.lower():
             # Only exact canonical units are accepted in this chunk; no inferred conversions.
             raise ReplayContractError("UNIT_MISMATCH")
+        # Count fields are dimensionless by definition. Other dimensional numbers
+        # need an explicit unit in the quoted source text; the canonical unit is
+        # not evidence that the source stated it.
+        if unit and unit.lower() != "seat" and not found_unit:
+            raise ReplayContractError("UNIT_EVIDENCE_MISSING")
         if value.is_integer():
             value = int(value)
-        return value, found_unit or unit
+        return value, found_unit or (None if unit and unit.lower() == "seat" else unit)
     return raw.strip(), unit
 
 
@@ -210,7 +216,7 @@ def _claims(doc: dict, registry: dict, eligible_trim_ids: set[str], active_rows:
             value, unit = _parse_value(raw_value.strip(), definition)
         except ReplayContractError as exc:
             held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
-                         "status": "HELD", "reason_code": str(exc)})
+                         "source_field": raw_key.strip(), "status": "HELD", "reason_code": str(exc)})
             continue
         locator = f"line:{index}"
         claim = SourceClaim(key, trim_id, value, unit, tuple(sorted(qualifiers.items())), line, locator)
@@ -234,15 +240,10 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
            *, root: Path | None = None) -> dict:
     snapshot_path = Path(snapshot_path)
     snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    validate_fixture(snapshot)
     documents = [json.loads(Path(p).read_text(encoding="utf-8")) for p in document_paths]
     documents.sort(key=lambda d: d.get("document_id", ""))
     registry = load_registry(root=root)
-    model_rows = {m["id"]: m for m in snapshot.get("models", [])}
-    trim_rows = {t["id"]: t for t in snapshot.get("trims", [])}
-    generation_rows = {g["id"]: g for g in snapshot.get("generations", [])}
-    active_rows = dict(model_rows)
-    active_rows["__trims__"] = trim_rows
-    active_rows["__generations__"] = generation_rows
     eligible = set()
     for model in snapshot.get("models", []):
         scope = evaluate_model(snapshot, model)
@@ -250,17 +251,42 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
     gap_before: dict[str, dict] = {}
     # Use canonical registry metadata and canonical aliases for present-value suppression.
     canonical_snapshot, tiers, out_of_scope = adapt_snapshot(snapshot, tuple(sorted(eligible)), registry)
+    # From here onward, all identity and value lookups use the adapted rows.
+    model_rows = {m["id"]: m for m in canonical_snapshot.get("models", [])}
+    trim_rows = {t["id"]: t for t in canonical_snapshot.get("trims", [])}
+    generation_rows = {g["id"]: g for g in canonical_snapshot.get("generations", [])}
+    active_rows = dict(model_rows)
+    active_rows["__trims__"] = trim_rows
+    active_rows["__generations__"] = generation_rows
     for model_id in sorted({trim_rows[t]["model_id"] for t in eligible}):
         model_trims = tuple(sorted(t for t in eligible if trim_rows[t]["model_id"] == model_id))
         gap_before[model_id] = gaps_for_model(canonical_snapshot, model_trims)
     evidence, candidates, rejects, source_documents = [], [], [], []
-    duplicate_hashes = set()
+    duplicate_hashes: dict[str, tuple] = {}
+    duplicate_hash_suppressions = 0
+    conflicting_hashes: set[str] = set()
+    def hash_scope(doc: dict) -> tuple:
+        return tuple((key, _stable(doc.get(key))) for key in (
+            "source_id", "source_authority", "market", "model_id", "generation_id", "trim_ids",
+            "trim_variant_ids", "powertrain_by_trim", "model_year_by_trim", "completeness", "capture_manifest", "source_kind"))
+    for doc in documents:
+        _valid_document(doc)
+        signature = hash_scope(doc)
+        previous = duplicate_hashes.get(doc["content_sha256"])
+        if previous is not None and previous != signature:
+            conflicting_hashes.add(doc["content_sha256"])
+        duplicate_hashes[doc["content_sha256"]] = signature
+    seen_hashes: set[str] = set()
     for doc in documents:
         validated_document = _valid_document(doc)
-        if doc["content_sha256"] in duplicate_hashes:
+        if doc["content_sha256"] in conflicting_hashes:
+            rejects.append({"document_id": doc["document_id"], "status": "HELD", "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT"})
+            continue
+        if doc["content_sha256"] in seen_hashes:
+            duplicate_hash_suppressions += 1
             rejects.append({"document_id": doc["document_id"], "status": "SUPPRESSED", "reason_code": "DUPLICATE_DOCUMENT_HASH"})
             continue
-        duplicate_hashes.add(doc["content_sha256"])
+        seen_hashes.add(doc["content_sha256"])
         source_documents.append(validated_document)
         evidence.append({k: doc.get(k) for k in ("schema_version", "document_id", "source_id", "source_authority", "market",
                          "model_id", "generation_id", "trim_ids", "trim_variant_ids", "powertrain_by_trim", "model_year_by_trim",
@@ -288,7 +314,7 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
         if n < 1 or n > len(lines) or lines[n-1] != candidate["quote"]:
             candidate["candidate_status"] = "HELD"
             candidate["reason_code"] = "QUOTE_LOCATOR_MISMATCH"
-    current_values: dict[tuple[str, str], list[object]] = {}
+    current_values: dict[tuple[str, str], list[dict]] = {}
     disposition_states = {}
     for model_id, gap in gap_before.items():
         for d in gap["dispositions"]:
@@ -301,12 +327,17 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
         layers = [trim.get("specs", {}), variant.get("specs", {}), generation.get("specs", {}), model.get("specs", {})]
         for layer in layers:
             for key, value in layer.items():
-                current_values.setdefault((trim_id, key), []).append(value)
+                current_values.setdefault((trim_id, key), []).append({"value": value, "qualifiers": None})
         for fact in canonical_snapshot.get("facts", []):
             if fact.get("trim_id") == trim_id and fact.get("value_state") == "KNOWN" and fact.get("value") is not None:
                 start, end = fact.get("effective_from"), fact.get("effective_to")
                 if (not start or start <= snapshot["as_of"]) and (not end or end >= snapshot["as_of"]):
-                    current_values.setdefault((trim_id, fact["field_key"]), []).append(fact["value"])
+                    qualifiers = fact.get("qualifiers")
+                    if not isinstance(qualifiers, dict):
+                        required = set(registry["fields"].get(fact["field_key"], {}).get("comparison_qualifiers", []))
+                        qualifier_keys = {"measurement_basis", "range_scope", "output_scope", "rating_basis"} | required
+                        qualifiers = {key: fact[key] for key in qualifier_keys if key in fact}
+                    current_values.setdefault((trim_id, fact["field_key"]), []).append({"value": fact["value"], "qualifiers": qualifiers or None})
     grouped: dict[tuple, list[dict]] = {}
     for c in candidates:
         qkey = tuple(sorted(c["qualifiers"].items()))
@@ -321,10 +352,33 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
         else:
             seen_lineage_claims = set()
             for c in sorted(group, key=lambda row: row["document_id"]):
-                existing = current_values.get((c["trim_id"], c["field_key"]), [])
-                distinct = {json.dumps(value, sort_keys=True) for value in existing}
+                all_existing = current_values.get((c["trim_id"], c["field_key"]), [])
+                definition = registry["fields"].get(c["field_key"], {})
+                required_qualifiers = set(definition.get("comparison_qualifiers", []))
+                candidate_qualifiers = c["qualifiers"]
+                existing = all_existing
+                qualifier_block = None
+                if required_qualifiers and all_existing:
+                    comparable, unresolved = [], False
+                    for row in all_existing:
+                        eq = row["qualifiers"]
+                        if not eq or not required_qualifiers <= eq.keys():
+                            unresolved = True
+                        elif all(eq[key] == candidate_qualifiers.get(key) for key in required_qualifiers):
+                            comparable.append(row)
+                    if unresolved:
+                        qualifier_block = "CURRENT_VALUE_QUALIFIERS_UNRESOLVED"
+                        existing = []
+                    elif comparable:
+                        existing = comparable
+                    else:
+                        qualifier_block = "CURRENT_VALUE_QUALIFIERS_DIFFER"
+                        existing = []
+                distinct = {json.dumps(row["value"], sort_keys=True) for row in existing}
                 state = disposition_states.get((c["trim_id"], c["field_key"]))
-                if state == "TOMBSTONED_LOCKED":
+                if qualifier_block:
+                    c["candidate_status"], c["reason_code"] = "HELD", qualifier_block
+                elif state == "TOMBSTONED_LOCKED":
                     c["candidate_status"], c["reason_code"] = "HELD", "ADMIN_LOCKED_TOMBSTONE"
                 elif state == "CONFLICT":
                     c["candidate_status"], c["reason_code"] = "HELD", "CURRENT_FACT_CONFLICT"
@@ -332,7 +386,7 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
                     c["candidate_status"], c["reason_code"] = "HELD", "FIELD_NOT_APPLICABLE"
                 elif state == "ABSENT":
                     c["candidate_status"], c["reason_code"] = "HELD", "CURRENTLY_ABSENT"
-                elif len(distinct) > 1 or (existing and any(value != c["value"] for value in existing)):
+                elif len(distinct) > 1 or (existing and any(row["value"] != c["value"] for row in existing)):
                     c["candidate_status"], c["reason_code"] = "HELD", "CONFLICT_WITH_CURRENT_VALUE"
                 elif existing and disposition_states.get((c["trim_id"], c["field_key"])) == "NEEDS_SOURCE_TRACE":
                     c["candidate_status"], c["reason_code"] = "ACCEPTED_CANDIDATE", "SOURCE_TRACE_MATCHED"
@@ -343,10 +397,11 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
                 else:
                     c["candidate_status"], c["reason_code"] = "ACCEPTED_CANDIDATE", "EXACT_TRIM_SOURCE_MATCH"
                 seen_lineage_claims.add(c["lineage_id"])
-    before_flat = {(trim, d["field_key"], d["state"]) for g in gap_before.values() for d in g["dispositions"]
-                   for trim in [d["trim_id"]] if d["state"] in {"MISSING", "UNKNOWN", "NEEDS_SOURCE_TRACE", "SOURCE_EXHAUSTED"}}
+    open_states = {"MISSING", "UNKNOWN", "NEEDS_SOURCE_TRACE", "SOURCE_EXHAUSTED", "NOT_AVAILABLE"}
+    before_flat = {(d["trim_id"], d["field_key"], d["state"]) for g in gap_before.values() for d in g["dispositions"]
+                   if d["state"] in open_states}
     open_gap_pairs = {(d["trim_id"], d["field_key"]) for g in gap_before.values() for d in g["dispositions"]
-                      if d["state"] in {"MISSING", "UNKNOWN", "NEEDS_SOURCE_TRACE", "SOURCE_EXHAUSTED"}}
+                      if d["state"] in open_states}
     proposed = {(c["trim_id"], c["field_key"]) for c in candidates
                 if c["candidate_status"] == "ACCEPTED_CANDIDATE" and (c["trim_id"], c["field_key"]) in open_gap_pairs}
     claim_rejects = [x for x in rejects if x.get("locator") and x.get("trim_id")]
@@ -354,7 +409,7 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
     held_count = sum(c["candidate_status"] == "HELD" for c in candidates) + sum(x.get("status") == "HELD" for x in claim_rejects)
     rejected_count = sum(x.get("status") == "REJECTED" for x in claim_rejects)
     summary = {"schema_version": SCHEMA_VERSION, "documents_seen": len(documents), "unique_documents": len(evidence),
-               "duplicate_hash_suppressions": len(documents) - len(evidence),
+               "duplicate_hash_suppressions": duplicate_hash_suppressions,
                "candidates_total": accepted_count + held_count + rejected_count,
                "accepted_candidates": accepted_count, "held_candidates": held_count,
                "rejected_candidates": rejected_count,
@@ -362,6 +417,11 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
                "rejected_documents": sum(x.get("status") == "REJECTED" and not x.get("locator") for x in rejects),
                "reason_counts": {}, "applicable_gaps_before": len(before_flat),
                "applicable_gaps_after_replay": max(0, len(before_flat) - len(proposed)),
+               "priority_gap_items_before_replay": len(open_gap_pairs),
+               "priority_gap_items_proposed": len(proposed),
+               "priority_gap_items_after_replay": max(0, len(open_gap_pairs) - len(proposed)),
+               "accepted_candidates_not_resolving_priority_gaps": accepted_count - sum(
+                   c["candidate_status"] == "ACCEPTED_CANDIDATE" and (c["trim_id"], c["field_key"]) in open_gap_pairs for c in candidates),
                "proposed_canonical_writes": 0, "production_writes": 0, "external_http_calls": 0,
                "paid_model_calls": 0, "paid_tokens": 0, "paid_spend_thb": 0,
                "canonical_registry_year": registry["year"], "canonical_registry_sha256": registry["registry_sha256"],
@@ -381,7 +441,7 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
     for model_id, gap in sorted(gap_before.items()):
         for row in gap["dispositions"]:
             disposition = dict(row)
-            if (row["trim_id"], row["field_key"]) in proposed and row["state"] in {"MISSING", "UNKNOWN", "SOURCE_EXHAUSTED", "NEEDS_SOURCE_TRACE"}:
+            if (row["trim_id"], row["field_key"]) in proposed and row["state"] in open_states:
                 disposition["replay_state"] = "CANDIDATE_PROPOSED"
             else:
                 disposition["replay_state"] = row["state"]

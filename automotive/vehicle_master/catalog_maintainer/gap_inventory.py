@@ -38,11 +38,25 @@ def _facts_for(facts: list[dict], trim_id: str, key: str, as_of: str) -> list[di
             and _active(f, as_of)]
 
 
-def _conflicting(rows: list[dict]) -> bool:
+def _qualifiers(fact: dict, required: set[str] | None = None) -> dict | None:
+    value = fact.get("qualifiers")
+    if isinstance(value, dict):
+        return value
+    keys = {"measurement_basis", "range_scope", "output_scope", "rating_basis"} | (required or set())
+    values = {key: fact[key] for key in keys if key in fact}
+    return values or None
+
+
+def _conflicting(rows: list[dict], required_qualifiers: set[str] | None = None) -> bool:
     if len(rows) < 2:
         return any(f.get("value_state") == "CONFLICT" for f in rows)
-    signatures = {(f.get("value_state"), repr(f.get("value"))) for f in rows}
-    return len(signatures) > 1 or any(f.get("value_state") == "CONFLICT" for f in rows)
+    required_qualifiers = required_qualifiers or set()
+    signatures: dict[tuple, set[tuple]] = {}
+    for fact in rows:
+        qualifiers = _qualifiers(fact, required_qualifiers)
+        qualifier_key = tuple((key, qualifiers.get(key)) for key in sorted(required_qualifiers)) if qualifiers and required_qualifiers <= qualifiers.keys() else None
+        signatures.setdefault((fact.get("value_state"), qualifier_key), set()).add((fact.get("value_state"), repr(fact.get("value"))))
+    return any(len(values) > 1 for values in signatures.values()) or any(f.get("value_state") == "CONFLICT" for f in rows)
 
 
 def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
@@ -63,6 +77,7 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
                 continue
 
             rows = _facts_for(facts, trim_id, key, as_of)
+            required_qualifiers = set(field.get("comparison_qualifiers", []))
             locked_clears = [f for f in rows if f.get("locked") and f.get("value") is None
                              and f.get("value_state") is None]
             if locked_clears:
@@ -73,7 +88,7 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
             if locked_states:
                 dispositions.append({"trim_id": trim_id, "field_key": key, "state": "TOMBSTONED_LOCKED"})
                 continue
-            if _conflicting(rows):
+            if _conflicting(rows, required_qualifiers):
                 dispositions.append({"trim_id": trim_id, "field_key": key, "state": "CONFLICT"})
                 continue
             fact = rows[0] if rows else None
@@ -84,9 +99,22 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
                 continue
             if fact and fact.get("value_state") in {"ABSENT", "NOT_AVAILABLE"}:
                 has_payload, _, _ = _payload_value(snapshot, trim, key)
-                state = "CONFLICT" if has_payload else ("ABSENT" if fact["value_state"] == "ABSENT" else "SOURCE_EXHAUSTED")
+                state = "CONFLICT" if has_payload else ("ABSENT" if fact["value_state"] == "ABSENT" else "NOT_AVAILABLE")
                 dispositions.append({"trim_id": trim_id, "field_key": key, "state": state})
+                if state == "NOT_AVAILABLE":
+                    bucket = groups.setdefault(field.get("group", "OTHER"), {"field_keys_by_tier": {}, "trim_ids_by_field": {}})
+                    bucket["field_keys_by_tier"].setdefault(tier, set()).add(key)
+                    bucket["trim_ids_by_field"].setdefault(key, []).append(trim_id)
                 continue
+            known_rows = [row for row in rows if row.get("value_state") == "KNOWN" and _present(row.get("value"))]
+            if required_qualifiers and known_rows:
+                if any(not (_qualifiers(row, required_qualifiers) and required_qualifiers <= _qualifiers(row, required_qualifiers).keys())
+                       for row in known_rows):
+                    dispositions.append({"trim_id": trim_id, "field_key": key, "state": "NEEDS_QUALIFIER_REVIEW"})
+                    bucket = groups.setdefault(field.get("group", "OTHER"), {"field_keys_by_tier": {}, "trim_ids_by_field": {}})
+                    bucket["field_keys_by_tier"].setdefault(tier, set()).add(key)
+                    bucket["trim_ids_by_field"].setdefault(key, []).append(trim_id)
+                    continue
             if fact and fact.get("value_state") == "KNOWN" and _present(fact.get("value")):
                 has_payload, _, payload = _payload_value(snapshot, trim, key)
                 if has_payload and payload != fact.get("value"):
@@ -103,6 +131,12 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
                 continue
             payload_has_value, payload_layer, _ = _payload_value(snapshot, trim, key)
             if payload_has_value:
+                if required_qualifiers:
+                    dispositions.append({"trim_id": trim_id, "field_key": key, "state": "NEEDS_QUALIFIER_REVIEW", "layer": payload_layer})
+                    bucket = groups.setdefault(field.get("group", "OTHER"), {"field_keys_by_tier": {}, "trim_ids_by_field": {}})
+                    bucket["field_keys_by_tier"].setdefault(tier, set()).add(key)
+                    bucket["trim_ids_by_field"].setdefault(key, []).append(trim_id)
+                    continue
                 if fact and fact.get("value_state") == "UNKNOWN":
                     dispositions.append({"trim_id": trim_id, "field_key": key, "state": "CONFLICT"})
                     continue
