@@ -26,6 +26,7 @@ jobs:
         run: |
           node --test orchestration/preflight.test.mjs
           node --test orchestration/pr-admission.test.mjs
+          node --test orchestration/pr-admission.integration.test.mjs
       - name: Verify Stage-0 plan remains disabled
         run: node orchestration/preflight.mjs --check-repo
 
