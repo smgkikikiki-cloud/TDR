@@ -14,7 +14,7 @@ from identity_bootstrap import engine
 from identity_bootstrap.engine.lexical import Lexicon
 from identity_bootstrap.engine.fingerprint import canonical_json
 
-from . import calibration, ir_rev4, post_ir, run as shadow_run
+from . import calibration, ir_export, post_ir, run as shadow_run
 
 RULE_FLAGS = {"R1_HYPHENATED_REGISTRATION_CODE", "R2_GLUED_POWERTRAIN_SUFFIX", "R4_DISPLACEMENT_TRIM_CODE"}
 CLASSES = ("model_code", "trim", "powertrain", "body", "generation")
@@ -54,12 +54,6 @@ def _causes(decisions: list[dict], units: dict[str, float]) -> dict:
             vol[d["primary_reason"]] += units[d["subject"]["entity_id"]]
         out[o] = {"primary": [[c, n, int(vol[c])] for c, n in primary.most_common()], "any_code": [[c, n] for c, n in anyc.most_common()]}
     return out
-
-
-def _weak_shared(a: list[str], b: list[str], lexicon_words: frozenset[str]) -> bool:
-    """True when every shared token is non-distinctive: digits, <=2 letters, or a trim/body/powertrain/generation word (GR, RS, AMG, EV, ...)."""
-    shared = set(a) & set(b)
-    return bool(shared) and all(t.isdigit() or len(t) <= 2 or t in lexicon_words for t in shared)
 
 
 def _creates(snapshot: dict, policy: dict, registry: dict) -> set[str]:
@@ -147,28 +141,8 @@ def analyse(A: dict, B: dict, notes_path: Path | None = None) -> dict:
         "dormant": sum(1 for c in creates if "DORMANT" in c["flags"]), "dormant_units_total": sum(c["units_total"] for c in creates if "DORMANT" in c["flags"]),
         "recent": sum(1 for c in creates if "RECENT" in c["flags"]), "creates": len(creates)}
 
-    # ---- suspected false REVIEW / HOLD
-    words = frozenset(w.casefold() for cls in ("trim", "powertrain", "body", "generation") for w in policy["shape"][cls]["tokens"])
-    weak, review_rows = [], []
-    for g, d in dA.items():
-        if d["outcome"] != "IDENTITY_REVIEW":
-            continue
-        s = subj[g]
-        relation_codes = {"EXISTING_IDENTITY_SUSPECTED", "PROVIDER_FINER_THAN_TDR", "STRUCTURAL_CONFLICT"} & set(d["reason_codes"])
-        other_blocking = set(d["reason_codes"]) - relation_codes - {"POSSIBLE_TRIM_NOT_MODEL", "POSSIBLE_POWERTRAIN_DERIVATIVE", "POSSIBLE_BODY_VARIANT", "POSSIBLE_GENERATION_VARIANT"}
-        rels = [r for r in s.get("relations", []) if r["name_relation"] == "SIBLING"]
-        peer_tokens = []
-        for r in rels:
-            if r["peer_kind"] == "SUBJECT":
-                peer_tokens.append(toks(r["peer_id"]))
-            else:
-                ident = next((i for i in A["catalog"]["identities"] if i["canonical_id"] == r["peer_id"]), None)
-                if ident:
-                    peer_tokens.append(lex.tokens(ident["name_en"], (s["brand"]["raw"], *s["brand"].get("spellings", []))))
-        only_sibling = relation_codes == {"EXISTING_IDENTITY_SUSPECTED"} and not other_blocking
-        if only_sibling and peer_tokens and all(_weak_shared(toks(g), p, words) for p in peer_tokens):
-            weak.append(g)
-        review_rows.append(g)
+    # ---- suspected false REVIEW / HOLD (relations are PR #200's; nothing here judges a name)
+    review_rows = [g for g, d in dA.items() if d["outcome"] == "IDENTITY_REVIEW"]
     notact = []
     for g, d in dA.items():
         if d["primary_reason"] == "NOT_ACTIVATED":
@@ -183,36 +157,12 @@ def analyse(A: dict, B: dict, notes_path: Path | None = None) -> dict:
         if dims[g]["model_name"] != "ไม่ระบุ" and not lex.shape(dims[g]["model_name"], t) and not lex.raw_shaped("", dims[g]["model_name"], t) and 1 <= len(t) <= 3:
             clean_pipes.append(g)
     out["suspected_false_review_hold"] = {
-        "review_total": len(review_rows), "weak_token_sibling_only": sorted(weak), "weak_units": int(sum(units[g] for g in weak)),
+        "review_total": len(review_rows),
         "not_activated_by_fuzzy_or_equiv_only": sorted(notact),
         "unsettled_raw_ids": len(pipes), "unsettled_raw_ids_with_clean_looking_name": len(clean_pipes),
         "clean_looking_raw_top": [[g, dims[g]["model_name"], int(units[g])] for g in sorted(clean_pipes, key=lambda g: -units[g])[:25]],
         "provisional": sum(1 for s in subj.values() if s["identity_status"] == "provisional"),
         "settled_ids_with_registration_code_tokens": sorted(g for g, d in dA.items() if d["primary_reason"] == "PROVIDER_RAW_NAME" and subj[g]["identity_status"] == "settled")}
-
-    # relation quality over ALL relations the stand-in produced (informational; this is the quality of the IR layer, not of Bootstrap)
-    weak_sib = fuzzy_digit = fuzzy_total = sib_total = 0
-    weak_sib_examples, fuzzy_digit_examples = [], []
-    for g, s in subj.items():
-        for r in s.get("relations", []):
-            if r["peer_kind"] != "SUBJECT":
-                continue
-            a, b2 = toks(g), toks(r["peer_id"])
-            if r["name_relation"] == "SIBLING":
-                sib_total += 1
-                if _weak_shared(a, b2, words):
-                    weak_sib += 1
-                    if len(weak_sib_examples) < 12:
-                        weak_sib_examples.append([dims[g]["model_name"], dims[r["peer_id"]]["model_name"], sorted(set(a) & set(b2))])
-            if r["name_relation"] == "FUZZY":
-                fuzzy_total += 1
-                diff = [x for x in set(a) ^ set(b2)]
-                if any(any(ch.isdigit() for ch in x) for x in diff):
-                    fuzzy_digit += 1
-                    if len(fuzzy_digit_examples) < 12:
-                        fuzzy_digit_examples.append([dims[g]["model_name"], dims[r["peer_id"]]["model_name"]])
-    out["relation_quality"] = {"subject_pairs_sibling": sib_total, "sibling_on_non_distinctive_token_only": weak_sib, "sibling_examples": weak_sib_examples,
-                               "subject_pairs_fuzzy": fuzzy_total, "fuzzy_where_the_differing_token_has_a_digit": fuzzy_digit, "fuzzy_digit_examples": fuzzy_digit_examples}
 
     # ---- structural conflicts (every subject carrying STRUCTURAL_CONFLICT, per mode)
     def conflicts(decisions: dict) -> list[dict]:
@@ -318,25 +268,21 @@ def write_files(summary: dict, A: dict, B: dict, out_dir: Path) -> list[Path]:
 
 
 def build_all(package_path: Path = shadow_run.DEFAULT_PACKAGE) -> tuple[dict, dict, dict, list[dict]]:
-    """Everything the committed results derive from: runs A and B with the pinned PR #200 rev 4 relations, the comparison with the frozen milestone-3 results,
-    the market-activity routing, and the PROVISIONAL adjudication rows. `A0` (same run, stand-in relations only) exists only to name the relation changes."""
-    ir = ir_rev4.load()
-    A = shadow_run.run("A", package_path, ir=ir)
-    B = shadow_run.run("B", package_path, pkg=A["package"], ir=ir)
-    A0 = shadow_run.run("A", package_path, pkg=A["package"])
+    """Everything the committed results derive from: runs A and B with every relation read from the verified PR #200 full export, the reconciliation against the frozen
+    b132a86 baseline, the market-activity routing, and the PROVISIONAL adjudication rows."""
+    export = ir_export.load()
+    A = shadow_run.run("A", package_path, export=export)
+    B = shadow_run.run("B", package_path, pkg=A["package"], export=export)
     summary = analyse(A, B)
     notes = yaml.safe_load((Path(__file__).with_name("analyst_notes.yaml")).read_text(encoding="utf-8"))["create_verdicts"]
-    base = calibration.load_baseline(calibration.HERE / "baseline_m3" / "decisions.csv")
-    baseline_ids = post_ir.load_baseline_ids(calibration.HERE / "baseline_m3" / "create_adjudication.csv")
+    base = post_ir.load_baseline()
     creates = sorted(c["id"] for c in summary["creates"])
     r6 = calibration.load_r6()
-    m4 = post_ir.build_m4(A, B, A0, ir, base, baseline_ids, creates, r6)
-    m4["activity_classes_informational"] = _activity(summary["creates"], A["package"])
-    m4["policy_version"] = A["policy"]["version"]
-    m4["universe_verification"] = A["catalog"]["verification"]["comparison_with_file_snapshot"]
-    summary["m4"] = m4
+    m5 = post_ir.build_m5(A, B, export, base, creates, r6)
+    m5["activity_classes_informational"] = _activity(summary["creates"], A["package"])
+    summary["m5"] = m5
     mk = post_ir.market(A, creates)
-    rows = calibration.adjudication_rows(A, A0, creates, notes, r6, A["catalog"]["verification"]["redirects"], baseline_ids, mk, m4)
+    rows = calibration.adjudication_rows(A, creates, notes, r6, A["catalog"]["verification"]["redirects"], base["creates"], base["relations"], mk, m5)
     return A, B, summary, rows
 
 
@@ -348,7 +294,7 @@ def write_transitions(rows: list[dict], path: Path) -> None:
 
 
 def write_routing(summary: dict, out: Path) -> None:
-    m = summary["m4"]
+    m = summary["m5"]
     rt, par = m["routing"], m["ir_parity_status"]
     with (out / "dispatch_manifest.csv").open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
@@ -364,12 +310,18 @@ def write_routing(summary: dict, out: Path) -> None:
         for g, v in rt["reviews"].items():
             if g not in rt["general_cross_brand_list"] and v["flags"]:
                 w.writerow([g, "CREATE_IDENTITY", "|".join(v["flags"]), "no (advisory)", json.dumps(v["evidence"], sort_keys=True)])
-    with (out / "ir_parity_unresolved.csv").open("w", encoding="utf-8", newline="") as fh:
+    with (out / "parity_unresolved.csv").open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["external_id", "status", "specific_reasons"])
+        w.writerow(["external_id", "status", "reasons"])
         for g in sorted(par):
-            if par[g]["specific_reasons"]:
-                w.writerow([g, par[g]["status"], " ; ".join(par[g]["specific_reasons"])])
+            if par[g]["status"] != "IR_PARITY_RESOLVED":
+                w.writerow([g, par[g]["status"], " ; ".join(par[g]["reasons"])])
+    with (out / "dry_run_vs_bootstrap.csv").open("w", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["external_id", "ir_dry_run_outcome", "ir_primary_code", "ir_target_ids", "bootstrap_mode_A"])
+        for x in m["dry_run_vs_bootstrap"]["divergent"]:
+            w.writerow([x["id"], x["ir_outcome"], x["ir_primary"], "|".join(x["ir_targets"]), x["bootstrap"]])
+    (out / "collision_analysis.json").write_text(json.dumps(m["collisions"], ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def write_market(A: dict, summary: dict, out: Path) -> None:
@@ -402,7 +354,7 @@ def main(argv: list[str] | None = None) -> int:
     for path in write_files(summary, A, B, args.out):
         print(path)
     calibration.write_adjudication(rows, (args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
-    write_transitions(summary["m4"]["transitions"], args.out / "transitions_vs_m3.csv")
+    write_transitions(summary["m5"]["transitions"], args.out / "transitions_vs_b132a86.csv")
     write_market(A, summary, args.out)
     write_routing(summary, args.out)
     print((args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
@@ -416,61 +368,57 @@ def _table(head: list[str], rows: list[list]) -> str:
 
 
 
-def _m4_md(s: dict, m: dict) -> str:
-    d, par, rel, st = m["diff"], m["parity"], m["released_no_candidate"], m["structural"]
-    L = ["## 0. Post-PR-#200-rev-4 rerun (relations consumed from the pinned export, not re-implemented)\n",
-         f"- PR #200 commit `{m['pr200']['commit']}` (`{m['pr200']['label']}`); source blobs sha256 {m['pr200']['sources_sha256']}. Policy keys in force there: {m['pr200']['policy']}.",
-         "- The stand-in supplies only the pair population and the relations rev 4 did not touch; every FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS verdict comes from the export. Same engine, policy v" + str(m["policy_version"]) + ", package and TDR universe as milestone 3.",
-         f"- Baseline: {m['baseline']}.",
-         "- **PARTIAL parity, not full Identity Resolution parity.** The export carries pair ids for FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS only; the stand-in still generates EQUAL, EQUAL_VIA_TOKEN_EQUIV, SUBJECT_COARSER and SUBJECT_FINER. "
-         "The CREATE counts below are therefore a **stand-in scenario estimate, not the authoritative Resolver output**; every verdict is labelled `IR_PARITY_UNRESOLVED` (see §0.6, `ir_parity_unresolved.csv`). A complete pair-level export is requested separately (`IR_FULL_PARITY_INTERFACE_REQUEST.md`).\n",
-         "### 0.1 Counts (before = milestone 3)\n"]
+def _m5_md(s: dict, m: dict) -> str:
+    pr, par = m["pr200"], m["parity"]
+    lx, pp, sub = par["lexical_relations"], par["candidate_pools"], par["subjects"]
+    L = ["## 0. Final reconciliation against PR #200's full pair-level relation export\n",
+         f"- Producer: PR #200 commit `{pr['commit']}`; export `{pr['export_id']}`, schema `{pr['schema_version']}`, consumer contract `{pr['consumer_contract_version']}`; `MANIFEST.json` sha256 `{pr['manifest_sha256']}`; producer contract {pr['contract']} (draft, not frozen).",
+         "- **Every relation Bootstrap saw is a direct lookup in the verified export** (all nine kinds, both populations). The stand-in matcher is gone: there is no relation generator, no `adjudicate`, and no default for a pair the export lacks. "
+         "Ice×Ice orientation (smaller id first; COARSER/FINER flipped on reversal) and ids containing `|` are handled by whole-key lookup.",
+         f"- Baseline: {m['baseline']}. Same engine, policy v{m['policy_version']}, package, TDR universe and market-activity policy.\n", "### 0.1 Counts\n"]
     rows = []
     for mode in ("A", "B"):
-        old, new = collections.Counter(), collections.Counter()
-        for k, n in d[mode]["transition_matrix"].items():
-            a, b = k.split(" -> ")
-            old[a] += n
-            new[b] += n
         for o in ("CREATE_IDENTITY", "IDENTITY_REVIEW", "HOLD"):
-            v = s["buckets"][mode][o]
-            rows.append([mode, o, old[o], new[o], f"{v['units_total']:,}", f"{v['units_last12']:,}"])
-    L.append(_table(["Mode", "Outcome", "Before", "After", "Units all time (after, info)", "Units last 12 m (after, info)"], rows))
-    for mode in ("A", "B"):
-        L.append(f"**Mode {mode} transitions:** " + "; ".join(f"{k} {n}" for k, n in sorted(d[mode]["transition_matrix"].items() if False else d[mode]["transition_matrix"].items())) + f". CREATE added {d[mode]['create_added']}; CREATE removed {d[mode]['create_removed']}.\n")
+            u = m["units_by_bucket_after"][mode][o]
+            rows.append([mode, o, m["counts"]["before"][mode].get(o, 0), m["counts"]["after"][mode].get(o, 0), f"{u['lifetime_units']:,}", f"{u['last12_units']:,}"])
+    L.append(_table(["Mode", "Outcome", "Before (b132a86)", "After", "Registrations all time (after, info)", "Registrations last 12 m (after, info)"], rows))
     cs = m["create_sets"]
-    L.append(f"**CREATE set: {cs['count']}** (added vs milestone 3: {cs['added_vs_m3']}; removed: {cs['removed_vs_m3']}; unchanged {cs['unchanged']}). Mode B (force-activate-all stress scenario) created a subset of mode A here: **{cs['B_subset_of_A']}** (observed, not a law: extra activated subjects can create batch conflicts, and could in principle also remove one); in A but not B: {cs['in_A_not_B']} (a sibling that the resolver stand-in diverted in A forms no batch conflict there).\n")
-    L.append("### 0.2 Per-subject decision transitions (any mode; first 60 by units)\n")
-    L.append(_table(["Group", "Name", "Status", "Units (info)", "A before", "A after", "B before", "B after"],
-                    [[t["model_group_id"], t["name"], t["identity_status"], t["lifetime_units"], t["A_before"], t["A_after"], t["B_before"], t["B_after"]] for t in sorted(m["transitions"], key=lambda t: -t["lifetime_units"])[:60]]))
-    L.append(f"{len(m['transitions'])} groups changed in total (full list: `transitions_vs_m3.csv`).\n")
-    L.append("### 0.3 Structural conflicts\n")
-    L.append(_table(["Mode", "Before", "After", "Left the set", "Entered the set"], [[k, v["before"], v["after"], len(v["left"]), f"{len(v['entered'])}: {', '.join(v['entered'][:12])}"] for k, v in st.items()]))
-    L.append("### 0.4 Newly exposed CREATE-risk cases\n")
-    L.append(_table(["Group", "Name", "Before (M3)", "A after", "B after", "Relation changes that exposed it"],
-                    [[r["id"], r["name"], r["before"], r["A_after"], r["B_after"], "; ".join(r["relation_changes"]) or "none (batch effect)"] for r in m["new_create_risks"]]))
-    L.append(f"### 0.5 The {rel['pr200_count']} NO_CANDIDATE groups PR #200 released from structural conflict ({rel['pr200_units']:,} lifetime units, info)\n")
-    L.append(f"Present in this run: {rel['present_in_bootstrap_run']}; identity status {rel['identity_status']}. **Not all are Bootstrap candidates**: unsettled raw ids (`BRAND|MODEL`) and provisional ids are HOLD by contract.\n")
-    L.append(_table(["Mode", "Outcomes before (M3)", "Outcomes after", "Primary reasons after", "CREATE"], [[mo, rel[mo]["before_m3"], rel[mo]["after"], rel[mo]["after_primary"], rel[mo]["create"]] for mo in ("A", "B")]))
-    L.append("### 0.6 Relation parity with the pinned export\n")
-    L.append(_table(["Population", "Exported pairs", "Missing / relabelled", "FUZZY/SIBLING not in export", "Corrected kinds [stand-in, IR]", "Unchanged kinds [stand-in, IR]"],
-                    [[k, par[k]["exported_pairs"], len(par[k]["exported_pairs_missing_or_relabelled"]), len(par[k]["fuzzy_or_sibling_not_in_export"]), par[k]["corrected_kinds_equal"], par[k]["unchanged_kinds_standin_vs_ir"]] for k in ("ice_ice", "ice_tdr")]))
-    unres = sum(1 for v in m["ir_parity_status"].values() if v["specific_reasons"])
-    L.append(f"Every one of the {len(m['ir_parity_status'])} verdicts is `IR_PARITY_UNRESOLVED`; {unres} carry subject-specific reasons (an unchanged-kind relation IR does not list, or a stand-in FUZZY/SIBLING dropped because it is absent from the export). Population reasons: {next(iter(m['ir_parity_status'].values()))['population_reasons']}.\n")
-    ov = par["unchanged_class_relations_overridden_by_ir"]
-    L.append(f"Stand-in relation of an unchanged kind overridden by IR's verdict (IR is the authority; a stand-in/IR population disagreement, not a rev 4 rule): ice×ice {len(ov['ice_ice'])}, ice×tdr {len(ov['ice_tdr'])} — {ov['ice_tdr']}\n")
+    L.append(f"**{m['groups']} groups. CREATE set: {cs['before']} → {cs['after']}** (added {len(cs['added'])}: {cs['added']}; removed {len(cs['removed'])}: {cs['removed']}; unchanged {cs['unchanged']}). "
+             f"Added CREATEs carry {m['units_create_added']['lifetime_units']:,} lifetime / {m['units_create_added']['last12_units']:,} last-12-month registrations; removed {m['units_create_removed']['lifetime_units']:,} / {m['units_create_removed']['last12_units']:,} (information only; volume decides nothing). "
+             f"Mode B (force-activate-all stress scenario, not an upper bound) CREATEs: {len(cs['B_creates'])}; in A not B: {cs['in_A_not_B']}; in B not A: {cs['in_B_not_A']}.\n")
+    L.append(f"REVIEW/HOLD moves — mode A: {m['review_hold_moves']['A']}; mode B: {m['review_hold_moves']['B']}.\n")
+    L.append("### 0.2 Routing of the CREATE set (projection only)\n")
+    L.append(_table(["Lane", "Before", "After"], [[l, m["routing_counts"]["before"].get(l, 0), m["routing_counts"]["after"].get(l, 0)] for l in ("CURRENT_DISCOVERY", "ACTIVITY_UNCLASSIFIED", "HISTORICAL_INACTIVE", "OWNER_REVIEW")]))
     ma = m["market_activity"]
-    L.append("### 0.7 Market-activity routing of the CREATE candidates (routing only; absent rows UNKNOWN)\n")
-    L.append(f"**Actual:** states {ma['actual']['states']}; lanes {ma['actual']['lanes']}. **What-if (NOT AUTHORITATIVE, assumes ABSENT_IS_ZERO):** states {ma['what_if_NOT_AUTHORITATIVE']['states']}; lanes {ma['what_if_NOT_AUTHORITATIVE']['lanes']}.\n")
-    L.append("Informational activity classes of the CREATE set: " + "; ".join(f"{c} {v['groups']}" for c, v in m["activity_classes_informational"].items()) + ". Age or low volume never decides an outcome; dormant legacy models are valid HISTORICAL_BACKFILL candidates, not false CREATEs.\n")
+    L.append(f"Market activity (Ice absent rows UNKNOWN; complete through {ma['complete_through']}): states {ma['actual']['states']}. What-if, NOT AUTHORITATIVE (assumes ABSENT_IS_ZERO): {ma['what_if_NOT_AUTHORITATIVE']['states']}. "
+             "Every record has `activation_authorized = NO`; blockers are listed per record (`IR_PARITY_UNRESOLVED` only where it still applies, always `OWNER_APPROVAL_PENDING`, `GOVERNED_WRITER_NOT_BUILT`).\n")
+    L.append("### 0.3 Parity with the export\n")
+    L.append(_table(["Population", "Evaluated pairs", "Pairs read by the shadow", "All read", "Relations passed to Bootstrap", "Snapshot relations not in export / relabelled", "Counts equal manifest (all 9 kinds)"],
+                    [[k, lx[k]["evaluated_pairs"], lx[k]["pairs_read_by_the_shadow"], lx[k]["all_pairs_read"], lx[k]["relations_passed_to_bootstrap"], len(lx[k]["snapshot_relations_not_in_export_or_relabelled"]), lx[k]["counts_equal_manifest_for_all_nine_kinds"]] for k in ("ice_ice", "ice_tdr")]))
+    L.append(f"**Candidate-pool parity:** subjects {pp['subjects']}; shadow candidates outside the export pool: {len(pp['shadow_candidates_outside_pool'])}; pool members not read: {len(pp['pool_members_not_read'])}; empty pools {pp['subjects_with_empty_pool']} (no TDR relation exists; not a CREATE authorization). "
+             f"The milestone-2/3 stand-in candidate set (every TDR model of the resolved brand family) differed from the export pool for {pp['old_brand_family_candidates_differing_from_pool']} subjects: {pp['old_vs_pool_by_kind']}.\n")
+    L.append(f"**Subjects:** {sub['resolved']} meet every consumer-contract requirement and clear `IR_PARITY_UNRESOLVED` (the owner and governed-writer blockers are untouched); **{sub['unresolved']} remain unresolved**: {sub['unresolved_ids_and_reasons'] or 'none'}.\n")
+    dr = m["dry_run_vs_bootstrap"]
+    L.append("**Reference evaluator's dry-run vs Bootstrap (mode A)** — different questions (link vs existence), reported separately: " + "; ".join(f"{k} {n}" for k, n in dr["cross_tab"].items()) + ". "
+             f"Divergences to inspect ({len(dr['divergent'])}, `dry_run_vs_bootstrap.csv`); CREATEs for which IR's dry run found a candidate: {[x['id'] for x in dr['divergent'] if x['bootstrap'] == 'CREATE_IDENTITY']}.\n")
+    L.append("### 0.4 Structural conflicts\n")
+    st = m["structural"]
+    L.append(_table(["Mode", "Before", "After", "Left", "Entered"], [[k, v["before"], v["after"], len(v["left"]), f"{len(v['entered'])}: {', '.join(v['entered'][:15])}"] for k, v in st.items()]))
+    L.append(f"### 0.5 Every changed subject ({len(m['transitions'])}; full table with TDR candidate ids, relation evidence and codes: `transitions_vs_b132a86.csv`)\n")
+    L.append(_table(["Group", "Name", "Units (info)", "A before", "A after", "B before", "B after", "TDR ids involved", "Relation changes"],
+                    [[t["model_group_id"], t["name"], t["lifetime_units"], t["A_before"], t["A_after"], t["B_before"], t["B_after"], t["tdr_candidate_ids_involved"], t["relation_changes"]]
+                     for t in sorted(m["transitions"], key=lambda t: -t["lifetime_units"])[:80]]))
+    L.append("### 0.6 CREATEs added and removed\n")
+    L.append(_table(["Group", "Change", "A before → after", "TDR ids involved", "Relation evidence", "Codes after"],
+                    [[g, "ADDED", f"{d['A_before']} → {d['A_after']}", d["tdr_candidate_ids_involved"], d["relation_changes"], d["A_codes_after"]] for g, d in m["added_detail"].items() if d]
+                    + [[g, "REMOVED", f"{d['A_before']} → {d['A_after']}", d["tdr_candidate_ids_involved"], d["relation_changes"], d["A_codes_after"]] for g, d in m["removed_detail"].items() if d]))
+    L.append("### 0.7 Existing-identity collision analysis of the CREATE set (closest pool members by the export's own score; IR dry run; routing flags)\n")
+    flagged = [c for c in m["collisions"] if c["collision_signal"]]
+    L.append(f"{len(flagged)} of {len(m['collisions'])} CREATEs carry a collision signal (a non-CONTRADICTION relation to a pooled TDR model, an IR dry-run link outcome, or a mandatory owner review). Full list: `collision_analysis.json`.\n")
+    L.append(_table(["Group", "Name", "Pool", "Non-CONTRADICTION relations", "IR dry run", "Flags"], [[c["id"], c["name"], c["pool_size"], ", ".join(c["non_contradiction_relations"]) or "none", " / ".join(str(x) for x in c["ir_dry_run"] if x), "|".join(c["review_flags"]) or "-"] for c in flagged]))
     rt = m["routing"]
-    L.append("### 0.8 Review routing and the dispatch boundary (pure projection after the engine; outcomes and write plans untouched)\n")
-    L.append(f"Lanes over all {sum(rt['lane_counts'].values())} decisions: {rt['lane_counts']}. **Current-discovery projection: {len(rt['current_dispatch_ids'])} ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. **These are projections, NOT authorizations: `activation_authorized` is NO for every record while `IR_PARITY_UNRESOLVED`, owner approval and the governed writer remain outstanding.** "
-             f"Latest-period completeness assumption: {m['market_activity']['complete_through']} treated as complete (an incomplete month can never supply a true zero).\n")
-    L.append("Mandatory `OWNER_REVIEW` (POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND — the provider id's label is a token of an existing TDR identity under the resolved brand; evidence below, no brand or model is named in code):\n")
-    L.append(_table(["Group", "Evidence"], [[g, "; ".join(f"{e['kind']}: " + ", ".join(f"{k}={v}" for k, v in e.items() if k != "kind") for e in r["evidence"])] for g, r in rt["reviews"].items() if r["mandatory_owner_review"]]))
-    L.append("General evidence-driven list (any decision, `cross_brand_review.csv`): " + ", ".join(f"{g} ({v['bootstrap_outcome']})" for g, v in rt["general_cross_brand_list"].items()) + ".\n")
-    L.append("Provisional owner-adjudication set: `shadow/review/create_adjudication.csv` (owner fields blank; QA pending).\n")
+    L.append("Mandatory `OWNER_REVIEW` (POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND): " + (", ".join(g for g, r in rt["reviews"].items() if r["mandatory_owner_review"]) or "none") + ". General evidence-driven list: " + ", ".join(f"{g} ({v['bootstrap_outcome']})" for g, v in rt["general_cross_brand_list"].items()) + ".\n")
+    L.append("Provisional owner-adjudication set: `shadow/review/create_adjudication.csv` (owner fields blank; QA pending; not a truth set).\n")
     return "\n".join(L)
 
 
@@ -482,8 +430,8 @@ def render_md(s: dict) -> str:
          f"- Status mix (adapter): {i['status_mix']}. Policy v{i['policy_version']} `{i['policy_digest'][:23]}…`. TDR side: **{i['tdr_catalog']['models']} models / {i['tdr_catalog']['brands']} brands from {i['tdr_catalog']['source']}**.",
          "- Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (force-activate-all STRESS scenario, not an upper bound): every group is offered to Bootstrap as `NO_CANDIDATE`.\n",
          ]
-    if s.get("m4"):
-        L.append(_m4_md(s, s["m4"]))
+    if s.get("m5"):
+        L.append(_m5_md(s, s["m5"]))
     L.append("## 1. Decisions and registration-volume coverage (informational)\n")
     for mode in ("A", "B"):
         L.append(f"**Mode {mode}**\n")
@@ -512,8 +460,8 @@ def render_md(s: dict) -> str:
     L.append(f"- Dormant (≤{DORMANT_LAST12} registrations in the last 12 months): **{f['dormant']} of {f['creates']}** ({f['dormant_units_total']:,} units all-time); first seen in the last 24 months: **{f['recent']}**.\n")
     r = s["suspected_false_review_hold"]
     L.append("## 5. Suspected false REVIEW / HOLD\n")
-    L.append(f"- Review decisions (mode A): {r['review_total']}. REVIEWs caused only by a SIBLING relation on a weak shared token (digits or ≤2 letters): **{len(r['weak_token_sibling_only'])}** {r['weak_token_sibling_only']}.")
-    L.append(f"- `NOT_ACTIVATED` only because of a FUZZY / token-equivalence / alias relation (no EQUAL match), i.e. stand-in matches worth a human look: {r['not_activated_by_fuzzy_or_equiv_only']}.")
+    L.append(f"- Review decisions (mode A): {r['review_total']}.")
+    L.append(f"- `NOT_ACTIVATED` only because of a FUZZY / token-equivalence / alias relation (no EQUAL match), i.e. export matches worth a human look: {r['not_activated_by_fuzzy_or_equiv_only']}.")
     L.append(f"- Unsettled raw ids held: {r['unsettled_raw_ids']} (`BRAND|MODEL`), of which **{r['unsettled_raw_ids_with_clean_looking_name']}** have a clean-looking name (held correctly by contract; they become CREATE candidates only after Ice settles them). Provisional: {r['provisional']}. Settled ids that are registration codes: {len(r['settled_ids_with_registration_code_tokens'])}.")
     L.append(_table(["Raw id", "Name", "Units"], r["clean_looking_raw_top"]))
     L.append("## 6. Structural conflicts (every group carrying `STRUCTURAL_CONFLICT`)\n")
@@ -521,8 +469,6 @@ def render_md(s: dict) -> str:
         L.append(f"**Mode {mode}: {len(s['structural_conflicts'][mode])} groups**\n")
         L.append(_table(["Group", "Name", "Outcome", "Codes", "Batch group", "Units"],
                         [[c["id"], c["name"], c["outcome"], " ".join(c["codes"]), ", ".join(c["group"]), f"{c['units_total']:,}"] for c in s["structural_conflicts"][mode]]))
-    q = s["relation_quality"]
-    L.append(f"**Relation quality (stand-in for the IR layer, subject↔subject pairs):** SIBLING pairs {q['subject_pairs_sibling']}, of which {q['sibling_on_non_distinctive_token_only']} share only a non-distinctive token (digits, ≤2 letters, or a trim/powertrain/body/generation word) — e.g. {q['sibling_examples'][:6]}; FUZZY pairs {q['subject_pairs_fuzzy']}, of which {q['fuzzy_where_the_differing_token_has_a_digit']} differ in a token that contains a digit (a different version/code, not a typo) — e.g. {q['fuzzy_digit_examples'][:6]}.\n")
     ln = s["lineage"]
     L.append(f"## 7. Lineage\n\n{ln['events']} `id_changes` events {ln['by_type']}; subjects affected: {len(ln['subjects_with_lineage_codes'])}.\n")
     L.append(_table(["Group", "Lineage codes"], [[g, " ".join(c)] for g, c in ln["subjects_with_lineage_codes"]]))

@@ -126,6 +126,8 @@ then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writ
 
 **QA round after `2d56112`:** parity with PR #200 is partial and every verdict is labelled `IR_PARITY_UNRESOLVED` (a complete pair export is requested in `shadow/IR_FULL_PARITY_INTERFACE_REQUEST.md`); `routing/` adds generic cross-brand review signals (Maxus/MG → mandatory OWNER_REVIEW) and a pure dispatch boundary (only ACTIVE / DECLINING / REACTIVATED reach `CURRENT_DISCOVERY`); portable committed-artifact tests run without the archived package; Mode B is a stress scenario, not an upper bound.
 
+**Final reconciliation (PR #200 `eed76aa6`):** every lexical relation is read from the hash-pinned full pair-level export (`shadow/ir_export.py`, `shadow/universe/ir_relation_export/`); the stand-in matcher is gone. A: 82 CREATE / 127 REVIEW / 991 HOLD, B: 82 / 365 / 753; 1,192 of 1,200 subjects clear `IR_PARITY_UNRESOLVED` (8 remain, brand resolution vs pool). Nine CREATEs equal a TDR catalog alias that the IR evaluator does not compare and are routed to mandatory owner review. Provisional adjudication set: `shadow/review/create_adjudication.csv` (82 rows, owner fields blank). See `shadow/FINDINGS.md`.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`

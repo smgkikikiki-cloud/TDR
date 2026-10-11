@@ -1,5 +1,9 @@
 # Interface request to Identity Resolution (PR #200) — complete pair-level relation export
 
+> **STATUS: ANSWERED AND INTEGRATED.** PR #200 published the full export at commit `eed76aa6ad6380afea60d604e5e7eac87abedb06` (`calibration/relation_export/`, consumer contract `ir-relation-export-consumer/1`). PR #201 vendors it hash-pinned under `shadow/universe/ir_relation_export/` and reads every relation from it (`shadow/ir_export.py`); the stand-in matcher and the partial-export bridge were removed. The text below is the original request, kept for the record.
+>
+> **New request (open):** the export compares a provider name with each TDR model's `name_en` (plus the producer's `aliases.model` entries) only. The TDR catalog's own per-model `aliases` (e.g. `audi.a8` aliases `A8L`, `wuling.wuling_bingo` aliases `binguo`) are in the producer's TDR extract but are not compared, so nine provider names that equal a catalog alias are exported as CONTRADICTION. PR #201 does not patch this; it surfaces the nine as `POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS` mandatory owner review. Please state whether catalog aliases should be a relation source, and if so publish them in a new export id.
+
 **Status:** a request for a later, separate change. PR #201 does not implement it, does not modify PR #200 and does not fork its rules.
 
 **Why.** Today PR #200's published `after_rev4.json` lists pair ids only for the three kinds that rev 4 changed (FUZZY, SIBLING, EQUAL_VIA_MODEL_ALIAS). Bootstrap's shadow stand-in still generates EQUAL, EQUAL_VIA_TOKEN_EQUIV, SUBJECT_COARSER and SUBJECT_FINER itself, and the counts disagree

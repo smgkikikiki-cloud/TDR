@@ -1,3 +1,39 @@
+# Final reconciliation against PR #200's full pair-level relation export (`eed76aa6`)
+
+**Pin.** PR #200 commit `eed76aa6ad6380afea60d604e5e7eac87abedb06`, export `ir-rev4-m7.0-relations/1`, schema `ir-relation-export/1`, consumer contract `ir-relation-export-consumer/1`, `MANIFEST.json` sha256 `e9d74e05ce9c09ad59bad2654d16fbb74e06969e929b7415b5e55a0fc2d2e0b8`, producer contract draft / `adoption.binding: false`. The producer's seven files are vendored byte-for-byte under `shadow/universe/ir_relation_export/` and verified fail-closed at load (manifest pin, per-file sha256/bytes/lines, versions, universes, key digests, ordering, the full same-brand Ice×Ice population, pool membership rules, per-subject coverage). A test also checks them against the git objects when present.
+
+**The stand-in matcher is gone.** `StandIn` now only resolves brands and the mode-A activation switch; every Ice×TDR relation is a lookup over the subject's export pool and every Ice×Ice relation a whole-key lookup (smaller id first; COARSER/FINER flipped on reversal; ids containing `|` are never split). A pair the export lacks raises `PAIR_NOT_EVALUATED`; nothing defaults to CONTRADICTION; an empty pool (226 subjects) yields no relation and is never a CREATE authorisation. `ir_rev4` (the partial bridge) and the local diagnostics that re-judged names were deleted.
+
+## Parity
+
+- **Lexical:** all 26,505 Ice×Ice and 12,412 Ice×TDR pairs were read; 439 + 391 non-CONTRADICTION/UNAVAILABLE relations reached Bootstrap; zero snapshot relations absent from or relabelled against the export; relation counts equal the manifest for **all nine kinds** in both populations (the old EQUAL 299 vs 239, COARSER 46 vs 58, FINER 45 vs 35 and TOKEN_EQUIV 0 vs 1 disagreements are gone).
+- **Candidate pools:** the shadow compared exactly the export pools (0 outside, 0 unread). The old stand-in candidate set (every model of the resolved brand family) differed from the pools for 8 subjects: 7 with a pool but no brand resolved by the shadow (`MERCEDES AMG`, `MERCEDESBENZ MAYBACH`, `RANGE ROVER` ×3) and 1 resolved by the shadow but with an empty pool (`JETOUR|ไม่ระบุ`), plus `maxus-maxus-epc1a`.
+- **Subjects:** 1,192 meet every consumer-contract requirement and clear `IR_PARITY_UNRESOLVED`; **8 stay unresolved** with the exact reason `BRAND_RESOLUTION_VS_POOL` (shadow brand resolution vs the export pool). `OWNER_APPROVAL_PENDING` and `GOVERNED_WRITER_NOT_BUILT` are untouched for all.
+- **Reference evaluator vs Bootstrap (reported separately):** IR NO_CANDIDATE→82 Bootstrap CREATE; IR AUTO→69 HOLD; IR PROPOSE→174 HOLD / 21 REVIEW; IR INSUFFICIENT_DATA→33 HOLD / 20 REVIEW; one divergence to inspect (`audi-audi-a1`: IR NO_CANDIDATE but mode A diverts it as a lexical duplicate). No CREATE where IR's dry run found a candidate.
+
+## Result (mode A / mode B)
+
+| | b132a86 | Final |
+|---|---|---|
+| CREATE | 73 / 72 | **82 / 82** |
+| REVIEW | 89 / 375 | 127 / 365 |
+| HOLD | 1,038 / 753 | 991 / 753 |
+| STRUCTURAL_CONFLICT groups | 9 / 48 | 17 / 48 |
+
+77 subjects changed (`transitions_vs_b132a86.csv`: previous/new decision, TDR candidate ids, relation evidence, codes). CREATE **removed (1): `maxus-mifa-7`** — its sibling `maxus-mifa-9` is now a lexical duplicate in the batch, so both go to structural conflict/review. CREATE **added (10)**: Audi A8L, Audi S3, BYD e6, Isuzu CAB4, Jaecoo J5, Jaecoo J7, VW Multivan, VW ID.Buzz, Wuling Binguo — all nine lost an EQUAL that the old stand-in took from the **TDR catalog's own `aliases`** (e.g. `audi.a8` aliases `A8L`) which the IR evaluator does not compare (name_en only) — plus **BMW X2** (lost SUBJECT_COARSER to `bmw.ix2`; a different car). 38 mode-A HOLDs became REVIEWs for the same reason. Registrations (information only): added CREATEs 27,010 lifetime / 25,714 last 12 months; removed 934 / 698.
+
+## Existing-identity collisions
+
+- **Catalog-alias collisions (9):** the nine above are flagged `POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS` in the routing/review layer — catalog data echoed to the owner (exact alias = provider name), **not a relation, never passed to the engine, no PR #200 rule re-implemented** — and routed to mandatory OWNER_REVIEW. For two of them the legacy R6 matcher had itself linked the group (status AUTO: Audi A8L→`audi.a8`, Binguo→`wuling.wuling_bingo`), now flagged `LEGACY_R6_AUTO_MATCH`. An interface request to PR #200 about catalog aliases is recorded in `IR_FULL_PARITY_INTERFACE_REQUEST.md`.
+- **Maxus/MG:** `maxus-maxus-v80` stays CREATE with mandatory owner review (provider-id label `maxus` is a token of `mg.mg_maxus_7/9`); `maxus-mifa-7` is no longer a CREATE.
+- **Routing of the CREATE set:** CURRENT_DISCOVERY 9 / ACTIVITY_UNCLASSIFIED 63 / OWNER_REVIEW 10 (was 9 / 62 / 2). Market activity (Ice absent rows UNKNOWN): UNKNOWN 70, ACTIVE 9, DECLINING 3; the ABSENT_IS_ZERO what-if (not authoritative) would have 25 INACTIVE_INFERRED. Every record keeps `activation_authorized = NO`.
+
+## Unresolved
+
+8 subjects with a brand-resolution/pool disagreement; the TDR-catalog-alias gap in the IR evaluator (open interface question to PR #200); `audi-audi-a1` mode-A divergence; BMW X2 and the other lexically-clean suspects (BMW M2–M5, Foton BJ1041, Sokon CRC50, Toyota TR, Genesis G80) await owner labels; Ice absent-row semantics; owner approval and the governed writer. The 82-row set is **provisional**; the owner fields are blank.
+
+---
+
 # Small correction after `cac76d6`: explicit zero in an incomplete month; projection is not authorization
 
 - **Market activity:** an *explicit* zero-registration row in an incomplete trailing month was still counted as a zero (only missing rows were guarded). `resolve_series` now makes any zero — explicit or inferred — in a period after `complete_through` unknown; positive counts there still show activity. Synthetic regression tests added. No M7 result moved (the package has no explicit zero rows): routing stays 9 current / 62 unclassified / 2 owner-review.

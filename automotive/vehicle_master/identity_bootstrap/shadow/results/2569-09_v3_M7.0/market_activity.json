@@ -1,14 +1,14 @@
 {
  "actual": {
   "lanes": {
-   "ACTIVITY_UNCLASSIFIED": 63,
-   "CURRENT_DISCOVERY": 10
+   "ACTIVITY_UNCLASSIFIED": 70,
+   "CURRENT_DISCOVERY": 12
   },
   "scenario": "Ice absent-row semantics UNKNOWN (Q-ICE-ABSENT-ROW open): a missing row is never a zero",
   "states": {
    "ACTIVE": 9,
-   "DECLINING": 1,
-   "UNKNOWN": 63
+   "DECLINING": 3,
+   "UNKNOWN": 70
   }
  },
  "all_groups_actual": {
@@ -24,7 +24,7 @@
  },
  "complete_through": "2569-09",
  "complete_through_assumption": "newest package period treated as complete (package status is final); no per-month completeness flag exists; an incomplete month can never supply a true zero",
- "create_candidates": 73,
+ "create_candidates": 82,
  "explicit_zero_rows_in_package": 0,
  "package_periods": [
   "2564-01",
@@ -32,6 +32,18 @@
   69
  ],
  "per_group": {
+  "audi-audi-a8l": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "audi-audi-s3": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
   "bentley-bentley-continental": {
    "actual": "UNKNOWN",
    "inactive_since_what_if": null,
@@ -61,6 +73,18 @@
    "inactive_since_what_if": null,
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "UNKNOWN"
+  },
+  "bmw-x2": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-09",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "byd-e6": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2569-02",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
   },
   "chevrolet-chevrolet-corvette": {
    "actual": "UNKNOWN",
@@ -182,17 +206,35 @@
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "UNKNOWN"
   },
+  "isuzu-isuzu-cab4": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
   "jac-t8": {
    "actual": "UNKNOWN",
    "inactive_since_what_if": "2568-02",
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "INACTIVE_INFERRED"
   },
+  "jaecoo-jaecoo-j5": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; no decline",
+   "what_if": "ACTIVE"
+  },
   "jaecoo-jaecoo-j6": {
    "actual": "ACTIVE",
    "inactive_since_what_if": null,
    "reason_actual": "active months in the trailing window; no decline",
    "what_if": "ACTIVE"
+  },
+  "jaecoo-jaecoo-j7": {
+   "actual": "DECLINING",
+   "inactive_since_what_if": null,
+   "reason_actual": "recent 3-month mean 27.0 <= 0.5 x baseline 95.1",
+   "what_if": "DECLINING"
   },
   "jeep-jeep-gladiator": {
    "actual": "UNKNOWN",
@@ -253,12 +295,6 @@
    "inactive_since_what_if": "2565-09",
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "INACTIVE_INFERRED"
-  },
-  "maxus-mifa-7": {
-   "actual": "ACTIVE",
-   "inactive_since_what_if": null,
-   "reason_actual": "active months in the trailing window; no decline",
-   "what_if": "ACTIVE"
   },
   "mazda-mazda-mx-30": {
    "actual": "UNKNOWN",
@@ -422,6 +458,12 @@
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "UNKNOWN"
   },
+  "volkswagen-volkswagen-multivan": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
   "volkswagen-volkswagen-t-roc": {
    "actual": "UNKNOWN",
    "inactive_since_what_if": null,
@@ -433,6 +475,12 @@
    "inactive_since_what_if": null,
    "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
    "what_if": "UNKNOWN"
+  },
+  "volkswagen-vw-idbuzz": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
   },
   "volkswagen-vw-t-cross": {
    "actual": "UNKNOWN",
@@ -457,6 +505,12 @@
    "inactive_since_what_if": null,
    "reason_actual": "active months in the trailing window; decline not assessable (unknown months in the window)",
    "what_if": "ACTIVE"
+  },
+  "wuling-binguo": {
+   "actual": "DECLINING",
+   "inactive_since_what_if": null,
+   "reason_actual": "recent 3-month mean 7.3 <= 0.5 x baseline 66.3",
+   "what_if": "DECLINING"
   },
   "wuling-e10": {
    "actual": "UNKNOWN",
@@ -691,16 +745,16 @@
  },
  "what_if_absent_is_zero": {
   "lanes": {
-   "ACTIVITY_UNCLASSIFIED": 34,
-   "CURRENT_DISCOVERY": 16,
-   "HISTORICAL_INACTIVE": 23
+   "ACTIVITY_UNCLASSIFIED": 38,
+   "CURRENT_DISCOVERY": 19,
+   "HISTORICAL_INACTIVE": 25
   },
   "scenario": "NOT AUTHORITATIVE: assumes every missing row in 2564-01..2569-09 is a guaranteed zero",
   "states": {
    "ACTIVE": 9,
-   "DECLINING": 7,
-   "INACTIVE_INFERRED": 23,
-   "UNKNOWN": 34
+   "DECLINING": 10,
+   "INACTIVE_INFERRED": 25,
+   "UNKNOWN": 38
   }
  }
 }

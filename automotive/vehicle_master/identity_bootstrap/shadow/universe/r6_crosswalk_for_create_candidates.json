@@ -1,12 +1,1452 @@
 {
- "_note": "READ-ONLY SELECT on live ice_model_crosswalk (begin transaction read only), 2026-10-11, project ltvwzkffmpudpjfjomrg. Rows for the 67 remaining CREATE groups; every row is status PROPOSED (none MATCHED/approved). Empty list = no crosswalk row. Informational only; the engine never reads this. Extended 2026-10-11 with the 9 groups that became CREATE candidates after PR #200 rev 4 relations (same read-only SELECT method); rows for groups that left the set are kept for the delta.",
+ "_note": "Legacy R6 ice_model_crosswalk rows (all 490: 408 PROPOSED and 82 AUTO, the legacy matcher's own status labels; none is a human approval) taken from the file PR #200 commit eed76aa6ad6380afea60d604e5e7eac87abedb06 carries at calibration/inputs/r6_crosswalk_rows.json (sha256 58dca8bdbddc981f368dfc972b92686a747b5586d1cd42abd1da12458fdad37b); read from a git object, no Production access in this round. A group with no key has no legacy row (a row with a null target/score is a recorded no-candidate row). Informational only: the engine never reads it.",
  "rows": {
+  "AUDI|R8 SPYDER V10": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "BENTLEY|MULSANNE SPEED": [
+   [
+    "bentley.flying_spur",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "BMW|318D M SPORT SALOON MANUAL": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.3556
+   ]
+  ],
+  "BMW|328I M SPORT": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "BMW|525D CELEBRATION EDITION": [
+   [
+    "bmw.bmw_5",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "BMW|525D M SPORT": [
+   [
+    "bmw.bmw_5",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "BMW|530I LIMOUSINE RHD": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "BMW|740LI LIMOUSINE RHD": [
+   [
+    "bmw.7_series",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "BMW|I3": [
+   [
+    "bmw.bmw_x3",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "BMW|I8": [
+   [
+    "bmw.bmw_ix3",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "BMW|I8 HYBRID": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "BMW|I8 RHD": [
+   [
+    "bmw.i8",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "BMW|I8 ROADSTER": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "BMW|I8 ROADSTER RHD": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "BYD|M3": [
+   [
+    "byd.byd_m6",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "CHANGAN|STAR TRUCK 1 0 5MT": [
+   [
+    "deepal.deepal_hunter_k50",
+    "PROPOSED",
+    "NAME",
+    0.3571
+   ]
+  ],
+  "CHANGAN|STAR TRUCK 1 3 5MT": [
+   [
+    "deepal.deepal_hunter_k50",
+    "PROPOSED",
+    "NAME",
+    0.3571
+   ]
+  ],
+  "CHEVROLET|OPTRA": [
+   [
+    "chevrolet.captiva",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "FERRARI|812 COMPETIZIONE": [
+   [
+    "ferrari.12cilindri",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "FERRARI|812 COMPETIZIONE A": [
+   [
+    "ferrari.12cilindri",
+    "PROPOSED",
+    "NAME",
+    0.4286
+   ]
+  ],
+  "FERRARI|CALIFORNIA T": [
+   [
+    "ferrari.12cilindri",
+    "PROPOSED",
+    "NAME",
+    0.4545
+   ]
+  ],
+  "FERRARI|F12 TDF": [
+   [
+    "ferrari.12cilindri",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "FERRARI|F360": [
+   [
+    "ferrari.sf90",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "FORD|ECOSPORT": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "FORD|FIESTA": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "FORD|FORD ECOSPORT": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "FORD|FORD FIESTA": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "FORD|TERRITORY": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "HONDA|BENLY E": [
+   [
+    "honda.brv",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "HONDA|E ADVANCE": [
+   [
+    "honda.en2",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "HONDA|E AS": [
+   [
+    "honda.en1",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "HONDA|N VAN": [
+   [
+    "honda.hrv",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "HONDA|N VAN TEN STYLE FUN": [
+   [
+    "honda.step_wgn",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "HONDA|NSX TYPE S": [
+   [
+    "honda.step_wgn",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "HONDA|WAVE125": [
+   [
+    "honda.en1",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "HYUNDAI|COUNTY": [
+   [
+    "hyundai.creta",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "HYUNDAI|SONATA2 4GLSEXECUTIV": [
+   [
+    "hyundai.santa_fe",
+    "PROPOSED",
+    "NAME",
+    0.4286
+   ]
+  ],
+  "HYUNDAI|VELOSTER": [
+   [
+    "hyundai.stargazer",
+    "PROPOSED",
+    "NAME",
+    0.4706
+   ]
+  ],
+  "KIA|CANIVAL": [
+   [
+    "kia.carnival",
+    "PROPOSED",
+    "NAME",
+    0.9333
+   ]
+  ],
+  "KIA|SOUL": [
+   [
+    "kia.sorento",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "KIA|SOUL EV": [
+   [
+    "kia.ev5",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "MASERATI|GRANCABRIO SPORT": [
+   [
+    "maserati.granturismo",
+    "PROPOSED",
+    "NAME",
+    0.5926
+   ]
+  ],
+  "MCLAREN|GT COUPE": [
+   [
+    "mclaren.gts",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "MG|MG GS": [
+   [
+    "mg.mg_hs",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "MG|MG6": [
+   [
+    "mg.mg_im6",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "MITSUBISHI|A03AXTHHRU": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "MITSUBISHI|A03AXTMHRU": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "MITSUBISHI|A13ASTMHRU": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "MITSUBISHI|CY3ASTHHRU": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "MITSUBISHI|KA5TNCNUERU": [
+   [
+    "mitsubishi.xpander",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "MITSUBISHI|KA5TXJNHERU": [
+   [
+    "mitsubishi.xpander",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "MITSUBISHI|LANCER EVOLUTION VI GSR TOMMI": [
+   [
+    "mitsubishi.outlander_phev",
+    "PROPOSED",
+    "NAME",
+    0.3721
+   ]
+  ],
+  "MITSUBISHI|LANCER EVOLUTION X FINAL": [
+   [
+    "mitsubishi.triton_cab",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "MITSUBISHI|MINICAB MIEV": [
+   [
+    "mitsubishi.triton_cab",
+    "PROPOSED",
+    "NAME",
+    0.4545
+   ]
+  ],
+  "NISSAN|ADB2RCYD23IHL C": [
+   [
+    "nissan.navara_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "NISSAN|BDBARGZL33MHA A": [
+   [
+    "nissan.almera",
+    "PROPOSED",
+    "NAME",
+    0.381
+   ]
+  ],
+  "NISSAN|BDRAREZL33MHA B": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "NISSAN|BDSARGZB172HA A": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "NISSAN|BDTARGZB172HA B": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "NISSAN|BDWARBZN17XHA B": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "NISSAN|BDWARBZN17XHAF B": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "NISSAN|BDWARBZN17XHAFA B": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "NISSAN|BLGURGWJ32EHAA CA": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "NISSAN|BVL2RTYD23FHP A": [
+   [
+    "nissan.teana",
+    "PROPOSED",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "NISSAN|CVL2RTLD23FHP A A": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "NISSAN|FDTARRZC12MHAA": [
+   [
+    "nissan.terra",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "NISSAN|SAKURA G": [
+   [
+    "nissan.navara_cab",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "SOKON|EC31": [
+   [
+    "sokon.sokon_ec35",
+    "PROPOSED",
+    "NAME",
+    0.75
+   ]
+  ],
+  "SUZUKI|HUSTLER HYBRID G": [
+   [
+    "suzuki.ertiga",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "TOYOTA|1 8ESPORT": [
+   [
+    "toyota.fortuner",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "TOYOTA|2 5 HV AVN": [
+   [
+    "toyota.avanza",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "TOYOTA|2 5 HV PREMIUM": [
+   [
+    "toyota.prius",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "TOYOTA|2 5HV": [
+   [
+    "toyota.c_hr",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "TOYOTA|2 7V A T": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "TOYOTA|ACV40R JEAGKT A1": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "TOYOTA|ACV41R JEPNKT AB": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "TOYOTA|ACV51R JEPEKT AA": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "TOYOTA|ACV51R JEPEKT AB": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "TOYOTA|ACV51R JEPEKT AC": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "TOYOTA|C POD": [
+   [
+    "toyota.c_hr",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "TOYOTA|CENTURY": [
+   [
+    "toyota.fortuner",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "TOYOTA|CENTURY 5 0L": [
+   [
+    "toyota.camry",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "TOYOTA|CENTURY HYBRID": [
+   [
+    "toyota.c_hr",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "TOYOTA|COASTER": [
+   [
+    "toyota.noah",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "TOYOTA|COMUTER": [
+   [
+    "toyota.fortuner",
+    "PROPOSED",
+    "NAME",
+    0.5333
+   ]
+  ],
+  "TOYOTA|ESTIMA HYBRID AERAS": [
+   [
+    "toyota.harrier",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "TOYOTA|GT86 RACING": [
+   [
+    "toyota.gr86",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "TOYOTA|GUN120R CTTSXT": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "TOYOTA|HILUK": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "TOYOTA|KDH202R RDMDYE A1": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3871
+   ]
+  ],
+  "TOYOTA|KUN15R CRMSHT A3": [
+   [
+    "toyota.land_cruiser_300",
+    "PROPOSED",
+    "NAME",
+    0.4375
+   ]
+  ],
+  "TOYOTA|KUN15R PRMDYT A3": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN15R TRMDHT B8": [
+   [
+    "toyota.hilux_travo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3871
+   ]
+  ],
+  "TOYOTA|KUN15R TRMDYT B6": [
+   [
+    "toyota.hilux_travo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3871
+   ]
+  ],
+  "TOYOTA|KUN25R PRMSHT A4": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN26R PRASYT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN26R PRPSYT A7": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R PRMDHT A6": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R PRMDHT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R PRMSHT A5": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R PRMSHT A6": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R PRMSHT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|KUN35R URASHT AJ": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|LN152R CRMSSTA": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3571
+   ]
+  ],
+  "TOYOTA|MIRAI": [
+   [
+    "toyota.yaris",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "TOYOTA|NCP93R BEPRKT A4": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|NSP152R AHXRKT CA": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.3871
+   ]
+  ],
+  "TOYOTA|TGN16R PRMSKT A7": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "TOYOTA|TGN16R PRMSKT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "TOYOTA|TGN16R TRMDKT A7": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|TGN16R URMDMT A7": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "TOYOTA|TGN16R URMDMT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "TOYOTA|TGN40R GKPDKT AE": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|TGN61R NKPSKT A3": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|TGN61R NKPSKT A5": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|TGN61R NKPSKT A8": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "TOYOTA|TUNDRA 3 5L": [
+   [
+    "toyota.fortuner",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "TOYOTA|YN85R TRMRST": [
+   [
+    "toyota.yaris_ativ",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "TOYOTA|ZVW30R AHXEBT CB": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "VOLVO|V40": [
+   [
+    "volvo.xc40",
+    "PROPOSED",
+    "NAME",
+    0.5714
+   ]
+  ],
+  "VOLVO|V50 2 0": [
+   [
+    "volvo.v60",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "VOLVO|V90": [
+   [
+    "volvo.v60",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "WULING|BINGOU SRD": [
+   [
+    "wuling.wuling_bingo",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "WULING|WULING MINI": [
+   [
+    "wuling.wuling_bingo",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "aion-aion-es": [
+   [
+    "aion.aion_es",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "aion-aion-ut": [
+   [
+    "aion.aion_ut",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "aion-aion-v": [
+   [
+    "aion.aion_v",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "aion-aion-y-plus": [
+   [
+    "aion.aion_y_plus",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "aion-hyptec-ht": [
+   [
+    "aion.hyptec_ht",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "audi-a3-saloon-35-tfsi__provisional": [
+   [
+    "audi.etron_gt",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "audi-audi-a1": [
+   [
+    "audi.a1",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-a4": [
+   [
+    "audi.a4",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-a5": [
+   [
+    "audi.a5",
+    "AUTO",
+    "SERIES",
+    0.989
+   ]
+  ],
+  "audi-audi-a6": [
+   [
+    "audi.a6",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-a7": [
+   [
+    "audi.a7",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "audi-audi-a8l": [
+   [
+    "audi.a8",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-e-tron": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "audi-audi-q3": [
+   [
+    "audi.audi_q3",
+    "AUTO",
+    "SERIES",
+    0.9965
+   ]
+  ],
+  "audi-audi-q5": [
+   [
+    "audi.audi_q5",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-q6": [
+   [
+    "audi.audi_q5",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "audi-audi-q7": [
+   [
+    "audi.q7",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "audi-audi-q8": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.3636
+   ]
+  ],
+  "audi-audi-rs-3": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "audi-audi-rs-4": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "audi-audi-rs-5": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "audi-audi-rs-6": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "audi-audi-rs-7": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "audi-audi-rs-q3": [
+   [
+    "audi.rs",
+    "PROPOSED",
+    "NAME",
+    0.5714
+   ]
+  ],
+  "audi-audi-rs-q8": [
+   [
+    "audi.q8",
+    "PROPOSED",
+    "NAME",
+    0.5714
+   ]
+  ],
+  "audi-audi-s3": [
+   [
+    "audi.audi_q3",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "audi-audi-tt": [
+   [
+    "audi.tt",
+    "AUTO",
+    "SERIES",
+    0.9921
+   ]
+  ],
+  "audi-q2-35-tfsi__provisional": [
+   [
+    "audi.q6_etron",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "audi-r8-coupe-v10-performance__provisional": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.4242
+   ]
+  ],
+  "audi-r8-coupe-v10__provisional": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.381
+   ]
+  ],
+  "audi-r8-spyder-v10-performance__provisional": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.4118
+   ]
+  ],
+  "audi-s8-tfsi-quattro__provisional": [
+   [
+    "audi.etron",
+    "PROPOSED",
+    "NAME",
+    0.381
+   ]
+  ],
+  "audi-sq8-vorsprung-tdi-quattro__provisional": [
+   [
+    "audi.q8_etron",
+    "PROPOSED",
+    "NAME",
+    0.4118
+   ]
+  ],
+  "avatr-avatr-07": [
+   [
+    "avatr.avatr_07",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "avatr-avatr-11": [
+   [
+    "avatr.avatr_11",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bentley-bentley-bentayga": [
+   [
+    "bentley.bentayga",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
   "bentley-bentley-continental": [
    [
     "bentley.bentayga",
     "PROPOSED",
     "NAME",
     0.4211
+   ]
+  ],
+  "bentley-bentley-flying": [
+   [
+    "bentley.flying_spur",
+    "PROPOSED",
+    "NAME",
+    0.7059
+   ]
+  ],
+  "bmw-420d-coupe-rhd__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.4242
+   ]
+  ],
+  "bmw-420d-gran-coupe-rhd__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.6316
+   ]
+  ],
+  "bmw-840d-xdrive-coupe__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.5556
+   ]
+  ],
+  "bmw-840d-xdrive-m-coupe__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.5789
+   ]
+  ],
+  "bmw-840d-xdrive__provisional": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "bmw-840i-convertible__provisional": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "bmw-840i-m-sport-coupe__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.4865
+   ]
+  ],
+  "bmw-840i-m-sport-gran-coupe__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "bmw-alpina-d3-s-touring__provisional": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    0.3704
+   ]
+  ],
+  "bmw-bmw-2-series": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.5926
+   ]
+  ],
+  "bmw-bmw-3-series": [
+   [
+    "bmw.bmw_3",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-5-series": [
+   [
+    "bmw.bmw_5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-7-series": [
+   [
+    "bmw.7_series",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-i4": [
+   [
+    "bmw.bmw_i4",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "bmw-bmw-i5": [
+   [
+    "bmw.i5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-i7": [
+   [
+    "bmw.i7",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-ix": [
+   [
+    "bmw.bmw_ix3",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "bmw-bmw-ix1": [
+   [
+    "bmw.ix1",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-ix2": [
+   [
+    "bmw.ix2",
+    "AUTO",
+    "SERIES",
+    1.0
    ]
   ],
   "bmw-bmw-m2": [
@@ -41,10 +1481,374 @@
     0.5
    ]
   ],
-  "chevrolet-chevrolet-corvette": [],
-  "chevrolet-trailblazer": [],
-  "daihatsu-daihatsu-copen": [],
-  "daihatsu-daihatsu-move": [],
+  "bmw-bmw-x1": [
+   [
+    "bmw.bmw_x1",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-x3": [
+   [
+    "bmw.bmw_x3",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-x4": [
+   [
+    "bmw.x4",
+    "AUTO",
+    "SERIES",
+    0.9933
+   ]
+  ],
+  "bmw-bmw-x5": [
+   [
+    "bmw.x5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-x6": [
+   [
+    "bmw.x6",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-x7": [
+   [
+    "bmw.x7",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-bmw-xm": [
+   [
+    "bmw.xm",
+    "AUTO",
+    "SERIES",
+    0.9914
+   ]
+  ],
+  "bmw-bmw-z4": [
+   [
+    "bmw.z4",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "bmw-m8-competition-coupe__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.5128
+   ]
+  ],
+  "bmw-m8-coupe-rhd__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.3871
+   ]
+  ],
+  "bmw-m8-gran-coupe-rhd__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.6111
+   ]
+  ],
+  "bmw-m850i-xdrive-coupe-rhd__provisional": [
+   [
+    "bmw.2_series_gran_coupe",
+    "PROPOSED",
+    "NAME",
+    0.4878
+   ]
+  ],
+  "bmw-m850i-xdrive-rhd__provisional": [
+   [
+    "bmw.bmw_5",
+    "PROPOSED",
+    "NAME",
+    0.4167
+   ]
+  ],
+  "bmw-x2": [
+   [
+    "bmw.bmw_x3",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "byd-atto-1": [
+   [
+    "byd.atto2",
+    "PROPOSED",
+    "NAME",
+    0.8333
+   ]
+  ],
+  "byd-atto-2": [
+   [
+    "byd.atto2",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "byd-atto-3": [
+   [
+    "byd.atto3",
+    "AUTO",
+    "SERIES",
+    0.9902
+   ]
+  ],
+  "byd-byd-shark-6-limited__provisional": [
+   [
+    "byd.sealion6",
+    "PROPOSED",
+    "NAME",
+    0.4138
+   ]
+  ],
+  "byd-byd-t3": [
+   [
+    "byd.byd_t3",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "byd-dolphin": [
+   [
+    "byd.dolphin",
+    "AUTO",
+    "SERIES",
+    0.9977
+   ]
+  ],
+  "byd-e6": [
+   [
+    "byd.byd_m6",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "byd-m6": [
+   [
+    "byd.byd_m6",
+    "AUTO",
+    "SERIES",
+    0.9935
+   ]
+  ],
+  "byd-seal": [
+   [
+    "byd.seal",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "byd-sealion-5": [
+   [
+    "byd.shark6",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "byd-sealion-6": [
+   [
+    "byd.sealion6",
+    "PROPOSED",
+    "SERIES",
+    0.9929
+   ]
+  ],
+  "byd-sealion-7": [
+   [
+    "byd.sealion7",
+    "AUTO",
+    "SERIES",
+    0.9986
+   ]
+  ],
+  "changan-changan-nevo-q05": [
+   [
+    "changan.nevo_q05",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "changan-deepal-e07": [
+   [
+    "deepal.deepal_e07",
+    "PROPOSED",
+    "SERIES",
+    0.9998
+   ]
+  ],
+  "changan-deepal-hunter": [
+   [
+    "deepal.deepal_hunter_k50",
+    "PROPOSED",
+    "NAME",
+    0.5217
+   ]
+  ],
+  "changan-deepal-l07": [
+   [
+    "deepal.deepal_l07",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "changan-deepal-s05": [
+   [
+    "deepal.deepal_s05",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "changan-deepal-s07": [
+   [
+    "deepal.deepal_s07",
+    "PROPOSED",
+    "SERIES",
+    0.9978
+   ]
+  ],
+  "changan-lumin": [
+   [
+    "changan.changan_lumin",
+    "AUTO",
+    "SERIES",
+    0.987
+   ]
+  ],
+  "chery-chery-c5-ev-omoda-e5": [
+   [
+    "chery.omoda_c5",
+    "PROPOSED",
+    "NAME",
+    0.6364
+   ]
+  ],
+  "chery-chery-v23": [
+   [
+    "chery.chery_v23",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "chery-tiggo-8": [
+   [
+    "chery.tiggo8",
+    "AUTO",
+    "SERIES",
+    0.9922
+   ]
+  ],
+  "chery-tiggo-cross": [
+   [
+    "chery.tiggo8",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "chevrolet-camaro-coupe__provisional": [
+   [
+    "chevrolet.colorado_c_cab",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "chevrolet-chevrolet-captiva": [
+   [
+    "chevrolet.captiva",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "chevrolet-chevrolet-colorado": [
+   [
+    "chevrolet.colorado_c_cab",
+    "PROPOSED",
+    "NAME",
+    0.7273
+   ]
+  ],
+  "daihatsu-daihatsu-hijet": [
+   [
+    "daihatsu.hijet",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "denza-denza-d9": [
+   [
+    "denza.denza_d9",
+    "AUTO",
+    "SERIES",
+    0.9976
+   ]
+  ],
+  "farizon-farizon-mpv-sv6": [
+   [
+    "farizon.farizon_sv",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "farizon-farizon-sv": [
+   [
+    "farizon.farizon_sv",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "ferrari-ferrari-12cilindri": [
+   [
+    "ferrari.12cilindri",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "ferrari-ferrari-296": [
+   [
+    "ferrari.296",
+    "AUTO",
+    "SERIES",
+    0.9888
+   ]
+  ],
   "ferrari-ferrari-488": [
    [
     "ferrari.f8",
@@ -53,7 +1857,14 @@
     0.4
    ]
   ],
-  "ferrari-ferrari-portofino": [],
+  "ferrari-ferrari-f8": [
+   [
+    "ferrari.f8",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
   "ferrari-ferrari-purosangue": [
    [
     "ferrari.roma",
@@ -62,15 +1873,228 @@
     0.4286
    ]
   ],
-  "ford-ford-focus": [],
-  "foton-bj1041": [],
-  "foton-eview": [],
+  "ferrari-ferrari-roma": [
+   [
+    "ferrari.roma",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "ferrari-ferrari-sf90": [
+   [
+    "ferrari.sf90",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "fomm-fomm-one": [
+   [
+    "fomm.fomm_one",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "ford-ford-everest": [
+   [
+    "ford.everest",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "ford-ford-mustang": [
+   [
+    "ford.mustang",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "ford-ford-ranger": [
+   [
+    "ford.ranger_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.5217
+   ]
+  ],
+  "ford-ford-ranger-raptor": [
+   [
+    "ford.ranger_cab",
+    "PROPOSED",
+    "NAME",
+    0.6957
+   ]
+  ],
+  "gac-gac-m8": [
+   [
+    "gac.gac_m8",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "geely-geely-ex2": [
+   [
+    "geely.geely_ex2",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "geely-geely-ex5": [
+   [
+    "geely.geely_ex5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "gwm-gwm-poer": [
+   [
+    "gwm.poer_sahar",
+    "PROPOSED",
+    "NAME",
+    0.5714
+   ]
+  ],
+  "gwm-haval-h6": [
+   [
+    "gwm.haval_h6",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "gwm-haval-jolion": [
+   [
+    "gwm.haval_jolion",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
+  "gwm-ora-07": [
+   [
+    "gwm.ora_good_cat",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "gwm-ora-5": [
+   [
+    "gwm.ora_good_cat",
+    "PROPOSED",
+    "NAME",
+    0.4706
+   ]
+  ],
+  "gwm-ora-good-cat": [
+   [
+    "gwm.ora_good_cat",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "gwm-tank-300": [
+   [
+    "gwm.tank300",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "gwm-tank-500": [
+   [
+    "gwm.tank500",
+    "AUTO",
+    "SERIES",
+    0.9846
+   ]
+  ],
+  "gwm-wey-g9": [
+   [
+    "gwm.wey_g9",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-accord": [
+   [
+    "honda.accord",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-br-v": [
+   [
+    "honda.brv",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
   "honda-brio": [
    [
     "honda.mobilio",
     "PROPOSED",
     "NAME",
     0.5455
+   ]
+  ],
+  "honda-city": [
+   [
+    "honda.city",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-city-hatchback": [
+   [
+    "honda.city_hatchback",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-civic": [
+   [
+    "honda.civic",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-cr-v": [
+   [
+    "honda.crv",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-en1": [
+   [
+    "honda.en1",
+    "AUTO",
+    "SERIES",
+    0.9981
+   ]
+  ],
+  "honda-en2": [
+   [
+    "honda.en2",
+    "PROPOSED",
+    "NAME",
+    1.0
    ]
   ],
   "honda-honda-acty": [
@@ -81,7 +2105,14 @@
     0.75
    ]
   ],
-  "honda-honda-amaze": [],
+  "honda-honda-e": [
+   [
+    "honda.en1",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
   "honda-honda-fit": [
    [
     "honda.city",
@@ -98,7 +2129,22 @@
     0.3636
    ]
   ],
-  "honda-honda-n-box": [],
+  "honda-honda-mobilio": [
+   [
+    "honda.mobilio",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "honda-honda-odyssey": [
+   [
+    "honda.odyssey",
+    "AUTO",
+    "SERIES",
+    0.9837
+   ]
+  ],
   "honda-honda-stepwagon": [
    [
     "honda.step_wgn",
@@ -107,8 +2153,22 @@
     0.8235
    ]
   ],
-  "honda-jazz": [],
-  "honda-prelude": [],
+  "honda-hr-v": [
+   [
+    "honda.hrv",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "honda-step-wgn": [
+   [
+    "honda.step_wgn",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "honda-super-one": [
    [
     "honda.step_wgn",
@@ -117,7 +2177,62 @@
     0.4706
    ]
   ],
-  "hyundai-genesis-g80": [],
+  "honda-wr-v": [
+   [
+    "honda.wrv",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "hyundai-creta": [
+   [
+    "hyundai.creta",
+    "AUTO",
+    "SERIES",
+    0.9997
+   ]
+  ],
+  "hyundai-elantra-n__provisional": [
+   [
+    "hyundai.santa_fe",
+    "PROPOSED",
+    "NAME",
+    0.5882
+   ]
+  ],
+  "hyundai-elantra__provisional": [
+   [
+    "hyundai.santa_fe",
+    "PROPOSED",
+    "NAME",
+    0.5333
+   ]
+  ],
+  "hyundai-h-1": [
+   [
+    "hyundai.h_1",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
+  "hyundai-ioniq-5": [
+   [
+    "hyundai.ioniq5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "hyundai-ioniq-6": [
+   [
+    "hyundai.ioniq6",
+    "AUTO",
+    "SERIES",
+    0.9952
+   ]
+  ],
   "hyundai-kona": [
    [
     "hyundai.ioniq5",
@@ -126,9 +2241,78 @@
     0.3636
    ]
   ],
-  "hyundai-tucson": [],
-  "jac-t8": [],
-  "jaecoo-jaecoo-j6": [],
+  "hyundai-palisade": [
+   [
+    "hyundai.palisade",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "hyundai-santa-fe": [
+   [
+    "hyundai.santa_fe",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "hyundai-stargazer": [
+   [
+    "hyundai.stargazer",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "hyundai-staria": [
+   [
+    "hyundai.staria",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "isuzu-isuzu-cab4": [
+   [
+    "isuzu.dmax_cab",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "isuzu-isuzu-d-max": [
+   [
+    "isuzu.mux",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "isuzu-isuzu-mu-x": [
+   [
+    "isuzu.mux",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "jac-jac-hfc1040ev3": [
+   [
+    "jac.jac_truck",
+    "PROPOSED",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "jaecoo-jaecoo-j7": [
+   [
+    "jaecoo.jaecoo_7",
+    "PROPOSED",
+    "SERIES",
+    0.998
+   ]
+  ],
   "jeep-jeep-gladiator": [
    [
     "jeep.wrangler",
@@ -137,14 +2321,212 @@
     0.3529
    ]
   ],
-  "kia-k2500": [],
-  "lamborghini-lamborghini-temerario": [],
+  "jeep-jeep-grand": [
+   [
+    "jeep.wrangler",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "jeep-jeep-wrangler": [
+   [
+    "jeep.wrangler",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "kia-carnival": [
+   [
+    "kia.carnival",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "kia-ev6": [
+   [
+    "kia.ev6",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "kia-ev9": [
+   [
+    "kia.ev9",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "kia-kia-ev5": [
+   [
+    "kia.ev5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "kia-kia-pv5": [
+   [
+    "kia.kia_pv5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "kia-sorento": [
+   [
+    "kia.sorento",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lamborghini-lamborghini-huracan": [
+   [
+    "lamborghini.huracan",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lamborghini-lamborghini-revuelto": [
+   [
+    "lamborghini.revuelto",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lamborghini-lamborghini-urus": [
+   [
+    "lamborghini.urus",
+    "AUTO",
+    "SERIES",
+    0.9917
+   ]
+  ],
+  "land-rover-land-rover-defender": [
+   [
+    "land_rover.defender",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "land-rover-land-rover-discovery": [
    [
     "land_rover.range_rover",
     "PROPOSED",
     "NAME",
     0.4
+   ]
+  ],
+  "land-rover-land-rover-range": [
+   [
+    "land_rover.range_rover",
+    "PROPOSED",
+    "NAME",
+    0.625
+   ]
+  ],
+  "leapmotor-leapmotor-b10": [
+   [
+    "leapmotor.leapmotor_b10",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "leapmotor-leapmotor-c10": [
+   [
+    "leapmotor.leapmotor_c10",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lexus-lexus-es300h": [
+   [
+    "lexus.lexus_es",
+    "PROPOSED",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "lexus-lexus-es350e": [
+   [
+    "lexus.lexus_es",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-es350h": [
+   [
+    "lexus.lexus_es",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-is300h": [
+   [
+    "lexus.lexus_is",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-lbx": [
+   [
+    "lexus.lbx",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lexus-lexus-lc": [
+   [
+    "lexus.lexus_lm",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-lm": [
+   [
+    "lexus.lexus_lm",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lexus-lexus-ls": [
+   [
+    "lexus.lexus_lm",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-lx": [
+   [
+    "lexus.lx",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "lexus-lexus-nx": [
+   [
+    "lexus.lexus_nx",
+    "AUTO",
+    "SERIES",
+    0.9829
    ]
   ],
   "lexus-lexus-rc": [
@@ -155,6 +2537,54 @@
     0.5
    ]
   ],
+  "lexus-lexus-rx": [
+   [
+    "lexus.lexus_rx",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "lexus-lexus-rz350e": [
+   [
+    "lexus.rz",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-rz450e": [
+   [
+    "lexus.rz",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-rz500e": [
+   [
+    "lexus.rz",
+    "PROPOSED",
+    "NAME",
+    0.5
+   ]
+  ],
+  "lexus-lexus-ux": [
+   [
+    "lexus.ux",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "lotus-elise-sport-220__provisional": [
+   [
+    "lotus.eletre",
+    "PROPOSED",
+    "NAME",
+    0.381
+   ]
+  ],
   "lotus-emira": [
    [
     "lotus.emeya",
@@ -163,9 +2593,54 @@
     0.6
    ]
   ],
-  "maserati-maserati-ghibli": [],
-  "maserati-maserati-mc20": [],
-  "maserati-maserati-quattroporte": [],
+  "lotus-emira-v6__provisional": [
+   [
+    "lotus.emeya",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "lotus-lotus-eletre": [
+   [
+    "lotus.eletre",
+    "AUTO",
+    "SERIES",
+    0.9894
+   ]
+  ],
+  "lotus-lotus-emeya": [
+   [
+    "lotus.emeya",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "maserati-maserati-granturismo": [
+   [
+    "maserati.granturismo",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "maserati-maserati-grecale": [
+   [
+    "maserati.grecale",
+    "AUTO",
+    "SERIES",
+    0.9932
+   ]
+  ],
+  "maserati-maserati-levante": [
+   [
+    "maserati.levante",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
   "maxus-maxus-v80": [
    [
     "mg.mg_zs_ev",
@@ -182,12 +2657,98 @@
     0.6154
    ]
   ],
+  "maxus-mifa-9": [
+   [
+    "mg.mg_maxus_9",
+    "PROPOSED",
+    "NAME",
+    0.6154
+   ]
+  ],
+  "mazda-mazda-bt-50": [
+   [
+    "mazda.cx30",
+    "PROPOSED",
+    "NAME",
+    0.4
+   ]
+  ],
+  "mazda-mazda-cx-3": [
+   [
+    "mazda.cx3",
+    "AUTO",
+    "SERIES",
+    0.9866
+   ]
+  ],
+  "mazda-mazda-cx-30": [
+   [
+    "mazda.cx3",
+    "PROPOSED",
+    "ADMIN",
+    null
+   ],
+   [
+    "mazda.cx30",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mazda-mazda-cx-5": [
+   [
+    "mazda.cx5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mazda-mazda-cx-8": [
+   [
+    "mazda.cx8",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "mazda-mazda-mx-30": [
    [
     "mazda.cx30",
     "PROPOSED",
     "NAME",
     0.8
+   ]
+  ],
+  "mazda-mazda-mx-5": [
+   [
+    "mazda.mx_5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mazda-mazda2": [
+   [
+    "mazda.mazda2",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mazda-mazda3": [
+   [
+    "mazda.mazda3",
+    "AUTO",
+    "SERIES",
+    0.9883
+   ]
+  ],
+  "mazda-mazda6": [
+   [
+    "mazda.mazda6",
+    "PROPOSED",
+    "NAME",
+    1.0
    ]
   ],
   "mazda-mazda6e": [
@@ -198,7 +2759,294 @@
     0.6667
    ]
   ],
-  "mclaren-mclaren-artura": [],
+  "mclaren-mclaren-gts": [
+   [
+    "mclaren.gts",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mg-mg-cyberster": [
+   [
+    "mg.mg_cyberster",
+    "AUTO",
+    "SERIES",
+    0.9976
+   ]
+  ],
+  "mg-mg-ep": [
+   [
+    "mg.mg_ep",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mg-mg-extender": [
+   [
+    "mg.mg_extender_cab",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "mg-mg-hs": [
+   [
+    "mg.mg_hs",
+    "AUTO",
+    "SERIES",
+    0.9947
+   ]
+  ],
+  "mg-mg-im5": [
+   [
+    "mg.mg_im5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mg-mg-im6": [
+   [
+    "mg.mg_im6",
+    "AUTO",
+    "SERIES",
+    0.9933
+   ]
+  ],
+  "mg-mg-s5-ev": [
+   [
+    "mg.mg_s5_ev",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mg-mg-urban-ev": [
+   [
+    "mg.mg_zs_ev",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "mg-mg-vs-hev": [
+   [
+    "mg.mg_vs_hev",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
+  "mg-mg-zs": [
+   [
+    "mg.mg_zs_ev",
+    "PROPOSED",
+    "NAME",
+    0.5714
+   ]
+  ],
+  "mg-mg3": [
+   [
+    "mg.mg3",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mg-mg4-ev": [
+   [
+    "mg.mg4",
+    "PROPOSED",
+    "NAME",
+    0.4286
+   ]
+  ],
+  "mg-mg5": [
+   [
+    "mg.mg5",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mine-mobility-mine-mts-mt30": [
+   [
+    "mine_mobility.mine_mts",
+    "PROPOSED",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "mini-clubman": [
+   [
+    "mini.countryman",
+    "PROPOSED",
+    "NAME",
+    0.5882
+   ]
+  ],
+  "mini-cooper": [
+   [
+    "mini.countryman",
+    "PROPOSED",
+    "NAME",
+    0.375
+   ]
+  ],
+  "mini-countryman": [
+   [
+    "mini.countryman",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mini-mini-aceman-ev": [
+   [
+    "mini.aceman",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "mini-mini-cooper-ev": [
+   [
+    "mini.mini_cooper",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "mini-mini-jcw-convertible": [
+   [
+    "mini.mini_cooper",
+    "PROPOSED",
+    "NAME",
+    0.381
+   ]
+  ],
+  "mini-mini-jcw-rhd": [
+   [
+    "mini.jcw_e",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "mitsubishi-attrage": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mitsubishi-mirage": [
+   [
+    "mitsubishi.mirage",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mitsubishi-mitsubishi-cy4astxhru": [
+   [
+    "mitsubishi.attrage",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "mitsubishi-outlander": [
+   [
+    "mitsubishi.outlander_phev",
+    "PROPOSED",
+    "SERIES",
+    0.9987
+   ]
+  ],
+  "mitsubishi-pajero": [
+   [
+    "mitsubishi.pajero_sport",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "mitsubishi-pajero-sport": [
+   [
+    "mitsubishi.pajero_sport",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mitsubishi-triton": [
+   [
+    "mitsubishi.triton_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.5217
+   ]
+  ],
+  "mitsubishi-xforce": [
+   [
+    "mitsubishi.xforce",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "mitsubishi-xpander": [
+   [
+    "mitsubishi.xpander",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "neta-neta-v": [
+   [
+    "neta.neta_v",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "neta-neta-x": [
+   [
+    "neta.neta_x",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "nextem-nextem-orca": [
+   [
+    "nextem.nextem_orca",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "nissan-almera": [
+   [
+    "nissan.almera",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "nissan-kicks-e-power": [
+   [
+    "nissan.kicks",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "nissan-leaf": [
    [
     "nissan.terra",
@@ -207,13 +3055,28 @@
     0.4444
    ]
   ],
-  "nissan-nissan-be-1": [],
+  "nissan-navara": [
+   [
+    "nissan.navara_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.5217
+   ]
+  ],
   "nissan-nissan-fairlady": [
    [
     "nissan.almera",
     "PROPOSED",
     "NAME",
     0.4286
+   ]
+  ],
+  "nissan-nissan-gt-r": [
+   [
+    "nissan.gtr",
+    "PROPOSED",
+    "NAME",
+    1.0
    ]
   ],
   "nissan-nissan-march": [
@@ -224,6 +3087,22 @@
     0.4
    ]
   ],
+  "nissan-nissan-sylphy": [
+   [
+    "nissan.sylphy",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "nissan-nissan-teana": [
+   [
+    "nissan.teana",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
   "nissan-note": [
    [
     "nissan.terra",
@@ -232,12 +3111,52 @@
     0.4444
    ]
   ],
+  "nissan-serena": [
+   [
+    "nissan.serena",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "nissan-terra": [
+   [
+    "nissan.terra",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
   "nissan-urvan": [
    [
     "nissan.terra",
     "PROPOSED",
     "NAME",
     0.4
+   ]
+  ],
+  "nissan-x-trail": [
+   [
+    "nissan.x_trail",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "peugeot-peugeot-2008": [
+   [
+    "peugeot.peugeot_2008",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "peugeot-peugeot-3008": [
+   [
+    "peugeot.peugeot_3008",
+    "AUTO",
+    "SERIES",
+    1.0
    ]
   ],
   "peugeot-peugeot-408": [
@@ -256,9 +3175,78 @@
     0.75
    ]
   ],
-  "rolls-royce-rolls-royce-cullinan": [],
-  "rolls-royce-rolls-royce-phantom": [],
-  "rolls-royce-rolls-royce-spectre": [],
+  "porsche-cayman-pdk__provisional": [
+   [
+    "porsche.cayenne",
+    "PROPOSED",
+    "NAME",
+    0.4706
+   ]
+  ],
+  "porsche-porsche-718": [
+   [
+    "porsche.718",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "porsche-porsche-911": [
+   [
+    "porsche.porsche_911",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "porsche-porsche-cayenne": [
+   [
+    "porsche.cayenne",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "porsche-porsche-macan": [
+   [
+    "porsche.macan",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "porsche-porsche-panamera": [
+   [
+    "porsche.panamera",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "porsche-porsche-taycan": [
+   [
+    "porsche.taycan",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "riddara-riddara-rd6": [
+   [
+    "riddara.riddara_rd6_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "seres-seres-3": [
+   [
+    "seres.seres_3",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "seres-seres-ec31": [
    [
     "seres.seres_3",
@@ -275,9 +3263,102 @@
     0.4444
    ]
   ],
-  "subaru-subaru-wrx": [],
-  "suzuki-apv": [],
-  "suzuki-grand-vitara": [],
+  "sokon-sokon-ec35": [
+   [
+    "sokon.sokon_ec35",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "subaru-levorg-sti-sport-r__provisional": [
+   [
+    "subaru.forester",
+    "PROPOSED",
+    "NAME",
+    0.3846
+   ]
+  ],
+  "subaru-subaru-brz": [
+   [
+    "subaru.brz",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "subaru-subaru-crosstrek": [
+   [
+    "subaru.crosstrek",
+    "AUTO",
+    "SERIES",
+    0.9997
+   ]
+  ],
+  "subaru-subaru-forester": [
+   [
+    "subaru.forester",
+    "AUTO",
+    "SERIES",
+    0.9909
+   ]
+  ],
+  "subaru-subaru-outback": [
+   [
+    "subaru.outback",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "suzuki-carry": [
+   [
+    "suzuki.suzuki_carry",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "suzuki-celerio": [
+   [
+    "suzuki.celerio",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "suzuki-ciaz": [
+   [
+    "suzuki.ciaz",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "suzuki-ertiga": [
+   [
+    "suzuki.ertiga",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "suzuki-fronx": [
+   [
+    "suzuki.fronx",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "suzuki-jimny": [
+   [
+    "suzuki.jimny",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "suzuki-suzuki-spacia": [
    [
     "suzuki.swift",
@@ -286,7 +3367,294 @@
     0.3636
    ]
   ],
-  "tata-tata-xenon": [],
+  "suzuki-swift": [
+   [
+    "suzuki.swift",
+    "AUTO",
+    "SERIES",
+    0.9992
+   ]
+  ],
+  "suzuki-xl-7": [
+   [
+    "suzuki.xl7",
+    "AUTO",
+    "SERIES",
+    0.9918
+   ]
+  ],
+  "tata-tata-super": [
+   [
+    "tata.tata_super_ace",
+    "PROPOSED",
+    "SERIES",
+    0.9997
+   ]
+  ],
+  "tesla-tesla-model": [
+   [
+    "tesla.modely",
+    "PROPOSED",
+    "NAME",
+    0.8333
+   ]
+  ],
+  "tesla-tesla-model-3": [
+   [
+    "tesla.model3",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "tesla-tesla-model-y": [
+   [
+    "tesla.modely",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-86-gr__provisional": [
+   [
+    "toyota.c_hr",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "toyota-86__provisional": [
+   [
+    "toyota.gr86",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "toyota-alphard": [
+   [
+    "toyota.alphard",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-avanza": [
+   [
+    "toyota.avanza",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "toyota-bz4x": [
+   [
+    "toyota.bz4x",
+    "AUTO",
+    "SERIES",
+    0.9849
+   ]
+  ],
+  "toyota-c-hr": [
+   [
+    "toyota.c_hr",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "toyota-camry": [
+   [
+    "toyota.camry",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-corolla-altis": [
+   [
+    "toyota.corolla_altis",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-corolla-cross": [
+   [
+    "toyota.corolla_cross",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-esquire-gi-7-seats__provisional": [
+   [
+    "toyota.yaris_ativ",
+    "PROPOSED",
+    "NAME",
+    0.3571
+   ]
+  ],
+  "toyota-esquire-gi__provisional": [
+   [
+    "toyota.vellfire",
+    "PROPOSED",
+    "NAME",
+    0.4444
+   ]
+  ],
+  "toyota-fortuner": [
+   [
+    "toyota.fortuner",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-gr-corolla": [
+   [
+    "toyota.corolla_altis",
+    "PROPOSED",
+    "NAME",
+    0.6087
+   ]
+  ],
+  "toyota-gr-supra": [
+   [
+    "toyota.gr_supra",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-gr-yaris": [
+   [
+    "toyota.prius",
+    "PROPOSED",
+    "NAME",
+    0.4615
+   ]
+  ],
+  "toyota-gr86": [
+   [
+    "toyota.gr86",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-hiace": [
+   [
+    "toyota.hiace_majesty",
+    "PROPOSED",
+    "NAME",
+    0.5556
+   ]
+  ],
+  "toyota-hiace-commuter": [
+   [
+    "toyota.commuter",
+    "PROPOSED",
+    "NAME",
+    0.7273
+   ]
+  ],
+  "toyota-hilux": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.5263
+   ]
+  ],
+  "toyota-hilux-champ": [
+   [
+    "toyota.hilux_champ",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-hilux-revo": [
+   [
+    "toyota.hilux_revo_double_cab",
+    "PROPOSED",
+    "NAME",
+    0.6452
+   ]
+  ],
+  "toyota-hilux-travo": [
+   [
+    "toyota.hilux_travo_cab",
+    "PROPOSED",
+    "NAME",
+    0.8462
+   ]
+  ],
+  "toyota-innova": [
+   [
+    "toyota.innova_zenix",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
+  "toyota-land-cruiser": [
+   [
+    "toyota.land_cruiser_300",
+    "PROPOSED",
+    "NAME",
+    0.8571
+   ]
+  ],
+  "toyota-land-cruiser-fj": [
+   [
+    "toyota.land_cruiser_300",
+    "PROPOSED",
+    "NAME",
+    0.8387
+   ]
+  ],
+  "toyota-toyota-crown": [
+   [
+    "toyota.crown",
+    "AUTO",
+    "SERIES",
+    0.996
+   ]
+  ],
+  "toyota-toyota-d-cab": [
+   [
+    "toyota.hilux_revo_cab",
+    "PROPOSED",
+    "NAME",
+    0.4211
+   ]
+  ],
+  "toyota-toyota-harrier": [
+   [
+    "toyota.harrier",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-toyota-noah": [
+   [
+    "toyota.noah",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "toyota-toyota-prius": [
+   [
+    "toyota.prius",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
   "toyota-toyota-roomy": [
    [
     "toyota.camry",
@@ -311,6 +3679,22 @@
     0.4
    ]
   ],
+  "toyota-vellfire": [
+   [
+    "toyota.vellfire",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-veloz": [
+   [
+    "toyota.veloz",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "toyota-vios": [
    [
     "toyota.yaris",
@@ -319,9 +3703,54 @@
     0.4444
    ]
   ],
-  "volkswagen-volkswagen-caddy": [],
-  "volkswagen-volkswagen-golf": [],
-  "volkswagen-volkswagen-t-roc": [],
+  "toyota-vitz-grmn__provisional": [
+   [
+    "toyota.vellfire",
+    "PROPOSED",
+    "NAME",
+    0.3529
+   ]
+  ],
+  "toyota-voxy": [
+   [
+    "toyota.voxy",
+    "AUTO",
+    "SERIES",
+    0.9922
+   ]
+  ],
+  "toyota-yaris": [
+   [
+    "toyota.yaris",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-yaris-ativ": [
+   [
+    "toyota.yaris_ativ",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "toyota-yaris-cross": [
+   [
+    "toyota.yaris_cross",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "volkswagen-volkswagen-caravelle": [
+   [
+    "volkswagen.caravelle",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "volkswagen-volkswagen-touareg": [
    [
     "volkswagen.caravelle",
@@ -330,14 +3759,20 @@
     0.375
    ]
   ],
-  "volkswagen-vw-t-cross": [],
-  "volkswagen-vw-tiguan": [],
   "volt-volt-volt": [
    [
     "volt.volt_for_four",
     "PROPOSED",
     "SERIES",
     0.9891
+   ]
+  ],
+  "volvo-volvo-ec40-c40": [
+   [
+    "volvo.xc40",
+    "PROPOSED",
+    "NAME",
+    0.5
    ]
   ],
   "volvo-volvo-es90": [
@@ -348,13 +3783,140 @@
     0.5
    ]
   ],
-  "wuling-e10": [],
+  "volvo-volvo-ex30": [
+   [
+    "volvo.ex30",
+    "AUTO",
+    "SERIES",
+    0.9956
+   ]
+  ],
+  "volvo-volvo-ex90": [
+   [
+    "volvo.ex90",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "volvo-volvo-s60": [
+   [
+    "volvo.s60",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "volvo-volvo-s90": [
+   [
+    "volvo.s90",
+    "AUTO",
+    "SERIES",
+    0.9921
+   ]
+  ],
+  "volvo-volvo-v60": [
+   [
+    "volvo.v60",
+    "AUTO",
+    "SERIES",
+    1.0
+   ]
+  ],
+  "volvo-volvo-xc40ex40": [
+   [
+    "volvo.ex40",
+    "PROPOSED",
+    "NAME",
+    0.6154
+   ]
+  ],
+  "volvo-volvo-xc60": [
+   [
+    "volvo.xc60",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "volvo-volvo-xc90": [
+   [
+    "volvo.xc90",
+    "AUTO",
+    "SERIES",
+    0.9895
+   ]
+  ],
+  "wuling-air-ev-aira-ev": [
+   [
+    "wuling.wuling_air_ev",
+    "PROPOSED",
+    "SERIES",
+    0.9954
+   ]
+  ],
+  "wuling-binguo": [
+   [
+    "wuling.wuling_bingo",
+    "AUTO",
+    "SERIES",
+    0.9998
+   ]
+  ],
+  "wuling-darion": [
+   [
+    "wuling.wuling_darion",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "wuling-wuling-porta-ev": [
+   [
+    "wuling.wuling_darion",
+    "PROPOSED",
+    "NAME",
+    0.4706
+   ]
+  ],
+  "xpeng-xpeng-g6": [
+   [
+    "xpeng.xpeng_g6",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "xpeng-xpeng-x9": [
+   [
+    "xpeng.xpeng_x9",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
+  "zeekr-zeekr-009": [
+   [
+    "zeekr.zeekr_009",
+    "PROPOSED",
+    "NAME",
+    1.0
+   ]
+  ],
   "zeekr-zeekr-7x": [
    [
     "zeekr.zeekr_x",
     "PROPOSED",
     "NAME",
     0.6667
+   ]
+  ],
+  "zeekr-zeekr-x": [
+   [
+    "zeekr.zeekr_x",
+    "PROPOSED",
+    "NAME",
+    1.0
    ]
   ]
  }

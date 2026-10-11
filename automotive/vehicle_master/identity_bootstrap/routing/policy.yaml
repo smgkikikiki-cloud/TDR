@@ -6,7 +6,11 @@ cross_brand:
   # token of an existing identity's name/alias under the resolved brand (a relabelled / parent-marque model). Evidence-driven: no brand or model is named here.
   min_slug_token_length: 4
   mandatory_owner_review: true
+catalog_alias:
+  # POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS: a pooled TDR identity's own alias list holds exactly the provider's name. Catalog data, echoed for the owner; never a relation.
+  mandatory_owner_review: true
 advisory:
+  legacy_r6_auto_mandatory_owner_review: true   # the legacy matcher itself linked this group to a TDR model (status AUTO): a CREATE for it is a collision to resolve first
   legacy_r6_min_score: 0.6       # a PROPOSED legacy crosswalk target at/above this score is shown as a review hint (never blocks, never decides)
 lanes:
   owner_review: OWNER_REVIEW

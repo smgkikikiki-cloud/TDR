@@ -199,3 +199,10 @@ def test_no_code_path_sets_activation_authorized_true():
     for f in root.rglob("*.py"):
         text = f.read_text(encoding="utf-8")
         assert '"activation_authorized": True' not in text and "activation_authorized=True" not in text and "activation_authorized'] = True" not in text, f
+
+
+def test_a_legacy_r6_auto_match_is_a_mandatory_owner_review():
+    flags = review_flags([subject("acme-roadster-2")], catalog(), {"acme-roadster-2": [["acme.acme_roadster", "AUTO", "SERIES", 1.0]]}, ["acme-roadster-2"])
+    f = flags["acme-roadster-2"]
+    assert "LEGACY_R6_AUTO_MATCH" in f["flags"] and f["mandatory_owner_review"] is True and f["evidence"][0]["status"] == "AUTO"
+    assert project(create("acme-roadster-2"), "ACTIVE", review=f)["lane"] == "OWNER_REVIEW"

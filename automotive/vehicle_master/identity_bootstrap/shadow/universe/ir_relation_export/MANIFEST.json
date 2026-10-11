@@ -1,0 +1,180 @@
+{
+ "consumer_contract_version": "ir-relation-export-consumer/1",
+ "contract": {
+  "adoption_binding": false,
+  "policy_version": "1.0.0",
+  "revision": 4,
+  "status": "draft_not_frozen",
+  "version": "v1"
+ },
+ "evaluator": {
+  "ice_ice_population": "calibration.lexical_pass.ice_ice_population (same Ice brand string, smaller model_group_id first)",
+  "ice_tdr_population": "calibration.ref_eval_resolve.resolve()['pools'] (single-target candidates)",
+  "outcome": "calibration.ref_eval_resolve.resolve()['decisions'] on the series-carrying snapshot (dry run, binding false)",
+  "relation": "calibration.ref_eval_core.name_relation"
+ },
+ "export_id": "ir-rev4-m7.0-relations/1",
+ "files": {
+  "ice_subjects.jsonl": {
+   "bytes": 1090217,
+   "lines": 1200,
+   "sha256": "60d61f993ca463be26d0d1f6e2c6e79c76bdf6c2cebf6ae83abbf418b0a66c49"
+  },
+  "pairs_ice_ice.jsonl": {
+   "bytes": 5400042,
+   "lines": 26505,
+   "sha256": "45480164472279f3e6afb823e488d374c76fa100f6ef3c12c39f51b1a7ecb94a"
+  },
+  "pairs_ice_tdr.jsonl": {
+   "bytes": 2368179,
+   "lines": 12412,
+   "sha256": "4edd7e361426425340bb36bd93cbdd7f5569733a7881fdbf77cad53bfe426212"
+  },
+  "tdr_targets.jsonl": {
+   "bytes": 30208,
+   "lines": 323,
+   "sha256": "c9529c4b223ada5f8f6bd56dc7d1877a08a6ed0182034c989f2c6fd33be76fe8"
+  }
+ },
+ "ordering": "records sorted by (a, b) in code-point order; ice_subjects and tdr_targets by id; JSON keys sorted; compact separators; UTF-8; one record per line; no timestamps",
+ "outcomes_included": true,
+ "policy_echo": {
+  "candidates.brand_relations_allowed": [
+   "EXACT",
+   "ALIAS_SAME",
+   "ALIAS_RELABEL",
+   "ALIAS_RELATED"
+  ],
+  "candidates.exclude_deleted_targets": true,
+  "candidates.target_statuses_in_pool": [
+   "CURRENT",
+   "HISTORICAL",
+   "UNVERIFIED"
+  ],
+  "lexical.distinctive_token.required_for_relations": [
+   "SIBLING"
+  ],
+  "lexical.fuzzy_token": {
+   "allow_tokens_with_digits": false,
+   "enabled": true,
+   "min_token_length": 6
+  },
+  "lexical.name": {
+   "auto_relations": [
+    "EQUAL",
+    "EQUAL_VIA_MODEL_ALIAS",
+    "EQUAL_VIA_TOKEN_EQUIV"
+   ],
+   "candidate_relations": [
+    "EQUAL",
+    "EQUAL_VIA_MODEL_ALIAS",
+    "EQUAL_VIA_TOKEN_EQUIV",
+    "FUZZY"
+   ],
+   "veto_relations": [
+    "SIBLING",
+    "CONTRADICTION"
+   ]
+  }
+ },
+ "populations": {
+  "ice_ice": {
+   "brand_strings": 170,
+   "expected_pairs": 26505,
+   "file": "pairs_ice_ice.jsonl",
+   "key_digest_sha256": "7023d8b10deefc67a19057898c99730d57eef04530add6f7bad5af4a6b471b5f",
+   "pairs": 26505,
+   "relation_counts": {
+    "CONTRADICTION": 25339,
+    "EQUAL": 4,
+    "EQUAL_VIA_MODEL_ALIAS": 2,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 7,
+    "SIBLING": 307,
+    "SUBJECT_COARSER": 78,
+    "SUBJECT_FINER": 40,
+    "UNAVAILABLE": 727
+   }
+  },
+  "ice_tdr": {
+   "expected_pairs": 12412,
+   "file": "pairs_ice_tdr.jsonl",
+   "key_digest_sha256": "3206097f400d21554bfad704bcfe83dbd7c9443069d1b8be2e27e5f3e8abce63",
+   "max_pool_size": 30,
+   "pairs": 12412,
+   "relation_counts": {
+    "CONTRADICTION": 11783,
+    "EQUAL": 239,
+    "EQUAL_VIA_MODEL_ALIAS": 1,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 2,
+    "SIBLING": 55,
+    "SUBJECT_COARSER": 58,
+    "SUBJECT_FINER": 35,
+    "UNAVAILABLE": 238
+   },
+   "subjects": 1200,
+   "subjects_with_empty_pool": 226
+  }
+ },
+ "relation_order": [
+  "EQUAL",
+  "EQUAL_VIA_MODEL_ALIAS",
+  "EQUAL_VIA_TOKEN_EQUIV",
+  "FUZZY",
+  "SUBJECT_COARSER",
+  "SUBJECT_FINER",
+  "SIBLING",
+  "CONTRADICTION",
+  "UNAVAILABLE"
+ ],
+ "schema_version": "ir-relation-export/1",
+ "sources": {
+  "evaluator_and_contract": {
+   "automotive/vehicle_master/identity_resolution/calibration/adapters.py": "5f528a917ff601a166074f2d2c53150ebe8606a7f3dd9a10029d7c836d3b8206",
+   "automotive/vehicle_master/identity_resolution/calibration/lexical_pass.py": "ea57edfe8a4799b2e398c1387f453b087b4a5f9ee690b85e9b692e815af2a776",
+   "automotive/vehicle_master/identity_resolution/calibration/ref_eval_core.py": "c546a5d10c362a1c1a38349194b6d55d218b9cd71f984259412acca7a77cd16c",
+   "automotive/vehicle_master/identity_resolution/calibration/ref_eval_resolve.py": "12b079ae3d76e854693d78a4faec8ff88f550ca16919c4facb35f9c3eab34e38",
+   "automotive/vehicle_master/identity_resolution/calibration/relation_export.py": "f0f2db88c07407c7ee7f8dbf243a4934fabac81d5e0dcfd6a084d56f2e83a9be",
+   "automotive/vehicle_master/identity_resolution/contract/v1/policy.yaml": "dde8375d9d91d17b83de191ec5c236af2fa7df3ec8e71f513a0868ab16670a30",
+   "automotive/vehicle_master/identity_resolution/contract/v1/provider_capabilities.yaml": "d9b750aa2e9de52173b4bfd0bcc0c0f2beb678f0505c6569881999e603d59dfd"
+  },
+  "ice_package": {
+   "bytes": 9775218,
+   "dims_model_group_csv_sha256": "750c2d64b923b0f61fc72677c7dc418da693cedd32f941fe046e1def3f03e372",
+   "path": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+   "reg_trend_csv_sha256": "a3c84cf442cc84bae0022951555bb6e4df66b9cd7aeb4907cda4a4914f6afec5",
+   "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+  },
+  "tdr_inputs": {
+   "extract_meta.json": "8db17908ffc60825f58d1f1a9b4d79ac56611fd633e0609eff84c8694b8ac1c8",
+   "ice_brand_aliases.json": "a72e4ec7e26426dc13bc1c5dc46624bac6b50b61232a802a1d27dfacd93939a8",
+   "r6_redirects.json": "03ac953534b075347967ac640e80d007d0dbc66dcea93ea59bdfc4f9102b0368",
+   "tdr_brands.json": "79d0df555f0b1cb841cd88ef0232e33ef8f58f2527a06ac5959d98773ba66809",
+   "tdr_generations.json": "5042d692d3f5f64505bb254257c3cb889bb622ae28951f743658d3b51cee46d7",
+   "tdr_models.json": "e75f970a6957fd42e5f9aaed01127e18efd9f3e09e4b88003a2fd81995c55768",
+   "tdr_registrations_series.json": "453ffb652e1dda780a68148dfc13b75770778f58b46b1271b841fd374c03c13c"
+  }
+ },
+ "static_files": {
+  "CONSUMER_CONTRACT.md": {
+   "bytes": 13494,
+   "sha256": "7077bb65ca11ce2432c91603cd8734bbd41c1302f9d3119fbd46a0893d908c83"
+  },
+  "relation_export.schema.json": {
+   "bytes": 11299,
+   "sha256": "6383d70153bd95ab895007a7652950176906a266efccfad2caa9fcf974b848f7"
+  }
+ },
+ "universes": {
+  "ice": {
+   "as_of_period": "2026-09",
+   "id": "ice:2569-09:v3:M7.0",
+   "subjects": 1200
+  },
+  "tdr": {
+   "id": "tdr_vehicle_models:sha256-e75f970a6957fd42",
+   "targets": 323
+  }
+ }
+}

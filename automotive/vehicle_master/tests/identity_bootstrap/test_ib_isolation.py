@@ -87,8 +87,9 @@ def test_identity_resolution_is_not_modified_or_imported_by_this_package():
     for path in py_files(PKG):
         for name in imports(path):
             assert name.split(".")[0] != "identity_resolution", f"{path.relative_to(VM)} imports {name}"
-    assert [p.name for p in (PKG / "shadow" / "universe" / "ir_rev4").iterdir()] == ["relations.json"]
-    assert [p.relative_to(PKG).as_posix() for p in py_files(PKG) if "identity_resolution" in p.read_text(encoding="utf-8")] == ["shadow/ir_rev4.py"]
+    assert sorted(p.name for p in (PKG / "shadow" / "universe" / "ir_relation_export").iterdir()) == sorted(
+        ["CONSUMER_CONTRACT.md", "MANIFEST.json", "ice_subjects.jsonl", "pairs_ice_ice.jsonl", "pairs_ice_tdr.jsonl", "relation_export.schema.json", "tdr_targets.jsonl"])
+    assert [p.relative_to(PKG).as_posix() for p in py_files(PKG) if "identity_resolution" in p.read_text(encoding="utf-8")] == []
 
 
 def test_no_production_data_in_the_corpus():

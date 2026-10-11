@@ -3,12 +3,12 @@
 > Separate step before current-market Bootstrap activation. It does not change any CREATE / REVIEW / HOLD outcome and does not say whether an identity exists; `INACTIVE_INFERRED` identities keep their canonical identity and are routed to a historical/inactive lane. Parameters are proposals (`market_activity/policy.yaml`).
 
 - Package months: 2564-01 … 2569-09 (69). **Explicit zero rows in the package: 0** — a zero month only ever appears as a missing row, so no true zero can be established until Ice's `ABSENT_IS_ZERO` is confirmed.
-- CREATE candidates classified: **73**.
+- CREATE candidates classified: **82**.
 
 ## Result
-**Actual (authoritative): Ice absent-row semantics UNKNOWN (Q-ICE-ABSENT-ROW open): a missing row is never a zero** — states {'UNKNOWN': 63, 'ACTIVE': 9, 'DECLINING': 1}; lanes {'ACTIVITY_UNCLASSIFIED': 63, 'CURRENT_DISCOVERY': 10}.
+**Actual (authoritative): Ice absent-row semantics UNKNOWN (Q-ICE-ABSENT-ROW open): a missing row is never a zero** — states {'UNKNOWN': 70, 'ACTIVE': 9, 'DECLINING': 3}; lanes {'ACTIVITY_UNCLASSIFIED': 70, 'CURRENT_DISCOVERY': 12}.
 
-**What-if (non-authoritative): NOT AUTHORITATIVE: assumes every missing row in 2564-01..2569-09 is a guaranteed zero** — states {'DECLINING': 7, 'ACTIVE': 9, 'UNKNOWN': 34, 'INACTIVE_INFERRED': 23}; lanes {'CURRENT_DISCOVERY': 16, 'ACTIVITY_UNCLASSIFIED': 34, 'HISTORICAL_INACTIVE': 23}.
+**What-if (non-authoritative): NOT AUTHORITATIVE: assumes every missing row in 2564-01..2569-09 is a guaranteed zero** — states {'UNKNOWN': 38, 'DECLINING': 10, 'ACTIVE': 9, 'INACTIVE_INFERRED': 25}; lanes {'ACTIVITY_UNCLASSIFIED': 38, 'CURRENT_DISCOVERY': 19, 'HISTORICAL_INACTIVE': 25}.
 
 ## Representative dormant models — monthly registrations, last 24 months (`·` = no row)
 
@@ -26,11 +26,15 @@ Why: toyota-toyota-sienta: ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trail
 
 | Group | Actual | What-if | Last inferred-inactive spell began (what-if) |
 |---|---|---|---|
+| audi-audi-a8l | UNKNOWN | UNKNOWN |  |
+| audi-audi-s3 | UNKNOWN | UNKNOWN |  |
 | bentley-bentley-continental | UNKNOWN | DECLINING |  |
 | bmw-bmw-m2 | ACTIVE | ACTIVE | 2566-01 |
 | bmw-bmw-m3 | ACTIVE | ACTIVE |  |
 | bmw-bmw-m4 | ACTIVE | ACTIVE |  |
 | bmw-bmw-m5 | UNKNOWN | UNKNOWN |  |
+| bmw-x2 | UNKNOWN | INACTIVE_INFERRED | 2566-09 |
+| byd-e6 | UNKNOWN | INACTIVE_INFERRED | 2569-02 |
 | chevrolet-chevrolet-corvette | UNKNOWN | DECLINING |  |
 | chevrolet-trailblazer | UNKNOWN | INACTIVE_INFERRED | 2566-06 |
 | daihatsu-daihatsu-copen | UNKNOWN | UNKNOWN |  |
@@ -51,8 +55,11 @@ Why: toyota-toyota-sienta: ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trail
 | hyundai-genesis-g80 | UNKNOWN | UNKNOWN |  |
 | hyundai-kona | UNKNOWN | UNKNOWN |  |
 | hyundai-tucson | UNKNOWN | UNKNOWN |  |
+| isuzu-isuzu-cab4 | UNKNOWN | UNKNOWN |  |
 | jac-t8 | UNKNOWN | INACTIVE_INFERRED | 2568-02 |
+| jaecoo-jaecoo-j5 | ACTIVE | ACTIVE |  |
 | jaecoo-jaecoo-j6 | ACTIVE | ACTIVE |  |
+| jaecoo-jaecoo-j7 | DECLINING | DECLINING |  |
 | jeep-jeep-gladiator | UNKNOWN | INACTIVE_INFERRED | 2567-09 |
 | kia-k2500 | UNKNOWN | INACTIVE_INFERRED | 2565-09 |
 | lamborghini-lamborghini-temerario | UNKNOWN | UNKNOWN |  |
@@ -63,7 +70,6 @@ Why: toyota-toyota-sienta: ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trail
 | maserati-maserati-mc20 | UNKNOWN | UNKNOWN |  |
 | maserati-maserati-quattroporte | UNKNOWN | UNKNOWN |  |
 | maxus-maxus-v80 | UNKNOWN | INACTIVE_INFERRED | 2565-09 |
-| maxus-mifa-7 | ACTIVE | ACTIVE |  |
 | mazda-mazda-mx-30 | UNKNOWN | UNKNOWN |  |
 | mazda-mazda6e | ACTIVE | ACTIVE |  |
 | mclaren-mclaren-artura | UNKNOWN | UNKNOWN |  |
@@ -91,11 +97,14 @@ Why: toyota-toyota-sienta: ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trail
 | toyota-vios | UNKNOWN | INACTIVE_INFERRED | 2567-01 |
 | volkswagen-volkswagen-caddy | UNKNOWN | UNKNOWN |  |
 | volkswagen-volkswagen-golf | UNKNOWN | UNKNOWN |  |
+| volkswagen-volkswagen-multivan | UNKNOWN | UNKNOWN |  |
 | volkswagen-volkswagen-t-roc | UNKNOWN | UNKNOWN |  |
 | volkswagen-volkswagen-touareg | UNKNOWN | UNKNOWN |  |
+| volkswagen-vw-idbuzz | UNKNOWN | DECLINING |  |
 | volkswagen-vw-t-cross | UNKNOWN | UNKNOWN |  |
 | volkswagen-vw-tiguan | UNKNOWN | UNKNOWN |  |
 | volt-volt-volt | UNKNOWN | DECLINING |  |
 | volvo-volvo-es90 | ACTIVE | ACTIVE |  |
+| wuling-binguo | DECLINING | DECLINING |  |
 | wuling-e10 | UNKNOWN | UNKNOWN |  |
 | zeekr-zeekr-7x | ACTIVE | ACTIVE |  |
