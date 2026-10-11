@@ -40,7 +40,7 @@ def load(path: Path) -> dict:
             raise PackageError(f"{member}: md5 {md5} does not match the package index ({declared})")
     dims = _csv(panels["dims"].read("dims/model_group.csv"))
     id_changes = _csv(outer.read("id_changes.csv"))
-    first, last, total, recent = {}, {}, {}, {}
+    first, last, total, recent, monthly = {}, {}, {}, {}, {}
     trend = _csv(panels["reg_trend"].read("data/reg_trend.csv"))
     periods = sorted({r["period"] for r in trend})
     newest = periods[-1]
@@ -52,7 +52,8 @@ def load(path: Path) -> dict:
         if gid not in last or p > last[gid]:
             last[gid] = p
         total[gid] = total.get(gid, 0.0) + n
+        monthly.setdefault(gid, {})[p] = monthly.get(gid, {}).get(p, 0.0) + n
         if p in last12:
             recent[gid] = recent.get(gid, 0.0) + n
     return {"sha256": digest, "dims": dims, "id_changes": id_changes, "first_seen": first, "last_seen": last, "trend_total": total,
-            "last12": recent, "periods": (periods[0], newest), "index": {k: v for k, v in index.items() if k != "panels"}}
+            "last12": recent, "monthly": monthly, "all_periods": periods, "periods": (periods[0], newest), "index": {k: v for k, v in index.items() if k != "panels"}}

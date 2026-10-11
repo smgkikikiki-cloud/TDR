@@ -1,0 +1,23 @@
+# Market-activity classification policy. ROUTING ONLY: it never decides whether a vehicle identity exists and is never evidence for CREATE / REVIEW / HOLD.
+# Every value is a PROPOSAL until the owner calibrates it on labelled data.
+version: 1
+status: proposal
+zero_streak_months: 4            # latest N complete observed months must each be a TRUE zero
+min_prior_total: 30              # meaningful prior activity: registrations before the streak ...
+min_prior_active_months: 6       # ... spread over at least this many months with >= 1 registration
+active_monthly_min: 5            # a month at or above this counts as active (below = trickle)
+reactivation_monthly_min: 5      # a month must reach this to count toward reactivation; smaller sporadic months reset the run
+reactivation_sustained_months: 3 # consecutive months at/above the threshold required to leave INACTIVE_INFERRED
+reactivated_window_months: 12    # REACTIVATED is reported while the reactivation is this recent
+decline_recent_months: 3
+decline_baseline_months: 9
+decline_ratio: 0.5               # recent monthly mean <= ratio * baseline monthly mean => DECLINING (needs fully known windows)
+lanes:
+  ACTIVE: CURRENT_DISCOVERY
+  DECLINING: CURRENT_DISCOVERY
+  REACTIVATED: CURRENT_DISCOVERY
+  INACTIVE_INFERRED: HISTORICAL_INACTIVE
+  UNKNOWN: ACTIVITY_UNCLASSIFIED
+absent_row:
+  # A missing provider row is a zero ONLY when the provider capability is ABSENT_IS_ZERO, names a coverage_guarantee, and the period lies inside the covered range.
+  confirming_value: ABSENT_IS_ZERO

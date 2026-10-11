@@ -120,6 +120,8 @@ then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writ
 **67 CREATE / 89 REVIEW / 1,044 HOLD** (was 78 / 94 / 1,028); the fuller universe removed 0 CREATEs; 11 were removed by the new rules. `shadow/review/create_adjudication.csv` lists every remaining CREATE with a blank `owner_label` for the owner's truth set (analyst notes are not ground truth). See `shadow/FINDINGS.md` and `shadow/results/…/REPORT.md` §0.
 **Next (separately gated):** owner labels the sheet; false-CREATE rate per class decides any CREATE permission. Persistence stays blocked.
 
+**Market-activity routing (separate step, `market_activity/`, proposal):** states `ACTIVE / DECLINING / INACTIVE_INFERRED / REACTIVATED / UNKNOWN` from a consecutive true-zero streak (4 months) after meaningful prior activity; sporadic sub-threshold registrations do not reactivate; a missing Ice row is a zero only under a confirmed `ABSENT_IS_ZERO` with a named coverage guarantee (Q-ICE-ABSENT-ROW is open, so today it is never a zero). It routes to CURRENT_DISCOVERY / HISTORICAL_INACTIVE / ACTIVITY_UNCLASSIFIED, never changes a Bootstrap outcome, never deletes an identity, and nothing in `engine/`, `providers/` or `contract/` may reference it (tested). Results: `shadow/results/…/market_activity.{md,json}`.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`

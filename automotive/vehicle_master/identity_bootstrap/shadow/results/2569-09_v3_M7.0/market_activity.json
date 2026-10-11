@@ -1,0 +1,676 @@
+{
+ "actual": {
+  "lanes": {
+   "ACTIVITY_UNCLASSIFIED": 60,
+   "CURRENT_DISCOVERY": 7
+  },
+  "scenario": "Ice absent-row semantics UNKNOWN (Q-ICE-ABSENT-ROW open): a missing row is never a zero",
+  "states": {
+   "ACTIVE": 6,
+   "DECLINING": 1,
+   "UNKNOWN": 60
+  }
+ },
+ "all_groups_actual": {
+  "lanes": {
+   "ACTIVITY_UNCLASSIFIED": 949,
+   "CURRENT_DISCOVERY": 251
+  },
+  "states": {
+   "ACTIVE": 219,
+   "DECLINING": 32,
+   "UNKNOWN": 949
+  }
+ },
+ "create_candidates": 67,
+ "explicit_zero_rows_in_package": 0,
+ "package_periods": [
+  "2564-01",
+  "2569-09",
+  69
+ ],
+ "per_group": {
+  "bentley-bentley-continental": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "bmw-bmw-m2": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": "2566-01",
+   "reason_actual": "active months in the trailing window; no decline",
+   "what_if": "ACTIVE"
+  },
+  "bmw-bmw-m3": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; no decline",
+   "what_if": "ACTIVE"
+  },
+  "bmw-bmw-m4": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; decline not assessable (unknown months in the window)",
+   "what_if": "ACTIVE"
+  },
+  "bmw-bmw-m5": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "chevrolet-chevrolet-corvette": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "chevrolet-trailblazer": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-06",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "daihatsu-daihatsu-copen": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "daihatsu-daihatsu-move": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "ferrari-ferrari-488": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-08",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "ferrari-ferrari-portofino": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "ferrari-ferrari-purosangue": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "ford-ford-focus": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "foton-bj1041": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-06",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "foton-eview": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; decline not assessable (unknown months in the window)",
+   "what_if": "ACTIVE"
+  },
+  "honda-brio": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2568-01",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "honda-honda-acty": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "honda-honda-amaze": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "honda-honda-fit": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "honda-honda-freed": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "honda-honda-n-box": {
+   "actual": "DECLINING",
+   "inactive_since_what_if": "2566-10",
+   "reason_actual": "trickle: trailing months known, below the active threshold, not a full zero streak",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "honda-honda-stepwagon": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-10",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "honda-jazz": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "honda-prelude": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "honda-super-one": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "hyundai-genesis-g80": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "hyundai-kona": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "hyundai-tucson": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "jac-t8": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2568-02",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "jaecoo-jaecoo-j6": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; no decline",
+   "what_if": "ACTIVE"
+  },
+  "jeep-jeep-gladiator": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-09",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "kia-k2500": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2565-09",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "lamborghini-lamborghini-temerario": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "land-rover-land-rover-discovery": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "lexus-lexus-rc": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "lotus-emira": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "maserati-maserati-ghibli": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-02",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "maserati-maserati-mc20": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "maserati-maserati-quattroporte": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "mclaren-mclaren-artura": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "nissan-leaf": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-10",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "nissan-nissan-fairlady": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "nissan-nissan-march": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-04",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "nissan-note": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-02",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "nissan-urvan": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-05",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "peugeot-peugeot-408": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2569-04",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "rolls-royce-rolls-royce-cullinan": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-09",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "rolls-royce-rolls-royce-phantom": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "rolls-royce-rolls-royce-spectre": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "seres-seres-ec31": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2568-05",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "sokon-crc50": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-03",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "subaru-subaru-wrx": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "suzuki-apv": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "suzuki-grand-vitara": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "suzuki-suzuki-spacia": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "tata-tata-xenon": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2566-01",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "toyota-toyota-roomy": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "toyota-toyota-sienta": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-08",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "toyota-toyota-tr": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2569-05",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "toyota-vios": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": "2567-01",
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "INACTIVE_INFERRED"
+  },
+  "volkswagen-volkswagen-caddy": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "volkswagen-volkswagen-golf": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "volkswagen-volkswagen-touareg": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "volkswagen-vw-tiguan": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "volt-volt-volt": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "DECLINING"
+  },
+  "wuling-e10": {
+   "actual": "UNKNOWN",
+   "inactive_since_what_if": null,
+   "reason_actual": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+   "what_if": "UNKNOWN"
+  },
+  "zeekr-zeekr-7x": {
+   "actual": "ACTIVE",
+   "inactive_since_what_if": null,
+   "reason_actual": "active months in the trailing window; no decline",
+   "what_if": "ACTIVE"
+  }
+ },
+ "policy": {
+  "absent_row": {
+   "confirming_value": "ABSENT_IS_ZERO"
+  },
+  "active_monthly_min": 5,
+  "decline_baseline_months": 9,
+  "decline_ratio": 0.5,
+  "decline_recent_months": 3,
+  "lanes": {
+   "ACTIVE": "CURRENT_DISCOVERY",
+   "DECLINING": "CURRENT_DISCOVERY",
+   "INACTIVE_INFERRED": "HISTORICAL_INACTIVE",
+   "REACTIVATED": "CURRENT_DISCOVERY",
+   "UNKNOWN": "ACTIVITY_UNCLASSIFIED"
+  },
+  "min_prior_active_months": 6,
+  "min_prior_total": 30,
+  "reactivated_window_months": 12,
+  "reactivation_monthly_min": 5,
+  "reactivation_sustained_months": 3,
+  "status": "proposal",
+  "version": 1,
+  "zero_streak_months": 4
+ },
+ "representative": {
+  "honda-jazz": {
+   "actual": {
+    "lane": "ACTIVITY_UNCLASSIFIED",
+    "reason": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+    "state": "UNKNOWN"
+   },
+   "in_create_set": true,
+   "last_24_months": {
+    "2567-10": 1.0,
+    "2567-11": 2.0,
+    "2567-12": 4.0,
+    "2568-01": null,
+    "2568-02": 1.0,
+    "2568-03": 2.0,
+    "2568-04": null,
+    "2568-05": 1.0,
+    "2568-06": 1.0,
+    "2568-07": null,
+    "2568-08": 1.0,
+    "2568-09": null,
+    "2568-10": null,
+    "2568-11": 1.0,
+    "2568-12": null,
+    "2569-01": null,
+    "2569-02": null,
+    "2569-03": 1.0,
+    "2569-04": null,
+    "2569-05": 1.0,
+    "2569-06": 1.0,
+    "2569-07": null,
+    "2569-08": 1.0,
+    "2569-09": null
+   },
+   "name": "Jazz",
+   "what_if_absent_is_zero": {
+    "lane": "CURRENT_DISCOVERY",
+    "reason": "trickle: trailing months known, below the active threshold, not a full zero streak",
+    "state": "DECLINING"
+   }
+  },
+  "nissan-nissan-march": {
+   "actual": {
+    "lane": "ACTIVITY_UNCLASSIFIED",
+    "reason": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+    "state": "UNKNOWN"
+   },
+   "in_create_set": true,
+   "last_24_months": {
+    "2567-10": null,
+    "2567-11": null,
+    "2567-12": null,
+    "2568-01": null,
+    "2568-02": 1.0,
+    "2568-03": null,
+    "2568-04": null,
+    "2568-05": 1.0,
+    "2568-06": null,
+    "2568-07": null,
+    "2568-08": null,
+    "2568-09": null,
+    "2568-10": null,
+    "2568-11": null,
+    "2568-12": null,
+    "2569-01": null,
+    "2569-02": null,
+    "2569-03": null,
+    "2569-04": null,
+    "2569-05": null,
+    "2569-06": 1.0,
+    "2569-07": null,
+    "2569-08": 1.0,
+    "2569-09": null
+   },
+   "name": "Nissan March",
+   "what_if_absent_is_zero": {
+    "lane": "HISTORICAL_INACTIVE",
+    "reason": "true-zero streak of 4+ months since 2567-04 after meaningful prior activity; no sustained reactivation",
+    "state": "INACTIVE_INFERRED"
+   }
+  },
+  "nissan-note": {
+   "actual": {
+    "lane": "ACTIVITY_UNCLASSIFIED",
+    "reason": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+    "state": "UNKNOWN"
+   },
+   "in_create_set": true,
+   "last_24_months": {
+    "2567-10": null,
+    "2567-11": null,
+    "2567-12": null,
+    "2568-01": null,
+    "2568-02": 1.0,
+    "2568-03": null,
+    "2568-04": null,
+    "2568-05": null,
+    "2568-06": null,
+    "2568-07": null,
+    "2568-08": null,
+    "2568-09": null,
+    "2568-10": null,
+    "2568-11": null,
+    "2568-12": 1.0,
+    "2569-01": null,
+    "2569-02": null,
+    "2569-03": null,
+    "2569-04": null,
+    "2569-05": null,
+    "2569-06": null,
+    "2569-07": null,
+    "2569-08": 1.0,
+    "2569-09": null
+   },
+   "name": "Nissan Note",
+   "what_if_absent_is_zero": {
+    "lane": "HISTORICAL_INACTIVE",
+    "reason": "true-zero streak of 4+ months since 2567-02 after meaningful prior activity; no sustained reactivation",
+    "state": "INACTIVE_INFERRED"
+   }
+  },
+  "toyota-toyota-sienta": {
+   "actual": {
+    "lane": "ACTIVITY_UNCLASSIFIED",
+    "reason": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+    "state": "UNKNOWN"
+   },
+   "in_create_set": true,
+   "last_24_months": {
+    "2567-10": null,
+    "2567-11": null,
+    "2567-12": null,
+    "2568-01": null,
+    "2568-02": null,
+    "2568-03": 1.0,
+    "2568-04": null,
+    "2568-05": 2.0,
+    "2568-06": 2.0,
+    "2568-07": null,
+    "2568-08": 2.0,
+    "2568-09": null,
+    "2568-10": 1.0,
+    "2568-11": null,
+    "2568-12": null,
+    "2569-01": null,
+    "2569-02": null,
+    "2569-03": null,
+    "2569-04": 3.0,
+    "2569-05": 1.0,
+    "2569-06": null,
+    "2569-07": null,
+    "2569-08": 1.0,
+    "2569-09": null
+   },
+   "name": "Toyota Sienta",
+   "what_if_absent_is_zero": {
+    "lane": "HISTORICAL_INACTIVE",
+    "reason": "true-zero streak of 4+ months since 2567-08 after meaningful prior activity; no sustained reactivation",
+    "state": "INACTIVE_INFERRED"
+   }
+  },
+  "toyota-vios": {
+   "actual": {
+    "lane": "ACTIVITY_UNCLASSIFIED",
+    "reason": "ZERO_SEMANTICS_UNCONFIRMED: missing rows in the trailing window are not guaranteed zeros and nothing there reaches the active threshold",
+    "state": "UNKNOWN"
+   },
+   "in_create_set": true,
+   "last_24_months": {
+    "2567-10": 2.0,
+    "2567-11": null,
+    "2567-12": null,
+    "2568-01": null,
+    "2568-02": 2.0,
+    "2568-03": null,
+    "2568-04": null,
+    "2568-05": null,
+    "2568-06": 2.0,
+    "2568-07": 7.0,
+    "2568-08": 14.0,
+    "2568-09": null,
+    "2568-10": 6.0,
+    "2568-11": 1.0,
+    "2568-12": null,
+    "2569-01": null,
+    "2569-02": null,
+    "2569-03": null,
+    "2569-04": null,
+    "2569-05": 1.0,
+    "2569-06": null,
+    "2569-07": null,
+    "2569-08": null,
+    "2569-09": null
+   },
+   "name": "Vios",
+   "what_if_absent_is_zero": {
+    "lane": "HISTORICAL_INACTIVE",
+    "reason": "true-zero streak of 4+ months since 2567-01 after meaningful prior activity; no sustained reactivation",
+    "state": "INACTIVE_INFERRED"
+   }
+  }
+ },
+ "what_if_absent_is_zero": {
+  "lanes": {
+   "ACTIVITY_UNCLASSIFIED": 31,
+   "CURRENT_DISCOVERY": 14,
+   "HISTORICAL_INACTIVE": 22
+  },
+  "scenario": "NOT AUTHORITATIVE: assumes every missing row in 2564-01..2569-09 is a guaranteed zero",
+  "states": {
+   "ACTIVE": 6,
+   "DECLINING": 8,
+   "INACTIVE_INFERRED": 22,
+   "UNKNOWN": 31
+  }
+ }
+}
