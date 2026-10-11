@@ -38,7 +38,9 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 - C03 blocks billing/entitlement mutations, not Vehicle Identity or PDI pure-function fixtures.
 - C04 blocks publishable CTPDI meaning, not inspecting raw CN/TH price evidence.
 
-**Owner question B:** Is Competitive Pressure the first Layer 3 product to pilot, while Spatial and Network Watch are staged and complete in final UX design? Any task can remain a proposal without imposing a timeline.
+**Owner decision recorded 2026-10-11 — APPROVED, LIMITED TO PRODUCT ROLLOUT ORDER:** Competitive Pressure is the **first** Layer 3 product to pilot/release; **Dealer Geography follows**, then **Competitive Network Watch**. All three must advance progressively and follow through to delivery, rather than leaving Geography/Network Watch as indefinite backlog ideas. Shared Spatial workspace is still one product workspace with two local modes. **Schedule interpretation:** staged customer release **does not require sequential design or foundational engineering**: Dealer Master, spatial contracts, network event evidence and UX can progress in parallel while Competitive Pressure is built. No fixed dates, formula adoption, production activation, gate overrides or autonomous work have been approved by this statement. The order of the latter two is the working interpretation of "ไล่ตามมาเรื่อยๆ", consistent with prior V1.5/V2 design handoff, and remains open to revision if the owner directs a different order.
+
+**Still to review for Pass B:** cross-project integration milestones, exact dependency gates, and timelines. **Still to review for Pass A:** remaining workstream functional boundaries.
 
 ### PASS C — Who controls what?
 
@@ -67,7 +69,7 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 | Pass | Owner verdict | Notes |
 | --- | --- | --- |
 | A — Product functions | **PENDING** | |
-| B — Roadmap ordering / first Layer 3 slice | **PENDING** | |
+| B — Roadmap ordering / first Layer 3 slice | **PARTIALLY APPROVED** | Competitive Pressure first; Dealer Geography and Network Watch follow progressively; dependencies/dates pending |
 | C — Governance roles (design only) | **PENDING** | |
 
 **After Pass A:** record approved differences as narrow patches in this draft PR; do not mark unrelated decisions approved.  
