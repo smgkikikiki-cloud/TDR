@@ -106,22 +106,192 @@ def test_the_honda_synonyms_and_the_digit_fuzzy_corrections_are_in_the_export(ex
 
 def test_the_universe_matches_the_committed_shadow_input_without_the_archived_package(export):
     rows = list(csv.DictReader((RESULTS / "decisions.csv").open(encoding="utf-8")))
-    ir_export.verify_universe(export, rows, tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True)["identities"])
+    ir_export.verify_universe(export, rows, tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True))
+
+
+def catalog():
+    import copy
+    return copy.deepcopy(tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True))
 
 
 def test_a_different_ice_or_tdr_universe_is_refused(export):
     rows = list(csv.DictReader((RESULTS / "decisions.csv").open(encoding="utf-8")))
-    ids = tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True)["identities"]
+    cat = catalog()
     with pytest.raises(ExportError, match="Ice universe differs"):
-        ir_export.verify_universe(export, rows[:-1], ids)
+        ir_export.verify_universe(export, rows[:-1], cat)
     renamed = [dict(r) for r in rows]
     renamed[5]["model_name"] += " x"
     with pytest.raises(ExportError, match="SUBJECT_DIFFERS"):
-        ir_export.verify_universe(export, renamed, ids)
+        ir_export.verify_universe(export, renamed, cat)
+    short = {**cat, "identities": cat["identities"][:-1]}
     with pytest.raises(ExportError, match="TDR universe differs"):
-        ir_export.verify_universe(export, rows, ids[:-1])
-    with pytest.raises(ExportError, match="TDR target differs"):
-        ir_export.verify_universe(export, rows, [{**ids[0], "name_en": ids[0]["name_en"] + "!"}, *ids[1:]])
+        ir_export.verify_universe(export, rows, short)
+
+
+# ------------------------------------------------------------------------------------------------------------- finding 1: the TDR fields the routing reads are bound to the producer snapshot
+def verify(export, mutate):
+    rows = list(csv.DictReader((RESULTS / "decisions.csv").open(encoding="utf-8")))
+    cat = catalog()
+    mutate(cat)
+    ir_export.verify_universe(export, rows, cat)
+
+
+def test_the_bound_tdr_snapshot_is_vendored_hash_checked_and_named_by_the_universe_id(export):
+    for n in ir_export.TDR_INPUT_FILES:
+        assert sha((SRC / "tdr_inputs" / n).read_bytes()) == export.manifest["sources"]["tdr_inputs"][n]
+    assert export.manifest["universes"]["tdr"]["id"].endswith(export.manifest["sources"]["tdr_inputs"]["tdr_models.json"][:16])
+    assert len(export.tdr_models) == 323 and len(export.tdr_brands) == 62 and set(export.allowed_statuses) == {"CURRENT", "HISTORICAL", "UNVERIFIED"}
+    assert export.tdr_models["audi.a8"]["aliases"] == ["A8L", "A8"]
+    assert ir_export.alias_binding_summary(export)["alias_strings"] == 662
+
+
+def test_the_real_catalog_matches_the_bound_snapshot_on_brand_status_and_aliases(export):
+    verify(export, lambda cat: None)
+
+
+@pytest.mark.parametrize("mutate,match", [
+    (lambda c: c["aliases"].__setitem__("audi.a8", ["A8"]), "TDR_ALIASES_DIFFER: 'audi.a8'"),                                   # an alias removed: the A8L collision would vanish
+    (lambda c: c["aliases"].__setitem__("audi.a8", ["A8L", "A8", "A8 Long"]), "TDR_ALIASES_DIFFER"),                              # an alias added
+    (lambda c: c["aliases"].__setitem__("wuling.wuling_bingo", ["bingo"]), "TDR_ALIASES_DIFFER"),
+    (lambda c: c["aliases"].__setitem__("audi.a1", ["A1L"]), "TDR_ALIASES_DIFFER"),                                             # an alias on a model that had none
+    (lambda c: c.__setitem__("historical", [*c["historical"], "audi.a8"]), "TDR_STATUS_DIFFERS: 'audi.a8'"),                    # CURRENT -> HISTORICAL
+    (lambda c: c.__setitem__("historical", c["historical"][1:]), "TDR_STATUS_DIFFERS"),                                         # HISTORICAL -> CURRENT
+    (lambda c: next(i for i in c["identities"] if i["canonical_id"] == "audi.a8").__setitem__("brand_id", "bmw"), "TDR_BRAND_DIFFERS: 'audi.a8'"),
+    (lambda c: next(i for i in c["identities"] if i["canonical_id"] == "audi.a8").__setitem__("name_en", "A8 L"), "TDR target differs"),
+    (lambda c: next(i for i in c["identities"] if i["canonical_id"] == "audi.a8").__setitem__("deleted", True), "TDR target differs"),
+    (lambda c: c["brands"]["audi"].__setitem__("name_en", "Audi AG"), "TDR_BRAND_DIFFERS: 'audi'"),
+    (lambda c: c["brands"].pop("audi"), "TDR brand universe differs"),
+])
+def test_a_changed_brand_status_or_alias_fails_closed_instead_of_changing_the_routing(export, mutate, match):
+    with pytest.raises(ExportError, match=match):
+        verify(export, mutate)
+
+
+def test_a_changed_alias_would_otherwise_have_changed_owner_review_routing(export):
+    """Why the binding matters: the catalog-alias evidence reads exactly these aliases. Removing 'A8L' from audi.a8 would drop Audi A8L out of mandatory owner review."""
+    from identity_bootstrap.routing import signals
+    cat = catalog()
+    subs = [{"entity_id": "audi-audi-a8l", "display_name": "Audi A8L", "identity_status": "settled", "relations": [], "brand": {"raw": "AUDI", "brand_id": "audi", "relation": "EXACT", "spellings": ["Audi", "AUDI"]}}]
+    from identity_bootstrap.engine.lexical import Lexicon
+    from identity_bootstrap.contract import loader
+    lex = Lexicon(loader.load_policy())
+    hit = signals.catalog_alias_evidence(subs, cat, lambda g: ["audi.a8"], lex.tokens, ["audi-audi-a8l"])
+    assert hit["audi-audi-a8l"][0]["alias"] == "A8L"
+    cat["aliases"]["audi.a8"] = ["A8"]
+    assert signals.catalog_alias_evidence(subs, cat, lambda g: ["audi.a8"], lex.tokens, ["audi-audi-a8l"]) == {}
+    with pytest.raises(ExportError):
+        verify(export, lambda c: c["aliases"].__setitem__("audi.a8", ["A8"]))              # ...which is exactly what the binding refuses
+
+
+def test_the_vendored_tdr_snapshot_cannot_be_altered_or_swapped(tmp_path):
+    for n in ir_export.TDR_INPUT_FILES:
+        d = copy_export(tmp_path / n.replace(".", "_"))
+        blob = bytearray((d / "tdr_inputs" / n).read_bytes())
+        blob[len(blob) // 2] ^= 0x01
+        (d / "tdr_inputs" / n).write_bytes(bytes(blob))
+        with pytest.raises(ExportError, match="tdr_inputs"):
+            ir_export.load(d)
+    d = copy_export(tmp_path / "gone")
+    (d / "tdr_inputs" / "tdr_models.json").unlink()
+    with pytest.raises(ExportError, match="missing"):
+        ir_export.load(d)
+
+
+def test_a_snapshot_edited_consistently_with_its_manifest_hash_is_still_refused_by_the_universe_id(tmp_path):
+    d = copy_export(tmp_path)
+    models = json.loads((d / "tdr_inputs" / "tdr_models.json").read_text(encoding="utf-8"))
+    models[0]["aliases"] = [*models[0]["aliases"], "extra"]
+    blob = json.dumps(models, ensure_ascii=False).encode("utf-8")
+    (d / "tdr_inputs" / "tdr_models.json").write_bytes(blob)
+    m = json.loads((d / "MANIFEST.json").read_text(encoding="utf-8"))
+    m["sources"]["tdr_inputs"]["tdr_models.json"] = sha(blob)
+    mb = (json.dumps(m, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode()
+    (d / "MANIFEST.json").write_bytes(mb)
+    with pytest.raises(ExportError, match="TDR universe id|does not name"):
+        ir_export.load(d, pin_manifest_sha256=sha(mb))
+
+
+def test_targets_that_disagree_with_the_bound_snapshot_are_refused(tmp_path):
+    d = copy_export(tmp_path)
+    mh = rewrite(d, "tdr_targets.jsonl", lambda r: [{**x, "status": "HISTORICAL"} if x["id"] == "audi.a8" else x for x in r])
+    with pytest.raises(ExportError, match="differs from the bound TDR snapshot"):
+        ir_export.load(d, pin_manifest_sha256=mh)
+
+
+# ------------------------------------------------------------------------------------------------------------- finding 2: brand parity against the export's brand relations and pools
+def first_subject(export, brand_id, only=True):
+    for sid in export.subjects:
+        pool = export.pool(sid)
+        brands = {export.tdr_models[t]["brand_id"] for t in pool}
+        if pool and ((brands == {brand_id}) if only else (brand_id in brands)):
+            return sid
+    raise AssertionError(brand_id)
+
+
+def test_the_correct_brand_resolution_has_no_mismatch_on_real_subjects(export):
+    sid = first_subject(export, "honda")
+    assert ir_export.brand_pool_mismatches({"brand_id": "honda", "relation": "EXACT"}, export.pool(sid), export, sid) == []
+    sid = first_subject(export, "changan", only=False)
+    family = [{"brand_id": "deepal", "relation": "ALIAS_RELABEL", "spellings": ["Deepal"]}]
+    assert ir_export.brand_pool_mismatches({"brand_id": "changan", "relation": "EXACT", "family": family}, export.pool(sid), export, sid) == []
+
+
+def test_a_wrong_but_non_null_brand_resolution_is_a_mismatch(export):
+    sid = first_subject(export, "honda")
+    out = ir_export.brand_pool_mismatches({"brand_id": "toyota", "relation": "EXACT"}, export.pool(sid), export, sid)
+    assert out and all(x.startswith("BRAND_RESOLUTION_VS_POOL") for x in out)
+    assert any("is brand 'honda', but the shadow resolved 'toyota'" in x for x in out) and any("lacks allowed model(s) of resolved brand 'toyota'" in x for x in out)
+
+
+def test_a_declared_family_must_match_the_export_and_an_undeclared_one_is_a_mismatch(export):
+    sid = first_subject(export, "changan", only=False)
+    pool = export.pool(sid)
+    assert any(export.ice_tdr[f"{sid}|{t}"]["br"] == "ALIAS_RELABEL" for t in pool)
+    no_family = ir_export.brand_pool_mismatches({"brand_id": "changan", "relation": "EXACT"}, pool, export, sid)
+    assert any("deepal" in x and "shadow resolved 'changan'" in x for x in no_family)
+    wrong_relation = ir_export.brand_pool_mismatches({"brand_id": "changan", "relation": "EXACT", "family": [{"brand_id": "deepal", "relation": "ALIAS_SAME"}]}, pool, export, sid)
+    assert any("export brand relation ALIAS_RELABEL, the shadow says ALIAS_SAME" in x for x in wrong_relation)
+
+
+def test_a_relation_that_contradicts_the_export_brand_relation_is_a_mismatch(export):
+    sid = first_subject(export, "honda")
+    out = ir_export.brand_pool_mismatches({"brand_id": "honda", "relation": "ALIAS_SAME"}, export.pool(sid), export, sid)
+    assert out and any("export brand relation EXACT, the shadow says ALIAS_SAME" in x for x in out)
+
+
+def test_resolved_with_an_empty_pool_and_unresolved_with_a_pool_stay_unresolved_with_the_exact_reason(export):
+    empty = next(s for s in export.subjects if not export.pool(s))
+    assert ir_export.brand_pool_mismatches({"brand_id": "honda", "relation": "EXACT"}, [], export, empty)[0].endswith("but the export pool is empty (brand relation not allowed)")
+    sid = first_subject(export, "honda")
+    assert ir_export.brand_pool_mismatches({"brand_id": None, "relation": "NOT_IN_TDR"}, export.pool(sid), export, sid) == ["BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"]
+    assert ir_export.brand_pool_mismatches({"brand_id": None, "relation": "NOT_IN_TDR"}, [], export, empty) == []
+
+
+def test_a_pool_that_lacks_an_allowed_model_of_the_resolved_brand_is_a_mismatch(export):
+    sid = first_subject(export, "honda")
+    cut = export.pool(sid)[1:]
+    out = ir_export.brand_pool_mismatches({"brand_id": "honda", "relation": "EXACT"}, cut, export, sid)
+    assert any("lacks allowed model(s) of resolved brand 'honda'" in x for x in out), out
+
+
+def test_deleted_and_out_of_pool_status_models_are_not_demanded_of_the_pool():
+    exp, ids, _ = synthetic_export()
+    exp.tdr_models = {"x.m0": {"brand_id": "x", "status": "CURRENT", "deleted": False}, "x.m1": {"brand_id": "x", "status": "CURRENT", "deleted": True},
+                      "x.m2": {"brand_id": "x", "status": "WITHDRAWN", "deleted": False}, **{f"x.m{n}": {"brand_id": "y", "status": "CURRENT", "deleted": False} for n in range(3, 9)}}
+    exp.allowed_statuses = ("CURRENT", "HISTORICAL", "UNVERIFIED")
+    for k, r in exp.ice_tdr.items():
+        r["br"] = "EXACT"
+    pool = ["x.m0"]
+    assert ir_export.brand_pool_mismatches({"brand_id": "x", "relation": "EXACT"}, pool, exp, ids[0]) == []
+    exp.tdr_models["x.m1"]["deleted"] = False
+    assert any("lacks allowed model" in r for r in ir_export.brand_pool_mismatches({"brand_id": "x", "relation": "EXACT"}, pool, exp, ids[0]))
+
+
+@pytest.mark.skipif(not (RESULTS / "summary.json").exists(), reason="results not committed")
+def test_the_eight_unresolved_subjects_are_preserved_and_the_report_binds_the_aliases():
+    s = json.loads((RESULTS / "summary.json").read_text(encoding="utf-8"))["m5"]["parity"]
+    assert (s["subjects"]["resolved"], s["subjects"]["unresolved"]) == (1192, 8)
+    assert s["tdr_universe_binding"]["alias_strings"] == 662 and s["tdr_universe_binding"]["models_with_aliases"] == 296 and s["tdr_universe_binding"]["statuses"] == {"CURRENT": 318, "HISTORICAL": 5}
 
 
 # ------------------------------------------------------------------------------------------------------------- fail closed on altered / mismatched data

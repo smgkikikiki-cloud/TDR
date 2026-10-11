@@ -1803,8 +1803,8 @@
  ],
  "inputs": {
   "engine_seconds": {
-   "A": 0.2,
-   "B": 0.24
+   "A": 0.25,
+   "B": 0.27
   },
   "groups": 1200,
   "package_index": {
@@ -12052,6 +12052,21 @@
      "maxus-maxus-epc1a": [
       "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
      ]
+    }
+   },
+   "tdr_universe_binding": {
+    "alias_strings": 662,
+    "brands": 62,
+    "models": 323,
+    "models_with_aliases": 296,
+    "statuses": {
+     "CURRENT": 318,
+     "HISTORICAL": 5
+    },
+    "tdr_inputs_sha256": {
+     "ice_brand_aliases.json": "a72e4ec7e26426dc13bc1c5dc46624bac6b50b61232a802a1d27dfacd93939a8",
+     "tdr_brands.json": "79d0df555f0b1cb841cd88ef0232e33ef8f58f2527a06ac5959d98773ba66809",
+     "tdr_models.json": "e75f970a6957fd42e5f9aaed01127e18efd9f3e09e4b88003a2fd81995c55768"
     }
    }
   },

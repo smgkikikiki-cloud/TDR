@@ -85,6 +85,28 @@ def test_candidate_pool_parity_and_the_unresolved_subjects_are_reported_with_exa
     assert listed == ids
 
 
+def test_the_tdr_universe_binding_and_the_eight_unresolved_subjects_are_in_the_report(summary):
+    b = summary["m5"]["parity"]["tdr_universe_binding"]
+    assert (b["models"], b["models_with_aliases"], b["alias_strings"], b["brands"]) == (323, 296, 662, 62) and b["statuses"] == {"CURRENT": 318, "HISTORICAL": 5}
+    assert b["tdr_inputs_sha256"] == {n: ir_export.load().manifest["sources"]["tdr_inputs"][n] for n in ir_export.TDR_INPUT_FILES}
+    sub = summary["m5"]["parity"]["subjects"]
+    assert (sub["resolved"], sub["unresolved"]) == (1192, 8)
+
+
+def test_the_committed_catalog_aliases_used_for_routing_equal_the_bound_snapshot(adj):
+    """The nine OWNER_REVIEW alias cases read these aliases; they must come from the hash-bound snapshot, not a drifting catalog."""
+    from identity_bootstrap.shadow import run as shadow_run, tdr_catalog
+    export = ir_export.load()
+    cat = tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True)
+    ir_export.verify_universe(export, rows(RESULTS / "decisions.csv"), cat)
+    for r in adj:
+        if "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS" in r["review_routing_flags"]:
+            for part in r["review_routing_evidence"].split("TDR_CATALOG_ALIAS_EQUALS_PROVIDER_NAME(")[1:]:
+                cid = part.split("existing_identity=")[1].split(",")[0]
+                alias = part.split("alias=")[1].split(",")[0]
+                assert alias.casefold() in [a.casefold() for a in export.tdr_models[cid]["aliases"]], (r["external_id"], cid, alias)
+
+
 def test_dry_run_vs_bootstrap_is_reported_separately(summary):
     dr = summary["m5"]["dry_run_vs_bootstrap"]
     assert dr["cross_tab"]["IR NO_CANDIDATE -> Bootstrap CREATE_IDENTITY"] == 82 and dr["cross_tab"]["IR AUTO -> Bootstrap HOLD"] == 69

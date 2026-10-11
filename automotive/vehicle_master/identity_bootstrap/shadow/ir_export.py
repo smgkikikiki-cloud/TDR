@@ -29,6 +29,8 @@ RELATIONS = ("EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY",
 FLIP = {"SUBJECT_COARSER": "SUBJECT_FINER", "SUBJECT_FINER": "SUBJECT_COARSER"}
 DATA_FILES = ("ice_subjects.jsonl", "tdr_targets.jsonl", "pairs_ice_ice.jsonl", "pairs_ice_tdr.jsonl")
 STATIC_FILES = ("CONSUMER_CONTRACT.md", "relation_export.schema.json")
+#: The producer's TDR snapshot inputs, vendored unchanged and bound by MANIFEST.sources.tdr_inputs: they carry what the routing actually reads (brand, status, deleted, aliases).
+TDR_INPUT_FILES = ("tdr_models.json", "tdr_brands.json", "ice_brand_aliases.json")
 BRAND_RELATIONS = ("EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED")
 
 
@@ -46,8 +48,11 @@ def _need(cond: bool, msg: str) -> None:
 
 
 class RelationExport:
-    def __init__(self, manifest: dict, subjects: dict, tdr: dict, ice_ice: dict, ice_tdr: dict):
+    def __init__(self, manifest: dict, subjects: dict, tdr: dict, ice_ice: dict, ice_tdr: dict, tdr_models: dict | None = None, tdr_brands: dict | None = None, allowed_statuses: tuple = ()):
         self.manifest, self.subjects, self.tdr, self.ice_ice, self.ice_tdr = manifest, subjects, tdr, ice_ice, ice_tdr
+        self.tdr_models = tdr_models or {}              # canonical_id -> the producer's TDR model record (brand_id, name_en, status, deleted, aliases), hash-bound
+        self.tdr_brands = tdr_brands or {}              # brand canonical_id -> the producer's TDR brand record
+        self.allowed_statuses = tuple(allowed_statuses)
         self.consulted_ice_ice: set[str] = set()       # every key a caller actually read: lets a run PROVE it read the whole evaluated population
         self.consulted_ice_tdr: set[str] = set()
         self.by_brand: dict[str, list[str]] = {}
@@ -108,6 +113,7 @@ def load(directory: Path = DIR, pin: dict | None = None, pin_manifest_sha256: st
     pin_manifest = pin_manifest_sha256 or PIN_MANIFEST_SHA256
     try:
         raw = {n: (directory / n).read_bytes() for n in ("MANIFEST.json", *DATA_FILES, *STATIC_FILES)}
+        raw.update({f"tdr_inputs/{n}": (directory / "tdr_inputs" / n).read_bytes() for n in TDR_INPUT_FILES})
     except OSError as e:
         raise ExportError(f"export file missing: {e}") from e
     # 1. manifest and versions (consumer contract section 3, items 1-3)
@@ -127,6 +133,11 @@ def load(directory: Path = DIR, pin: dict | None = None, pin_manifest_sha256: st
     _need(m["universes"]["ice"]["id"] == pin["ice_universe_id"], "Ice universe id differs from the pin")
     _need(m["sources"]["ice_package"]["sha256"] == pin["ice_package_sha256"], "Ice package sha256 differs from the pin")
     _need(m["universes"]["tdr"]["id"] == pin["tdr_universe_id"], "TDR universe id differs from the pin")
+    # the producer's TDR snapshot: hash-bound, and it must be what the TDR universe id names (consumer contract section 3, item 5)
+    for n in TDR_INPUT_FILES:
+        _need(_sha(raw[f"tdr_inputs/{n}"]) == m["sources"]["tdr_inputs"][n], f"tdr_inputs/{n}: sha256 differs from MANIFEST.sources.tdr_inputs")
+    _need(pin["tdr_universe_id"] == "tdr_vehicle_models:sha256-" + m["sources"]["tdr_inputs"]["tdr_models.json"][:16], "the TDR universe id does not name tdr_models.json")
+    tdr_models_l, tdr_brands_l = json.loads(raw["tdr_inputs/tdr_models.json"]), json.loads(raw["tdr_inputs/tdr_brands.json"])
     # records
     subs_l, tdr_l = _read_lines(raw["ice_subjects.jsonl"], "ice_subjects"), _read_lines(raw["tdr_targets.jsonl"], "tdr_targets")
     ii_l, it_l = _read_lines(raw["pairs_ice_ice.jsonl"], "pairs_ice_ice"), _read_lines(raw["pairs_ice_tdr.jsonl"], "pairs_ice_tdr")
@@ -178,17 +189,81 @@ def load(directory: Path = DIR, pin: dict | None = None, pin_manifest_sha256: st
         empty += not pool
     _need(empty == m["populations"]["ice_tdr"]["subjects_with_empty_pool"], "empty-pool count differs")
     _need(max(len(s["pool"]) for s in subs_l) == m["populations"]["ice_tdr"]["max_pool_size"], "max pool size differs")
-    return RelationExport(m, subjects, tdr, {r["k"]: r for r in ii_l}, {r["k"]: r for r in it_l})
+    models = {x["canonical_id"]: x for x in tdr_models_l}
+    brands = {x["canonical_id"]: x for x in tdr_brands_l}
+    _need(set(models) == set(tdr) and len(models) == len(tdr_models_l), "tdr_models.json and tdr_targets.jsonl are different universes")
+    bname = {k: b["name_en"] for k, b in brands.items()}
+    for cid, x in models.items():
+        t = tdr[cid]
+        _need(t["name"] == x["name_en"] and t["status"] == x["status"] and t["deleted"] == x["deleted"] and t["brand"] == bname.get(x["brand_id"]), f"tdr_targets.jsonl differs from the bound TDR snapshot for {cid!r}")
+    return RelationExport(m, subjects, tdr, {r["k"]: r for r in ii_l}, {r["k"]: r for r in it_l}, models, brands, tuple(sorted(allowed_status)))
 
 
-def verify_universe(export: RelationExport, ice_rows: list[dict], tdr_identities: list[dict]) -> None:
-    """The shadow's own input must be exactly the export's universes (consumer contract section 6 item 2): same Ice groups with the same name and brand, same TDR models."""
+def _alias_multiset(aliases) -> list[str]:
+    return sorted(a.strip() for a in aliases if a and a.strip())
+
+
+def verify_universe(export: RelationExport, ice_rows: list[dict], catalog: dict) -> None:
+    """The shadow's own input must be exactly the export's universes (consumer contract section 6 item 2), and every TDR field the routing or the brand resolution relies on
+    (brand, name, status, deleted, aliases) must equal the producer's hash-bound snapshot. A changed alias or status therefore fails closed instead of silently changing
+    OWNER_REVIEW routing. Brand `aliases` used for Ice-brand resolution are NOT in the producer snapshot; they are covered by the subject-level brand parity check instead."""
     got = {r["model_group_id"]: r for r in ice_rows}
     _need(set(got) == set(export.subjects), f"Ice universe differs: {len(set(got) ^ set(export.subjects))} ids")
     for gid, r in got.items():
         s = export.subjects[gid]
         _need(s["name"] == r["model_name"] and s["brand"] == r["brand"] and r["brand"] in s["brands_observed"], f"SUBJECT_DIFFERS: {gid!r}")
-    mine = {i["canonical_id"]: i for i in tdr_identities}
+    mine = {i["canonical_id"]: i for i in catalog["identities"]}
     _need(set(mine) == set(export.tdr), f"TDR universe differs: {sorted(set(mine) ^ set(export.tdr))[:5]}")
+    historical = set(catalog.get("historical", ()))
     for cid, i in mine.items():
+        x = export.tdr_models[cid]
         _need(export.tdr[cid]["name"] == i["name_en"] and export.tdr[cid]["deleted"] == bool(i.get("deleted")), f"TDR target differs: {cid!r}")
+        _need(i["brand_id"] == x["brand_id"], f"TDR_BRAND_DIFFERS: {cid!r}: {i['brand_id']!r} != {x['brand_id']!r}")
+        _need(i["name_en"] == x["name_en"] and bool(i.get("deleted")) == x["deleted"], f"TDR_FIELD_DIFFERS: {cid!r}")
+        _need((x["status"] == "HISTORICAL") == (cid in historical), f"TDR_STATUS_DIFFERS: {cid!r}: producer {x['status']!r}")
+        _need(_alias_multiset(catalog["aliases"].get(cid, [])) == _alias_multiset(x.get("aliases", [])), f"TDR_ALIASES_DIFFER: {cid!r}: {catalog['aliases'].get(cid)!r} != {x.get('aliases')!r}")
+    brands = catalog["brands"]
+    _need(set(brands) == set(export.tdr_brands), f"TDR brand universe differs: {sorted(set(brands) ^ set(export.tdr_brands))[:5]}")
+    for bid, b in brands.items():
+        _need(b["name_en"] == export.tdr_brands[bid]["name_en"] and not export.tdr_brands[bid]["deleted"], f"TDR_BRAND_DIFFERS: {bid!r}")
+
+
+def alias_binding_summary(export: RelationExport) -> dict:
+    return {"models": len(export.tdr_models), "models_with_aliases": sum(1 for x in export.tdr_models.values() if _alias_multiset(x.get("aliases", []))),
+            "alias_strings": sum(len(_alias_multiset(x.get("aliases", []))) for x in export.tdr_models.values()), "brands": len(export.tdr_brands),
+            "tdr_inputs_sha256": {n: export.manifest["sources"]["tdr_inputs"][n] for n in TDR_INPUT_FILES}, "statuses": dict(collections_counter(x["status"] for x in export.tdr_models.values()))}
+
+
+def collections_counter(it):
+    import collections
+    return collections.Counter(it)
+
+
+def brand_pool_mismatches(brand: dict, pool: list[str], export: RelationExport, subject_id: str) -> list[str]:
+    """Is the shadow's brand resolution consistent with the export's brand relations and pool semantics for THIS subject? Not just 'resolved?' / 'empty?':
+    - brand unresolved but a pool exists, or resolved but the pool is empty;
+    - a pool member of a brand the shadow neither resolved nor declared as family (wrong-but-non-null resolution);
+    - a pool member's brand relation (`br`) that contradicts the shadow's relation for that brand (EXACT / ALIAS_SAME for the resolved brand, the declared relation for a family brand);
+    - an allowed (non-deleted, in-pool status) model of the resolved or family brand that the export pool lacks."""
+    bid = brand.get("brand_id")
+    reasons: list[str] = []
+    if not bid:
+        if pool:
+            reasons.append("BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand")
+        return reasons
+    if not pool:
+        return ["BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)"]
+    declared = {bid: brand.get("relation")} | {f["brand_id"]: f["relation"] for f in brand.get("family", ())}
+    for tid in pool:
+        c = export.tdr_models[tid]["brand_id"]
+        br = export.ice_tdr[f"{subject_id}|{tid}"]["br"]
+        if c not in declared:
+            reasons.append(f"BRAND_RESOLUTION_VS_POOL: pool member {tid} is brand {c!r}, but the shadow resolved {bid!r} (family {sorted(declared)[1:] or 'none'})")
+        elif br != declared[c]:
+            reasons.append(f"BRAND_RESOLUTION_VS_POOL: pool member {tid} has export brand relation {br}, the shadow says {declared[c]} for brand {c!r}")
+    in_pool = set(pool)
+    for c in declared:
+        missing = sorted(t for t, x in export.tdr_models.items() if x["brand_id"] == c and not x["deleted"] and x["status"] in export.allowed_statuses and t not in in_pool)
+        if missing:
+            reasons.append(f"BRAND_RESOLUTION_VS_POOL: the export pool lacks allowed model(s) of resolved brand {c!r}: {missing[:3]}")
+    return reasons

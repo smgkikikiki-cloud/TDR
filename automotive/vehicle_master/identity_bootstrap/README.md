@@ -128,6 +128,8 @@ then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writ
 
 **Final reconciliation (PR #200 `eed76aa6`):** every lexical relation is read from the hash-pinned full pair-level export (`shadow/ir_export.py`, `shadow/universe/ir_relation_export/`); the stand-in matcher is gone. A: 82 CREATE / 127 REVIEW / 991 HOLD, B: 82 / 365 / 753; 1,192 of 1,200 subjects clear `IR_PARITY_UNRESOLVED` (8 remain, brand resolution vs pool). Nine CREATEs equal a TDR catalog alias that the IR evaluator does not compare and are routed to mandatory owner review. Provisional adjudication set: `shadow/review/create_adjudication.csv` (82 rows, owner fields blank). See `shadow/FINDINGS.md`.
 
+**Full-parity QA correction:** the TDR brand/status/alias fields the routing reads are bound to the producer's hash-pinned TDR snapshot (`shadow/universe/ir_relation_export/tdr_inputs/`; a changed alias fails closed), and subject-level brand parity now compares the resolved brand and its relation with the export's pool and brand relations. Outcomes unchanged.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`

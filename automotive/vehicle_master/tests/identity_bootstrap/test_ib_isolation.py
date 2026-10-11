@@ -88,7 +88,8 @@ def test_identity_resolution_is_not_modified_or_imported_by_this_package():
         for name in imports(path):
             assert name.split(".")[0] != "identity_resolution", f"{path.relative_to(VM)} imports {name}"
     assert sorted(p.name for p in (PKG / "shadow" / "universe" / "ir_relation_export").iterdir()) == sorted(
-        ["CONSUMER_CONTRACT.md", "MANIFEST.json", "ice_subjects.jsonl", "pairs_ice_ice.jsonl", "pairs_ice_tdr.jsonl", "relation_export.schema.json", "tdr_targets.jsonl"])
+        ["CONSUMER_CONTRACT.md", "MANIFEST.json", "ice_subjects.jsonl", "pairs_ice_ice.jsonl", "pairs_ice_tdr.jsonl", "relation_export.schema.json", "tdr_targets.jsonl", "tdr_inputs"])
+    assert sorted(p.name for p in (PKG / "shadow" / "universe" / "ir_relation_export" / "tdr_inputs").iterdir()) == ["ice_brand_aliases.json", "tdr_brands.json", "tdr_models.json"]
     assert [p.relative_to(PKG).as_posix() for p in py_files(PKG) if "identity_resolution" in p.read_text(encoding="utf-8")] == []
 
 

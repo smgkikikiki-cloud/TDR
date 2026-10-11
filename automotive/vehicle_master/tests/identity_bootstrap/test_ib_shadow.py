@@ -279,8 +279,26 @@ def test_subject_level_parity_status_clears_only_what_meets_every_requirement(bu
     assert set(sub["unresolved_ids_and_reasons"]) == {"JETOUR|ไม่ระบุ", "MERCEDES AMG|SL 43", "MERCEDES AMG|SL 55 4MATIC", "MERCEDESBENZ MAYBACH|S680 4 M", "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
                                                     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC", "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"}
     assert all(r and all(x.startswith("BRAND_RESOLUTION_VS_POOL") for x in r) for r in sub["unresolved_ids_and_reasons"].values())
+    assert summary["m5"]["parity"]["tdr_universe_binding"]["alias_strings"] == 662
     for g, v in summary["m5"]["ir_parity_status"].items():
         assert v["status"] == ("IR_PARITY_UNRESOLVED" if v["reasons"] else "IR_PARITY_RESOLVED")
+
+
+@needs_package
+def test_a_wrong_but_non_null_brand_in_the_real_snapshot_is_caught_by_the_subject_level_parity(runs):
+    import copy
+    a, _ = runs
+    export, si = a["export"], a["stand_in"]
+    dims = {r["model_group_id"]: r for r in a["package"]["dims"]}
+    A2 = {**a, "snapshot": copy.deepcopy(a["snapshot"])}
+    base = post_ir.parity_status(a, export, si, dims)
+    target = next(s for s in A2["snapshot"]["subjects"] if s["brand"].get("brand_id") == "honda" and export.pool(s["entity_id"]))
+    target["brand"] = {**target["brand"], "brand_id": "toyota"}      # this subject only (brand dicts are shared per Ice brand string): resolved, non-null, and wrong
+    out = post_ir.parity_status(A2, export, si, dims)
+    changed = {g for g in out if out[g]["status"] != base[g]["status"]}
+    assert changed == {target["entity_id"]} and out[target["entity_id"]]["status"] == "IR_PARITY_UNRESOLVED"
+    assert any("shadow resolved 'toyota'" in r for r in out[target["entity_id"]]["reasons"])
+    assert sum(1 for v in base.values() if v["status"] == "IR_PARITY_UNRESOLVED") == 8, "the eight unresolved subjects are preserved until parity is proven"
 
 
 @needs_package

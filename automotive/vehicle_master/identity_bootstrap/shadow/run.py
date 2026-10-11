@@ -17,7 +17,7 @@ DEFAULT_PACKAGE = VM.parents[1] / "data" / "packages" / "2569-09" / "v3_M7.0" / 
 
 
 def build(mode: str, pkg: dict, catalog: dict, policy: dict, export: ir_export.RelationExport, **stand_in_options) -> tuple[dict, stand_in.StandIn]:
-    ir_export.verify_universe(export, pkg["dims"], catalog["identities"])            # fail closed: same Ice groups, same TDR models
+    ir_export.verify_universe(export, pkg["dims"], catalog)            # fail closed: same Ice groups, same TDR models, and the brand/status/aliases the routing reads
     si = stand_in.StandIn(catalog, policy, export, **stand_in_options)
     dims = pkg["dims"]
     brand = {r["brand"]: si.brand_for(r["brand"]) for r in dims}

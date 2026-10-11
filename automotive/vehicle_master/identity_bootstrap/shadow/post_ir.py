@@ -101,11 +101,7 @@ def parity_status(A: dict, export: ir_export.RelationExport, si, dims: dict) -> 
                 reasons.append("POOL_MISMATCH: relation to a TDR id outside the export pool")
             if any(f"{g}|{t}" not in export.consulted_ice_tdr for t in pool):
                 reasons.append("PAIR_NOT_EVALUATED: a pool member was not read")
-            brand_id = s["brand"].get("brand_id")
-            if brand_id and not pool:
-                reasons.append("BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)")
-            if not brand_id and pool:
-                reasons.append("BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand")
+            reasons.extend(ir_export.brand_pool_mismatches(s["brand"], list(export.pool(g)), export, g))
             peers = export.peers(g)
             if len(export.rows_by_subject_ice.get(g, [])) != len(peers) or any(f"{min(g, p)}|{max(g, p)}" not in export.consulted_ice_ice for p in peers):
                 reasons.append("PAIR_NOT_EVALUATED: an Ice x Ice peer pair was not read")
@@ -237,7 +233,7 @@ def build_m5(A: dict, B: dict, export: ir_export.RelationExport, base: dict, cre
                               "B": dict(collections.Counter(f"{t['B_before'].split(' / ')[0]} -> {t['B_after'].split(' / ')[0]}" for t in changes if t["B_before"].split(" / ")[0] != t["B_after"].split(" / ")[0]))},
         "structural": {"A": structural(A, {g for g, r in base["decisions"].items() if "STRUCTURAL_CONFLICT" in r["A_codes"].split("|")}),
                        "B": structural(B, {g for g, r in base["decisions"].items() if "STRUCTURAL_CONFLICT" in r["B_codes"].split("|")})},
-        "parity": {"lexical_relations": parity, "candidate_pools": pool_parity(A, export, si),
+        "parity": {"lexical_relations": parity, "candidate_pools": pool_parity(A, export, si), "tdr_universe_binding": ir_export.alias_binding_summary(export),
                    "subjects": {"resolved": len(pstat) - len(unresolved), "unresolved": len(unresolved), "unresolved_ids_and_reasons": {g: v["reasons"] for g, v in sorted(unresolved.items())},
                                 "empty_pool_subjects": sum(1 for v in pstat.values() if v["empty_pool"])}},
         "ir_parity_status": pstat,
