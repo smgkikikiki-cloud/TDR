@@ -23,6 +23,15 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 
 **Additional enabling dependency (not product #9):** Vehicle Master Phase 1 governed writer; needed for future canonical mutations from #201/#203, **not** a blocker for offline audits, UX, pure PDI/CTPDI calculations or sourced spatial read models.
 
+**New methodology review set (all proposed; approval not inferred):**
+- [ENGINE_VALIDITY_AND_DEPENDENCIES.md](ENGINE_VALIDITY_AND_DEPENDENCIES.md): M0–M5 method gates for all Engines, identity and evidence safety, cross-workstream dependencies.
+- [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md): audited substitutability → relative offer advantage → contextual market registration → evidence-ranked assessment. No invented score.
+- [PRICING_ENGINES_METHODOLOGY_REVIEW.md](PRICING_ENGINES_METHODOLOGY_REVIEW.md): explicit PDI/CTPDI unit/FX/coverage/method collision and events.
+- [SPATIAL_NETWORK_METHODOLOGY_REVIEW.md](SPATIAL_NETWORK_METHODOLOGY_REVIEW.md): dealer site/brand/operator and verified network events, province registration fallacy and region masking.
+- [PRESSURE_GOLDEN_CASES.proposed.json](PRESSURE_GOLDEN_CASES.proposed.json): 15 synthetic expected-outcome examples; no executable job permissions.
+
+**Methodology choices awaiting owner verdict:** Should V1 pressure be an evidence-ranked observational radar (recommended), should reviewed substitute relationships be a first-class graph (recommended), should MSRP and verified cash-net be separate lanes (recommended), and should the 0–100 score remain null until independently calibrated (recommended)? **Do not treat this review attachment as permission to implement or to alter the existing locked five-section model-analysis UX.**
+
 **Owner question A:** Are these functions and product boundaries faithful to the intended TDR architecture? The existence of this table does NOT imply 'approved'.
 
 **Methodology attachment for review (not approved):** [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md). Recommends demand-substitution gate → comparable documented price movement → qualified registration corroboration → evidence-ranked signal; no guessed causal sales loss or 0–100 score. Also gives a falsifiability rubric for other engines. This document does **not** mark Pass A approved.
