@@ -20,7 +20,7 @@ function packet() {
   return {
     schema: 'tdr.task-packet.v1', task_id: 'SYN-001',
     roadmap_version: '1.0', roadmap_sha256: digest(roadmap),
-    base_sha: SHA, head_sha: SHA,
+    base_sha: SHA,
     owner_authorized: true, approval_ref: 'synthetic-owner-go',
     execution_mode: 'OFFLINE',
     allowed_paths: ['lib/analysis/**', 'scripts/check-analysis.mjs'],
@@ -80,9 +80,13 @@ test('stale or wrong roadmap hash fails', () => {
   const x = args(); x.packet.roadmap_sha256 = 'f'.repeat(64);
   assert.ok(checkTask(x).errors.includes('TASK_ROADMAP_HASH_STALE'));
 });
-test('no fabricated base/head SHA can pass', () => {
-  const x = args(); x.packet.head_sha = 'HEAD';
-  assert.ok(checkTask(x).errors.includes('TASK_COMMIT_SHA_MISSING'));
+test('invalid base SHA cannot pass', () => {
+  const x = args(); x.packet.base_sha = 'HEAD';
+  assert.ok(checkTask(x).errors.includes('TASK_BASE_SHA_MISSING'));
+});
+test('packet cannot self-reference its own commit HEAD SHA', () => {
+  const x = args(); x.packet.head_sha = SHA;
+  assert.ok(checkTask(x).errors.includes('TASK_SELF_REFERENTIAL_HEAD_SHA_FORBIDDEN'));
 });
 test('out-of-scope file change fails', () => {
   const x = args(); x.changedFiles = ['app/page.tsx'];

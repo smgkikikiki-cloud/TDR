@@ -1,0 +1,67 @@
+name: TDR Enforcer PR Admission
+
+# Stage 1: PR evidence checker only. No secrets, service accounts, paid APIs,
+# agent dispatch, merges, deployments, data writes or scheduled runs.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  enforcer-stage1-tests:
+    name: enforcer-stage1-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline pure unit tests
+        run: |
+          node --test orchestration/preflight.test.mjs
+          node --test orchestration/pr-admission.test.mjs
+          node --test orchestration/pr-admission.integration.test.mjs
+      - name: Verify Stage-0 plan remains disabled
+        run: node orchestration/preflight.mjs --check-repo
+
+  enforcer-pr-admission:
+    name: enforcer-pr-admission
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Critical trust split: approved master & checker from PR BASE, NEVER from
+      # the PR candidate. This first bootstrap PR predates checker in its BASE.
+      - name: Checkout trusted base-commit policy
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: policy
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout candidate HEAD as untrusted input
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify authentic PR diff using base policy
+        run: |
+          if [ ! -f policy/orchestration/pr-admission.mjs ]; then
+            echo "::notice::Stage 1 bootstrap PR: BASE has no trusted checker yet. No managed task is authorized by this check."
+            exit 0
+          fi
+          node policy/orchestration/pr-admission.mjs \
+            --event "$GITHUB_EVENT_PATH" \
+            --policy-root "$PWD/policy" \
+            --candidate-root "$PWD/candidate"
