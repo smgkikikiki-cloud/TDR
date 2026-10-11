@@ -322,5 +322,37 @@
       "catalog Chunk 2+"
     ]
   },
-  "task_queue": []
+  "task_queue": [],
+  "evidence_audits": [
+    {
+      "id": "CP00_SOURCE_COVERAGE_2026_10_11",
+      "status": "READONLY_EVIDENCE_PARTIAL_NOT_ADOPTED",
+      "report": "docs/portfolio/CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md",
+      "source": "Supabase TDR project connected read-only aggregate SELECT plus current-main code",
+      "facts": {
+        "current_trims": 1431,
+        "current_models": 318,
+        "list_price_rows": 320,
+        "current_trims_any_list_price": 273,
+        "current_models_all_trims_any_list_price": 74,
+        "current_models_no_list_price": 178,
+        "list_price_observed_months": [
+          "2026-09"
+        ],
+        "promotion_options": 48,
+        "promotions_valid_window_on_2026_10_11": 4,
+        "promotions_without_normalized_amount": 48,
+        "ice_reg_trend_months": 69,
+        "ice_model_crosswalk_rows": 490,
+        "ice_approved_crosswalk_rows": 0
+      },
+      "no_claims": [
+        "not complete longitudinal MSRP or discount history",
+        "not calibrated competitive-pressure score",
+        "not approval of R6/R7/R8",
+        "not permission to start code",
+        "not evidence of universal retail lineup verification"
+      ]
+    }
+  ]
 }
