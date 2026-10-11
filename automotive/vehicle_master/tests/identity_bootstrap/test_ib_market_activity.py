@@ -100,12 +100,14 @@ def test_no_model_is_hardcoded_in_policy_or_code():
         assert g not in text.lower()
 
 
-def test_bootstrap_never_imports_or_reads_market_activity():
+def test_bootstrap_never_imports_or_reads_market_activity_or_the_routing_layer():
+    import re
     root = Path(activity_report.__file__).parent.parent
+    pattern = re.compile(r"market_activity|identity_bootstrap\.routing|from\s+\.+routing|import\s+routing")
     for sub in ("engine", "providers", "contract"):
         for f in (root / sub).rglob("*"):
-            if f.is_file() and f.suffix in (".py", ".yaml", ".json"):
-                assert "market_activity" not in f.read_text(encoding="utf-8"), f
+            if f.is_file() and f.suffix in (".py", ".yaml", ".json", ".md"):
+                assert not pattern.search(f.read_text(encoding="utf-8")), f
 
 
 @pytest.fixture(scope="module")

@@ -19,13 +19,18 @@ def cap_hypothetical(periods: list[str]) -> dict:
     return {"absent_row": "ABSENT_IS_ZERO", "coverage_guarantee": "WHAT-IF ONLY (not confirmed)", "covered_from": periods[0], "covered_to": periods[-1]}
 
 
+def complete_through(pkg: dict) -> str:
+    """ASSUMPTION (recorded in the report): the newest period of a package whose status is 'พร้อมส่ง' (final) is complete. The package carries no per-month completeness flag."""
+    return pkg["periods"][1]
+
+
 def classify_all(run_a: dict, ids: list[str], pol: dict | None = None) -> dict:
     pkg = run_a["package"]
     pol = pol or load_policy()
     periods = pkg["all_periods"]
     out = {}
     for scen, cap in (("actual", CAP_ACTUAL), ("what_if_absent_is_zero", cap_hypothetical(periods))):
-        out[scen] = {g: classify(pkg["monthly"].get(g, {}), periods, cap, pol) for g in ids}
+        out[scen] = {g: classify(pkg["monthly"].get(g, {}), periods, cap, pol, complete_through=complete_through(pkg)) for g in ids}
     return out
 
 
@@ -46,7 +51,8 @@ def build(run_a: dict, pol: dict | None = None) -> dict:
                   "actual": {k: res["actual"][g][k] for k in ("state", "reason", "lane")} if g in res["actual"] else None,
                   "what_if_absent_is_zero": {k: res["what_if_absent_is_zero"][g][k] for k in ("state", "reason", "lane")} if g in res["what_if_absent_is_zero"] else None}
     return {"policy": pol or load_policy(), "package_periods": [periods[0], periods[-1], len(periods)],
-            "explicit_zero_rows_in_package": 0, "create_candidates": len(creates),
+            "explicit_zero_rows_in_package": 0, "complete_through": complete_through(pkg),
+            "complete_through_assumption": "newest package period treated as complete (package status is final); no per-month completeness flag exists; an incomplete month can never supply a true zero", "create_candidates": len(creates),
             "actual": {"scenario": "Ice absent-row semantics UNKNOWN (Q-ICE-ABSENT-ROW open): a missing row is never a zero", **summarise(res["actual"])},
             "what_if_absent_is_zero": {"scenario": "NOT AUTHORITATIVE: assumes every missing row in 2564-01..2569-09 is a guaranteed zero", **summarise(res["what_if_absent_is_zero"])},
             "per_group": {g: {"actual": res["actual"][g]["state"], "what_if": res["what_if_absent_is_zero"][g]["state"], "reason_actual": res["actual"][g]["reason"],

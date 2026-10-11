@@ -168,7 +168,7 @@ class StandIn:
 
     @staticmethod
     def activation(relations: list[dict], mode: str) -> dict:
-        """Mode B offers every subject to Bootstrap (worst case). Mode A lets a lexical duplicate of a TDR model stop at the resolver, as IR would."""
+        """Mode B force-activates every subject (a stress scenario, not an upper bound on CREATE). Mode A lets a lexical duplicate of a TDR model stop at the resolver, as IR would."""
         if mode == "A" and any(r["peer_kind"] == "TARGET" and r["name_relation"] in DUPLICATE_RELATIONS for r in relations):
             return {"outcome": "PROPOSE", "reason_codes": ["STAND_IN_LEXICAL_DUPLICATE"]}
         return {"outcome": "NO_CANDIDATE", "reason_codes": []}

@@ -5,6 +5,9 @@ from __future__ import annotations
 import collections
 import csv
 
+from identity_bootstrap import routing
+from identity_bootstrap.routing import signals
+
 from . import activity_report, calibration, ir_rev4
 
 
@@ -36,6 +39,32 @@ def relation_parity(A: dict, A0: dict, ir: dict) -> dict:
     for name, exp in (("ice_ice", ir["ice_ice_relation_pairs"]), ("ice_tdr", ir["ice_tdr_relation_pairs"])):
         over[name] = sorted(f"{k}: stand-in {base.get(k, 'CONTRADICTION')} -> IR {v}" for k, v in exp.items() if base.get(k, "CONTRADICTION") not in (v, "FUZZY", "SIBLING", "CONTRADICTION"))
     out["unchanged_class_relations_overridden_by_ir"] = over
+    return out
+
+
+UNCHANGED_KINDS = ("EQUAL", "EQUAL_VIA_TOKEN_EQUIV", "SUBJECT_COARSER", "SUBJECT_FINER")
+
+
+def parity_status(A: dict, A0: dict, ir: dict, par: dict) -> dict[str, dict]:
+    """Per-subject IR parity. The export carries pair ids for FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS only, so a verdict can be verified at pair level for those kinds and
+    never for the others. EVERY verdict is therefore IR_PARITY_UNRESOLVED while the population-level counts of an unchanged kind disagree; the reasons say why, per subject."""
+    exp_ii, exp_it = ir["ice_ice_relation_pairs"], ir["ice_tdr_relation_pairs"]
+    base = {s["entity_id"]: s for s in A0["snapshot"]["subjects"]}
+    pop = []
+    for name in ("ice_ice", "ice_tdr"):
+        pop += [f"{name}.{k}: stand-in {v[0]} vs IR {v[1]}" for k, v in par[name]["unchanged_kinds_standin_vs_ir"].items() if v[0] != v[1]]
+    out = {}
+    for s in A["snapshot"]["subjects"]:
+        g, reasons = s["entity_id"], []
+        for r in base[g]["relations"]:
+            kind = "SUBJECT" if r["peer_kind"] == "SUBJECT" else "TARGET"
+            key = f"{g}|{r['peer_id']}"
+            exported = (exp_ii if kind == "SUBJECT" else exp_it).get(key)
+            if r["name_relation"] in UNCHANGED_KINDS:
+                reasons.append(f"UNCHANGED_KIND_NOT_IN_EXPORT: {r['peer_id']} {r['name_relation']}" + (f" (IR says {exported})" if exported else ""))
+            elif r["name_relation"] in ("FUZZY", "SIBLING") and exported is None:
+                reasons.append(f"STANDIN_RELATION_DROPPED_NOT_IN_EXPORT: {r['peer_id']} {r['name_relation']}")
+        out[g] = {"status": "IR_PARITY_UNRESOLVED", "specific_reasons": reasons, "population_reasons": pop}
     return out
 
 
@@ -101,7 +130,20 @@ def market(A: dict, creates: list[str]) -> dict:
     return {"actual": res["actual"], "what_if": res["what_if_absent_is_zero"]}
 
 
-def build_m4(A: dict, B: dict, A0: dict, ir: dict, base: dict[str, dict], baseline_ids: set[str], creates: list[str]) -> dict:
+def build_routing(A: dict, creates: list[str], mk: dict, r6: dict) -> dict:
+    subjects = A["snapshot"]["subjects"]
+    pol = signals.load_policy()
+    reviews = signals.review_flags(subjects, A["catalog"], r6, creates, pol)
+    general = signals.provider_id_label_evidence(subjects, A["catalog"], pol)
+    dec = _dec(A)
+    dispatched = routing.dispatch_all(A["decisions"], {g: v["state"] for g, v in mk["actual"].items()}, reviews)
+    cur = routing.current_dispatch(dispatched)
+    lanes = collections.Counter(r["lane"] for r in dispatched)
+    return {"reviews": reviews, "general_cross_brand_list": {g: {"bootstrap_outcome": dec[g]["outcome"], "evidence": e} for g, e in sorted(general.items())},
+            "dispatch": dispatched, "lane_counts": dict(lanes), "current_dispatch_ids": sorted(r["external_id"] for r in cur)}
+
+
+def build_m4(A: dict, B: dict, A0: dict, ir: dict, base: dict[str, dict], baseline_ids: set[str], creates: list[str], r6: dict | None = None) -> dict:
     mk = market(A, creates)
     summ = lambda r: {"states": dict(collections.Counter(v["state"] for v in r.values())), "lanes": dict(collections.Counter(v["lane"] for v in r.values()))}
     return {
@@ -115,9 +157,11 @@ def build_m4(A: dict, B: dict, A0: dict, ir: dict, base: dict[str, dict], baseli
         "create_sets": {"count": len(creates), "added_vs_m3": sorted(set(creates) - baseline_ids), "removed_vs_m3": sorted(baseline_ids - set(creates)), "unchanged": len(set(creates) & baseline_ids),
                         "B_subset_of_A": {d["subject"]["entity_id"] for d in B["decisions"] if d["outcome"] == "CREATE_IDENTITY"} <= set(creates),
                         "in_A_not_B": sorted(set(creates) - {d["subject"]["entity_id"] for d in B["decisions"] if d["outcome"] == "CREATE_IDENTITY"})},
-        "market_activity": {"actual": summ(mk["actual"]), "what_if_NOT_AUTHORITATIVE": summ(mk["what_if"]),
+        "market_activity": {"complete_through": activity_report.complete_through(A["package"]), "actual": summ(mk["actual"]), "what_if_NOT_AUTHORITATIVE": summ(mk["what_if"]),
                             "per_group": {g: {"actual": mk["actual"][g]["state"], "lane": mk["actual"][g]["lane"], "what_if": mk["what_if"][g]["state"]} for g in creates}},
         "activity_classes_informational": None,
+        "routing": build_routing(A, creates, mk, r6 or {}),
+        "ir_parity_status": parity_status(A, A0, ir, relation_parity(A, A0, ir)),
     }
 
 

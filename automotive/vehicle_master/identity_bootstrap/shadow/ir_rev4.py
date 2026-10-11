@@ -19,6 +19,12 @@ SOURCES = ("after_rev4.json", "before_rev3.json", "comparison.json")
 EXPORTED_RELATIONS = ("FUZZY", "SIBLING", "EQUAL_VIA_MODEL_ALIAS")
 
 
+def pairs_digest(data: dict) -> str:
+    """sha256 over the canonical JSON of the vendored pair maps and relation counts, so the committed data can be checked without the PR #200 git objects."""
+    body = {k: data[k] for k in ("ice_ice_relation_pairs", "ice_tdr_relation_pairs", "relation_counts")}
+    return hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
 def _git_show(repo: Path, commit: str, path: str) -> bytes:
     return subprocess.run(["git", "-C", str(repo), "show", f"{commit}:{path}"], check=True, capture_output=True).stdout
 
@@ -39,6 +45,7 @@ def vendor(repo: Path, commit: str = PR200_COMMIT, out: Path = VENDORED) -> dict
         "released_no_candidate": {k: comp["create_eligible_released"][k] for k in ("count", "units", "by_cause", "groups")},
         "named_in_pr201": comp["named_in_pr201"], "changed_decisions": comp["changed_decisions"],
     }
+    data["provenance"]["pairs_and_counts_sha256"] = pairs_digest(data)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     return data

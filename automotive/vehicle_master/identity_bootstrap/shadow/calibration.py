@@ -157,7 +157,7 @@ OWNER_FIELDS = ["owner_verdict", "owner_canonical_model_id", "owner_discovery_cl
 SUGGESTED_DISCOVERY = {"RECENT_DISCOVERY": "RECENT_NEW_MODEL", "ACTIVE_ESTABLISHED": "ACTIVE_CATALOG_GAP", "DORMANT_LEGACY": "HISTORICAL_BACKFILL"}
 
 
-def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: dict, redirects: list, baseline_ids: set[str], market: dict) -> list[dict]:
+def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: dict, redirects: list, baseline_ids: set[str], market: dict, m4: dict) -> list[dict]:
     """PROVISIONAL candidate rows for the owner. Every machine field is filled; every owner field is blank. `A0` is the same run without the PR #200 rev 4 relations."""
     pkg = A["package"]
     dims = {r["model_group_id"]: r for r in pkg["dims"]}
@@ -198,6 +198,12 @@ def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: di
             "in_previous_set_milestone3": "yes" if g in baseline_ids else "NO (added since milestone 3)",
             "market_activity_state_actual": market["actual"][g]["state"], "market_activity_lane_actual": market["actual"][g]["lane"],
             "market_activity_state_what_if_NON_AUTHORITATIVE": market["what_if"][g]["state"],
+            "ir_parity_status": m4["ir_parity_status"][g]["status"],
+            "ir_parity_reasons": "; ".join(m4["ir_parity_status"][g]["specific_reasons"] + m4["ir_parity_status"][g]["population_reasons"]),
+            "review_routing_flags": "|".join(m4["routing"]["reviews"][g]["flags"]) or "none",
+            "review_routing_evidence": "; ".join(_ev(e) for e in m4["routing"]["reviews"][g]["evidence"]) or "none",
+            "mandatory_owner_review": "YES" if m4["routing"]["reviews"][g]["mandatory_owner_review"] else "no",
+            "dispatch_lane": next(r["lane"] for r in m4["routing"]["dispatch"] if r["external_id"] == g),
             "activity_class_informational": cls,
             "machine_suggested_discovery_class_NON_AUTHORITATIVE": SUGGESTED_DISCOVERY[cls],
             "analyst_note_NON_AUTHORITATIVE": (f"{notes_row['kind']}: {notes_row['why']}" if notes_row else ""),
@@ -205,10 +211,14 @@ def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: di
     return rows
 
 
+def _ev(e: dict) -> str:
+    return e["kind"] + "(" + ", ".join(f"{k}={v}" for k, v in e.items() if k != "kind") + ")"
+
+
 COLUMNS = ["provider", "external_id", "provider_model_name", "provider_brand", "proposed_canonical_name", "proposed_canonical_id", "first_seen", "last_seen", "lifetime_units", "last12_units",
            "identity_status", "lineage_state", "retired_aliases_in_plan", "nearest_existing_canonical_identities", "relation_evidence", "brand_relation", "shape_flags", "lexical_flags",
            "evidence_tier", "evidence_kinds", "bootstrap_decision", "bootstrap_reason_codes", "legacy_r6_candidate_status", "changed_by_pr200_rev4_relations", "pr200_relation_changes",
-           "in_previous_set_milestone3", "market_activity_state_actual", "market_activity_lane_actual", "market_activity_state_what_if_NON_AUTHORITATIVE", "activity_class_informational",
+           "in_previous_set_milestone3", "ir_parity_status", "ir_parity_reasons", "review_routing_flags", "review_routing_evidence", "mandatory_owner_review", "dispatch_lane", "market_activity_state_actual", "market_activity_lane_actual", "market_activity_state_what_if_NON_AUTHORITATIVE", "activity_class_informational",
            "machine_suggested_discovery_class_NON_AUTHORITATIVE", "analyst_note_NON_AUTHORITATIVE", *OWNER_FIELDS]
 HEADER = ("# PROVISIONAL candidate set (not the final truth set; QA pending). Owner fields are blank and must be filled only by the owner: "
           "owner_verdict in " + " | ".join(OWNER_VERDICTS) + "; owner_discovery_class (only when VALID_MISSING_CANONICAL) in " + " | ".join(OWNER_DISCOVERY_CLASSES) + ". "

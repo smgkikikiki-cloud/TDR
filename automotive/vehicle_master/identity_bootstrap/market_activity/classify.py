@@ -21,20 +21,25 @@ def absent_is_zero(capability: dict | None, period: str, policy: dict) -> bool:
     return c.get("covered_from", "") <= period <= c.get("covered_to", "")
 
 
-def resolve_series(counts: dict[str, float], periods: list[str], capability: dict | None, policy: dict) -> list[float | None]:
-    """One value per observed period: the registered count, a TRUE zero (guaranteed), or None (unknown)."""
+def resolve_series(counts: dict[str, float], periods: list[str], capability: dict | None, policy: dict, complete_through: str | None = None) -> list[float | None]:
+    """One value per observed period: the registered count, a TRUE zero (guaranteed), or None (unknown).
+
+    `complete_through` is the last period the provider has finished publishing. A later (incomplete) period can never supply a true zero: an unfinished month is
+    unknown whatever the capability says. A registered count in an incomplete month is still a registration (it can only show activity, never inactivity)."""
     out: list[float | None] = []
     for p in periods:
         if p in counts:
             out.append(float(counts[p]))
         else:
-            out.append(0.0 if absent_is_zero(capability, p, policy) else None)
+            incomplete = complete_through is not None and p > complete_through
+            out.append(0.0 if absent_is_zero(capability, p, policy) and not incomplete else None)
     return out
 
 
-def classify(counts: dict[str, float], periods: list[str], capability: dict | None = None, policy: dict | None = None, relaunch_evidence: bool = False) -> dict:
+def classify(counts: dict[str, float], periods: list[str], capability: dict | None = None, policy: dict | None = None, relaunch_evidence: bool = False,
+             complete_through: str | None = None) -> dict:
     pol = policy or load_policy()
-    series = resolve_series(counts, periods, capability, pol)
+    series = resolve_series(counts, periods, capability, pol, complete_through)
     n, streak_need = len(series), pol["zero_streak_months"]
     streak = sust = 0
     cum_total, cum_active = 0.0, 0

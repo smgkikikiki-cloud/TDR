@@ -104,9 +104,9 @@ def test_only_plans_never_writes(runs):
 
 
 @needs_package
-def test_the_worst_case_mode_never_creates_more_than_the_realistic_mode(runs):
-    """Mode B offers everything to Bootstrap. Its CREATE set must be a subset of mode A's: Bootstrap's own defences can only add objections, never remove them.
-    (Since PR #200 rev 4 the sets are no longer equal: a sibling the resolver diverted in A forms no batch conflict there.)"""
+def test_mode_b_stress_scenario_created_a_subset_of_mode_a_on_this_snapshot(runs):
+    """OBSERVATION, not a law. Mode B force-activates every subject (a stress scenario, not an upper bound on CREATE): the extra activated subjects can form batch conflicts
+    (which is why B has one fewer CREATE here) and could in principle also remove a conflict. This test only pins what this pinned package shows."""
     a, b = runs
     ids = lambda r: {d["subject"]["entity_id"] for d in r["decisions"] if d["outcome"] == "CREATE_IDENTITY"}
     assert ids(b) <= ids(a)
@@ -220,7 +220,8 @@ def test_the_committed_results_match_the_run(built, tmp_path):
     report.write_files(summary, a, b, tmp_path)
     report.write_transitions(summary["m4"]["transitions"], tmp_path / "transitions_vs_m3.csv")
     report.write_market(a, summary, tmp_path)
-    for name in ("decisions.csv", "REPORT.md", "transitions_vs_m3.csv", "market_activity.json", "market_activity.md"):
+    report.write_routing(summary, tmp_path)
+    for name in ("decisions.csv", "REPORT.md", "transitions_vs_m3.csv", "market_activity.json", "market_activity.md", "dispatch_manifest.csv", "cross_brand_review.csv", "ir_parity_unresolved.csv"):
         assert (tmp_path / name).read_text(encoding="utf-8") == (committed / name).read_text(encoding="utf-8"), f"{name} is stale: re-run python -m identity_bootstrap.shadow --out {committed}"
     review = Path(shadow_run.__file__).parent / "review" / "create_adjudication.csv"
     calibration.write_adjudication(rows, tmp_path / "create_adjudication.csv")

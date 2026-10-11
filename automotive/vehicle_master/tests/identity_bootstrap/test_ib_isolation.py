@@ -37,7 +37,7 @@ def test_the_package_imports_nothing_from_the_engine_database_network_or_identit
 def test_the_engine_exists_only_with_its_conformance_runner_and_stays_offline():
     assert (VM / "tests" / "identity_bootstrap" / "test_ib_engine_conformance.py").exists(), "an engine needs a corpus conformance runner"
     names = {p.name for p in PKG.iterdir()}
-    assert names <= {"__init__.py", "README.md", "INTEGRATION.md", "contract", "engine", "providers", "shadow", "market_activity", "__pycache__"}, names
+    assert names <= {"__init__.py", "README.md", "INTEGRATION.md", "contract", "engine", "providers", "shadow", "market_activity", "routing", "__pycache__"}, names
     assert {p.name for p in (PKG / "engine").iterdir()} - {"__pycache__"} == {"__init__.py", "allocate.py", "decide.py", "fingerprint.py", "lexical.py", "lineage.py", "plan.py"}
     for path in py_files(PKG / "engine") + py_files(PKG / "providers"):
         text = path.read_text(encoding="utf-8")

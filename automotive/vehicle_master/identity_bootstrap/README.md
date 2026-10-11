@@ -124,6 +124,8 @@ then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writ
 
 **Post-PR-#200 rerun:** relations come from the hash-pinned rev 4 export of PR #200 (`shadow/ir_rev4.py`); nothing of its lexical rules is re-implemented. 73 CREATE / 89 REVIEW / 1,038 HOLD (A), 72 / 375 / 753 (B); structural conflicts 24→9 (A), 105→48 (B). Provisional owner-adjudication set (73 rows, owner fields blank): `shadow/review/create_adjudication.csv`. See `shadow/FINDINGS.md`.
 
+**QA round after `2d56112`:** parity with PR #200 is partial and every verdict is labelled `IR_PARITY_UNRESOLVED` (a complete pair export is requested in `shadow/IR_FULL_PARITY_INTERFACE_REQUEST.md`); `routing/` adds generic cross-brand review signals (Maxus/MG → mandatory OWNER_REVIEW) and a pure dispatch boundary (only ACTIVE / DECLINING / REACTIVATED reach `CURRENT_DISCOVERY`); portable committed-artifact tests run without the archived package; Mode B is a stress scenario, not an upper bound.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`

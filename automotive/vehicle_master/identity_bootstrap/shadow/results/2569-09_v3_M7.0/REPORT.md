@@ -4,13 +4,14 @@
 
 - Package sha256 `c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d` (pinned). 1200 model groups; 4,141,987 registrations in total (689,429 in the last 12 months).
 - Status mix (adapter): {'settled': 495, 'unmapped_name': 591, 'provisional': 114}. Policy v2 `sha256:1fc33a12b2f81c3e…`. TDR side: **323 models / 62 brands from vehreg/data/2026/models/*.json (repo file catalog, verified identical to the live Vehicle Master on 2026-10-11 by a read-only SELECT)**.
-- Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (worst case): every group is offered to Bootstrap as `NO_CANDIDATE`.
+- Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (force-activate-all STRESS scenario, not an upper bound): every group is offered to Bootstrap as `NO_CANDIDATE`.
 
 ## 0. Post-PR-#200-rev-4 rerun (relations consumed from the pinned export, not re-implemented)
 
 - PR #200 commit `1f73aee1834697cbd439291d0074293c30446e5b` (`rev4`); source blobs sha256 {'after_rev4.json': '42ceac6cfcd08c87e6d5807a7f5cca7d9335b4746ff74626449a6711b5fcb012', 'before_rev3.json': '336edc58d2312e34c58afa7631519db47c6b13e363fd84cd355eecb165b436a7', 'comparison.json': '28cb837e14678efb584455e549010b82edf86602fab11116ed95eb8d857dd79d'}. Policy keys in force there: {'distinctive_token_required_for': ['SIBLING'], 'fuzzy_token': {'allow_tokens_with_digits': False, 'enabled': True, 'min_token_length': 6}, 'model_aliases': ['maxus_mifa', 'honda_model_synonyms']}.
 - The stand-in supplies only the pair population and the relations rev 4 did not touch; every FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS verdict comes from the export. Same engine, policy v2, package and TDR universe as milestone 3.
 - Baseline: shadow/baseline_m3 (milestone 3: policy v2, stand-in relations, same package and TDR universe).
+- **PARTIAL parity, not full Identity Resolution parity.** The export carries pair ids for FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS only; the stand-in still generates EQUAL, EQUAL_VIA_TOKEN_EQUIV, SUBJECT_COARSER and SUBJECT_FINER. The CREATE counts below are therefore a **stand-in scenario estimate, not the authoritative Resolver output**; every verdict is labelled `IR_PARITY_UNRESOLVED` (see §0.6, `ir_parity_unresolved.csv`). A complete pair-level export is requested separately (`IR_FULL_PARITY_INTERFACE_REQUEST.md`).
 
 ### 0.1 Counts (before = milestone 3)
 
@@ -27,7 +28,7 @@
 
 **Mode B transitions:** CREATE_IDENTITY -> CREATE_IDENTITY 64; CREATE_IDENTITY -> IDENTITY_REVIEW 3; HOLD -> HOLD 753; IDENTITY_REVIEW -> CREATE_IDENTITY 8; IDENTITY_REVIEW -> IDENTITY_REVIEW 372. CREATE added ['maxus-maxus-v80', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; CREATE removed ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz'].
 
-**CREATE set: 73** (added vs milestone 3: ['maxus-maxus-v80', 'maxus-mifa-7', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; removed: ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz']; unchanged 64). Worst-case mode B creates a subset of mode A: **True**; in A but not B: ['maxus-mifa-7'] (a sibling that the resolver stand-in diverted in A forms no batch conflict there).
+**CREATE set: 73** (added vs milestone 3: ['maxus-maxus-v80', 'maxus-mifa-7', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; removed: ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz']; unchanged 64). Mode B (force-activate-all stress scenario) created a subset of mode A here: **True** (observed, not a law: extra activated subjects can create batch conflicts, and could in principle also remove one); in A but not B: ['maxus-mifa-7'] (a sibling that the resolver stand-in diverted in A forms no batch conflict there).
 
 ### 0.2 Per-subject decision transitions (any mode; first 60 by units)
 
@@ -133,6 +134,8 @@ Present in this run: 177; identity status {'unmapped_name': 115, 'provisional': 
 | ice_ice | 316 | 0 | 0 | {'FUZZY': [7, 7], 'SIBLING': [307, 307], 'EQUAL_VIA_MODEL_ALIAS': [2, 2]} | {'EQUAL': [4, 4], 'EQUAL_VIA_TOKEN_EQUIV': [0, 1], 'SUBJECT_COARSER': [78, 78], 'SUBJECT_FINER': [40, 40]} |
 | ice_tdr | 58 | 0 | 0 | {'FUZZY': [2, 2], 'SIBLING': [55, 55], 'EQUAL_VIA_MODEL_ALIAS': [1, 1]} | {'EQUAL': [299, 239], 'EQUAL_VIA_TOKEN_EQUIV': [1, 1], 'SUBJECT_COARSER': [46, 58], 'SUBJECT_FINER': [45, 35]} |
 
+Every one of the 1200 verdicts is `IR_PARITY_UNRESOLVED`; 632 carry subject-specific reasons (an unchanged-kind relation IR does not list, or a stand-in FUZZY/SIBLING dropped because it is absent from the export). Population reasons: ['ice_ice.EQUAL_VIA_TOKEN_EQUIV: stand-in 0 vs IR 1', 'ice_tdr.EQUAL: stand-in 299 vs IR 239', 'ice_tdr.SUBJECT_COARSER: stand-in 46 vs IR 58', 'ice_tdr.SUBJECT_FINER: stand-in 45 vs IR 35'].
+
 Stand-in relation of an unchanged kind overridden by IR's verdict (IR is the authority; a stand-in/IR population disagreement, not a rev 4 rule): ice×ice 0, ice×tdr 7 — ['ford-ford-ranger-raptor|ford.ranger_cab: stand-in SUBJECT_FINER -> IR SIBLING', 'ford-ford-ranger-raptor|ford.ranger_double_cab: stand-in EQUAL -> IR SIBLING', 'gwm-ora-07|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING', 'gwm-ora-5|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-corolla-cross|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-gr-corolla|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-land-cruiser-fj|toyota.land_cruiser_300: stand-in SUBJECT_FINER -> IR SIBLING']
 
 ### 0.7 Market-activity routing of the CREATE candidates (routing only; absent rows UNKNOWN)
@@ -140,6 +143,19 @@ Stand-in relation of an unchanged kind overridden by IR's verdict (IR is the aut
 **Actual:** states {'UNKNOWN': 63, 'ACTIVE': 9, 'DECLINING': 1}; lanes {'ACTIVITY_UNCLASSIFIED': 63, 'CURRENT_DISCOVERY': 10}. **What-if (NOT AUTHORITATIVE, assumes ABSENT_IS_ZERO):** states {'DECLINING': 7, 'ACTIVE': 9, 'UNKNOWN': 34, 'INACTIVE_INFERRED': 23}; lanes {'CURRENT_DISCOVERY': 16, 'ACTIVITY_UNCLASSIFIED': 34, 'HISTORICAL_INACTIVE': 23}.
 
 Informational activity classes of the CREATE set: RECENT_DISCOVERY 6; DORMANT_LEGACY 62; ACTIVE_ESTABLISHED 5. Age or low volume never decides an outcome; dormant legacy models are valid HISTORICAL_BACKFILL candidates, not false CREATEs.
+
+### 0.8 Review routing and the dispatch boundary (pure projection after the engine; outcomes and write plans untouched)
+
+Lanes over all 1200 decisions: {'NOT_DISPATCHED': 1127, 'ACTIVITY_UNCLASSIFIED': 62, 'CURRENT_DISCOVERY': 9, 'OWNER_REVIEW': 2}. **Current-discovery dispatch output: 9 ids** (only CREATE_IDENTITY with ACTIVE / DECLINING / REACTIVATED and no mandatory owner review); UNKNOWN and INACTIVE_INFERRED cannot reach it. Latest-period completeness assumption: 2569-09 treated as complete (an incomplete month can never supply a true zero).
+
+Mandatory `OWNER_REVIEW` (POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND — the provider id's label is a token of an existing TDR identity under the resolved brand; evidence below, no brand or model is named in code):
+
+| Group | Evidence |
+|---|---|
+| maxus-maxus-v80 | PROVIDER_ID_LABEL_IN_EXISTING_IDENTITY: label=maxus, ice_brand=MG, resolved_brand_id=mg, existing_identities=['mg.mg_maxus_7', 'mg.mg_maxus_9'] |
+| maxus-mifa-7 | PROVIDER_ID_LABEL_IN_EXISTING_IDENTITY: label=maxus, ice_brand=MG, resolved_brand_id=mg, existing_identities=['mg.mg_maxus_7', 'mg.mg_maxus_9']; SIBLING_MAPPED_TO_EXISTING_IDENTITY: sibling=maxus-mifa-9, sibling_relation=SIBLING, existing_identity=mg.mg_maxus_9, relation=EQUAL; LEGACY_R6_STRONG_PROPOSAL: target=mg.mg_maxus_7, status=PROPOSED, method=NAME, score=0.6154 |
+
+General evidence-driven list (any decision, `cross_brand_review.csv`): maxus-maxus-v80 (CREATE_IDENTITY), maxus-mifa-7 (CREATE_IDENTITY), maxus-mifa-9 (HOLD).
 
 Provisional owner-adjudication set: `shadow/review/create_adjudication.csv` (owner fields blank; QA pending).
 

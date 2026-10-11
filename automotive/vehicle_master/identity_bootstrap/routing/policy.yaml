@@ -1,0 +1,13 @@
+# Review/dispatch routing policy. Routing and review only: it never changes a Bootstrap outcome, a write plan or whether an identity exists. Values are PROPOSALS.
+version: 1
+status: proposal
+cross_brand:
+  # POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND is raised when the provider's own id prefix names a label that the Ice brand string does not, and that label is a whole
+  # token of an existing identity's name/alias under the resolved brand (a relabelled / parent-marque model). Evidence-driven: no brand or model is named here.
+  min_slug_token_length: 4
+  mandatory_owner_review: true
+advisory:
+  legacy_r6_min_score: 0.6       # a PROPOSED legacy crosswalk target at/above this score is shown as a review hint (never blocks, never decides)
+lanes:
+  owner_review: OWNER_REVIEW
+  not_dispatched: NOT_DISPATCHED   # anything that is not a CREATE_IDENTITY decision
