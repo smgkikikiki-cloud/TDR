@@ -17,6 +17,10 @@ This folder inventories shared development workstreams and their interfaces; it 
 
 Start with [OWNER_REVIEW.md](OWNER_REVIEW.md): three short passes covering (A) what each workstream must do, (B) proposed sequencing and first Layer 3 product, and (C) governance roles **for design only**. All three verdicts are PENDING; do not treat the roadmap as approved.
 
+## CP-00 actual read-only evidence (October 11, 2026)
+
+[CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md](CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md) now contains real Supabase SELECT-only counts and status, with explicit unresolved source/validity caveats: 1,431 CURRENT trims but only 273 have a matching LIST_PRICE; 320 LIST_PRICE observations all in Sep 2026; only 4 promotion rows date-window-cover the audit date, none yet a verified net cash offer; Ice has 69 months of reg trend but 0 owner-APPROVED crosswalk records (490 total). **CP-00 evidence round 1 is partial, NOT a methodology/production approval.**
+
 ## Current product readiness finding
 
 [CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md](CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md) inventories actual current-main Price/Vehicle/Ice code and proposes CP-00...CP-05 evidence-to-product work packets. **No owner approval or execution rights granted.** It flags the existing market-price adapter's explicit 1,000-row cap, which must not be treated as a complete historical price source.
