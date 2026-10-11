@@ -1,8 +1,8 @@
 # TDR portfolio control room — Master Roadmap v1.0 (OWNER APPROVED)
 
-**Snapshot:** 2026-10-11 · **State:** `OWNER_APPROVED_AWAITING_MAIN_ADOPTION` · **Scope:** portfolio plan and operating gate design, not task execution.
+**Owner signoff:** 2026-10-11 · **State:** `OWNER_APPROVED` · **Scope:** approved portfolio design (operational gates separately closed). GitHub PR #204 records main adoption.
 
-**Approved entrypoint:** [TDR_MASTER_ROADMAP_V1.md](TDR_MASTER_ROADMAP_V1.md). The owner reviewed the complete portfolio roadmap and approved its architecture, scope and sequencing on 2026-10-11. The plan **has not been merged to main**, so it is not yet repository-wide agent-enforced; no execution permission, CI activation or production gate is implicitly granted.
+**Approved entrypoint:** [TDR_MASTER_ROADMAP_V1.md](TDR_MASTER_ROADMAP_V1.md). The owner reviewed the complete portfolio roadmap and approved its architecture, scope and sequencing on 2026-10-11. Main adoption is tracked in [PR #204](https://github.com/smgkikikiki-cloud/TDR/pull/204); agent bootstrap and CI enforcement require a separate committed and verified change. No execution permission, CI activation or production gate is implicitly granted.
 
 ## Read and authority order
 
@@ -41,7 +41,7 @@ Start with [TDR_MASTER_ROADMAP_V1.md](TDR_MASTER_ROADMAP_V1.md) for the approved
 ## G0 release decision
 
 - **Discovery / evidence reconciliation:** documented; no repository runtime changed.
-- **Portfolio roadmap owner signoff:** ACHIEVED 2026-10-11; full v1.0 architecture and dependency direction approved on this branch, pending main adoption.
+- **Portfolio roadmap owner signoff:** ACHIEVED 2026-10-11; v1.0 architecture and dependency direction approved, main adoption tracked in PR #204.
 - **Enforcer portfolio autonomy:** BLOCKED; `portfolio.plan.json` must never be interpreted as an executable job manifest.
 - **Market Track:** preserve `CURRENT_GATE=R6_PRODUCTION_CROSSWALK` and `PRODUCTION_CROSSWALK_ALLOWED=false` until owner-controlled reconciliation and authorization.
 - **Vehicle Master:** Phase 0 complete, Phase 1 governed writer absent. No proposed data-mutation job is ready.
