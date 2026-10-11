@@ -1,6 +1,6 @@
 # TDR workstream functional boundaries and integration contracts
 
-**Status:** G0 PROPOSED; an architecture inventory, not authorization for implementation or a new data-master.
+**Status:** WORKSTREAM BOUNDARIES APPROVED AS PORTFOLIO v1.0 (owner review 2026-10-11); not authorization for a code task, formula publication or a new data-master. Subordinate unvalidated methods and permissions remain gated.
 
 ## Product architecture
 
@@ -128,4 +128,4 @@ For any derived scored data, carry when applicable: `source_snapshot_id`, `canon
 5. **G4 V1 user slice:** login into company team → choose own brand / authorized region → view sourced model/competitor pricing and registrations with evidence → inspect Model Analysis five sections; reporting and tenant isolation verified. CTPDI/Network Watch optional extensions for this slice, not fabricated prerequisites.
 6. **G5 Operations:** reliable nightly queue, idempotency, observed-event monitoring, auditability, source freshness and cost control, owner authorization for each class of action.
 
-**G0's gate is not fulfilled merely by this document being written.** See [G0_RECONCILIATION.md](G0_RECONCILIATION.md).
+**Roadmap approval is recorded**, but **G0 operational conflict reconciliation and activation gates remain open**. See [TDR_MASTER_ROADMAP_V1.md](TDR_MASTER_ROADMAP_V1.md) and [G0_RECONCILIATION.md](G0_RECONCILIATION.md).
