@@ -64,6 +64,24 @@ node policy/orchestration/pr-admission.mjs \
 
 **Branch protection caveat:** neither creating this workflow nor a local `ok:true` makes it a required check. GitHub rulesets/check policy, CODEOWNERS/protected governance paths, migration of older open PRs, actual CI completion and provenance of owner approval require separate verification before hard enforcement. Automatic merge/deployment/dispatch remain unsupported.
 
+## Stage-1 central CI compatibility fix (2026-10-11; proposed)
+
+**Incident:** Legacy PR #201 (GitHub run [38128865165](https://github.com/smgkikikiki-cloud/TDR/actions/runs/38128865165)) and PR #203 ([38128785197](https://github.com/smgkikikiki-cloud/TDR/actions/runs/38128785197)) failed `enforcer-stage1-tests` because the central GitHub workflow checked out PR HEAD before executing `orchestration/preflight.test.mjs`, which did not exist in those historical branches. Their separate `enforcer-pr-admission` jobs succeeded **only** through a historical-base bootstrap notice; this was **never task authorization**. The separately named attachment `TDR_Enforcer_Incident_Report_2026-10-11.md` was not exposed to this review session; factual reconstruction used the supplied incident description plus actual GitHub job logs.
+
+**Correction, source and identity:**
+
+- `enforcer-stage1-tests` now checks out **trusted repository default branch** to `trusted-enforcer/` and runs all Enforcer self-tests there. The exact Git commit SHA is recorded in Actions logs. Historical PR HEAD code is not executed as CI self-tests. This separates **central governance implementation QA** from independent feature-branch CI.
+- `enforcer-pr-admission` keeps using the PR's **exact BASE SHA** for policy and executable admission script whenever `policy/orchestration/pr-admission.mjs` exists. It still reads the **candidate HEAD only as untrusted Git diff and optional manifest**; nothing from HEAD is run as admission logic.
+- When a historical BASE has no admission script, the former unconditional `exit 0` bootstrap is replaced by the versioned central `orchestration/historical-pr-audit.mjs` reader. It verifies repo/PR identity, exact BASE and HEAD checkouts, full diff (including both paths in renames), and whether the candidate contains any `.tdr/enforcer-task.json`. **Only an ordinary historical PR can receive `UNMANAGED_AUDIT_ONLY`, always with `enforcerAuthorized=false`.**
+- Historic `enforcer/*` branches or manifests are **DENIED**, as are attempts by a historical candidate to alter `AGENTS.md`, `CLAUDE.md`, Enforcer code, workflow files or portfolio governance docs. A domain-specific `docs/WORK_STATE.md` modification (observed in existing PR #201) is not *by itself* an Enforcer request; it is reported as a risk warning, not approved or denied on some invented policy.
+- The **present canonical portfolio plan remains disabled**, and this change does not create or authorize an Enforcer worker. A successful audit is a compatibility result only. Existing PR #201/#203 domain review and CI remain separate and cannot be bypassed.
+
+The accompanying `orchestration/historical-pr-audit.test.mjs` contains isolated temporary Git repository regression cases for old branches, normal unmanaged history, explicit managed deny, suspicious governance changes and SHA mismatch. The central workflow discovers these tests from its **trusted checkout** once this change is adopted into `main`. It does **not** falsely claim to test candidate-proposed governance code in a legacy PR.
+
+**Operational compatibility:** PR #209 independently changes `.github/workflows/portfolio-roadmap.yml` to remove its PR path filter. This patch edits only `.github/workflows/enforcer-pr-admission.yml` and Enforcer compatibility code/documentation; do not merge branches into one another or preempt #209.
+
+**QA gate:** Existing CI jobs on this proposed PR can validate the currently adopted trusted main Enforcer; a separate, clean native run against the proposed compatibility source and an after-merge smoke against actual #201/#203 PR events is still required to prove the new flow. Re-running an old pre-fix Actions attempt alone cannot prove that a new version of the workflow was used. Branch protection and Night Shift remain separately gated.
+
 ## Security boundaries
 
 - File/diff path filters are an early safety check, not OS sandboxing. Running Claude/Codex with powerful shell/tools and production credentials is still unsafe even if a JSON packet passes. Future workers need an isolated, least-privileged environment without DB secrets or unrestricted network.
