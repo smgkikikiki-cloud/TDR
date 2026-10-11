@@ -67,12 +67,25 @@ test('governance-path rename checks BOTH old and new', () => {
   assert.ok(x.changedFiles.includes('src/not-a-governance-file.py'));
   assert.ok(x.changedFiles.includes('orchestration/preflight.test.mjs'));
 });
+test('empty legacy PR diff fails closed instead of claiming audited', () => {
+  const x = classifyHistoricalPr({ event: event(), changes: [] });
+  assert.equal(x.ok, false);
+  assert.equal(x.admission, 'DENIED');
+  assert.ok(x.errors.includes('DIFF_NOT_AVAILABLE_OR_EMPTY'));
+});
+test('non-governance source file rename stays audit-only', () => {
+  const x = classifyHistoricalPr({ event: event(),
+    changes: [{ kind: 'R', paths: ['src/old.py', 'src/new.py'] }] });
+  assert.equal(x.admission, 'UNMANAGED_AUDIT_ONLY');
+  assert.deepEqual(x.changedFiles, ['src/new.py','src/old.py']);
+});
+
 test('invalid event repository, SHA and diff fail closed', () => {
   const e = event(); e.repository.full_name = 'attacker/TDR'; e.pull_request.head.sha = 'fake';
   const x = classifyHistoricalPr({ event: e, changes: null });
   assert.ok(x.errors.includes('REPOSITORY_MISMATCH'));
   assert.ok(x.errors.includes('EVENT_SHA_INVALID'));
-  assert.ok(x.errors.includes('DIFF_NOT_AVAILABLE'));
+  assert.ok(x.errors.includes('DIFF_NOT_AVAILABLE_OR_EMPTY'));
   assert.equal(x.admission, 'DENIED');
 });
 
