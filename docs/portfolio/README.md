@@ -19,6 +19,10 @@ Start with [OWNER_REVIEW.md](OWNER_REVIEW.md): three short passes covering (A) w
 
 ## Folder index
 
+- [ENGINE_VALIDITY_AND_DEPENDENCIES.md](ENGINE_VALIDITY_AND_DEPENDENCIES.md): six measurement/evidence/falsification gates, integration requirements, and a staged delivery graph; proposed for review.
+- [PRICING_ENGINES_METHODOLOGY_REVIEW.md](PRICING_ENGINES_METHODOLOGY_REVIEW.md): PDI and CTPDI source/price-basis/FX/missingness rules and adversarial tests; formulas not approved.
+- [SPATIAL_NETWORK_METHODOLOGY_REVIEW.md](SPATIAL_NETWORK_METHODOLOGY_REVIEW.md): source-backed dealer Site/Franchise/Operator identity, event detection and region ACL; proposed for review.
+- [PRESSURE_GOLDEN_CASES.proposed.json](PRESSURE_GOLDEN_CASES.proposed.json): 15 **synthetic, non-executable** QA examples; never infer owner approval.
 - [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md): draft observable-pressure methodology, formulas/tests, and whole-engine validity rubric. **Requires owner review; scoring remains unapproved.**
 - [G0_RECONCILIATION.md](G0_RECONCILIATION.md): observed states, conflicts, required decisions and evidence, including the R6/run discrepancy and migration number collision.
 - [DOMAIN_BOUNDARIES.md](DOMAIN_BOUNDARIES.md): workstream contracts, data and product boundaries, dependency gates, first vertical slice, detailed owner-locked Toolkit behavior.
