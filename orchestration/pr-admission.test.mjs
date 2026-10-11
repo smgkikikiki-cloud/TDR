@@ -6,6 +6,8 @@ import { digest, ROADMAP_FILE, PLAN_FILE } from './preflight.mjs';
 const BASE = 'a'.repeat(40), HEAD = 'b'.repeat(40);
 const roadmap = '# TDR Master Development Roadmap v1.0\nSynthetic reviewed contract\n';
 const refs = ROADMAP_FILE + '\n' + PLAN_FILE + '\ndocs/WORK_STATE.md';
+const domainContract = '# Synthetic Domain Contract v1\n';
+const domainContractPath = 'docs/vehicle-db/VEHICLE_DB_V3.md';
 function event() {
   return { repository: { full_name: 'smgkikikiki-cloud/TDR' },
     pull_request: { number: 206, base: { ref: 'main', sha: BASE },
@@ -20,7 +22,8 @@ function packet() {
     allowed_paths: ['lib/analysis/**'],
     required_tests: ['node --test tests/pressure.test.mjs'],
     dependencies: [],
-    domain_gate: { status: 'CLEARED', contract_version: 'v1' },
+    domain_gate: { status: 'CLEARED', domain: 'VEHICLE', contract_version: 'v1',
+      contract_path: domainContractPath, contract_sha256: digest(domainContract) },
     permissions: { production_write: false, merge: false, deploy: false,
       paid_api: false, network_access: false, migrations: false },
   };
@@ -51,6 +54,7 @@ function inputs(enabled = false) {
   return {
     event: event(), basePlan: plan(enabled), baseRoadmap: roadmap,
     baseAgents: refs, baseClaude: refs, packet: packet(),
+    baseContracts: { [domainContractPath]: domainContract },
     changes: [{ kind: 'A', paths: ['.tdr/enforcer-task.json'] },
       { kind: 'M', paths: ['lib/analysis/pressure.ts'] }],
     headFileModes: {
@@ -140,6 +144,18 @@ test('not yet accepted dependency blocks task', () => {
 test('missing independent domain gate blocks task', () => {
   const res = run(x => { x.packet.domain_gate.status = 'REVIEW_REQUIRED'; });
   assert.ok(res.errors.includes('DOMAIN_GATE_NOT_INDEPENDENTLY_CLEARED'));
+});
+test('swapping domain ID with same version is rejected', () => {
+  const res = run(x => { x.packet.domain_gate.domain = 'BILLING'; });
+  assert.ok(res.errors.includes('DOMAIN_GATE_NOT_INDEPENDENTLY_CLEARED'));
+});
+test('tampering with trusted base domain contract causes hash mismatch', () => {
+  const res = run(x => { x.baseContracts[domainContractPath] = 'wrong contents'; });
+  assert.ok(res.errors.includes('DOMAIN_GATE_NOT_INDEPENDENTLY_CLEARED'));
+});
+test('missing git file mode evidence is not silently treated as regular file', () => {
+  const res = run(x => { delete x.headFileModes['lib/analysis/pressure.ts']; });
+  assert.ok(res.errors.includes('HEAD_FILE_MODE_MISSING:lib/analysis/pressure.ts'));
 });
 test('task cannot self-authorize live HTTP/paid/Production/merge capability', () => {
   for (const p of ['network_access', 'paid_api', 'production_write', 'merge']) {
