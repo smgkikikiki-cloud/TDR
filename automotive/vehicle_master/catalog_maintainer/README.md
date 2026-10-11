@@ -19,6 +19,7 @@ python -m automotive.vehicle_master.catalog_maintainer.cli retail-reconcile \
   --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
   --document automotive/vehicle_master/catalog_maintainer/fixtures/recorded_docs/complete-lineup.json \
   --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_retail_reconciliation.json
+rm -f /tmp/catalog-maintainer-offline.sqlite /tmp/catalog-maintainer-offline.sqlite-shm /tmp/catalog-maintainer-offline.sqlite-wal
 python -m automotive.vehicle_master.catalog_maintainer.cli offline-plan \
   --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
   --db /tmp/catalog-maintainer-offline.sqlite --now-epoch 1791676800 \
@@ -33,7 +34,7 @@ python -m automotive.vehicle_master.catalog_maintainer.cli offline-report \
   --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_offline_run/report.json
 ```
 
-Reproduce the fixture output from the package directory's parent repository root using those exact commands. No credentials, optional packages, external services, or database are used. `--budget 0` returns empty queues. A positive `--budget` caps each queue independently, so a Retail Audit backlog cannot consume the Spec Enrichment allowance. The merged queue follows a finite policy-configured service cycle. Output contains `queue.csv`, `decisions.jsonl`, and `summary.json`.
+Reproduce the fixture output from the package directory's parent repository root using those exact commands. No credentials, optional packages, external services, Production database, or remote database are used. Chunk 4's journal is local SQLite only. `--budget 0` returns empty queues. A positive `--budget` caps each queue independently, so a Retail Audit backlog cannot consume the Spec Enrichment allowance. The merged queue follows a finite policy-configured service cycle. Output contains `queue.csv`, `decisions.jsonl`, and `summary.json`.
 
 ## Queue semantics
 
@@ -70,7 +71,7 @@ The proposed minimum negative-lineup evidence interval is policy data in `contra
 
 ### Chunk 3 correction record — QA pending
 
-Corrected all six QA findings. Added adversarial regressions for previous-positive plus one-negative, independent negative editions from one publisher, reverse chronology, content-bound capture provenance, generation/model-year/facelift scope, forged model metadata, page-count mismatch, production-vs-retail end, and policy interval validation. Carried-forward regressions prove an eligible official Thai source reduces one genuinely missing P1 gap, mixed fact states are order-independent, and qualifier review remains unresolved. Sample simulator, evidence replay, and retail reconciliation outputs were regenerated. The implementation remains offline, deterministic, proposal-only, and zero-write. Full GitHub Actions status is pending for this correction commit; Chunk 4 has not started.
+Corrected all six QA findings. Added adversarial regressions for previous-positive plus one-negative, independent negative editions from one publisher, reverse chronology, content-bound capture provenance, generation/model-year/facelift scope, forged model metadata, page-count mismatch, production-vs-retail end, and policy interval validation. Carried-forward regressions prove an eligible official Thai source reduces one genuinely missing P1 gap, mixed fact states are order-independent, and qualifier review remains unresolved. Sample simulator, evidence replay, and retail reconciliation outputs were regenerated. The implementation remains offline, deterministic, proposal-only, and zero-write. Chunk 3 was accepted at `38a6d1ac583c3a34b8d92de134ff72a6ad601209`; Chunk 4 implementation and its QA gate are recorded below.
 
 ## Chunk 4 — bounded planner and persistent OFFLINE runner
 
