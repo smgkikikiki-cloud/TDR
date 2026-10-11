@@ -1,0 +1,32 @@
+{
+  "schema": "tdr.task-packet.v1",
+  "task_id": "STAGE1-DENY-SMOKE-20261011",
+  "roadmap_version": "1.0",
+  "roadmap_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "base_sha": "0000000000000000000000000000000000000000",
+  "owner_authorized": false,
+  "approval_ref": "NOT_AUTHORIZED_SMOKE_TEST",
+  "execution_mode": "OFFLINE",
+  "allowed_paths": [
+    "lib/analysis/**"
+  ],
+  "required_tests": [
+    "node --test orchestration/pr-admission.test.mjs"
+  ],
+  "dependencies": [],
+  "permissions": {
+    "production_write": false,
+    "merge": false,
+    "deploy": false,
+    "paid_api": false,
+    "network_access": false,
+    "migrations": false
+  },
+  "domain_gate": {
+    "status": "REVIEW_REQUIRED",
+    "domain": "NONE",
+    "contract_path": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md",
+    "contract_version": "NONE",
+    "contract_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}
