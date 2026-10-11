@@ -45,7 +45,13 @@ assert.equal(combined.scoredModelCount,1);
 assert.equal(combined.modelCoveragePct,50);
 assert.equal(combined.publicationStatus,"RESEARCH_ONLY");
 assert.equal(combined.publishableHeadlinePdiPct,null);
-assert.equal(run([model("one",[trim("a",1_000_000,0)])],{publicationApproved:true,approvedMinimumCoveragePct:100}).publicationStatus,"PUBLISHABLE");
+assert.equal(run([model("one",[trim("a",1_000_000,0)])],{publicationApproved:true,approvedMinimumCoveragePct:100}).publicationStatus,"RESEARCH_ONLY");
+assert.equal(run([model("one",[trim("a",1_000_000,0)])],{
+  publicationApproved:true,methodologyApproved:true,completeUniverseAttested:true,approvedMinimumCoveragePct:100
+}).publicationStatus,"PUBLISHABLE");
+assert.equal(run([
+  model("one",[trim("a",1_000_000,0)]),model("unknown",[trim("b",null,null)])
+],{publicationApproved:true,methodologyApproved:true,completeUniverseAttested:true,approvedMinimumCoveragePct:0}).publicationStatus,"RESEARCH_ONLY");
 assert.equal(run([model("jp",[trim("a",1_000_000,100_000)],"JP","CANDIDATE")]).modelResults[0].status,"CANDIDATE");
 assert.equal(run([model("mixed",[{...trim("a",1_000_000,100_000),powertrain:"ICE"},trim("b",1_500_000,0)])]).modelResults[0].status,"SCOPE_CONFLICT");
 const cond=trim("a",1_000_000,null);
