@@ -1,7 +1,7 @@
 {
   "schema": "tdr.portfolio.approved-roadmap.v1.0",
   "snapshot_date": "2026-10-11",
-  "state": "OWNER_APPROVED_AWAITING_MAIN_ADOPTION",
+  "state": "OWNER_APPROVED_REPOSITORY_ADOPTION_TRACKED",
   "scope": "Owner-approved portfolio plan and guardrails. This JSON is non-executable; methodology and operational domain gates remain separate.",
   "repository": "smgkikikiki-cloud/TDR",
   "execution": {
@@ -387,7 +387,7 @@
       "billing plan changes"
     ],
     "document": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md",
-    "repository_adoption": "PENDING_MERGE",
+    "repository_adoption": "PR_204_GITHUB_MERGE_STATE",
     "human_gate_overrides": false
   },
   "conflicts_blocking_operational_activation": [
