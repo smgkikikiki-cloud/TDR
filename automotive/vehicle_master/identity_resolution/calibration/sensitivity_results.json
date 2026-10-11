@@ -1,0 +1,1802 @@
+{
+ "baseline_outcomes": {
+  "AUTO": 69,
+  "INSUFFICIENT_DATA": 53,
+  "NO_CANDIDATE": 883,
+  "PROPOSE": 195
+ },
+ "baseline_review_queues": {
+  "crosswalk_review": 195,
+  "discovery": 34,
+  "none": 971
+ },
+ "groups": 1200,
+ "legacy_row_groups": 489,
+ "variants": [
+  {
+   "id": "strong.correlation_min=0.97",
+   "adoption_entry": "series_strong (calibration; accepted in 14.2, value still pending)",
+   "key": "series.strong.correlation_min",
+   "value": 0.97,
+   "description": "AUTO/strong gate: correlation >= 0.97",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "strong.correlation_min=0.99",
+   "adoption_entry": "series_strong",
+   "key": "series.strong.correlation_min",
+   "value": 0.99,
+   "description": "correlation >= 0.99",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 68,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 196
+   },
+   "review_queues": {
+    "crosswalk_review": 196,
+    "discovery": 34,
+    "none": 970
+   },
+   "groups_changed": 2,
+   "groups_changed_in_legacy_rows": 2,
+   "auto_gained": 0,
+   "auto_lost": 1,
+   "moves": {
+    "AUTO->PROPOSE": 1,
+    "PROPOSE->PROPOSE": 1
+   },
+   "examples_changed": [
+    "bmw-bmw-i7",
+    "mini-cooper"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": [
+    "bmw-bmw-i7"
+   ]
+  },
+  {
+   "id": "strong.ratio_min=0.85",
+   "adoption_entry": "series_strong",
+   "key": "series.strong.ratio_min",
+   "value": 0.85,
+   "description": "ratio lower bound 0.85",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "strong.ratio_min=0.95",
+   "adoption_entry": "series_strong",
+   "key": "series.strong.ratio_min",
+   "value": 0.95,
+   "description": "ratio lower bound 0.95",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "strong.ratio_max=1.15",
+   "adoption_entry": "series_strong",
+   "key": "series.strong.ratio_max",
+   "value": 1.15,
+   "description": "ratio upper bound 1.15",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "strong.ratio_max=1.05",
+   "adoption_entry": "series_strong",
+   "key": "series.strong.ratio_max",
+   "value": 1.05,
+   "description": "ratio upper bound 1.05",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->PROPOSE": 1
+   },
+   "examples_changed": [
+    "mini-cooper"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "monthly_fit.min_share=0.6",
+   "adoption_entry": "series_monthly_fit",
+   "key": "series.monthly_fit.min_share_of_months",
+   "value": 0.6,
+   "description": "monthly fit share >= 0.60",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "monthly_fit.min_share=0.9",
+   "adoption_entry": "series_monthly_fit",
+   "key": "series.monthly_fit.min_share_of_months",
+   "value": 0.9,
+   "description": "monthly fit share >= 0.90",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "monthly_fit.rel_tolerance=0.15",
+   "adoption_entry": "series_monthly_fit",
+   "key": "series.monthly_fit.rel_tolerance",
+   "value": 0.15,
+   "description": "relative tolerance 15 %",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "monthly_fit.rel_tolerance=0.35",
+   "adoption_entry": "series_monthly_fit",
+   "key": "series.monthly_fit.rel_tolerance",
+   "value": 0.35,
+   "description": "relative tolerance 35 %",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.common_months=9",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.common_months",
+   "value": 9,
+   "description": "AUTO needs 9 common months (was 12)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.common_months=18",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.common_months",
+   "value": 18,
+   "description": "AUTO needs 18 common months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.joint_nonzero=7",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.joint_nonzero_months",
+   "value": 7,
+   "description": "AUTO needs 7 joint non-zero months (was 10)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.joint_nonzero=14",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.joint_nonzero_months",
+   "value": 14,
+   "description": "AUTO needs 14 joint non-zero months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.units=60",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.units_each_side",
+   "value": 60,
+   "description": "AUTO needs 60 units each side (was 120)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "auto.units=240",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.auto.units_each_side",
+   "value": 240,
+   "description": "AUTO needs 240 units each side",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 63,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 201
+   },
+   "review_queues": {
+    "crosswalk_review": 201,
+    "discovery": 34,
+    "none": 965
+   },
+   "groups_changed": 6,
+   "groups_changed_in_legacy_rows": 6,
+   "auto_gained": 0,
+   "auto_lost": 6,
+   "moves": {
+    "AUTO->PROPOSE": 6
+   },
+   "examples_changed": [
+    "bmw-bmw-i4",
+    "bmw-bmw-i7",
+    "bmw-bmw-xm",
+    "daihatsu-daihatsu-hijet",
+    "kia-sorento",
+    "porsche-porsche-718"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": [
+    "bmw-bmw-i4",
+    "bmw-bmw-i7",
+    "bmw-bmw-xm",
+    "daihatsu-daihatsu-hijet",
+    "kia-sorento",
+    "porsche-porsche-718"
+   ]
+  },
+  {
+   "id": "propose.common_months=4",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.propose.common_months",
+   "value": 4,
+   "description": "a series is usable from 4 common months (was 6)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "propose.common_months=9",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.propose.common_months",
+   "value": 9,
+   "description": "usable from 9 common months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "propose.units=15",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.propose.units_each_side",
+   "value": 15,
+   "description": "usable from 15 units each side (was 30)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 49,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 199
+   },
+   "review_queues": {
+    "crosswalk_review": 199,
+    "discovery": 34,
+    "none": 967
+   },
+   "groups_changed": 4,
+   "groups_changed_in_legacy_rows": 4,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "INSUFFICIENT_DATA->PROPOSE": 4
+   },
+   "examples_changed": [
+    "audi-audi-rs-4",
+    "audi-audi-rs-5",
+    "audi-audi-rs-q3",
+    "toyota-gr-yaris"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "propose.units=60",
+   "adoption_entry": "series_minimums",
+   "key": "series.minimums.propose.units_each_side",
+   "value": 60,
+   "description": "usable from 60 units each side",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 57,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 191
+   },
+   "review_queues": {
+    "crosswalk_review": 191,
+    "discovery": 34,
+    "none": 975
+   },
+   "groups_changed": 4,
+   "groups_changed_in_legacy_rows": 3,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->INSUFFICIENT_DATA": 4
+   },
+   "examples_changed": [
+    "bentley-bentley-flying",
+    "changan-deepal-hunter",
+    "mercedes-benz-mercedes-benz-amg-c",
+    "mitsubishi-outlander"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "gap.cap=1",
+   "adoption_entry": "series_absent_row_gap",
+   "key": "series.absent_row.auto_max_unconfirmed_gap_months",
+   "value": 1,
+   "description": "AUTO tolerates 1 unconfirmed-gap month (was 0)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 73,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 191
+   },
+   "review_queues": {
+    "crosswalk_review": 191,
+    "discovery": 34,
+    "none": 975
+   },
+   "groups_changed": 4,
+   "groups_changed_in_legacy_rows": 4,
+   "auto_gained": 4,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->AUTO": 4
+   },
+   "examples_changed": [
+    "aion-hyptec-ht",
+    "byd-m6",
+    "hyundai-creta",
+    "hyundai-ioniq-5"
+   ],
+   "examples_auto_gained": [
+    "aion-hyptec-ht",
+    "byd-m6",
+    "hyundai-creta",
+    "hyundai-ioniq-5"
+   ],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "gap.cap=3",
+   "adoption_entry": "series_absent_row_gap",
+   "key": "series.absent_row.auto_max_unconfirmed_gap_months",
+   "value": 3,
+   "description": "AUTO tolerates 3 unconfirmed-gap months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 81,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 183
+   },
+   "review_queues": {
+    "crosswalk_review": 183,
+    "discovery": 34,
+    "none": 983
+   },
+   "groups_changed": 12,
+   "groups_changed_in_legacy_rows": 12,
+   "auto_gained": 12,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->AUTO": 12
+   },
+   "examples_changed": [
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "byd-m6",
+    "honda-wr-v",
+    "hyundai-creta",
+    "hyundai-ioniq-5",
+    "hyundai-palisade",
+    "mg-mg-cyberster",
+    "nissan-terra",
+    "zeekr-zeekr-009"
+   ],
+   "examples_auto_gained": [
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "byd-m6",
+    "honda-wr-v",
+    "hyundai-creta",
+    "hyundai-ioniq-5",
+    "hyundai-palisade",
+    "mg-mg-cyberster",
+    "nissan-terra",
+    "zeekr-zeekr-009"
+   ],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "gap.cap=24",
+   "adoption_entry": "series_absent_row_gap",
+   "key": "series.absent_row.auto_max_unconfirmed_gap_months",
+   "value": 24,
+   "description": "no cap at all (every gap tolerated): the upper bound of what Ice/TDR confirmation could unlock",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 101,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 163
+   },
+   "review_queues": {
+    "crosswalk_review": 163,
+    "discovery": 34,
+    "none": 1003
+   },
+   "groups_changed": 32,
+   "groups_changed_in_legacy_rows": 32,
+   "auto_gained": 32,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->AUTO": 32
+   },
+   "examples_changed": [
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "bmw-bmw-ix1",
+    "byd-byd-t3",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-e07",
+    "changan-deepal-s05"
+   ],
+   "examples_auto_gained": [
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "bmw-bmw-ix1",
+    "byd-byd-t3",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-e07",
+    "changan-deepal-s05"
+   ],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "fuzzy.min_token_length=4",
+   "adoption_entry": "lexical_fuzzy_min_length",
+   "key": "lexical.fuzzy_token.min_token_length",
+   "value": 4,
+   "description": "one-edit tolerance from 4-letter tokens (was 6)",
+   "hypothetical": false,
+   "outcomes": {
+    "AMBIGUOUS": 1,
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 879,
+    "PROPOSE": 198
+   },
+   "review_queues": {
+    "crosswalk_review": 199,
+    "discovery": 33,
+    "none": 968
+   },
+   "groups_changed": 4,
+   "groups_changed_in_legacy_rows": 4,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "NO_CANDIDATE->AMBIGUOUS": 1,
+    "NO_CANDIDATE->PROPOSE": 3
+   },
+   "examples_changed": [
+    "SOKON|EC31",
+    "peugeot-peugeot-5008",
+    "volvo-volvo-es90",
+    "wuling-binguo"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "fuzzy.min_token_length=5",
+   "adoption_entry": "lexical_fuzzy_min_length",
+   "key": "lexical.fuzzy_token.min_token_length",
+   "value": 5,
+   "description": "one-edit tolerance from 5-letter tokens",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 882,
+    "PROPOSE": 196
+   },
+   "review_queues": {
+    "crosswalk_review": 196,
+    "discovery": 33,
+    "none": 971
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "NO_CANDIDATE->PROPOSE": 1
+   },
+   "examples_changed": [
+    "wuling-binguo"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "fuzzy.min_token_length=8",
+   "adoption_entry": "lexical_fuzzy_min_length",
+   "key": "lexical.fuzzy_token.min_token_length",
+   "value": 8,
+   "description": "one-edit tolerance only from 8-letter tokens",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 886,
+    "PROPOSE": 192
+   },
+   "review_queues": {
+    "crosswalk_review": 192,
+    "discovery": 35,
+    "none": 973
+   },
+   "groups_changed": 3,
+   "groups_changed_in_legacy_rows": 3,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->NO_CANDIDATE": 3
+   },
+   "examples_changed": [
+    "KIA|CANIVAL",
+    "TOYOTA|COMUTER",
+    "mazda-mazda6e"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "fuzzy.enabled=false",
+   "adoption_entry": "lexical_fuzzy_switch",
+   "key": "lexical.fuzzy_token.enabled",
+   "value": false,
+   "description": "no one-edit typo tolerance at all",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 886,
+    "PROPOSE": 192
+   },
+   "review_queues": {
+    "crosswalk_review": 192,
+    "discovery": 35,
+    "none": 973
+   },
+   "groups_changed": 3,
+   "groups_changed_in_legacy_rows": 3,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->NO_CANDIDATE": 3
+   },
+   "examples_changed": [
+    "KIA|CANIVAL",
+    "TOYOTA|COMUTER",
+    "mazda-mazda6e"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "series_only.allow_with_name_veto=true",
+   "adoption_entry": "lexical_name_relation_roles",
+   "key": "lexical.series_only.allow_with_name_veto",
+   "value": true,
+   "description": "a STRONG series rescues a contradicting / sibling name",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 874,
+    "PROPOSE": 204
+   },
+   "review_queues": {
+    "crosswalk_review": 204,
+    "discovery": 29,
+    "none": 967
+   },
+   "groups_changed": 9,
+   "groups_changed_in_legacy_rows": 7,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "NO_CANDIDATE->PROPOSE": 9
+   },
+   "examples_changed": [
+    "jac-jac-hfc1040ev3",
+    "jaecoo-jaecoo-j5",
+    "jaecoo-jaecoo-j6",
+    "jaecoo-jaecoo-j7",
+    "lexus-lexus-es300h",
+    "lexus-lexus-is300h",
+    "maxus-mifa-7",
+    "volt-volt-volt",
+    "wuling-binguo"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "wrong.correlation_below=0.3",
+   "adoption_entry": "data_sufficiency_wrong_series",
+   "key": "data_sufficiency.series_decisively_wrong.correlation_below",
+   "value": 0.3,
+   "description": "decisively wrong only below correlation 0.3 (was 0.5)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 54,
+    "NO_CANDIDATE": 882,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 33,
+    "none": 972
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "NO_CANDIDATE->INSUFFICIENT_DATA": 1
+   },
+   "examples_changed": [
+    "volvo-volvo-ec40-c40"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "wrong.correlation_below=0.7",
+   "adoption_entry": "data_sufficiency_wrong_series",
+   "key": "data_sufficiency.series_decisively_wrong.correlation_below",
+   "value": 0.7,
+   "description": "decisively wrong below correlation 0.7",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 52,
+    "NO_CANDIDATE": 884,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 35,
+    "none": 970
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "INSUFFICIENT_DATA->NO_CANDIDATE": 1
+   },
+   "examples_changed": [
+    "volvo-volvo-xc40ex40"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "wrong.ratio_outside=[0.33,3]",
+   "adoption_entry": "data_sufficiency_wrong_series",
+   "key": "data_sufficiency.series_decisively_wrong.ratio_outside",
+   "value": [
+    0.33,
+    3.0
+   ],
+   "description": "decisively wrong outside ratio 0.33..3 (was 0.5..2)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "wrong.ratio_outside=[0.67,1.5]",
+   "adoption_entry": "data_sufficiency_wrong_series",
+   "key": "data_sufficiency.series_decisively_wrong.ratio_outside",
+   "value": [
+    0.67,
+    1.5
+   ],
+   "description": "decisively wrong outside ratio 0.67..1.5",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "margin.correlation_delta=0.005",
+   "adoption_entry": "candidates_margin",
+   "key": "candidates.margin.correlation_delta_min",
+   "value": 0.005,
+   "description": "rivals are tied when correlation differs by < 0.005 (was 0.01)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "margin.correlation_delta=0.03",
+   "adoption_entry": "candidates_margin",
+   "key": "candidates.margin.correlation_delta_min",
+   "value": 0.03,
+   "description": "rivals are tied when correlation differs by < 0.03",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "margin.abs_ln_ratio_delta=0.02",
+   "adoption_entry": "candidates_margin",
+   "key": "candidates.margin.abs_ln_ratio_delta_min",
+   "value": 0.02,
+   "description": "tied when |ln ratio| differs by < 0.02 (was 0.05)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "margin.abs_ln_ratio_delta=0.15",
+   "adoption_entry": "candidates_margin",
+   "key": "candidates.margin.abs_ln_ratio_delta_min",
+   "value": 0.15,
+   "description": "tied when |ln ratio| differs by < 0.15",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "part_of.min_ratio_above=1.3",
+   "adoption_entry": "granularity_part_of_ratio",
+   "key": "granularity.part_of.min_ratio_above",
+   "value": 1.3,
+   "description": "PART_OF needs a target >= 1.3x the subject (was 1.1)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "part_of.min_ratio_above=2.0",
+   "adoption_entry": "granularity_part_of_ratio",
+   "key": "granularity.part_of.min_ratio_above",
+   "value": 2.0,
+   "description": "PART_OF needs a target >= 2x the subject",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "part_of.arbitration_sum_check=false",
+   "adoption_entry": "granularity_part_of_rules",
+   "key": "granularity.part_of.arbitration_sum_check",
+   "value": false,
+   "description": "no sum rule: several subjects are never grouped as parts",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->PROPOSE": 1
+   },
+   "examples_changed": [
+    "mini-cooper"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "lifecycle.grace_months=3",
+   "adoption_entry": "attributes_lifecycle",
+   "key": "attributes.lifecycle.grace_months",
+   "value": 3,
+   "description": "generation grace 3 months (was 6)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 67,
+    "INSUFFICIENT_DATA": 51,
+    "NO_CANDIDATE": 885,
+    "PROPOSE": 197
+   },
+   "review_queues": {
+    "crosswalk_review": 197,
+    "discovery": 34,
+    "none": 969
+   },
+   "groups_changed": 4,
+   "groups_changed_in_legacy_rows": 2,
+   "auto_gained": 0,
+   "auto_lost": 2,
+   "moves": {
+    "AUTO->PROPOSE": 2,
+    "INSUFFICIENT_DATA->NO_CANDIDATE": 2
+   },
+   "examples_changed": [
+    "MINI|ไม่ระบุ",
+    "bmw-bmw-x7",
+    "mercedes-benz-type-s-580-4matic__provisional",
+    "mg-mg-vs-hev"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": [
+    "bmw-bmw-x7",
+    "mg-mg-vs-hev"
+   ]
+  },
+  {
+   "id": "lifecycle.grace_months=12",
+   "adoption_entry": "attributes_lifecycle",
+   "key": "attributes.lifecycle.grace_months",
+   "value": 12,
+   "description": "generation grace 12 months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 76,
+    "INSUFFICIENT_DATA": 55,
+    "NO_CANDIDATE": 880,
+    "PROPOSE": 189
+   },
+   "review_queues": {
+    "crosswalk_review": 189,
+    "discovery": 34,
+    "none": 977
+   },
+   "groups_changed": 10,
+   "groups_changed_in_legacy_rows": 8,
+   "auto_gained": 7,
+   "auto_lost": 0,
+   "moves": {
+    "NO_CANDIDATE->INSUFFICIENT_DATA": 2,
+    "NO_CANDIDATE->PROPOSE": 1,
+    "PROPOSE->AUTO": 7
+   },
+   "examples_changed": [
+    "ROLLS ROYCE|ไม่ระบุ",
+    "audi-audi-a1",
+    "audi-audi-tt",
+    "bmw-bmw-x1",
+    "bmw-bmw-x4",
+    "bmw-bmw-x5",
+    "bmw-bmw-z4",
+    "kia-kia-ev5",
+    "mercedes-benz-mercedes-benz-sprinter",
+    "tesla-tesla-model"
+   ],
+   "examples_auto_gained": [
+    "audi-audi-tt",
+    "bmw-bmw-x1",
+    "bmw-bmw-x4",
+    "bmw-bmw-x5",
+    "bmw-bmw-z4",
+    "kia-kia-ev5",
+    "mercedes-benz-mercedes-benz-sprinter"
+   ],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "lifecycle.within_min_share=0.9",
+   "adoption_entry": "attributes_lifecycle",
+   "key": "attributes.lifecycle.within_min_share",
+   "value": 0.9,
+   "description": "WITHIN needs 90 % of units inside the lifetime (was 80 %)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 64,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 200
+   },
+   "review_queues": {
+    "crosswalk_review": 200,
+    "discovery": 34,
+    "none": 966
+   },
+   "groups_changed": 5,
+   "groups_changed_in_legacy_rows": 5,
+   "auto_gained": 0,
+   "auto_lost": 5,
+   "moves": {
+    "AUTO->PROPOSE": 5
+   },
+   "examples_changed": [
+    "bmw-bmw-x7",
+    "daihatsu-daihatsu-hijet",
+    "lexus-lexus-rx",
+    "mg-mg-vs-hev",
+    "toyota-vellfire"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": [
+    "bmw-bmw-x7",
+    "daihatsu-daihatsu-hijet",
+    "lexus-lexus-rx",
+    "mg-mg-vs-hev",
+    "toyota-vellfire"
+   ]
+  },
+  {
+   "id": "lifecycle.disjoint_max_share=0.4",
+   "adoption_entry": "attributes_lifecycle",
+   "key": "attributes.lifecycle.disjoint_max_share",
+   "value": 0.4,
+   "description": "DISJOINT below 40 % inside (was 20 %)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 51,
+    "NO_CANDIDATE": 893,
+    "PROPOSE": 187
+   },
+   "review_queues": {
+    "crosswalk_review": 187,
+    "discovery": 41,
+    "none": 972
+   },
+   "groups_changed": 10,
+   "groups_changed_in_legacy_rows": 8,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "INSUFFICIENT_DATA->NO_CANDIDATE": 2,
+    "PROPOSE->NO_CANDIDATE": 8
+   },
+   "examples_changed": [
+    "MINI|ไม่ระบุ",
+    "bmw-bmw-x3",
+    "ford-ford-mustang",
+    "mercedes-benz-mercedes-benz-glb-class",
+    "mg-mg3",
+    "subaru-subaru-crosstrek",
+    "toyota-c-hr",
+    "toyota-gr-yaris",
+    "volvo-volvo-s60",
+    "volvo-volvo-v60"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "discovery.catalog_gap_min_units=250",
+   "adoption_entry": "subject_discovery_thresholds",
+   "key": "subject_quality.discovery.catalog_gap_min_units",
+   "value": 250,
+   "description": "catalog-gap flag from 250 units (was 500)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 46,
+    "none": 959
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "discovery.catalog_gap_min_units=2000",
+   "adoption_entry": "subject_discovery_thresholds",
+   "key": "subject_quality.discovery.catalog_gap_min_units",
+   "value": 2000,
+   "description": "catalog-gap flag from 2000 units",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 22,
+    "none": 983
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "bundle.max_members=2",
+   "adoption_entry": "candidates_bundle_bounds",
+   "key": "candidates.bundle.max_members",
+   "value": 2,
+   "description": "link sets of at most 2 members (was 3)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 54,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 194
+   },
+   "review_queues": {
+    "crosswalk_review": 194,
+    "discovery": 34,
+    "none": 972
+   },
+   "groups_changed": 1,
+   "groups_changed_in_legacy_rows": 1,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->INSUFFICIENT_DATA": 1
+   },
+   "examples_changed": [
+    "land-rover-land-rover-range"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "bundle.max_members=4",
+   "adoption_entry": "candidates_bundle_bounds",
+   "key": "candidates.bundle.max_members",
+   "value": 4,
+   "description": "link sets of at most 4 members",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "bundle.enabled=false",
+   "adoption_entry": "candidates_bundle_enabled (owner_accepted)",
+   "key": "candidates.bundle.enabled",
+   "value": false,
+   "description": "no COMPOSED_OF link sets at all (the owner accepted them; shown for size only)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 60,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 188
+   },
+   "review_queues": {
+    "crosswalk_review": 188,
+    "discovery": 34,
+    "none": 978
+   },
+   "groups_changed": 12,
+   "groups_changed_in_legacy_rows": 12,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {
+    "PROPOSE->INSUFFICIENT_DATA": 7,
+    "PROPOSE->PROPOSE": 5
+   },
+   "examples_changed": [
+    "audi-audi-q8",
+    "byd-seal",
+    "chevrolet-chevrolet-colorado",
+    "isuzu-isuzu-d-max",
+    "land-rover-land-rover-range",
+    "mg-mg-zs",
+    "mitsubishi-triton",
+    "mitsubishi-xpander",
+    "nissan-navara",
+    "toyota-hiace",
+    "toyota-hilux-revo",
+    "toyota-hilux-travo"
+   ],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "window.max_months=12",
+   "adoption_entry": "series_window (not an adoption entry: SPEC 14.2 text)",
+   "key": "series.window.max_months",
+   "value": 12,
+   "description": "compare the newest 12 common months (was 24)",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 82,
+    "INSUFFICIENT_DATA": 60,
+    "NO_CANDIDATE": 882,
+    "PROPOSE": 176
+   },
+   "review_queues": {
+    "crosswalk_review": 176,
+    "discovery": 33,
+    "none": 991
+   },
+   "groups_changed": 40,
+   "groups_changed_in_legacy_rows": 38,
+   "auto_gained": 21,
+   "auto_lost": 8,
+   "moves": {
+    "AUTO->PROPOSE": 8,
+    "INSUFFICIENT_DATA->PROPOSE": 1,
+    "NO_CANDIDATE->INSUFFICIENT_DATA": 1,
+    "PROPOSE->AUTO": 21,
+    "PROPOSE->INSUFFICIENT_DATA": 7,
+    "PROPOSE->PROPOSE": 2
+   },
+   "examples_changed": [
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "avatr-avatr-11",
+    "bentley-bentley-flying",
+    "bmw-bmw-i4",
+    "bmw-bmw-ix1",
+    "bmw-bmw-x7",
+    "bmw-bmw-xm",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-hunter"
+   ],
+   "examples_auto_gained": [
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "avatr-avatr-11",
+    "bmw-bmw-ix1",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-s05",
+    "denza-denza-d9",
+    "gac-gac-m8",
+    "geely-geely-ex5",
+    "hyundai-palisade"
+   ],
+   "examples_auto_lost": [
+    "bmw-bmw-i4",
+    "bmw-bmw-x7",
+    "bmw-bmw-xm",
+    "daihatsu-daihatsu-hijet",
+    "kia-sorento",
+    "porsche-porsche-718",
+    "toyota-voxy",
+    "volvo-volvo-xc90"
+   ]
+  },
+  {
+   "id": "window.max_months=36",
+   "adoption_entry": "series_window",
+   "key": "series.window.max_months",
+   "value": 36,
+   "description": "compare the newest 36 common months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 56,
+    "INSUFFICIENT_DATA": 51,
+    "NO_CANDIDATE": 884,
+    "PROPOSE": 209
+   },
+   "review_queues": {
+    "crosswalk_review": 209,
+    "discovery": 35,
+    "none": 956
+   },
+   "groups_changed": 20,
+   "groups_changed_in_legacy_rows": 20,
+   "auto_gained": 1,
+   "auto_lost": 14,
+   "moves": {
+    "AUTO->PROPOSE": 14,
+    "INSUFFICIENT_DATA->PROPOSE": 2,
+    "PROPOSE->AUTO": 1,
+    "PROPOSE->NO_CANDIDATE": 1,
+    "PROPOSE->PROPOSE": 2
+   },
+   "examples_changed": [
+    "audi-audi-e-tron",
+    "audi-audi-rs-4",
+    "audi-audi-rs-5",
+    "bmw-bmw-i5",
+    "bmw-bmw-xm",
+    "changan-deepal-s07",
+    "changan-lumin",
+    "gwm-tank-300",
+    "gwm-tank-500",
+    "honda-en1",
+    "hyundai-santa-fe",
+    "kia-sorento"
+   ],
+   "examples_auto_gained": [
+    "nissan-kicks-e-power"
+   ],
+   "examples_auto_lost": [
+    "bmw-bmw-i5",
+    "bmw-bmw-xm",
+    "changan-deepal-s07",
+    "changan-lumin",
+    "gwm-tank-300",
+    "gwm-tank-500",
+    "honda-en1",
+    "hyundai-santa-fe",
+    "kia-sorento",
+    "toyota-hilux-champ",
+    "toyota-yaris-cross",
+    "volvo-volvo-ex30"
+   ]
+  },
+  {
+   "id": "window.trim_inactive_edges=false",
+   "adoption_entry": "series_window_switches",
+   "key": "series.window.trim_inactive_edges",
+   "value": false,
+   "description": "do not trim both-zero edge months",
+   "hypothetical": false,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "what-if: Ice confirms absent = zero",
+   "adoption_entry": "capability what-if (not a contract value)",
+   "key": null,
+   "value": null,
+   "description": "HYPOTHESIS (Q-ICE-ABSENT-ROW is open): the Ice side zero-fills its absent in-coverage months",
+   "hypothetical": true,
+   "outcomes": {
+    "AUTO": 69,
+    "INSUFFICIENT_DATA": 53,
+    "NO_CANDIDATE": 883,
+    "PROPOSE": 195
+   },
+   "review_queues": {
+    "crosswalk_review": 195,
+    "discovery": 34,
+    "none": 971
+   },
+   "groups_changed": 0,
+   "groups_changed_in_legacy_rows": 0,
+   "auto_gained": 0,
+   "auto_lost": 0,
+   "moves": {},
+   "examples_changed": [],
+   "examples_auto_gained": [],
+   "examples_auto_lost": []
+  },
+  {
+   "id": "what-if: Ice and TDR confirm absent = zero",
+   "adoption_entry": "capability what-if (not a contract value)",
+   "key": null,
+   "value": null,
+   "description": "HYPOTHESIS (Q-ICE-ABSENT-ROW open; TDR trace says UNKNOWN): both sides zero-fill",
+   "hypothetical": true,
+   "outcomes": {
+    "AUTO": 101,
+    "INSUFFICIENT_DATA": 57,
+    "NO_CANDIDATE": 885,
+    "PROPOSE": 157
+   },
+   "review_queues": {
+    "crosswalk_review": 157,
+    "discovery": 35,
+    "none": 1008
+   },
+   "groups_changed": 39,
+   "groups_changed_in_legacy_rows": 38,
+   "auto_gained": 32,
+   "auto_lost": 0,
+   "moves": {
+    "INSUFFICIENT_DATA->NO_CANDIDATE": 1,
+    "PROPOSE->AUTO": 32,
+    "PROPOSE->INSUFFICIENT_DATA": 5,
+    "PROPOSE->NO_CANDIDATE": 1
+   },
+   "examples_changed": [
+    "ISUZU|ไม่ระบุ",
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "bmw-bmw-ix1",
+    "byd-byd-t3",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-e07"
+   ],
+   "examples_auto_gained": [
+    "aion-aion-ut",
+    "aion-aion-v",
+    "aion-hyptec-ht",
+    "audi-audi-q3",
+    "audi-audi-q5",
+    "avatr-avatr-11",
+    "bmw-bmw-ix1",
+    "byd-byd-t3",
+    "byd-m6",
+    "byd-sealion-7",
+    "changan-deepal-e07",
+    "changan-deepal-s05"
+   ],
+   "examples_auto_lost": []
+  }
+ ]
+}

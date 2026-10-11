@@ -1,0 +1,367 @@
+# TDR Identity Resolution — Policy v1 (DRAFT, NOT FROZEN — revision 2, pending owner review)
+#
+# Every threshold, alias, allow-list and precedence rule that changes a decision lives HERE, not in
+# Python (SPEC §0.4). The engine reads this file; it never carries its own copy of a number.
+#
+# STATUS: draft_not_frozen. Nothing reads this file in production, and the numbers below are NOT adopted:
+# every `proposal` / `assumption` value is provisional until it has been calibrated or accepted by the owner
+# (adoption.yaml records the plan and the gate; SPEC §14.6). Changing any value below requires a new
+# `policy.version` (once frozen), a new row in the corpus for the behaviour that moved (SPEC §14.4), and an
+# owner decision. `policy.version` follows SemVer:
+#   MAJOR  a mapping that was AUTO/PROPOSED could now be a different outcome class
+#   MINOR  a new alias / allow-list entry / new tunable with a no-op default
+#   PATCH  wording only (no behavioural key changes)
+#
+# PROVENANCE of every number / list is recorded in the `provenance` block at the bottom:
+#   inherited   — taken unchanged from an owner-approved document (docs/vehicle-db/VEHICLE_DB_V3.md §14.2)
+#   observed    — read directly from the real M7.0 package (see README "Evidence base")
+#   proposal    — NEW in this design, NOT calibrated on production data (the first R6 run's rows are not
+#                 in the repository). PROVISIONAL: it is not adopted until adoption.yaml says it is.
+#   assumption  — depends on a fact about the TDR catalog / Ice that this design could not verify.
+
+policy:
+  id: tdr-identity-resolution
+  version: "1.0.0"
+  contract_version: v1
+  revision: 2                             # draft revision; the version stays 1.0.0 until the contract is frozen
+  status: draft_not_frozen
+
+# Quantization applies to every threshold comparison and every fingerprint payload (SPEC §6.7, §11.1).
+# Rounding is half-even on the shortest-repr decimal expansion (a SPEC invariant, not a tunable).
+quantization:
+  places: 6
+
+# --------------------------------------------------------------------------------------------------
+# Time & calendar
+# --------------------------------------------------------------------------------------------------
+time:
+  valid_year_range: [1900, 2200]          # a period outside this is INPUT_PERIOD_CALENDAR_INVALID
+
+# --------------------------------------------------------------------------------------------------
+# Series evidence (monthly registrations). SPEC §6.
+# --------------------------------------------------------------------------------------------------
+series:
+  window:
+    max_months: 24                        # §14.2 "last 24 monthly totals", anchored on the COMMON window end
+    trim_inactive_edges: true             # drop leading/trailing months where both sides are 0
+    exclude_partial_periods: true         # periods either source flags partial are excluded
+  strong:                                 # §14.2 "strong"; bounds inclusive; compared on quantized values
+    correlation_min: 0.98
+    ratio_min: 0.9                        # ratio = target units / subject units
+    ratio_max: 1.1
+  minimums:
+    auto:
+      common_months: 12
+      joint_nonzero_months: 10
+      units_each_side: 120
+    propose:
+      common_months: 6
+      joint_nonzero_months: 4
+      units_each_side: 30
+  monthly_fit:                            # same-DLT-source series should track month by month, not only in shape
+    abs_tolerance_units: 3
+    rel_tolerance: 0.25
+    min_share_of_months: 0.75
+  absent_row:                             # SPEC §6.2a. What a missing row means is provider_capabilities.yaml's business, not a tunable.
+    # A comparison that had to drop in-coverage months ONLY because a source's missing-row semantics are unconfirmed
+    # (a month with no row on one side) may not be AUTO when more than this many such months fall in the last
+    # `window.max_months` months of the coverage intersection. 0 = any such month caps the pair at PROPOSED.
+    auto_max_unconfirmed_gap_months: 0
+
+# --------------------------------------------------------------------------------------------------
+# Lexical evidence (brand + model name). SPEC §5.
+# --------------------------------------------------------------------------------------------------
+lexical:
+  token_boundary_characters: " -_/.,()+"  # split points; any other non-alphanumeric character is deleted
+  generic_tokens: [series, class]         # carry no identity: "BMW 3 Series" == "3"
+  token_equivalences:
+    - [ev, electric]
+    - [hatch, hatchback]
+    - [hev, hybrid]
+  unavailable_name_values: ["ไม่ระบุ", "unknown", "n/a"]   # a blank name, or one with no tokens, is unavailable by construction
+  fuzzy_token:                            # one-edit typo tolerance on long tokens only
+    enabled: true
+    min_token_length: 6
+  name:
+    auto_relations: [EQUAL, EQUAL_VIA_MODEL_ALIAS, EQUAL_VIA_TOKEN_EQUIV]
+    candidate_relations: [EQUAL, EQUAL_VIA_MODEL_ALIAS, EQUAL_VIA_TOKEN_EQUIV, FUZZY]
+    veto_relations: [SIBLING, CONTRADICTION]
+  series_only:
+    allow_with_name_veto: false           # a strong series never rescues a contradicting name (D-Max != MU-X)
+
+# --------------------------------------------------------------------------------------------------
+# Aliases (matching aids only; they never merge anything in Vehicle Master)
+# --------------------------------------------------------------------------------------------------
+aliases:
+  brand:
+    # relation: SAME    = spelling / format variants of one marque        -> AUTO-eligible
+    #           RELABEL = the same marque sold under another label        -> AUTO-eligible
+    #           RELATED = parent / child / joint-venture, not equivalent  -> capped at PROPOSED
+    # Matching is on COMPACT keys (case-folded, separators removed), so "Mercedes-Benz",
+    # "MERCEDES BENZ" and "mercedesbenz" are one key without being listed. A key may belong to at most one
+    # SAME/RELABEL class; RELATED classes are evaluated between SAME/RELABEL classes (SPEC §5.1).
+    - id: mercedes_benz
+      relation: SAME
+      members: ["Mercedes-Benz", "Mercedes", "Benz"]
+    - id: dfsk
+      relation: SAME
+      members: ["DFSK", "DSFK"]
+    - id: deepal_changan
+      relation: RELABEL
+      members: ["Deepal", "Changan"]
+    - id: maxus_mg
+      relation: RELABEL
+      members: ["MAXUS", "MG Maxus"]
+    - id: mercedes_amg_maybach
+      relation: RELATED
+      members: ["Mercedes-Benz", "Mercedes AMG", "Mercedes-Benz Maybach"]
+    - id: land_range_rover
+      relation: RELATED
+      members: ["Land Rover", "Range Rover"]
+    - id: gwm_sub_brands
+      relation: RELATED
+      members: ["GWM", "Ora", "Haval", "Tank", "Wey"]
+    - id: mg_maxus_registration
+      # Observed in M7.0: Maxus-badged vans (Mifa 7/9, V80) are registered under brand MG (maxus-mifa-7:
+      # 934 units all MG; maxus-mifa-9: 1,961 MG + 2 MAXUS), while the TDR brand is MAXUS. Related, not equal.
+      relation: RELATED
+      members: ["MAXUS", "MG"]
+  model:
+    # An explicit, scoped model-name pair. Never a fuzzy rule. It applies only when the brand relation is an
+    # alias relation whose alias id is listed in `brand_alias_ids`. Pairs are [subject name, target name] and
+    # match on normalized tokens in either orientation.
+    - id: maxus_mifa
+      brand_alias_ids: [maxus_mg, mg_maxus_registration]
+      pairs:
+        - ["7", "Mifa 7"]
+        - ["9", "Mifa 9"]
+
+# --------------------------------------------------------------------------------------------------
+# Attribute evidence (advisory only: can cap, never confirm). SPEC §6.9.
+# --------------------------------------------------------------------------------------------------
+attributes:
+  body:
+    # Provider label -> set of TDR BodyType values it is compatible with. A MISMATCH is raised only when both
+    # sides are known. Unmapped / empty labels are UNKNOWN. Segment is deliberately NOT compared: TDR owns its
+    # segment definitions (VEHICLE_DB_V3 §14.3).
+    compatibility:
+      Sedan: [SEDAN]
+      Hatchback: [HATCHBACK]
+      SUV: [CROSSOVER, PPV, OFFROAD]
+      PPV: [PPV, OFFROAD, CROSSOVER]
+      "Coupe SUV": [CROSSOVER, COUPE]
+      "Coupe/Convertible": [COUPE]
+      MPV: [MPV]
+      Pickup: [PICKUP]
+      Truck: [TRUCK]
+      Van: [VAN]
+      Wagon: [WAGON]
+  lifecycle:
+    grace_months: 6
+    within_min_share: 0.8                 # share of the subject's units that fall inside the target's lifetime
+    disjoint_max_share: 0.2               # below this the target is vetoed
+  target_status:
+    cap_proposed: [UNVERIFIED]            # statuses that may never be AUTO
+
+# --------------------------------------------------------------------------------------------------
+# Subject quality. SPEC §7.1.
+# --------------------------------------------------------------------------------------------------
+subject_quality:
+  never_auto_identity_statuses: [provisional, unmapped_name]
+  discovery:
+    catalog_gap_min_units: 500            # a NO_CANDIDATE subject this big is flagged as a probable catalog gap
+    provisional_min_units: 30             # a provisional / raw-name subject this big with no resolution goes to discovery
+
+# --------------------------------------------------------------------------------------------------
+# Candidate generation, bundles (link type COMPOSED_OF, persisted as a link set), ranking. SPEC §7.
+# --------------------------------------------------------------------------------------------------
+candidates:
+  brand_relations_allowed: [EXACT, ALIAS_SAME, ALIAS_RELABEL, ALIAS_RELATED]
+  brand_relations_auto_eligible: [EXACT, ALIAS_SAME, ALIAS_RELABEL]
+  target_statuses_in_pool: [CURRENT, HISTORICAL, UNVERIFIED]
+  exclude_deleted_targets: true
+  bundle:
+    enabled: true
+    max_members: 3
+    max_pool_for_enumeration: 12
+    member_name_relations: [EQUAL, EQUAL_VIA_MODEL_ALIAS, EQUAL_VIA_TOKEN_EQUIV, SUBJECT_COARSER]
+  ranking:
+    tier_order:                           # lexicographic, never a weighted sum, never a raw cross-unit comparison
+      - auto_eligible
+      - series_state
+      - lifecycle_relation
+      - name_relation
+      - abs_ln_ratio_ascending
+      - correlation_descending
+    series_state_order: [STRONG, WEAK, UNAVAILABLE]
+    lifecycle_order: [WITHIN, UNKNOWN, PARTIAL]
+    name_relation_order: [EQUAL, EQUAL_VIA_MODEL_ALIAS, EQUAL_VIA_TOKEN_EQUIV, FUZZY, SUBJECT_COARSER, SUBJECT_FINER, UNAVAILABLE]
+  margin:
+    correlation_delta_min: 0.01
+    abs_ln_ratio_delta_min: 0.05
+
+# --------------------------------------------------------------------------------------------------
+# Granularity: the provider splits what TDR holds as one model (link type PART_OF). SPEC §7.4.
+# Identity (EQUIVALENT), aggregation (COMPOSED_OF) and granularity (PART_OF) are different link types with
+# different cardinality (SPEC §7.0); this block only decides when a subject is a PART of a target.
+# --------------------------------------------------------------------------------------------------
+granularity:
+  part_of:
+    subject_name_relations: [SUBJECT_FINER]
+    min_ratio_above: 1.1                  # target units / subject units: the target is clearly bigger than the subject
+    arbitration_sum_check: true           # several subjects whose SUM fits one target are parts of it too
+
+# --------------------------------------------------------------------------------------------------
+# Provider structure (lineage). Processed BEFORE any matching. SPEC §9.
+# --------------------------------------------------------------------------------------------------
+lineage:
+  quarantine:                             # withhold AUTO for subjects whose history an event restated
+    split_parent: true
+    split_child: true
+    merge_target: true
+    rename_target: false
+  split_child_structure_card: true        # a split raises a review question (CANDIDATE_HINT), never a mapping row
+  protected:                              # what an identity change does to protected mappings
+    approved: follow_with_lineage         # follow_with_lineage | require_owner_ack
+    locked: require_owner_ack             # follow_with_lineage | require_owner_ack
+
+# --------------------------------------------------------------------------------------------------
+# State protection & write planning. SPEC §10.
+# --------------------------------------------------------------------------------------------------
+state:
+  # write_matrix[existing CLAIM state][engine decision for that claim] -> action. A claim is (subject, link type, sorted targets); a link set
+  # (COMPOSED_OF) is ONE claim, so the action applies to every one of its rows (SPEC §10.1, §10.5).
+  # REJECTED additionally keys on whether the evidence fingerprint moved.
+  write_matrix:
+    NONE:
+      AUTO: INSERT_AUTO
+      PROPOSE: INSERT_PROPOSED
+      ABSENT: NOOP
+    PROPOSED:
+      AUTO: PROMOTE_TO_AUTO
+      PROPOSE: REFRESH_EVIDENCE
+      ABSENT: MARK_STALE
+    AUTO:
+      AUTO: REFRESH_EVIDENCE
+      PROPOSE: DEMOTE_TO_PROPOSED
+      ABSENT: DEMOTE_TO_PROPOSED
+    APPROVED:
+      AUTO: BLOCK_REPORT
+      PROPOSE: BLOCK_REPORT
+      ABSENT: BLOCK_REPORT
+    LOCKED:
+      AUTO: BLOCK_REPORT
+      PROPOSE: BLOCK_REPORT
+      ABSENT: BLOCK_REPORT
+    REJECTED:
+      AUTO:
+        fingerprint_unchanged: SUPPRESS
+        fingerprint_changed: REOPEN_AS_PROPOSED
+      PROPOSE:
+        fingerprint_unchanged: SUPPRESS
+        fingerprint_changed: REOPEN_AS_PROPOSED
+      ABSENT: KEEP
+
+# --------------------------------------------------------------------------------------------------
+# Insufficient-data vs no-candidate boundary. SPEC §8.2.
+# INSUFFICIENT_DATA iff >=1 brand-compatible candidate survives (is not excluded by AFFIRMATIVE evidence) but
+# no evidence reaches PROPOSE. NO_CANDIDATE iff every candidate is excluded by affirmative evidence, or the
+# pool is empty. Absence of data never excludes a candidate.
+# --------------------------------------------------------------------------------------------------
+data_sufficiency:
+  series_decisively_wrong:                # series usable AND name gives no candidate relation AND:
+    correlation_below: 0.5
+    ratio_outside: [0.5, 2.0]
+
+# --------------------------------------------------------------------------------------------------
+# Fingerprints. SPEC §11.
+# The EVIDENCE fingerprint is the REJECTED-suppression key. It is built from BANDS, never raw values, and
+# never from the comparison window or the source version, so a rolling window / a new package alone cannot
+# un-suppress a rejection. Band edges are lower-inclusive: value in [e_i, e_{i+1}).
+# --------------------------------------------------------------------------------------------------
+fingerprint:
+  bands:
+    correlation: [0.80, 0.95, 0.98]
+    ratio: [0.50, 0.90, 1.10, 2.00]
+    name_score: [0.50, 0.80]
+    common_months: [6, 12, 24]
+
+# --------------------------------------------------------------------------------------------------
+# Review routing. SPEC §8.5.
+# --------------------------------------------------------------------------------------------------
+review:
+  routing:                                # base queue per outcome (discovery / high-priority rules below refine it)
+    AUTO: none
+    PROPOSE: crosswalk_review
+    AMBIGUOUS: crosswalk_review
+    STRUCTURAL_REVIEW: structure_review
+    NO_CANDIDATE: none
+    INSUFFICIENT_DATA: none
+    PROTECTED_HOLD: none
+    SUPPRESSED: none
+  discovery_subject_flags: [SUBJ_PROVISIONAL, SUBJ_UNMAPPED_NAME]
+  high_priority_codes:
+    - STRUCTURAL_APPROVED_CLAIM_CONFLICT
+    - STRUCTURAL_STORED_CLAIMS_INCONSISTENT
+    - STATE_EVIDENCE_CONTRADICTS
+    - CARD_TARGET_MISSING
+    - CARD_LINK_TYPE_CONFLICTS_PROTECTED
+
+# --------------------------------------------------------------------------------------------------
+# Provenance of every tunable above (dotted path -> tag). Enforced by tests: every numeric leaf and every
+# list-valued tunable must be covered by an entry here or by a listed ancestor.
+# --------------------------------------------------------------------------------------------------
+provenance:
+  quantization: proposal
+  time.valid_year_range: proposal
+  series.window.max_months: inherited
+  series.window.trim_inactive_edges: proposal
+  series.window.exclude_partial_periods: proposal
+  series.strong: inherited
+  series.minimums: proposal
+  series.monthly_fit: proposal
+  series.absent_row: proposal
+  lexical.token_boundary_characters: proposal
+  lexical.generic_tokens: observed
+  lexical.token_equivalences: assumption
+  lexical.unavailable_name_values: observed
+  lexical.fuzzy_token: proposal
+  lexical.name.auto_relations: proposal
+  lexical.name.candidate_relations: proposal
+  lexical.name.veto_relations: proposal
+  lexical.series_only: proposal
+  aliases.brand: observed
+  aliases.model: inherited
+  attributes.body: observed
+  attributes.lifecycle: proposal
+  attributes.target_status: proposal
+  subject_quality.never_auto_identity_statuses: proposal
+  subject_quality.discovery: proposal
+  candidates.brand_relations_allowed: proposal
+  candidates.brand_relations_auto_eligible: proposal
+  candidates.target_statuses_in_pool: proposal
+  candidates.exclude_deleted_targets: proposal
+  candidates.bundle: proposal
+  candidates.ranking: proposal
+  candidates.margin: proposal
+  granularity.part_of: proposal
+  lineage.quarantine: proposal
+  lineage.split_child_structure_card: proposal
+  lineage.protected: proposal
+  state.write_matrix: proposal
+  data_sufficiency.series_decisively_wrong: proposal
+  fingerprint.bands: proposal
+  review: proposal
+
+alias_provenance:
+  # Per-alias provenance. owner_seed = in VEHICLE_DB_V3 §14.2 / migration_v63 seed;
+  # observed = spelling / label seen in the real M7.0 package; assumption = needs owner confirmation.
+  mercedes_benz: observed
+  dfsk: observed
+  deepal_changan: owner_seed
+  maxus_mg: owner_seed
+  mercedes_amg_maybach: observed
+  land_range_rover: assumption
+  gwm_sub_brands: assumption
+  mg_maxus_registration: observed
+  maxus_mifa: owner_seed

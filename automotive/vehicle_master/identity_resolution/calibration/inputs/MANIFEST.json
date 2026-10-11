@@ -1,0 +1,109 @@
+{
+ "what": "Read-only extracts of production tables and the legacy matcher's inputs, for the R6 calibration milestone (docs: calibration/README.md).",
+ "extracted_at": "2026-10-11T02:55:48Z",
+ "project": "ltvwzkffmpudpjfjomrg",
+ "access": "SELECT only, through the Supabase MCP execute_sql tool; no row, table, function, flag or gate was changed",
+ "raw_extraction": {
+  "file": "single JSON result of EXTRACT_QUERY.sql",
+  "sha256": "7746b5a40c426df7f9276738d8a03bc27b9842d4943e6e4a832c065f060b8d9f",
+  "bytes": 583129,
+  "note": "split by key into the files below; the split only re-serialises (one record per line)"
+ },
+ "first_run": {
+  "workflow": "Run Ice crosswalk (R6)",
+  "run_id": 38064404218,
+  "run_started": "2026-10-10T15:38:08Z",
+  "head_sha": "7963ebf0072154d2fde429ff9567ff6311718fcf",
+  "artifact": {
+   "name": "ice-crosswalk-r6-7.0",
+   "id": 11675135764,
+   "bytes": 32422,
+   "sha256_of_zip": "4e188ba423473e6c3dd98423eecc79ce37b3e3b1cf4cc19edc05760bf47a141d",
+   "expires_at": "2027-01-08T15:38:09Z",
+   "downloaded": false,
+   "why_not": "the sandbox network policy denies the artifact host productionresultssa13.blob.core.windows.net; the production tables hold the same rows"
+  }
+ },
+ "ice_package": {
+  "path": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+  "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+  "used_members": [
+   "panels/reg_trend_2569-09_v3.zip -> data/reg_trend.csv, manifest.json",
+   "panels/dims_2569-09_v3.zip -> dims/model_group.csv",
+   "id_changes.csv"
+  ]
+ },
+ "verification": {
+  "row_counts_in_production": {
+   "ice_model_crosswalk": 490,
+   "ice_model_group_redirects": 50,
+   "ice_known_model_groups": 1200,
+   "ice_brand_aliases": 4
+  },
+  "package_equals_live": {
+   "ice_reg_trend_cells": 18385,
+   "ice_reg_trend_cells_md5": "d4f37e092a8b59c3358e38899c2c98be",
+   "ice_dims_model_group_rows": 1200,
+   "ice_dims_model_group_md5": "fb8a184a10db065e7c0d3042558c2b49",
+   "how": "md5 of the newline-joined 'model_group_id|period|units' cells (ordered by C collation) and of 'id|name|brand|reg_total_all|segment|body' dims rows; computed once in the database and once from the archived package; both equal"
+  },
+  "inputs_unchanged_since_the_run": {
+   "registrations_rows_created_after_run_start": 0,
+   "vehicle_models_updated_after_run_start": 0,
+   "vehicle_generations_updated_after_run_start": 0
+  },
+  "replay": "legacy.verify_against_stored reproduces 489/489 matcher rows exactly (candidate, status, method, reason, full fingerprint); tests/identity_resolution/test_ir_calibration.py re-runs it"
+ },
+ "files": {
+  "EXTRACT_QUERY.sql": {
+   "sha256": "92ddb3fa6c08f57ce66144e51aa905d4c6e30ff008d05eed299f1423df87a8e2",
+   "bytes": 5715,
+   "records": null
+  },
+  "extract_meta.json": {
+   "sha256": "8db17908ffc60825f58d1f1a9b4d79ac56611fd633e0609eff84c8694b8ac1c8",
+   "bytes": 602,
+   "records": 2
+  },
+  "ice_brand_aliases.json": {
+   "sha256": "a72e4ec7e26426dc13bc1c5dc46624bac6b50b61232a802a1d27dfacd93939a8",
+   "bytes": 209,
+   "records": 4
+  },
+  "r6_crosswalk_rows.json": {
+   "sha256": "58dca8bdbddc981f368dfc972b92686a747b5586d1cd42abd1da12458fdad37b",
+   "bytes": 247550,
+   "records": 490
+  },
+  "r6_redirects.json": {
+   "sha256": "03ac953534b075347967ac640e80d007d0dbc66dcea93ea59bdfc4f9102b0368",
+   "bytes": 9069,
+   "records": 50
+  },
+  "tdr_brands.json": {
+   "sha256": "79d0df555f0b1cb841cd88ef0232e33ef8f58f2527a06ac5959d98773ba66809",
+   "bytes": 7067,
+   "records": 62
+  },
+  "tdr_generations.json": {
+   "sha256": "5042d692d3f5f64505bb254257c3cb889bb622ae28951f743658d3b51cee46d7",
+   "bytes": 44633,
+   "records": 326
+  },
+  "tdr_models.json": {
+   "sha256": "e75f970a6957fd42e5f9aaed01127e18efd9f3e09e4b88003a2fd81995c55768",
+   "bytes": 160227,
+   "records": 323
+  },
+  "tdr_period_totals.json": {
+   "sha256": "56beb85dbd77007e51308a6f2153b0e1e62d17498f1ee5b4a28f5ceb953a4194",
+   "bytes": 6395,
+   "records": 68
+  },
+  "tdr_registrations_series.json": {
+   "sha256": "453ffb652e1dda780a68148dfc13b75770778f58b46b1271b841fd374c03c13c",
+   "bytes": 57498,
+   "records": 312
+  }
+ }
+}

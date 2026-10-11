@@ -1,0 +1,734 @@
+# TDR Identity Resolution — edge-case taxonomy v1 (DRAFT, NOT FROZEN — revision 2, pending owner review)
+#
+# The identity-resolution situations the contract commits to handling. It is COMPLETE FOR THE KNOWN TAXONOMY
+# CLASSES (the twelve areas below, drawn from the owner's R6 report, the real M7.0 package and the contract's own
+# rules) and CORPUS-EXTENSIBLE: it does not claim that no other situation exists. A situation nobody has seen yet
+# enters as a new id here plus a failing corpus case (SPEC §14.4), never as a Python special case. It is DATA,
+# not prose, so tests can enforce two rules mechanically:
+#   1. every taxonomy id is exercised by at least one case in cases.jsonl, and
+#   2. every case names the taxonomy ids it covers (a case that covers nothing is not allowed).
+# A bug or surprise found later is added here (a new id) AND to the corpus — never as a Python special case
+# (SPEC §14.4).
+#
+# origin:
+#   owner_report_r6  a defect class the owner reported from the first R6 run. The R6 review rows themselves are
+#                    not in the repository, so these are reproduced from the stated mechanism, not from row data.
+#   ice_m7_data      verified against the real TDR_FULL_2569-09_v3_M7.0 package in data/packages/ (counts in `evidence`).
+#   design           derived from the contract's own rules; no real instance is known yet.
+
+version: v1
+completeness: complete_for_known_classes_and_corpus_extensible
+
+areas:
+  CORE: Baseline outcomes
+  SUBJ: Provider subject identity and quality
+  BRND: Brand normalization and aliasing
+  NAME: Model-name normalization and lexical relations
+  SER: Monthly-series evidence, windows and data sufficiency
+  GRAN: Granularity, body, generation and lifecycle
+  CARD: Cardinality, conflicts and catalog gaps
+  LIN: Provider-supplied structural changes (lineage)
+  STATE: State protection and persistence
+  AUTH: Authority between evidence classes
+  FP: Fingerprints and determinism
+  INPUT: Input integrity
+  ADOPT: Adoption gate and provisional policy
+
+entries:
+  # ------------------------------------------------------------------------------------------- CORE
+  - id: CORE-01
+    title: Clean match
+    origin: design
+    evidence: "Same brand, equal name, strong series over >= 12 common months, no flag of any kind."
+    handling: AUTO — a revocable machine link, not an approval.
+    codes: [AUTO_ALL_GATES_PASSED, BRND_EXACT, NAME_EQUAL, SER_STRONG]
+  - id: CORE-02
+    title: Strong series held back by one blocking condition
+    origin: design
+    evidence: "Each blocking code in the registry is a distinct way to be strong but not AUTO."
+    handling: PROPOSED, with the blocking codes listed.
+    codes: [PROPOSE_SERIES_STRONG_CAPPED]
+
+  # ------------------------------------------------------------------------------------------- SUBJ
+  - id: SUBJ-01
+    title: Provisional subject id
+    origin: ice_m7_data
+    evidence: "114 of 1,200 M7.0 model_group ids end in __provisional; id_changes.csv replaces many of them later (e.g. gwm-ora-07__provisional -> gwm-ora-07)."
+    handling: Never AUTO; PROPOSED at most; when promoted the lineage stage moves its mappings.
+    codes: [SUBJ_PROVISIONAL]
+  - id: SUBJ-02
+    title: Raw-name subject with no principal model (BRAND|MODEL)
+    origin: ice_m7_data
+    evidence: "591 of 1,200 ids are BRAND|MODEL raw-name groups (e.g. ISUZU|RODEO S 3 0, 5 units). They are valid primary keys."
+    handling: Never AUTO; usually INSUFFICIENT_DATA because they are tiny.
+    codes: [SUBJ_UNMAPPED_NAME, INSUFFICIENT_DATA_NO_BASIS]
+  - id: SUBJ-03
+    title: Display name is a non-name
+    origin: ice_m7_data
+    evidence: "38 groups have model_name 'ไม่ระบุ' (unspecified), e.g. ISUZU|ไม่ระบุ with 12,508 lifetime units."
+    handling: Name evidence is unavailable; a name can never create or confirm a candidate for such a subject.
+    codes: [SUBJ_UNSPECIFIED_NAME, NAME_UNAVAILABLE]
+  - id: SUBJ-04
+    title: Display name is not a key
+    origin: ice_m7_data
+    evidence: "model_name repeats across groups (ไม่ระบุ x38, EQ1020TF x2, GT COUPE x2); dims/method.md states model_name is not a key."
+    handling: Matching never uses the display name to identify the subject, only to compare against a target.
+    codes: [SUBJ_DUPLICATE_DISPLAY_NAME]
+  - id: SUBJ-05
+    title: Subject registered under several brands
+    origin: ice_m7_data
+    evidence: "maxus-mifa-9 and maxus-maxus-v80 appear under brands MAXUS and MG in reg_trend; dims keeps only the primary brand."
+    handling: Any observed brand may satisfy brand matching; the multi-brand fact is recorded.
+    codes: [SUBJ_MULTI_BRAND]
+
+  # ------------------------------------------------------------------------------------------- BRND
+  - id: BRND-01
+    title: Brand spelling and format variants
+    origin: ice_m7_data
+    evidence: "Ice spells Mercedes as 'MERCEDES BENZ', 'MERCEDES', 'BENZ'; 'ZXAUTO' vs 'ZX AUTO'; DFSK vs the typo 'DSFK'. TDR spells 'Mercedes-Benz'."
+    handling: Compact-key comparison absorbs separator/case variants; remaining spellings are listed SAME aliases. The first R6 run's weak brand normalization is this class.
+    codes: [BRND_EXACT, BRND_ALIAS_SAME]
+  - id: BRND-02
+    title: Same marque under another label
+    origin: ice_m7_data
+    evidence: "Deepal models sit under brand CHANGAN in Ice (changan-deepal-s05); owner-seeded alias Deepal<->Changan and MAXUS<->MG Maxus."
+    handling: RELABEL aliases are AUTO-eligible.
+    codes: [BRND_ALIAS_RELABEL]
+  - id: BRND-03
+    title: Related but not equivalent brands
+    origin: design
+    evidence: "Ice has MERCEDES AMG / MERCEDESBENZ MAYBACH / RANGE ROVER as brands; GWM carries Ora/Haval/Tank/Wey models. How TDR files these is unverified."
+    handling: RELATED aliases may produce candidates but never AUTO.
+    codes: [BRND_ALIAS_RELATED]
+  - id: BRND-04
+    title: Same model name under unrelated brands
+    origin: ice_m7_data
+    evidence: "EQ1020TF is a group under both DFSK and DFM, and GT COUPE under two brands (model_name is not a key)."
+    handling: Brand mismatch excludes the target before any name or series evidence is looked at.
+    codes: [BRND_MISMATCH]
+  - id: BRND-05
+    title: Provider brand absent from the TDR catalog
+    origin: ice_m7_data
+    evidence: "Ice carries commercial and niche marques (SINOTRUK HOWO, HIGER, KING LONG, SCANIA, ...). Whether TDR has a counterpart brand is a catalog fact this design could not verify; absence is assumed for several."
+    handling: NO_CANDIDATE; the subject stays visible and unlinked.
+    codes: [BRND_NOT_IN_TDR]
+  - id: BRND-06
+    title: Provider brand unusable
+    origin: design
+    evidence: "No M7.0 example; the engine must not guess a pool from a blank brand."
+    handling: NO_CANDIDATE with BRND_UNKNOWN.
+    codes: [BRND_UNKNOWN]
+  - id: BRND-07
+    title: Brand prefix inside the model name
+    origin: ice_m7_data
+    evidence: "Ice names carry the brand ('Isuzu D-Max', 'Mercedes GLC', 'Mercedes-Benz C-Class', 'MINI Countryman') but the brand field is 'MERCEDES BENZ'; and 'MG4 EV' starts with the characters 'mg' without a brand token."
+    handling: Strip only whole leading tokens that spell the brand or one of its aliases, longest first; never characters.
+    codes: [BRND_PREFIX_STRIPPED]
+
+  # ------------------------------------------------------------------------------------------- NAME
+  - id: NAME-01
+    title: Separator and case variants
+    origin: ice_m7_data
+    evidence: "D-Max / DMAX / D Max / d-max; X-Trail / XTRAIL."
+    handling: Compact equality makes them EQUAL.
+    codes: [NAME_EQUAL]
+  - id: NAME-02
+    title: Distinct nameplates of one brand
+    origin: owner_report_r6
+    evidence: "Reported: D-Max proposed as MU-X. Reproduced offline with the legacy matcher: normalized 'd max' vs 'mu x' scores 0.44 under SequenceMatcher, above the 0.35 candidate floor, so a NAME-only PROPOSED row is written. Ice lists both as ISUZU (615,360 vs 92,980 lifetime units)."
+    handling: Disjoint distinguishing tokens are a CONTRADICTION; the target is excluded, and a strong series cannot rescue it.
+    codes: [NAME_CONTRADICTION, NO_CANDIDATE_ALL_EXCLUDED]
+  - id: NAME-03
+    title: Number-versus-letter prefix trap
+    origin: ice_m7_data
+    evidence: "VEHICLE_DB_V3 §14.2 names bmw_3 vs bmw-x3 as a known false match; Ice has bmw-bmw-3-series and bmw-bmw-x3."
+    handling: Tokens '3' and 'x3' differ exactly; character-level similarity is not used.
+    codes: [NAME_CONTRADICTION]
+  - id: NAME-04
+    title: Sibling variants sharing a stem
+    origin: ice_m7_data
+    evidence: "toyota-hilux-revo, toyota-hilux-travo, toyota-hilux-champ and a generic toyota-hilux are separate groups. 'Hilux Revo' vs 'Hilux Travo' scores 0.86 in the legacy matcher, above its 0.8 AUTO threshold."
+    handling: Each name has a distinguishing token the other lacks -> SIBLING -> excluded.
+    codes: [NAME_SIBLING_VARIANT]
+  - id: NAME-05
+    title: Subject name is the broader nameplate
+    origin: ice_m7_data
+    evidence: "Ice 'toyota-hilux-travo' vs TDR models 'Hilux Travo Cab' / 'Hilux Travo Double Cab' (VEHICLE_DB_V3 §14.2 example)."
+    handling: Not equal; AUTO is withheld; may still be PROPOSED or become a bundle member.
+    codes: [NAME_CONTAINMENT_SUBJECT_COARSER]
+  - id: NAME-06
+    title: Subject name is the narrower nameplate
+    origin: ice_m7_data
+    evidence: "honda-city (110,131 units) and honda-city-hatchback (106,582 units) are separate Ice groups; a TDR 'City' may cover both."
+    handling: Not equal; AUTO is withheld; may signal that the provider is finer than TDR.
+    codes: [NAME_CONTAINMENT_SUBJECT_FINER]
+  - id: NAME-07
+    title: Generic descriptor tokens
+    origin: ice_m7_data
+    evidence: "'BMW 3 Series' vs 'BMW 3'; 'Mercedes-Benz C-Class' vs 'C-Class'."
+    handling: "The tokens series and class carry no identity and are dropped."
+    codes: [NAME_EQUAL]
+  - id: NAME-08
+    title: Declared token equivalence
+    origin: design
+    evidence: "'MG4 EV' vs 'MG4 Electric'; 'City Hatch' vs 'City Hatchback'."
+    handling: Equal through a listed equivalence, recorded as such; AUTO-eligible.
+    codes: [NAME_EQUAL_VIA_TOKEN_EQUIV]
+  - id: NAME-09
+    title: Scoped model-name alias
+    origin: ice_m7_data
+    evidence: "VEHICLE_DB_V3 §14.2 trap: MG Maxus 7/9 vs MAXUS Mifa 7/9. In M7.0 Ice already names them 'Mifa 7' / 'Mifa 9' under brand MG; the alias still guards older or other deliveries."
+    handling: An explicit pair, valid only under its named brand alias; never a generic fuzzy rule.
+    codes: [NAME_EQUAL_VIA_MODEL_ALIAS]
+  - id: NAME-10
+    title: One-edit typo in a long token
+    origin: design
+    evidence: "Provider spelling errors such as DSFK exist at brand level; model-level equivalents are plausible."
+    handling: FUZZY relation, PROPOSED at most.
+    codes: [NAME_FUZZY_TOKEN]
+  - id: NAME-11
+    title: Name unavailable or non-Latin only
+    origin: ice_m7_data
+    evidence: "Blank / 'ไม่ระบุ' names; Thai script is kept but never transliterated."
+    handling: No name evidence; series may still PROPOSE; never AUTO.
+    codes: [NAME_UNAVAILABLE, NAME_ONLY_NOT_AUTO]
+  - id: NAME-12
+    title: Provider groups by trim code
+    origin: ice_m7_data
+    evidence: "Mercedes groups include mercedes-benz-e300 (4,473 units), -c350, -c250, -amg-c ... next to -e-class, -c-class. v1 defines no model-code family rules."
+    handling: A trim-code token does not equal a class token -> CONTRADICTION -> NO_CANDIDATE, flagged for discovery. Teaching the engine that E300 belongs to E-Class is a future policy extension with its own corpus rows.
+    codes: [NAME_CONTRADICTION]
+  - id: NAME-13
+    title: Name-only agreement
+    origin: owner_report_r6
+    evidence: "§14.2: name similarity is never sufficient alone for AUTO."
+    handling: Equal name + matching brand without strong series is PROPOSED.
+    codes: [NAME_ONLY_NOT_AUTO, PROPOSE_NAME_MATCH_SERIES_NOT_STRONG]
+
+  # ------------------------------------------------------------------------------------------- SER
+  - id: SER-01
+    title: The two sources cover different spans
+    origin: owner_report_r6
+    evidence: "Ice covers 2564-01..2569-09 (69 months). The TDR registrations table's coverage is independent and may start later or end earlier."
+    handling: Compare only the common observation window; record both coverages.
+    codes: [SER_COVERAGE_ASYMMETRIC]
+  - id: SER-02
+    title: Window anchored on the provider's newest month
+    origin: owner_report_r6
+    evidence: "Reported as time-window bias. The legacy matcher takes the last 24 months of the Ice series and zero-fills any month the TDR side lacks (build_paired_series), turning missing data into evidence."
+    handling: Anchor the window on the newest month BOTH series observe; never zero-fill an unobserved month.
+    codes: [SER_COVERAGE_ASYMMETRIC, SER_STRONG]
+  - id: SER-03
+    title: Leading zeros before a launch
+    origin: ice_m7_data
+    evidence: "239 of 1,200 groups first appear inside the last 24 months; a 24-month window holds long all-zero prefixes that inflate correlation."
+    handling: Trim months where both sides are zero at the window edges.
+    codes: [SER_WINDOW_TRIMMED_INACTIVE]
+  - id: SER-04
+    title: Trailing zeros after a discontinuation
+    origin: design
+    evidence: "Discontinued models keep a zero tail on both sides."
+    handling: Same trimming rule.
+    codes: [SER_WINDOW_TRIMMED_INACTIVE]
+  - id: SER-05
+    title: Unobserved months inside a series
+    origin: ice_m7_data
+    evidence: "518 of 1,200 groups have months with no reg_trend row between their first and last month. 0 of 262,985 reg_trend rows have a non-positive count: Ice ships no zero rows. That is consistent with 'absent = zero' and with 'absent = not reported'; no package document says which. The reading is UNCONFIRMED capability data (provider_capabilities.yaml), not an assumption."
+    handling: The engine treats null as unobserved and leaves it out; the adapter zero-fills only inside declared coverage and only where the source has CONFIRMED that a missing row means zero.
+    codes: [SER_UNOBSERVED_NOT_ZERO]
+  - id: SER-06
+    title: Partial period
+    origin: design
+    evidence: "A just-ingested month can be incomplete on the TDR side."
+    handling: Periods a source flags partial are excluded.
+    codes: [SER_PARTIAL_PERIOD_EXCLUDED]
+  - id: SER-07
+    title: Coverage not declared
+    origin: design
+    evidence: "A source that cannot say what span it covers cannot distinguish a true zero from a missing month."
+    handling: Series evidence is unavailable; lexical evidence may still PROPOSE.
+    codes: [SER_COVERAGE_UNDECLARED]
+  - id: SER-08
+    title: No common window
+    origin: design
+    evidence: "Disjoint coverages, or every common month excluded."
+    handling: Series evidence is unavailable.
+    codes: [SER_NO_COMMON_WINDOW]
+  - id: SER-09
+    title: Too few common months
+    origin: ice_m7_data
+    evidence: "735 of 1,200 groups have rows in fewer than 6 months; 87 more in 6-11."
+    handling: Below propose minimum the series is unusable; between propose and auto minimums AUTO is blocked.
+    codes: [SER_OVERLAP_BELOW_PROPOSE_MIN, SER_OVERLAP_BELOW_AUTO_MIN]
+  - id: SER-10
+    title: Too few units
+    origin: ice_m7_data
+    evidence: "912 groups hold fewer than 120 lifetime units, together 0.21% of all 4,141,987 units."
+    handling: Same two-level rule on units.
+    codes: [SER_VOLUME_BELOW_PROPOSE_MIN, SER_VOLUME_BELOW_AUTO_MIN]
+  - id: SER-11
+    title: Constant series
+    origin: design
+    evidence: "Correlation is undefined for a constant series."
+    handling: Series evidence is unavailable.
+    codes: [SER_ZERO_VARIANCE]
+  - id: SER-12
+    title: Subject has zero units in the window
+    origin: design
+    evidence: "The ratio is undefined."
+    handling: Series evidence is unavailable.
+    codes: [SER_ZERO_TOTAL]
+  - id: SER-13
+    title: Right shape, wrong level
+    origin: owner_report_r6
+    evidence: "Two nameplates of one brand share seasonality; a high correlation says nothing about identity (D-Max 615,360 vs MU-X 92,980 lifetime units)."
+    handling: A ratio outside [0.9, 1.1] is never strong however high the correlation.
+    codes: [SER_RATIO_OUT_OF_BAND]
+  - id: SER-14
+    title: Right level, wrong shape
+    origin: design
+    evidence: "Equal totals with an unrelated month profile."
+    handling: Correlation below 0.98 is never strong.
+    codes: [SER_CORRELATION_BELOW_STRONG]
+  - id: SER-15
+    title: Threshold boundaries
+    origin: design
+    evidence: "§14.2: correlation >= 0.98 and ratio 0.9-1.1. Bounds are inclusive and compared on 6-dp quantized values."
+    handling: Exactly on a bound passes; one quantum beyond fails.
+    codes: [SER_STRONG, SER_CORRELATION_BELOW_STRONG, SER_RATIO_OUT_OF_BAND]
+  - id: SER-16
+    title: Outlier-driven correlation
+    origin: design
+    evidence: "One large month can dominate a Pearson coefficient while most months disagree."
+    handling: A monthly-fit gate must also pass.
+    codes: [SER_MONTHLY_FIT_FAIL]
+  - id: SER-17
+    title: Several TDR models sum to one subject (link type COMPOSED_OF)
+    origin: ice_m7_data
+    evidence: "§14.2 example hilux_travo_cab + hilux_travo_double_cab -> toyota-hilux-travo. Each part alone has ratio ~0.5, so one-at-a-time evaluation can never discover the pair."
+    handling: Bounded bundle enumeration among name-affine same-brand models; PROPOSED at most, as ONE link set (atomic rows sharing a set_id), never as independent pair rows.
+    codes: [SER_BUNDLE_STRONG, PROPOSE_COMPOSED_OF, GRAN_PROVIDER_COARSER]
+  - id: SER-18
+    title: Bundle overshoots the subject
+    origin: design
+    evidence: "Adding a member can push the summed ratio above the band."
+    handling: That bundle is rejected.
+    codes: [SER_BUNDLE_OVERSHOOT]
+  - id: SER-19
+    title: Missing-row meaning unconfirmed (the semantics gap)
+    origin: owner_report_r6
+    evidence: "Owner review of rev 1: Ice 'absent row = zero' was an assumption. Ice and TDR registrations are both UNKNOWN in provider_capabilities.yaml (Q-ICE-ABSENT-ROW, Q-TDR-ABSENT-ROW); both ship sparse series."
+    handling: "In-coverage months with no row are null, left out of the comparison, counted as semantics_gap_months and reported; a gap above series.absent_row.auto_max_unconfirmed_gap_months caps the pair at PROPOSED. Never a zero, never a veto."
+    codes: [SER_MISSING_ROW_SEMANTICS_UNCONFIRMED, SER_UNOBSERVED_NOT_ZERO]
+  - id: SER-20
+    title: Missing row confirmed as zero
+    origin: design
+    evidence: "No source has confirmed ABSENT_IS_ZERO yet. If Ice does, its absent in-coverage months become observed zeros by capability."
+    handling: The adapter (never the engine) writes 0 for those months; the engine compares them as observed and the gap is 0. Pinned with a fixture capability so the case does not move until a real confirmation edits provider_capabilities.yaml.
+    codes: []
+  - id: SER-21
+    title: Missing row confirmed as unobserved
+    origin: design
+    evidence: "A source may confirm that a missing row means 'no data'."
+    handling: The months stay null and are excluded as ordinary unobserved months; they do not count toward the semantics gap because nothing is unconfirmed.
+    codes: [SER_UNOBSERVED_NOT_ZERO]
+
+  # ------------------------------------------------------------------------------------------- GRAN
+  - id: GRAN-01
+    title: Provider finer than TDR, one narrower subject (link type PART_OF)
+    origin: ice_m7_data
+    evidence: "honda-city-hatchback (106,582 units) is narrower than a TDR 'City' that is clearly bigger. An identity link would be wrong (ratio far from 1) and the v63 one-active-group-per-model rule cannot hold several such groups."
+    handling: "PROPOSED as a PART_OF claim (the subject is a part of the target). PART_OF is its own link type, so many subjects may be parts of one target without any TDR split; nothing is forced onto an identity link and TDR is not asked to restructure (the review question may still ask whether TDR wants a split)."
+    codes: [PROPOSE_PART_OF, GRAN_PROVIDER_FINER, NAME_CONTAINMENT_SUBJECT_FINER]
+  - id: GRAN-02
+    title: Body type disagrees
+    origin: owner_report_r6
+    evidence: "Reported as body/granularity mismatch. Ice body Sedan vs TDR HATCHBACK. 649 of 1,200 Ice groups have a blank body, so UNKNOWN is the common case."
+    handling: Both known and incompatible -> AUTO withheld. One side unknown -> body unused.
+    codes: [ATTR_BODY_MISMATCH, ATTR_BODY_UNKNOWN]
+  - id: GRAN-03
+    title: Generation / lifecycle disjoint
+    origin: owner_report_r6
+    evidence: "Reported as granularity/generation mismatch. A TDR model whose generations ended years before the subject's units were registered cannot be the same identity."
+    handling: Disjoint -> target excluded. Partial -> AUTO withheld. No dates -> unused.
+    codes: [GEN_LIFECYCLE_DISJOINT, GEN_LIFECYCLE_PARTIAL, GEN_LIFECYCLE_UNKNOWN]
+  - id: GRAN-04
+    title: Same nameplate, several TDR models (one per generation)
+    origin: design
+    evidence: "If TDR splits a nameplate by generation, two models normalize to one name."
+    handling: Lifecycle ranks WITHIN above PARTIAL; if still tied the result is AMBIGUOUS.
+    codes: [GEN_SAME_NAMEPLATE_MULTI_TARGET]
+  - id: GRAN-05
+    title: Unverified target
+    origin: design
+    evidence: "vehicle_models.status may be UNVERIFIED."
+    handling: AUTO withheld; PROPOSED allowed.
+    codes: [ATTR_TARGET_UNVERIFIED]
+  - id: GRAN-06
+    title: Several provider subjects are parts of one TDR model, their sum fits
+    origin: ice_m7_data
+    evidence: "honda-city (110,131 units) + honda-city-hatchback (106,582 units) against one TDR City: neither alone is strong, their sum is."
+    handling: Both become PROPOSED PART_OF claims on the same target (parts may share a target); the sum is recorded as evidence. Nothing is forced onto one group and TDR is not asked to split City.
+    codes: [PROPOSE_PART_OF, SER_PARTS_SUM_STRONG, GRAN_PROVIDER_FINER]
+  - id: GRAN-07
+    title: Narrower name but the subject is not clearly smaller
+    origin: design
+    evidence: "A narrower provider name whose volume is within the identity band of the target is not a part of it."
+    handling: Not a PART_OF candidate; evaluated as an ordinary (name-containment) candidate.
+    codes: [NAME_CONTAINMENT_SUBJECT_FINER]
+
+  # ------------------------------------------------------------------------------------------- CARD
+  - id: CARD-01
+    title: Conflicting candidates within the margin
+    origin: owner_report_r6
+    evidence: "Reported as conflicting candidates. The legacy matcher keeps the single best by rank and drops the rest silently."
+    handling: Candidates tied at the top tier inside the margin -> AMBIGUOUS; none is written as AUTO; all are listed.
+    codes: [AMBIGUOUS_CANDIDATES_WITHIN_MARGIN]
+  - id: CARD-02
+    title: Two subjects claim one TDR target
+    origin: design
+    evidence: "The v63 unique index allows one active (AUTO/APPROVED) group per TDR model."
+    handling: Neither subject is AUTO; both AMBIGUOUS, unless their sum fits the target (then they are parts of it, GRAN-06).
+    codes: [AMBIGUOUS_TARGET_CONTESTED]
+  - id: CARD-03
+    title: Target already held by a protected mapping
+    origin: design
+    evidence: "APPROVED/LOCKED rows are never overwritten."
+    handling: The target is excluded for other subjects.
+    codes: [CARD_TARGET_ACTIVE_ELSEWHERE]
+  - id: CARD-04
+    title: Strong evidence for a protected target held by another subject
+    origin: design
+    evidence: "Either the approved mapping is wrong or the new subject is a split/rename the lineage missed."
+    handling: STRUCTURAL_REVIEW, high priority; nothing is changed.
+    codes: [STRUCTURAL_APPROVED_CLAIM_CONFLICT]
+  - id: CARD-05
+    title: Missing canonical target (catalog gap)
+    origin: ice_m7_data
+    evidence: "Ice has 1,200 groups; the §14.2 prototype counted 296 TDR nameplates and found 6% of units with no candidate."
+    handling: NO_CANDIDATE; a sizeable subject is also flagged for discovery.
+    codes: [NO_CANDIDATE_ALL_EXCLUDED, DISCOVERY_CATALOG_GAP]
+  - id: CARD-06
+    title: Mapped TDR target no longer exists
+    origin: design
+    evidence: "VEHICLE_DB_V3 §10: model merge is ADMIN-only; a deleted or merged TDR model leaves mapping rows pointing at nothing."
+    handling: The protected mapping is untouched; a high-priority structure review is raised.
+    codes: [CARD_TARGET_MISSING]
+  - id: CARD-07
+    title: New member for a subject that already has a protected claim
+    origin: design
+    evidence: "A subject holds one claim (SPEC §7.0 C1); adding a target changes what the approved claim means."
+    handling: Listed PROPOSED at most; activating it means replacing the protected claim, which only a human does.
+    codes: [CARD_EXTENDS_PROTECTED]
+  - id: CARD-08
+    title: Brand exists in TDR but offers no eligible model
+    origin: design
+    evidence: "All of a brand's models deleted or ineligible."
+    handling: NO_CANDIDATE.
+    codes: [NO_CANDIDATE_EMPTY_POOL]
+  - id: CARD-09
+    title: Nothing excludes a candidate but nothing supports one
+    origin: ice_m7_data
+    evidence: "Tiny raw-name groups against a populated brand."
+    handling: "INSUFFICIENT_DATA, not NO_CANDIDATE: absence of evidence never excludes."
+    codes: [INSUFFICIENT_DATA_NO_BASIS]
+  - id: CARD-10
+    title: Identity, aggregation and granularity are different link types
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: a single 'one target, one active subject' rule could not say that several finer provider subjects may share one TDR model, nor that one subject may be the sum of several models."
+    handling: "Three link types with fixed cardinality (SPEC §7.0): EQUIVALENT (1:1), COMPOSED_OF (one subject, a set of targets), PART_OF (many subjects, one target). Two active claims conflict iff they belong to one subject (C1) or share a target unless both are PART_OF (C2)."
+    codes: [PROPOSE_PART_OF, PROPOSE_COMPOSED_OF]
+  - id: CARD-11
+    title: A proposed claim conflicts with another subject's AUTO claim
+    origin: design
+    evidence: "Parts and sets are PROPOSED at most; an AUTO identity claim by another subject on the same target is an active, revocable machine link."
+    handling: The proposal is kept and annotated; activating it requires resolving the AUTO claim first.
+    codes: [CARD_CLAIM_CONFLICTS_AUTO]
+  - id: CARD-12
+    title: Candidate claims a protected subject under a different link type
+    origin: design
+    evidence: "An APPROVED EQUIVALENT claim exists and fresh evidence says PART_OF (or the reverse)."
+    handling: PROTECTED_HOLD; the alternative is listed, flagged and routed to structure review at high priority; nothing is changed.
+    codes: [CARD_LINK_TYPE_CONFLICTS_PROTECTED, PROTECTED_HOLD_APPROVED]
+  - id: CARD-13
+    title: Stored active claims break the cardinality rules
+    origin: design
+    evidence: "v63 rows carry no link type; a subject with two AUTO rows to two targets is two EQUIVALENT claims, which C1 forbids (it is a COMPOSED_OF set or an error)."
+    handling: STRUCTURAL_REVIEW for the subject; nothing is changed or repaired (I18).
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
+  - id: CARD-14
+    title: Stored active claims of two subjects overlap contrary to C2
+    origin: owner_report_r6
+    evidence: "Owner decision 2026-10-11: legacy overlapping claims must be reported and never auto-repaired. The v63 unique index prevents two AUTO/APPROVED identity rows on one target, but not an overlap that involves a PART_OF / COMPOSED_OF claim, a LOCKED row, or data loaded before the index."
+    handling: "STRUCTURAL_REVIEW on every subject involved, high priority; no write for any of them -- in particular a stored AUTO row that overlaps a protected claim is not demoted."
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
+
+  # ------------------------------------------------------------------------------------------- LIN
+  - id: LIN-01
+    title: Rename (เปลี่ยนรหัส)
+    origin: ice_m7_data
+    evidence: "19 of 81 id_changes rows, e.g. NISSAN|NOTE -> nissan-note."
+    handling: Old id retires; redirect and mappings follow the new id.
+    codes: [LIN_RENAME_FOLLOWED]
+  - id: LIN-02
+    title: Merge (รวม)
+    origin: ice_m7_data
+    evidence: "31 rows, e.g. five SOKON|CRC50.. ids -> sokon-crc50."
+    handling: Each old id retires into the survivor; duplicate mappings collapse.
+    codes: [LIN_MERGE_FOLLOWED]
+  - id: LIN-03
+    title: Split where the parent stays live
+    origin: ice_m7_data
+    evidence: "16 rows, e.g. toyota-corolla-cross -> toyota-corolla-altis (23.0%); the old id remains in dims."
+    handling: No redirect. Parent and child are quarantined (no AUTO this snapshot); the parent's mappings are flagged for review; a STRUCTURE card asks whether the parent's TDR target also covers the child. The v63 behaviour of copying the parent's target onto the child as a PROPOSED row is dropped.
+    codes: [LIN_SPLIT_PARENT_RETAINED, LIN_EVIDENCE_QUARANTINE, LIN_PARENT_MAPPING_REVIEW, LIN_SPLIT_CHILD_INHERITED_CANDIDATE]
+  - id: LIN-04
+    title: Split where the parent is retired
+    origin: ice_m7_data
+    evidence: "15 rows from 3 retired ids: mercedes-benz-mercedes-benz-amg-g (6 successors), -amg-cls (6), toyota-toyota-gr (3). The v63 redirect table's check constraint only admits RENAME/MERGE, so these have no redirect today."
+    handling: Redirect to the successor with the largest share_of_old_pct (Ice's published rule); mappings are not moved but flagged.
+    codes: [LIN_REDIRECT_RETIRED_SPLIT, LIN_PARENT_MAPPING_REVIEW]
+  - id: LIN-05
+    title: Equal shares among successors
+    origin: ice_m7_data
+    evidence: "Ice rule: ties break on new_model_group_id ascending."
+    handling: Deterministic tie-break, recorded.
+    codes: [LIN_TIE_BREAK_ID_ASC]
+  - id: LIN-06
+    title: An id that is both old and new in one file
+    origin: ice_m7_data
+    evidence: "mini-mini-cooper-ev, mini-mini-jcw-rhd and mini-mini-jcw-convertible are each an old id and a new id; Ice forbids chained redirects."
+    handling: Every event is read against the pre-change state; none is chained; live ids are kept.
+    codes: [LIN_NO_CHAIN]
+  - id: LIN-07
+    title: Mutual splits between live ids
+    origin: ice_m7_data
+    evidence: "mini-mini-cooper-ev -> mini-mini-jcw-convertible (1.07%) and mini-mini-jcw-convertible -> mini-mini-cooper-ev (7.14%) are both present."
+    handling: A cycle among live ids is legal; both stay, both are quarantined.
+    codes: [LIN_NO_CHAIN, LIN_SPLIT_PARENT_RETAINED, LIN_EVIDENCE_QUARANTINE]
+  - id: LIN-08
+    title: Redirect cycle among retired ids
+    origin: design
+    evidence: "A->B and B->A with both absent from the snapshot."
+    handling: ERROR operation; no redirect written.
+    codes: [LIN_CYCLE_NO_REDIRECT]
+  - id: LIN-09
+    title: Redirect target not live
+    origin: design
+    evidence: "The new id is missing from the snapshot."
+    handling: ERROR operation; redirects are never chained to find a live id.
+    codes: [LIN_TARGET_NOT_LIVE]
+  - id: LIN-10
+    title: Identity change declared but no machine-readable source
+    origin: ice_m7_data
+    evidence: "The M6.0 trial carried crosswalk-type CHANGELOG rows without id_changes.csv (docs/WORK_STATE.md, R2)."
+    handling: Refuse the lineage stage; infer nothing from prose.
+    codes: [LIN_SOURCE_MISSING]
+  - id: LIN-11
+    title: Re-applying an already applied event
+    origin: ice_m7_data
+    evidence: "id_changes.csv is cumulative since the previous master (M5.0 -> M7.0), so later packages may restate events."
+    handling: No-op.
+    codes: [LIN_ALREADY_APPLIED]
+  - id: LIN-12
+    title: Provisional id promoted to a principal id
+    origin: ice_m7_data
+    evidence: "gwm-ora-07__provisional -> gwm-ora-07 is a เปลี่ยนรหัส; kia-k2500__provisional -> kia-k2500 is a รวม."
+    handling: Handled by its own event type, and additionally recorded as a promotion.
+    codes: [LIN_PROVISIONAL_PROMOTED, LIN_RENAME_FOLLOWED]
+  - id: LIN-13
+    title: Rename touches an APPROVED mapping
+    origin: design
+    evidence: "APPROVED mappings must not be silently rewritten."
+    handling: The mapping follows the identity as a recorded lineage move (not a silent overwrite).
+    codes: [LIN_PROTECTED_FOLLOWED_WITH_LINEAGE]
+  - id: LIN-14
+    title: Rename touches a LOCKED mapping
+    origin: design
+    evidence: "LOCKED is the owner's explicit freeze."
+    handling: Nothing moves until the owner acknowledges.
+    codes: [LIN_PROTECTED_NEEDS_OWNER_ACK]
+  - id: LIN-15
+    title: Move would break one-active-group-per-target
+    origin: ice_m7_data
+    evidence: "ice_crosswalk_apply_id_change counts such rows as 'conflicts' and leaves them on the old id."
+    handling: The row stays; a mapping review is raised.
+    codes: [LIN_MOVE_TARGET_CONFLICT]
+  - id: LIN-16
+    title: History restated by an identity change
+    origin: ice_m7_data
+    evidence: "README_นำเข้า: DLT name COROLLA moved from toyota-corolla-cross to toyota-corolla-altis; both groups' history changed."
+    handling: AUTO is withheld for the subjects an event touches, for the snapshot it arrives in.
+    codes: [LIN_EVIDENCE_QUARANTINE]
+  - id: LIN-17
+    title: Provider's explicit successor
+    origin: design
+    evidence: "A provider may state the successor outright."
+    handling: An explicit successor_id wins over the share rule.
+    codes: [LIN_REDIRECT_RETIRED_SPLIT]
+
+  # ------------------------------------------------------------------------------------------- STATE
+  - id: STATE-01
+    title: APPROVED mapping is held
+    origin: design
+    evidence: "A human approval is the highest non-lock authority."
+    handling: PROTECTED_HOLD; evidence is reported, nothing is written.
+    codes: [PROTECTED_HOLD_APPROVED]
+  - id: STATE-02
+    title: LOCKED mapping is held
+    origin: design
+    evidence: "LOCKED additionally blocks structural moves without owner acknowledgement."
+    handling: PROTECTED_HOLD.
+    codes: [PROTECTED_HOLD_LOCKED]
+  - id: STATE-03
+    title: Fresh evidence versus a protected mapping
+    origin: design
+    evidence: "The engine keeps measuring protected mappings."
+    handling: CONFIRMS or CONTRADICTS is recorded; a contradiction raises a high-priority review but changes nothing.
+    codes: [STATE_EVIDENCE_CONFIRMS, STATE_EVIDENCE_CONTRADICTS, AUTH_HUMAN_OVER_ENGINE]
+  - id: STATE-04
+    title: AUTO is not APPROVED
+    origin: design
+    evidence: "AUTO is a revocable machine link."
+    handling: A later run that no longer reaches AUTO demotes the row to PROPOSED with a record; it is never silently kept or deleted.
+    codes: [STATE_AUTO_DEMOTED]
+  - id: STATE-05
+    title: Rejected pair, evidence unchanged
+    origin: design
+    evidence: "VEHICLE_DB_V3 / SKILL: never silently re-propose a rejected mapping."
+    handling: SUPPRESSED.
+    codes: [SUPPRESSED_REJECTED_UNCHANGED]
+  - id: STATE-06
+    title: Rejected pair, evidence changed
+    origin: design
+    evidence: "The evidence fingerprint moved."
+    handling: May be re-proposed, never auto-linked.
+    codes: [STATE_REJECTED_REOPENED]
+  - id: STATE-07
+    title: Candidate no longer produced
+    origin: design
+    evidence: "Candidate rows may change across runs."
+    handling: A PROPOSED row that is no longer produced is marked stale, not deleted.
+    codes: [STATE_CANDIDATE_STALE]
+  - id: STATE-08
+    title: Write matrix coverage
+    origin: design
+    evidence: "Every (existing pair state x engine decision) cell is a decided action."
+    handling: policy.state.write_matrix.
+    codes: [AUTH_HUMAN_OVER_ENGINE]
+  - id: STATE-09
+    title: A link set is persisted as one unit
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: bundle candidates were PROPOSED as independent per-target rows, so approving, rejecting or staling one member left the others meaningless."
+    handling: A COMPOSED_OF claim is N atomic rows sharing a deterministic set_id; the write matrix is evaluated once for the set and every member row gets the same action; humans act on the set, never on a member (SPEC §10.5).
+    codes: [PROPOSE_COMPOSED_OF]
+  - id: STATE-10
+    title: Stored link set incomplete or mixed-state
+    origin: design
+    evidence: "A member row was deleted, or one row of a set was approved alone."
+    handling: STRUCTURAL_REVIEW for the subject; the set is neither repaired nor rewritten.
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
+  - id: STATE-11
+    title: Claim identity includes the link type
+    origin: design
+    evidence: "A REJECTED 'honda-city is equivalent to City' says nothing about 'honda-city is a part of City'."
+    handling: Existing state, suppression and fingerprints are per claim (subject, link type, sorted targets).
+    codes: [SUPPRESSED_REJECTED_UNCHANGED]
+
+  # ------------------------------------------------------------------------------------------- AUTH
+  - id: AUTH-01
+    title: Provider structure disagrees with statistics
+    origin: design
+    evidence: "A renamed id whose fresh series no longer matches the old mapping."
+    handling: Structure wins; the divergence is recorded.
+    codes: [AUTH_STRUCTURE_OVER_STATISTICS]
+
+  # ------------------------------------------------------------------------------------------- FP
+  - id: FP-01
+    title: Deterministic decision fingerprint
+    origin: design
+    evidence: "Same inputs and policy -> identical bytes."
+    handling: SPEC §11 canonical JSON + sha256; test vectors in the corpus.
+    codes: []
+  - id: FP-02
+    title: Suppression key independent of the rolling window
+    origin: design
+    evidence: "The legacy fingerprint contains master_version, so it changes on every package and a REJECTED row is re-proposed every time."
+    handling: The evidence fingerprint is built from bands and relations only.
+    codes: []
+  - id: FP-03
+    title: No floats in fingerprint payloads
+    origin: design
+    evidence: "Floating-point repr differences must never change a hash."
+    handling: Quantized decimal strings only.
+    codes: []
+  - id: FP-04
+    title: Band edges
+    origin: design
+    evidence: "Bands are lower-inclusive."
+    handling: SPEC §11.2.
+    codes: []
+  - id: FP-05
+    title: Order independence and idempotence
+    origin: design
+    evidence: "The legacy matcher picks the best candidate while iterating a dict; results must not depend on input order."
+    handling: Output is a pure function of the snapshot; lists are sorted; ties break on ids.
+    codes: []
+
+  # ------------------------------------------------------------------------------------------- INPUT
+  - id: INPUT-01
+    title: Duplicate subject id
+    origin: design
+    evidence: "dims PK is model_group_id; a violation means the package is corrupt."
+    handling: Refuse the run.
+    codes: [INPUT_DUPLICATE_SUBJECT_ID]
+  - id: INPUT-02
+    title: Missing source version
+    origin: design
+    evidence: "Every decision must be traceable to a package."
+    handling: Refuse the run.
+    codes: [INPUT_SOURCE_VERSION_MISSING]
+  - id: INPUT-03
+    title: Calendar mix-up (Buddhist year in a Gregorian series)
+    origin: owner_report_r6
+    evidence: "Ice periods are Buddhist (2569-09); the registrations table is Gregorian. A missed conversion yields year 2569 where 2026 is expected."
+    handling: Refuse the run when any period is outside time.valid_year_range.
+    codes: [INPUT_PERIOD_CALENDAR_INVALID]
+  - id: INPUT-04
+    title: Negative count
+    origin: design
+    evidence: "Counts are non-negative by construction."
+    handling: Refuse the run.
+    codes: [INPUT_NEGATIVE_COUNT]
+  - id: INPUT-05
+    title: Unsupported policy version
+    origin: design
+    evidence: "A decision made under policy X must not be silently produced under policy Y."
+    handling: Refuse the run.
+    codes: [INPUT_POLICY_VERSION_UNSUPPORTED]
+  - id: INPUT-06
+    title: Series claims missing-row semantics the contract does not grant
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: the Ice adapter read an absent row as zero by assumption. Semantics are capability data; a snapshot may not claim more than provider_capabilities.yaml confirms."
+    handling: Refuse the run.
+    codes: [INPUT_CAPABILITY_MISMATCH]
+  - id: INPUT-07
+    title: Adapter zero-filled an unconfirmed gap
+    origin: owner_report_r6
+    evidence: "A month listed as an absent row carries a number although its source has not confirmed ABSENT_IS_ZERO."
+    handling: Refuse the run.
+    codes: [INPUT_ABSENT_ROW_ZERO_UNCONFIRMED]
+
+  # ------------------------------------------------------------------------------------------- ADOPT
+  - id: ADOPT-01
+    title: Uncalibrated proposal thresholds are not adopted
+    origin: owner_report_r6
+    evidence: "Owner review of rev 1: do not adopt uncalibrated proposal thresholds yet. The first R6 run's review rows are not in the repository, so every proposal/assumption value is provisional."
+    handling: adoption.yaml classifies every such value, records how it will be settled, and keeps binding false; a run under a non-binding policy is a dry run whose writes are advisory (invariant I16).
+    codes: []
+  - id: ADOPT-02
+    title: A case depends on a provisional value
+    origin: design
+    evidence: "A golden case whose expectation moves when a provisional threshold moves would silently freeze that threshold."
+    handling: Such a case carries provisional_keys naming the adoption entries it depends on; recalibrating an entry means re-deriving those cases.
+    codes: []

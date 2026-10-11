@@ -52,10 +52,39 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
+## Identity Resolution Contract v1 — DRAFT, revision 3, NOT FROZEN (2026-10-10; owner decisions recorded 2026-10-11; R6 calibration data 2026-10-11)
+
+`automotive/vehicle_master/identity_resolution/` now holds a provider-agnostic identity-resolution **contract**: `contract/v1/SPEC.md`,
+`policy.yaml`, `adoption.yaml`, `provider_capabilities.yaml`, `reason_codes.yaml`, `taxonomy.yaml`, the input/output/case/capability JSON schemas, a
+`CHANGELOG.md` and a golden corpus (`cases.jsonl`), plus its contract tests (`automotive/vehicle_master/tests/identity_resolution/`) and `README.md`
+(architecture, evidence base, owner decisions).
+
+- **Calibration-data milestone (2026-10-11, data and evidence only).** `identity_resolution/calibration/` recovers the first-run R6 rows **read-only** from production (`SELECT` only; the workflow artifact `ice-crosswalk-r6-7.0` was located but its blob host is blocked in the sandbox) and commits them with their provenance (`inputs/MANIFEST.json`). An offline replay of the legacy matcher reproduces all 489 stored matcher rows exactly (candidate, status, method, reason, full fingerprint). The milestone adds a calibration dataset (legacy evidence vs Contract v1 recomputed on the common observation window, a dry run), the owner-adjudication sheet `r6_owner_review.csv` (**owner columns blank**, legacy decision kept separate, ordered by the owner's seven priorities), a policy-sensitivity run on the real data and `CALIBRATION_REPORT.md`. Ice and TDR absent-row semantics stay UNKNOWN. **Nothing is calibrated** (no owner labels exist), `adoption.yaml` keeps `binding: false`, the contract is not frozen, no production row/flag/gate was touched, R6 was not re-run, R7 was not started, no engine, migration or write path was built (`ref_eval_*.py` is a reference transcription for calibration, not the engine). **Next:** the owner labels `r6_owner_review.csv` (and Ice answers `Q-ICE-ABSENT-ROW`); only then can any threshold be calibrated.
+- **Revision 3 (owner decisions, 2026-10-11).** Accepted: link types `EQUIVALENT`/`PART_OF`/`COMPOSED_OF`, the two cardinality rules (C1/C2), bundles as real atomic link sets, and `link_type` in the persistence identity (logical contract only; legacy overlapping claims are reported, never auto-repaired — invariant I18). Ice absent-row semantics stay UNKNOWN until Ice confirms. TDR registrations were **traced, not assumed**: no pipeline stage guarantees complete month × dimension coverage, so they stay UNKNOWN (`provider_capabilities.yaml` → `trace`). `adoption.yaml` keeps `binding: false`; all provisional thresholds stay non-authoritative until calibrated against the real R6 review data. **Not frozen; the next step is the threshold / data-semantics calibration.**
+- **Revision 2 (owner review: architecture accepted in principle, contract not frozen).** (1) What a missing row means is now **capability data**
+  (`provider_capabilities.yaml`): Ice and TDR registrations are both *UNKNOWN / unconfirmed* (`Q-ICE-ABSENT-ROW`, `Q-TDR-ABSENT-ROW`), so an absent row is
+  never assumed zero; unconfirmed gaps are counted and cap AUTO. (2) Cardinality separates identity (`EQUIVALENT`), aggregation (`COMPOSED_OF`) and
+  granularity (`PART_OF`, many subjects may share one target, no forced TDR split). (3) A bundle is a **link set** (one decision, one `set_id`, one write
+  action, atomic storage); the review-only alternative is recorded as a decision, not built. Wording is now "complete for the known taxonomy classes and
+  corpus-extensible". The uncalibrated `proposal` thresholds are **not adopted**: `adoption.yaml` has `binding: false`, so any run is a dry run.
+
+- **Documentation, corpus and test tooling only.** There is no resolver, adapter, CLI, persistence, migration, workflow or database access, and
+  nothing in production imports the package (a test enforces it). `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain
+  the live matcher. No `ice_*` row, mapping, `PRODUCTION_*` flag or roadmap gate was touched; R6 was not re-run and R7 was not started.
+- **Why:** the owner reported that the first R6 run exposed design flaws (time-window bias, granularity mismatches, weak brand normalization, bad
+  proposals such as D-Max → MU-X). The contract makes TDR own the identity-resolution policy — Ice's package guidance covers only Ice-internal id
+  continuity (`id_changes.csv`), not an Ice → TDR mapping.
+- **State discrepancy, left as is:** the Market Track section below still says R6 "has not been started"; the owner reports it ran once and produced candidate
+  rows. The R6 review rows are not in the repository, so the corpus reproduces that run's defect classes from the code and the real M7.0 package rather
+  than from rows. Reconcile this file when the owner decides how the first run is recorded.
+- **Next step:** owner review of `identity_resolution/README.md` §6 ("Decisions for the owner"). The engine (phase 1) and everything after it need an explicit go
+  and their own gates (README §5); none of it may precede the R6 decision.
+
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  
 **Current gate:** `R6_PRODUCTION_CROSSWALK` -- **R5 is DONE (2026-10-10)**; R6 has **not** been started and needs the owner's explicit go. R1-R3 complete (PR #189/M4 merged 2026-10-07); the owner declared `TDR_FULL_2569-09_v3_M7.0.zip` final on 2026-10-09; the single authorised production import of it ran on 2026-10-10 (entry "R5 production import" immediately below).  
+**Reality check (2026-10-11, read-only; flags and gate above unchanged):** production shows R6 ran once — workflow run 38064404218, 2026-10-10 15:38 UTC. `ice_model_crosswalk` holds 490 rows (82 AUTO, 407 PROPOSED, 1 PROPOSED/ADMIN STRUCTURE proposal; **0 APPROVED / LOCKED / REJECTED**, so nobody has reviewed them), `ice_model_group_redirects` 50, `ice_known_model_groups` 1,200. The "R6 has not been started" wording in this file and in the roadmap is therefore stale; the owner decides how the first run is recorded. The rows are in `identity_resolution/calibration/inputs/`.
 **Production import:** allowed once and done; further imports need fresh owner authorization (`PRODUCTION_IMPORT_ALLOWED` stays false). **Production crosswalk:** blocked until the owner says go for R6. **Live cutover:** blocked.
 
 **R5 production import -- DONE, 2026-10-10.** `TDR_FULL_2569-09_v3_M7.0.zip` (9,775,218 bytes, sha256 `c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d`) is live in production Supabase `ltvwzkffmpudpjfjomrg`.
