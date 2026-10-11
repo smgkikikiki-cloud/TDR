@@ -40,6 +40,8 @@
 
 **Resolution required:** independent read-only reconciliation against exact production project/version and actual workflow history; record executed step vs *authorized* gate separately. Identify run timestamp, writes, review statuses and approval, then owner controls any correction to WORK_STATE/ROADMAP. Stop before fresh matcher, R7, R8 or crosswalk mutation.
 
+**CP-00 live state check on 2026-10-11 (SELECT-only):** `ice_model_crosswalk` contains **490** rows (**82 AUTO, 408 PROPOSED, 0 APPROVED**) across 489 Ice group IDs, `ice_model_group_redirects` 50 rows and `ice_known_model_groups` 1,200 rows. This confirms PR #200's recorded-row observation and falsifies WORK_STATE's *current factual empty-table assertion* as of the read. It **does not establish whether any R6 action was owner-authorized**, resolve why WORK_STATE was not updated, approve existing AUTO associations, or permit an R6 re-run. C01 stays OPEN until provenance/owner adjudication reconciles execution-state and authorization-state separately. See [CP00 audit](CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md).
+
 ### C02 — Migration-number reservation collision · P0 / BLOCKS new migrations
 
 **Evidence:** GRAFT_PLAN assigns Upcoming `v57` and Analysis `v58` based on 1 October reservation; `WORK_STATE.md` reports Vehicle Master `migration_v57_vehicle_master_tables.sql` and `migration_v58_vehicle_serving_parity.sql` have ALREADY been executed. An old design reservation cannot safely be turned into real migration filenames now.
