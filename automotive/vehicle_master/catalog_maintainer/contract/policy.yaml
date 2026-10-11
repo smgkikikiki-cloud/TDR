@@ -25,8 +25,27 @@
     "p3_independent_searches_allowed": 0
   },
   "queue_policy": {
-    "audit_anti_starvation_slots_per_5": 1,
+    "cycle_size": 5,
+    "spec_enrich_slots_per_cycle": 1,
+    "audit_anti_starvation_cycle_size": 5,
+    "audit_anti_starvation_slots_per_cycle": 1,
     "underrepresented_cohort_field": "priority_cohort"
+  },
+  "priority_policy": {
+    "audit_weights": {
+      "registration_relevance": 0.45,
+      "catalog_staleness": 0.30,
+      "lineup_recency": 0.15,
+      "document_reuse": 0.10
+    },
+    "spec_weights": {
+      "missingness_applicability": 0.50,
+      "business_relevance": 0.25,
+      "shared_document_yield": 0.20,
+      "ready_evidence": 0.05
+    },
+    "spec_missingness_weights": {"P1": 0.75, "P2": 0.25},
+    "high_market_relevance_threshold": 0.5
   },
   "trim_authority": {
     "add": "PROPOSE_ONLY_IN_INITIAL_IMPLEMENTATION",

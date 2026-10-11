@@ -1,4 +1,4 @@
-"""Deterministic, normalized scoring; registration affects order only."""
+"""Deterministic scores parameterized by the reviewed policy file."""
 from __future__ import annotations
 
 
@@ -6,38 +6,65 @@ def _clamp(x: float) -> float:
     return max(0.0, min(1.0, float(x)))
 
 
-def audit_scores(models: list[dict], registration_signals: list[dict]) -> dict[str, float]:
-    # Comparable cohorts are normalized independently (e.g. segment/source stratum).
-    buckets: dict[str, list[dict]] = {}
-    for row in registration_signals:
-        buckets.setdefault(str(row.get("stratum", "ALL")), []).append(row)
-    relevance: dict[str, float] = {}
-    for rows in buckets.values():
-        maximum = max((max(0, float(x.get("count", 0))) for x in rows), default=0)
-        for row in rows:
-            relevance[row["model_id"]] = max(relevance.get(row["model_id"], 0.0),
-                                               float(row.get("count", 0)) / maximum if maximum else 0)
-    out = {}
-    for m in models:
-        # Queue A: registration relevance 45%, catalog staleness 30%, launch recency 15%,
-        # document reuse readiness 10%. Missing signals are neutral zero, never evidence.
-        out[m["id"]] = round(_clamp(.45 * relevance.get(m["id"], 0)
-                                  + .30 * float(m.get("staleness_risk", 0))
-                                  + .15 * float(m.get("lineup_recency", 0))
-                                  + .10 * float(m.get("document_reuse", 0))), 6)
-    return out
+def registration_relevance(models: list[dict], signals: list[dict]) -> dict[str, float]:
+    """Normalize within series/stratum/period; ignore aggregate '*' rows.
+
+    A model selects one source series (RY1 or RY3) in its input profile. The
+    function never adds RY1 and RY3 or an aggregate class to a specific class.
+    """
+    selected = []
+    profile = {m["id"]: (m.get("registration_series"), m.get("registration_stratum")) for m in models}
+    for row in signals:
+        series, stratum = profile.get(row.get("model_id"), (None, None))
+        if not series or row.get("series") != series:
+            continue
+        if row.get("source_class", "MODEL") != "MODEL":
+            continue
+        if stratum and row.get("stratum") != stratum:
+            continue
+        selected.append(row)
+    latest_by_bucket: dict[tuple[str, str], str] = {}
+    for row in selected:
+        key = (row["series"], row["stratum"])
+        latest_by_bucket[key] = max(latest_by_bucket.get(key, ""), row.get("period", ""))
+    maxima: dict[tuple[str, str], float] = {}
+    for row in selected:
+        key = (row["series"], row["stratum"])
+        if row.get("period", "") != latest_by_bucket[key]:
+            continue
+        maxima[key] = max(maxima.get(key, 0), max(0.0, float(row.get("count", 0))))
+    relevance = {}
+    for row in selected:
+        key = (row["series"], row["stratum"])
+        if row.get("period", "") != latest_by_bucket[key]:
+            continue
+        maximum = maxima[key]
+        score = max(0.0, float(row.get("count", 0))) / maximum if maximum else 0.0
+        relevance[row["model_id"]] = max(relevance.get(row["model_id"], 0.0), score)
+    return relevance
 
 
-def spec_score(model: dict, gaps: dict, shared_doc: bool) -> tuple[float, list[str]]:
-    groups = gaps["groups"]
-    p1 = sum(len(g["field_keys"]) for g in groups.values() if g["tier"] == "P1")
-    p2 = sum(len(g["field_keys"]) for g in groups.values() if g["tier"] == "P2")
-    # Missingness is saturated; P1 has greater value without rewarding raw cell count.
-    utility = _clamp((.75 if p1 else 0) + (.25 if p2 else 0))
-    relevance = _clamp(float(model.get("business_relevance", 0)))
-    yield_score = 1.0 if shared_doc else _clamp(float(model.get("shared_document_yield", 0)))
-    ready = _clamp(float(model.get("ready_evidence", 0)))
-    score = .50 * utility + .25 * relevance + .20 * yield_score + .05 * ready
+def audit_scores(models: list[dict], registration_signals: list[dict], policy: dict) -> dict[str, float]:
+    weights = policy["priority_policy"]["audit_weights"]
+    relevance = registration_relevance(models, registration_signals)
+    return {m["id"]: round(_clamp(weights["registration_relevance"] * relevance.get(m["id"], 0)
+                                  + weights["catalog_staleness"] * m.get("staleness_risk", 0)
+                                  + weights["lineup_recency"] * m.get("lineup_recency", 0)
+                                  + weights["document_reuse"] * m.get("document_reuse", 0)), 6)
+            for m in models}
+
+
+def spec_score(model: dict, gaps: dict, shared_doc: bool, policy: dict) -> tuple[float, list[str]]:
+    fields_by_tier = [g.get("field_keys_by_tier", {}) for g in gaps["groups"].values()]
+    p1 = sum(len(keys.get("P1", [])) for keys in fields_by_tier)
+    p2 = sum(len(keys.get("P2", [])) for keys in fields_by_tier)
+    within = policy["priority_policy"]["spec_missingness_weights"]
+    utility = _clamp((within["P1"] if p1 else 0) + (within["P2"] if p2 else 0))
+    weights = policy["priority_policy"]["spec_weights"]
+    score = (weights["missingness_applicability"] * utility
+             + weights["business_relevance"] * _clamp(model.get("business_relevance", 0))
+             + weights["shared_document_yield"] * (1.0 if shared_doc else _clamp(model.get("shared_document_yield", 0)))
+             + weights["ready_evidence"] * _clamp(model.get("ready_evidence", 0)))
     reasons = []
     if p1: reasons.append("P1_GAPS_PRESENT")
     if p2: reasons.append("P2_GAPS_PRESENT")

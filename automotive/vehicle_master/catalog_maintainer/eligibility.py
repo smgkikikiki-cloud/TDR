@@ -10,6 +10,17 @@ class Eligibility:
     reasons: tuple[str, ...]
     generation_ids: tuple[str, ...]
     admitted_trim_ids: tuple[str, ...] = ()
+    conflicting_trim_ids: tuple[str, ...] = ()
+
+
+def _complete_official_lineup(model: dict) -> bool:
+    evidence = model.get("lineup_evidence") or {}
+    return (evidence.get("market") == "TH"
+            and evidence.get("source_authority") == "OFFICIAL"
+            and evidence.get("completeness") == "COMPLETE_LINEUP"
+            and bool(evidence.get("document_sha256"))
+            and bool(evidence.get("captured_at"))
+            and isinstance(evidence.get("trim_ids"), list))
 
 
 def evaluate_model(snapshot: dict, model: dict) -> Eligibility:
@@ -31,30 +42,50 @@ def evaluate_model(snapshot: dict, model: dict) -> Eligibility:
                                if g.get("model_id") == mid and not g.get("deleted_at")))
     if not generations:
         return Eligibility("HOLD_IDENTITY", ("GENERATION_UNRESOLVED",), ())
-    known = [t for t in snapshot.get("trims", []) if t.get("model_id") == mid
-             and t.get("generation_id") in generations and not t.get("deleted_at")]
+    model_trims = [t for t in snapshot.get("trims", []) if t.get("model_id") == mid
+                   and t.get("generation_id") in generations]
+    known = [t for t in model_trims if not t.get("deleted_at")]
     if any(s.get("model_id") == mid for s in snapshot.get("current_retail_sets", [])):
         approved = next(s for s in snapshot["current_retail_sets"] if s.get("model_id") == mid)
         ids = set(approved.get("trim_ids", []))
-        known_ids = {t["id"] for t in known}
+        known_ids = {t["id"] for t in model_trims}
         # A bad sidecar is not silently repaired by the simulator.
         if not ids or not ids <= known_ids:
             return Eligibility("HOLD_IDENTITY", ("INVALID_OWNER_RETAIL_SET",), generations)
-        trims = [t for t in known if t["id"] in ids]
-        if any(t.get("admin_retired") for t in trims):
-            return Eligibility("HOLD_IDENTITY", ("OWNER_SET_CONFLICT",), generations)
+        trims = [t for t in model_trims if t["id"] in ids]
+        conflicts = [t for t in trims if t.get("deleted_at") or t.get("admin_retired")
+                     or t.get("owner_retired") or t.get("status") != "CURRENT"]
+        admitted = [t for t in trims if t not in conflicts]
         observed = model.get("observed_current_trim_ids")
-        review = observed is not None and set(observed) != ids
-        reasons = ("OWNER_CURRENT_SET", "OWNER_SET_CONFLICT_REVIEW_REQUIRED") if review else ("OWNER_CURRENT_SET",)
-        return Eligibility("ELIGIBLE_ENRICH", reasons, generations,
-                           tuple(sorted(t["id"] for t in trims)))
+        review = bool(conflicts) or (observed is not None and set(observed) != ids)
+        reasons = ["OWNER_CURRENT_SET"]
+        if conflicts: reasons.append("OWNER_SET_TRIM_STATUS_CONFLICT")
+        if observed is not None and set(observed) != ids: reasons.append("OWNER_SET_CONFLICT_REVIEW_REQUIRED")
+        if not admitted:
+            return Eligibility("HOLD_IDENTITY", tuple(reasons + ["MODEL_REVIEW_REQUIRED", "NO_ENRICHABLE_OWNER_SET_TRIMS"]),
+                               generations, (), tuple(sorted(t["id"] for t in conflicts)))
+        if review: reasons.append("MODEL_REVIEW_REQUIRED")
+        return Eligibility("ELIGIBLE_ENRICH", tuple(reasons), generations,
+                           tuple(sorted(t["id"] for t in admitted)),
+                           tuple(sorted(t["id"] for t in conflicts)))
 
-    confirmed = bool(model.get("source_current_lineup_confirmed"))
+    evidence = model.get("lineup_evidence") or {}
+    confirmed = _complete_official_lineup(model)
     if not confirmed:
-        return Eligibility("RETAIL_AUDIT_ONLY", ("RETAIL_UNVERIFIED",), generations)
-    current = [t for t in known if t.get("status") == "CURRENT" and t.get("retail_verified")
-               and not t.get("admin_retired")]
-    if not current:
-        return Eligibility("HOLD_IDENTITY", ("CONFIRMED_LINEUP_WITHOUT_TRIMS",), generations)
-    return Eligibility("ELIGIBLE_ENRICH", ("SOURCE_CONFIRMED_CURRENT_LINEUP",), generations,
-                       tuple(sorted(t["id"] for t in current)))
+        partial = evidence.get("completeness") in {"PARTIAL_TRIM_LIST", "INDIVIDUAL_TRIM"}
+        return Eligibility("RETAIL_AUDIT_ONLY", ("LINEUP_PARTIAL" if partial else "RETAIL_UNVERIFIED",), generations)
+    current_ids = set(evidence["trim_ids"])
+    known_ids = {t["id"] for t in known}
+    if not current_ids or not current_ids <= known_ids:
+        return Eligibility("HOLD_IDENTITY", ("COMPLETE_LINEUP_HAS_UNRESOLVED_IDENTITIES",), generations)
+    current = [t for t in known if t["id"] in current_ids]
+    conflicts = [t for t in current if t.get("status") != "CURRENT" or t.get("admin_retired") or t.get("owner_retired")]
+    admitted = [t for t in current if t not in conflicts]
+    if not admitted:
+        return Eligibility("HOLD_IDENTITY", ("SOURCE_LINEUP_STATUS_CONFLICT",), generations, (),
+                           tuple(sorted(t["id"] for t in conflicts)))
+    reasons = ["SOURCE_CONFIRMED_CURRENT_LINEUP"]
+    if conflicts: reasons.extend(["SOURCE_LINEUP_STATUS_CONFLICT", "MODEL_REVIEW_REQUIRED"])
+    return Eligibility("ELIGIBLE_ENRICH", tuple(reasons), generations,
+                       tuple(sorted(t["id"] for t in admitted)),
+                       tuple(sorted(t["id"] for t in conflicts)))

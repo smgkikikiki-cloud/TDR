@@ -8,7 +8,7 @@ from pathlib import Path
 from .planner import plan
 
 CSV_FIELDS = ["job_key", "model_id", "work_kind", "eligibility", "tier", "score",
-              "reason_codes", "generation_ids", "field_groups", "document_bundle_key", "status"]
+              "reason_codes", "generation_ids", "field_groups", "field_plan", "document_bundle_key", "status"]
 
 
 def simulate(fixture_path: str | Path, output_dir: str | Path, *, budget: int | None = None) -> dict:

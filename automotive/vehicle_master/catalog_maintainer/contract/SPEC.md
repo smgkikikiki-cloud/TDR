@@ -16,7 +16,7 @@ Status: offline implementation draft; no production authority. Vehicle DB v3 §4
 
 Use the existing comparable-spec field registry as authority in production. The synthetic fixture registry in this package only defines test keys and does not replace it. Fields carry tier and applicable powertrains. P0 is lineup/price correctness (price remains Price Ledger-owned); P1 is core comparison; P2 is differentiating equipment; P3 is incidental. P3 never creates a standalone research task.
 
-Known values are resolved across canonical facts and payload layers. A canonical fact is preferred; payload/variant/model/generation values suppress duplicate gaps and may be flagged for trace/reconciliation, never copied blindly. `UNKNOWN`, `NO`, `ABSENT`, `NOT_APPLICABLE`, locked tombstones, conflicts, and source-trace needs remain distinct. Price fields are excluded from spec gap fill. Registration is a score input only.
+Known values are resolved across canonical facts and payload layers. V3 stores `value_state` (`KNOWN`, `UNKNOWN`, `NOT_AVAILABLE`, `NOT_APPLICABLE`, `ABSENT`; legacy/current rows may also require a locked `null` tombstone) separately from `verification_status` (`VERIFIED` or `PROVISIONAL`). Only `value_state=KNOWN` with a non-null value is a known canonical fact; `verification_status=VERIFIED` cannot promote `UNKNOWN` to `KNOWN`. A canonical fact is preferred; payload/variant/model/generation values suppress duplicate gaps and may be flagged for trace/reconciliation, never copied blindly. Powertrain-inapplicable values and explicit `NOT_APPLICABLE` facts are closed; Admin-locked null tombstones never reopen. Conflicting current facts need review. Price fields are excluded from spec gap fill. Registration is a score input only.
 
 ## Existing-code inventory and boundary map
 
@@ -34,6 +34,10 @@ No new scheduler, production agent, Supabase adapter, migration, storage write, 
 `ELIGIBLE_ENRICH`, `RETAIL_AUDIT_ONLY`, `EXCLUDED_HISTORICAL`, `EXCLUDED_UPCOMING`, `EXCLUDED_DISCOVERED`, `EXCLUDED_ADMIN_RETIRED`, `EXCLUDED_NON_MEMBER`, `HOLD_IDENTITY`.
 
 Each emitted row has a stable key derived from normalized input, policy version, model, work kind, and field group. Ties use stable identifiers. Re-running the same fixture produces byte-identical outputs.
+
+Durable job keys hash only the semantic inputs for the target job: model and relevant generation/trim scope, approved set or lineup-document hash, target field-gap bundle, document bundle hash, and contract/registry versions. They do not include a snapshot-wide hash, so an unrelated model or fact change does not re-key the backlog.
+
+Retail Audit and Spec Enrichment retain separate ranked queues and per-queue caps. A policy-configured service cycle interleaves them; one queue's backlog cannot consume the other queue's allowance. Weights, high-relevance threshold, cycle size, and underrepresented-audit reservation are all policy values validated at load.
 
 ## Proposed V3 §4 permission amendment — not adopted
 
