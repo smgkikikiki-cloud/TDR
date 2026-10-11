@@ -129,8 +129,14 @@ export function inspectPr({ event, basePlan, baseRoadmap, baseAgents,
     || packet.roadmap_sha256 !== digest(baseRoadmap)
     || !SHA64.test(String(packet.roadmap_sha256 ?? '')))
     errors.push('PINNED_ROADMAP_MISMATCH');
-  if (packet.base_sha !== baseSha || packet.head_sha !== headSha)
-    errors.push('PACKET_COMMIT_SHA_STALE');
+  // A manifest committed inside HEAD cannot embed its own HEAD SHA:
+  // that would be a cryptographic self-reference. Bind the BASE SHA in
+  // the manifest, and get the immutable HEAD SHA from GitHub's event +
+  // independently checked git checkout at CI runtime instead.
+  if (packet.base_sha !== baseSha || !SHA40.test(String(packet.base_sha ?? '')))
+    errors.push('PACKET_BASE_SHA_STALE');
+  if (packet.head_sha !== undefined)
+    errors.push('SELF_REFERENTIAL_HEAD_SHA_FORBIDDEN');
   if (packet.owner_authorized !== true || typeof packet.approval_ref !== 'string'
     || !packet.approval_ref.trim()) errors.push('PACKET_OWNER_APPROVAL_MISSING');
   if (typeof packet.task_id !== 'string' || !/^[A-Z0-9][A-Z0-9_.-]{1,79}$/.test(packet.task_id))
