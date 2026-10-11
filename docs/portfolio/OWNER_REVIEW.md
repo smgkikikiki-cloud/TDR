@@ -30,6 +30,8 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 - [SPATIAL_NETWORK_METHODOLOGY_REVIEW.md](SPATIAL_NETWORK_METHODOLOGY_REVIEW.md): dealer site/brand/operator and verified network events, province registration fallacy and region masking.
 - [PRESSURE_GOLDEN_CASES.proposed.json](PRESSURE_GOLDEN_CASES.proposed.json): 15 synthetic expected-outcome examples; no executable job permissions.
 
+**Concrete next-step audit:** [CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md](CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md) identifies existing code, source gaps and six proposed development packets CP-00→CP-05. Critical discovery: existing market-price-state view caps read results at 1,000 by design, not a complete pricing-index/history reader. No production rows were accessed. CP-00 itself needs a separately scoped go before run.
+
 **Methodology choices awaiting owner verdict:** Should V1 pressure be an evidence-ranked observational radar (recommended), should reviewed substitute relationships be a first-class graph (recommended), should MSRP and verified cash-net be separate lanes (recommended), and should the 0–100 score remain null until independently calibrated (recommended)? **Do not treat this review attachment as permission to implement or to alter the existing locked five-section model-analysis UX.**
 
 **Owner question A:** Are these functions and product boundaries faithful to the intended TDR architecture? The existence of this table does NOT imply 'approved'.
