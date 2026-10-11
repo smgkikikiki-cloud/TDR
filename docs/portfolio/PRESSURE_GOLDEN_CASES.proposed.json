@@ -1,0 +1,286 @@
+{
+  "schema": "tdr.pressure.owner-review-cases.v0.1",
+  "status": "PROPOSED_ONLY",
+  "executable": false,
+  "production_authorized": false,
+  "notes": [
+    "All examples use synthetic/fictional Model IDs and inputs, not TDR observations.",
+    "Expected fields are desired methodological assertions, NOT evidence that code exists or passes.",
+    "Do not compile into executable CI tests without owner-approved contract and scope.",
+    "Same-registry version; cases depending on proposed calculation methods must be reviewed before adoption."
+  ],
+  "cases": [
+    {
+      "id": "CP-01",
+      "title": "Confirmed substitute gains observed relative cash-price advantage",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "reference_status": "CURRENT",
+        "competitor_status": "CURRENT",
+        "substitution": "CONFIRMED",
+        "price_basis": "GENERAL_CASH_NET_VERIFIED",
+        "scope": "NATIONAL",
+        "old": {
+          "reference_thb": 1150000,
+          "competitor_thb": 1220000
+        },
+        "new": {
+          "reference_thb": 1150000,
+          "competitor_thb": 1070000
+        },
+        "registration": "SUFFICIENT_NEUTRAL"
+      },
+      "expected": {
+        "price_advantage_old_thb": -70000,
+        "price_advantage_new_thb": 80000,
+        "delta_advantage_thb": 150000,
+        "status": "OBSERVED_ADVERSE_MOVE",
+        "pressure_score": null,
+        "causal_sales_loss_claim": false
+      }
+    },
+    {
+      "id": "CP-02",
+      "title": "Same segment and similar list price cannot confirm substitute",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CANDIDATE",
+        "same_segment": true,
+        "similar_msrp": true,
+        "observed_verified_price_cut": true
+      },
+      "expected": {
+        "status": "WATCH",
+        "substitution_confirmed": false,
+        "realized_model_pressure_asserted": false,
+        "pressure_score": null
+      }
+    },
+    {
+      "id": "CP-03",
+      "title": "Unknown current cash offer prevents net-price comparison",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "reference_offer": "VERIFIED_ZERO",
+        "competitor_offer": "UNKNOWN",
+        "competitor_msrp_thb": 1100000
+      },
+      "expected": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "comparable_cash_price": null,
+        "price_advantage_new_thb": null,
+        "assume_competitor_discount_zero": false
+      }
+    },
+    {
+      "id": "CP-04",
+      "title": "Unlaunched upcoming candidate is potential not realized",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CANDIDATE",
+        "competitor_status": "RUMORED",
+        "launch_window": "2027-H1"
+      },
+      "expected": {
+        "status": "WATCH",
+        "realized_model_pressure_asserted": false,
+        "display_section": "Events & Outlook",
+        "pressure_score": null
+      }
+    },
+    {
+      "id": "CP-05",
+      "title": "Rival registration momentum is not customer diversion",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "registration": {
+          "same_window": true,
+          "same_registration_class": true,
+          "share_pp_r": -1.5,
+          "share_pp_c": 1.8
+        },
+        "verified_new_price_event": false
+      },
+      "expected": {
+        "status": "WATCH",
+        "registration_interpretation": "CORROBORATING_CONTEXT_ONLY",
+        "causal_sales_loss_claim": false
+      }
+    },
+    {
+      "id": "CP-06",
+      "title": "Observed adverse price action does not require positive registration corroboration",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "price_basis": "GENERAL_CASH_NET_VERIFIED",
+        "relative_price_advantage_change_thb": 120000,
+        "registration": "FLAT"
+      },
+      "expected": {
+        "status": "OBSERVED_ADVERSE_MOVE",
+        "registration_interpretation": "NEUTRAL",
+        "pressure_score": null,
+        "causal_sales_loss_claim": false
+      }
+    },
+    {
+      "id": "CP-07",
+      "title": "PART_OF identity cannot be naively allocated into model registration count",
+      "given": {
+        "identity_link_type": "PART_OF",
+        "ice_group_registrations": 420,
+        "tdr_models": [
+          "R",
+          "C"
+        ],
+        "allocation_evidence": "NONE"
+      },
+      "expected": {
+        "model_r_registrations": null,
+        "model_c_registrations": null,
+        "ice_group_registrations_preserved": 420,
+        "registration_interpretation": "UNMAPPED"
+      }
+    },
+    {
+      "id": "CP-08",
+      "title": "Region selection may not change national PDI/CTPDI",
+      "given": {
+        "selected_region_before": "NORTH",
+        "selected_region_after": "CENTRAL",
+        "th_national_pdi_pct": 7.73,
+        "cn_th_national_parity_index": 135
+      },
+      "expected": {
+        "th_national_pdi_pct": 7.73,
+        "cn_th_national_parity_index": 135,
+        "region_registration_context_requeried": true,
+        "outside_region_units_exposed": false
+      }
+    },
+    {
+      "id": "CP-09",
+      "title": "Trim-set change without matched cohort price move",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "price_observations_all_existing_trim_unchanged": true,
+        "competitor_added_premium_trim": true,
+        "competitor_median_msrp_raw_changed": true
+      },
+      "expected": {
+        "like_for_like_relative_price_change_thb": 0,
+        "composition_effect_separate": true,
+        "fabricated_discount_event": false
+      }
+    },
+    {
+      "id": "CP-10",
+      "title": "Expired offer must not silently carry forward",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "last_verified_offer_thb": 150000,
+        "offer_expired_at": "2026-09-30",
+        "as_of": "2026-10-11",
+        "new_offer_seen": false
+      },
+      "expected": {
+        "current_offer_status": "EXPIRED_OR_UNKNOWN",
+        "net_cash_price_comparable": false,
+        "status": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    {
+      "id": "CP-11",
+      "title": "FX-only CTPDI movement is not Thai pricing action",
+      "given": {
+        "cn_price_unchanged": true,
+        "th_price_unchanged": true,
+        "fx_thb_per_cny_change_fraction": -0.1,
+        "prior_ctpdi_ratio": 1.35
+      },
+      "expected": {
+        "new_ctpdi_ratio": 1.5,
+        "thai_msrp_change_thb": 0,
+        "discount_event_created": false,
+        "ratio_driver": "FX_ONLY"
+      }
+    },
+    {
+      "id": "CP-12",
+      "title": "Network locator missing cannot be asserted as closure or branch performance",
+      "given": {
+        "site_status_last_verified": "OPEN",
+        "last_locator_result": "MISSING",
+        "verification_evidence": "NONE",
+        "province_registrations_change_pct": 12
+      },
+      "expected": {
+        "network_event_publication": false,
+        "site_closure_verified": false,
+        "branch_sales_inferred": false
+      }
+    },
+    {
+      "id": "CP-13",
+      "title": "Cross-account and out-of-region request is denied before analysis",
+      "given": {
+        "requesting_org_id": "ORG-A",
+        "requested_report_org_id": "ORG-B",
+        "authorized_region": "NORTH",
+        "requested_province_region": "CENTRAL"
+      },
+      "expected": {
+        "report_request_allowed": false,
+        "province_market_payload_exposed": false,
+        "denial_status": "FORBIDDEN"
+      }
+    },
+    {
+      "id": "CP-14",
+      "title": "Price action counted once despite PDI and net-price views",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "competitor_verified_cash_cut_thb": 100000,
+        "pdi_changes_due_to_same_action": true,
+        "net_price_changes_due_to_same_action": true
+      },
+      "expected": {
+        "underlying_events_count": 1,
+        "independent_pressure_drivers_from_same_action": 1,
+        "do_not_double_weight": true
+      }
+    },
+    {
+      "id": "CP-15",
+      "title": "No source does not mean no new competitive changes",
+      "given": {
+        "reference_model": "R",
+        "competitor_model": "C",
+        "substitution": "CONFIRMED",
+        "observations_current_period": "MISSING",
+        "source_last_checked": "2026-08-01",
+        "as_of": "2026-10-11"
+      },
+      "expected": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "may_claim_no_material_change": false,
+        "pressure_score": null
+      }
+    }
+  ]
+}

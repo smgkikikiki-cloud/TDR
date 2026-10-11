@@ -1,0 +1,400 @@
+{
+  "schema": "tdr.portfolio.approved-roadmap.v1.0",
+  "snapshot_date": "2026-10-11",
+  "state": "OWNER_APPROVED_REPOSITORY_ADOPTION_TRACKED",
+  "scope": "Owner-approved portfolio plan and guardrails. This JSON is non-executable; methodology and operational domain gates remain separate.",
+  "repository": "smgkikikiki-cloud/TDR",
+  "execution": {
+    "enabled": false,
+    "autonomous_claim": false,
+    "auto_merge": false,
+    "auto_deploy": false,
+    "production_access": false,
+    "paid_ai_or_external_api": false,
+    "maximum_parallel_code_agents": 0,
+    "owner_approval_required_per_task": true,
+    "untrusted_if_only_portfolio": true
+  },
+  "precedence_sources": [
+    {
+      "key": "AGENTS",
+      "path": "AGENTS.md",
+      "authority": "repository instructions"
+    },
+    {
+      "key": "EXECUTION_STATE",
+      "path": "docs/WORK_STATE.md",
+      "authority": "vehicle/market execution state"
+    },
+    {
+      "key": "MARKET_GATE",
+      "path": "docs/market-track/ROADMAP.md",
+      "authority": "fixed Ice market gate order"
+    },
+    {
+      "key": "VEHICLE_PERMISSIONS",
+      "path": "docs/vehicle-db/VEHICLE_DB_V3.md",
+      "authority": "master permissions"
+    },
+    {
+      "key": "WEBSITE_OWNER_DECISIONS",
+      "path": "docs/MERGE_DECISIONS.md",
+      "authority": "adopted original website design decisions"
+    },
+    {
+      "key": "WEBSITE_GRAFT",
+      "path": "design/GRAFT_PLAN.md",
+      "authority": "approved website UX delivery rules"
+    },
+    {
+      "key": "B2B_DESIGN_EVIDENCE",
+      "path": "external-prior-handoff: TDR_Enterprise_Master_Architecture_and_Design_Handoff_v0.2_LOCKED_SPATIAL_2026-10-10.md",
+      "authority": "prior user-locked design decisions, not yet in-repo adopted contract"
+    },
+    {
+      "key": "PRICING_EVIDENCE",
+      "path": "external-prior-brief: TDR_PDI_CTPDI_RETAIL_PRICING_INTELLIGENCE_MASTER_BRIEF_v0.7",
+      "authority": "owner locks and unadopted methodology proposals"
+    }
+  ],
+  "conflicts_blocking_g0": [
+    "C01",
+    "C02",
+    "C03",
+    "C04"
+  ],
+  "risk_register": "docs/portfolio/G0_RECONCILIATION.md",
+  "domain_contract": "docs/portfolio/DOMAIN_BOUNDARIES.md",
+  "milestones": [
+    {
+      "id": "G0",
+      "name": "Portfolio authority reconciliation",
+      "status": "ROADMAP_APPROVED_AUTHORITY_RECONCILIATION_OPEN",
+      "pass": [
+        "C01-C04 resolved with observed evidence and owner-reviewed decisions",
+        "owner accepts portfolio domain contract",
+        "no automatic task permission inferred"
+      ],
+      "approved_portfolio_direction": true,
+      "remaining_execution_conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ]
+    },
+    {
+      "id": "G1",
+      "name": "Offline contract/engine reliability",
+      "status": "PLANNED",
+      "pass": [
+        "PR203 corrected test suite + CI pass verified",
+        "PR200/201 labelled fixtures and draft-contract adoption only where owner approves",
+        "typed engine/UI boundaries testable offline"
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "Evidence foundation",
+      "status": "PLANNED",
+      "pass": [
+        "price event and frozen timeline with sparse 2021 coverage",
+        "dealer site/brand/operator evidence and event basis",
+        "CN-TH manually reviewed crosswalk fixtures",
+        "Vehicle DB writer permission design"
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "Versioned measurable engines",
+      "status": "PLANNED",
+      "pass": [
+        "PDI approved formula+coverage",
+        "CTPDI approved ratio and comparability",
+        "geography mapped/read-scoped metric with evidence",
+        "Ice R6/R7/R8 independently authorized in order"
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "First standalone Layer3 vertical slice",
+      "status": "PLANNED",
+      "pass": [
+        "organization+member isolation",
+        "own-brand + authorized region → verified competitor movement",
+        "five-section analysis and evidence drilldown",
+        "PDF snapshot output authorized and testable"
+      ]
+    },
+    {
+      "id": "G5",
+      "name": "Controlled operations",
+      "status": "PLANNED",
+      "pass": [
+        "bounded/replayable queue",
+        "governance/cost audit/recovery",
+        "owner-defined activation gates"
+      ]
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "PR200",
+      "name": "Ice identity resolution",
+      "lane": "identity",
+      "status": "DRAFT_CONTRACT_UNCALIBRATED",
+      "repository_ref": "https://github.com/smgkikikiki-cloud/TDR/pull/200",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "owner calibration/freeze approval"
+      ],
+      "production_requires": [
+        "C01",
+        "R6_OWNER_GO"
+      ],
+      "output": "Versioned reviewed Ice-to-TDR identity link sets"
+    },
+    {
+      "id": "PR201",
+      "name": "new-identity bootstrap",
+      "lane": "identity",
+      "status": "DRAFT_OFFLINE_ENGINE",
+      "repository_ref": "https://github.com/smgkikikiki-cloud/TDR/pull/201",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "approved bounded task"
+      ],
+      "production_requires": [
+        "PR200_DUPLICATE_INTERFACE",
+        "VEHICLE_MASTER_GOVERNED_WRITER",
+        "OWNER_CREATE_AUTHORITY"
+      ],
+      "output": "Reviewed candidate DISCOVERED identity proposal"
+    },
+    {
+      "id": "PR203",
+      "name": "retail-audit and spec-maintainer",
+      "lane": "catalog",
+      "status": "DRAFT_CORRECTIONS_PENDING",
+      "repository_ref": "https://github.com/smgkikikiki-cloud/TDR/pull/203",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "current Chunk 1 correction round review"
+      ],
+      "production_requires": [
+        "VEHICLE_MASTER_GOVERNED_WRITER",
+        "V3_PERMISSIONS_AND_BUDGET_GO"
+      ],
+      "output": "Two distinct fair queues and validated current-retail/spec evidence bundles"
+    },
+    {
+      "id": "UI_ICE",
+      "name": "TDR website replacement-engine UI",
+      "lane": "website",
+      "status": "DESIGN_GRAFT_ACTIVE",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "owner go per GRAFT_PLAN",
+        "typed adapter contract",
+        "file-scope separation"
+      ],
+      "production_requires": [
+        "R8_OWNER_GO",
+        "GRAFT_PR_ACCEPTANCE"
+      ],
+      "output": "Final L1-L2 pages with canonical and Ice data via typed adapter"
+    },
+    {
+      "id": "PDI",
+      "name": "Thai Retail Price Discount Index",
+      "lane": "pricing",
+      "status": "METHODOLOGY_PARTIALLY_LOCKED",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "bounded approved pure-function task"
+      ],
+      "production_requires": [
+        "OWNER_FORMULA_GO",
+        "PRICE_SOURCE_COVERAGE",
+        "INDEX_PUBLICATION_GO"
+      ],
+      "output": "Versioned evidence-backed cash discount time series; frozen historical snapshots"
+    },
+    {
+      "id": "CTPDI",
+      "name": "China-Thailand Price Difference Index",
+      "lane": "pricing",
+      "status": "PAIR_METHOD_PROPOSED",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "crosswalk mock/locked policy specs"
+      ],
+      "production_requires": [
+        "C04",
+        "ADMIN_APPROVED_CN_TH_PAIRS",
+        "PRICE_FX_BASIS_GO"
+      ],
+      "output": "Reviewed pair-level comparable gap/approved headline and sources"
+    },
+    {
+      "id": "GEOGRAPHY",
+      "name": "Dealer geography and spatial intelligence",
+      "lane": "spatial",
+      "status": "SPATIAL_UX_LOCKED_DATA_NOT_VERIFIED",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "single spatial workspace and account ACL contract"
+      ],
+      "production_requires": [
+        "DEALER_MASTER_VERIFICATION",
+        "REGION_ACCESS_TESTS",
+        "APPROVED_MARKET_READ_MODELS"
+      ],
+      "output": "Single Spatial workspace: Dealer Geography and Network Watch local modes"
+    },
+    {
+      "id": "LAYER3",
+      "name": "Standalone Dealership Toolkit UX and product",
+      "lane": "toolkit",
+      "status": "PRODUCT_UX_LOCKED_METHODS_UNAPPROVED",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "organization entitlement/read-only route contract"
+      ],
+      "production_requires": [
+        "ORG_SECURITY",
+        "VERIFIED_SIGNALS",
+        "PRESSURE_METHOD_GO",
+        "REPORT_SNAPSHOT_TESTS"
+      ],
+      "output": "Account-specific Competitive Pressure, immutable reporting, evidence drilldown"
+    },
+    {
+      "id": "VEHICLE_WRITER",
+      "name": "Vehicle Master governed writer",
+      "lane": "platform",
+      "status": "PHASE1_NOT_STARTED",
+      "offline_start_allowed": false,
+      "code_start_requires": [
+        "V3 Phase1 scoped writer design and owner go"
+      ],
+      "production_requires": [
+        "V3_WRITER_IMPLEMENTATION_AND_SECURITY_GO"
+      ],
+      "output": "Immutable observations, reconcile, apply/propose, locks, audit and revert"
+    }
+  ],
+  "ice_market_track": {
+    "observed_document_gate": "R6_PRODUCTION_CROSSWALK",
+    "observed_authorization": false,
+    "required_order": [
+      "R6 owner-reviewed crosswalk",
+      "R7 real-data acceptance",
+      "R8 owner-approved live cutover"
+    ],
+    "state_discrepancy_id": "C01"
+  },
+  "document_decisions": {
+    "catalog_cannot_be_historical_pricing_worker": true,
+    "website_pro_is_separate_from_organization_toolkit": true,
+    "spatial_single_workspace_local_modes": true,
+    "admin_locked_cn_th_crosswalk_v1": true,
+    "model_analysis_sections": [
+      "Pressure Overview",
+      "Competitive Landscape",
+      "Pressure Investigation",
+      "Regional Market Context",
+      "Events & Outlook"
+    ],
+    "pdf": {
+      "paper": "A4",
+      "orientation": "landscape",
+      "executive_pages": 1,
+      "full_pages": 5
+    }
+  },
+  "first_candidate_g1_task": {
+    "state": "NOT_AUTHORIZED",
+    "goal": "After current PR203 Chunk 1 correction round closes, select one new fixture-only bug/test task and pin head SHA",
+    "allowed_actions": [
+      "test only in isolated branch after owner approval"
+    ],
+    "forbidden_actions": [
+      "production",
+      "merge",
+      "deploy",
+      "paid provider",
+      "external research",
+      "R6/R7/R8 gate advance",
+      "catalog Chunk 2+"
+    ]
+  },
+  "task_queue": [],
+  "evidence_audits": [
+    {
+      "id": "CP00_SOURCE_COVERAGE_2026_10_11",
+      "status": "READONLY_EVIDENCE_PARTIAL_NOT_ADOPTED",
+      "report": "docs/portfolio/CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md",
+      "source": "Supabase TDR project connected read-only aggregate SELECT plus current-main code",
+      "facts": {
+        "current_trims": 1431,
+        "current_models": 318,
+        "list_price_rows": 320,
+        "current_trims_any_list_price": 273,
+        "current_models_all_trims_any_list_price": 74,
+        "current_models_no_list_price": 178,
+        "list_price_observed_months": [
+          "2026-09"
+        ],
+        "promotion_options": 48,
+        "promotions_valid_window_on_2026_10_11": 4,
+        "promotions_without_normalized_amount": 48,
+        "ice_reg_trend_months": 69,
+        "ice_model_crosswalk_rows": 490,
+        "ice_approved_crosswalk_rows": 0
+      },
+      "no_claims": [
+        "not complete longitudinal MSRP or discount history",
+        "not calibrated competitive-pressure score",
+        "not approval of R6/R7/R8",
+        "not permission to start code",
+        "not evidence of universal retail lineup verification"
+      ]
+    }
+  ],
+  "approval": {
+    "roadmap_version": "1.0",
+    "owner_approved_on": "2026-10-11",
+    "status": "OWNER_APPROVED",
+    "approved_for": [
+      "portfolio product/workstream scope",
+      "system boundaries and architecture",
+      "relative dependencies and G0–G5 delivery sequence",
+      "Layer 3 release order Competitive Pressure → Dealer Geography → Network Watch",
+      "methodology validity doctrine and independent QA direction",
+      "governance design direction"
+    ],
+    "not_approved_by_this_record": [
+      "specific unresolved pricing/pressure scores and formulas",
+      "source data sufficiency or factual R6 authorization",
+      "existing PR #200/#201/#203 merge or acceptance",
+      "CI or Enforcer activation",
+      "automatic task packets or queued execution",
+      "GitHub merge/branch protection changes",
+      "paid AI/HTTP",
+      "database migrations/Production writes",
+      "deployments",
+      "billing plan changes"
+    ],
+    "document": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md",
+    "repository_adoption": "PR_204_GITHUB_MERGE_STATE",
+    "human_gate_overrides": false
+  },
+  "conflicts_blocking_operational_activation": [
+    "C01",
+    "C02",
+    "C03",
+    "C04"
+  ],
+  "roadmap_authoritative_file": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md"
+}
