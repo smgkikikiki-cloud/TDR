@@ -9,6 +9,7 @@
  */
 import {adminDb} from "../lib/supabase.ts";
 import {calculatePdi,type PdiModel,type PdiMsrp,type PdiTrim,type PdiCashBundle} from "../lib/pdi-engine.ts";
+import {classifyPdiUniverse,PDI_UNIVERSE_POLICY} from "../lib/pdi-universe-policy.ts";
 type Row=Record<string,any>;
 const PRIMARY_KEYS:Record<string,string[]>={
   vehicle_brands:["canonical_id"],vehicle_models:["canonical_id"],
@@ -50,7 +51,7 @@ async function main() {
   const asOf=state.seed_as_of as string;
   const [brands,models,trims,retailSets,prices,promotions,campaigns]=await Promise.all([
     readAll(db,"vehicle_brands","canonical_id,origin_country,deleted_at"),
-    readAll(db,"vehicle_models","canonical_id,brand_id,status,deleted_at"),
+    readAll(db,"vehicle_models","canonical_id,brand_id,status,body_type,payload,deleted_at"),
     readAll(db,"vehicle_trims","canonical_id,model_id,status,powertrain,deleted_at"),
     readAll(db,"vehicle_current_retail_sets","model_id,trim_ids"),
     readAll(db,"vehicle_price_ledger","record_id,trim_id,amount_thb,price_type,effective_from,effective_to,observed_at,source,source_ref,authority,in_release,retracted_at"),
@@ -101,8 +102,19 @@ async function main() {
     const arr=byModel.get(t.model_id)||[];arr.push(t);byModel.set(t.model_id,arr);
   }
   const pdiModels:PdiModel[]=[];
+  const policyDecisions:Record<string,number>={};
   for(const m of models) {
     if(m.deleted_at || m.status!=="CURRENT")continue;
+    const decision=classifyPdiUniverse({
+      modelId:m.canonical_id,brandOrigin:origin.get(m.brand_id)||"",
+      bodyType:m.body_type||null,
+      marketPosition:m.payload?.market_position||null,currentRetail:true
+    });
+    const key=decision.bucket+":"+decision.reason;
+    policyDecisions[key]=(policyDecisions[key]||0)+1;
+    // Commercial/off-universe models remain in discovery audit counts, never
+    // contaminate the passenger-car national index calculation denominator.
+    if(decision.bucket==="OUTSIDE_POLICY"||decision.bucket==="COMMERCIAL_FUTURE")continue;
     const selected:Set<string>|undefined=set.get(m.canonical_id);
     const current=(byModel.get(m.canonical_id)||[]).filter(t=>selected?selected.has(t.canonical_id):t.status==="CURRENT");
     if(!current.length)continue;
@@ -129,7 +141,7 @@ async function main() {
       };
     });
     pdiModels.push({modelId:m.canonical_id,brandOrigin:origin.get(m.brand_id)||"",
-      currentRetail:true,japaneseAdmission:"CANDIDATE",trims:calcTrims,
+      currentRetail:true,japaneseAdmission:decision.japanAdmission,trims:calcTrims,
       retailSetBasis:selected?"REVIEWED":"MASTER_CURRENT_STATUS"});
   }
   const output=calculatePdi({asOf,sourceSnapshot:state.seed_release_id+":"+state.seed_source_hash,
@@ -148,7 +160,9 @@ async function main() {
       legacyPromotionsWithoutTypedClassification:promotions.filter(p=>!p.type||!p.scope||!p.status).length,
       promotionsTotal:promotions.length,
       qualifiedCashBundleCount,
-      japaneseAdmission:"CANDIDATE_PENDING_OWNER_APPROVED_RULE",
+      policyVersion:PDI_UNIVERSE_POLICY,
+      policyDecisions,
+      japaneseAdmission:"EXPLICIT_DELEGATED_PILOT_MODEL_ALLOWLIST",
       statusCounts},
     index:{methodologyVersion:output.methodologyVersion,
       eligibleModelCount:output.eligibleModelCount,scoredModelCount:output.scoredModelCount,
