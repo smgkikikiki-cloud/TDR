@@ -3,13 +3,10 @@ name: TDR Roadmap Contract
 # Stage-0 read-only verification. No scheduled runs, model calls, external
 # integration, database credentials, deployments, or agent dispatch.
 on:
+  # Must run on EVERY PR before being usable as a required status check.
+  # Path filters otherwise leave unrelated PRs with a permanently pending check.
   pull_request:
-    paths:
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'docs/portfolio/**'
-      - 'orchestration/**'
-      - '.github/workflows/portfolio-roadmap.yml'
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
     paths:
