@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-10-11",
+  "models": [
+    {"id":"toyota.yaris_ativ","status":"CURRENT","segment":"B","staleness_risk":0.8,"lineup_recency":0.5,"document_reuse":0.8,"business_relevance":0.9,"shared_document_available":true},
+    {"id":"byd.atto_3","status":"CURRENT","segment":"C","staleness_risk":0.5,"lineup_recency":0.8,"document_reuse":1,"business_relevance":0.9,"shared_document_available":true},
+    {"id":"honda.city_hatchback","status":"CURRENT","segment":"B","source_current_lineup_confirmed":true,"priority_cohort":"UNDERREPRESENTED","staleness_risk":0.3,"lineup_recency":0.4,"document_reuse":0.4,"business_relevance":0.7,"shared_document_available":false},
+    {"id":"legacy.example","status":"HISTORICAL"},
+    {"id":"upcoming.example","status":"UPCOMING","upcoming":true},
+    {"id":"discovered.example","status":"DISCOVERED","discovered":true}
+  ],
+  "generations": [
+    {"id":"yaris_ativ.g4","model_id":"toyota.yaris_ativ"},
+    {"id":"atto_3.g1","model_id":"byd.atto_3"},
+    {"id":"city_hb.g3","model_id":"honda.city_hatchback"},
+    {"id":"legacy.g1","model_id":"legacy.example"},
+    {"id":"upcoming.g1","model_id":"upcoming.example"},
+    {"id":"discovered.g1","model_id":"discovered.example"}
+  ],
+  "trims": [
+    {"id":"yaris.smart","model_id":"toyota.yaris_ativ","generation_id":"yaris_ativ.g4","status":"CURRENT","powertrain":"ICE","retail_verified":false},
+    {"id":"atto.extended","model_id":"byd.atto_3","generation_id":"atto_3.g1","status":"CURRENT","powertrain":"BEV","variant_id":"atto.bev","specs":{"drive_type":"FWD"}},
+    {"id":"atto.standard","model_id":"byd.atto_3","generation_id":"atto_3.g1","status":"CURRENT","powertrain":"BEV","variant_id":"atto.bev"},
+    {"id":"city.sv","model_id":"honda.city_hatchback","generation_id":"city_hb.g3","status":"CURRENT","powertrain":"ICE","retail_verified":true,"specs":{"seats":5}},
+    {"id":"legacy.old","model_id":"legacy.example","generation_id":"legacy.g1","status":"HISTORICAL","powertrain":"ICE"},
+    {"id":"upcoming.shell","model_id":"upcoming.example","generation_id":"upcoming.g1","status":"CURRENT","powertrain":"BEV"},
+    {"id":"discovered.shell","model_id":"discovered.example","generation_id":"discovered.g1","status":"CURRENT","powertrain":"BEV"}
+  ],
+  "variants": [{"id":"atto.bev","specs":{"seats":5,"battery_kwh":60.48}}],
+  "current_retail_sets": [{"model_id":"byd.atto_3","trim_ids":["atto.extended","atto.standard"],"reviewer":"owner","reviewed_at":"2026-10-01"}],
+  "facts": [
+    {"trim_id":"atto.extended","field_key":"battery_kwh","value":60.48,"value_state":"VERIFIED","locked":false},
+    {"trim_id":"city.sv","field_key":"engine_cc","value_state":"ABSENT","locked":true},
+    {"trim_id":"atto.standard","field_key":"length_mm","value_state":"UNKNOWN","locked":false}
+  ],
+  "field_registry": [
+    {"key":"length_mm","group":"dimensions","tier":"P1","applicable_powertrains":[]},
+    {"key":"seats","group":"dimensions","tier":"P1","applicable_powertrains":[]},
+    {"key":"drive_type","group":"powertrain","tier":"P1","applicable_powertrains":[]},
+    {"key":"engine_cc","group":"powertrain","tier":"P1","applicable_powertrains":["ICE","HEV","PHEV","REEV"]},
+    {"key":"battery_kwh","group":"electrification","tier":"P1","applicable_powertrains":["BEV","PHEV","REEV"]},
+    {"key":"aeb","group":"safety","tier":"P2","applicable_powertrains":[]},
+    {"key":"wheel_size","group":"wheels","tier":"P3","applicable_powertrains":[]},
+    {"key":"LIST_PRICE","group":"price","tier":"P0","owner":"PRICE_LEDGER","applicable_powertrains":[]}
+  ],
+  "registration_signals": [
+    {"model_id":"toyota.yaris_ativ","stratum":"passenger","count":29236},
+    {"model_id":"honda.city_hatchback","stratum":"passenger","count":11000},
+    {"model_id":"byd.atto_3","stratum":"bev","count":7000}
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1",
+  "autonomy": {
+    "operating_mode": "BACKFILL",
+    "execution_mode": "MOCK",
+    "source_scope": "EXISTING_CURRENT_TH_MODEL_ONLY",
+    "allow_bootstrap_shells": false,
+    "allow_upcoming": false,
+    "allow_historical_research": false,
+    "allow_external_http": false,
+    "allow_paid_ai": false,
+    "allow_paid_search": false,
+    "max_paid_model_calls": 0,
+    "max_paid_tokens": 0,
+    "max_paid_spend_thb": 0,
+    "enable_prod_writer": false,
+    "enable_cron": false
+  },
+  "research": {
+    "task_grain": "MODEL_DOCUMENT_BUNDLE",
+    "primary_source_first": true,
+    "negative_cache_days": 30,
+    "skip_unchanged_hash": true,
+    "maximum_retries": 1,
+    "p3_independent_searches_allowed": 0
+  },
+  "queue_policy": {
+    "audit_anti_starvation_slots_per_5": 1,
+    "underrepresented_cohort_field": "priority_cohort"
+  },
+  "trim_authority": {
+    "add": "PROPOSE_ONLY_IN_INITIAL_IMPLEMENTATION",
+    "discontinue": "PROPOSE_ONLY_IN_INITIAL_IMPLEMENTATION",
+    "soft_archive_only": true,
+    "protect_owner_retail_sets": true,
+    "prohibit_model_deletion": true
+  }
+}
