@@ -44,6 +44,32 @@ def validate_policy(policy: dict) -> None:
     for path in ("max_paid_tokens", "max_paid_model_calls", "max_paid_spend_thb"):
         if policy["autonomy"].get(path) != 0:
             raise ValueError(f"autonomy.{path} must remain zero in MOCK")
+    runner = policy.get("runner")
+    if not isinstance(runner, dict):
+        raise ValueError("runner policy is required")
+    for key in ("background_execution", "external_http_enabled", "paid_ai_enabled",
+                "production_database_enabled"):
+        if runner.get(key) is not False:
+            raise ValueError(f"runner.{key} must remain false")
+    if runner.get("manual_mock_steps_allowed") is not True:
+        raise ValueError("runner permits only explicitly invoked one-shot MOCK steps")
+    for key in ("manual_pause_default", "kill_switch_default"):
+        if runner.get(key) is not True:
+            raise ValueError(f"runner.{key} must fail closed by default")
+    for key, minimum, maximum in (
+        ("max_offline_requests_per_day", 1, 1000),
+        ("max_elapsed_seconds_per_day", 1, 86400),
+        ("maximum_retries_per_job", 0, 10),
+        ("lease_seconds", 1, 86400),
+        ("retry_cooldown_seconds", 1, 31536000),
+    ):
+        value = runner.get(key)
+        if type(value) is not int or not minimum <= value <= maximum:
+            raise ValueError(f"runner.{key} must be an integer from {minimum} to {maximum}")
+    for key in ("max_tokens_per_day", "max_spend_thb_per_day"):
+        value = runner.get(key)
+        if (type(value) not in {int, float} or value < 0 or value != 0):
+            raise ValueError(f"runner.{key} must remain zero for offline MOCK execution")
 
 
 def validate_fixture(snapshot: dict) -> None:

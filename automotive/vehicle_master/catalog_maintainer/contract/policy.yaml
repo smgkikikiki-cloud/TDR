@@ -65,5 +65,21 @@
       "maximum_days": 365,
       "chronology": "STRICTLY_OLDER_CAPTURE_BEFORE_CURRENT"
     }
+  },
+  "runner": {
+    "manual_mock_steps_allowed": true,
+    "manual_pause_default": true,
+    "kill_switch_default": true,
+    "background_execution": false,
+    "external_http_enabled": false,
+    "paid_ai_enabled": false,
+    "production_database_enabled": false,
+    "max_offline_requests_per_day": 6,
+    "max_tokens_per_day": 0,
+    "max_spend_thb_per_day": 0,
+    "max_elapsed_seconds_per_day": 3600,
+    "maximum_retries_per_job": 2,
+    "lease_seconds": 900,
+    "retry_cooldown_seconds": 3600
   }
 }

@@ -1,0 +1,251 @@
+{
+  "deduplicated_count": 0,
+  "dispositions": [
+    {
+      "field_key": "length_mm",
+      "idempotency_key": "a46177453e48d857a8c6eee86bbd796152c87747764e66de6cc4e4a10852fd58",
+      "queue": "SPEC_ENRICH",
+      "reason": "SNAPSHOT_FACT_CONFLICT",
+      "status": "CONFLICT",
+      "target_key": "SPEC_ENRICH:honda.city_hatchback:city.sv:length_mm",
+      "trim_id": "city.sv"
+    }
+  ],
+  "enqueued_count": 6,
+  "planner_summary": {
+    "cached_evidence_checked": true,
+    "cached_replays_planned": 0,
+    "external_http_calls": 0,
+    "negative_cache_suppressed": 0,
+    "paid_model_calls": 0,
+    "paid_spend_thb": 0,
+    "paid_tokens": 0,
+    "production_writes": 0,
+    "retrieval_planned": 6,
+    "snapshot_checked": true,
+    "unchanged_hash_suppressed": 0
+  },
+  "tasks": [
+    {
+      "idempotency_key": "9a494a9283c8de916af9de85a3b56b706d023d409547d0cbd5354faa51dda0f6",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "RETAIL_LINEUP",
+        "field_plan": {},
+        "generation_ids": [
+          "yaris_ativ.g4"
+        ],
+        "model_id": "toyota.yaris_ativ",
+        "planner_job_key": "cab643d3e36f2b482a376d3ee33ab7c4d09a79564bd43ef82241732d45eb1029",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.845,
+      "queue": "RETAIL_AUDIT",
+      "target_key": "RETAIL_AUDIT:toyota.yaris_ativ:RETAIL_LINEUP"
+    },
+    {
+      "idempotency_key": "abfaac4a4bcf458eca55646ab00169f79d1f61a5838de47e10ed458dcc6f6733",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "dimensions",
+        "field_plan": {
+          "field_keys": [
+            "length_mm"
+          ],
+          "field_keys_by_tier": {
+            "P1": [
+              "length_mm"
+            ]
+          },
+          "tiers": [
+            "P1"
+          ],
+          "trim_ids_by_field": {
+            "length_mm": [
+              "atto.extended",
+              "atto.standard"
+            ]
+          }
+        },
+        "generation_ids": [
+          "atto_3.g1"
+        ],
+        "model_id": "byd.atto_3",
+        "planner_job_key": "9fa7ef9d98cf8d7c1b0475f230fe5580deea9238f90f770c3723a8fe884f5176",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.925,
+      "queue": "SPEC_ENRICH",
+      "target_key": "SPEC_ENRICH:byd.atto_3:dimensions"
+    },
+    {
+      "idempotency_key": "a80f732770f7312ccc32078efe131cbe987184a9bb8b031f974dc67b7a251ba1",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "powertrain",
+        "field_plan": {
+          "field_keys": [
+            "drive_type"
+          ],
+          "field_keys_by_tier": {
+            "P1": [
+              "drive_type"
+            ]
+          },
+          "tiers": [
+            "P1"
+          ],
+          "trim_ids_by_field": {
+            "drive_type": [
+              "atto.standard"
+            ]
+          }
+        },
+        "generation_ids": [
+          "atto_3.g1"
+        ],
+        "model_id": "byd.atto_3",
+        "planner_job_key": "9fa7ef9d98cf8d7c1b0475f230fe5580deea9238f90f770c3723a8fe884f5176",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.925,
+      "queue": "SPEC_ENRICH",
+      "target_key": "SPEC_ENRICH:byd.atto_3:powertrain"
+    },
+    {
+      "idempotency_key": "d58a292420eda546cc4cf92f56b55b29925648bfa1ad48fa620ce5b810554792",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "safety",
+        "field_plan": {
+          "field_keys": [
+            "aeb"
+          ],
+          "field_keys_by_tier": {
+            "P2": [
+              "aeb"
+            ]
+          },
+          "tiers": [
+            "P2"
+          ],
+          "trim_ids_by_field": {
+            "aeb": [
+              "atto.extended",
+              "atto.standard"
+            ]
+          }
+        },
+        "generation_ids": [
+          "atto_3.g1"
+        ],
+        "model_id": "byd.atto_3",
+        "planner_job_key": "9fa7ef9d98cf8d7c1b0475f230fe5580deea9238f90f770c3723a8fe884f5176",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.925,
+      "queue": "SPEC_ENRICH",
+      "target_key": "SPEC_ENRICH:byd.atto_3:safety"
+    },
+    {
+      "idempotency_key": "456208e7e21df3b65b495242cf9e2bc3ac80a383754736a6ad10c472bfc2d2b1",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "powertrain",
+        "field_plan": {
+          "field_keys": [
+            "drive_type",
+            "torque_nm"
+          ],
+          "field_keys_by_tier": {
+            "P1": [
+              "drive_type"
+            ],
+            "P2": [
+              "torque_nm"
+            ]
+          },
+          "tiers": [
+            "P1",
+            "P2"
+          ],
+          "trim_ids_by_field": {
+            "drive_type": [
+              "city.sv"
+            ],
+            "torque_nm": [
+              "city.sv"
+            ]
+          }
+        },
+        "generation_ids": [
+          "city_hb.g3"
+        ],
+        "model_id": "honda.city_hatchback",
+        "planner_job_key": "002d3f07180b413ce06eb469c26c6f79378fced8beee8cb8237d287b89bc08fd",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.675,
+      "queue": "SPEC_ENRICH",
+      "target_key": "SPEC_ENRICH:honda.city_hatchback:powertrain"
+    },
+    {
+      "idempotency_key": "d6cdb18cccb0fbfe9448f4f4493b68cbc3173a15a3ed04218735eeb315d2a4ce",
+      "payload": {
+        "cached_document": null,
+        "cached_evidence_checked": true,
+        "document_first": true,
+        "field_group": "safety",
+        "field_plan": {
+          "field_keys": [
+            "aeb"
+          ],
+          "field_keys_by_tier": {
+            "P2": [
+              "aeb"
+            ]
+          },
+          "tiers": [
+            "P2"
+          ],
+          "trim_ids_by_field": {
+            "aeb": [
+              "city.sv"
+            ]
+          }
+        },
+        "generation_ids": [
+          "city_hb.g3"
+        ],
+        "model_id": "honda.city_hatchback",
+        "planner_job_key": "002d3f07180b413ce06eb469c26c6f79378fced8beee8cb8237d287b89bc08fd",
+        "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
+        "snapshot_checked": true,
+        "source_action": "PLAN_RETRIEVAL"
+      },
+      "priority": 0.675,
+      "queue": "SPEC_ENRICH",
+      "target_key": "SPEC_ENRICH:honda.city_hatchback:safety"
+    }
+  ]
+}

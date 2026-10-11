@@ -19,6 +19,18 @@ python -m automotive.vehicle_master.catalog_maintainer.cli retail-reconcile \
   --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
   --document automotive/vehicle_master/catalog_maintainer/fixtures/recorded_docs/complete-lineup.json \
   --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_retail_reconciliation.json
+python -m automotive.vehicle_master.catalog_maintainer.cli offline-plan \
+  --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
+  --db /tmp/catalog-maintainer-offline.sqlite --now-epoch 1791676800 \
+  --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_offline_run/plan.json
+python -m automotive.vehicle_master.catalog_maintainer.cli offline-step \
+  --db /tmp/catalog-maintainer-offline.sqlite \
+  --responses automotive/vehicle_master/catalog_maintainer/fixtures/offline_mock_responses.json \
+  --now-epoch 1791676800 --confirm-mock-only \
+  --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_offline_run/step.json
+python -m automotive.vehicle_master.catalog_maintainer.cli offline-report \
+  --db /tmp/catalog-maintainer-offline.sqlite \
+  --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_offline_run/report.json
 ```
 
 Reproduce the fixture output from the package directory's parent repository root using those exact commands. No credentials, optional packages, external services, or database are used. `--budget 0` returns empty queues. A positive `--budget` caps each queue independently, so a Retail Audit backlog cannot consume the Spec Enrichment allowance. The merged queue follows a finite policy-configured service cycle. Output contains `queue.csv`, `decisions.jsonl`, and `summary.json`.
@@ -32,7 +44,7 @@ Reproduce the fixture output from the package directory's parent repository root
 - RY1 and RY3 are selected through each model's declared registration profile, normalized within compatible strata and periods, and never summed together or with `*` aggregate rows. Registration contributes only to Retail Audit ranking and is never evidence.
 - Job keys hash only the model's relevant identity/scope, document hashes, or field-gap bundle. An unrelated model/fact update does not regenerate every job.
 
-`contract/SPEC.md` records the proposed V3 §4 permission amendment. It is not adopted policy and this package has no writer, scheduler, HTTP client, or model-provider dependency.
+`contract/SPEC.md` records the proposed V3 §4 permission amendment. It is not adopted policy. The runner has no canonical writer, autonomous/background scheduler, HTTP client, or external/paid provider dependency.
 
 ## Chunk 2 — offline evidence replay
 
@@ -59,3 +71,13 @@ The proposed minimum negative-lineup evidence interval is policy data in `contra
 ### Chunk 3 correction record — QA pending
 
 Corrected all six QA findings. Added adversarial regressions for previous-positive plus one-negative, independent negative editions from one publisher, reverse chronology, content-bound capture provenance, generation/model-year/facelift scope, forged model metadata, page-count mismatch, production-vs-retail end, and policy interval validation. Carried-forward regressions prove an eligible official Thai source reduces one genuinely missing P1 gap, mixed fact states are order-independent, and qualifier review remains unresolved. Sample simulator, evidence replay, and retail reconciliation outputs were regenerated. The implementation remains offline, deterministic, proposal-only, and zero-write. Full GitHub Actions status is pending for this correction commit; Chunk 4 has not started.
+
+## Chunk 4 — bounded planner and persistent OFFLINE runner
+
+The `offline-plan`, `offline-step`, and `offline-report` commands use a local SQLite journal only. Planning validates the normalized snapshot and policy, checks the snapshot and local evidence/negative caches first, then creates scoped idempotent tasks with a relevant policy revision. RETAIL_AUDIT and SPEC_ENRICH remain separate and use the validated finite service cycle. Leases, attempt counts, checkpoints, retry cooldowns, terminal stop states, measured daily usage, negative caching, and unchanged content-hash suppression survive process restarts. Each manual step requires explicit `--confirm-mock-only` acknowledgment, consumes one canned response, then re-engages both pause and kill switches. No worker loop, cron, HTTP, paid service, Production database, or canonical writer exists.
+
+`fixtures/sample_offline_run/` is generated from a fixed fake epoch and local `SOURCE_EXHAUSTED` canned response. Structural interval policy remains `PENDING_OWNER_APPROVAL`; it is independent from research negative-cache cooldown.
+
+### Chunk 4 completion record — QA pending
+
+SQLite interruption/restart, stale lease ownership, duplicate job/evidence identity, multi-day budget reset and negative-cache expiry, terminal source states, request/token/spend/time limits, queue fairness, and fail-closed pause/kill are exercised with fake time and a canned in-memory provider. Focused suite: 73 tests pass from repository root and `automotive/vehicle_master/`. The sample reports 0 external HTTP, paid calls/tokens/spend, Production database accesses/writes, canonical writes, and background workers. Full GitHub Actions status is pending on this commit. This records implementation only; stop for QA and do not begin Chunk 5.
