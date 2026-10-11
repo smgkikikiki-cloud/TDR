@@ -6,60 +6,142 @@
 - Status mix (adapter): {'settled': 495, 'unmapped_name': 591, 'provisional': 114}. Policy v2 `sha256:1fc33a12b2f81c3e…`. TDR side: **323 models / 62 brands from vehreg/data/2026/models/*.json (repo file catalog, verified identical to the live Vehicle Master on 2026-10-11 by a read-only SELECT)**.
 - Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (worst case): every group is offered to Bootstrap as `NO_CANDIDATE`.
 
-## 0. Milestone 3 — calibration and false-CREATE reduction (before / after)
+## 0. Post-PR-#200-rev-4 rerun (relations consumed from the pinned export, not re-implemented)
 
-Baseline = the frozen milestone-2 run (shadow/baseline_m2/decisions.csv (milestone 2: policy v1, same package, same TDR catalog)). After = policy v2, same package, TDR side = the live Vehicle Master (323 models, verified identical to the repo file snapshot by read-only SELECT). **Volume never decides an outcome; it is shown for information.**
+- PR #200 commit `1f73aee1834697cbd439291d0074293c30446e5b` (`rev4`); source blobs sha256 {'after_rev4.json': '42ceac6cfcd08c87e6d5807a7f5cca7d9335b4746ff74626449a6711b5fcb012', 'before_rev3.json': '336edc58d2312e34c58afa7631519db47c6b13e363fd84cd355eecb165b436a7', 'comparison.json': '28cb837e14678efb584455e549010b82edf86602fab11116ed95eb8d857dd79d'}. Policy keys in force there: {'distinctive_token_required_for': ['SIBLING'], 'fuzzy_token': {'allow_tokens_with_digits': False, 'enabled': True, 'min_token_length': 6}, 'model_aliases': ['maxus_mifa', 'honda_model_synonyms']}.
+- The stand-in supplies only the pair population and the relations rev 4 did not touch; every FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS verdict comes from the export. Same engine, policy v2, package and TDR universe as milestone 3.
+- Baseline: shadow/baseline_m3 (milestone 3: policy v2, stand-in relations, same package and TDR universe).
 
-### 0.1 Counts and volume
+### 0.1 Counts (before = milestone 3)
 
-| Mode | Outcome | Before (groups) | After (groups) | Units all time (after) | Units last 12 m (after) |
+| Mode | Outcome | Before | After | Units all time (after, info) | Units last 12 m (after, info) |
 |---|---|---|---|---|---|
-| A | CREATE_IDENTITY | 78 | 67 | 46,816 | 10,272 |
-| A | IDENTITY_REVIEW | 94 | 89 | 74,228 | 23,378 |
-| A | HOLD | 1028 | 1044 | 4,020,943 | 655,779 |
-| B | CREATE_IDENTITY | 78 | 67 | 46,816 | 10,272 |
-| B | IDENTITY_REVIEW | 385 | 380 | 4,073,468 | 675,732 |
-| B | HOLD | 737 | 753 | 21,703 | 3,425 |
+| A | CREATE_IDENTITY | 67 | 73 | 35,090 | 11,719 |
+| A | IDENTITY_REVIEW | 89 | 89 | 103,139 | 24,729 |
+| A | HOLD | 1044 | 1038 | 4,003,758 | 652,981 |
+| B | CREATE_IDENTITY | 67 | 72 | 34,156 | 11,021 |
+| B | IDENTITY_REVIEW | 380 | 375 | 4,086,128 | 674,983 |
+| B | HOLD | 753 | 753 | 21,703 | 3,425 |
 
-**Mode A transition matrix (before → after):** CREATE_IDENTITY -> CREATE_IDENTITY 67; CREATE_IDENTITY -> HOLD 7; CREATE_IDENTITY -> IDENTITY_REVIEW 4; HOLD -> HOLD 1028; IDENTITY_REVIEW -> HOLD 9; IDENTITY_REVIEW -> IDENTITY_REVIEW 85. CREATEs added: **0**. Groups whose outcome or primary reason changed: 20.
+**Mode A transitions:** CREATE_IDENTITY -> CREATE_IDENTITY 64; CREATE_IDENTITY -> HOLD 1; CREATE_IDENTITY -> IDENTITY_REVIEW 2; HOLD -> CREATE_IDENTITY 3; HOLD -> HOLD 1037; HOLD -> IDENTITY_REVIEW 4; IDENTITY_REVIEW -> CREATE_IDENTITY 6; IDENTITY_REVIEW -> IDENTITY_REVIEW 83. CREATE added ['maxus-maxus-v80', 'maxus-mifa-7', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; CREATE removed ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz'].
 
-**Mode B transition matrix (before → after):** CREATE_IDENTITY -> CREATE_IDENTITY 67; CREATE_IDENTITY -> HOLD 7; CREATE_IDENTITY -> IDENTITY_REVIEW 4; HOLD -> HOLD 737; IDENTITY_REVIEW -> HOLD 9; IDENTITY_REVIEW -> IDENTITY_REVIEW 376. CREATEs added: **0**. Groups whose outcome or primary reason changed: 20.
+**Mode B transitions:** CREATE_IDENTITY -> CREATE_IDENTITY 64; CREATE_IDENTITY -> IDENTITY_REVIEW 3; HOLD -> HOLD 753; IDENTITY_REVIEW -> CREATE_IDENTITY 8; IDENTITY_REVIEW -> IDENTITY_REVIEW 372. CREATE added ['maxus-maxus-v80', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; CREATE removed ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz'].
 
-### 0.2 Effect of the fuller Vehicle Master universe
+**CREATE set: 73** (added vs milestone 3: ['maxus-maxus-v80', 'maxus-mifa-7', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; removed: ['honda-honda-fit', 'honda-honda-stepwagon', 'honda-jazz']; unchanged 64). Worst-case mode B creates a subset of mode A: **True**; in A but not B: ['maxus-mifa-7'] (a sibling that the resolver stand-in diverted in A forms no batch conflict there).
 
-the live Vehicle Master is identical to the snapshot on every identity-bearing field; the only difference is that all 323 slugs are now reserved in the collision check. CREATEs removed because the full universe already contained them: **0**; added: 0. Live vs file snapshot: model ids equal = True; brand/en-name/alias differences = 0; historical ids ['audi.etron', 'bmw.i3', 'byd.seagull', 'gwm.ora_03', 'gwm.ora_good_cat']. Not available in this schema: DISCOVERED/pending identities, UNVERIFIED state, deleted/withdrawn ids (the live Vehicle Master has no such columns/rows — see `shadow/universe/vehicle_master_live_2026-10-11.json`). Historical: 5 ids included. **The full Vehicle Master did not materially reduce CREATE (0 of 78 baseline CREATEs).**
+### 0.2 Per-subject decision transitions (any mode; first 60 by units)
 
-### 0.3 CREATEs removed, by rule (single-rule ablation: switch only that rule off)
+| Group | Name | Status | Units (info) | A before | A after | B before | B after |
+|---|---|---|---|---|---|---|---|
+| honda-hr-v | HR-V | settled | 105452 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda2 | Mazda2 | settled | 61313 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| honda-cr-v | CR-V | settled | 38413 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mg-mg4-ev | MG4 EV | settled | 29161 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda-cx-30 | Mazda CX-30 | settled | 22782 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda-cx-3 | Mazda CX-3 | settled | 14905 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| honda-jazz | Jazz | settled | 13790 | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| mg-mg-s5-ev | MG S5 EV | settled | 13675 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| ford-ford-ranger-raptor | Ford Ranger Raptor | settled | 12839 | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| changan-deepal-s05 | Deepal S05 | settled | 11983 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| changan-deepal-s07 | Deepal S07 | settled | 11650 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda3 | Mazda3 | settled | 6613 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda-cx-8 | Mazda CX-8 | settled | 4823 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda-cx-5 | Mazda CX-5 | settled | 4168 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| honda-br-v | BR-V | settled | 4130 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| honda-wr-v | WR-V | settled | 3688 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mercedes-benz-mercedes-benz-c350 | Mercedes-Benz C350 | settled | 2549 | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS |
+| mg-mg-urban-ev | MG Urban EV | settled | 2473 | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR |
+| volvo-volvo-xc60 | Volvo XC60 | settled | 2432 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| volvo-volvo-ex30 | Volvo EX30 | settled | 1689 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| changan-deepal-l07 | Deepal L07 | settled | 1512 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| toyota-land-cruiser-fj | Land Cruiser FJ | settled | 1472 | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| honda-step-wgn | Step WGN | settled | 1288 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| wuling-air-ev-aira-ev | Air ev / Aira ev | settled | 1177 | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR |
+| mini-mini-aceman-ev | Mini Aceman EV | settled | 1057 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR |
+| bmw-bmw-430i | BMW 430i | settled | 1044 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| volvo-volvo-xc90 | Volvo XC90 | settled | 993 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| peugeot-peugeot-3008 | Peugeot 3008 | settled | 939 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| maxus-mifa-7 | Mifa 7 | settled | 934 | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| bmw-bmw-630i | BMW 630I | settled | 802 | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE |
+| mazda-mazda6e | Mazda6e | settled | 604 | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED |
+| peugeot-peugeot-2008 | Peugeot 2008 | settled | 566 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mercedes-benz-mercedes-benz-amg-c | Mercedes-Benz AMG C | settled | 550 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| lexus-lexus-es300h | Lexus ES300H | settled | 332 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| peugeot-peugeot-5008 | Peugeot 5008 | settled | 316 | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED |
+| lexus-lexus-is300h | Lexus IS300H | settled | 295 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| changan-deepal-e07 | Deepal E07 | settled | 289 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mercedes-benz-mercedes-benz-amg-g63 | Mercedes-Benz AMG G63 | settled | 209 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| wuling-wuling-porta-ev | Wuling Porta EV | settled | 184 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| lexus-lexus-rz450e | Lexus RZ450E | settled | 151 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE |
+| toyota-gr-yaris | GR Yaris | settled | 149 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| volvo-volvo-es90 | Volvo ES90 | settled | 145 | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED |
+| maxus-maxus-v80 | Maxus V80 | settled | 135 | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED |
+| audi-audi-rs-4 | AUDI RS 4 | settled | 103 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| toyota-gr-supra | GR Supra | settled | 97 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| bmw-bmw-420i | BMW 420I | settled | 95 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| audi-audi-rs-5 | AUDI RS 5 | settled | 94 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| volvo-volvo-ex90 | Volvo EX90 | settled | 88 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| audi-audi-rs-q3 | AUDI RS Q3 | settled | 81 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| mazda-mazda-mx-5 | Mazda MX-5 | settled | 81 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| honda-honda-stepwagon | Honda Stepwagon | settled | 73 | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| mercedes-benz-mercedes-benz-c250 | Mercedes-Benz C250 | settled | 61 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| toyota-gr-corolla | GR Corolla | settled | 45 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |
+| audi-audi-rs-6 | AUDI RS 6 | settled | 44 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR |
+| bmw-bmw-330i | BMW 330i | settled | 39 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| changan-deepal-hunter | Deepal Hunter | settled | 33 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| mazda-mazda6 | Mazda6 | settled | 29 | HOLD / NOT_ACTIVATED | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED |
+| lexus-lexus-rz350e | Lexus RZ350E | settled | 27 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE |
+| toyota-toyota-d-cab | Toyota D-CAB | settled | 25 | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / POSSIBLE_BODY_VARIANT | IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED | IDENTITY_REVIEW / POSSIBLE_BODY_VARIANT |
+| audi-audi-rs-3 | AUDI RS 3 | settled | 22 | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR |
 
-| Rule | Groups changed (any outcome/code) | CREATE → not CREATE | New REVIEW | New HOLD | Became CREATE |
+74 groups changed in total (full list: `transitions_vs_m3.csv`).
+
+### 0.3 Structural conflicts
+
+| Mode | Before | After | Left the set | Entered the set |
+|---|---|---|---|---|
+| A | 24 | 9 | 17 | 2: honda-honda-fit, honda-jazz |
+| B | 105 | 48 | 61 | 4: honda-honda-fit, honda-honda-stepwagon, honda-jazz, honda-step-wgn |
+
+### 0.4 Newly exposed CREATE-risk cases
+
+| Group | Name | Before (M3) | A after | B after | Relation changes that exposed it |
 |---|---|---|---|---|---|
-| R1_hyphenated_code | 16 | hino-hino-fg8jj1a-jjt, hino-hino-fg8jj3a-acdmh, hino-hino-fm1an1d-sht, hino-hino-fm2pn1d-xht, hino-hino-fm8jn1d-sgt, hino-hino-fm8jn3d-cddmh, toyota-toyota-kun51r-nkpsyt | none | 16 | none |
-| R2_glued_powertrain_suffix | 5 | jac-jac-t8ev | jac-jac-t8ev | 0 | none |
-| R4_displacement_trim_code | 50 | mclaren-mclaren-750s | mclaren-mclaren-750s | 0 | none |
-| YEAR_range_and_context | 0 | none | none | 0 | none |
-| TRUNCATION_soft_signal | 8 | chery-chery-q, jeep-jeep-grand | chery-chery-q, jeep-jeep-grand | 0 | none |
-| SUB_BRAND_guard | 0 | none | none | 0 | none |
-| BRAND_FAMILY | 0 | none | none | 0 | none |
+| maxus-maxus-v80 | Maxus V80 | A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED | CREATE_IDENTITY | CREATE_IDENTITY | mg.mg_maxus_7: SIBLING -> none; mg.mg_maxus_9: SIBLING -> none |
+| maxus-mifa-7 | Mifa 7 | A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | IDENTITY_REVIEW | mg.mg_maxus_7: SIBLING -> none; mg.mg_maxus_9: SIBLING -> none |
+| mazda-mazda-mx-30 | Mazda MX-30 | A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | mazda-mazda-mx-5: SIBLING -> none; mazda.cx30: SIBLING -> none; mazda.mx_5: SIBLING -> none |
+| mazda-mazda6e | Mazda6e | A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | mazda.mazda6: FUZZY -> none |
+| nissan-nissan-be-1 | Nissan BE-1 | A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED | CREATE_IDENTITY | CREATE_IDENTITY | nissan.sylphy: SIBLING -> none |
+| peugeot-peugeot-5008 | Peugeot 5008 | A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | peugeot.peugeot_2008: FUZZY -> none; peugeot.peugeot_3008: FUZZY -> none |
+| volkswagen-volkswagen-t-roc | Volkswagen T-ROC | A IDENTITY_REVIEW/STRUCTURAL_CONFLICT; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | volkswagen-vw-t-cross: SIBLING -> none |
+| volkswagen-vw-t-cross | VW T-Cross | A IDENTITY_REVIEW/STRUCTURAL_CONFLICT; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | none (batch effect) |
+| volvo-volvo-es90 | Volvo ES90 | A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT | CREATE_IDENTITY | CREATE_IDENTITY | volvo-volvo-ex90: FUZZY -> none; volvo.ex90: FUZZY -> none |
 
-Notes: `SUB_BRAND_guard`: measured with a NAIVE adapter that offers every catalog alias (sub-brands included) as a spelling. `BRAND_FAMILY`: family input withheld in the 'off' run. `SUB_BRAND_guard` and `BRAND_FAMILY` change nothing in this run because the stand-in resolver already filters sub-brand aliases and pools Changan/Deepal; they are pinned by corpus cases, not by this run. `YEAR_range_and_context` changes no M7 group (no M7 name was misread as a year in the base run either); it is pinned by the Peugeot 2008 / lone-year cases.
+### 0.5 The 177 NO_CANDIDATE groups PR #200 released from structural conflict (3,308 lifetime units, info)
 
-Removed CREATEs and the rule responsible: {'chery-chery-q': ['TRUNCATION_soft_signal'], 'hino-hino-fg8jj1a-jjt': ['R1_hyphenated_code'], 'hino-hino-fg8jj3a-acdmh': ['R1_hyphenated_code'], 'hino-hino-fm1an1d-sht': ['R1_hyphenated_code'], 'hino-hino-fm2pn1d-xht': ['R1_hyphenated_code'], 'hino-hino-fm8jn1d-sgt': ['R1_hyphenated_code'], 'hino-hino-fm8jn3d-cddmh': ['R1_hyphenated_code'], 'jac-jac-t8ev': ['R2_glued_powertrain_suffix'], 'jeep-jeep-grand': ['TRUNCATION_soft_signal'], 'mclaren-mclaren-750s': ['R4_displacement_trim_code'], 'toyota-toyota-kun51r-nkpsyt': ['R1_hyphenated_code']}
+Present in this run: 177; identity status {'unmapped_name': 115, 'provisional': 30, 'settled': 32}. **Not all are Bootstrap candidates**: unsettled raw ids (`BRAND|MODEL`) and provisional ids are HOLD by contract.
 
-### 0.4 New REVIEWs (CREATE → REVIEW) and HOLD moves
+| Mode | Outcomes before (M3) | Outcomes after | Primary reasons after | CREATE |
+|---|---|---|---|---|
+| A | {'HOLD': 165, 'CREATE_IDENTITY': 2, 'IDENTITY_REVIEW': 10} | {'HOLD': 163, 'CREATE_IDENTITY': 7, 'IDENTITY_REVIEW': 7} | {'PROVIDER_RAW_NAME': 129, 'PROVIDER_IDENTITY_PROVISIONAL': 30, 'NEW_IDENTITY_CONFIRMED': 7, 'NOT_ACTIVATED': 4, 'POSSIBLE_MODEL_CODE': 4, 'BRAND_NOT_IN_TDR': 1, 'PROVIDER_LINEAGE_AMBIGUOUS': 1, 'POSSIBLE_BODY_VARIANT': 1} | ['honda-honda-n-box', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volkswagen-vw-tiguan'] |
+| B | {'HOLD': 159, 'CREATE_IDENTITY': 2, 'IDENTITY_REVIEW': 16} | {'HOLD': 159, 'CREATE_IDENTITY': 7, 'IDENTITY_REVIEW': 11} | {'PROVIDER_RAW_NAME': 129, 'PROVIDER_IDENTITY_PROVISIONAL': 30, 'NEW_IDENTITY_CONFIRMED': 7, 'DUPLICATE_CANONICAL_SUSPECTED': 4, 'POSSIBLE_MODEL_CODE': 4, 'BRAND_NOT_IN_TDR': 1, 'PROVIDER_LINEAGE_AMBIGUOUS': 1, 'POSSIBLE_BODY_VARIANT': 1} | ['honda-honda-n-box', 'mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volkswagen-vw-tiguan'] |
 
-CREATE → REVIEW: ['chery-chery-q', 'jac-jac-t8ev', 'jeep-jeep-grand', 'mclaren-mclaren-750s']. REVIEW → HOLD (R1: the same registration-code names are now caught earlier as raw codes): 9 groups ['hino-hino-xzu600r-hkmqlt3', 'hino-hino-xzu600r-wkmlst3', 'hino-hino-xzu600r-wktlst3', 'hino-hino-xzu720r-wkftst3', 'jiayuan-jiayuan-jy1320-zlh', 'jiayuan-jiayuan-jy7222-zqr', 'toyota-toyota-gun122r-btflxt', 'toyota-toyota-kdh222r-lemdyt', 'toyota-toyota-kdh223r-lemdyt'].
+### 0.6 Relation parity with the pinned export
 
-### 0.5 Remaining CREATEs by activity (informational)
+| Population | Exported pairs | Missing / relabelled | FUZZY/SIBLING not in export | Corrected kinds [stand-in, IR] | Unchanged kinds [stand-in, IR] |
+|---|---|---|---|---|---|
+| ice_ice | 316 | 0 | 0 | {'FUZZY': [7, 7], 'SIBLING': [307, 307], 'EQUAL_VIA_MODEL_ALIAS': [2, 2]} | {'EQUAL': [4, 4], 'EQUAL_VIA_TOKEN_EQUIV': [0, 1], 'SUBJECT_COARSER': [78, 78], 'SUBJECT_FINER': [40, 40]} |
+| ice_tdr | 58 | 0 | 0 | {'FUZZY': [2, 2], 'SIBLING': [55, 55], 'EQUAL_VIA_MODEL_ALIAS': [1, 1]} | {'EQUAL': [299, 239], 'EQUAL_VIA_TOKEN_EQUIV': [1, 1], 'SUBJECT_COARSER': [46, 58], 'SUBJECT_FINER': [45, 35]} |
 
-| Class | Groups | Lifetime units | Last 12 m units |
-|---|---|---|---|
-| DORMANT_LEGACY | 59 | 33,882 | 173 |
-| RECENT_DISCOVERY | 3 | 11,695 | 9,859 |
-| ACTIVE_ESTABLISHED | 5 | 1,239 | 240 |
+Stand-in relation of an unchanged kind overridden by IR's verdict (IR is the authority; a stand-in/IR population disagreement, not a rev 4 rule): ice×ice 0, ice×tdr 7 — ['ford-ford-ranger-raptor|ford.ranger_cab: stand-in SUBJECT_FINER -> IR SIBLING', 'ford-ford-ranger-raptor|ford.ranger_double_cab: stand-in EQUAL -> IR SIBLING', 'gwm-ora-07|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING', 'gwm-ora-5|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-corolla-cross|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-gr-corolla|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING', 'toyota-land-cruiser-fj|toyota.land_cruiser_300: stand-in SUBJECT_FINER -> IR SIBLING']
 
-Recent discoveries (class RECENT_DISCOVERY): ['jaecoo-jaecoo-j6', 'zeekr-zeekr-7x', 'foton-eview']. DORMANT_LEGACY = ≤10 registrations in the last 12 months; RECENT_DISCOVERY = more than that and first seen on or after 2567-10; ACTIVE_ESTABLISHED = the rest. These are shown separately from genuinely recent discoveries and never alter a decision.
+### 0.7 Market-activity routing of the CREATE candidates (routing only; absent rows UNKNOWN)
 
-Owner adjudication artifact: `shadow/review/create_adjudication.csv` — one row per remaining CREATE, `owner_label` blank. The analyst column is a note, not ground truth.
+**Actual:** states {'UNKNOWN': 63, 'ACTIVE': 9, 'DECLINING': 1}; lanes {'ACTIVITY_UNCLASSIFIED': 63, 'CURRENT_DISCOVERY': 10}. **What-if (NOT AUTHORITATIVE, assumes ABSENT_IS_ZERO):** states {'DECLINING': 7, 'ACTIVE': 9, 'UNKNOWN': 34, 'INACTIVE_INFERRED': 23}; lanes {'CURRENT_DISCOVERY': 16, 'ACTIVITY_UNCLASSIFIED': 34, 'HISTORICAL_INACTIVE': 23}.
+
+Informational activity classes of the CREATE set: RECENT_DISCOVERY 6; DORMANT_LEGACY 62; ACTIVE_ESTABLISHED 5. Age or low volume never decides an outcome; dormant legacy models are valid HISTORICAL_BACKFILL candidates, not false CREATEs.
+
+Provisional owner-adjudication set: `shadow/review/create_adjudication.csv` (owner fields blank; QA pending).
 
 ## 1. Decisions and registration-volume coverage (informational)
 
@@ -67,19 +149,19 @@ Owner adjudication artifact: `shadow/review/create_adjudication.csv` — one row
 
 | Outcome | Groups | Units (all time) | Share | Units (last 12 m) | Share |
 |---|---|---|---|---|---|
-| CREATE_IDENTITY | 67 | 46,816 | 1.13% | 10,272 | 1.49% |
-| IDENTITY_REVIEW | 89 | 74,228 | 1.79% | 23,378 | 3.39% |
-| HOLD | 1044 | 4,020,943 | 97.08% | 655,779 | 95.12% |
+| CREATE_IDENTITY | 73 | 35,090 | 0.85% | 11,719 | 1.7% |
+| IDENTITY_REVIEW | 89 | 103,139 | 2.49% | 24,729 | 3.59% |
+| HOLD | 1038 | 4,003,758 | 96.66% | 652,981 | 94.71% |
 
 **Mode B**
 
 | Outcome | Groups | Units (all time) | Share | Units (last 12 m) | Share |
 |---|---|---|---|---|---|
-| CREATE_IDENTITY | 67 | 46,816 | 1.13% | 10,272 | 1.49% |
-| IDENTITY_REVIEW | 380 | 4,073,468 | 98.35% | 675,732 | 98.01% |
+| CREATE_IDENTITY | 72 | 34,156 | 0.82% | 11,021 | 1.6% |
+| IDENTITY_REVIEW | 375 | 4,086,128 | 98.65% | 674,983 | 97.9% |
 | HOLD | 753 | 21,703 | 0.52% | 3,425 | 0.5% |
 
-CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; writes executed: **0**.
+CREATE sets identical in A and B: **False**. Write plans produced: A 73, B 72; writes executed: **0**.
 
 ## 2. Top REVIEW / HOLD causes
 
@@ -88,22 +170,22 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; wr
 | Primary reason | Groups | Units (all time) |
 |---|---|---|
 | BRAND_NOT_IN_TDR | 35 | 1,132 |
-| STRUCTURAL_CONFLICT | 20 | 9,620 |
+| PROVIDER_FINER_THAN_TDR | 11 | 17,948 |
 | PROVIDER_COARSER_THAN_TDR | 10 | 6,845 |
-| EXISTING_IDENTITY_SUSPECTED | 9 | 41,800 |
-| PROVIDER_FINER_THAN_TDR | 5 | 14,016 |
-| POSSIBLE_MODEL_CODE | 4 | 67 |
+| POSSIBLE_MODEL_CODE | 10 | 1,056 |
+| STRUCTURAL_CONFLICT | 8 | 21,255 |
+| EXISTING_IDENTITY_SUSPECTED | 6 | 51,559 |
+| PROVIDER_LINEAGE_AMBIGUOUS | 4 | 2,981 |
 | POSSIBLE_TRUNCATED_NAME | 2 | 335 |
-| PROVIDER_LINEAGE_AMBIGUOUS | 2 | 410 |
-| POSSIBLE_BODY_VARIANT | 1 | 1 |
+| POSSIBLE_BODY_VARIANT | 2 | 26 |
 | POSSIBLE_POWERTRAIN_DERIVATIVE | 1 | 2 |
 
 **Mode A — HOLD, by primary reason**
 
 | Primary reason | Groups | Units (all time) |
 |---|---|---|
-| PROVIDER_RAW_NAME | 627 | 19,509 |
-| NOT_ACTIVATED | 301 | 3,999,268 |
+| PROVIDER_RAW_NAME | 628 | 19,510 |
+| NOT_ACTIVATED | 294 | 3,982,082 |
 | PROVIDER_IDENTITY_PROVISIONAL | 114 | 309 |
 | LINEAGE_UNRESOLVED | 2 | 1,857 |
 
@@ -111,16 +193,15 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; wr
 
 | Primary reason | Groups | Units (all time) |
 |---|---|---|
-| DUPLICATE_CANONICAL_SUSPECTED | 218 | 2,252,501 |
-| STRUCTURAL_CONFLICT | 101 | 1,799,472 |
+| DUPLICATE_CANONICAL_SUSPECTED | 256 | 2,595,194 |
+| STRUCTURAL_CONFLICT | 46 | 1,461,240 |
 | BRAND_NOT_IN_TDR | 35 | 1,132 |
 | PROVIDER_COARSER_THAN_TDR | 10 | 6,845 |
-| PROVIDER_FINER_THAN_TDR | 4 | 12,544 |
-| POSSIBLE_MODEL_CODE | 3 | 65 |
-| EXISTING_IDENTITY_SUSPECTED | 3 | 161 |
+| POSSIBLE_MODEL_CODE | 10 | 1,056 |
+| PROVIDER_FINER_THAN_TDR | 9 | 17,317 |
+| PROVIDER_LINEAGE_AMBIGUOUS | 4 | 2,981 |
 | POSSIBLE_TRUNCATED_NAME | 2 | 335 |
-| PROVIDER_LINEAGE_AMBIGUOUS | 2 | 410 |
-| POSSIBLE_BODY_VARIANT | 1 | 1 |
+| POSSIBLE_BODY_VARIANT | 2 | 26 |
 | POSSIBLE_POWERTRAIN_DERIVATIVE | 1 | 2 |
 
 **Mode B — HOLD, by primary reason**
@@ -135,28 +216,32 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; wr
 
 | Outcome | Codes (count) |
 |---|---|
-| IDENTITY_REVIEW | BRAND_NOT_IN_TDR 35, STRUCTURAL_CONFLICT 22, EXISTING_IDENTITY_SUSPECTED 19, PROVIDER_FINER_THAN_TDR 17, PROVIDER_COARSER_THAN_TDR 10, POSSIBLE_MODEL_CODE 9, DUPLICATE_CANONICAL_SUSPECTED 8, POSSIBLE_TRUNCATED_NAME 8, POSSIBLE_TRIM_NOT_MODEL 6, POSSIBLE_POWERTRAIN_DERIVATIVE 6, PROVIDER_LINEAGE_AMBIGUOUS 6, POSSIBLE_BODY_VARIANT 2, POSSIBLE_GENERATION_VARIANT 1 |
-| HOLD | PROVIDER_RAW_NAME 628, NOT_ACTIVATED 301, BRAND_NOT_IN_TDR 197, POSSIBLE_POWERTRAIN_DERIVATIVE 127, POSSIBLE_MODEL_CODE 122, PROVIDER_IDENTITY_PROVISIONAL 114, POSSIBLE_BODY_VARIANT 82, EXISTING_IDENTITY_SUSPECTED 80, POSSIBLE_TRIM_NOT_MODEL 47, NAME_UNSPECIFIED 39, PROVIDER_FINER_THAN_TDR 24, LINEAGE_UNRESOLVED 2, STRUCTURAL_CONFLICT 2, PROVIDER_LINEAGE_AMBIGUOUS 2 |
+| IDENTITY_REVIEW | BRAND_NOT_IN_TDR 35, PROVIDER_FINER_THAN_TDR 13, POSSIBLE_MODEL_CODE 12, PROVIDER_COARSER_THAN_TDR 10, EXISTING_IDENTITY_SUSPECTED 9, POSSIBLE_TRUNCATED_NAME 8, STRUCTURAL_CONFLICT 8, PROVIDER_LINEAGE_AMBIGUOUS 7, POSSIBLE_TRIM_NOT_MODEL 6, POSSIBLE_POWERTRAIN_DERIVATIVE 6, DUPLICATE_CANONICAL_SUSPECTED 4, POSSIBLE_BODY_VARIANT 2, POSSIBLE_GENERATION_VARIANT 1 |
+| HOLD | PROVIDER_RAW_NAME 629, NOT_ACTIVATED 294, BRAND_NOT_IN_TDR 197, POSSIBLE_POWERTRAIN_DERIVATIVE 127, POSSIBLE_MODEL_CODE 122, PROVIDER_IDENTITY_PROVISIONAL 114, POSSIBLE_BODY_VARIANT 82, POSSIBLE_TRIM_NOT_MODEL 47, NAME_UNSPECIFIED 39, PROVIDER_FINER_THAN_TDR 24, EXISTING_IDENTITY_SUSPECTED 4, LINEAGE_UNRESOLVED 2, PROVIDER_LINEAGE_AMBIGUOUS 2, STRUCTURAL_CONFLICT 1 |
 
 ## 3. CREATE candidates (mode A; every one is a plan, none was executed)
 
 | Group | Name | → canonical id | Units | Last 12 m | First seen | Flags | Analyst |
 |---|---|---|---|---|---|---|---|
-| honda-jazz | Jazz | honda.jazz | 13,790 | 5 | 2564-01 | DORMANT | SUSPECT_ALIAS: Jazz and Fit are one car; honda-fit is also a CREATE (a model-synonym table is missing) |
 | jaecoo-jaecoo-j6 | Jaecoo J6 | jaecoo.j6 | 8,659 | 6848 | 2567-12 | RECENT | - |
 | toyota-vios | Vios | toyota.vios | 6,647 | 8 | 2564-01 | DORMANT | - |
 | nissan-nissan-march | Nissan March | nissan.march | 4,000 | 2 | 2564-01 | DORMANT | - |
 | nissan-note | Nissan Note | nissan.note | 3,667 | 2 | 2564-01 | DORMANT | - |
 | zeekr-zeekr-7x | Zeekr 7X | zeekr.7x | 2,892 | 2867 | 2568-09 | RECENT | - |
 | toyota-toyota-sienta | Toyota Sienta | toyota.sienta | 2,645 | 6 | 2564-01 | DORMANT | - |
+| maxus-mifa-7 | Mifa 7 | mg.mifa_7 | 934 | 698 | 2567-11 | RECENT | - |
 | bmw-bmw-m3 | BMW M3 | bmw.m3 | 639 | 117 | 2564-05 | - | SUSPECT_VARIANT: performance variant of 3 Series; owner decision whether TDR models M cars separately |
+| mazda-mazda6e | Mazda6e | mazda.mazda6e | 604 | 604 | 2569-07 | RECENT | - |
 | nissan-urvan | Nissan Urvan | nissan.urvan | 550 | 0 | 2564-01 | DORMANT | - |
 | volt-volt-volt | VOLT Volt | volt.volt | 484 | 9 | 2566-06 | DORMANT | - |
+| peugeot-peugeot-5008 | Peugeot 5008 | peugeot.5008 | 316 | 4 | 2564-01 | DORMANT | - |
 | bmw-bmw-m2 | BMW M2 | bmw.m2 | 300 | 69 | 2564-01 | - | SUSPECT_VARIANT: performance variant of 2 Series; owner decision whether TDR models M cars separately |
 | toyota-toyota-tr | Toyota TR | toyota.tr | 250 | 6 | 2564-01 | DORMANT | SUSPECT_TRUNCATED: two-letter name; unclear nameplate |
 | nissan-leaf | Leaf | nissan.leaf | 237 | 4 | 2564-01 | DORMANT | - |
 | bmw-bmw-m4 | BMW M4 | bmw.m4 | 147 | 32 | 2564-01 | - | SUSPECT_VARIANT: performance variant of 4 Series; owner decision whether TDR models M cars separately |
+| volvo-volvo-es90 | Volvo ES90 | volvo.es90 | 145 | 145 | 2569-03 | RECENT | - |
 | foton-eview | Foton eView | foton.eview | 144 | 144 | 2569-08 | RECENT | - |
+| maxus-maxus-v80 | Maxus V80 | mg.maxus_v80 | 135 | 1 | 2564-01 | DORMANT | - |
 | bentley-bentley-continental | Bentley Continental | bentley.continental | 117 | 8 | 2564-01 | DORMANT | - |
 | sokon-crc50 | Sokon CRC50 | sokon.crc50 | 101 | 0 | 2564-01 | DORMANT | SUSPECT_CODE: letters+digits code; may be a real Sokon model code |
 | chevrolet-trailblazer | Chevrolet Trailblazer | chevrolet.trailblazer | 88 | 1 | 2564-01 | DORMANT | - |
@@ -166,7 +251,6 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; wr
 | peugeot-peugeot-408 | Peugeot 408 | peugeot.408 | 79 | 5 | 2567-10 | DORMANT RECENT | - |
 | suzuki-suzuki-spacia | Suzuki Spacia | suzuki.spacia | 78 | 6 | 2564-01 | DORMANT | - |
 | tata-tata-xenon | TATA Xenon | tata.xenon | 76 | 6 | 2564-01 | DORMANT | - |
-| honda-honda-stepwagon | Honda Stepwagon | honda.stepwagon | 73 | 2 | 2564-03 | DORMANT | SUSPECT_ALIAS: TDR already holds Step WGN (honda.step_wgn); spelling variant not caught lexically |
 | jac-t8 | JAC T8 | jac.t8 | 73 | 1 | 2566-09 | DORMANT | - |
 | seres-seres-ec31 | Seres EC31 | seres.ec31 | 73 | 11 | 2566-12 | - | - |
 | honda-honda-n-box | Honda N-BOX | honda.n_box | 71 | 7 | 2564-02 | DORMANT | - |
@@ -199,33 +283,36 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 67, B 67; wr
 | honda-super-one | Honda Super-ONE | honda.super_one | 3 | 3 | 2569-09 | DORMANT RECENT | - |
 | lexus-lexus-rc | Lexus RC | lexus.rc | 3 | 1 | 2564-01 | DORMANT | - |
 | volkswagen-volkswagen-caddy | Volkswagen Caddy | volkswagen.caddy | 3 | 3 | 2569-05 | DORMANT RECENT | - |
-| honda-honda-fit | Honda FIT | honda.fit | 2 | 2 | 2568-11 | DORMANT RECENT | SUSPECT_ALIAS: Jazz and Fit are one car; honda-jazz is also a CREATE |
 | suzuki-apv | APV | suzuki.apv | 2 | 0 | 2567-02 | DORMANT | - |
 | toyota-toyota-roomy | Toyota Roomy | toyota.roomy | 2 | 2 | 2568-10 | DORMANT RECENT | - |
+| volkswagen-volkswagen-t-roc | Volkswagen T-ROC | volkswagen.t_roc | 2 | 2 | 2569-02 | DORMANT RECENT | - |
 | volkswagen-volkswagen-touareg | Volkswagen Touareg | volkswagen.touareg | 2 | 1 | 2565-11 | DORMANT | - |
 | volkswagen-vw-tiguan | VW Tiguan | volkswagen.tiguan | 2 | 2 | 2568-10 | DORMANT RECENT | - |
 | honda-honda-amaze | Honda Amaze | honda.amaze | 1 | 1 | 2569-03 | DORMANT RECENT | - |
 | hyundai-genesis-g80 | Genesis G80 | hyundai.genesis_g80 | 1 | 0 | 2568-01 | DORMANT RECENT | SUSPECT_BRAND: Genesis is a separate marque filed under Hyundai |
 | hyundai-tucson | Tucson | hyundai.tucson | 1 | 0 | 2565-10 | DORMANT | - |
 | lotus-emira | Lotus Emira | lotus.emira | 1 | 1 | 2569-09 | DORMANT RECENT | - |
+| mazda-mazda-mx-30 | Mazda MX-30 | mazda.mx_30 | 1 | 0 | 2567-12 | DORMANT RECENT | - |
+| nissan-nissan-be-1 | Nissan BE-1 | nissan.be_1 | 1 | 1 | 2569-01 | DORMANT RECENT | - |
 | suzuki-grand-vitara | Grand Vitara | suzuki.grand_vitara | 1 | 1 | 2569-06 | DORMANT RECENT | - |
+| volkswagen-vw-t-cross | VW T-Cross | volkswagen.t_cross | 1 | 1 | 2569-05 | DORMANT RECENT | - |
 
 ## 4. Suspected false CREATEs
 
-Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **11 of 67** (15,402 units) — {'SUSPECT_ALIAS': 3, 'SUSPECT_VARIANT': 4, 'SUSPECT_TRUNCATED': 1, 'SUSPECT_CODE': 2, 'SUSPECT_BRAND': 1}.
+Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **8 of 73** (1,537 units) — {'SUSPECT_VARIANT': 4, 'SUSPECT_TRUNCATED': 1, 'SUSPECT_CODE': 2, 'SUSPECT_BRAND': 1}.
 
 - The milestone-2 proposals R1/R2/R4 are now policy v2 rules (section 0.3); the lists below show what they still catch among the remaining CREATEs (empty = all already removed).
 - R1 (hyphenated registration code) still catches 0: .
 - R2 (powertrain suffix glued to a digit token) still catches 0: .
 - R4 (displacement/trim code) still catches 0: none.
-- Analyst-suspected, not caught by any rule (11): bmw-bmw-m2, bmw-bmw-m3, bmw-bmw-m4, bmw-bmw-m5, foton-bj1041, honda-honda-fit, honda-honda-stepwagon, honda-jazz, hyundai-genesis-g80, sokon-crc50, toyota-toyota-tr.
+- Analyst-suspected, not caught by any rule (8): bmw-bmw-m2, bmw-bmw-m3, bmw-bmw-m4, bmw-bmw-m5, foton-bj1041, hyundai-genesis-g80, sokon-crc50, toyota-toyota-tr.
 - Rule flags the analyst did not list (false positives of the proposals): none.
-- Dormant (≤10 registrations in the last 12 months): **59 of 67** (33,882 units all-time); first seen in the last 24 months: **16**.
+- Dormant (≤10 registrations in the last 12 months): **62 of 73** (20,473 units all-time); first seen in the last 24 months: **22**.
 
 ## 5. Suspected false REVIEW / HOLD
 
-- Review decisions (mode A): 89. REVIEWs caused only by a SIBLING relation on a weak shared token (digits or ≤2 letters): **2** ['mazda-mazda-mx-30', 'toyota-toyota-d-cab'].
-- `NOT_ACTIVATED` only because of a FUZZY / token-equivalence / alias relation (no EQUAL match), i.e. stand-in matches worth a human look: ['KIA|CANIVAL', 'SOKON|EC31', 'TOYOTA|COMUTER', 'bmw-bmw-630i', 'lexus-lexus-es350h', 'mazda-mazda6e', 'mercedes-benz-mercedes-benz-c350', 'mg-mg4-ev', 'peugeot-peugeot-5008', 'volvo-volvo-es90'].
+- Review decisions (mode A): 89. REVIEWs caused only by a SIBLING relation on a weak shared token (digits or ≤2 letters): **0** [].
+- `NOT_ACTIVATED` only because of a FUZZY / token-equivalence / alias relation (no EQUAL match), i.e. stand-in matches worth a human look: ['KIA|CANIVAL', 'TOYOTA|COMUTER', 'honda-honda-stepwagon', 'mg-mg4-ev'].
 - Unsettled raw ids held: 591 (`BRAND|MODEL`), of which **158** have a clean-looking name (held correctly by contract; they become CREATE candidates only after Ice settles them). Provisional: 114. Settled ids that are registration codes: 45.
 | Raw id | Name | Units |
 |---|---|---|
@@ -257,162 +344,84 @@ Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **11 of 67** 
 
 ## 6. Structural conflicts (every group carrying `STRUCTURAL_CONFLICT`)
 
-**Mode A: 24 groups**
+**Mode A: 9 groups**
 
 | Group | Name | Outcome | Codes | Batch group | Units |
 |---|---|---|---|---|---|
-| gwm-ora-5 | Ora 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | gwm-ora-07, gwm-ora-5 | 4,809 |
-| mini-mini-cooper-ev | Mini Cooper EV | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_POWERTRAIN_DERIVATIVE | mini-mini-aceman-ev, mini-mini-cooper-ev | 1,772 |
-| gwm-ora-07 | Ora 07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | gwm-ora-07, gwm-ora-5 | 1,698 |
-| mini-mini-aceman-ev | Mini Aceman EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR POSSIBLE_POWERTRAIN_DERIVATIVE | mini-mini-aceman-ev, mini-mini-cooper-ev | 1,057 |
+| honda-jazz | Jazz | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 13,790 |
+| gwm-ora-5 | Ora 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | gwm-ora-07, gwm-ora-5 | 4,809 |
+| gwm-ora-07 | Ora 07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | gwm-ora-07, gwm-ora-5 | 1,698 |
 | mini-mini-jcw-rhd | MINI JCW RHD | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | mini-mini-jcw-convertible, mini-mini-jcw-rhd | 581 |
-| mercedes-benz-mercedes-benz-amg-c | Mercedes-Benz AMG C | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|A 180, MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-amg-sl | 550 |
 | nissan-nissan-urvan-e26 | Nissan Urvan E26 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | nissan-nissan-urvan-e26, nissan-urvan | 212 |
-| lexus-lexus-rz450e | Lexus RZ450E | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-rz350e, lexus-lexus-rz450e | 151 |
-| toyota-gr-yaris | GR Yaris | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-gr-corolla, toyota-gr-yaris | 149 |
 | foton-tunland | Foton Tunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 140 |
 | mini-mini-jcw-convertible | MINI JCW Convertible | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_BODY_VARIANT | mini-mini-jcw-convertible, mini-mini-jcw-rhd | 85 |
-| audi-audi-rs-q3 | AUDI RS Q3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-rs-3, audi-audi-rs-6, audi-audi-rs-q3 | 81 |
-| toyota-gr-corolla | GR Corolla | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-gr-corolla, toyota-gr-yaris | 45 |
-| audi-audi-rs-6 | AUDI RS 6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-rs-3, audi-audi-rs-6, audi-audi-rs-q3 | 44 |
-| lexus-lexus-rz350e | Lexus RZ350E | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-rz350e, lexus-lexus-rz450e | 27 |
 | foton-foton-etunland | Foton Etunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 23 |
-| audi-audi-rs-3 | AUDI RS 3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-rs-3, audi-audi-rs-6, audi-audi-rs-q3 | 22 |
-| mercedes-benz-mercedes-benz-amg-sl | Mercedes-Benz AMG SL | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|A 180, MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-amg-sl | 22 |
-| aston-martin-aston-martin-db11 | Aston Martin DB11 | IDENTITY_REVIEW | BRAND_NOT_IN_TDR STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | aston-martin-aston-martin-db11, aston-martin-aston-martin-db12 | 14 |
-| aston-martin-aston-martin-db12 | Aston Martin DB12 | IDENTITY_REVIEW | BRAND_NOT_IN_TDR STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | aston-martin-aston-martin-db11, aston-martin-aston-martin-db12 | 8 |
-| volvo-volvo-264gl | Volvo 264GL | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | volvo-volvo-264gl, volvo-volvo-264gle | 4 |
-| volkswagen-volkswagen-t-roc | Volkswagen T-ROC | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | volkswagen-volkswagen-t-roc, volkswagen-vw-t-cross | 2 |
-| volvo-volvo-264gle | Volvo 264GLE | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | volvo-volvo-264gl, volvo-volvo-264gle | 2 |
-| volkswagen-vw-t-cross | VW T-Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | volkswagen-volkswagen-t-roc, volkswagen-vw-t-cross | 1 |
+| honda-honda-fit | Honda FIT | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 2 |
 
-**Mode B: 105 groups**
+**Mode B: 48 groups**
 
 | Group | Name | Outcome | Codes | Batch group | Units |
 |---|---|---|---|---|---|
-| toyota-hilux-revo | Hilux Revo | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | TOYOTA\|HILUK, toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 550,946 |
-| toyota-yaris-ativ | Yaris Ativ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 257,146 |
+| toyota-hilux-revo | Hilux Revo | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 550,946 |
+| toyota-yaris-ativ | Yaris Ativ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 257,146 |
 | honda-city-hatchback | City Hatchback | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_BODY_VARIANT | honda-city, honda-city-hatchback | 106,582 |
-| honda-hr-v | HR-V | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | honda-br-v, honda-cr-v, honda-hr-v, honda-wr-v | 105,452 |
-| toyota-corolla-cross | Corolla Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 103,951 |
-| toyota-yaris-cross | Yaris Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 99,875 |
-| mazda-mazda2 | Mazda2 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_COARSER_THAN_TDR | mazda-mazda2, mazda-mazda3, mazda-mazda6, mazda-mazda6e | 61,313 |
+| toyota-corolla-cross | Corolla Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 103,951 |
+| toyota-yaris-cross | Yaris Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 99,875 |
 | byd-atto-3 | Atto 3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-atto-1, byd-atto-2, byd-atto-3 | 44,588 |
-| honda-cr-v | CR-V | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | honda-br-v, honda-cr-v, honda-hr-v, honda-wr-v | 38,413 |
 | toyota-hiace-commuter | Hiace / Commuter | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-hiace, toyota-hiace-commuter | 37,053 |
-| toyota-corolla-altis | Corolla Altis | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 31,043 |
-| toyota-hilux-travo | Hilux Travo | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | TOYOTA\|HILUK, toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 30,119 |
-| mg-mg4-ev | MG4 EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_POWERTRAIN_DERIVATIVE | mg-mg-s5-ev, mg-mg-urban-ev, mg-mg4-ev | 29,161 |
+| toyota-corolla-altis | Corolla Altis | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 31,043 |
+| toyota-hilux-travo | Hilux Travo | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 30,119 |
 | mitsubishi-pajero-sport | Pajero Sport | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_TRIM_NOT_MODEL | mitsubishi-pajero, mitsubishi-pajero-sport | 26,287 |
-| mazda-mazda-cx-30 | Mazda CX-30 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 22,782 |
-| toyota-hilux-champ | Hilux Champ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | TOYOTA\|HILUK, toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 22,310 |
+| toyota-hilux-champ | Hilux Champ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | toyota-hilux, toyota-hilux-champ, toyota-hilux-revo, toyota-hilux-travo | 22,310 |
 | gwm-ora-good-cat | Ora Good Cat | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | gwm-ora-07, gwm-ora-5, gwm-ora-good-cat | 20,823 |
-| mazda-mazda-cx-3 | Mazda CX-3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 14,905 |
 | tesla-tesla-model-y | Tesla Model Y | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | tesla-tesla-model, tesla-tesla-model-3, tesla-tesla-model-y | 14,168 |
-| mg-mg-s5-ev | MG S5 EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_POWERTRAIN_DERIVATIVE | mg-mg-s5-ev, mg-mg-urban-ev, mg-mg4-ev | 13,675 |
-| ford-ford-ranger-raptor | Ford Ranger Raptor | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_FINER_THAN_TDR | ford-ford-ranger, ford-ford-ranger-raptor | 12,839 |
+| honda-jazz | Jazz | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 13,790 |
+| ford-ford-ranger-raptor | Ford Ranger Raptor | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | ford-ford-ranger, ford-ford-ranger-raptor | 12,839 |
 | tesla-tesla-model-3 | Tesla Model 3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | tesla-tesla-model, tesla-tesla-model-3, tesla-tesla-model-y | 12,594 |
-| byd-sealion-6 | Sealion 6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-byd-shark-6-limited__provisional, byd-sealion-5, byd-sealion-6, byd-sealion-7 | 12,545 |
+| byd-sealion-6 | Sealion 6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-sealion-5, byd-sealion-6, byd-sealion-7 | 12,545 |
 | gwm-haval-h6 | Haval H6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | gwm-haval-h6, gwm-haval-jolion | 12,225 |
 | gwm-tank-300 | Tank 300 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | gwm-tank-300, gwm-tank-500 | 12,017 |
-| changan-deepal-s05 | Deepal S05 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | changan-deepal-e07, changan-deepal-hunter, changan-deepal-l07, changan-deepal-s05, changan-deepal-s07 | 11,983 |
-| changan-deepal-s07 | Deepal S07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | changan-deepal-e07, changan-deepal-hunter, changan-deepal-l07, changan-deepal-s05, changan-deepal-s07 | 11,650 |
-| byd-sealion-7 | Sealion 7 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-byd-shark-6-limited__provisional, byd-sealion-5, byd-sealion-6, byd-sealion-7 | 11,136 |
+| byd-sealion-7 | Sealion 7 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-sealion-5, byd-sealion-6, byd-sealion-7 | 11,136 |
 | gwm-haval-jolion | Haval Jolion | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | gwm-haval-h6, gwm-haval-jolion | 9,586 |
-| mazda-mazda3 | Mazda3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_COARSER_THAN_TDR | mazda-mazda2, mazda-mazda3, mazda-mazda6, mazda-mazda6e | 6,613 |
-| mazda-mazda-cx-8 | Mazda CX-8 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 4,823 |
-| gwm-ora-5 | Ora 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | gwm-ora-07, gwm-ora-5, gwm-ora-good-cat | 4,809 |
-| mazda-mazda-cx-5 | Mazda CX-5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 4,168 |
-| honda-br-v | BR-V | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | honda-br-v, honda-cr-v, honda-hr-v, honda-wr-v | 4,130 |
-| honda-wr-v | WR-V | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | honda-br-v, honda-cr-v, honda-hr-v, honda-wr-v | 3,688 |
-| mercedes-benz-mercedes-benz-c350 | Mercedes-Benz C350 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_MODEL_CODE | mercedes-benz-mercedes-benz-c250, mercedes-benz-mercedes-benz-c350 | 2,549 |
-| mg-mg-urban-ev | MG Urban EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_POWERTRAIN_DERIVATIVE | mg-mg-s5-ev, mg-mg-urban-ev, mg-mg4-ev | 2,473 |
-| volvo-volvo-xc60 | Volvo XC60 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | volvo-volvo-xc60, volvo-volvo-xc90 | 2,432 |
+| gwm-ora-5 | Ora 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | gwm-ora-07, gwm-ora-5, gwm-ora-good-cat | 4,809 |
 | maxus-mifa-9 | Mifa 9 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | maxus-mifa-7, maxus-mifa-9 | 1,963 |
-| mini-mini-cooper-ev | Mini Cooper EV | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_POWERTRAIN_DERIVATIVE | mini-cooper, mini-mini-aceman-ev, mini-mini-cooper-ev | 1,772 |
-| gwm-ora-07 | Ora 07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | gwm-ora-07, gwm-ora-5, gwm-ora-good-cat | 1,698 |
-| volvo-volvo-ex30 | Volvo EX30 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | volvo-volvo-es90, volvo-volvo-ex30, volvo-volvo-ex90 | 1,689 |
+| mini-mini-cooper-ev | Mini Cooper EV | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_POWERTRAIN_DERIVATIVE | mini-cooper, mini-mini-cooper-ev | 1,772 |
+| gwm-ora-07 | Ora 07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | gwm-ora-07, gwm-ora-5, gwm-ora-good-cat | 1,698 |
 | gwm-tank-500 | Tank 500 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | gwm-tank-300, gwm-tank-500 | 1,524 |
-| changan-deepal-l07 | Deepal L07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | changan-deepal-e07, changan-deepal-hunter, changan-deepal-l07, changan-deepal-s05, changan-deepal-s07 | 1,512 |
-| toyota-land-cruiser-fj | Land Cruiser FJ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR | toyota-land-cruiser, toyota-land-cruiser-fj | 1,472 |
+| toyota-land-cruiser-fj | Land Cruiser FJ | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | toyota-land-cruiser, toyota-land-cruiser-fj | 1,472 |
 | byd-atto-2 | Atto 2 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-atto-1, byd-atto-2, byd-atto-3 | 1,308 |
-| wuling-air-ev-aira-ev | Air ev / Aira ev | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_POWERTRAIN_DERIVATIVE | wuling-air-ev-aira-ev, wuling-wuling-porta-ev | 1,177 |
-| mini-mini-aceman-ev | Mini Aceman EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR POSSIBLE_POWERTRAIN_DERIVATIVE | mini-cooper, mini-mini-aceman-ev, mini-mini-cooper-ev | 1,057 |
-| bmw-bmw-430i | BMW 430i | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 1,044 |
-| volvo-volvo-xc90 | Volvo XC90 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | volvo-volvo-xc60, volvo-volvo-xc90 | 993 |
+| honda-step-wgn | Step WGN | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-stepwagon, honda-step-wgn | 1,288 |
 | byd-atto-1 | Atto 1 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-atto-1, byd-atto-2, byd-atto-3 | 978 |
-| byd-sealion-5 | Sealion 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-byd-shark-6-limited__provisional, byd-sealion-5, byd-sealion-6, byd-sealion-7 | 946 |
-| peugeot-peugeot-3008 | Peugeot 3008 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | peugeot-peugeot-2008, peugeot-peugeot-3008, peugeot-peugeot-5008 | 939 |
-| maxus-mifa-7 | Mifa 7 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | maxus-mifa-7, maxus-mifa-9 | 934 |
-| bmw-bmw-630i | BMW 630I | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 802 |
+| byd-sealion-5 | Sealion 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | byd-sealion-5, byd-sealion-6, byd-sealion-7 | 946 |
+| maxus-mifa-7 | Mifa 7 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | maxus-mifa-7, maxus-mifa-9 | 934 |
 | hyundai-ioniq-5 | Ioniq 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | hyundai-ioniq-5, hyundai-ioniq-6 | 604 |
-| mazda-mazda6e | Mazda6e | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | mazda-mazda2, mazda-mazda3, mazda-mazda6, mazda-mazda6e | 604 |
 | mini-mini-jcw-rhd | MINI JCW RHD | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | mini-mini-jcw-convertible, mini-mini-jcw-rhd | 581 |
-| peugeot-peugeot-2008 | Peugeot 2008 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | peugeot-peugeot-2008, peugeot-peugeot-3008, peugeot-peugeot-5008 | 566 |
-| mercedes-benz-mercedes-benz-amg-c | Mercedes-Benz AMG C | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|A 180, MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-a-class, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-amg-g63, mercedes-benz-mercedes-benz-amg-sl, mercedes-benz-mercedes-benz-c-class | 550 |
-| lexus-lexus-es300h | Lexus ES300H | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-es300h, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-is300h | 332 |
-| peugeot-peugeot-5008 | Peugeot 5008 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | peugeot-peugeot-2008, peugeot-peugeot-3008, peugeot-peugeot-5008 | 316 |
-| lexus-lexus-is300h | Lexus IS300H | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-es300h, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-is300h | 295 |
-| changan-deepal-e07 | Deepal E07 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | changan-deepal-e07, changan-deepal-hunter, changan-deepal-l07, changan-deepal-s05, changan-deepal-s07 | 289 |
+| mercedes-benz-mercedes-benz-amg-c | Mercedes-Benz AMG C | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-c-class | 550 |
 | nissan-nissan-urvan-e26 | Nissan Urvan E26 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | nissan-nissan-urvan-e26, nissan-urvan | 212 |
-| mercedes-benz-mercedes-benz-amg-g63 | Mercedes-Benz AMG G63 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|A 180, MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-a-class, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-amg-g63, mercedes-benz-mercedes-benz-amg-sl, mercedes-benz-mercedes-benz-c-class | 209 |
-| wuling-wuling-porta-ev | Wuling Porta EV | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_POWERTRAIN_DERIVATIVE | wuling-air-ev-aira-ev, wuling-wuling-porta-ev | 184 |
-| lexus-lexus-rz450e | Lexus RZ450E | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-rz350e, lexus-lexus-rz450e | 151 |
-| toyota-gr-yaris | GR Yaris | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 149 |
-| volvo-volvo-es90 | Volvo ES90 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | volvo-volvo-es90, volvo-volvo-ex30, volvo-volvo-ex90 | 145 |
+| toyota-gr-yaris | GR Yaris | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 149 |
 | foton-tunland | Foton Tunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 140 |
 | chery-tiggo-8 | Tiggo 8 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | chery-tiggo-8, chery-tiggo-cross | 139 |
-| audi-audi-rs-4 | AUDI RS 4 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 103 |
-| toyota-gr-supra | GR Supra | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 97 |
-| bmw-bmw-420i | BMW 420I | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 95 |
-| audi-audi-rs-5 | AUDI RS 5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 94 |
-| volvo-volvo-ex90 | Volvo EX90 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | volvo-volvo-es90, volvo-volvo-ex30, volvo-volvo-ex90 | 88 |
 | mini-mini-jcw-convertible | MINI JCW Convertible | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_BODY_VARIANT | mini-mini-jcw-convertible, mini-mini-jcw-rhd | 85 |
-| audi-audi-rs-q3 | AUDI RS Q3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 81 |
-| mazda-mazda-mx-5 | Mazda MX-5 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 81 |
+| audi-audi-rs-q3 | AUDI RS Q3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-rs-q3 | 81 |
+| honda-honda-stepwagon | Honda Stepwagon | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-stepwagon, honda-step-wgn | 73 |
 | hyundai-ioniq-6 | Ioniq 6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED | hyundai-ioniq-5, hyundai-ioniq-6 | 63 |
-| mercedes-benz-mercedes-benz-c250 | Mercedes-Benz C250 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_MODEL_CODE | mercedes-benz-mercedes-benz-c250, mercedes-benz-mercedes-benz-c350 | 61 |
-| toyota-gr-corolla | GR Corolla | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR PROVIDER_LINEAGE_AMBIGUOUS | toyota-86-gr__provisional, toyota-86-gt-limited__provisional, toyota-86__provisional, toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-supra, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 45 |
-| audi-audi-rs-6 | AUDI RS 6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 44 |
-| bmw-bmw-330i | BMW 330i | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 39 |
-| audi-audi-rs-q8 | AUDI RS Q8 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 34 |
-| changan-deepal-hunter | Deepal Hunter | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | changan-deepal-e07, changan-deepal-hunter, changan-deepal-l07, changan-deepal-s05, changan-deepal-s07 | 33 |
-| mazda-mazda6 | Mazda6 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | mazda-mazda2, mazda-mazda3, mazda-mazda6, mazda-mazda6e | 29 |
-| lexus-lexus-rz350e | Lexus RZ350E | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-rz350e, lexus-lexus-rz450e | 27 |
+| toyota-gr-corolla | GR Corolla | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 45 |
+| audi-audi-rs-q8 | AUDI RS Q8 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q8, audi-audi-rs-q8 | 34 |
 | foton-foton-etunland | Foton Etunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 23 |
-| audi-audi-rs-3 | AUDI RS 3 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 22 |
-| mercedes-benz-mercedes-benz-amg-sl | Mercedes-Benz AMG SL | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_TRIM_NOT_MODEL | MERCEDES BENZ\|A 180, MERCEDES BENZ\|C 180, mercedes-benz-mercedes-benz-a-class, mercedes-benz-mercedes-benz-amg-c, mercedes-benz-mercedes-benz-amg-g63, mercedes-benz-mercedes-benz-amg-sl, mercedes-benz-mercedes-benz-c-class | 22 |
-| audi-audi-rs-7 | AUDI RS 7 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED EXISTING_IDENTITY_SUSPECTED POSSIBLE_TRIM_NOT_MODEL | audi-audi-q3, audi-audi-q8, audi-audi-rs-3, audi-audi-rs-4, audi-audi-rs-5, audi-audi-rs-6, audi-audi-rs-7, audi-audi-rs-q3, audi-audi-rs-q8 | 16 |
-| aston-martin-aston-martin-db11 | Aston Martin DB11 | IDENTITY_REVIEW | BRAND_NOT_IN_TDR STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | aston-martin-aston-martin-db11, aston-martin-aston-martin-db12 | 14 |
-| aston-martin-aston-martin-db12 | Aston Martin DB12 | IDENTITY_REVIEW | BRAND_NOT_IN_TDR STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | aston-martin-aston-martin-db11, aston-martin-aston-martin-db12 | 8 |
-| volvo-volvo-264gl | Volvo 264GL | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | volvo-volvo-264gl, volvo-volvo-264gle | 4 |
-| bmw-bmw-320i | BMW 320i | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 3 |
-| lexus-lexus-es350h | Lexus ES350H | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-es300h, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-is300h | 3 |
-| bmw-bmw-520i | BMW 520i | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | BMW\|630CI, BMW\|650I, bmw-bmw-320i, bmw-bmw-330i, bmw-bmw-420i, bmw-bmw-430i, bmw-bmw-520i, bmw-bmw-630i | 2 |
-| lexus-lexus-es350e | Lexus ES350E | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | lexus-lexus-es300h, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-is300h | 2 |
-| volkswagen-volkswagen-t-roc | Volkswagen T-ROC | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | volkswagen-volkswagen-t-roc, volkswagen-vw-t-cross | 2 |
-| volvo-volvo-264gle | Volvo 264GLE | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED POSSIBLE_MODEL_CODE | volvo-volvo-264gl, volvo-volvo-264gle | 2 |
+| honda-honda-fit | Honda FIT | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 2 |
 | chery-tiggo-cross | Tiggo Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | chery-tiggo-8, chery-tiggo-cross | 1 |
-| mazda-mazda-mx-30 | Mazda MX-30 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | mazda-mazda-cx-3, mazda-mazda-cx-30, mazda-mazda-cx-5, mazda-mazda-cx-8, mazda-mazda-mx-30, mazda-mazda-mx-5 | 1 |
-| volkswagen-vw-t-cross | VW T-Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT | volkswagen-volkswagen-t-roc, volkswagen-vw-t-cross | 1 |
 
-**What-if: stricter relations (FUZZY never on digit-bearing tokens; SIBLING needs a distinctive shared token); same engine, same policy**
-
-Mode A: CREATE_IDENTITY 74 (1.16% of units); IDENTITY_REVIEW 88 (1.87% of units); HOLD 1038 (96.97% of units); groups with STRUCTURAL_CONFLICT: 7.
-Mode B: CREATE_IDENTITY 74 (1.16% of units); IDENTITY_REVIEW 373 (98.32% of units); HOLD 753 (0.52% of units); groups with STRUCTURAL_CONFLICT: 49.
-
-CREATEs gained vs the base relations — A: ['mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; B: ['mazda-mazda-mx-30', 'mazda-mazda6e', 'nissan-nissan-be-1', 'peugeot-peugeot-5008', 'volkswagen-volkswagen-t-roc', 'volkswagen-vw-t-cross', 'volvo-volvo-es90']; lost in A: none. Of the gained CREATEs, rule R4 flags: none.
-
-**Relation quality (stand-in for the IR layer, subject↔subject pairs):** SIBLING pairs 1154, of which 731 share only a non-distinctive token (digits, ≤2 letters, or a trim/powertrain/body/generation word) — e.g. [['HR-V', 'WR-V', ['v']], ['CR-V', 'HR-V', ['v']], ['CR-V', 'WR-V', ['v']], ['Mazda CX-30', 'Mazda CX-5', ['cx']], ['Mazda CX-30', 'Mazda CX-8', ['cx']], ['Mazda CX-30', 'Mazda MX-30', ['30']]]; FUZZY pairs 85, of which 76 differ in a token that contains a digit (a different version/code, not a typo) — e.g. [['Mazda2', 'Mazda3'], ['Mazda2', 'Mazda6'], ['Mazda3', 'Mazda6'], ['HINO XZU600R-WKMLST3', 'HINO XZU600R-WKTLST3'], ['Volvo XC60', 'Volvo XC90'], ['Volvo EX30', 'Volvo EX90']].
+**Relation quality (stand-in for the IR layer, subject↔subject pairs):** SIBLING pairs 307, of which 0 share only a non-distinctive token (digits, ≤2 letters, or a trim/powertrain/body/generation word) — e.g. []; FUZZY pairs 7, of which 0 differ in a token that contains a digit (a different version/code, not a typo) — e.g. [].
 
 ## 7. Lineage
 
-81 `id_changes` events {'SPLIT': 31, 'RENAME': 19, 'MERGE': 31}; subjects affected: 8.
+81 `id_changes` events {'SPLIT': 31, 'RENAME': 19, 'MERGE': 31}; subjects affected: 9.
 
 | Group | Lineage codes |
 |---|---|
 | mercedes-benz-mercedes-benz-amg-c | PROVIDER_LINEAGE_AMBIGUOUS |
 | mercedes-benz-mercedes-benz-amg-sl | PROVIDER_LINEAGE_AMBIGUOUS |
+| mercedes-benz-mercedes-benz-c350 | PROVIDER_LINEAGE_AMBIGUOUS |
 | mercedes-benz-mercedes-benz-gt-class | PROVIDER_LINEAGE_AMBIGUOUS |
 | mini-clubman | PROVIDER_LINEAGE_AMBIGUOUS |
 | mini-mini-cooper-ev | LINEAGE_UNRESOLVED PROVIDER_LINEAGE_AMBIGUOUS |
@@ -424,13 +433,13 @@ CREATEs gained vs the base relations — A: ['mazda-mazda-mx-30', 'mazda-mazda6e
 
 | Class removed | New CREATEs in A | New CREATEs in B |
 |---|---|---|
-| model_code | honda-honda-s660, lexus-lexus-es350e, lexus-lexus-rz500e, mclaren-mclaren-750s | honda-honda-s660, lexus-lexus-rz500e, mclaren-mclaren-750s |
+| model_code | bmw-bmw-630i, honda-honda-s660, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-rz350e, lexus-lexus-rz450e, lexus-lexus-rz500e, mclaren-mclaren-750s, volvo-volvo-264gl, volvo-volvo-264gle | bmw-bmw-630i, honda-honda-s660, lexus-lexus-es350e, lexus-lexus-es350h, lexus-lexus-rz350e, lexus-lexus-rz450e, lexus-lexus-rz500e, mclaren-mclaren-750s, volvo-volvo-264gl, volvo-volvo-264gle |
 | trim | none | none |
 | powertrain | jac-jac-t8ev | jac-jac-t8ev |
-| body | farizon-farizon-mpv-sv6 | farizon-farizon-mpv-sv6 |
+| body | farizon-farizon-mpv-sv6, toyota-toyota-d-cab | farizon-farizon-mpv-sv6, toyota-toyota-d-cab |
 | generation | none | none |
 
-All shape classes removed → new CREATEs in A: ['farizon-farizon-mpv-sv6', 'honda-honda-s660', 'jac-jac-t8ev', 'lexus-lexus-es350e', 'lexus-lexus-rz500e', 'mclaren-mclaren-750s']. Single words whose removal changes a CREATE: {'body.mpv': ['farizon-farizon-mpv-sv6']}.
+All shape classes removed → new CREATEs in A: ['bmw-bmw-630i', 'farizon-farizon-mpv-sv6', 'honda-honda-s660', 'jac-jac-t8ev', 'lexus-lexus-es350e', 'lexus-lexus-es350h', 'lexus-lexus-rz350e', 'lexus-lexus-rz450e', 'lexus-lexus-rz500e', 'mclaren-mclaren-750s', 'toyota-toyota-d-cab', 'volvo-volvo-264gl', 'volvo-volvo-264gle']. Single words whose removal changes a CREATE: {'body.cab': ['toyota-toyota-d-cab'], 'body.mpv': ['farizon-farizon-mpv-sv6']}.
 
 | Class.word | Groups hit | Of which settled ids | Settled names (≤12) |
 |---|---|---|---|
@@ -487,4 +496,4 @@ All shape classes removed → new CREATEs in A: ['farizon-farizon-mpv-sv6', 'hon
 | trim.sports | 2 | 0 |  |
 | trim.standard | 2 | 0 |  |
 
-Legitimate model names a word rule hits: Pajero Sport → HOLD/NOT_ACTIVATED; Aion Y Plus → HOLD/NOT_ACTIVATED; MG4 EV → HOLD/NOT_ACTIVATED; MG S5 EV → HOLD/NOT_ACTIVATED; Wuling Porta EV → HOLD/NOT_ACTIVATED; Mini Aceman EV → IDENTITY_REVIEW/STRUCTURAL_CONFLICT; Mini Cooper EV → HOLD/LINEAGE_UNRESOLVED; Mercedes-Benz GT-Class → IDENTITY_REVIEW/PROVIDER_LINEAGE_AMBIGUOUS; Karba NEW → IDENTITY_REVIEW/BRAND_NOT_IN_TDR; Peugeot 2008 → HOLD/NOT_ACTIVATED; Honda S660 → IDENTITY_REVIEW/POSSIBLE_MODEL_CODE; Mazda Roadster → HOLD/NOT_ACTIVATED
+Legitimate model names a word rule hits: Pajero Sport → HOLD/NOT_ACTIVATED; Aion Y Plus → HOLD/NOT_ACTIVATED; MG4 EV → HOLD/NOT_ACTIVATED; MG S5 EV → HOLD/NOT_ACTIVATED; Wuling Porta EV → HOLD/NOT_ACTIVATED; Mini Aceman EV → IDENTITY_REVIEW/PROVIDER_FINER_THAN_TDR; Mini Cooper EV → HOLD/LINEAGE_UNRESOLVED; Mercedes-Benz GT-Class → IDENTITY_REVIEW/PROVIDER_LINEAGE_AMBIGUOUS; Karba NEW → IDENTITY_REVIEW/BRAND_NOT_IN_TDR; Peugeot 2008 → HOLD/NOT_ACTIVATED; Honda S660 → IDENTITY_REVIEW/POSSIBLE_MODEL_CODE; Mazda Roadster → HOLD/NOT_ACTIVATED

@@ -81,8 +81,14 @@ def test_no_migration_workflow_or_serving_view_was_added():
 
 def test_identity_resolution_is_not_modified_or_imported_by_this_package():
     # PR #200 is a read-only reference. This package must neither import it nor ship a copy of its files.
+    # The one permitted contact is a vendored, hash-pinned DATA export of its published relation output (shadow/ir_rev4.py + universe/ir_rev4/relations.json):
+    # no import, no copy of its code, and the only string reference is the source path recorded for provenance.
     assert not (PKG / "identity_resolution").exists()
-    assert "identity_resolution" not in "".join(p.read_text(encoding="utf-8") for p in py_files(PKG))
+    for path in py_files(PKG):
+        for name in imports(path):
+            assert name.split(".")[0] != "identity_resolution", f"{path.relative_to(VM)} imports {name}"
+    assert [p.name for p in (PKG / "shadow" / "universe" / "ir_rev4").iterdir()] == ["relations.json"]
+    assert [p.relative_to(PKG).as_posix() for p in py_files(PKG) if "identity_resolution" in p.read_text(encoding="utf-8")] == ["shadow/ir_rev4.py"]
 
 
 def test_no_production_data_in_the_corpus():

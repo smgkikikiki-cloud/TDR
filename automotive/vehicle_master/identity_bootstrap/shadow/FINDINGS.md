@@ -1,3 +1,27 @@
+# Post-PR-#200-rev-4 rerun (consumed from the pinned export; read-only; recommendations only)
+
+Relations come from PR #200 commit `1f73aee1834697cbd439291d0074293c30446e5b` (rev 4: no FUZZY across digit tokens, SIBLING needs a distinctive shared token, Honda-scoped Jazz↔Fit and Stepwagon↔Step WGN). `shadow/ir_rev4.py` vendors **its published relation output** (`calibration/lexical_pass/after_rev4.json`, sha256-pinned; a test re-reads the blobs from the commit) — **no PR #200 rule is re-implemented or forked here**; the stand-in's own milestone-2 "refined" what-if (a local clone of those rules) was deleted. The stand-in now supplies only the pair population (a deliberate superset) and the relations rev 4 did not touch; every FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS verdict is IR's. Same engine, policy v2, package, TDR universe as milestone 3 (`baseline_m3/` is frozen). `REPORT.md` §0 has every table; `transitions_vs_m3.csv` has all 74 changed groups.
+
+| | Milestone 3 (A / B) | Post-rev-4 (A / B) |
+|---|---|---|
+| CREATE | 67 / 67 | **73 / 72** |
+| REVIEW | 89 / 380 | 89 / 375 |
+| HOLD | 1,044 / 753 | 1,038 / 753 |
+| STRUCTURAL_CONFLICT groups | 24 / 105 | **9 / 48** |
+
+- **Relation parity:** 316 exported ice×ice and 58 ice×tdr pairs all present with IR's relation; ice×ice FUZZY 7/7, SIBLING 307/307, EQUAL_VIA_MODEL_ALIAS 2/2; ice×tdr FUZZY 2/2, SIBLING 55/55, EQUAL_VIA_MODEL_ALIAS 1/1 (stand-in/IR). Zero FUZZY/SIBLING pairs outside the export.
+- **CREATEs that disappeared (3):** Honda Jazz, Honda Fit, Honda Stepwagon. Jazz and Fit are now one vehicle in two Ice groups (`EQUAL_VIA_MODEL_ALIAS`) → both `IDENTITY_REVIEW / STRUCTURAL_CONFLICT`; TDR has neither, so a single identity may still be owed, but never two. Stepwagon ≡ TDR `honda.step_wgn` → `HOLD / NOT_ACTIVATED` (A), reviewed in B. These were *not* false merely for being old.
+- **CREATEs that appeared (9):** Mazda MX-30, Mazda6e, Nissan BE-1, Peugeot 5008, VW T-Roc, VW T-Cross, Volvo ES90 (all expected: a digit-only FUZZY/SIBLING objection fell away), **plus Maxus V80 and Maxus Mifa 7**. TDR holds the Maxus models under brand `mg` (`mg.mg_maxus_7`, `mg.mg_maxus_9`); the only link was a shared digit, so they are now clean — **a brand-family gap (Maxus↔MG), not a Bootstrap rule**, and likely EXISTING_IDENTITY for Mifa 7 (legacy R6 proposed `mg.mg_maxus_7`, score 0.62). Left for the owner; I did not add a Maxus→MG family locally.
+- **The 177 NO_CANDIDATE groups PR #200 released:** 115 are unsettled raw ids and 30 provisional (HOLD by contract), 32 settled. Only **7** are Bootstrap CREATEs in either mode: five of the new ones above (MX-30, Mazda6e, BE-1, T-Roc, T-Cross) plus Honda N-BOX and VW Tiguan, which were already CREATE. 7 are reviewed in A (11 in B; POSSIBLE_MODEL_CODE for Lexus RZ/ES codes, duplicates, body variant), the rest are held. Not all 177 are candidates.
+- **Mode B ⊆ mode A, no longer equal.** `maxus-mifa-7` is CREATE in A only: its sibling `maxus-mifa-9` is diverted by the resolver stand-in, so no batch conflict forms. The old "CREATE sets identical" invariant is replaced by the subset invariant (tested).
+- **Unresolved risks:** (1) seven ice×tdr pairs where IR says SIBLING but the stand-in alone had a stronger unchanged-kind relation (e.g. Ford Ranger Raptor↔`ford.ranger_double_cab` EQUAL via a catalog alias): IR wins, outcomes moved (Ranger Raptor HOLD→REVIEW); unchanged-kind counts also differ from IR's (EQUAL 299 vs 239) — a stand-in/IR population disagreement that rev 4 did not touch; (2) Maxus↔MG family (above); (3) BMW M2–M5, Foton BJ1041, Sokon CRC50, Toyota TR, Genesis G80 remain lexically clean and unexplained, as before; (4) Jazz/Fit need an owner decision on the single identity to create.
+
+**Market-activity routing (absent rows UNKNOWN):** 73 CREATEs → actual `UNKNOWN 63, ACTIVE 9, DECLINING 1` (lanes ACTIVITY_UNCLASSIFIED 63, CURRENT_DISCOVERY 10); what-if ABSENT_IS_ZERO (not authoritative) `INACTIVE_INFERRED 23, UNKNOWN 34, ACTIVE 9, DECLINING 7`. Routing never changed an outcome.
+
+**Provisional adjudication set** (`review/create_adjudication.csv`, 73 rows; 9 added, 3 removed vs milestone 3, 64 unchanged): every machine field filled, `owner_verdict / owner_canonical_model_id / owner_discovery_class / owner_notes` blank, machine suggestions in `*_NON_AUTHORITATIVE` columns. Not final: QA first.
+
+---
+
 # Shadow run findings — Ice `2569-09` v3 M7.0, milestone 3 (read-only; recommendations only)
 
 Numbers come from `results/2569-09_v3_M7.0/` (`REPORT.md` §0 has the before/after tables; `summary.json` and `decisions.csv` have the data; a test fails if they go stale). The milestone-2 baseline is frozen in `baseline_m2/`.

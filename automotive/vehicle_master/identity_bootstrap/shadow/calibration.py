@@ -150,52 +150,79 @@ def nearest_identities(run: dict, subject: dict, top: int = 3) -> list[str]:
     return [f"{cid} ({name}; overlap {j:.2f}; {'same brand/family' if same else 'OTHER BRAND'}{'; HISTORICAL' if cid in hist else ''})" for _, cid, name, j, same in scored[:top]]
 
 
-def adjudication_rows(A: dict, summary_creates: list[dict], notes: dict, r6: dict, redirects: list) -> list[dict]:
+OWNER_VERDICTS = ["VALID_MISSING_CANONICAL", "EXISTING_IDENTITY", "VARIANT_TRIM_CODE", "AMBIGUOUS"]
+OWNER_DISCOVERY_CLASSES = ["RECENT_NEW_MODEL", "ACTIVE_CATALOG_GAP", "HISTORICAL_BACKFILL"]
+OWNER_FIELDS = ["owner_verdict", "owner_canonical_model_id", "owner_discovery_class", "owner_notes"]
+#: Machine-only context. Never copied into an owner field, never read by a test as truth, never an input to any decision.
+SUGGESTED_DISCOVERY = {"RECENT_DISCOVERY": "RECENT_NEW_MODEL", "ACTIVE_ESTABLISHED": "ACTIVE_CATALOG_GAP", "DORMANT_LEGACY": "HISTORICAL_BACKFILL"}
+
+
+def adjudication_rows(A: dict, A0: dict, creates: list[str], notes: dict, r6: dict, redirects: list, baseline_ids: set[str], market: dict) -> list[dict]:
+    """PROVISIONAL candidate rows for the owner. Every machine field is filled; every owner field is blank. `A0` is the same run without the PR #200 rev 4 relations."""
     pkg = A["package"]
     dims = {r["model_group_id"]: r for r in pkg["dims"]}
     subj = {s["entity_id"]: s for s in A["snapshot"]["subjects"]}
+    subj0 = {s["entity_id"]: s for s in A0["snapshot"]["subjects"]}
     events = A["snapshot"]["lineage"]["events"]
     dec = {d["subject"]["entity_id"]: d for d in A["decisions"]}
+    lex_codes = {c for c, v in A["registry"]["codes"].items() if v.get("area") == "SHAPE"} if isinstance(A["registry"].get("codes"), dict) else set()
     rows = []
-    for c in summary_creates:
-        g = c["id"]
+    for g in creates:
         d, s = dec[g], subj[g]
         rels = [f"{r['peer_kind']}:{r['peer_id']}={r['name_relation']}" for r in s["relations"] if r["name_relation"] not in ("CONTRADICTION", "UNAVAILABLE")]
+        old = {(r["peer_kind"], r["peer_id"]): r["name_relation"] for r in subj0[g]["relations"]}
+        new = {(r["peer_kind"], r["peer_id"]): r["name_relation"] for r in s["relations"]}
+        changes = [f"{k[1]}: {old.get(k, 'none')} -> {new.get(k, 'none')}" for k in sorted(set(old) | set(new)) if old.get(k) != new.get(k)]
         ev = [f"{e['event_type']}:{e['old_id']}>{e['new_id']}" for e in events if g in (e["old_id"], e["new_id"])]
         red = [f"R6_REDIRECT:{o}>{n}({t})" for o, n, t in redirects if g in (o, n)]
         alias = [a["external_id"] for a in d["write_plan"]["event"]["aliases"] if a["relation"] == "RETIRED_PREDECESSOR"]
         r6rows = r6.get(g)
         notes_row = notes.get(g)
+        cls = activity_class(g, pkg)
+        fam = s["brand"].get("family") or []
         rows.append({
-            "provider": "ice", "external_id": g, "brand": dims[g]["brand"], "name": dims[g]["model_name"],
-            "proposed_canonical_id": d["identity"]["canonical_model_id"], "proposed_canonical_name": d["identity"]["canonical_name"],
+            "provider": "ice", "external_id": g, "provider_model_name": dims[g]["model_name"], "provider_brand": dims[g]["brand"],
+            "proposed_canonical_name": d["identity"]["canonical_name"], "proposed_canonical_id": d["identity"]["canonical_model_id"],
             "first_seen": pkg["first_seen"][g], "last_seen": pkg["last_seen"][g], "lifetime_units": int(float(dims[g]["reg_total_all"])), "last12_units": int(pkg["last12"].get(g, 0)),
-            "activity_class_informational": activity_class(g, pkg),
-            "nearest_existing_identities": " || ".join(nearest_identities(A, s)) or "none above zero overlap",
-            "relation_evidence": "; ".join(rels) or "none (no non-contradictory relation to any TDR model or other Ice group)",
-            "legacy_r6_candidate": ("; ".join(f"{x[1]} {x[0]} ({x[2]}, score {x[3]})" for x in r6rows) if r6rows else ("none" if r6 else "not fetched")),
-            "lineage_state": "; ".join(ev + red) or "no id_changes event and no R6 redirect",
+            "identity_status": s["identity_status"], "lineage_state": "; ".join(ev + red) or "no id_changes event and no R6 redirect",
             "retired_aliases_in_plan": "|".join(alias),
+            "nearest_existing_canonical_identities": " || ".join(nearest_identities(A, s)) or "none above zero overlap",
+            "relation_evidence": "; ".join(rels) or "none (no non-contradictory relation to any TDR model or other Ice group)",
+            "brand_relation": f"{s['brand'].get('relation')} brand_id={s['brand'].get('brand_id')}" + (" family=" + ",".join(f"{f['brand_id']}({f['relation']})" for f in fam) if fam else ""),
             "shape_flags": "|".join(c_["code"] + ":cleared_by_" + c_["cleared_by"] for c_ in d["evidence_basis"]["cleared_flags"]) or "none fired",
+            "lexical_flags": "|".join(c for c in d["reason_codes"] if c in lex_codes) or "none fired",
             "evidence_tier": d["evidence_basis"]["tier"], "evidence_kinds": "|".join(d["evidence_basis"]["kinds"]),
-            "machine_decision": f"{d['outcome']} / {d['primary_reason']}", "reason_codes": "|".join(d["reason_codes"]),
-            "analyst_note": (f"{notes_row['kind']}: {notes_row['why']}" if notes_row else ""),
-            "owner_label": "", "owner_comment": ""})
+            "bootstrap_decision": f"{d['outcome']} / {d['primary_reason']}", "bootstrap_reason_codes": "|".join(d["reason_codes"]),
+            "legacy_r6_candidate_status": ("; ".join(f"{x[1]} {x[0]} ({x[2]}, score {x[3]})" for x in r6rows) if r6rows else ("none" if r6 else "not fetched")),
+            "changed_by_pr200_rev4_relations": "YES" if changes else "no", "pr200_relation_changes": "; ".join(changes),
+            "in_previous_set_milestone3": "yes" if g in baseline_ids else "NO (added since milestone 3)",
+            "market_activity_state_actual": market["actual"][g]["state"], "market_activity_lane_actual": market["actual"][g]["lane"],
+            "market_activity_state_what_if_NON_AUTHORITATIVE": market["what_if"][g]["state"],
+            "activity_class_informational": cls,
+            "machine_suggested_discovery_class_NON_AUTHORITATIVE": SUGGESTED_DISCOVERY[cls],
+            "analyst_note_NON_AUTHORITATIVE": (f"{notes_row['kind']}: {notes_row['why']}" if notes_row else ""),
+            **{f: "" for f in OWNER_FIELDS}})
     return rows
 
 
-COLUMNS = ["provider", "external_id", "brand", "name", "proposed_canonical_id", "proposed_canonical_name", "first_seen", "last_seen", "lifetime_units", "last12_units",
-           "activity_class_informational", "nearest_existing_identities", "relation_evidence", "legacy_r6_candidate", "lineage_state", "retired_aliases_in_plan",
-           "shape_flags", "evidence_tier", "evidence_kinds", "machine_decision", "reason_codes", "analyst_note", "owner_label", "owner_comment"]
+COLUMNS = ["provider", "external_id", "provider_model_name", "provider_brand", "proposed_canonical_name", "proposed_canonical_id", "first_seen", "last_seen", "lifetime_units", "last12_units",
+           "identity_status", "lineage_state", "retired_aliases_in_plan", "nearest_existing_canonical_identities", "relation_evidence", "brand_relation", "shape_flags", "lexical_flags",
+           "evidence_tier", "evidence_kinds", "bootstrap_decision", "bootstrap_reason_codes", "legacy_r6_candidate_status", "changed_by_pr200_rev4_relations", "pr200_relation_changes",
+           "in_previous_set_milestone3", "market_activity_state_actual", "market_activity_lane_actual", "market_activity_state_what_if_NON_AUTHORITATIVE", "activity_class_informational",
+           "machine_suggested_discovery_class_NON_AUTHORITATIVE", "analyst_note_NON_AUTHORITATIVE", *OWNER_FIELDS]
+HEADER = ("# PROVISIONAL candidate set (not the final truth set; QA pending). Owner fields are blank and must be filled only by the owner: "
+          "owner_verdict in " + " | ".join(OWNER_VERDICTS) + "; owner_discovery_class (only when VALID_MISSING_CANONICAL) in " + " | ".join(OWNER_DISCOVERY_CLASSES) + ". "
+          "Columns ending _NON_AUTHORITATIVE and analyst notes are machine context, never owner truth, never copied into an owner field and never an input to a decision. "
+          "Age, dormancy and volume do not make a candidate false: a discontinued model with no TDR identity is a valid HISTORICAL_BACKFILL.\n")
 
 
 def write_adjudication(rows: list[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as fh:
-        fh.write("# owner_label must be one of: " + " | ".join(OWNER_LABELS) + ". analyst_note is a machine-assisted NOTE, never ground truth; do not calibrate CREATE permission from it.\n")
+        fh.write(HEADER)
         w = csv.DictWriter(fh, fieldnames=COLUMNS)
         w.writeheader()
-        for r in sorted(rows, key=lambda r: (-r["last12_units"], -r["lifetime_units"], r["external_id"])):
+        for r in sorted(rows, key=lambda r: r["external_id"]):
             w.writerow(r)
 
 

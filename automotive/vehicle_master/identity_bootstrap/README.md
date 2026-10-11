@@ -122,6 +122,8 @@ then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writ
 
 **Market-activity routing (separate step, `market_activity/`, proposal):** states `ACTIVE / DECLINING / INACTIVE_INFERRED / REACTIVATED / UNKNOWN` from a consecutive true-zero streak (4 months) after meaningful prior activity; sporadic sub-threshold registrations do not reactivate; a missing Ice row is a zero only under a confirmed `ABSENT_IS_ZERO` with a named coverage guarantee (Q-ICE-ABSENT-ROW is open, so today it is never a zero). It routes to CURRENT_DISCOVERY / HISTORICAL_INACTIVE / ACTIVITY_UNCLASSIFIED, never changes a Bootstrap outcome, never deletes an identity, and nothing in `engine/`, `providers/` or `contract/` may reference it (tested). Results: `shadow/results/…/market_activity.{md,json}`.
 
+**Post-PR-#200 rerun:** relations come from the hash-pinned rev 4 export of PR #200 (`shadow/ir_rev4.py`); nothing of its lexical rules is re-implemented. 73 CREATE / 89 REVIEW / 1,038 HOLD (A), 72 / 375 / 753 (B); structural conflicts 24→9 (A), 105→48 (B). Provisional owner-adjudication set (73 rows, owner fields blank): `shadow/review/create_adjudication.csv`. See `shadow/FINDINGS.md`.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`

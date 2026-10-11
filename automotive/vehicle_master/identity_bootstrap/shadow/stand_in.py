@@ -10,6 +10,8 @@ import unicodedata
 
 from identity_bootstrap.engine.lexical import Lexicon
 
+from . import ir_rev4
+
 TOKEN_EQUIVALENCE = [["ev", "electric"], ["hatch", "hatchback"], ["hev", "hybrid"]]       # assumption, shared with the IR draft's open list
 FUZZY_MIN_TOKEN = 4
 STRENGTH = ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY", "SUBJECT_FINER", "SUBJECT_COARSER", "SIBLING", "CONTRADICTION"]
@@ -36,12 +38,12 @@ def _edit1(a: str, b: str) -> bool:
     return any(long_[:i] + long_[i + 1:] == short for i in range(len(long_)))
 
 
-def name_relation(a: list[str], b: list[str], refined: bool = False, non_distinctive: frozenset[str] = frozenset()) -> str:
-    """Relation of subject tokens `a` to peer tokens `b`, oriented as IR section 5.3 (SUBJECT_FINER = a contains b).
+def name_relation(a: list[str], b: list[str]) -> str:
+    """Pair POPULATION and the relations rev 4 did not touch, oriented as IR section 5.3 (SUBJECT_FINER = a contains b).
 
-    refined=False follows the IR draft: FUZZY = every differing token pairs with a one-edit token (length >= 4); SIBLING = any shared token.
-    refined=True is a what-if for the shadow report only: FUZZY never applies to a token containing a digit (XC60/XC90, DB11/DB12 are different
-    versions, not typos), and SIBLING needs at least one shared token that is distinctive (not a digit, not <= 2 letters, not in `non_distinctive`)."""
+    This is the milestone-2/3 stand-in (FUZZY = every differing token pairs with a one-edit token of length >= 4; SIBLING = any shared token), i.e. a deliberate SUPERSET of
+    the corrected Identity Resolution relations. It contains no lexical correction: FUZZY/SIBLING/model-synonym verdicts come from the pinned PR #200 rev 4 export
+    (`ir_rev4.adjudicate`), never from this function."""
     if not a or not b:
         return "UNAVAILABLE"
     if "".join(a) == "".join(b):
@@ -51,8 +53,7 @@ def name_relation(a: list[str], b: list[str], refined: bool = False, non_distinc
         return "EQUAL_VIA_TOKEN_EQUIV"
     sa, sb = set(a), set(b)
     only_a, only_b = sorted(sa - sb), sorted(sb - sa)
-    if only_a and len(only_a) == len(only_b) and all(len(t) >= FUZZY_MIN_TOKEN for t in only_a + only_b) \
-            and not (refined and any(ch.isdigit() for tok in only_a + only_b for ch in tok)):
+    if only_a and len(only_a) == len(only_b) and all(len(t) >= FUZZY_MIN_TOKEN for t in only_a + only_b):
         left = list(only_b)
         for t in only_a:
             hit = next((u for u in left if _edit1(t, u)), None)
@@ -66,19 +67,16 @@ def name_relation(a: list[str], b: list[str], refined: bool = False, non_distinc
     if sa > sb:
         return "SUBJECT_FINER"
     if sa & sb:
-        if refined and not any(not tok.isdigit() and len(tok) > 2 and tok not in non_distinctive for tok in sa & sb):
-            return "CONTRADICTION"
         return "SIBLING"
     return "CONTRADICTION"
 
 
 class StandIn:
-    def __init__(self, catalog: dict, policy: dict, refined: bool = False, naive_spellings: bool = False, families: bool = True):
+    def __init__(self, catalog: dict, policy: dict, ir: dict | None = None, naive_spellings: bool = False, families: bool = True):
         self.lex = Lexicon(policy)
-        self.refined = refined
+        self.ir = ir        # the vendored PR #200 rev 4 export (shadow.ir_rev4.load()); None = the milestone-3 stand-in alone
         self.naive_spellings = naive_spellings      # offer every catalog alias (sub-brands included) as a spelling, as the first shadow pass did
         self.families = families
-        self.non_distinctive = frozenset(w.casefold() for cls in ("trim", "powertrain", "body", "generation") for w in policy["shape"][cls]["tokens"])
         self.brands = catalog["brands"]
         self.identities = catalog["identities"]
         self.aliases = catalog["aliases"]
@@ -130,7 +128,7 @@ class StandIn:
         return [brand_id]
 
     # ---- relations ----
-    def target_relations(self, brand: dict, name: str, spellings: tuple) -> list[dict]:
+    def target_relations(self, brand: dict, name: str, spellings: tuple, gid: str | None = None) -> list[dict]:
         """Relations of one subject name to the TDR models of its brand family. Both names are tokenised with the UNION of both brands' spellings."""
         if not brand["brand_id"]:
             return []
@@ -142,9 +140,11 @@ class StandIn:
             for ident in self.by_brand.get(bid, ()):
                 best = None
                 for peer_name in [ident["name_en"], *self.aliases.get(ident["canonical_id"], [])]:
-                    rel = name_relation(mine, self.lex.tokens(peer_name, union), self.refined, self.non_distinctive)
+                    rel = name_relation(mine, self.lex.tokens(peer_name, union))
                     if rel in STRENGTH and (best is None or STRENGTH.index(rel) < STRENGTH.index(best)):
                         best = rel
+                if self.ir is not None:
+                    best = ir_rev4.adjudicate(best or "CONTRADICTION", self.ir["ice_tdr_relation_pairs"].get(f"{gid}|{ident['canonical_id']}"))
                 if best and best not in ("CONTRADICTION", "UNAVAILABLE"):
                     out.append({"peer_kind": "TARGET", "peer_id": ident["canonical_id"], "identity_state": None, "name_relation": best})
         return out
@@ -159,7 +159,9 @@ class StandIn:
             ids.sort()
             for i, a in enumerate(ids):
                 for b in ids[i + 1:]:
-                    rel = name_relation(tokens[a], tokens[b], self.refined, self.non_distinctive)
+                    rel = name_relation(tokens[a], tokens[b])
+                    if self.ir is not None:
+                        rel = ir_rev4.adjudicate(rel, self.ir["ice_ice_relation_pairs"].get(f"{a}|{b}"))
                     if rel not in ("CONTRADICTION", "UNAVAILABLE"):
                         out[a].append({"peer_kind": "SUBJECT", "peer_id": b, "name_relation": rel})
         return out

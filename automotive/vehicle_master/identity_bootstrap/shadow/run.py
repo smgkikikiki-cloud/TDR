@@ -16,8 +16,8 @@ DEFAULT_LEGACY = VM / "integration_data" / "tdr_2026-09-09.json"
 DEFAULT_PACKAGE = VM.parents[1] / "data" / "packages" / "2569-09" / "v3_M7.0" / package.PINNED["file"]
 
 
-def build(mode: str, pkg: dict, catalog: dict, policy: dict, refined: bool = False, **stand_in_options) -> tuple[dict, stand_in.StandIn]:
-    si = stand_in.StandIn(catalog, policy, refined, **stand_in_options)
+def build(mode: str, pkg: dict, catalog: dict, policy: dict, ir: dict | None = None, **stand_in_options) -> tuple[dict, stand_in.StandIn]:
+    si = stand_in.StandIn(catalog, policy, ir, **stand_in_options)
     dims = pkg["dims"]
     brand = {r["brand"]: si.brand_for(r["brand"]) for r in dims}
     tokens = {r["model_group_id"]: si.lex.tokens(r["model_name"], (r["brand"], *brand[r["brand"]].get("spellings", []))) for r in dims}
@@ -29,7 +29,7 @@ def build(mode: str, pkg: dict, catalog: dict, policy: dict, refined: bool = Fal
         if gid not in cache:
             b = brand[row["brand"]]
             spell = (row["brand"], *b.get("spellings", []))
-            cache[gid] = si.target_relations(b, row["model_name"], spell) + subject_rel[gid]
+            cache[gid] = si.target_relations(b, row["model_name"], spell, gid) + subject_rel[gid]
         return cache[gid]
 
     snapshot = ice.build_snapshot(
@@ -40,12 +40,12 @@ def build(mode: str, pkg: dict, catalog: dict, policy: dict, refined: bool = Fal
 
 
 def run(mode: str, package_path: Path = DEFAULT_PACKAGE, models_dir: Path = DEFAULT_MODELS, legacy: Path = DEFAULT_LEGACY,
-        pkg: dict | None = None, refined: bool = False, with_slugs: bool = True, policy: dict | None = None, **stand_in_options) -> dict:
+        pkg: dict | None = None, ir: dict | None = None, with_slugs: bool = True, policy: dict | None = None, **stand_in_options) -> dict:
     policy, registry = policy or loader.load_policy(), loader.load_reason_codes()
     pkg = pkg or package.load(package_path)
     catalog = tdr_catalog.load(models_dir, legacy, with_slugs)
-    snapshot, si = build(mode, pkg, catalog, policy, refined, **stand_in_options)
+    snapshot, si = build(mode, pkg, catalog, policy, ir, **stand_in_options)
     started = time.perf_counter()
     decisions = engine.decide(snapshot, policy, registry)
     return {"mode": mode, "package": pkg, "catalog": catalog, "snapshot": snapshot, "decisions": decisions, "policy": policy, "registry": registry,
-            "stand_in": si, "refined": refined, "seconds": round(time.perf_counter() - started, 2)}
+            "stand_in": si, "ir": ir, "seconds": round(time.perf_counter() - started, 2)}

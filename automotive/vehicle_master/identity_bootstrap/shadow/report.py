@@ -14,7 +14,7 @@ from identity_bootstrap import engine
 from identity_bootstrap.engine.lexical import Lexicon
 from identity_bootstrap.engine.fingerprint import canonical_json
 
-from . import calibration, run as shadow_run
+from . import calibration, ir_rev4, post_ir, run as shadow_run
 
 RULE_FLAGS = {"R1_HYPHENATED_REGISTRATION_CODE", "R2_GLUED_POWERTRAIN_SUFFIX", "R4_DISPLACEMENT_TRIM_CODE"}
 CLASSES = ("model_code", "trim", "powertrain", "body", "generation")
@@ -76,7 +76,7 @@ def _drop_class(policy: dict, cls: str) -> dict:
 
 
 # ---------------------------------------------------------------------------------------------------------------- analysis
-def analyse(A: dict, B: dict, notes_path: Path | None = None, refined: dict | None = None) -> dict:
+def analyse(A: dict, B: dict, notes_path: Path | None = None) -> dict:
     pkg, policy, registry = A["package"], A["policy"], A["registry"]
     units, last12 = _units(pkg), pkg["last12"]
     dims = {r["model_group_id"]: r for r in pkg["dims"]}
@@ -228,18 +228,6 @@ def analyse(A: dict, B: dict, notes_path: Path | None = None, refined: dict | No
                       "subjects_with_lineage_codes": sorted([[g, [c for c in d["reason_codes"] if c in lineage_codes]] for g, d in dA.items() if any(c in lineage_codes for c in d["reason_codes"])]),
                       "events_whose_new_id_is_not_a_subject": sum(1 for e in snap["lineage"]["events"] if e["new_id"] not in subj)}
 
-    # ---- what-if: a stricter relation layer (stand-in `refined`), same engine and policy
-    if refined:
-        rA, rB = refined["A"], refined["B"]
-        cA = {d["subject"]["entity_id"] for d in rA["decisions"] if d["outcome"] == "CREATE_IDENTITY"}
-        base = {g for g, d in dA.items() if d["outcome"] == "CREATE_IDENTITY"}
-        out["refined_relations_whatif"] = {
-            "A": _bucket(rA["decisions"], units, last12), "B": _bucket(rB["decisions"], units, last12),
-            "structural_conflict_groups": {"A": sum(1 for d in rA["decisions"] if "STRUCTURAL_CONFLICT" in d["reason_codes"]), "B": sum(1 for d in rB["decisions"] if "STRUCTURAL_CONFLICT" in d["reason_codes"])},
-            "new_creates_vs_base_A": sorted(cA - base), "lost_creates_vs_base_A": sorted(base - cA),
-            "new_creates_in_B": sorted({d["subject"]["entity_id"] for d in rB["decisions"] if d["outcome"] == "CREATE_IDENTITY"} - base),
-            "new_creates_flagged_by_R4": sorted(g for g in cA - base if any(trim_code.search(x) for x in toks(g)))}
-
     # ---- word rules
     out["word_rules"] = _word_rules(A, B, subj, dA, toks, policy, registry, lex, units)
     return out
@@ -330,21 +318,39 @@ def write_files(summary: dict, A: dict, B: dict, out_dir: Path) -> list[Path]:
 
 
 def build_all(package_path: Path = shadow_run.DEFAULT_PACKAGE) -> tuple[dict, dict, dict, list[dict]]:
-    """Everything the committed results derive from: runs A and B, the refined-relations what-if, the milestone-3 calibration, and the adjudication rows."""
-    A = shadow_run.run("A", package_path)
-    B = shadow_run.run("B", package_path, pkg=A["package"])
-    refined = {"A": shadow_run.run("A", package_path, pkg=A["package"], refined=True), "B": shadow_run.run("B", package_path, pkg=A["package"], refined=True)}
-    summary = analyse(A, B, refined=refined)
+    """Everything the committed results derive from: runs A and B with the pinned PR #200 rev 4 relations, the comparison with the frozen milestone-3 results,
+    the market-activity routing, and the PROVISIONAL adjudication rows. `A0` (same run, stand-in relations only) exists only to name the relation changes."""
+    ir = ir_rev4.load()
+    A = shadow_run.run("A", package_path, ir=ir)
+    B = shadow_run.run("B", package_path, pkg=A["package"], ir=ir)
+    A0 = shadow_run.run("A", package_path, pkg=A["package"])
+    summary = analyse(A, B)
     notes = yaml.safe_load((Path(__file__).with_name("analyst_notes.yaml")).read_text(encoding="utf-8"))["create_verdicts"]
-    base = calibration.load_baseline()
-    effects = calibration.rule_effects(A, A["package"])
-    diff = calibration.diff_against_baseline(A, B, base, notes)
-    summary["m3"] = {"baseline": "shadow/baseline_m2/decisions.csv (milestone 2: policy v1, same package, same TDR catalog)", "policy_version": A["policy"]["version"], "diff": diff,
-                     "rule_effects": effects, "removed_create_attribution": calibration.attribute_removed(diff["A"]["create_removed"], effects),
-                     "universe": calibration.universe_effect(A, A["package"]), "universe_verification": A["catalog"]["verification"]["comparison_with_file_snapshot"],
-                     "activity": _activity(summary["creates"], A["package"])}
-    rows = calibration.adjudication_rows(A, summary["creates"], notes, calibration.load_r6(), A["catalog"]["verification"]["redirects"])
+    base = calibration.load_baseline(calibration.HERE / "baseline_m3" / "decisions.csv")
+    baseline_ids = post_ir.load_baseline_ids(calibration.HERE / "baseline_m3" / "create_adjudication.csv")
+    creates = sorted(c["id"] for c in summary["creates"])
+    m4 = post_ir.build_m4(A, B, A0, ir, base, baseline_ids, creates)
+    m4["activity_classes_informational"] = _activity(summary["creates"], A["package"])
+    m4["policy_version"] = A["policy"]["version"]
+    m4["universe_verification"] = A["catalog"]["verification"]["comparison_with_file_snapshot"]
+    summary["m4"] = m4
+    mk = post_ir.market(A, creates)
+    rows = calibration.adjudication_rows(A, A0, creates, notes, calibration.load_r6(), A["catalog"]["verification"]["redirects"], baseline_ids, mk)
     return A, B, summary, rows
+
+
+def write_transitions(rows: list[dict], path: Path) -> None:
+    with path.open("w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]) if rows else ["model_group_id"])
+        w.writeheader()
+        w.writerows(rows)
+
+
+def write_market(A: dict, summary: dict, out: Path) -> None:
+    from . import activity_report
+    s = activity_report.build(A)
+    (out / "market_activity.json").write_text(json.dumps(s, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    (out / "market_activity.md").write_text(activity_report.render_md(s), encoding="utf-8")
 
 
 def _activity(creates: list[dict], pkg: dict) -> dict:
@@ -370,6 +376,8 @@ def main(argv: list[str] | None = None) -> int:
     for path in write_files(summary, A, B, args.out):
         print(path)
     calibration.write_adjudication(rows, (args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
+    write_transitions(summary["m4"]["transitions"], args.out / "transitions_vs_m3.csv")
+    write_market(A, summary, args.out)
     print((args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
     return 0
 
@@ -381,41 +389,49 @@ def _table(head: list[str], rows: list[list]) -> str:
 
 
 
-def _m3_md(s: dict, m: dict) -> str:
-    d = m["diff"]
-    L = ["## 0. Milestone 3 — calibration and false-CREATE reduction (before / after)\n",
-         f"Baseline = the frozen milestone-2 run ({m['baseline']}). After = policy v{m['policy_version']}, same package, TDR side = the live Vehicle Master ({m['universe_verification']['models_compared']} models, verified identical to the repo file snapshot by read-only SELECT). **Volume never decides an outcome; it is shown for information.**\n",
-         "### 0.1 Counts and volume\n"]
-    base = s["m3"].get("baseline_counts") or {}
+def _m4_md(s: dict, m: dict) -> str:
+    d, par, rel, st = m["diff"], m["parity"], m["released_no_candidate"], m["structural"]
+    L = ["## 0. Post-PR-#200-rev-4 rerun (relations consumed from the pinned export, not re-implemented)\n",
+         f"- PR #200 commit `{m['pr200']['commit']}` (`{m['pr200']['label']}`); source blobs sha256 {m['pr200']['sources_sha256']}. Policy keys in force there: {m['pr200']['policy']}.",
+         "- The stand-in supplies only the pair population and the relations rev 4 did not touch; every FUZZY / SIBLING / EQUAL_VIA_MODEL_ALIAS verdict comes from the export. Same engine, policy v" + str(m["policy_version"]) + ", package and TDR universe as milestone 3.",
+         f"- Baseline: {m['baseline']}.\n", "### 0.1 Counts (before = milestone 3)\n"]
     rows = []
     for mode in ("A", "B"):
-        tm = d[mode]["transition_matrix"]
-        old = collections.Counter()
-        new = collections.Counter()
-        for k, n in tm.items():
+        old, new = collections.Counter(), collections.Counter()
+        for k, n in d[mode]["transition_matrix"].items():
             a, b = k.split(" -> ")
             old[a] += n
             new[b] += n
         for o in ("CREATE_IDENTITY", "IDENTITY_REVIEW", "HOLD"):
             v = s["buckets"][mode][o]
             rows.append([mode, o, old[o], new[o], f"{v['units_total']:,}", f"{v['units_last12']:,}"])
-    L.append(_table(["Mode", "Outcome", "Before (groups)", "After (groups)", "Units all time (after)", "Units last 12 m (after)"], rows))
+    L.append(_table(["Mode", "Outcome", "Before", "After", "Units all time (after, info)", "Units last 12 m (after, info)"], rows))
     for mode in ("A", "B"):
-        L.append(f"**Mode {mode} transition matrix (before → after):** " + "; ".join(f"{k} {n}" for k, n in sorted(d[mode]["transition_matrix"].items())) + f". CREATEs added: **{len(d[mode]['create_added'])}**. Groups whose outcome or primary reason changed: {d[mode]['groups_with_any_change']}.\n")
-    L.append("### 0.2 Effect of the fuller Vehicle Master universe\n")
-    u = m["universe"]
-    L.append(f"{u['explanation']}. CREATEs removed because the full universe already contained them: **{len(u['create_removed_by_the_fuller_universe'])}**; added: {len(u['create_added_by_the_fuller_universe'])}. Live vs file snapshot: model ids equal = {m['universe_verification']['model_ids_equal']}; brand/en-name/alias differences = {m['universe_verification']['models_whose_brand_name_en_or_aliases_differ']}; historical ids {m['universe_verification']['historical_ids_equal']}. Not available in this schema: DISCOVERED/pending identities, UNVERIFIED state, deleted/withdrawn ids (the live Vehicle Master has no such columns/rows — see `shadow/universe/vehicle_master_live_2026-10-11.json`). Historical: 5 ids included. **The full Vehicle Master did not materially reduce CREATE (0 of 78 baseline CREATEs).**\n")
-    L.append("### 0.3 CREATEs removed, by rule (single-rule ablation: switch only that rule off)\n")
-    L.append(_table(["Rule", "Groups changed (any outcome/code)", "CREATE → not CREATE", "New REVIEW", "New HOLD", "Became CREATE"],
-                    [[r, e["groups_changed"], ", ".join(e["created_off_not_created_on"]) or "none", ", ".join(e["new_reviews"]) or "none", len(e["new_holds"]), ", ".join(e["became_create"]) or "none"] for r, e in m["rule_effects"].items()]))
-    L.append("Notes: " + " ".join(f"`{r}`: {e['note']}." for r, e in m["rule_effects"].items() if e["note"]) + " `SUB_BRAND_guard` and `BRAND_FAMILY` change nothing in this run because the stand-in resolver already filters sub-brand aliases and pools Changan/Deepal; they are pinned by corpus cases, not by this run. `YEAR_range_and_context` changes no M7 group (no M7 name was misread as a year in the base run either); it is pinned by the Peugeot 2008 / lone-year cases.\n")
-    L.append(f"Removed CREATEs and the rule responsible: {m['removed_create_attribution']}\n")
-    L.append("### 0.4 New REVIEWs (CREATE → REVIEW) and HOLD moves\n")
-    L.append(f"CREATE → REVIEW: {d['A']['review_added']}. REVIEW → HOLD (R1: the same registration-code names are now caught earlier as raw codes): {len(d['A']['review_removed'])} groups {d['A']['review_removed']}.\n")
-    L.append("### 0.5 Remaining CREATEs by activity (informational)\n")
-    L.append(_table(["Class", "Groups", "Lifetime units", "Last 12 m units"], [[c, v["groups"], f"{v['lifetime_units']:,}", f"{v['last12_units']:,}"] for c, v in m["activity"].items()]))
-    L.append(f"Recent discoveries (class RECENT_DISCOVERY): {m['activity'].get('RECENT_DISCOVERY', {}).get('ids')}. DORMANT_LEGACY = ≤{DORMANT_LAST12} registrations in the last 12 months; RECENT_DISCOVERY = more than that and first seen on or after {calibration.ACTIVITY_RECENT_FIRST_SEEN}; ACTIVE_ESTABLISHED = the rest. These are shown separately from genuinely recent discoveries and never alter a decision.\n")
-    L.append("Owner adjudication artifact: `shadow/review/create_adjudication.csv` — one row per remaining CREATE, `owner_label` blank. The analyst column is a note, not ground truth.\n")
+        L.append(f"**Mode {mode} transitions:** " + "; ".join(f"{k} {n}" for k, n in sorted(d[mode]["transition_matrix"].items() if False else d[mode]["transition_matrix"].items())) + f". CREATE added {d[mode]['create_added']}; CREATE removed {d[mode]['create_removed']}.\n")
+    cs = m["create_sets"]
+    L.append(f"**CREATE set: {cs['count']}** (added vs milestone 3: {cs['added_vs_m3']}; removed: {cs['removed_vs_m3']}; unchanged {cs['unchanged']}). Worst-case mode B creates a subset of mode A: **{cs['B_subset_of_A']}**; in A but not B: {cs['in_A_not_B']} (a sibling that the resolver stand-in diverted in A forms no batch conflict there).\n")
+    L.append("### 0.2 Per-subject decision transitions (any mode; first 60 by units)\n")
+    L.append(_table(["Group", "Name", "Status", "Units (info)", "A before", "A after", "B before", "B after"],
+                    [[t["model_group_id"], t["name"], t["identity_status"], t["lifetime_units"], t["A_before"], t["A_after"], t["B_before"], t["B_after"]] for t in sorted(m["transitions"], key=lambda t: -t["lifetime_units"])[:60]]))
+    L.append(f"{len(m['transitions'])} groups changed in total (full list: `transitions_vs_m3.csv`).\n")
+    L.append("### 0.3 Structural conflicts\n")
+    L.append(_table(["Mode", "Before", "After", "Left the set", "Entered the set"], [[k, v["before"], v["after"], len(v["left"]), f"{len(v['entered'])}: {', '.join(v['entered'][:12])}"] for k, v in st.items()]))
+    L.append("### 0.4 Newly exposed CREATE-risk cases\n")
+    L.append(_table(["Group", "Name", "Before (M3)", "A after", "B after", "Relation changes that exposed it"],
+                    [[r["id"], r["name"], r["before"], r["A_after"], r["B_after"], "; ".join(r["relation_changes"]) or "none (batch effect)"] for r in m["new_create_risks"]]))
+    L.append(f"### 0.5 The {rel['pr200_count']} NO_CANDIDATE groups PR #200 released from structural conflict ({rel['pr200_units']:,} lifetime units, info)\n")
+    L.append(f"Present in this run: {rel['present_in_bootstrap_run']}; identity status {rel['identity_status']}. **Not all are Bootstrap candidates**: unsettled raw ids (`BRAND|MODEL`) and provisional ids are HOLD by contract.\n")
+    L.append(_table(["Mode", "Outcomes before (M3)", "Outcomes after", "Primary reasons after", "CREATE"], [[mo, rel[mo]["before_m3"], rel[mo]["after"], rel[mo]["after_primary"], rel[mo]["create"]] for mo in ("A", "B")]))
+    L.append("### 0.6 Relation parity with the pinned export\n")
+    L.append(_table(["Population", "Exported pairs", "Missing / relabelled", "FUZZY/SIBLING not in export", "Corrected kinds [stand-in, IR]", "Unchanged kinds [stand-in, IR]"],
+                    [[k, par[k]["exported_pairs"], len(par[k]["exported_pairs_missing_or_relabelled"]), len(par[k]["fuzzy_or_sibling_not_in_export"]), par[k]["corrected_kinds_equal"], par[k]["unchanged_kinds_standin_vs_ir"]] for k in ("ice_ice", "ice_tdr")]))
+    ov = par["unchanged_class_relations_overridden_by_ir"]
+    L.append(f"Stand-in relation of an unchanged kind overridden by IR's verdict (IR is the authority; a stand-in/IR population disagreement, not a rev 4 rule): ice×ice {len(ov['ice_ice'])}, ice×tdr {len(ov['ice_tdr'])} — {ov['ice_tdr']}\n")
+    ma = m["market_activity"]
+    L.append("### 0.7 Market-activity routing of the CREATE candidates (routing only; absent rows UNKNOWN)\n")
+    L.append(f"**Actual:** states {ma['actual']['states']}; lanes {ma['actual']['lanes']}. **What-if (NOT AUTHORITATIVE, assumes ABSENT_IS_ZERO):** states {ma['what_if_NOT_AUTHORITATIVE']['states']}; lanes {ma['what_if_NOT_AUTHORITATIVE']['lanes']}.\n")
+    L.append("Informational activity classes of the CREATE set: " + "; ".join(f"{c} {v['groups']}" for c, v in m["activity_classes_informational"].items()) + ". Age or low volume never decides an outcome; dormant legacy models are valid HISTORICAL_BACKFILL candidates, not false CREATEs.\n")
+    L.append("Provisional owner-adjudication set: `shadow/review/create_adjudication.csv` (owner fields blank; QA pending).\n")
     return "\n".join(L)
 
 
@@ -427,8 +443,8 @@ def render_md(s: dict) -> str:
          f"- Status mix (adapter): {i['status_mix']}. Policy v{i['policy_version']} `{i['policy_digest'][:23]}…`. TDR side: **{i['tdr_catalog']['models']} models / {i['tdr_catalog']['brands']} brands from {i['tdr_catalog']['source']}**.",
          "- Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (worst case): every group is offered to Bootstrap as `NO_CANDIDATE`.\n",
          ]
-    if s.get("m3"):
-        L.append(_m3_md(s, s["m3"]))
+    if s.get("m4"):
+        L.append(_m4_md(s, s["m4"]))
     L.append("## 1. Decisions and registration-volume coverage (informational)\n")
     for mode in ("A", "B"):
         L.append(f"**Mode {mode}**\n")
@@ -466,12 +482,6 @@ def render_md(s: dict) -> str:
         L.append(f"**Mode {mode}: {len(s['structural_conflicts'][mode])} groups**\n")
         L.append(_table(["Group", "Name", "Outcome", "Codes", "Batch group", "Units"],
                         [[c["id"], c["name"], c["outcome"], " ".join(c["codes"]), ", ".join(c["group"]), f"{c['units_total']:,}"] for c in s["structural_conflicts"][mode]]))
-    rf = s.get("refined_relations_whatif")
-    if rf:
-        L.append("**What-if: stricter relations (FUZZY never on digit-bearing tokens; SIBLING needs a distinctive shared token); same engine, same policy**\n")
-        for mode in ("A", "B"):
-            L.append(f"Mode {mode}: " + "; ".join(f"{o} {v['groups']} ({v['units_share_pct']}% of units)" for o, v in rf[mode].items()) + f"; groups with STRUCTURAL_CONFLICT: {rf['structural_conflict_groups'][mode]}.")
-        L.append(f"\nCREATEs gained vs the base relations — A: {rf['new_creates_vs_base_A'] or 'none'}; B: {rf['new_creates_in_B'] or 'none'}; lost in A: {rf['lost_creates_vs_base_A'] or 'none'}. Of the gained CREATEs, rule R4 flags: {rf['new_creates_flagged_by_R4'] or 'none'}.\n")
     q = s["relation_quality"]
     L.append(f"**Relation quality (stand-in for the IR layer, subject↔subject pairs):** SIBLING pairs {q['subject_pairs_sibling']}, of which {q['sibling_on_non_distinctive_token_only']} share only a non-distinctive token (digits, ≤2 letters, or a trim/powertrain/body/generation word) — e.g. {q['sibling_examples'][:6]}; FUZZY pairs {q['subject_pairs_fuzzy']}, of which {q['fuzzy_where_the_differing_token_has_a_digit']} differ in a token that contains a digit (a different version/code, not a typo) — e.g. {q['fuzzy_digit_examples'][:6]}.\n")
     ln = s["lineage"]

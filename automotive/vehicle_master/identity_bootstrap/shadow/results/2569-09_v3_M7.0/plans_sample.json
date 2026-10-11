@@ -9,252 +9,6 @@
     "PROVIDER_IDENTITY"
    ],
    "refs": [
-    "ice:2569-09:v3:M7.0#model_group/honda-jazz"
-   ],
-   "tier": 0
-  },
-  "existing_identity": null,
-  "fingerprints": {
-   "decision": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
-   "idempotency_key": "sha256:e763b1763f09599ef4866f559a48d9e380e27a38d19dba47850ca3c51fc0a433",
-   "identity_key": "honda|jazz",
-   "review": "sha256:ab1414caaef5e3a8d3eb6a2ff04927a3edbb20aecc92bb178a48378196e763da"
-  },
-  "identity": {
-   "allocation": {
-    "collision": false,
-    "local_segment": "jazz",
-    "method": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"
-   },
-   "brand_id": "honda",
-   "canonical_model_id": "honda.jazz",
-   "canonical_name": "Jazz",
-   "enrichment_state": "PENDING",
-   "identity_key": "honda|jazz",
-   "identity_state": "DISCOVERED",
-   "slug": "honda-jazz"
-  },
-  "outcome": "CREATE_IDENTITY",
-  "policy": {
-   "digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
-   "version": 2
-  },
-  "primary_reason": "NEW_IDENTITY_CONFIRMED",
-  "provider": "ice",
-  "reason_codes": [
-   "NEW_IDENTITY_CONFIRMED"
-  ],
-  "record_type": "decision",
-  "review": {
-   "alert": null,
-   "priority_band": "HIGH",
-   "queue": null,
-   "required": false
-  },
-  "source_version": "ice:2569-09:v3:M7.0",
-  "subject": {
-   "display_name": "Jazz",
-   "entity_id": "honda-jazz",
-   "provider": "ice"
-  },
-  "suggested_binding": null,
-  "write_plan": {
-   "actor_kind": "BOOTSTRAP",
-   "apply_mode": "PROPOSE",
-   "deferred_fields": [
-    "provenance.run_id",
-    "provenance.created_at",
-    "provenance.actor",
-    "event.occurred_at",
-    "event.creation.run_id"
-   ],
-   "event": {
-    "aliases": [
-     {
-      "external_id": "honda-jazz",
-      "provider": "ice",
-      "relation": "ORIGIN"
-     }
-    ],
-    "brand_id": "honda",
-    "canonical_model_id": "honda.jazz",
-    "canonical_name": "Jazz",
-    "creation": {
-     "apply_mode": "PROPOSE",
-     "contract_version": 1,
-     "creator_type": "machine",
-     "decision_fingerprint": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
-     "evidence": {
-      "kinds": [
-       "PROVIDER_IDENTITY"
-      ],
-      "refs": [
-       "ice:2569-09:v3:M7.0#model_group/honda-jazz"
-      ],
-      "tier": 0
-     },
-     "policy_version": 2,
-     "reason_codes": [
-      "NEW_IDENTITY_CONFIRMED"
-     ]
-    },
-    "enrichment_hints": {
-     "excluded_neighbors": [],
-     "known_names": [
-      "Jazz"
-     ],
-     "provider_hints": {
-      "body": "Hatchback",
-      "segment": "A-segment"
-     }
-    },
-    "enrichment_state": "PENDING",
-    "event_id": "sha256:9cf03918e490dfdcec3d68e0b1efcc67e390b1e3d997d3c27bf1b5d80ccf4e05",
-    "event_type": "VEHICLE_IDENTITY_CREATED",
-    "event_version": 1,
-    "identity_state": "DISCOVERED",
-    "occurred_at": null,
-    "source": {
-     "external_id": "honda-jazz",
-     "first_seen_period": "2021-01",
-     "provider": "ice",
-     "source_version": "ice:2569-09:v3:M7.0"
-    }
-   },
-   "lock_key": "identity_bootstrap:honda",
-   "operations": [
-    {
-     "idempotency_key": "sha256:b552fd4fff6b5b51cf59792bed75bf597339b827c734f37c2d34abea5f6b5c98",
-     "op": "RESERVE_CANONICAL_ID",
-     "values": {
-      "brand_id": "honda",
-      "canonical_id": "honda.jazz",
-      "identity_key": "honda|jazz",
-      "slug": "honda-jazz"
-     }
-    },
-    {
-     "idempotency_key": "sha256:f6cec63cb513d034713382ef333239856d65e47899bcccc727e7ba428ce2fdb0",
-     "op": "INSERT_IDENTITY_SHELL",
-     "table": "vehicle_models",
-     "values": {
-      "brand_id": "honda",
-      "canonical_id": "honda.jazz",
-      "enrichment_state": "PENDING",
-      "identity_state": "DISCOVERED",
-      "name_en": "Jazz",
-      "slug": "honda-jazz"
-     }
-    },
-    {
-     "idempotency_key": "sha256:12befac72fa41a5cca54cbca769fd972c8c683a7289280277753f746b70d434b",
-     "op": "INSERT_EXTERNAL_ALIAS",
-     "rows": [
-      {
-       "canonical_id": "honda.jazz",
-       "external_id": "honda-jazz",
-       "provider": "ice",
-       "relation": "ORIGIN",
-       "state": "ACTIVE"
-      }
-     ],
-     "table": "vehicle_identity_aliases"
-    },
-    {
-     "idempotency_key": "sha256:f2de8fc37a9da9a9dc761d29be85f3938be324102bace8ee7211f1ff13e7849c",
-     "op": "INSERT_PROVENANCE",
-     "table": "vehicle_identity_provenance",
-     "values": {
-      "actor": null,
-      "apply_mode": "PROPOSE",
-      "canonical_id": "honda.jazz",
-      "contract_version": 1,
-      "created_at": null,
-      "creator_type": "machine",
-      "decision_fingerprint": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
-      "evidence_kinds": [
-       "PROVIDER_IDENTITY"
-      ],
-      "evidence_refs": [
-       "ice:2569-09:v3:M7.0#model_group/honda-jazz"
-      ],
-      "evidence_tier": 0,
-      "external_id": "honda-jazz",
-      "first_seen_period": "2021-01",
-      "identity_key": "honda|jazz",
-      "policy_version": 2,
-      "provider": "ice",
-      "reason_codes": [
-       "NEW_IDENTITY_CONFIRMED"
-      ],
-      "run_id": null,
-      "source_version": "ice:2569-09:v3:M7.0"
-     }
-    },
-    {
-     "idempotency_key": "sha256:8fc21aab26f13009f159da8899079fc78d4d5790d4fd1ecdb526659ea0473663",
-     "op": "ENQUEUE_EVENT",
-     "table": "vehicle_identity_events",
-     "values": {
-      "event_id": "sha256:9cf03918e490dfdcec3d68e0b1efcc67e390b1e3d997d3c27bf1b5d80ccf4e05"
-     }
-    },
-    {
-     "idempotency_key": "sha256:b1aa9fa5a6b35cdda5306a784772d5718eddff543a42cef8f293c48e21d2af9d",
-     "op": "PROPOSE_ORIGIN_MAPPING",
-     "values": {
-      "canonical_id": "honda.jazz",
-      "method": "ORIGIN",
-      "provider": "ice",
-      "state": "AUTO",
-      "subject_id": "honda-jazz"
-     }
-    }
-   ],
-   "plan_id": "sha256:8650324da2ada42adcf298164108d1fe7af77b8a52758e2e1f1a2ef37684dc2e",
-   "preconditions": [
-    {
-     "brand_id": "honda",
-     "kind": "brand_exists"
-    },
-    {
-     "canonical_id": "honda.jazz",
-     "kind": "canonical_id_absent"
-    },
-    {
-     "kind": "slug_absent",
-     "slug": "honda-jazz"
-    },
-    {
-     "brand_id": "honda",
-     "identity_key": "honda|jazz",
-     "kind": "identity_key_absent"
-    },
-    {
-     "canonical_id": "honda.jazz",
-     "external_id": "honda-jazz",
-     "kind": "alias_absent_or_same",
-     "provider": "ice"
-    },
-    {
-     "brand_id": "honda",
-     "digest": "sha256:948fddb1f64263b59935f53dd36fa37e175acd6000e2a4c9874450a4ffcf028d",
-     "kind": "brand_identity_digest"
-    }
-   ],
-   "required_permission": "CREATE_DISCOVERED_SHELL"
-  }
- },
- {
-  "batch_group": [],
-  "contract_version": 1,
-  "creator_type": "machine",
-  "evidence_basis": {
-   "cleared_flags": [],
-   "kinds": [
-    "PROVIDER_IDENTITY"
-   ],
-   "refs": [
     "ice:2569-09:v3:M7.0#model_group/jaecoo-jaecoo-j6"
    ],
    "tier": 0
@@ -732,6 +486,253 @@
     {
      "brand_id": "toyota",
      "digest": "sha256:c0a2dbcab7e587e985f2c826a58b4fe158c63e242a083d064f7c10cb27d83b9c",
+     "kind": "brand_identity_digest"
+    }
+   ],
+   "required_permission": "CREATE_DISCOVERED_SHELL"
+  }
+ },
+ {
+  "batch_group": [],
+  "contract_version": 1,
+  "creator_type": "machine",
+  "evidence_basis": {
+   "cleared_flags": [],
+   "kinds": [
+    "PROVIDER_IDENTITY"
+   ],
+   "refs": [
+    "ice:2569-09:v3:M7.0#model_group/nissan-nissan-march"
+   ],
+   "tier": 0
+  },
+  "existing_identity": null,
+  "fingerprints": {
+   "decision": "sha256:bf0b3977c26b46d1757482b2b1171561640b393c43e77505b894b279a936bcde",
+   "idempotency_key": "sha256:1773211d95f5df5a84e75c707aa735decdd12b7adc18e9145bc3e71e247228c0",
+   "identity_key": "nissan|march",
+   "review": "sha256:88efbdaa5969d472d9efb3d14bfa4b32a4f22544aed9efe657d2b9595febac88"
+  },
+  "identity": {
+   "allocation": {
+    "collision": false,
+    "local_segment": "march",
+    "method": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"
+   },
+   "brand_id": "nissan",
+   "canonical_model_id": "nissan.march",
+   "canonical_name": "March",
+   "enrichment_state": "PENDING",
+   "identity_key": "nissan|march",
+   "identity_state": "DISCOVERED",
+   "slug": "nissan-march"
+  },
+  "outcome": "CREATE_IDENTITY",
+  "policy": {
+   "digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
+   "version": 2
+  },
+  "primary_reason": "NEW_IDENTITY_CONFIRMED",
+  "provider": "ice",
+  "reason_codes": [
+   "NEW_IDENTITY_CONFIRMED"
+  ],
+  "record_type": "decision",
+  "review": {
+   "alert": null,
+   "priority_band": "HIGH",
+   "queue": null,
+   "required": false
+  },
+  "source_version": "ice:2569-09:v3:M7.0",
+  "subject": {
+   "display_name": "Nissan March",
+   "entity_id": "nissan-nissan-march",
+   "provider": "ice"
+  },
+  "suggested_binding": null,
+  "write_plan": {
+   "actor_kind": "BOOTSTRAP",
+   "apply_mode": "PROPOSE",
+   "deferred_fields": [
+    "provenance.run_id",
+    "provenance.created_at",
+    "provenance.actor",
+    "event.occurred_at",
+    "event.creation.run_id"
+   ],
+   "event": {
+    "aliases": [
+     {
+      "external_id": "nissan-nissan-march",
+      "provider": "ice",
+      "relation": "ORIGIN"
+     }
+    ],
+    "brand_id": "nissan",
+    "canonical_model_id": "nissan.march",
+    "canonical_name": "March",
+    "creation": {
+     "apply_mode": "PROPOSE",
+     "contract_version": 1,
+     "creator_type": "machine",
+     "decision_fingerprint": "sha256:bf0b3977c26b46d1757482b2b1171561640b393c43e77505b894b279a936bcde",
+     "evidence": {
+      "kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "refs": [
+       "ice:2569-09:v3:M7.0#model_group/nissan-nissan-march"
+      ],
+      "tier": 0
+     },
+     "policy_version": 2,
+     "reason_codes": [
+      "NEW_IDENTITY_CONFIRMED"
+     ]
+    },
+    "enrichment_hints": {
+     "excluded_neighbors": [],
+     "known_names": [
+      "March",
+      "Nissan March"
+     ],
+     "provider_hints": {
+      "body": "Hatchback",
+      "segment": "A-segment"
+     }
+    },
+    "enrichment_state": "PENDING",
+    "event_id": "sha256:cd0efb00e2ca06fa181539c2612bc823a95def8663e792ea062bd70eaa875811",
+    "event_type": "VEHICLE_IDENTITY_CREATED",
+    "event_version": 1,
+    "identity_state": "DISCOVERED",
+    "occurred_at": null,
+    "source": {
+     "external_id": "nissan-nissan-march",
+     "first_seen_period": "2021-01",
+     "provider": "ice",
+     "source_version": "ice:2569-09:v3:M7.0"
+    }
+   },
+   "lock_key": "identity_bootstrap:nissan",
+   "operations": [
+    {
+     "idempotency_key": "sha256:aa6d3f184004e423a39cb6ac24e07d7d33cbc5c748f821bad2648ee71714b268",
+     "op": "RESERVE_CANONICAL_ID",
+     "values": {
+      "brand_id": "nissan",
+      "canonical_id": "nissan.march",
+      "identity_key": "nissan|march",
+      "slug": "nissan-march"
+     }
+    },
+    {
+     "idempotency_key": "sha256:2661c34109f79a079fd26d910b3ae4432eba3921d30c44715cde5d90298265b2",
+     "op": "INSERT_IDENTITY_SHELL",
+     "table": "vehicle_models",
+     "values": {
+      "brand_id": "nissan",
+      "canonical_id": "nissan.march",
+      "enrichment_state": "PENDING",
+      "identity_state": "DISCOVERED",
+      "name_en": "March",
+      "slug": "nissan-march"
+     }
+    },
+    {
+     "idempotency_key": "sha256:b01cced6f3ac8647d317aee07d80321bc3cffeee749406b43e1bd639d8a18d14",
+     "op": "INSERT_EXTERNAL_ALIAS",
+     "rows": [
+      {
+       "canonical_id": "nissan.march",
+       "external_id": "nissan-nissan-march",
+       "provider": "ice",
+       "relation": "ORIGIN",
+       "state": "ACTIVE"
+      }
+     ],
+     "table": "vehicle_identity_aliases"
+    },
+    {
+     "idempotency_key": "sha256:67e3c42dd357f53f5a8b6496882616bc3fe7990a78555fde3a08892754d047b5",
+     "op": "INSERT_PROVENANCE",
+     "table": "vehicle_identity_provenance",
+     "values": {
+      "actor": null,
+      "apply_mode": "PROPOSE",
+      "canonical_id": "nissan.march",
+      "contract_version": 1,
+      "created_at": null,
+      "creator_type": "machine",
+      "decision_fingerprint": "sha256:bf0b3977c26b46d1757482b2b1171561640b393c43e77505b894b279a936bcde",
+      "evidence_kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "evidence_refs": [
+       "ice:2569-09:v3:M7.0#model_group/nissan-nissan-march"
+      ],
+      "evidence_tier": 0,
+      "external_id": "nissan-nissan-march",
+      "first_seen_period": "2021-01",
+      "identity_key": "nissan|march",
+      "policy_version": 2,
+      "provider": "ice",
+      "reason_codes": [
+       "NEW_IDENTITY_CONFIRMED"
+      ],
+      "run_id": null,
+      "source_version": "ice:2569-09:v3:M7.0"
+     }
+    },
+    {
+     "idempotency_key": "sha256:532995dea4fd5bd418c60b0053e813c1aa1ea0ca6526c40cca9e3dc86fa5f7fa",
+     "op": "ENQUEUE_EVENT",
+     "table": "vehicle_identity_events",
+     "values": {
+      "event_id": "sha256:cd0efb00e2ca06fa181539c2612bc823a95def8663e792ea062bd70eaa875811"
+     }
+    },
+    {
+     "idempotency_key": "sha256:7e379b1f46c7f1c81fe76100d521b8ec3abdd8b8efe4381302156144c3195a36",
+     "op": "PROPOSE_ORIGIN_MAPPING",
+     "values": {
+      "canonical_id": "nissan.march",
+      "method": "ORIGIN",
+      "provider": "ice",
+      "state": "AUTO",
+      "subject_id": "nissan-nissan-march"
+     }
+    }
+   ],
+   "plan_id": "sha256:d3592bde240d106faf41f870091d6dbee03526d37b62552ecac2a67fe8da6232",
+   "preconditions": [
+    {
+     "brand_id": "nissan",
+     "kind": "brand_exists"
+    },
+    {
+     "canonical_id": "nissan.march",
+     "kind": "canonical_id_absent"
+    },
+    {
+     "kind": "slug_absent",
+     "slug": "nissan-march"
+    },
+    {
+     "brand_id": "nissan",
+     "identity_key": "nissan|march",
+     "kind": "identity_key_absent"
+    },
+    {
+     "canonical_id": "nissan.march",
+     "external_id": "nissan-nissan-march",
+     "kind": "alias_absent_or_same",
+     "provider": "ice"
+    },
+    {
+     "brand_id": "nissan",
+     "digest": "sha256:b1bf789daa7764c17853b28fd31f83e3d71fe2b8b72cb3be32405f465f3364af",
      "kind": "brand_identity_digest"
     }
    ],

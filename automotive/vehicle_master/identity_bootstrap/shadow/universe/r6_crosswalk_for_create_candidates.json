@@ -1,5 +1,5 @@
 {
- "_note": "READ-ONLY SELECT on live ice_model_crosswalk (begin transaction read only), 2026-10-11, project ltvwzkffmpudpjfjomrg. Rows for the 67 remaining CREATE groups; every row is status PROPOSED (none MATCHED/approved). Empty list = no crosswalk row. Informational only; the engine never reads this.",
+ "_note": "READ-ONLY SELECT on live ice_model_crosswalk (begin transaction read only), 2026-10-11, project ltvwzkffmpudpjfjomrg. Rows for the 67 remaining CREATE groups; every row is status PROPOSED (none MATCHED/approved). Empty list = no crosswalk row. Informational only; the engine never reads this. Extended 2026-10-11 with the 9 groups that became CREATE candidates after PR #200 rev 4 relations (same read-only SELECT method); rows for groups that left the set are kept for the delta.",
  "rows": {
   "bentley-bentley-continental": [
    [
@@ -166,6 +166,38 @@
   "maserati-maserati-ghibli": [],
   "maserati-maserati-mc20": [],
   "maserati-maserati-quattroporte": [],
+  "maxus-maxus-v80": [
+   [
+    "mg.mg_zs_ev",
+    "PROPOSED",
+    "NAME",
+    0.4286
+   ]
+  ],
+  "maxus-mifa-7": [
+   [
+    "mg.mg_maxus_7",
+    "PROPOSED",
+    "NAME",
+    0.6154
+   ]
+  ],
+  "mazda-mazda-mx-30": [
+   [
+    "mazda.cx30",
+    "PROPOSED",
+    "NAME",
+    0.8
+   ]
+  ],
+  "mazda-mazda6e": [
+   [
+    "mazda.mazda6",
+    "PROPOSED",
+    "NAME",
+    0.6667
+   ]
+  ],
   "mclaren-mclaren-artura": [],
   "nissan-leaf": [
    [
@@ -175,6 +207,7 @@
     0.4444
    ]
   ],
+  "nissan-nissan-be-1": [],
   "nissan-nissan-fairlady": [
    [
     "nissan.almera",
@@ -213,6 +246,14 @@
     "PROPOSED",
     "NAME",
     0.5714
+   ]
+  ],
+  "peugeot-peugeot-5008": [
+   [
+    "peugeot.peugeot_3008",
+    "PROPOSED",
+    "NAME",
+    0.75
    ]
   ],
   "rolls-royce-rolls-royce-cullinan": [],
@@ -280,6 +321,7 @@
   ],
   "volkswagen-volkswagen-caddy": [],
   "volkswagen-volkswagen-golf": [],
+  "volkswagen-volkswagen-t-roc": [],
   "volkswagen-volkswagen-touareg": [
    [
     "volkswagen.caravelle",
@@ -288,6 +330,7 @@
     0.375
    ]
   ],
+  "volkswagen-vw-t-cross": [],
   "volkswagen-vw-tiguan": [],
   "volt-volt-volt": [
    [
@@ -295,6 +338,14 @@
     "PROPOSED",
     "SERIES",
     0.9891
+   ]
+  ],
+  "volvo-volvo-es90": [
+   [
+    "volvo.ec40",
+    "PROPOSED",
+    "NAME",
+    0.5
    ]
   ],
   "wuling-e10": [],

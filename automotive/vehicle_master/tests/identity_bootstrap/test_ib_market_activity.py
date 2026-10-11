@@ -112,24 +112,25 @@ def test_bootstrap_never_imports_or_reads_market_activity():
 def real():
     if not shadow_run.DEFAULT_PACKAGE.exists():
         pytest.skip("pinned Ice package not in this checkout")
-    a = shadow_run.run("A")
+    from identity_bootstrap.shadow import ir_rev4
+    a = shadow_run.run("A", ir=ir_rev4.load())
     return a, activity_report.build(a)
 
 
 def test_real_package_has_no_explicit_zero_rows_so_nothing_can_be_inactive_today(real):
     a, s = real
     assert all(v > 0 for m in a["package"]["monthly"].values() for v in m.values())
-    assert s["create_candidates"] == 67
+    assert s["create_candidates"] == 73
     assert "INACTIVE_INFERRED" not in s["actual"]["states"]
-    assert sum(s["actual"]["states"].values()) == 67
-    assert s["actual"]["states"].get("UNKNOWN", 0) == 60 and s["actual"]["lanes"].get("HISTORICAL_INACTIVE", 0) == 0
+    assert sum(s["actual"]["states"].values()) == 73
+    assert s["actual"]["states"].get("UNKNOWN", 0) == 63 and s["actual"]["lanes"].get("HISTORICAL_INACTIVE", 0) == 0
 
 
 def test_the_what_if_is_labelled_non_authoritative_and_split_is_reported(real):
     _, s = real
     assert "NOT AUTHORITATIVE" in s["what_if_absent_is_zero"]["scenario"]
-    assert s["what_if_absent_is_zero"]["states"].get("INACTIVE_INFERRED", 0) == 22
-    assert sum(s["what_if_absent_is_zero"]["states"].values()) == 67
+    assert s["what_if_absent_is_zero"]["states"].get("INACTIVE_INFERRED", 0) == 23
+    assert sum(s["what_if_absent_is_zero"]["states"].values()) == 73
 
 
 def test_routing_leaves_every_bootstrap_decision_unchanged(real):
@@ -138,4 +139,4 @@ def test_routing_leaves_every_bootstrap_decision_unchanged(real):
     before = [(d["subject"]["entity_id"], d["outcome"], tuple(d["reason_codes"])) for d in a["decisions"]]
     activity_report.build(a)
     assert before == [(d["subject"]["entity_id"], d["outcome"], tuple(d["reason_codes"])) for d in a["decisions"]]
-    assert collections.Counter(o for _, o, _ in before) == {"CREATE_IDENTITY": 67, "IDENTITY_REVIEW": 89, "HOLD": 1044}
+    assert collections.Counter(o for _, o, _ in before) == {"CREATE_IDENTITY": 73, "IDENTITY_REVIEW": 89, "HOLD": 1038}

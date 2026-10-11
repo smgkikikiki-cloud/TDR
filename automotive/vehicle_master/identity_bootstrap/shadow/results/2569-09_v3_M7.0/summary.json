@@ -2,34 +2,34 @@
  "buckets": {
   "A": {
    "CREATE_IDENTITY": {
-    "groups": 67,
-    "units_last12": 10272,
-    "units_last12_share_pct": 1.49,
-    "units_share_pct": 1.13,
-    "units_total": 46816
+    "groups": 73,
+    "units_last12": 11719,
+    "units_last12_share_pct": 1.7,
+    "units_share_pct": 0.85,
+    "units_total": 35090
    },
    "HOLD": {
-    "groups": 1044,
-    "units_last12": 655779,
-    "units_last12_share_pct": 95.12,
-    "units_share_pct": 97.08,
-    "units_total": 4020943
+    "groups": 1038,
+    "units_last12": 652981,
+    "units_last12_share_pct": 94.71,
+    "units_share_pct": 96.66,
+    "units_total": 4003758
    },
    "IDENTITY_REVIEW": {
     "groups": 89,
-    "units_last12": 23378,
-    "units_last12_share_pct": 3.39,
-    "units_share_pct": 1.79,
-    "units_total": 74228
+    "units_last12": 24729,
+    "units_last12_share_pct": 3.59,
+    "units_share_pct": 2.49,
+    "units_total": 103139
    }
   },
   "B": {
    "CREATE_IDENTITY": {
-    "groups": 67,
-    "units_last12": 10272,
-    "units_last12_share_pct": 1.49,
-    "units_share_pct": 1.13,
-    "units_total": 46816
+    "groups": 72,
+    "units_last12": 11021,
+    "units_last12_share_pct": 1.6,
+    "units_share_pct": 0.82,
+    "units_total": 34156
    },
    "HOLD": {
     "groups": 753,
@@ -39,11 +39,11 @@
     "units_total": 21703
    },
    "IDENTITY_REVIEW": {
-    "groups": 380,
-    "units_last12": 675732,
-    "units_last12_share_pct": 98.01,
-    "units_share_pct": 98.35,
-    "units_total": 4073468
+    "groups": 375,
+    "units_last12": 674983,
+    "units_last12_share_pct": 97.9,
+    "units_share_pct": 98.65,
+    "units_total": 4086128
    }
   }
  },
@@ -53,14 +53,14 @@
     "any_code": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67
+      73
      ]
     ],
     "primary": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67,
-      46816
+      73,
+      35090
      ]
     ]
    },
@@ -68,11 +68,11 @@
     "any_code": [
      [
       "PROVIDER_RAW_NAME",
-      628
+      629
      ],
      [
       "NOT_ACTIVATED",
-      301
+      294
      ],
      [
       "BRAND_NOT_IN_TDR",
@@ -95,10 +95,6 @@
       82
      ],
      [
-      "EXISTING_IDENTITY_SUSPECTED",
-      80
-     ],
-     [
       "POSSIBLE_TRIM_NOT_MODEL",
       47
      ],
@@ -111,28 +107,32 @@
       24
      ],
      [
-      "LINEAGE_UNRESOLVED",
-      2
+      "EXISTING_IDENTITY_SUSPECTED",
+      4
      ],
      [
-      "STRUCTURAL_CONFLICT",
+      "LINEAGE_UNRESOLVED",
       2
      ],
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
       2
+     ],
+     [
+      "STRUCTURAL_CONFLICT",
+      1
      ]
     ],
     "primary": [
      [
       "PROVIDER_RAW_NAME",
-      627,
-      19509
+      628,
+      19510
      ],
      [
       "NOT_ACTIVATED",
-      301,
-      3999268
+      294,
+      3982082
      ],
      [
       "PROVIDER_IDENTITY_PROVISIONAL",
@@ -153,32 +153,32 @@
       35
      ],
      [
-      "STRUCTURAL_CONFLICT",
-      22
-     ],
-     [
-      "EXISTING_IDENTITY_SUSPECTED",
-      19
-     ],
-     [
       "PROVIDER_FINER_THAN_TDR",
-      17
+      13
+     ],
+     [
+      "POSSIBLE_MODEL_CODE",
+      12
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
       10
      ],
      [
-      "POSSIBLE_MODEL_CODE",
+      "EXISTING_IDENTITY_SUSPECTED",
       9
-     ],
-     [
-      "DUPLICATE_CANONICAL_SUSPECTED",
-      8
      ],
      [
       "POSSIBLE_TRUNCATED_NAME",
       8
+     ],
+     [
+      "STRUCTURAL_CONFLICT",
+      8
+     ],
+     [
+      "PROVIDER_LINEAGE_AMBIGUOUS",
+      7
      ],
      [
       "POSSIBLE_TRIM_NOT_MODEL",
@@ -189,8 +189,8 @@
       6
      ],
      [
-      "PROVIDER_LINEAGE_AMBIGUOUS",
-      6
+      "DUPLICATE_CANONICAL_SUSPECTED",
+      4
      ],
      [
       "POSSIBLE_BODY_VARIANT",
@@ -208,9 +208,9 @@
       1132
      ],
      [
-      "STRUCTURAL_CONFLICT",
-      20,
-      9620
+      "PROVIDER_FINER_THAN_TDR",
+      11,
+      17948
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -218,19 +218,24 @@
       6845
      ],
      [
-      "EXISTING_IDENTITY_SUSPECTED",
-      9,
-      41800
-     ],
-     [
-      "PROVIDER_FINER_THAN_TDR",
-      5,
-      14016
-     ],
-     [
       "POSSIBLE_MODEL_CODE",
+      10,
+      1056
+     ],
+     [
+      "STRUCTURAL_CONFLICT",
+      8,
+      21255
+     ],
+     [
+      "EXISTING_IDENTITY_SUSPECTED",
+      6,
+      51559
+     ],
+     [
+      "PROVIDER_LINEAGE_AMBIGUOUS",
       4,
-      67
+      2981
      ],
      [
       "POSSIBLE_TRUNCATED_NAME",
@@ -238,14 +243,9 @@
       335
      ],
      [
-      "PROVIDER_LINEAGE_AMBIGUOUS",
-      2,
-      410
-     ],
-     [
       "POSSIBLE_BODY_VARIANT",
-      1,
-      1
+      2,
+      26
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
@@ -260,14 +260,14 @@
     "any_code": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67
+      72
      ]
     ],
     "primary": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67,
-      46816
+      72,
+      34156
      ]
     ]
    },
@@ -298,10 +298,6 @@
       83
      ],
      [
-      "EXISTING_IDENTITY_SUSPECTED",
-      80
-     ],
-     [
       "POSSIBLE_TRIM_NOT_MODEL",
       47
      ],
@@ -315,7 +311,11 @@
      ],
      [
       "DUPLICATE_CANONICAL_SUSPECTED",
-      10
+      9
+     ],
+     [
+      "EXISTING_IDENTITY_SUSPECTED",
+      4
      ],
      [
       "LINEAGE_UNRESOLVED",
@@ -352,19 +352,19 @@
     "any_code": [
      [
       "DUPLICATE_CANONICAL_SUSPECTED",
-      300
+      289
      ],
      [
       "STRUCTURAL_CONFLICT",
-      103
-     ],
-     [
-      "EXISTING_IDENTITY_SUSPECTED",
-      58
+      46
      ],
      [
       "BRAND_NOT_IN_TDR",
       35
+     ],
+     [
+      "EXISTING_IDENTITY_SUSPECTED",
+      31
      ],
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
@@ -379,11 +379,11 @@
       25
      ],
      [
-      "PROVIDER_FINER_THAN_TDR",
-      24
+      "POSSIBLE_TRUNCATED_NAME",
+      18
      ],
      [
-      "POSSIBLE_TRUNCATED_NAME",
+      "PROVIDER_FINER_THAN_TDR",
       18
      ],
      [
@@ -406,13 +406,13 @@
     "primary": [
      [
       "DUPLICATE_CANONICAL_SUSPECTED",
-      218,
-      2252501
+      256,
+      2595194
      ],
      [
       "STRUCTURAL_CONFLICT",
-      101,
-      1799472
+      46,
+      1461240
      ],
      [
       "BRAND_NOT_IN_TDR",
@@ -425,19 +425,19 @@
       6845
      ],
      [
-      "PROVIDER_FINER_THAN_TDR",
-      4,
-      12544
-     ],
-     [
       "POSSIBLE_MODEL_CODE",
-      3,
-      65
+      10,
+      1056
      ],
      [
-      "EXISTING_IDENTITY_SUSPECTED",
-      3,
-      161
+      "PROVIDER_FINER_THAN_TDR",
+      9,
+      17317
+     ],
+     [
+      "PROVIDER_LINEAGE_AMBIGUOUS",
+      4,
+      2981
      ],
      [
       "POSSIBLE_TRUNCATED_NAME",
@@ -445,14 +445,9 @@
       335
      ],
      [
-      "PROVIDER_LINEAGE_AMBIGUOUS",
-      2,
-      410
-     ],
-     [
       "POSSIBLE_BODY_VARIANT",
-      1,
-      1
+      2,
+      26
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
@@ -463,27 +458,8 @@
    }
   }
  },
- "create_sets_equal": true,
+ "create_sets_equal": false,
  "creates": [
-  {
-   "analyst": {
-    "kind": "SUSPECT_ALIAS",
-    "why": "Jazz and Fit are one car; honda-fit is also a CREATE (a model-synonym table is missing)"
-   },
-   "brand": "HONDA",
-   "canonical_id": "honda.jazz",
-   "canonical_name": "Jazz",
-   "first_seen": "2564-01",
-   "flags": [
-    "DORMANT"
-   ],
-   "id": "honda-jazz",
-   "in_B": true,
-   "last_seen": "2569-08",
-   "name": "Jazz",
-   "units_last12": 5,
-   "units_total": 13790
-  },
   {
    "analyst": null,
    "brand": "JAECOO",
@@ -581,6 +557,22 @@
    "units_total": 2645
   },
   {
+   "analyst": null,
+   "brand": "MG",
+   "canonical_id": "mg.mifa_7",
+   "canonical_name": "Mifa 7",
+   "first_seen": "2567-11",
+   "flags": [
+    "RECENT"
+   ],
+   "id": "maxus-mifa-7",
+   "in_B": false,
+   "last_seen": "2569-09",
+   "name": "Mifa 7",
+   "units_last12": 698,
+   "units_total": 934
+  },
+  {
    "analyst": {
     "kind": "SUSPECT_VARIANT",
     "why": "performance variant of 3 Series; owner decision whether TDR models M cars separately"
@@ -596,6 +588,22 @@
    "name": "BMW M3",
    "units_last12": 117,
    "units_total": 639
+  },
+  {
+   "analyst": null,
+   "brand": "MAZDA",
+   "canonical_id": "mazda.mazda6e",
+   "canonical_name": "Mazda6e",
+   "first_seen": "2569-07",
+   "flags": [
+    "RECENT"
+   ],
+   "id": "mazda-mazda6e",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "Mazda6e",
+   "units_last12": 604,
+   "units_total": 604
   },
   {
    "analyst": null,
@@ -628,6 +636,22 @@
    "name": "VOLT Volt",
    "units_last12": 9,
    "units_total": 484
+  },
+  {
+   "analyst": null,
+   "brand": "PEUGEOT",
+   "canonical_id": "peugeot.5008",
+   "canonical_name": "5008",
+   "first_seen": "2564-01",
+   "flags": [
+    "DORMANT"
+   ],
+   "id": "peugeot-peugeot-5008",
+   "in_B": true,
+   "last_seen": "2569-07",
+   "name": "Peugeot 5008",
+   "units_last12": 4,
+   "units_total": 316
   },
   {
    "analyst": {
@@ -701,6 +725,22 @@
   },
   {
    "analyst": null,
+   "brand": "VOLVO",
+   "canonical_id": "volvo.es90",
+   "canonical_name": "ES90",
+   "first_seen": "2569-03",
+   "flags": [
+    "RECENT"
+   ],
+   "id": "volvo-volvo-es90",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "Volvo ES90",
+   "units_last12": 145,
+   "units_total": 145
+  },
+  {
+   "analyst": null,
    "brand": "FOTON",
    "canonical_id": "foton.eview",
    "canonical_name": "eView",
@@ -714,6 +754,22 @@
    "name": "Foton eView",
    "units_last12": 144,
    "units_total": 144
+  },
+  {
+   "analyst": null,
+   "brand": "MG",
+   "canonical_id": "mg.maxus_v80",
+   "canonical_name": "Maxus V80",
+   "first_seen": "2564-01",
+   "flags": [
+    "DORMANT"
+   ],
+   "id": "maxus-maxus-v80",
+   "in_B": true,
+   "last_seen": "2569-07",
+   "name": "Maxus V80",
+   "units_last12": 1,
+   "units_total": 135
   },
   {
    "analyst": null,
@@ -864,25 +920,6 @@
    "name": "TATA Xenon",
    "units_last12": 6,
    "units_total": 76
-  },
-  {
-   "analyst": {
-    "kind": "SUSPECT_ALIAS",
-    "why": "TDR already holds Step WGN (honda.step_wgn); spelling variant not caught lexically"
-   },
-   "brand": "HONDA",
-   "canonical_id": "honda.stepwagon",
-   "canonical_name": "Stepwagon",
-   "first_seen": "2564-03",
-   "flags": [
-    "DORMANT"
-   ],
-   "id": "honda-honda-stepwagon",
-   "in_B": true,
-   "last_seen": "2569-04",
-   "name": "Honda Stepwagon",
-   "units_last12": 2,
-   "units_total": 73
   },
   {
    "analyst": null,
@@ -1403,26 +1440,6 @@
    "units_total": 3
   },
   {
-   "analyst": {
-    "kind": "SUSPECT_ALIAS",
-    "why": "Jazz and Fit are one car; honda-jazz is also a CREATE"
-   },
-   "brand": "HONDA",
-   "canonical_id": "honda.fit",
-   "canonical_name": "FIT",
-   "first_seen": "2568-11",
-   "flags": [
-    "DORMANT",
-    "RECENT"
-   ],
-   "id": "honda-honda-fit",
-   "in_B": true,
-   "last_seen": "2569-02",
-   "name": "Honda FIT",
-   "units_last12": 2,
-   "units_total": 2
-  },
-  {
    "analyst": null,
    "brand": "SUZUKI",
    "canonical_id": "suzuki.apv",
@@ -1452,6 +1469,23 @@
    "in_B": true,
    "last_seen": "2569-03",
    "name": "Toyota Roomy",
+   "units_last12": 2,
+   "units_total": 2
+  },
+  {
+   "analyst": null,
+   "brand": "VOLKSWAGEN",
+   "canonical_id": "volkswagen.t_roc",
+   "canonical_name": "T-ROC",
+   "first_seen": "2569-02",
+   "flags": [
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "volkswagen-volkswagen-t-roc",
+   "in_B": true,
+   "last_seen": "2569-05",
+   "name": "Volkswagen T-ROC",
    "units_last12": 2,
    "units_total": 2
   },
@@ -1560,6 +1594,40 @@
   },
   {
    "analyst": null,
+   "brand": "MAZDA",
+   "canonical_id": "mazda.mx_30",
+   "canonical_name": "MX-30",
+   "first_seen": "2567-12",
+   "flags": [
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "mazda-mazda-mx-30",
+   "in_B": true,
+   "last_seen": "2567-12",
+   "name": "Mazda MX-30",
+   "units_last12": 0,
+   "units_total": 1
+  },
+  {
+   "analyst": null,
+   "brand": "NISSAN",
+   "canonical_id": "nissan.be_1",
+   "canonical_name": "BE-1",
+   "first_seen": "2569-01",
+   "flags": [
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "nissan-nissan-be-1",
+   "in_B": true,
+   "last_seen": "2569-01",
+   "name": "Nissan BE-1",
+   "units_last12": 1,
+   "units_total": 1
+  },
+  {
+   "analyst": null,
    "brand": "SUZUKI",
    "canonical_id": "suzuki.grand_vitara",
    "canonical_name": "Grand Vitara",
@@ -1574,12 +1642,29 @@
    "name": "Grand Vitara",
    "units_last12": 1,
    "units_total": 1
+  },
+  {
+   "analyst": null,
+   "brand": "VOLKSWAGEN",
+   "canonical_id": "volkswagen.t_cross",
+   "canonical_name": "T-Cross",
+   "first_seen": "2569-05",
+   "flags": [
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "volkswagen-vw-t-cross",
+   "in_B": true,
+   "last_seen": "2569-05",
+   "name": "VW T-Cross",
+   "units_last12": 1,
+   "units_total": 1
   }
  ],
  "inputs": {
   "engine_seconds": {
-   "A": 0.32,
-   "B": 0.3
+   "A": 0.22,
+   "B": 0.31
   },
   "groups": 1200,
   "package_index": {
@@ -1645,6 +1730,12 @@
     ]
    ],
    [
+    "mercedes-benz-mercedes-benz-c350",
+    [
+     "PROVIDER_LINEAGE_AMBIGUOUS"
+    ]
+   ],
+   [
     "mercedes-benz-mercedes-benz-gt-class",
     [
      "PROVIDER_LINEAGE_AMBIGUOUS"
@@ -1684,8 +1775,8 @@
    ]
   ]
  },
- "m3": {
-  "activity": {
+ "m4": {
+  "activity_classes_informational": {
    "ACTIVE_ESTABLISHED": {
     "groups": 5,
     "ids": [
@@ -1699,17 +1790,18 @@
     "lifetime_units": 1239
    },
    "DORMANT_LEGACY": {
-    "groups": 59,
+    "groups": 62,
     "ids": [
-     "honda-jazz",
      "toyota-vios",
      "nissan-nissan-march",
      "nissan-note",
      "toyota-toyota-sienta",
      "nissan-urvan",
      "volt-volt-volt",
+     "peugeot-peugeot-5008",
      "toyota-toyota-tr",
      "nissan-leaf",
+     "maxus-maxus-v80",
      "bentley-bentley-continental",
      "sokon-crc50",
      "chevrolet-trailblazer",
@@ -1718,7 +1810,6 @@
      "peugeot-peugeot-408",
      "suzuki-suzuki-spacia",
      "tata-tata-xenon",
-     "honda-honda-stepwagon",
      "jac-t8",
      "honda-honda-n-box",
      "kia-k2500",
@@ -1750,415 +1841,1915 @@
      "honda-super-one",
      "lexus-lexus-rc",
      "volkswagen-volkswagen-caddy",
-     "honda-honda-fit",
      "suzuki-apv",
      "toyota-toyota-roomy",
+     "volkswagen-volkswagen-t-roc",
      "volkswagen-volkswagen-touareg",
      "volkswagen-vw-tiguan",
      "honda-honda-amaze",
      "hyundai-genesis-g80",
      "hyundai-tucson",
      "lotus-emira",
-     "suzuki-grand-vitara"
+     "mazda-mazda-mx-30",
+     "nissan-nissan-be-1",
+     "suzuki-grand-vitara",
+     "volkswagen-vw-t-cross"
     ],
     "last12_units": 173,
-    "lifetime_units": 33882
+    "lifetime_units": 20473
    },
    "RECENT_DISCOVERY": {
-    "groups": 3,
+    "groups": 6,
     "ids": [
      "jaecoo-jaecoo-j6",
      "zeekr-zeekr-7x",
+     "maxus-mifa-7",
+     "mazda-mazda6e",
+     "volvo-volvo-es90",
      "foton-eview"
     ],
-    "last12_units": 9859,
-    "lifetime_units": 11695
+    "last12_units": 11306,
+    "lifetime_units": 13378
    }
   },
-  "baseline": "shadow/baseline_m2/decisions.csv (milestone 2: policy v1, same package, same TDR catalog)",
+  "baseline": "shadow/baseline_m3 (milestone 3: policy v2, stand-in relations, same package and TDR universe)",
+  "create_sets": {
+   "B_subset_of_A": true,
+   "added_vs_m3": [
+    "maxus-maxus-v80",
+    "maxus-mifa-7",
+    "mazda-mazda-mx-30",
+    "mazda-mazda6e",
+    "nissan-nissan-be-1",
+    "peugeot-peugeot-5008",
+    "volkswagen-volkswagen-t-roc",
+    "volkswagen-vw-t-cross",
+    "volvo-volvo-es90"
+   ],
+   "count": 73,
+   "in_A_not_B": [
+    "maxus-mifa-7"
+   ],
+   "removed_vs_m3": [
+    "honda-honda-fit",
+    "honda-honda-stepwagon",
+    "honda-jazz"
+   ],
+   "unchanged": 64
+  },
   "diff": {
    "A": {
-    "create_added": [],
-    "create_removed": [
-     "chery-chery-q",
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s",
-     "toyota-toyota-kun51r-nkpsyt"
+    "create_added": [
+     "maxus-maxus-v80",
+     "maxus-mifa-7",
+     "mazda-mazda-mx-30",
+     "mazda-mazda6e",
+     "nissan-nissan-be-1",
+     "peugeot-peugeot-5008",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volvo-volvo-es90"
     ],
-    "groups_with_any_change": 20,
+    "create_removed": [
+     "honda-honda-fit",
+     "honda-honda-stepwagon",
+     "honda-jazz"
+    ],
+    "groups_with_any_change": 33,
     "removed_detail": {
-     "chery-chery-q": [
+     "honda-honda-fit": [
       "IDENTITY_REVIEW",
       [
-       "POSSIBLE_TRUNCATED_NAME"
+       "STRUCTURAL_CONFLICT",
+       "DUPLICATE_CANONICAL_SUSPECTED"
       ]
      ],
-     "hino-hino-fg8jj1a-jjt": [
+     "honda-honda-stepwagon": [
       "HOLD",
       [
-       "PROVIDER_RAW_NAME"
+       "NOT_ACTIVATED"
       ]
      ],
-     "hino-hino-fg8jj3a-acdmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm1an1d-sht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm2pn1d-xht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn1d-sgt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn3d-cddmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "jac-jac-t8ev": [
+     "honda-jazz": [
       "IDENTITY_REVIEW",
       [
-       "POSSIBLE_POWERTRAIN_DERIVATIVE"
-      ]
-     ],
-     "jeep-jeep-grand": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "mclaren-mclaren-750s": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_MODEL_CODE"
-      ]
-     ],
-     "toyota-toyota-kun51r-nkpsyt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
+       "STRUCTURAL_CONFLICT",
+       "DUPLICATE_CANONICAL_SUSPECTED"
       ]
      ]
     },
     "review_added": [
-     "chery-chery-q",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s"
+     "bmw-bmw-630i",
+     "ford-ford-ranger-raptor",
+     "honda-honda-fit",
+     "honda-jazz",
+     "lexus-lexus-es350h",
+     "mercedes-benz-mercedes-benz-c350"
     ],
     "review_removed": [
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt"
+     "maxus-maxus-v80",
+     "maxus-mifa-7",
+     "mazda-mazda-mx-30",
+     "nissan-nissan-be-1",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross"
     ],
     "transition_matrix": {
-     "CREATE_IDENTITY -> CREATE_IDENTITY": 67,
-     "CREATE_IDENTITY -> HOLD": 7,
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 4,
-     "HOLD -> HOLD": 1028,
-     "IDENTITY_REVIEW -> HOLD": 9,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 85
+     "CREATE_IDENTITY -> CREATE_IDENTITY": 64,
+     "CREATE_IDENTITY -> HOLD": 1,
+     "CREATE_IDENTITY -> IDENTITY_REVIEW": 2,
+     "HOLD -> CREATE_IDENTITY": 3,
+     "HOLD -> HOLD": 1037,
+     "HOLD -> IDENTITY_REVIEW": 4,
+     "IDENTITY_REVIEW -> CREATE_IDENTITY": 6,
+     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 83
     }
    },
    "B": {
-    "create_added": [],
-    "create_removed": [
-     "chery-chery-q",
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s",
-     "toyota-toyota-kun51r-nkpsyt"
+    "create_added": [
+     "maxus-maxus-v80",
+     "mazda-mazda-mx-30",
+     "mazda-mazda6e",
+     "nissan-nissan-be-1",
+     "peugeot-peugeot-5008",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volvo-volvo-es90"
     ],
-    "groups_with_any_change": 20,
+    "create_removed": [
+     "honda-honda-fit",
+     "honda-honda-stepwagon",
+     "honda-jazz"
+    ],
+    "groups_with_any_change": 66,
     "removed_detail": {
-     "chery-chery-q": [
+     "honda-honda-fit": [
       "IDENTITY_REVIEW",
       [
-       "POSSIBLE_TRUNCATED_NAME"
+       "STRUCTURAL_CONFLICT",
+       "DUPLICATE_CANONICAL_SUSPECTED"
       ]
      ],
-     "hino-hino-fg8jj1a-jjt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fg8jj3a-acdmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm1an1d-sht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm2pn1d-xht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn1d-sgt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn3d-cddmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "jac-jac-t8ev": [
+     "honda-honda-stepwagon": [
       "IDENTITY_REVIEW",
       [
-       "POSSIBLE_POWERTRAIN_DERIVATIVE"
+       "STRUCTURAL_CONFLICT",
+       "DUPLICATE_CANONICAL_SUSPECTED"
       ]
      ],
-     "jeep-jeep-grand": [
+     "honda-jazz": [
       "IDENTITY_REVIEW",
       [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "mclaren-mclaren-750s": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_MODEL_CODE"
-      ]
-     ],
-     "toyota-toyota-kun51r-nkpsyt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
+       "STRUCTURAL_CONFLICT",
+       "DUPLICATE_CANONICAL_SUSPECTED"
       ]
      ]
     },
     "review_added": [
-     "chery-chery-q",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s"
+     "honda-honda-fit",
+     "honda-honda-stepwagon",
+     "honda-jazz"
     ],
     "review_removed": [
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt"
+     "maxus-maxus-v80",
+     "mazda-mazda-mx-30",
+     "mazda-mazda6e",
+     "nissan-nissan-be-1",
+     "peugeot-peugeot-5008",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volvo-volvo-es90"
     ],
     "transition_matrix": {
-     "CREATE_IDENTITY -> CREATE_IDENTITY": 67,
-     "CREATE_IDENTITY -> HOLD": 7,
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 4,
-     "HOLD -> HOLD": 737,
-     "IDENTITY_REVIEW -> HOLD": 9,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 376
+     "CREATE_IDENTITY -> CREATE_IDENTITY": 64,
+     "CREATE_IDENTITY -> IDENTITY_REVIEW": 3,
+     "HOLD -> HOLD": 753,
+     "IDENTITY_REVIEW -> CREATE_IDENTITY": 8,
+     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 372
     }
+   }
+  },
+  "market_activity": {
+   "actual": {
+    "lanes": {
+     "ACTIVITY_UNCLASSIFIED": 63,
+     "CURRENT_DISCOVERY": 10
+    },
+    "states": {
+     "ACTIVE": 9,
+     "DECLINING": 1,
+     "UNKNOWN": 63
+    }
+   },
+   "per_group": {
+    "bentley-bentley-continental": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "bmw-bmw-m2": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "bmw-bmw-m3": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "bmw-bmw-m4": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "bmw-bmw-m5": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "chevrolet-chevrolet-corvette": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "chevrolet-trailblazer": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "daihatsu-daihatsu-copen": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "daihatsu-daihatsu-move": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "ferrari-ferrari-488": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "ferrari-ferrari-portofino": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "ferrari-ferrari-purosangue": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "ford-ford-focus": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "foton-bj1041": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "foton-eview": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "honda-brio": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "honda-honda-acty": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "honda-honda-amaze": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "honda-honda-freed": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "honda-honda-n-box": {
+     "actual": "DECLINING",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "honda-prelude": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "honda-super-one": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "hyundai-genesis-g80": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "hyundai-kona": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "hyundai-tucson": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "jac-t8": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "jaecoo-jaecoo-j6": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "jeep-jeep-gladiator": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "kia-k2500": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "lamborghini-lamborghini-temerario": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "land-rover-land-rover-discovery": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "lexus-lexus-rc": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "lotus-emira": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "maserati-maserati-ghibli": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "maserati-maserati-mc20": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "maserati-maserati-quattroporte": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "maxus-maxus-v80": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "maxus-mifa-7": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "mazda-mazda-mx-30": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "mazda-mazda6e": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "mclaren-mclaren-artura": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "nissan-leaf": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "nissan-nissan-be-1": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "nissan-nissan-fairlady": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "nissan-nissan-march": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "nissan-note": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "nissan-urvan": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "peugeot-peugeot-408": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "peugeot-peugeot-5008": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "rolls-royce-rolls-royce-cullinan": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "rolls-royce-rolls-royce-phantom": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "rolls-royce-rolls-royce-spectre": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "seres-seres-ec31": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "sokon-crc50": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "subaru-subaru-wrx": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "suzuki-apv": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "suzuki-grand-vitara": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "suzuki-suzuki-spacia": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "tata-tata-xenon": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "toyota-toyota-roomy": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "toyota-toyota-sienta": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "toyota-toyota-tr": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "toyota-vios": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "INACTIVE_INFERRED"
+    },
+    "volkswagen-volkswagen-caddy": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volkswagen-volkswagen-golf": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volkswagen-volkswagen-t-roc": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volkswagen-volkswagen-touareg": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volkswagen-vw-t-cross": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volkswagen-vw-tiguan": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "volt-volt-volt": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "DECLINING"
+    },
+    "volvo-volvo-es90": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    },
+    "wuling-e10": {
+     "actual": "UNKNOWN",
+     "lane": "ACTIVITY_UNCLASSIFIED",
+     "what_if": "UNKNOWN"
+    },
+    "zeekr-zeekr-7x": {
+     "actual": "ACTIVE",
+     "lane": "CURRENT_DISCOVERY",
+     "what_if": "ACTIVE"
+    }
+   },
+   "what_if_NOT_AUTHORITATIVE": {
+    "lanes": {
+     "ACTIVITY_UNCLASSIFIED": 34,
+     "CURRENT_DISCOVERY": 16,
+     "HISTORICAL_INACTIVE": 23
+    },
+    "states": {
+     "ACTIVE": 9,
+     "DECLINING": 7,
+     "INACTIVE_INFERRED": 23,
+     "UNKNOWN": 34
+    }
+   }
+  },
+  "new_create_risks": [
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED",
+    "id": "maxus-maxus-v80",
+    "name": "Maxus V80",
+    "relation_changes": [
+     "mg.mg_maxus_7: SIBLING -> none",
+     "mg.mg_maxus_9: SIBLING -> none"
+    ],
+    "units": 135
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "IDENTITY_REVIEW",
+    "before": "A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "maxus-mifa-7",
+    "name": "Mifa 7",
+    "relation_changes": [
+     "mg.mg_maxus_7: SIBLING -> none",
+     "mg.mg_maxus_9: SIBLING -> none"
+    ],
+    "units": 934
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "mazda-mazda-mx-30",
+    "name": "Mazda MX-30",
+    "relation_changes": [
+     "mazda-mazda-mx-5: SIBLING -> none",
+     "mazda.cx30: SIBLING -> none",
+     "mazda.mx_5: SIBLING -> none"
+    ],
+    "units": 1
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "mazda-mazda6e",
+    "name": "Mazda6e",
+    "relation_changes": [
+     "mazda.mazda6: FUZZY -> none"
+    ],
+    "units": 604
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED; B IDENTITY_REVIEW/EXISTING_IDENTITY_SUSPECTED",
+    "id": "nissan-nissan-be-1",
+    "name": "Nissan BE-1",
+    "relation_changes": [
+     "nissan.sylphy: SIBLING -> none"
+    ],
+    "units": 1
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "peugeot-peugeot-5008",
+    "name": "Peugeot 5008",
+    "relation_changes": [
+     "peugeot.peugeot_2008: FUZZY -> none",
+     "peugeot.peugeot_3008: FUZZY -> none"
+    ],
+    "units": 316
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A IDENTITY_REVIEW/STRUCTURAL_CONFLICT; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "volkswagen-volkswagen-t-roc",
+    "name": "Volkswagen T-ROC",
+    "relation_changes": [
+     "volkswagen-vw-t-cross: SIBLING -> none"
+    ],
+    "units": 2
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A IDENTITY_REVIEW/STRUCTURAL_CONFLICT; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "volkswagen-vw-t-cross",
+    "name": "VW T-Cross",
+    "relation_changes": [],
+    "units": 1
+   },
+   {
+    "A_after": "CREATE_IDENTITY",
+    "B_after": "CREATE_IDENTITY",
+    "before": "A HOLD/NOT_ACTIVATED; B IDENTITY_REVIEW/STRUCTURAL_CONFLICT",
+    "id": "volvo-volvo-es90",
+    "name": "Volvo ES90",
+    "relation_changes": [
+     "volvo-volvo-ex90: FUZZY -> none",
+     "volvo.ex90: FUZZY -> none"
+    ],
+    "units": 145
+   }
+  ],
+  "parity": {
+   "ice_ice": {
+    "corrected_kinds_equal": {
+     "EQUAL_VIA_MODEL_ALIAS": [
+      2,
+      2
+     ],
+     "FUZZY": [
+      7,
+      7
+     ],
+     "SIBLING": [
+      307,
+      307
+     ]
+    },
+    "exported_pairs": 316,
+    "exported_pairs_missing_or_relabelled": [],
+    "fuzzy_or_sibling_not_in_export": [],
+    "unchanged_kinds_standin_vs_ir": {
+     "EQUAL": [
+      4,
+      4
+     ],
+     "EQUAL_VIA_TOKEN_EQUIV": [
+      0,
+      1
+     ],
+     "SUBJECT_COARSER": [
+      78,
+      78
+     ],
+     "SUBJECT_FINER": [
+      40,
+      40
+     ]
+    }
+   },
+   "ice_tdr": {
+    "corrected_kinds_equal": {
+     "EQUAL_VIA_MODEL_ALIAS": [
+      1,
+      1
+     ],
+     "FUZZY": [
+      2,
+      2
+     ],
+     "SIBLING": [
+      55,
+      55
+     ]
+    },
+    "exported_pairs": 58,
+    "exported_pairs_missing_or_relabelled": [],
+    "fuzzy_or_sibling_not_in_export": [],
+    "unchanged_kinds_standin_vs_ir": {
+     "EQUAL": [
+      299,
+      239
+     ],
+     "EQUAL_VIA_TOKEN_EQUIV": [
+      1,
+      1
+     ],
+     "SUBJECT_COARSER": [
+      46,
+      58
+     ],
+     "SUBJECT_FINER": [
+      45,
+      35
+     ]
+    }
+   },
+   "pr200_commit": "1f73aee1834697cbd439291d0074293c30446e5b",
+   "sources_sha256": {
+    "after_rev4.json": "42ceac6cfcd08c87e6d5807a7f5cca7d9335b4746ff74626449a6711b5fcb012",
+    "before_rev3.json": "336edc58d2312e34c58afa7631519db47c6b13e363fd84cd355eecb165b436a7",
+    "comparison.json": "28cb837e14678efb584455e549010b82edf86602fab11116ed95eb8d857dd79d"
+   },
+   "unchanged_class_relations_overridden_by_ir": {
+    "ice_ice": [],
+    "ice_tdr": [
+     "ford-ford-ranger-raptor|ford.ranger_cab: stand-in SUBJECT_FINER -> IR SIBLING",
+     "ford-ford-ranger-raptor|ford.ranger_double_cab: stand-in EQUAL -> IR SIBLING",
+     "gwm-ora-07|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING",
+     "gwm-ora-5|gwm.ora_good_cat: stand-in SUBJECT_FINER -> IR SIBLING",
+     "toyota-corolla-cross|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING",
+     "toyota-gr-corolla|toyota.corolla_altis: stand-in SUBJECT_FINER -> IR SIBLING",
+     "toyota-land-cruiser-fj|toyota.land_cruiser_300: stand-in SUBJECT_FINER -> IR SIBLING"
+    ]
    }
   },
   "policy_version": 2,
-  "removed_create_attribution": {
-   "chery-chery-q": [
-    "TRUNCATION_soft_signal"
-   ],
-   "hino-hino-fg8jj1a-jjt": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fg8jj3a-acdmh": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm1an1d-sht": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm2pn1d-xht": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm8jn1d-sgt": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm8jn3d-cddmh": [
-    "R1_hyphenated_code"
-   ],
-   "jac-jac-t8ev": [
-    "R2_glued_powertrain_suffix"
-   ],
-   "jeep-jeep-grand": [
-    "TRUNCATION_soft_signal"
-   ],
-   "mclaren-mclaren-750s": [
-    "R4_displacement_trim_code"
-   ],
-   "toyota-toyota-kun51r-nkpsyt": [
-    "R1_hyphenated_code"
-   ]
-  },
-  "rule_effects": {
-   "BRAND_FAMILY": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "family input withheld in the 'off' run",
-    "transitions_off_to_on": {}
+  "pr200": {
+   "commit": "1f73aee1834697cbd439291d0074293c30446e5b",
+   "label": "rev4",
+   "policy": {
+    "distinctive_token_required_for": [
+     "SIBLING"
+    ],
+    "fuzzy_token": {
+     "allow_tokens_with_digits": false,
+     "enabled": true,
+     "min_token_length": 6
+    },
+    "model_aliases": [
+     "maxus_mifa",
+     "honda_model_synonyms"
+    ]
    },
-   "R1_hyphenated_code": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "groups_changed": 16,
-    "new_holds": [
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "new_reviews": [],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> HOLD": 7,
-     "IDENTITY_REVIEW -> HOLD": 9
-    }
-   },
-   "R2_glued_powertrain_suffix": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "jac-jac-t8ev"
-    ],
-    "groups_changed": 5,
-    "new_holds": [],
-    "new_reviews": [
-     "jac-jac-t8ev"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 1,
-     "HOLD -> HOLD": 3,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 1
-    }
-   },
-   "R4_displacement_trim_code": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "mclaren-mclaren-750s"
-    ],
-    "groups_changed": 50,
-    "new_holds": [],
-    "new_reviews": [
-     "mclaren-mclaren-750s"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 1,
-     "HOLD -> HOLD": 47,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 2
-    }
-   },
-   "SUB_BRAND_guard": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "measured with a NAIVE adapter that offers every catalog alias (sub-brands included) as a spelling",
-    "transitions_off_to_on": {}
-   },
-   "TRUNCATION_soft_signal": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "chery-chery-q",
-     "jeep-jeep-grand"
-    ],
-    "groups_changed": 8,
-    "new_holds": [],
-    "new_reviews": [
-     "chery-chery-q",
-     "jeep-jeep-grand"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 2,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 6
-    }
-   },
-   "YEAR_range_and_context": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "",
-    "transitions_off_to_on": {}
+   "pr": 200,
+   "source_dir": "automotive/vehicle_master/identity_resolution/calibration/lexical_pass",
+   "sources_sha256": {
+    "after_rev4.json": "42ceac6cfcd08c87e6d5807a7f5cca7d9335b4746ff74626449a6711b5fcb012",
+    "before_rev3.json": "336edc58d2312e34c58afa7631519db47c6b13e363fd84cd355eecb165b436a7",
+    "comparison.json": "28cb837e14678efb584455e549010b82edf86602fab11116ed95eb8d857dd79d"
    }
   },
-  "universe": {
-   "create_added_by_the_fuller_universe": [],
-   "create_removed_by_the_fuller_universe": [],
-   "explanation": "the live Vehicle Master is identical to the snapshot on every identity-bearing field; the only difference is that all 323 slugs are now reserved in the collision check",
-   "models_in_live_not_in_snapshot": 0,
-   "models_in_snapshot_not_in_live": 0
+  "released_no_candidate": {
+   "A": {
+    "after": {
+     "CREATE_IDENTITY": 7,
+     "HOLD": 163,
+     "IDENTITY_REVIEW": 7
+    },
+    "after_primary": {
+     "BRAND_NOT_IN_TDR": 1,
+     "NEW_IDENTITY_CONFIRMED": 7,
+     "NOT_ACTIVATED": 4,
+     "POSSIBLE_BODY_VARIANT": 1,
+     "POSSIBLE_MODEL_CODE": 4,
+     "PROVIDER_IDENTITY_PROVISIONAL": 30,
+     "PROVIDER_LINEAGE_AMBIGUOUS": 1,
+     "PROVIDER_RAW_NAME": 129
+    },
+    "before_m3": {
+     "CREATE_IDENTITY": 2,
+     "HOLD": 165,
+     "IDENTITY_REVIEW": 10
+    },
+    "create": [
+     "honda-honda-n-box",
+     "mazda-mazda-mx-30",
+     "mazda-mazda6e",
+     "nissan-nissan-be-1",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volkswagen-vw-tiguan"
+    ]
+   },
+   "B": {
+    "after": {
+     "CREATE_IDENTITY": 7,
+     "HOLD": 159,
+     "IDENTITY_REVIEW": 11
+    },
+    "after_primary": {
+     "BRAND_NOT_IN_TDR": 1,
+     "DUPLICATE_CANONICAL_SUSPECTED": 4,
+     "NEW_IDENTITY_CONFIRMED": 7,
+     "POSSIBLE_BODY_VARIANT": 1,
+     "POSSIBLE_MODEL_CODE": 4,
+     "PROVIDER_IDENTITY_PROVISIONAL": 30,
+     "PROVIDER_LINEAGE_AMBIGUOUS": 1,
+     "PROVIDER_RAW_NAME": 129
+    },
+    "before_m3": {
+     "CREATE_IDENTITY": 2,
+     "HOLD": 159,
+     "IDENTITY_REVIEW": 16
+    },
+    "create": [
+     "honda-honda-n-box",
+     "mazda-mazda-mx-30",
+     "mazda-mazda6e",
+     "nissan-nissan-be-1",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volkswagen-vw-tiguan"
+    ]
+   },
+   "identity_status": {
+    "provisional": 30,
+    "settled": 32,
+    "unmapped_name": 115
+   },
+   "pr200_by_cause": {
+    "fuzzy_across_digit": 48,
+    "fuzzy_across_digit+sibling_without_distinctive_token": 6,
+    "sibling_without_distinctive_token": 123
+   },
+   "pr200_count": 177,
+   "pr200_units": 3308,
+   "present_in_bootstrap_run": 177,
+   "settled_among_released": [
+    "foton-foton-bj1031evja3",
+    "foton-foton-bj1031evja4",
+    "foton-foton-bj1044v9jb3-r1",
+    "foton-foton-bj1045v9jd4-r1",
+    "honda-honda-n-box",
+    "jac-jac-hfc1040ev2",
+    "jac-jac-hfc1040ev3",
+    "lexus-lexus-es300h",
+    "lexus-lexus-es350e",
+    "lexus-lexus-es350h",
+    "lexus-lexus-is300h",
+    "lexus-lexus-rz350e",
+    "lexus-lexus-rz450e",
+    "linxys-linxys-g100-r",
+    "mazda-mazda-mx-30",
+    "mazda-mazda6e",
+    "mercedes-benz-mercedes-benz-amg-g63",
+    "mercedes-benz-mercedes-benz-amg-sl",
+    "nissan-nissan-bdtarczb172ha",
+    "nissan-nissan-be-1",
+    "nissan-nissan-udb4rdre26ewdder-c",
+    "nissan-nissan-udb4rgke26ewb-s-c",
+    "suzuki-suzuki-ap416pum14058",
+    "toyota-toyota-d-cab",
+    "ud-trucks-ud-trucks-cwe08n43r350css9",
+    "ud-trucks-ud-trucks-pke250celrm",
+    "ud-trucks-ud-trucks-pke250chlra",
+    "ud-trucks-ud-trucks-pke250chlrm",
+    "volkswagen-volkswagen-t-roc",
+    "volkswagen-vw-idbuzz",
+    "volkswagen-vw-t-cross",
+    "volkswagen-vw-tiguan"
+   ]
   },
+  "structural": {
+   "A": {
+    "after": 9,
+    "before": 24,
+    "entered": [
+     "honda-honda-fit",
+     "honda-jazz"
+    ],
+    "left": [
+     "aston-martin-aston-martin-db11",
+     "aston-martin-aston-martin-db12",
+     "audi-audi-rs-3",
+     "audi-audi-rs-6",
+     "audi-audi-rs-q3",
+     "lexus-lexus-rz350e",
+     "lexus-lexus-rz450e",
+     "mercedes-benz-mercedes-benz-amg-c",
+     "mercedes-benz-mercedes-benz-amg-sl",
+     "mini-mini-aceman-ev",
+     "mini-mini-cooper-ev",
+     "toyota-gr-corolla",
+     "toyota-gr-yaris",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volvo-volvo-264gl",
+     "volvo-volvo-264gle"
+    ]
+   },
+   "B": {
+    "after": 48,
+    "before": 105,
+    "entered": [
+     "honda-honda-fit",
+     "honda-honda-stepwagon",
+     "honda-jazz",
+     "honda-step-wgn"
+    ],
+    "left": [
+     "aston-martin-aston-martin-db11",
+     "aston-martin-aston-martin-db12",
+     "audi-audi-rs-3",
+     "audi-audi-rs-4",
+     "audi-audi-rs-5",
+     "audi-audi-rs-6",
+     "audi-audi-rs-7",
+     "bmw-bmw-320i",
+     "bmw-bmw-330i",
+     "bmw-bmw-420i",
+     "bmw-bmw-430i",
+     "bmw-bmw-520i",
+     "bmw-bmw-630i",
+     "changan-deepal-e07",
+     "changan-deepal-hunter",
+     "changan-deepal-l07",
+     "changan-deepal-s05",
+     "changan-deepal-s07",
+     "honda-br-v",
+     "honda-cr-v",
+     "honda-hr-v",
+     "honda-wr-v",
+     "lexus-lexus-es300h",
+     "lexus-lexus-es350e",
+     "lexus-lexus-es350h",
+     "lexus-lexus-is300h",
+     "lexus-lexus-rz350e",
+     "lexus-lexus-rz450e",
+     "mazda-mazda-cx-3",
+     "mazda-mazda-cx-30",
+     "mazda-mazda-cx-5",
+     "mazda-mazda-cx-8",
+     "mazda-mazda-mx-30",
+     "mazda-mazda-mx-5",
+     "mazda-mazda2",
+     "mazda-mazda3",
+     "mazda-mazda6",
+     "mazda-mazda6e",
+     "mercedes-benz-mercedes-benz-amg-g63",
+     "mercedes-benz-mercedes-benz-amg-sl",
+     "mercedes-benz-mercedes-benz-c250",
+     "mercedes-benz-mercedes-benz-c350",
+     "mg-mg-s5-ev",
+     "mg-mg-urban-ev",
+     "mg-mg4-ev",
+     "mini-mini-aceman-ev",
+     "peugeot-peugeot-2008",
+     "peugeot-peugeot-3008",
+     "peugeot-peugeot-5008",
+     "toyota-gr-supra",
+     "volkswagen-volkswagen-t-roc",
+     "volkswagen-vw-t-cross",
+     "volvo-volvo-264gl",
+     "volvo-volvo-264gle",
+     "volvo-volvo-es90",
+     "volvo-volvo-ex30",
+     "volvo-volvo-ex90",
+     "volvo-volvo-xc60",
+     "volvo-volvo-xc90",
+     "wuling-air-ev-aira-ev",
+     "wuling-wuling-porta-ev"
+    ]
+   }
+  },
+  "transitions": [
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "PROVIDER_RAW_NAME",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "SOKON",
+    "identity_status": "unmapped_name",
+    "lifetime_units": 1,
+    "model_group_id": "SOKON|EC31",
+    "name": "EC31"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_TRIM_NOT_MODEL",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 22,
+    "model_group_id": "audi-audi-rs-3",
+    "name": "AUDI RS 3"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 103,
+    "model_group_id": "audi-audi-rs-4",
+    "name": "AUDI RS 4"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 94,
+    "model_group_id": "audi-audi-rs-5",
+    "name": "AUDI RS 5"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_TRIM_NOT_MODEL",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 44,
+    "model_group_id": "audi-audi-rs-6",
+    "name": "AUDI RS 6"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 16,
+    "model_group_id": "audi-audi-rs-7",
+    "name": "AUDI RS 7"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_TRIM_NOT_MODEL",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "AUDI",
+    "identity_status": "settled",
+    "lifetime_units": 81,
+    "model_group_id": "audi-audi-rs-q3",
+    "name": "AUDI RS Q3"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 3,
+    "model_group_id": "bmw-bmw-320i",
+    "name": "BMW 320i"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 39,
+    "model_group_id": "bmw-bmw-330i",
+    "name": "BMW 330i"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 95,
+    "model_group_id": "bmw-bmw-420i",
+    "name": "BMW 420I"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 1044,
+    "model_group_id": "bmw-bmw-430i",
+    "name": "BMW 430i"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 2,
+    "model_group_id": "bmw-bmw-520i",
+    "name": "BMW 520i"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "BMW",
+    "identity_status": "settled",
+    "lifetime_units": 802,
+    "model_group_id": "bmw-bmw-630i",
+    "name": "BMW 630I"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "CHANGAN",
+    "identity_status": "settled",
+    "lifetime_units": 289,
+    "model_group_id": "changan-deepal-e07",
+    "name": "Deepal E07"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "CHANGAN",
+    "identity_status": "settled",
+    "lifetime_units": 33,
+    "model_group_id": "changan-deepal-hunter",
+    "name": "Deepal Hunter"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "CHANGAN",
+    "identity_status": "settled",
+    "lifetime_units": 1512,
+    "model_group_id": "changan-deepal-l07",
+    "name": "Deepal L07"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "CHANGAN",
+    "identity_status": "settled",
+    "lifetime_units": 11983,
+    "model_group_id": "changan-deepal-s05",
+    "name": "Deepal S05"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "CHANGAN",
+    "identity_status": "settled",
+    "lifetime_units": 11650,
+    "model_group_id": "changan-deepal-s07",
+    "name": "Deepal S07"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "EXISTING_IDENTITY_SUSPECTED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "FORD",
+    "identity_status": "settled",
+    "lifetime_units": 12839,
+    "model_group_id": "ford-ford-ranger-raptor",
+    "name": "Ford Ranger Raptor"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 4130,
+    "model_group_id": "honda-br-v",
+    "name": "BR-V"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 38413,
+    "model_group_id": "honda-cr-v",
+    "name": "CR-V"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_codes_after": "STRUCTURAL_CONFLICT|DUPLICATE_CANONICAL_SUSPECTED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 2,
+    "model_group_id": "honda-honda-fit",
+    "name": "Honda FIT"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 73,
+    "model_group_id": "honda-honda-stepwagon",
+    "name": "Honda Stepwagon"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 105452,
+    "model_group_id": "honda-hr-v",
+    "name": "HR-V"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_codes_after": "STRUCTURAL_CONFLICT|DUPLICATE_CANONICAL_SUSPECTED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 13790,
+    "model_group_id": "honda-jazz",
+    "name": "Jazz"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 1288,
+    "model_group_id": "honda-step-wgn",
+    "name": "Step WGN"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "HONDA",
+    "identity_status": "settled",
+    "lifetime_units": 3688,
+    "model_group_id": "honda-wr-v",
+    "name": "WR-V"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 332,
+    "model_group_id": "lexus-lexus-es300h",
+    "name": "Lexus ES300H"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 2,
+    "model_group_id": "lexus-lexus-es350e",
+    "name": "Lexus ES350E"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 3,
+    "model_group_id": "lexus-lexus-es350h",
+    "name": "Lexus ES350H"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 295,
+    "model_group_id": "lexus-lexus-is300h",
+    "name": "Lexus IS300H"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 27,
+    "model_group_id": "lexus-lexus-rz350e",
+    "name": "Lexus RZ350E"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "LEXUS",
+    "identity_status": "settled",
+    "lifetime_units": 151,
+    "model_group_id": "lexus-lexus-rz450e",
+    "name": "Lexus RZ450E"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "brand": "MG",
+    "identity_status": "settled",
+    "lifetime_units": 135,
+    "model_group_id": "maxus-maxus-v80",
+    "name": "Maxus V80"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MG",
+    "identity_status": "settled",
+    "lifetime_units": 934,
+    "model_group_id": "maxus-mifa-7",
+    "name": "Mifa 7"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 14905,
+    "model_group_id": "mazda-mazda-cx-3",
+    "name": "Mazda CX-3"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 22782,
+    "model_group_id": "mazda-mazda-cx-30",
+    "name": "Mazda CX-30"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 4168,
+    "model_group_id": "mazda-mazda-cx-5",
+    "name": "Mazda CX-5"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 4823,
+    "model_group_id": "mazda-mazda-cx-8",
+    "name": "Mazda CX-8"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 1,
+    "model_group_id": "mazda-mazda-mx-30",
+    "name": "Mazda MX-30"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 81,
+    "model_group_id": "mazda-mazda-mx-5",
+    "name": "Mazda MX-5"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 61313,
+    "model_group_id": "mazda-mazda2",
+    "name": "Mazda2"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 6613,
+    "model_group_id": "mazda-mazda3",
+    "name": "Mazda3"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 29,
+    "model_group_id": "mazda-mazda6",
+    "name": "Mazda6"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MAZDA",
+    "identity_status": "settled",
+    "lifetime_units": 604,
+    "model_group_id": "mazda-mazda6e",
+    "name": "Mazda6e"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|PROVIDER_LINEAGE_AMBIGUOUS|POSSIBLE_TRIM_NOT_MODEL",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MERCEDES BENZ",
+    "identity_status": "settled",
+    "lifetime_units": 550,
+    "model_group_id": "mercedes-benz-mercedes-benz-amg-c",
+    "name": "Mercedes-Benz AMG C"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MERCEDES BENZ",
+    "identity_status": "settled",
+    "lifetime_units": 209,
+    "model_group_id": "mercedes-benz-mercedes-benz-amg-g63",
+    "name": "Mercedes-Benz AMG G63"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_LINEAGE_AMBIGUOUS|POSSIBLE_TRIM_NOT_MODEL",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MERCEDES BENZ",
+    "identity_status": "settled",
+    "lifetime_units": 22,
+    "model_group_id": "mercedes-benz-mercedes-benz-amg-sl",
+    "name": "Mercedes-Benz AMG SL"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MERCEDES BENZ",
+    "identity_status": "settled",
+    "lifetime_units": 61,
+    "model_group_id": "mercedes-benz-mercedes-benz-c250",
+    "name": "Mercedes-Benz C250"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "PROVIDER_LINEAGE_AMBIGUOUS|POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_LINEAGE_AMBIGUOUS",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MERCEDES BENZ",
+    "identity_status": "settled",
+    "lifetime_units": 2549,
+    "model_group_id": "mercedes-benz-mercedes-benz-c350",
+    "name": "Mercedes-Benz C350"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MG",
+    "identity_status": "settled",
+    "lifetime_units": 13675,
+    "model_group_id": "mg-mg-s5-ev",
+    "name": "MG S5 EV"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MG",
+    "identity_status": "settled",
+    "lifetime_units": 2473,
+    "model_group_id": "mg-mg-urban-ev",
+    "name": "MG Urban EV"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MG",
+    "identity_status": "settled",
+    "lifetime_units": 29161,
+    "model_group_id": "mg-mg4-ev",
+    "name": "MG4 EV"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "MINI",
+    "identity_status": "settled",
+    "lifetime_units": 1057,
+    "model_group_id": "mini-mini-aceman-ev",
+    "name": "Mini Aceman EV"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "brand": "NISSAN",
+    "identity_status": "settled",
+    "lifetime_units": 1,
+    "model_group_id": "nissan-nissan-be-1",
+    "name": "Nissan BE-1"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "PEUGEOT",
+    "identity_status": "settled",
+    "lifetime_units": 566,
+    "model_group_id": "peugeot-peugeot-2008",
+    "name": "Peugeot 2008"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "PEUGEOT",
+    "identity_status": "settled",
+    "lifetime_units": 939,
+    "model_group_id": "peugeot-peugeot-3008",
+    "name": "Peugeot 3008"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "PEUGEOT",
+    "identity_status": "settled",
+    "lifetime_units": 316,
+    "model_group_id": "peugeot-peugeot-5008",
+    "name": "Peugeot 5008"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "EXISTING_IDENTITY_SUSPECTED|PROVIDER_LINEAGE_AMBIGUOUS",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "TOYOTA",
+    "identity_status": "settled",
+    "lifetime_units": 45,
+    "model_group_id": "toyota-gr-corolla",
+    "name": "GR Corolla"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "TOYOTA",
+    "identity_status": "settled",
+    "lifetime_units": 97,
+    "model_group_id": "toyota-gr-supra",
+    "name": "GR Supra"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "EXISTING_IDENTITY_SUSPECTED|PROVIDER_FINER_THAN_TDR",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "TOYOTA",
+    "identity_status": "settled",
+    "lifetime_units": 149,
+    "model_group_id": "toyota-gr-yaris",
+    "name": "GR Yaris"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_before": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_codes_after": "EXISTING_IDENTITY_SUSPECTED",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "TOYOTA",
+    "identity_status": "settled",
+    "lifetime_units": 1472,
+    "model_group_id": "toyota-land-cruiser-fj",
+    "name": "Land Cruiser FJ"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_BODY_VARIANT",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "POSSIBLE_BODY_VARIANT",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_BODY_VARIANT",
+    "B_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "brand": "TOYOTA",
+    "identity_status": "settled",
+    "lifetime_units": 25,
+    "model_group_id": "toyota-toyota-d-cab",
+    "name": "Toyota D-CAB"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLKSWAGEN",
+    "identity_status": "settled",
+    "lifetime_units": 2,
+    "model_group_id": "volkswagen-volkswagen-t-roc",
+    "name": "Volkswagen T-ROC"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLKSWAGEN",
+    "identity_status": "settled",
+    "lifetime_units": 1,
+    "model_group_id": "volkswagen-vw-t-cross",
+    "name": "VW T-Cross"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 4,
+    "model_group_id": "volvo-volvo-264gl",
+    "name": "Volvo 264GL"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "A_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_codes_after": "POSSIBLE_MODEL_CODE",
+    "B_after": "IDENTITY_REVIEW / POSSIBLE_MODEL_CODE",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 2,
+    "model_group_id": "volvo-volvo-264gle",
+    "name": "Volvo 264GLE"
+   },
+   {
+    "A_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NEW_IDENTITY_CONFIRMED",
+    "B_after": "CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 145,
+    "model_group_id": "volvo-volvo-es90",
+    "name": "Volvo ES90"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 1689,
+    "model_group_id": "volvo-volvo-ex30",
+    "name": "Volvo EX30"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 88,
+    "model_group_id": "volvo-volvo-ex90",
+    "name": "Volvo EX90"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 2432,
+    "model_group_id": "volvo-volvo-xc60",
+    "name": "Volvo XC60"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "VOLVO",
+    "identity_status": "settled",
+    "lifetime_units": 993,
+    "model_group_id": "volvo-volvo-xc90",
+    "name": "Volvo XC90"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "A_before": "IDENTITY_REVIEW / EXISTING_IDENTITY_SUSPECTED",
+    "A_codes_after": "PROVIDER_FINER_THAN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "B_after": "IDENTITY_REVIEW / PROVIDER_FINER_THAN_TDR",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "WULING",
+    "identity_status": "settled",
+    "lifetime_units": 1177,
+    "model_group_id": "wuling-air-ev-aira-ev",
+    "name": "Air ev / Aira ev"
+   },
+   {
+    "A_after": "HOLD / NOT_ACTIVATED",
+    "A_before": "HOLD / NOT_ACTIVATED",
+    "A_codes_after": "NOT_ACTIVATED",
+    "B_after": "IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED",
+    "B_before": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "brand": "WULING",
+    "identity_status": "settled",
+    "lifetime_units": 184,
+    "model_group_id": "wuling-wuling-porta-ev",
+    "name": "Wuling Porta EV"
+   }
+  ],
   "universe_verification": {
    "brand_digest_equal": true,
    "conclusion": "the file snapshot used by milestone 2 is identical to the live Vehicle Master on every identity-bearing field; the live universe holds no model that the snapshot lacked",
@@ -2180,227 +3771,34 @@
    ]
   }
  },
- "refined_relations_whatif": {
-  "A": {
-   "CREATE_IDENTITY": {
-    "groups": 74,
-    "units_last12": 11029,
-    "units_last12_share_pct": 1.6,
-    "units_share_pct": 1.16,
-    "units_total": 47886
-   },
-   "HOLD": {
-    "groups": 1038,
-    "units_last12": 654527,
-    "units_last12_share_pct": 94.94,
-    "units_share_pct": 96.97,
-    "units_total": 4016524
-   },
-   "IDENTITY_REVIEW": {
-    "groups": 88,
-    "units_last12": 23873,
-    "units_last12_share_pct": 3.46,
-    "units_share_pct": 1.87,
-    "units_total": 77577
-   }
-  },
-  "B": {
-   "CREATE_IDENTITY": {
-    "groups": 74,
-    "units_last12": 11029,
-    "units_last12_share_pct": 1.6,
-    "units_share_pct": 1.16,
-    "units_total": 47886
-   },
-   "HOLD": {
-    "groups": 753,
-    "units_last12": 3425,
-    "units_last12_share_pct": 0.5,
-    "units_share_pct": 0.52,
-    "units_total": 21703
-   },
-   "IDENTITY_REVIEW": {
-    "groups": 373,
-    "units_last12": 674975,
-    "units_last12_share_pct": 97.9,
-    "units_share_pct": 98.32,
-    "units_total": 4072398
-   }
-  },
-  "lost_creates_vs_base_A": [],
-  "new_creates_flagged_by_R4": [],
-  "new_creates_in_B": [
-   "mazda-mazda-mx-30",
-   "mazda-mazda6e",
-   "nissan-nissan-be-1",
-   "peugeot-peugeot-5008",
-   "volkswagen-volkswagen-t-roc",
-   "volkswagen-vw-t-cross",
-   "volvo-volvo-es90"
-  ],
-  "new_creates_vs_base_A": [
-   "mazda-mazda-mx-30",
-   "mazda-mazda6e",
-   "nissan-nissan-be-1",
-   "peugeot-peugeot-5008",
-   "volkswagen-volkswagen-t-roc",
-   "volkswagen-vw-t-cross",
-   "volvo-volvo-es90"
-  ],
-  "structural_conflict_groups": {
-   "A": 7,
-   "B": 49
-  }
- },
  "relation_quality": {
-  "fuzzy_digit_examples": [
-   [
-    "Mazda2",
-    "Mazda3"
-   ],
-   [
-    "Mazda2",
-    "Mazda6"
-   ],
-   [
-    "Mazda3",
-    "Mazda6"
-   ],
-   [
-    "HINO XZU600R-WKMLST3",
-    "HINO XZU600R-WKTLST3"
-   ],
-   [
-    "Volvo XC60",
-    "Volvo XC90"
-   ],
-   [
-    "Volvo EX30",
-    "Volvo EX90"
-   ],
-   [
-    "BMW 430i",
-    "BMW 630I"
-   ],
-   [
-    "Peugeot 3008",
-    "Peugeot 5008"
-   ],
-   [
-    "Peugeot 2008",
-    "Peugeot 3008"
-   ],
-   [
-    "Peugeot 2008",
-    "Peugeot 5008"
-   ],
-   [
-    "Foton BJ1031EVJA3",
-    "Foton BJ1031EVJA4"
-   ],
-   [
-    "Lexus ES300H",
-    "Lexus ES350H"
-   ]
-  ],
-  "fuzzy_where_the_differing_token_has_a_digit": 76,
-  "sibling_examples": [
-   [
-    "HR-V",
-    "WR-V",
-    [
-     "v"
-    ]
-   ],
-   [
-    "CR-V",
-    "HR-V",
-    [
-     "v"
-    ]
-   ],
-   [
-    "CR-V",
-    "WR-V",
-    [
-     "v"
-    ]
-   ],
-   [
-    "Mazda CX-30",
-    "Mazda CX-5",
-    [
-     "cx"
-    ]
-   ],
-   [
-    "Mazda CX-30",
-    "Mazda CX-8",
-    [
-     "cx"
-    ]
-   ],
-   [
-    "Mazda CX-30",
-    "Mazda MX-30",
-    [
-     "30"
-    ]
-   ],
-   [
-    "Mazda CX-3",
-    "Mazda CX-30",
-    [
-     "cx"
-    ]
-   ],
-   [
-    "Mazda CX-3",
-    "Mazda CX-5",
-    [
-     "cx"
-    ]
-   ],
-   [
-    "Mazda CX-3",
-    "Mazda CX-8",
-    [
-     "cx"
-    ]
-   ],
-   [
-    "MG S5 EV",
-    "MG Urban EV",
-    [
-     "ev"
-    ]
-   ],
-   [
-    "MG S5 EV",
-    "MG4 EV",
-    [
-     "ev"
-    ]
-   ],
-   [
-    "Mazda CX-5",
-    "Mazda CX-8",
-    [
-     "cx"
-    ]
-   ]
-  ],
-  "sibling_on_non_distinctive_token_only": 731,
-  "subject_pairs_fuzzy": 85,
-  "subject_pairs_sibling": 1154
+  "fuzzy_digit_examples": [],
+  "fuzzy_where_the_differing_token_has_a_digit": 0,
+  "sibling_examples": [],
+  "sibling_on_non_distinctive_token_only": 0,
+  "subject_pairs_fuzzy": 7,
+  "subject_pairs_sibling": 307
  },
  "structural_conflicts": {
   "A": [
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
+     "DUPLICATE_CANONICAL_SUSPECTED"
+    ],
+    "group": [
+     "honda-honda-fit",
+     "honda-jazz"
+    ],
+    "id": "honda-jazz",
+    "name": "Jazz",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 13790
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
      "gwm-ora-07",
@@ -2413,27 +3811,8 @@
    },
    {
     "codes": [
-     "LINEAGE_UNRESOLVED",
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "mini-mini-aceman-ev",
-     "mini-mini-cooper-ev"
-    ],
-    "id": "mini-mini-cooper-ev",
-    "name": "Mini Cooper EV",
-    "outcome": "HOLD",
-    "units_total": 1772
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
+     "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
      "gwm-ora-07",
@@ -2443,21 +3822,6 @@
     "name": "Ora 07",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 1698
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "mini-mini-aceman-ev",
-     "mini-mini-cooper-ev"
-    ],
-    "id": "mini-mini-aceman-ev",
-    "name": "Mini Aceman EV",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1057
    },
    {
     "codes": [
@@ -2476,25 +3840,6 @@
    },
    {
     "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "MERCEDES BENZ|A 180",
-     "MERCEDES BENZ|C 180",
-     "mercedes-benz-mercedes-benz-amg-c",
-     "mercedes-benz-mercedes-benz-amg-sl"
-    ],
-    "id": "mercedes-benz-mercedes-benz-amg-c",
-    "name": "Mercedes-Benz AMG C",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 550
-   },
-   {
-    "codes": [
      "STRUCTURAL_CONFLICT"
     ],
     "group": [
@@ -2505,39 +3850,6 @@
     "name": "Nissan Urvan E26",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 212
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-rz350e",
-     "lexus-lexus-rz450e"
-    ],
-    "id": "lexus-lexus-rz450e",
-    "name": "Lexus RZ450E",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 151
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
-    ],
-    "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
-     "toyota-gr-corolla",
-     "toyota-gr-yaris"
-    ],
-    "id": "toyota-gr-yaris",
-    "name": "GR Yaris",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 149
    },
    {
     "codes": [
@@ -2576,74 +3888,6 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-rs-3",
-     "audi-audi-rs-6",
-     "audi-audi-rs-q3"
-    ],
-    "id": "audi-audi-rs-q3",
-    "name": "AUDI RS Q3",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 81
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "PROVIDER_LINEAGE_AMBIGUOUS"
-    ],
-    "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
-     "toyota-gr-corolla",
-     "toyota-gr-yaris"
-    ],
-    "id": "toyota-gr-corolla",
-    "name": "GR Corolla",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 45
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-rs-3",
-     "audi-audi-rs-6",
-     "audi-audi-rs-q3"
-    ],
-    "id": "audi-audi-rs-6",
-    "name": "AUDI RS 6",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 44
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-rz350e",
-     "lexus-lexus-rz450e"
-    ],
-    "id": "lexus-lexus-rz350e",
-    "name": "Lexus RZ350E",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 27
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
@@ -2661,123 +3905,16 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-rs-3",
-     "audi-audi-rs-6",
-     "audi-audi-rs-q3"
-    ],
-    "id": "audi-audi-rs-3",
-    "name": "AUDI RS 3",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 22
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "MERCEDES BENZ|A 180",
-     "MERCEDES BENZ|C 180",
-     "mercedes-benz-mercedes-benz-amg-c",
-     "mercedes-benz-mercedes-benz-amg-sl"
-    ],
-    "id": "mercedes-benz-mercedes-benz-amg-sl",
-    "name": "Mercedes-Benz AMG SL",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 22
-   },
-   {
-    "codes": [
-     "BRAND_NOT_IN_TDR",
-     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
-     "aston-martin-aston-martin-db11",
-     "aston-martin-aston-martin-db12"
+     "honda-honda-fit",
+     "honda-jazz"
     ],
-    "id": "aston-martin-aston-martin-db11",
-    "name": "Aston Martin DB11",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 14
-   },
-   {
-    "codes": [
-     "BRAND_NOT_IN_TDR",
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "aston-martin-aston-martin-db11",
-     "aston-martin-aston-martin-db12"
-    ],
-    "id": "aston-martin-aston-martin-db12",
-    "name": "Aston Martin DB12",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 8
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "volvo-volvo-264gl",
-     "volvo-volvo-264gle"
-    ],
-    "id": "volvo-volvo-264gl",
-    "name": "Volvo 264GL",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 4
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT"
-    ],
-    "group": [
-     "volkswagen-volkswagen-t-roc",
-     "volkswagen-vw-t-cross"
-    ],
-    "id": "volkswagen-volkswagen-t-roc",
-    "name": "Volkswagen T-ROC",
+    "id": "honda-honda-fit",
+    "name": "Honda FIT",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 2
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "volvo-volvo-264gl",
-     "volvo-volvo-264gle"
-    ],
-    "id": "volvo-volvo-264gle",
-    "name": "Volvo 264GLE",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT"
-    ],
-    "group": [
-     "volkswagen-volkswagen-t-roc",
-     "volkswagen-vw-t-cross"
-    ],
-    "id": "volkswagen-vw-t-cross",
-    "name": "VW T-Cross",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1
    }
   ],
   "B": [
@@ -2788,7 +3925,6 @@
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "TOYOTA|HILUK",
      "toyota-hilux",
      "toyota-hilux-champ",
      "toyota-hilux-revo",
@@ -2807,13 +3943,9 @@
      "PROVIDER_FINER_THAN_TDR"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -2844,35 +3976,13 @@
     "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "honda-br-v",
-     "honda-cr-v",
-     "honda-hr-v",
-     "honda-wr-v"
-    ],
-    "id": "honda-hr-v",
-    "name": "HR-V",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 105452
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
      "PROVIDER_LINEAGE_AMBIGUOUS"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -2891,13 +4001,9 @@
      "PROVIDER_FINER_THAN_TDR"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -2907,23 +4013,6 @@
     "name": "Yaris Cross",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 99875
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_COARSER_THAN_TDR"
-    ],
-    "group": [
-     "mazda-mazda2",
-     "mazda-mazda3",
-     "mazda-mazda6",
-     "mazda-mazda6e"
-    ],
-    "id": "mazda-mazda2",
-    "name": "Mazda2",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 61313
    },
    {
     "codes": [
@@ -2940,23 +4029,6 @@
     "name": "Atto 3",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 44588
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "honda-br-v",
-     "honda-cr-v",
-     "honda-hr-v",
-     "honda-wr-v"
-    ],
-    "id": "honda-cr-v",
-    "name": "CR-V",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 38413
    },
    {
     "codes": [
@@ -2981,13 +4053,9 @@
      "PROVIDER_LINEAGE_AMBIGUOUS"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -3005,7 +4073,6 @@
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "TOYOTA|HILUK",
      "toyota-hilux",
      "toyota-hilux-champ",
      "toyota-hilux-revo",
@@ -3015,23 +4082,6 @@
     "name": "Hilux Travo",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 30119
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "mg-mg-s5-ev",
-     "mg-mg-urban-ev",
-     "mg-mg4-ev"
-    ],
-    "id": "mg-mg4-ev",
-    "name": "MG4 EV",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 29161
    },
    {
     "codes": [
@@ -3052,30 +4102,9 @@
     "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS"
-    ],
-    "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
-    ],
-    "id": "mazda-mazda-cx-30",
-    "name": "Mazda CX-30",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 22782
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "TOYOTA|HILUK",
      "toyota-hilux",
      "toyota-hilux-champ",
      "toyota-hilux-revo",
@@ -3106,27 +4135,6 @@
     "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "PROVIDER_LINEAGE_AMBIGUOUS"
-    ],
-    "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
-    ],
-    "id": "mazda-mazda-cx-3",
-    "name": "Mazda CX-3",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 14905
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
@@ -3142,25 +4150,21 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
-     "mg-mg-s5-ev",
-     "mg-mg-urban-ev",
-     "mg-mg4-ev"
+     "honda-honda-fit",
+     "honda-jazz"
     ],
-    "id": "mg-mg-s5-ev",
-    "name": "MG S5 EV",
+    "id": "honda-jazz",
+    "name": "Jazz",
     "outcome": "IDENTITY_REVIEW",
-    "units_total": 13675
+    "units_total": 13790
    },
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
+     "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
      "ford-ford-ranger",
@@ -3194,7 +4198,6 @@
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "byd-byd-shark-6-limited__provisional",
      "byd-sealion-5",
      "byd-sealion-6",
      "byd-sealion-7"
@@ -3237,45 +4240,10 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "changan-deepal-e07",
-     "changan-deepal-hunter",
-     "changan-deepal-l07",
-     "changan-deepal-s05",
-     "changan-deepal-s07"
-    ],
-    "id": "changan-deepal-s05",
-    "name": "Deepal S05",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 11983
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "changan-deepal-e07",
-     "changan-deepal-hunter",
-     "changan-deepal-l07",
-     "changan-deepal-s05",
-     "changan-deepal-s07"
-    ],
-    "id": "changan-deepal-s07",
-    "name": "Deepal S07",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 11650
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "byd-byd-shark-6-limited__provisional",
      "byd-sealion-5",
      "byd-sealion-6",
      "byd-sealion-7"
@@ -3303,44 +4271,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_COARSER_THAN_TDR"
-    ],
-    "group": [
-     "mazda-mazda2",
-     "mazda-mazda3",
-     "mazda-mazda6",
-     "mazda-mazda6e"
-    ],
-    "id": "mazda-mazda3",
-    "name": "Mazda3",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 6613
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
-    ],
-    "id": "mazda-mazda-cx-8",
-    "name": "Mazda CX-8",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 4823
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
     ],
     "group": [
      "gwm-ora-07",
@@ -3351,106 +4282,6 @@
     "name": "Ora 5",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 4809
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
-    ],
-    "id": "mazda-mazda-cx-5",
-    "name": "Mazda CX-5",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 4168
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "honda-br-v",
-     "honda-cr-v",
-     "honda-hr-v",
-     "honda-wr-v"
-    ],
-    "id": "honda-br-v",
-    "name": "BR-V",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 4130
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "honda-br-v",
-     "honda-cr-v",
-     "honda-hr-v",
-     "honda-wr-v"
-    ],
-    "id": "honda-wr-v",
-    "name": "WR-V",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 3688
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "mercedes-benz-mercedes-benz-c250",
-     "mercedes-benz-mercedes-benz-c350"
-    ],
-    "id": "mercedes-benz-mercedes-benz-c350",
-    "name": "Mercedes-Benz C350",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2549
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "mg-mg-s5-ev",
-     "mg-mg-urban-ev",
-     "mg-mg4-ev"
-    ],
-    "id": "mg-mg-urban-ev",
-    "name": "MG Urban EV",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2473
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "volvo-volvo-xc60",
-     "volvo-volvo-xc90"
-    ],
-    "id": "volvo-volvo-xc60",
-    "name": "Volvo XC60",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2432
    },
    {
     "codes": [
@@ -3470,14 +4301,12 @@
     "codes": [
      "LINEAGE_UNRESOLVED",
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
      "PROVIDER_FINER_THAN_TDR",
      "PROVIDER_LINEAGE_AMBIGUOUS",
      "POSSIBLE_POWERTRAIN_DERIVATIVE"
     ],
     "group": [
      "mini-cooper",
-     "mini-mini-aceman-ev",
      "mini-mini-cooper-ev"
     ],
     "id": "mini-mini-cooper-ev",
@@ -3488,8 +4317,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR"
+     "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
      "gwm-ora-07",
@@ -3500,21 +4328,6 @@
     "name": "Ora 07",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 1698
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "volvo-volvo-es90",
-     "volvo-volvo-ex30",
-     "volvo-volvo-ex90"
-    ],
-    "id": "volvo-volvo-ex30",
-    "name": "Volvo EX30",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1689
    },
    {
     "codes": [
@@ -3534,24 +4347,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "changan-deepal-e07",
-     "changan-deepal-hunter",
-     "changan-deepal-l07",
-     "changan-deepal-s05",
-     "changan-deepal-s07"
-    ],
-    "id": "changan-deepal-l07",
-    "name": "Deepal L07",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1512
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "PROVIDER_FINER_THAN_TDR"
+     "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
      "toyota-land-cruiser",
@@ -3581,69 +4377,16 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "wuling-air-ev-aira-ev",
-     "wuling-wuling-porta-ev"
-    ],
-    "id": "wuling-air-ev-aira-ev",
-    "name": "Air ev / Aira ev",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1177
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "mini-cooper",
-     "mini-mini-aceman-ev",
-     "mini-mini-cooper-ev"
-    ],
-    "id": "mini-mini-aceman-ev",
-    "name": "Mini Aceman EV",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1057
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-430i",
-    "name": "BMW 430i",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1044
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
-     "volvo-volvo-xc60",
-     "volvo-volvo-xc90"
+     "honda-honda-stepwagon",
+     "honda-step-wgn"
     ],
-    "id": "volvo-volvo-xc90",
-    "name": "Volvo XC90",
+    "id": "honda-step-wgn",
+    "name": "Step WGN",
     "outcome": "IDENTITY_REVIEW",
-    "units_total": 993
+    "units_total": 1288
    },
    {
     "codes": [
@@ -3668,7 +4411,6 @@
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
-     "byd-byd-shark-6-limited__provisional",
      "byd-sealion-5",
      "byd-sealion-6",
      "byd-sealion-7"
@@ -3680,23 +4422,7 @@
    },
    {
     "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "peugeot-peugeot-2008",
-     "peugeot-peugeot-3008",
-     "peugeot-peugeot-5008"
-    ],
-    "id": "peugeot-peugeot-3008",
-    "name": "Peugeot 3008",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 939
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED"
+     "STRUCTURAL_CONFLICT"
     ],
     "group": [
      "maxus-mifa-7",
@@ -3711,27 +4437,6 @@
     "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-630i",
-    "name": "BMW 630I",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 802
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED"
     ],
     "group": [
@@ -3740,22 +4445,6 @@
     ],
     "id": "hyundai-ioniq-5",
     "name": "Ioniq 5",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 604
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "mazda-mazda2",
-     "mazda-mazda3",
-     "mazda-mazda6",
-     "mazda-mazda6e"
-    ],
-    "id": "mazda-mazda6e",
-    "name": "Mazda6e",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 604
    },
@@ -3777,105 +4466,19 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "peugeot-peugeot-2008",
-     "peugeot-peugeot-3008",
-     "peugeot-peugeot-5008"
-    ],
-    "id": "peugeot-peugeot-2008",
-    "name": "Peugeot 2008",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 566
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
      "PROVIDER_FINER_THAN_TDR",
      "PROVIDER_LINEAGE_AMBIGUOUS",
      "POSSIBLE_TRIM_NOT_MODEL"
     ],
     "group": [
-     "MERCEDES BENZ|A 180",
      "MERCEDES BENZ|C 180",
-     "mercedes-benz-mercedes-benz-a-class",
      "mercedes-benz-mercedes-benz-amg-c",
-     "mercedes-benz-mercedes-benz-amg-g63",
-     "mercedes-benz-mercedes-benz-amg-sl",
      "mercedes-benz-mercedes-benz-c-class"
     ],
     "id": "mercedes-benz-mercedes-benz-amg-c",
     "name": "Mercedes-Benz AMG C",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 550
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-es300h",
-     "lexus-lexus-es350e",
-     "lexus-lexus-es350h",
-     "lexus-lexus-is300h"
-    ],
-    "id": "lexus-lexus-es300h",
-    "name": "Lexus ES300H",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 332
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "peugeot-peugeot-2008",
-     "peugeot-peugeot-3008",
-     "peugeot-peugeot-5008"
-    ],
-    "id": "peugeot-peugeot-5008",
-    "name": "Peugeot 5008",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 316
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-es300h",
-     "lexus-lexus-es350e",
-     "lexus-lexus-es350h",
-     "lexus-lexus-is300h"
-    ],
-    "id": "lexus-lexus-is300h",
-    "name": "Lexus IS300H",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 295
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "changan-deepal-e07",
-     "changan-deepal-hunter",
-     "changan-deepal-l07",
-     "changan-deepal-s05",
-     "changan-deepal-s07"
-    ],
-    "id": "changan-deepal-e07",
-    "name": "Deepal E07",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 289
    },
    {
     "codes": [
@@ -3893,70 +4496,13 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "MERCEDES BENZ|A 180",
-     "MERCEDES BENZ|C 180",
-     "mercedes-benz-mercedes-benz-a-class",
-     "mercedes-benz-mercedes-benz-amg-c",
-     "mercedes-benz-mercedes-benz-amg-g63",
-     "mercedes-benz-mercedes-benz-amg-sl",
-     "mercedes-benz-mercedes-benz-c-class"
-    ],
-    "id": "mercedes-benz-mercedes-benz-amg-g63",
-    "name": "Mercedes-Benz AMG G63",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 209
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_POWERTRAIN_DERIVATIVE"
-    ],
-    "group": [
-     "wuling-air-ev-aira-ev",
-     "wuling-wuling-porta-ev"
-    ],
-    "id": "wuling-wuling-porta-ev",
-    "name": "Wuling Porta EV",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 184
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-rz350e",
-     "lexus-lexus-rz450e"
-    ],
-    "id": "lexus-lexus-rz450e",
-    "name": "Lexus RZ450E",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 151
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
      "EXISTING_IDENTITY_SUSPECTED",
      "PROVIDER_FINER_THAN_TDR"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -3966,21 +4512,6 @@
     "name": "GR Yaris",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 149
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "volvo-volvo-es90",
-     "volvo-volvo-ex30",
-     "volvo-volvo-ex90"
-    ],
-    "id": "volvo-volvo-es90",
-    "name": "Volvo ES90",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 145
    },
    {
     "codes": [
@@ -4015,112 +4546,6 @@
    },
    {
     "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
-    ],
-    "id": "audi-audi-rs-4",
-    "name": "AUDI RS 4",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 103
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS"
-    ],
-    "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
-     "toyota-corolla-altis",
-     "toyota-corolla-cross",
-     "toyota-gr-corolla",
-     "toyota-gr-supra",
-     "toyota-gr-yaris",
-     "toyota-yaris",
-     "toyota-yaris-ativ",
-     "toyota-yaris-cross"
-    ],
-    "id": "toyota-gr-supra",
-    "name": "GR Supra",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 97
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-420i",
-    "name": "BMW 420I",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 95
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
-    ],
-    "id": "audi-audi-rs-5",
-    "name": "AUDI RS 5",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 94
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "volvo-volvo-es90",
-     "volvo-volvo-ex30",
-     "volvo-volvo-ex90"
-    ],
-    "id": "volvo-volvo-ex90",
-    "name": "Volvo EX90",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 88
-   },
-   {
-    "codes": [
      "LINEAGE_UNRESOLVED",
      "STRUCTURAL_CONFLICT",
      "EXISTING_IDENTITY_SUSPECTED",
@@ -4139,20 +4564,12 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
      "PROVIDER_FINER_THAN_TDR",
      "POSSIBLE_TRIM_NOT_MODEL"
     ],
     "group": [
      "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
+     "audi-audi-rs-q3"
     ],
     "id": "audi-audi-rs-q3",
     "name": "AUDI RS Q3",
@@ -4162,21 +4579,16 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
+     "honda-honda-stepwagon",
+     "honda-step-wgn"
     ],
-    "id": "mazda-mazda-mx-5",
-    "name": "Mazda MX-5",
+    "id": "honda-honda-stepwagon",
+    "name": "Honda Stepwagon",
     "outcome": "IDENTITY_REVIEW",
-    "units_total": 81
+    "units_total": 73
    },
    {
     "codes": [
@@ -4196,34 +4608,13 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "mercedes-benz-mercedes-benz-c250",
-     "mercedes-benz-mercedes-benz-c350"
-    ],
-    "id": "mercedes-benz-mercedes-benz-c250",
-    "name": "Mercedes-Benz C250",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 61
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
      "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
      "PROVIDER_LINEAGE_AMBIGUOUS"
     ],
     "group": [
-     "toyota-86-gr__provisional",
-     "toyota-86-gt-limited__provisional",
-     "toyota-86__provisional",
      "toyota-corolla-altis",
      "toyota-corolla-cross",
      "toyota-gr-corolla",
-     "toyota-gr-supra",
      "toyota-gr-yaris",
      "toyota-yaris",
      "toyota-yaris-ativ",
@@ -4237,118 +4628,18 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
+     "DUPLICATE_CANONICAL_SUSPECTED",
      "PROVIDER_FINER_THAN_TDR",
      "POSSIBLE_TRIM_NOT_MODEL"
     ],
     "group": [
-     "audi-audi-q3",
      "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
-    ],
-    "id": "audi-audi-rs-6",
-    "name": "AUDI RS 6",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 44
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-330i",
-    "name": "BMW 330i",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 39
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
      "audi-audi-rs-q8"
     ],
     "id": "audi-audi-rs-q8",
     "name": "AUDI RS Q8",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 34
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "changan-deepal-e07",
-     "changan-deepal-hunter",
-     "changan-deepal-l07",
-     "changan-deepal-s05",
-     "changan-deepal-s07"
-    ],
-    "id": "changan-deepal-hunter",
-    "name": "Deepal Hunter",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 33
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "mazda-mazda2",
-     "mazda-mazda3",
-     "mazda-mazda6",
-     "mazda-mazda6e"
-    ],
-    "id": "mazda-mazda6",
-    "name": "Mazda6",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 29
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-rz350e",
-     "lexus-lexus-rz450e"
-    ],
-    "id": "lexus-lexus-rz350e",
-    "name": "Lexus RZ350E",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 27
    },
    {
     "codes": [
@@ -4370,216 +4661,14 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_FINER_THAN_TDR",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
-    ],
-    "id": "audi-audi-rs-3",
-    "name": "AUDI RS 3",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 22
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "PROVIDER_LINEAGE_AMBIGUOUS",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "MERCEDES BENZ|A 180",
-     "MERCEDES BENZ|C 180",
-     "mercedes-benz-mercedes-benz-a-class",
-     "mercedes-benz-mercedes-benz-amg-c",
-     "mercedes-benz-mercedes-benz-amg-g63",
-     "mercedes-benz-mercedes-benz-amg-sl",
-     "mercedes-benz-mercedes-benz-c-class"
-    ],
-    "id": "mercedes-benz-mercedes-benz-amg-sl",
-    "name": "Mercedes-Benz AMG SL",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 22
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "EXISTING_IDENTITY_SUSPECTED",
-     "POSSIBLE_TRIM_NOT_MODEL"
-    ],
-    "group": [
-     "audi-audi-q3",
-     "audi-audi-q8",
-     "audi-audi-rs-3",
-     "audi-audi-rs-4",
-     "audi-audi-rs-5",
-     "audi-audi-rs-6",
-     "audi-audi-rs-7",
-     "audi-audi-rs-q3",
-     "audi-audi-rs-q8"
-    ],
-    "id": "audi-audi-rs-7",
-    "name": "AUDI RS 7",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 16
-   },
-   {
-    "codes": [
-     "BRAND_NOT_IN_TDR",
-     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
-     "aston-martin-aston-martin-db11",
-     "aston-martin-aston-martin-db12"
+     "honda-honda-fit",
+     "honda-jazz"
     ],
-    "id": "aston-martin-aston-martin-db11",
-    "name": "Aston Martin DB11",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 14
-   },
-   {
-    "codes": [
-     "BRAND_NOT_IN_TDR",
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
-    ],
-    "group": [
-     "aston-martin-aston-martin-db11",
-     "aston-martin-aston-martin-db12"
-    ],
-    "id": "aston-martin-aston-martin-db12",
-    "name": "Aston Martin DB12",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 8
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "volvo-volvo-264gl",
-     "volvo-volvo-264gle"
-    ],
-    "id": "volvo-volvo-264gl",
-    "name": "Volvo 264GL",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 4
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-320i",
-    "name": "BMW 320i",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 3
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-es300h",
-     "lexus-lexus-es350e",
-     "lexus-lexus-es350h",
-     "lexus-lexus-is300h"
-    ],
-    "id": "lexus-lexus-es350h",
-    "name": "Lexus ES350H",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 3
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "BMW|630CI",
-     "BMW|650I",
-     "bmw-bmw-320i",
-     "bmw-bmw-330i",
-     "bmw-bmw-420i",
-     "bmw-bmw-430i",
-     "bmw-bmw-520i",
-     "bmw-bmw-630i"
-    ],
-    "id": "bmw-bmw-520i",
-    "name": "BMW 520i",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "lexus-lexus-es300h",
-     "lexus-lexus-es350e",
-     "lexus-lexus-es350h",
-     "lexus-lexus-is300h"
-    ],
-    "id": "lexus-lexus-es350e",
-    "name": "Lexus ES350E",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT"
-    ],
-    "group": [
-     "volkswagen-volkswagen-t-roc",
-     "volkswagen-vw-t-cross"
-    ],
-    "id": "volkswagen-volkswagen-t-roc",
-    "name": "Volkswagen T-ROC",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 2
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
-    ],
-    "group": [
-     "volvo-volvo-264gl",
-     "volvo-volvo-264gle"
-    ],
-    "id": "volvo-volvo-264gle",
-    "name": "Volvo 264GLE",
+    "id": "honda-honda-fit",
+    "name": "Honda FIT",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 2
    },
@@ -4596,57 +4685,22 @@
     "name": "Tiggo Cross",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 1
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT",
-     "EXISTING_IDENTITY_SUSPECTED"
-    ],
-    "group": [
-     "mazda-mazda-cx-3",
-     "mazda-mazda-cx-30",
-     "mazda-mazda-cx-5",
-     "mazda-mazda-cx-8",
-     "mazda-mazda-mx-30",
-     "mazda-mazda-mx-5"
-    ],
-    "id": "mazda-mazda-mx-30",
-    "name": "Mazda MX-30",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1
-   },
-   {
-    "codes": [
-     "STRUCTURAL_CONFLICT"
-    ],
-    "group": [
-     "volkswagen-volkswagen-t-roc",
-     "volkswagen-vw-t-cross"
-    ],
-    "id": "volkswagen-vw-t-cross",
-    "name": "VW T-Cross",
-    "outcome": "IDENTITY_REVIEW",
-    "units_total": 1
    }
   ]
  },
  "suspected_false_creates": {
-  "analyst_count": 11,
+  "analyst_count": 8,
   "analyst_suspects_missed_by_R1_R2": [
    "bmw-bmw-m2",
    "bmw-bmw-m3",
    "bmw-bmw-m4",
    "bmw-bmw-m5",
    "foton-bj1041",
-   "honda-honda-fit",
-   "honda-honda-stepwagon",
-   "honda-jazz",
    "hyundai-genesis-g80",
    "sokon-crc50",
    "toyota-toyota-tr"
   ],
   "by_kind": {
-   "SUSPECT_ALIAS": 3,
    "SUSPECT_BRAND": 1,
    "SUSPECT_CODE": 2,
    "SUSPECT_TRUNCATED": 1,
@@ -4655,12 +4709,12 @@
   "caught_by_R1": [],
   "caught_by_R2": [],
   "caught_by_R4": [],
-  "creates": 67,
-  "dormant": 59,
-  "dormant_units_total": 33882,
+  "creates": 73,
+  "dormant": 62,
+  "dormant_units_total": 20473,
   "r1_r2_flags_not_in_analyst_list": [],
-  "recent": 16,
-  "units_total": 15402
+  "recent": 22,
+  "units_total": 1537
  },
  "suspected_false_review_hold": {
   "clean_looking_raw_top": [
@@ -4792,15 +4846,9 @@
   ],
   "not_activated_by_fuzzy_or_equiv_only": [
    "KIA|CANIVAL",
-   "SOKON|EC31",
    "TOYOTA|COMUTER",
-   "bmw-bmw-630i",
-   "lexus-lexus-es350h",
-   "mazda-mazda6e",
-   "mercedes-benz-mercedes-benz-c350",
-   "mg-mg4-ev",
-   "peugeot-peugeot-5008",
-   "volvo-volvo-es90"
+   "honda-honda-stepwagon",
+   "mg-mg4-ev"
   ],
   "provisional": 114,
   "review_total": 89,
@@ -4853,29 +4901,35 @@
   ],
   "unsettled_raw_ids": 591,
   "unsettled_raw_ids_with_clean_looking_name": 158,
-  "weak_token_sibling_only": [
-   "mazda-mazda-mx-30",
-   "toyota-toyota-d-cab"
-  ],
-  "weak_units": 26
+  "weak_token_sibling_only": [],
+  "weak_units": 0
  },
  "word_rules": {
   "all_classes_removed_new_creates_A": [
+   "bmw-bmw-630i",
    "farizon-farizon-mpv-sv6",
    "honda-honda-s660",
    "jac-jac-t8ev",
    "lexus-lexus-es350e",
+   "lexus-lexus-es350h",
+   "lexus-lexus-rz350e",
+   "lexus-lexus-rz450e",
    "lexus-lexus-rz500e",
-   "mclaren-mclaren-750s"
+   "mclaren-mclaren-750s",
+   "toyota-toyota-d-cab",
+   "volvo-volvo-264gl",
+   "volvo-volvo-264gle"
   ],
   "classes": {
    "body": {
     "new_creates_if_removed": {
      "A": [
-      "farizon-farizon-mpv-sv6"
+      "farizon-farizon-mpv-sv6",
+      "toyota-toyota-d-cab"
      ],
      "B": [
-      "farizon-farizon-mpv-sv6"
+      "farizon-farizon-mpv-sv6",
+      "toyota-toyota-d-cab"
      ]
     }
    },
@@ -4888,15 +4942,28 @@
    "model_code": {
     "new_creates_if_removed": {
      "A": [
+      "bmw-bmw-630i",
       "honda-honda-s660",
       "lexus-lexus-es350e",
+      "lexus-lexus-es350h",
+      "lexus-lexus-rz350e",
+      "lexus-lexus-rz450e",
       "lexus-lexus-rz500e",
-      "mclaren-mclaren-750s"
+      "mclaren-mclaren-750s",
+      "volvo-volvo-264gl",
+      "volvo-volvo-264gle"
      ],
      "B": [
+      "bmw-bmw-630i",
       "honda-honda-s660",
+      "lexus-lexus-es350e",
+      "lexus-lexus-es350h",
+      "lexus-lexus-rz350e",
+      "lexus-lexus-rz450e",
       "lexus-lexus-rz500e",
-      "mclaren-mclaren-750s"
+      "mclaren-mclaren-750s",
+      "volvo-volvo-264gl",
+      "volvo-volvo-264gle"
      ]
     }
    },
@@ -5262,7 +5329,7 @@
    },
    {
     "name": "Mini Aceman EV",
-    "outcome": "IDENTITY_REVIEW/STRUCTURAL_CONFLICT"
+    "outcome": "IDENTITY_REVIEW/PROVIDER_FINER_THAN_TDR"
    },
    {
     "name": "Mini Cooper EV",
@@ -5290,14 +5357,17 @@
    }
   ],
   "per_word_new_creates_A": {
+   "body.cab": [
+    "toyota-toyota-d-cab"
+   ],
    "body.mpv": [
     "farizon-farizon-mpv-sv6"
    ]
   }
  },
  "write_plans": {
-  "A": 67,
-  "B": 67,
+  "A": 73,
+  "B": 72,
   "writes_executed": 0
  }
 }
