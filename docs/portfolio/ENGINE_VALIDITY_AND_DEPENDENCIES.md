@@ -63,6 +63,10 @@ A source observation is not an owner-approved fact and a derived metric is not a
 
 No customer-facing historical index or alert without source IDs, coverage denominator, as-of, methodology version and rights/entitlement. No data claim may depend on UI-only authorization. No Night Shift preflight task is authorized by the existence of this file.
 
+## CP-00 source readiness evidence (new 2026-10-11 finding)
+
+Live read-only inventory is recorded in [CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md](CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md): official-list observations are only dated September 2026 in the current ledger; ECO sticker amounts may not be silently reclassified as MSRP; current trim source coverage is incomplete and promotions are not normalized general-cash amounts. **Do not assert a 3M/12M price-movement series or full 2021→present PDI**. This adds a real *price history/data-readiness gate* before publishable time-series pressure; it does not block offline substitution or independently scoped UX design. Any time-series release requires independent source reconstruction and validity tests.
+
 ## Cross-engine dependencies for actual development
 
 ```text
