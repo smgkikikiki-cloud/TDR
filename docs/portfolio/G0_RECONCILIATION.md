@@ -1,7 +1,7 @@
 # G0 reconciliation evidence, conflicts and decision requests
 
-**Observed:** 2026-10-11 (GitHub main + open PR metadata; no Supabase write or independent live DB check).  
-**Result:** `RECONCILIATION_ARTIFACT_PREPARED`; **G0 NOT PASSED / owner adoption pending**.  
+**Observed:** 2026-10-11 (GitHub main/open PR metadata, supplemented later by SELECT-only CP-00 Supabase audit; no DB writes).  
+**Roadmap decision:** owner APPROVED Master Development Roadmap v1.0 on 2026-10-11 after reviewing the full plan. **G0 operational evidence/permission conflicts remain OPEN**, with R6, migrations, billing and CTPDI method decisions gated separately.  
 **Priority:** facts before jobs, authority before autonomy. Status in this document is a point-in-time reading, not an instruction to change workstream heads.
 
 ## 1. Source provenance and precedence
@@ -112,9 +112,9 @@
 
 | Gate | Deliverable | Pass condition | Current G0 verdict |
 |---|---|---|---|
-| G0-A Evidence Inventory | present documents + PR observations + contradiction register | each material source fact points to exact file/PR; owner decisions vs proposals explicit | **Prepared for review** |
+| G0-A Evidence Inventory | present documents + PR observations + contradiction register | each material source fact points to exact file/PR; owner decisions vs proposals explicit | **Documented; source-state conflicts remain** |
 | G0-B Resolve Critical Conflicts | C01 R6, C02 migration allocation, C03 payment roadmap and C04 index grain | approved, versioned decision recorded; relevant authority doc updated via separate scoped PR | **BLOCKED / outstanding** |
-| G0-C Adopt Portfolio Contract | domain boundaries, workflow states and first bounded task | owner accepts this contract, no ambiguous destructive action | **NOT ADOPTED** |
+| G0-C Adopt Portfolio Contract | domain boundaries and workflow responsibilities | owner accepts the portfolio roadmap; no automatic work permission | **OWNER APPROVED v1.0; unmerged on PR branch** |
 | G1 Offline Engineering | narrow approved correction or fixture task | green CI + exact base SHA + no scope/gate breach | **NOT STARTED BY THIS PR** |
 
 **Earliest legitimate autonomous trial:** after review, choose a *new* isolated fixture/test task (potentially a single #203 correction follow-on only after that PR's current correction round stops); pin HEAD SHA and permitted paths; Claude implements, Codex reviews from a clean pinned read-only checkout, enforcer enforces deterministic checks and caps at a proposed three fix cycles, then returns draft PR for owner review. It does not proceed into R6, R8, production writer, external research or paid AI research calls.
@@ -130,4 +130,4 @@
 - **D07:** approve initial price evidence coverage/freshness rules and Dealer Master source/event verification.
 - **D08:** adopt Toolkit design contracts without overruling Website Pro rights; five model analysis sections, local Spatial modes and PDF rules are protected.
 
-No action above is silently assumed approved because this document was generated or reviewed.
+The owner approved the **portfolio roadmap and its governance direction** on 2026-10-11. That approval does NOT resolve C01–C04, adopt a specific disputed index formula, create a Task Packet, grant GitHub merge rights or authorize production changes. Those decisions remain explicitly separate.
