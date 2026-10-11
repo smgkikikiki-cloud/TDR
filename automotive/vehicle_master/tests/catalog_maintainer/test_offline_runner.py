@@ -12,6 +12,7 @@ from automotive.vehicle_master.catalog_maintainer.offline_runner import (
     FakeClock, OfflineFakeProvider, OfflineRunner, SQLiteJobStore, WorkerInterrupted,
     build_offline_plan, validate_offline_plan, validate_runner_report,
 )
+from automotive.vehicle_master.catalog_maintainer.replay import validate_cached_source_document
 from automotive.vehicle_master.catalog_maintainer.validation import validate_policy
 
 
@@ -439,6 +440,72 @@ class OfflineRunnerTests(unittest.TestCase):
         self.assertEqual(result["status"],"COMPLETED")
         self.assertEqual(self.store.list_jobs()[0]["attempt_count"],6)
         self.assertEqual(len(self.store.cached_evidence()),1)
+
+    def test_multigeneration_retail_lineup_cannot_complete_or_suppress_other_generation(self):
+        snapshot=fixture()
+        snapshot["generations"].append({"id":"yaris_ativ.g5","model_id":"toyota.yaris_ativ"})
+        snapshot["trims"].append({"id":"yaris.next_gen","model_id":"toyota.yaris_ativ",
+                                  "generation_id":"yaris_ativ.g5","status":"CURRENT","powertrain":"ICE"})
+        initial=build_offline_plan(snapshot,self.policy,now=DAY)
+        task=next(t for t in initial["tasks"] if t["target_key"]=="RETAIL_AUDIT:toyota.yaris_ativ:RETAIL_LINEUP")
+        self.assertEqual(set(task["payload"]["generation_ids"]),{"yaris_ativ.g4","yaris_ativ.g5"})
+        key=task["idempotency_key"]
+
+        # The valid G1 attestation is not an existential match for the model's
+        # entire two-generation RETAIL_AUDIT scope.
+        doc=json.loads((ROOT/"fixtures/recorded_docs/complete-lineup.json").read_text())
+        doc.update(model_id="toyota.yaris_ativ",generation_id="yaris_ativ.g4",
+                   captured_at="2026-10-10",published_at="2026-10-01",
+                   source_id="synthetic-oem-th",edition_id="oem-edition-yaris",
+                   lineage_id="synthetic-oem-yaris-lineage")
+        doc["trim_ids"]=["yaris.smart"]
+        doc["capture_manifest"].update(listed_trim_ids=["yaris.smart"],row_count=1,source_page_count=1)
+        scope="lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=toyota.yaris_ativ|generation=yaris_ativ.g4|model_year=NONE|facelift=NONE"
+        lines=["lineup|trim|yaris.smart",scope,
+            "capture|edition=oem-edition-yaris|capture_id=capture-yaris-g4|captured_at=2026-10-10|method=LOCAL_FIXTURE_CAPTURE"]
+        doc["content"]="\n".join(lines)
+        doc["completeness_evidence"].update(quote=scope,locator=f"line:{len(lines)-1}")
+        doc["capture_provenance"].update(capture_id="capture-yaris-g4",capture_method="LOCAL_FIXTURE_CAPTURE",
+            captured_at="2026-10-10",captured_page_count=1)
+        doc["lineup_rows"]=[{"market_trim_id":"yaris.smart","model_id":"toyota.yaris_ativ",
+            "generation_id":"yaris_ativ.g4","grade":None,"powertrain":"ICE",
+            "model_year":None,"facelift_id":None}]
+        doc["content_sha256"]=hashlib.sha256(doc["content"].encode()).hexdigest()
+        digest=hashlib.sha256(doc["content"].encode()).hexdigest()
+        self.assertTrue(validate_cached_source_document(snapshot,doc)["retail_lineup_validated"])
+        cached={"source_document":doc,"content_sha256":digest,"document_id":doc["document_id"]}
+        cache_plan=build_offline_plan(snapshot,self.policy,now=DAY,cached_documents=[cached],
+                                      known_hashes={task["target_key"]:{digest}})
+        cache_task=next(t for t in cache_plan["tasks"] if t["target_key"]==task["target_key"])
+        self.assertEqual(cache_task["payload"]["source_action"],"PLAN_RETRIEVAL")
+        self.assertNotIn("UNCHANGED_DOCUMENT_HASH",{d["reason"] for d in cache_plan["dispositions"]})
+
+        self.store.enqueue(task,at=DAY,max_attempts=1+self.policy["runner"]["maximum_retries_per_job"])
+        self.store.bind_job_snapshot(key,snapshot,at=DAY)
+        provider=OfflineFakeProvider(responses={task["target_key"]:{"state":"COMPLETED",
+            "source_document":doc,"source_hash":digest}},clock=self.clock)
+        runner=OfflineRunner(self.store,self.policy,self.clock,provider)
+        result=self.explicit_step(runner)
+        self.assertEqual((result["status"],result["reason"]),
+                         ("RETRY_WAIT","EVIDENCE_MULTI_GENERATION_LINEUP_SCOPE_UNSUPPORTED"))
+        self.assertEqual(self.store.cached_evidence(),[])
+        self.assertNotEqual(self.store.list_jobs()[0]["status"],"COMPLETED")
+
+        # Journal restart and deterministic replan retain the same queued unit
+        # of work, without adding a duplicate or trusting the G1 cache entry.
+        self.store.close()
+        self.store=SQLiteJobStore(self.db_path)
+        runner=OfflineRunner(self.store,self.policy,self.clock,OfflineFakeProvider(clock=self.clock))
+        replanned=runner.enqueue_plan(snapshot)
+        same=next(t for t in replanned["tasks"] if t["target_key"]==task["target_key"])
+        self.assertEqual(same["idempotency_key"],key)
+        self.assertGreaterEqual(replanned["deduplicated_count"],1)
+        self.assertEqual(sum(j["idempotency_key"]==key for j in self.store.list_jobs()),1)
+        self.assertEqual(next(j for j in self.store.list_jobs() if j["idempotency_key"]==key)["status"],"RETRY_WAIT")
+        still_planned=build_offline_plan(snapshot,self.policy,now=self.clock.now(),
+            cached_documents=self.store.cached_evidence(),known_hashes=self.store.cached_hashes())
+        self.assertIn(task["target_key"],{t["target_key"] for t in still_planned["tasks"]})
+        self.assertNotIn("UNCHANGED_DOCUMENT_HASH",{d["reason"] for d in still_planned["dispositions"]})
 
     def test_policy_rejects_lease_shorter_than_safe_renewal_boundary(self):
         self.policy["runner"]["lease_seconds"]=1

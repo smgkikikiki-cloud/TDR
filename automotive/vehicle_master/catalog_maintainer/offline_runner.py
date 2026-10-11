@@ -642,6 +642,11 @@ def _cache_covers(snapshot: dict, cache_record: dict, model_id: str, generation_
     except Exception:
         return False
     if group == "RETAIL_LINEUP":
+        # Retail completeness attestations cover one generation at a time.
+        # A model-level task spanning generations cannot be satisfied by an
+        # existential match against just one of them.
+        if len(generation_ids) != 1:
+            return False
         return validated["retail_lineup_validated"] is True
     registry=load_registry()
     required={(trim, resolve_key(field,registry) or field)
@@ -682,6 +687,10 @@ def _document_scope_error(snapshot: dict, job: dict, document: dict | None,
     if source_hash is None or source_hash != document.get("content_sha256"):
         return "EVIDENCE_HASH_MISMATCH"
     if payload["field_group"] == "RETAIL_LINEUP":
+        # Chunk 3 lineup evidence is generation-scoped. Until the planner emits
+        # one retail task per generation, fail closed for multi-generation jobs.
+        if len(generations) != 1:
+            return "EVIDENCE_MULTI_GENERATION_LINEUP_SCOPE_UNSUPPORTED"
         if document.get("source_kind") != "RETAIL_LINEUP" or validated.get("retail_lineup_validated") is not True:
             return "EVIDENCE_LINEUP_SCOPE_INVALID"
         return None
