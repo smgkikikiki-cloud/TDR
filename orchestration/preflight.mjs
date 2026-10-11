@@ -105,9 +105,13 @@ export function checkTask({ packet, plan, roadmap, changedFiles = [] }) {
   if (!HEX64.test(String(packet?.roadmap_sha256 ?? ''))
       || packet.roadmap_sha256 !== digest(roadmap))
     errors.push('TASK_ROADMAP_HASH_STALE');
-  if (!HEX40.test(String(packet?.base_sha ?? ''))
-      || !HEX40.test(String(packet?.head_sha ?? '')))
-    errors.push('TASK_COMMIT_SHA_MISSING');
+  // The packet is stored inside the candidate commit, so it cannot also
+  // embed that very commit SHA. Bind the approved BASE here; Stage-1 binds
+  // the HEAD to GitHub's immutable event SHA and verified checkout.
+  if (!HEX40.test(String(packet?.base_sha ?? '')))
+    errors.push('TASK_BASE_SHA_MISSING');
+  if (packet?.head_sha !== undefined)
+    errors.push('TASK_SELF_REFERENTIAL_HEAD_SHA_FORBIDDEN');
   if (packet?.owner_authorized !== true || !packet.approval_ref)
     errors.push('TASK_OWNER_AUTHORIZATION_MISSING');
   const queueEntry = Array.isArray(plan?.task_queue)
