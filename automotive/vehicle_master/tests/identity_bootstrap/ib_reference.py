@@ -505,7 +505,7 @@ def _lineage(sid, s, snapshot, bindings, policy, fire, facts) -> None:
         elif act == "REVIEW_AMBIGUOUS":
             fire(sid, "PROVIDER_LINEAGE_AMBIGUOUS", **{k: v for k, v in d.items() if k == "event"})
         elif act == "PROCEED_WITH_RETIRED_ALIAS":
-            facts[sid]["retired_aliases"] += d["olds"]
+            facts[sid]["retired_aliases"] += d.get("olds", [])
 
 
 def _record(sid, s, f, subjects, reps, allocations, ev, snapshot, policy, registry, digest, batch_groups, all_ev) -> dict:

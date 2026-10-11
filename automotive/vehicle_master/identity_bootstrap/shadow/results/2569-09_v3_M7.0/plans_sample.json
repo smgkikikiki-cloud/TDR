@@ -1,0 +1,741 @@
+[
+ {
+  "batch_group": [],
+  "contract_version": 1,
+  "creator_type": "machine",
+  "evidence_basis": {
+   "cleared_flags": [],
+   "kinds": [
+    "PROVIDER_IDENTITY"
+   ],
+   "refs": [
+    "ice:2569-09:v3:M7.0#model_group/honda-jazz"
+   ],
+   "tier": 0
+  },
+  "existing_identity": null,
+  "fingerprints": {
+   "decision": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+   "idempotency_key": "sha256:e763b1763f09599ef4866f559a48d9e380e27a38d19dba47850ca3c51fc0a433",
+   "identity_key": "honda|jazz",
+   "review": "sha256:ab1414caaef5e3a8d3eb6a2ff04927a3edbb20aecc92bb178a48378196e763da"
+  },
+  "identity": {
+   "allocation": {
+    "collision": false,
+    "local_segment": "jazz",
+    "method": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"
+   },
+   "brand_id": "honda",
+   "canonical_model_id": "honda.jazz",
+   "canonical_name": "Jazz",
+   "enrichment_state": "PENDING",
+   "identity_key": "honda|jazz",
+   "identity_state": "DISCOVERED",
+   "slug": "honda-jazz"
+  },
+  "outcome": "CREATE_IDENTITY",
+  "policy": {
+   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
+   "version": 1
+  },
+  "primary_reason": "NEW_IDENTITY_CONFIRMED",
+  "provider": "ice",
+  "reason_codes": [
+   "NEW_IDENTITY_CONFIRMED"
+  ],
+  "record_type": "decision",
+  "review": {
+   "alert": null,
+   "priority_band": "HIGH",
+   "queue": null,
+   "required": false
+  },
+  "source_version": "ice:2569-09:v3:M7.0",
+  "subject": {
+   "display_name": "Jazz",
+   "entity_id": "honda-jazz",
+   "provider": "ice"
+  },
+  "suggested_binding": null,
+  "write_plan": {
+   "actor_kind": "BOOTSTRAP",
+   "apply_mode": "PROPOSE",
+   "deferred_fields": [
+    "provenance.run_id",
+    "provenance.created_at",
+    "provenance.actor",
+    "event.occurred_at",
+    "event.creation.run_id"
+   ],
+   "event": {
+    "aliases": [
+     {
+      "external_id": "honda-jazz",
+      "provider": "ice",
+      "relation": "ORIGIN"
+     }
+    ],
+    "brand_id": "honda",
+    "canonical_model_id": "honda.jazz",
+    "canonical_name": "Jazz",
+    "creation": {
+     "apply_mode": "PROPOSE",
+     "contract_version": 1,
+     "creator_type": "machine",
+     "decision_fingerprint": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+     "evidence": {
+      "kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "refs": [
+       "ice:2569-09:v3:M7.0#model_group/honda-jazz"
+      ],
+      "tier": 0
+     },
+     "policy_version": 1,
+     "reason_codes": [
+      "NEW_IDENTITY_CONFIRMED"
+     ]
+    },
+    "enrichment_hints": {
+     "excluded_neighbors": [],
+     "known_names": [
+      "Jazz"
+     ],
+     "provider_hints": {
+      "body": "Hatchback",
+      "segment": "A-segment"
+     }
+    },
+    "enrichment_state": "PENDING",
+    "event_id": "sha256:9cf03918e490dfdcec3d68e0b1efcc67e390b1e3d997d3c27bf1b5d80ccf4e05",
+    "event_type": "VEHICLE_IDENTITY_CREATED",
+    "event_version": 1,
+    "identity_state": "DISCOVERED",
+    "occurred_at": null,
+    "source": {
+     "external_id": "honda-jazz",
+     "first_seen_period": "2021-01",
+     "provider": "ice",
+     "source_version": "ice:2569-09:v3:M7.0"
+    }
+   },
+   "lock_key": "identity_bootstrap:honda",
+   "operations": [
+    {
+     "idempotency_key": "sha256:b552fd4fff6b5b51cf59792bed75bf597339b827c734f37c2d34abea5f6b5c98",
+     "op": "RESERVE_CANONICAL_ID",
+     "values": {
+      "brand_id": "honda",
+      "canonical_id": "honda.jazz",
+      "identity_key": "honda|jazz",
+      "slug": "honda-jazz"
+     }
+    },
+    {
+     "idempotency_key": "sha256:f6cec63cb513d034713382ef333239856d65e47899bcccc727e7ba428ce2fdb0",
+     "op": "INSERT_IDENTITY_SHELL",
+     "table": "vehicle_models",
+     "values": {
+      "brand_id": "honda",
+      "canonical_id": "honda.jazz",
+      "enrichment_state": "PENDING",
+      "identity_state": "DISCOVERED",
+      "name_en": "Jazz",
+      "slug": "honda-jazz"
+     }
+    },
+    {
+     "idempotency_key": "sha256:12befac72fa41a5cca54cbca769fd972c8c683a7289280277753f746b70d434b",
+     "op": "INSERT_EXTERNAL_ALIAS",
+     "rows": [
+      {
+       "canonical_id": "honda.jazz",
+       "external_id": "honda-jazz",
+       "provider": "ice",
+       "relation": "ORIGIN",
+       "state": "ACTIVE"
+      }
+     ],
+     "table": "vehicle_identity_aliases"
+    },
+    {
+     "idempotency_key": "sha256:f2de8fc37a9da9a9dc761d29be85f3938be324102bace8ee7211f1ff13e7849c",
+     "op": "INSERT_PROVENANCE",
+     "table": "vehicle_identity_provenance",
+     "values": {
+      "actor": null,
+      "apply_mode": "PROPOSE",
+      "canonical_id": "honda.jazz",
+      "contract_version": 1,
+      "created_at": null,
+      "creator_type": "machine",
+      "decision_fingerprint": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+      "evidence_kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "evidence_refs": [
+       "ice:2569-09:v3:M7.0#model_group/honda-jazz"
+      ],
+      "evidence_tier": 0,
+      "external_id": "honda-jazz",
+      "first_seen_period": "2021-01",
+      "identity_key": "honda|jazz",
+      "policy_version": 1,
+      "provider": "ice",
+      "reason_codes": [
+       "NEW_IDENTITY_CONFIRMED"
+      ],
+      "run_id": null,
+      "source_version": "ice:2569-09:v3:M7.0"
+     }
+    },
+    {
+     "idempotency_key": "sha256:8fc21aab26f13009f159da8899079fc78d4d5790d4fd1ecdb526659ea0473663",
+     "op": "ENQUEUE_EVENT",
+     "table": "vehicle_identity_events",
+     "values": {
+      "event_id": "sha256:9cf03918e490dfdcec3d68e0b1efcc67e390b1e3d997d3c27bf1b5d80ccf4e05"
+     }
+    },
+    {
+     "idempotency_key": "sha256:b1aa9fa5a6b35cdda5306a784772d5718eddff543a42cef8f293c48e21d2af9d",
+     "op": "PROPOSE_ORIGIN_MAPPING",
+     "values": {
+      "canonical_id": "honda.jazz",
+      "method": "ORIGIN",
+      "provider": "ice",
+      "state": "AUTO",
+      "subject_id": "honda-jazz"
+     }
+    }
+   ],
+   "plan_id": "sha256:0fe2e0406c3d511783c4fe1b16fd22680ab06dd2a4cef09407fe06f177dc8328",
+   "preconditions": [
+    {
+     "brand_id": "honda",
+     "kind": "brand_exists"
+    },
+    {
+     "canonical_id": "honda.jazz",
+     "kind": "canonical_id_absent"
+    },
+    {
+     "kind": "slug_absent",
+     "slug": "honda-jazz"
+    },
+    {
+     "brand_id": "honda",
+     "identity_key": "honda|jazz",
+     "kind": "identity_key_absent"
+    },
+    {
+     "canonical_id": "honda.jazz",
+     "external_id": "honda-jazz",
+     "kind": "alias_absent_or_same",
+     "provider": "ice"
+    },
+    {
+     "brand_id": "honda",
+     "digest": "sha256:948fddb1f64263b59935f53dd36fa37e175acd6000e2a4c9874450a4ffcf028d",
+     "kind": "brand_identity_digest"
+    }
+   ],
+   "required_permission": "CREATE_DISCOVERED_SHELL"
+  }
+ },
+ {
+  "batch_group": [],
+  "contract_version": 1,
+  "creator_type": "machine",
+  "evidence_basis": {
+   "cleared_flags": [],
+   "kinds": [
+    "PROVIDER_IDENTITY"
+   ],
+   "refs": [
+    "ice:2569-09:v3:M7.0#model_group/jaecoo-jaecoo-j6"
+   ],
+   "tier": 0
+  },
+  "existing_identity": null,
+  "fingerprints": {
+   "decision": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+   "idempotency_key": "sha256:b75af3357c937e0560dc67e0aadc32efa928b65f446fac92f07ac65101be33e5",
+   "identity_key": "jaecoo|j6",
+   "review": "sha256:cfad582208d67df32f6739c747ece3ebb38ec45ab77c38d11fc5109baccdda24"
+  },
+  "identity": {
+   "allocation": {
+    "collision": false,
+    "local_segment": "j6",
+    "method": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"
+   },
+   "brand_id": "jaecoo",
+   "canonical_model_id": "jaecoo.j6",
+   "canonical_name": "J6",
+   "enrichment_state": "PENDING",
+   "identity_key": "jaecoo|j6",
+   "identity_state": "DISCOVERED",
+   "slug": "jaecoo-j6"
+  },
+  "outcome": "CREATE_IDENTITY",
+  "policy": {
+   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
+   "version": 1
+  },
+  "primary_reason": "NEW_IDENTITY_CONFIRMED",
+  "provider": "ice",
+  "reason_codes": [
+   "NEW_IDENTITY_CONFIRMED"
+  ],
+  "record_type": "decision",
+  "review": {
+   "alert": null,
+   "priority_band": "HIGH",
+   "queue": null,
+   "required": false
+  },
+  "source_version": "ice:2569-09:v3:M7.0",
+  "subject": {
+   "display_name": "Jaecoo J6",
+   "entity_id": "jaecoo-jaecoo-j6",
+   "provider": "ice"
+  },
+  "suggested_binding": null,
+  "write_plan": {
+   "actor_kind": "BOOTSTRAP",
+   "apply_mode": "PROPOSE",
+   "deferred_fields": [
+    "provenance.run_id",
+    "provenance.created_at",
+    "provenance.actor",
+    "event.occurred_at",
+    "event.creation.run_id"
+   ],
+   "event": {
+    "aliases": [
+     {
+      "external_id": "jaecoo-jaecoo-j6",
+      "provider": "ice",
+      "relation": "ORIGIN"
+     }
+    ],
+    "brand_id": "jaecoo",
+    "canonical_model_id": "jaecoo.j6",
+    "canonical_name": "J6",
+    "creation": {
+     "apply_mode": "PROPOSE",
+     "contract_version": 1,
+     "creator_type": "machine",
+     "decision_fingerprint": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+     "evidence": {
+      "kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "refs": [
+       "ice:2569-09:v3:M7.0#model_group/jaecoo-jaecoo-j6"
+      ],
+      "tier": 0
+     },
+     "policy_version": 1,
+     "reason_codes": [
+      "NEW_IDENTITY_CONFIRMED"
+     ]
+    },
+    "enrichment_hints": {
+     "excluded_neighbors": [],
+     "known_names": [
+      "J6",
+      "Jaecoo J6"
+     ],
+     "provider_hints": {
+      "body": "SUV",
+      "segment": "C-segment"
+     }
+    },
+    "enrichment_state": "PENDING",
+    "event_id": "sha256:0f3b9904c2accc60a088847972c2e5af1c40eb2f2422c6100af2ec92de28c5b5",
+    "event_type": "VEHICLE_IDENTITY_CREATED",
+    "event_version": 1,
+    "identity_state": "DISCOVERED",
+    "occurred_at": null,
+    "source": {
+     "external_id": "jaecoo-jaecoo-j6",
+     "first_seen_period": "2024-12",
+     "provider": "ice",
+     "source_version": "ice:2569-09:v3:M7.0"
+    }
+   },
+   "lock_key": "identity_bootstrap:jaecoo",
+   "operations": [
+    {
+     "idempotency_key": "sha256:4b9f4303e320b14b9f582b1e39d3869de7f09f4aff1f06029a752fd16b689d9e",
+     "op": "RESERVE_CANONICAL_ID",
+     "values": {
+      "brand_id": "jaecoo",
+      "canonical_id": "jaecoo.j6",
+      "identity_key": "jaecoo|j6",
+      "slug": "jaecoo-j6"
+     }
+    },
+    {
+     "idempotency_key": "sha256:ab107121eabe96d100287829568ae9ad401ffc105954bbdc88b307d452adc5cd",
+     "op": "INSERT_IDENTITY_SHELL",
+     "table": "vehicle_models",
+     "values": {
+      "brand_id": "jaecoo",
+      "canonical_id": "jaecoo.j6",
+      "enrichment_state": "PENDING",
+      "identity_state": "DISCOVERED",
+      "name_en": "J6",
+      "slug": "jaecoo-j6"
+     }
+    },
+    {
+     "idempotency_key": "sha256:3077990f52202aff6a22ce770a1d296ed7233250a5a1d61323778f29a402cd21",
+     "op": "INSERT_EXTERNAL_ALIAS",
+     "rows": [
+      {
+       "canonical_id": "jaecoo.j6",
+       "external_id": "jaecoo-jaecoo-j6",
+       "provider": "ice",
+       "relation": "ORIGIN",
+       "state": "ACTIVE"
+      }
+     ],
+     "table": "vehicle_identity_aliases"
+    },
+    {
+     "idempotency_key": "sha256:6c9e4da203f549f8499ad0f0e1f53ba91ea785c33ce45e6ed9127a1737f25651",
+     "op": "INSERT_PROVENANCE",
+     "table": "vehicle_identity_provenance",
+     "values": {
+      "actor": null,
+      "apply_mode": "PROPOSE",
+      "canonical_id": "jaecoo.j6",
+      "contract_version": 1,
+      "created_at": null,
+      "creator_type": "machine",
+      "decision_fingerprint": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+      "evidence_kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "evidence_refs": [
+       "ice:2569-09:v3:M7.0#model_group/jaecoo-jaecoo-j6"
+      ],
+      "evidence_tier": 0,
+      "external_id": "jaecoo-jaecoo-j6",
+      "first_seen_period": "2024-12",
+      "identity_key": "jaecoo|j6",
+      "policy_version": 1,
+      "provider": "ice",
+      "reason_codes": [
+       "NEW_IDENTITY_CONFIRMED"
+      ],
+      "run_id": null,
+      "source_version": "ice:2569-09:v3:M7.0"
+     }
+    },
+    {
+     "idempotency_key": "sha256:23c07f70da756d00c0b41f50b919245632aa953bda78f14d99372579d4343bb2",
+     "op": "ENQUEUE_EVENT",
+     "table": "vehicle_identity_events",
+     "values": {
+      "event_id": "sha256:0f3b9904c2accc60a088847972c2e5af1c40eb2f2422c6100af2ec92de28c5b5"
+     }
+    },
+    {
+     "idempotency_key": "sha256:54d65837ca34f14abeda176a9f206bdbac6f5a2e436d5d0f2864cf06af189e6b",
+     "op": "PROPOSE_ORIGIN_MAPPING",
+     "values": {
+      "canonical_id": "jaecoo.j6",
+      "method": "ORIGIN",
+      "provider": "ice",
+      "state": "AUTO",
+      "subject_id": "jaecoo-jaecoo-j6"
+     }
+    }
+   ],
+   "plan_id": "sha256:856368de090aebf2582458c17dd9a3b67d43501811ef1b3212636b60e6a0aec2",
+   "preconditions": [
+    {
+     "brand_id": "jaecoo",
+     "kind": "brand_exists"
+    },
+    {
+     "canonical_id": "jaecoo.j6",
+     "kind": "canonical_id_absent"
+    },
+    {
+     "kind": "slug_absent",
+     "slug": "jaecoo-j6"
+    },
+    {
+     "brand_id": "jaecoo",
+     "identity_key": "jaecoo|j6",
+     "kind": "identity_key_absent"
+    },
+    {
+     "canonical_id": "jaecoo.j6",
+     "external_id": "jaecoo-jaecoo-j6",
+     "kind": "alias_absent_or_same",
+     "provider": "ice"
+    },
+    {
+     "brand_id": "jaecoo",
+     "digest": "sha256:6f2b4d82a07e993968fee92bbad3cabb0b3ba4025c03c59feadf76ee19091453",
+     "kind": "brand_identity_digest"
+    }
+   ],
+   "required_permission": "CREATE_DISCOVERED_SHELL"
+  }
+ },
+ {
+  "batch_group": [],
+  "contract_version": 1,
+  "creator_type": "machine",
+  "evidence_basis": {
+   "cleared_flags": [],
+   "kinds": [
+    "PROVIDER_IDENTITY"
+   ],
+   "refs": [
+    "ice:2569-09:v3:M7.0#model_group/toyota-vios"
+   ],
+   "tier": 0
+  },
+  "existing_identity": null,
+  "fingerprints": {
+   "decision": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+   "idempotency_key": "sha256:47513d71345e6cae12a3f12e0570e4ac9e23c9dc5945dfeca522cf643d32ac02",
+   "identity_key": "toyota|vios",
+   "review": "sha256:f1a1e2d87fcaecec0dcf65fedce1497453b8fdfbd07c28c9c9385eafed761f51"
+  },
+  "identity": {
+   "allocation": {
+    "collision": false,
+    "local_segment": "vios",
+    "method": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"
+   },
+   "brand_id": "toyota",
+   "canonical_model_id": "toyota.vios",
+   "canonical_name": "Vios",
+   "enrichment_state": "PENDING",
+   "identity_key": "toyota|vios",
+   "identity_state": "DISCOVERED",
+   "slug": "toyota-vios"
+  },
+  "outcome": "CREATE_IDENTITY",
+  "policy": {
+   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
+   "version": 1
+  },
+  "primary_reason": "NEW_IDENTITY_CONFIRMED",
+  "provider": "ice",
+  "reason_codes": [
+   "NEW_IDENTITY_CONFIRMED"
+  ],
+  "record_type": "decision",
+  "review": {
+   "alert": null,
+   "priority_band": "HIGH",
+   "queue": null,
+   "required": false
+  },
+  "source_version": "ice:2569-09:v3:M7.0",
+  "subject": {
+   "display_name": "Vios",
+   "entity_id": "toyota-vios",
+   "provider": "ice"
+  },
+  "suggested_binding": null,
+  "write_plan": {
+   "actor_kind": "BOOTSTRAP",
+   "apply_mode": "PROPOSE",
+   "deferred_fields": [
+    "provenance.run_id",
+    "provenance.created_at",
+    "provenance.actor",
+    "event.occurred_at",
+    "event.creation.run_id"
+   ],
+   "event": {
+    "aliases": [
+     {
+      "external_id": "toyota-vios",
+      "provider": "ice",
+      "relation": "ORIGIN"
+     }
+    ],
+    "brand_id": "toyota",
+    "canonical_model_id": "toyota.vios",
+    "canonical_name": "Vios",
+    "creation": {
+     "apply_mode": "PROPOSE",
+     "contract_version": 1,
+     "creator_type": "machine",
+     "decision_fingerprint": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+     "evidence": {
+      "kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "refs": [
+       "ice:2569-09:v3:M7.0#model_group/toyota-vios"
+      ],
+      "tier": 0
+     },
+     "policy_version": 1,
+     "reason_codes": [
+      "NEW_IDENTITY_CONFIRMED"
+     ]
+    },
+    "enrichment_hints": {
+     "excluded_neighbors": [],
+     "known_names": [
+      "Vios"
+     ],
+     "provider_hints": {
+      "body": "Sedan",
+      "segment": "B-segment"
+     }
+    },
+    "enrichment_state": "PENDING",
+    "event_id": "sha256:65439ef27d840f1c71367524c844f29a83d2ec5fa353e06bb7358de223dcfbfa",
+    "event_type": "VEHICLE_IDENTITY_CREATED",
+    "event_version": 1,
+    "identity_state": "DISCOVERED",
+    "occurred_at": null,
+    "source": {
+     "external_id": "toyota-vios",
+     "first_seen_period": "2021-01",
+     "provider": "ice",
+     "source_version": "ice:2569-09:v3:M7.0"
+    }
+   },
+   "lock_key": "identity_bootstrap:toyota",
+   "operations": [
+    {
+     "idempotency_key": "sha256:cdef455384fd269d56ea71503aaebad6ed04b49a0841687b23cb8e553c75847d",
+     "op": "RESERVE_CANONICAL_ID",
+     "values": {
+      "brand_id": "toyota",
+      "canonical_id": "toyota.vios",
+      "identity_key": "toyota|vios",
+      "slug": "toyota-vios"
+     }
+    },
+    {
+     "idempotency_key": "sha256:df818d8110fa47a3ba8a18df9380e367119bca97d2d6eff2afbff360fe723a32",
+     "op": "INSERT_IDENTITY_SHELL",
+     "table": "vehicle_models",
+     "values": {
+      "brand_id": "toyota",
+      "canonical_id": "toyota.vios",
+      "enrichment_state": "PENDING",
+      "identity_state": "DISCOVERED",
+      "name_en": "Vios",
+      "slug": "toyota-vios"
+     }
+    },
+    {
+     "idempotency_key": "sha256:520be12f12fd1b11ba48eac0443fbc83d343ef6ef2109dc7fa11d907dd9e2696",
+     "op": "INSERT_EXTERNAL_ALIAS",
+     "rows": [
+      {
+       "canonical_id": "toyota.vios",
+       "external_id": "toyota-vios",
+       "provider": "ice",
+       "relation": "ORIGIN",
+       "state": "ACTIVE"
+      }
+     ],
+     "table": "vehicle_identity_aliases"
+    },
+    {
+     "idempotency_key": "sha256:1178fec7c1dba5cfd5d79ebb79320fdf6e3e11600fe1c7a59177f00ca9245bd1",
+     "op": "INSERT_PROVENANCE",
+     "table": "vehicle_identity_provenance",
+     "values": {
+      "actor": null,
+      "apply_mode": "PROPOSE",
+      "canonical_id": "toyota.vios",
+      "contract_version": 1,
+      "created_at": null,
+      "creator_type": "machine",
+      "decision_fingerprint": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+      "evidence_kinds": [
+       "PROVIDER_IDENTITY"
+      ],
+      "evidence_refs": [
+       "ice:2569-09:v3:M7.0#model_group/toyota-vios"
+      ],
+      "evidence_tier": 0,
+      "external_id": "toyota-vios",
+      "first_seen_period": "2021-01",
+      "identity_key": "toyota|vios",
+      "policy_version": 1,
+      "provider": "ice",
+      "reason_codes": [
+       "NEW_IDENTITY_CONFIRMED"
+      ],
+      "run_id": null,
+      "source_version": "ice:2569-09:v3:M7.0"
+     }
+    },
+    {
+     "idempotency_key": "sha256:a58b9f0e20bc3e91a4f823035e07f5a03e3619de0ec7851b6afeec2eb8aa8034",
+     "op": "ENQUEUE_EVENT",
+     "table": "vehicle_identity_events",
+     "values": {
+      "event_id": "sha256:65439ef27d840f1c71367524c844f29a83d2ec5fa353e06bb7358de223dcfbfa"
+     }
+    },
+    {
+     "idempotency_key": "sha256:c4d0579ca4bc62ce4997552b27c4dea4a271aef15d33b39c289b0051801f6da5",
+     "op": "PROPOSE_ORIGIN_MAPPING",
+     "values": {
+      "canonical_id": "toyota.vios",
+      "method": "ORIGIN",
+      "provider": "ice",
+      "state": "AUTO",
+      "subject_id": "toyota-vios"
+     }
+    }
+   ],
+   "plan_id": "sha256:36a7c053428734882c35cdcc44aca63b9c26adc3c841d789a18ed70deba6228b",
+   "preconditions": [
+    {
+     "brand_id": "toyota",
+     "kind": "brand_exists"
+    },
+    {
+     "canonical_id": "toyota.vios",
+     "kind": "canonical_id_absent"
+    },
+    {
+     "kind": "slug_absent",
+     "slug": "toyota-vios"
+    },
+    {
+     "brand_id": "toyota",
+     "identity_key": "toyota|vios",
+     "kind": "identity_key_absent"
+    },
+    {
+     "canonical_id": "toyota.vios",
+     "external_id": "toyota-vios",
+     "kind": "alias_absent_or_same",
+     "provider": "ice"
+    },
+    {
+     "brand_id": "toyota",
+     "digest": "sha256:c0a2dbcab7e587e985f2c826a58b4fe158c63e242a083d064f7c10cb27d83b9c",
+     "kind": "brand_identity_digest"
+    }
+   ],
+   "required_permission": "CREATE_DISCOVERED_SHELL"
+  }
+ }
+]

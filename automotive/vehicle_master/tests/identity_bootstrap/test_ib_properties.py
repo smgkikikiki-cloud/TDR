@@ -9,6 +9,7 @@ import pytest
 
 import ib_reference as R
 import ib_support as S
+from identity_bootstrap import engine
 
 DECIDE = [c for c in S.kind("decide") if "decisions" in c["expect"]]
 IDS = [c["id"] for c in DECIDE]
@@ -16,8 +17,18 @@ POLICY = S.policy()
 INV = {"SUBJECT_FINER": "SUBJECT_COARSER", "SUBJECT_COARSER": "SUBJECT_FINER"}
 
 
+@pytest.fixture(params=sorted(S.IMPLS), autouse=True)
+def impl(request):
+    global IMPL
+    IMPL = request.param
+    return request.param
+
+
+IMPL = "oracle"
+
+
 def run(snapshot, policy=None):
-    return S.run_decide(copy.deepcopy(snapshot), policy)
+    return S.run_decide(copy.deepcopy(snapshot), policy, IMPL)
 
 
 def strip_review(decisions):
@@ -167,11 +178,11 @@ def test_apply_then_redecide_converges(case):
         if d["outcome"] != "CREATE_IDENTITY":
             continue
         store = R.Store(snap["identities"], snap["bindings"])
-        fin = R.finalize(d, {"run_id": "r1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})
+        fin = (engine.finalize if IMPL == "engine" else R.finalize)(d, {"run_id": "r1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})
         assert store.apply(fin) == "APPLIED"
         assert store.apply(fin) == "ALREADY_APPLIED"
         assert len(store.events) == 1
-        again = S.by_subject(S.run_decide(S.snapshot_after(snap, store)))
+        again = S.by_subject(S.run_decide(S.snapshot_after(snap, store), impl=IMPL))
         sid = f"{d['subject']['provider']}:{d['subject']['entity_id']}"
         assert again[sid]["outcome"] == "HOLD" and again[sid]["primary_reason"] == "IDENTITY_ALREADY_DISCOVERED"
         assert again[sid]["write_plan"] is None
@@ -181,12 +192,13 @@ def test_apply_then_redecide_converges(case):
 
 @pytest.mark.parametrize("case", DECIDE, ids=IDS)
 def test_finalize_fills_only_the_deferred_fields(case):
+    FIN = engine.finalize if IMPL == "engine" else R.finalize
     for d in run(case["input"]):
         if d["outcome"] != "CREATE_IDENTITY":
             continue
         before = copy.deepcopy(d)
-        a = R.finalize(d, {"run_id": "r1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})
-        b = R.finalize(d, {"run_id": "r2", "created_at": "2026-10-11T00:00:00Z", "actor": "admin:kiki"})
+        a = FIN(d, {"run_id": "r1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})
+        b = FIN(d, {"run_id": "r2", "created_at": "2026-10-11T00:00:00Z", "actor": "admin:kiki"})
         assert d == before, "finalize must not mutate the decision"
         prov = lambda x: next(o for o in x["write_plan"]["operations"] if o["op"] == "INSERT_PROVENANCE")["values"]
         assert prov(d)["run_id"] is None and prov(d)["created_at"] is None and d["write_plan"]["event"]["occurred_at"] is None
@@ -225,14 +237,14 @@ def test_review_fingerprint_changes_when_the_question_changes():
 
 def test_creator_type_is_admin_only_through_a_directive():
     for c in DECIDE:
-        for d in S.run_decide(c["input"]):
+        for d in run(c["input"]):
             if d["outcome"] == "CREATE_IDENTITY":
                 assert (d["creator_type"] == "admin") == ("ADMIN_STRUCTURE_DECISION_APPLIED" in d["reason_codes"]), c["id"]
 
 
 def test_every_create_cites_its_evidence():
     for c in DECIDE:
-        for d in S.run_decide(c["input"]):
+        for d in run(c["input"]):
             if d["outcome"] == "CREATE_IDENTITY":
                 b = d["evidence_basis"]
                 assert b["tier"] is not None and b["refs"] and b["kinds"], c["id"]

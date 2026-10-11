@@ -8,6 +8,7 @@ from pathlib import Path
 from identity_bootstrap.contract import loader, schema_subset
 
 import ib_reference as ref
+from identity_bootstrap import engine
 
 IB_ROOT = Path(__file__).resolve().parents[2] / "identity_bootstrap"
 CONTRACT_DIR = IB_ROOT / "contract" / "v1"
@@ -68,8 +69,12 @@ def validate_decision(record: dict) -> list[str]:
     return schema_subset.validate(record, schemas()["decision.schema.json"], registry=schemas())
 
 
-def run_decide(snapshot: dict, pol: dict | None = None) -> list[dict]:
-    return ref.decide(snapshot, pol or policy(), registry())
+IMPLS = {"oracle": ref.decide, "engine": engine.decide}
+REFUSALS = (ref.Refusal, engine.Refusal)
+
+
+def run_decide(snapshot: dict, pol: dict | None = None, impl: str = "oracle") -> list[dict]:
+    return IMPLS[impl](snapshot, pol or policy(), registry())
 
 
 def by_subject(decisions: list[dict]) -> dict[str, dict]:
@@ -106,12 +111,12 @@ def project(decision: dict) -> dict:
     }
 
 
-def check_decide_case(case: dict) -> list[str]:
+def check_decide_case(case: dict, impl: str = "oracle") -> list[str]:
     problems: list[str] = []
     exp = case["expect"]
     try:
-        out = by_subject(run_decide(case["input"]))
-    except ref.Refusal as refusal:
+        out = by_subject(run_decide(case["input"], impl=impl))
+    except REFUSALS as refusal:
         return [] if exp.get("refusal") == refusal.code else [f"{case['id']}: refused with {refusal.code}, expected {exp}"]
     if "refusal" in exp:
         return [f"{case['id']}: expected refusal {exp['refusal']}, got decisions"]
@@ -131,7 +136,7 @@ def snapshot_after(base: dict, store: ref.Store) -> dict:
     return snap
 
 
-def run_apply_case(case: dict) -> list[str]:
+def run_apply_case(case: dict, impl: str = "oracle") -> list[str]:
     base = case_by_id(case["input"]["base"])["input"]
     store = ref.Store(base["identities"], base["bindings"])
     results: list[str | None] = []
@@ -144,9 +149,9 @@ def run_apply_case(case: dict) -> list[str]:
             store.aliases[(a["provider"], a["external_id"])] = (a["canonical_id"], a["state"])
             results.append(None)
         elif step["do"] == "apply":
-            decision = by_subject(run_decide(case_by_id(step["case"])["input"]))[step["subject"]]
+            decision = by_subject(run_decide(case_by_id(step["case"])["input"], impl=impl))[step["subject"]]
             assert decision["outcome"] == "CREATE_IDENTITY", f"{case['id']}: {step['case']} {step['subject']} is not a CREATE"
-            results.append(store.apply(ref.finalize(decision, {"run_id": "run-1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})))
+            results.append(store.apply((engine.finalize if impl == "engine" else ref.finalize)(decision, {"run_id": "run-1", "created_at": "2026-10-10T00:00:00Z", "actor": "bootstrap"})))
     problems = []
     exp = case["expect"]
     if results != exp["results"]:
@@ -158,22 +163,27 @@ def run_apply_case(case: dict) -> list[str]:
             problems.append(f"{case['id']}: {key} {counts[key]} != {value}")
     for sid, want in exp.get("redecide", {}).items():
         snap = snapshot_after(base, store)
-        got = project(by_subject(run_decide(snap))[sid])
+        got = project(by_subject(run_decide(snap, impl=impl))[sid])
         for key, value in want.items():
             if got[key] != value:
                 problems.append(f"{case['id']} redecide {sid} {key}: expected {value!r}, got {got[key]!r}")
     return problems
 
 
-def run_allocate_case(case: dict) -> list[str]:
+def run_allocate_case(case: dict, impl: str = "oracle") -> list[str]:
     inp, exp = case["input"], case["expect"]
-    name = ref.canonical_name(inp["display_name"], inp["spellings"], policy())
-    got = ref.allocate(inp["brand_id"], name, inp["identities"], policy())
+    if impl == "engine":
+        from identity_bootstrap.engine.lexical import Lexicon
+        name = Lexicon(policy()).canonical_name(inp["display_name"], tuple(inp["spellings"]))
+        got = engine.allocate(inp["brand_id"], name, inp["identities"], policy())
+    else:
+        name = ref.canonical_name(inp["display_name"], inp["spellings"], policy())
+        got = ref.allocate(inp["brand_id"], name, inp["identities"], policy())
     got["canonical_name"] = name
     return [f"{case['id']} {k}: expected {v!r}, got {got.get(k)!r}" for k, v in exp.items() if got.get(k) != v]
 
 
-def run_lifecycle_case(case: dict) -> list[str]:
+def run_lifecycle_case(case: dict, impl: str = "oracle") -> list[str]:
     inp, exp = case["input"], case["expect"]
     got = ref.transition(lifecycle(), inp["from"], inp["to"], inp["actor"])
     return [f"{case['id']} {k}: expected {v!r}, got {got.get(k)!r}" for k, v in exp.items() if got.get(k) != v]

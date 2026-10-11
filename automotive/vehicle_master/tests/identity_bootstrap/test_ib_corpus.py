@@ -13,9 +13,10 @@ CASES = S.cases()
 CODES = S.codes()
 
 
+@pytest.mark.parametrize("impl", sorted(S.IMPLS))
 @pytest.mark.parametrize("case", CASES, ids=[c["id"] for c in CASES])
-def test_reference_reproduces_expectation(case):
-    assert S.RUNNERS[case["kind"]](case) == []
+def test_every_implementation_reproduces_the_expectation(case, impl):
+    assert S.RUNNERS[case["kind"]](case, impl) == []
 
 
 def asserted_codes():

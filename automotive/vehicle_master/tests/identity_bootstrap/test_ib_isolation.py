@@ -34,11 +34,24 @@ def test_the_package_imports_nothing_from_the_engine_database_network_or_identit
             assert name.split(".")[0] not in FORBIDDEN_IMPORT_ROOTS, f"{path.relative_to(VM)} imports {name}"
 
 
-def test_the_package_has_no_engine_without_a_conformance_runner():
-    assert not (PKG / "engine").exists(), "an engine/ directory needs a corpus conformance runner and its own owner gate"
-    assert not (PKG / "providers").exists()
+def test_the_engine_exists_only_with_its_conformance_runner_and_stays_offline():
+    assert (VM / "tests" / "identity_bootstrap" / "test_ib_engine_conformance.py").exists(), "an engine needs a corpus conformance runner"
     names = {p.name for p in PKG.iterdir()}
-    assert names <= {"__init__.py", "README.md", "INTEGRATION.md", "contract", "__pycache__"}, names
+    assert names <= {"__init__.py", "README.md", "INTEGRATION.md", "contract", "engine", "providers", "shadow", "__pycache__"}, names
+    assert {p.name for p in (PKG / "engine").iterdir()} - {"__pycache__"} == {"__init__.py", "allocate.py", "decide.py", "fingerprint.py", "lexical.py", "lineage.py", "plan.py"}
+    for path in py_files(PKG / "engine") + py_files(PKG / "providers"):
+        text = path.read_text(encoding="utf-8")
+        for needle in ("open(", "Path(", "requests", "subprocess", "os.environ", "datetime", "time.time", "random", "uuid"):
+            assert needle not in text, f"{path.name}: the engine and adapters are pure (no I/O, clock or randomness): {needle}"
+
+
+def test_no_production_wiring_or_persistence_was_added():
+    banned = ("supabase", "create_client", "psycopg", "execute_sql", "apply_migration", "rpc(")
+    for path in py_files(PKG):
+        text = path.read_text(encoding="utf-8")
+        for needle in banned:
+            assert needle not in text, f"{path.relative_to(VM)} mentions {needle}"
+    assert not (PKG / "shadow" / "persist.py").exists()
 
 
 def test_nothing_in_production_imports_the_package():

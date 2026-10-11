@@ -1,0 +1,26 @@
+# Analyst judgement on specific shadow-run results. NOT ground truth and NOT part of the contract: a reviewer's reading of the 2569-09 v3 M7.0 names
+# against the TDR catalog snapshot, kept as data so every claim in REPORT.md about a "suspected" decision can be traced and overruled by the owner.
+# kind: SUSPECT_CODE (a chassis/registration code), SUSPECT_VARIANT (a variant of a model the catalog or the batch already holds), SUSPECT_ALIAS (probably
+# the same car as another subject under another name), SUSPECT_TRUNCATED (a nameplate cut short by the provider), SUSPECT_BRAND (brand attribution), LIKELY_REAL (plausibly a real nameplate absent from the snapshot).
+create_verdicts:
+  hino-hino-fg8jj1a-jjt: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  hino-hino-fm8jn1d-sgt: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  hino-hino-fm1an1d-sht: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  hino-hino-fm2pn1d-xht: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  hino-hino-fg8jj3a-acdmh: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  hino-hino-fm8jn3d-cddmh: {kind: SUSPECT_CODE, why: Hino chassis/model code with hyphenated suffix}
+  toyota-toyota-kun51r-nkpsyt: {kind: SUSPECT_CODE, why: Hilux chassis code (KUN51R), not a nameplate}
+  foton-bj1041: {kind: SUSPECT_CODE, why: Foton truck chassis code}
+  sokon-crc50: {kind: SUSPECT_CODE, why: letters+digits code; may be a real Sokon model code, unverified}
+  jac-jac-t8ev: {kind: SUSPECT_VARIANT, why: electric variant of jac-t8 (powertrain suffix glued to the token)}
+  bmw-bmw-m2: {kind: SUSPECT_VARIANT, why: performance variant of 2 Series; owner decision whether TDR models M cars separately}
+  bmw-bmw-m3: {kind: SUSPECT_VARIANT, why: performance variant of 3 Series; owner decision whether TDR models M cars separately}
+  bmw-bmw-m4: {kind: SUSPECT_VARIANT, why: performance variant of 4 Series; owner decision whether TDR models M cars separately}
+  bmw-bmw-m5: {kind: SUSPECT_VARIANT, why: performance variant of 5 Series; owner decision whether TDR models M cars separately}
+  honda-jazz: {kind: SUSPECT_ALIAS, why: Jazz and Fit are one car; honda-fit is also a CREATE (a model-synonym table is missing)}
+  honda-honda-fit: {kind: SUSPECT_ALIAS, why: Jazz and Fit are one car; honda-jazz is also a CREATE}
+  jeep-jeep-grand: {kind: SUSPECT_TRUNCATED, why: "\"Grand\" is the start of Grand Cherokee / Grand Wagoneer"}
+  hyundai-genesis-g80: {kind: SUSPECT_BRAND, why: Genesis is a separate marque filed under Hyundai}
+  toyota-toyota-tr: {kind: SUSPECT_TRUNCATED, why: two-letter name; unclear nameplate, unverified}
+  honda-honda-stepwagon: {kind: SUSPECT_ALIAS, why: "TDR already holds Step WGN (honda.step_wgn); spelling variant not caught lexically"}
+  chery-chery-q: {kind: LIKELY_REAL, why: first seen 2569-08; single-letter name deserves a human look}

@@ -9,7 +9,9 @@ Resolution finds no TDR counterpart, and handing it to a separate enrichment pro
 `lifecycle.yaml`, four JSON schemas, a 127-case golden corpus, `README.md` (architecture, owner decisions) and `INTEGRATION.md` (live-schema conflicts, proposed schema change,
 proposed amendments to the Identity Resolution draft). Tests: `automotive/vehicle_master/tests/identity_bootstrap/`.
 
-- **No engine, adapter, persistence, migration, workflow or database access; no vehicle was created or published; no serving or catalog change.** Nothing in production imports it
+- **Milestone 2 (2026-10-11): offline engine (`engine/`), Ice adapter (`providers/ice.py`) and a read-only shadow run on the pinned M7.0 package (`shadow/`, results in `shadow/results/2569-09_v3_M7.0/`,
+  findings in `shadow/FINDINGS.md`).** Across all 1,200 model groups: 78 CREATE / 94 REVIEW / 1,028 HOLD (TDR side = the repo's file catalog snapshot, not the live DB). Recommendations only; nothing applied.
+- **No persistence, migration, workflow or database access; no vehicle was created or published; no serving or catalog change.** Nothing in production imports it
   (a test enforces it). `PRODUCTION_*` flags, the roadmap gate, R6 and R7 are untouched; PR #200 (Identity Resolution) was read, not modified.
 - **Finding:** the live `vehicle_models` cannot hold a null-attribute `DISCOVERED` row (v59 model rules, the generation requirement, an unfiltered `current_vehicle_models` view, a closed `status`
   set), and no governed write path exists until Phase 1 — see `INTEGRATION.md` §1. VEHICLE_DB_V3 §4 also lets AI only *propose* model creation, so the plan defaults to `apply_mode: PROPOSE`.

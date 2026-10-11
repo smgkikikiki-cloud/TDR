@@ -1,7 +1,7 @@
 # TDR Identity Bootstrap — Contract v1 (normative, DRAFT for owner review)
 
-Status: **draft**. This is a contract, a corpus and tests. There is no engine, no persistence, no migration, no database access and no
-enrichment bot. Nothing in production imports this package (a test enforces it). The appendices are generated from `policy.yaml`,
+Status: **draft**. This is a contract, a corpus and tests, with an offline engine (`engine/`), the Ice adapter (`providers/ice.py`) and a read-only
+shadow run (`shadow/`) that conform to it. There is no persistence, no migration, no database access and no enrichment bot. Nothing in production imports this package (a test enforces it). The appendices are generated from `policy.yaml`,
 `reason_codes.yaml`, `taxonomy.yaml` and `lifecycle.yaml`; do not edit them by hand (`python -m identity_bootstrap.contract.render --write`).
 
 Words **MUST**, **MUST NOT**, **SHOULD** are normative.
