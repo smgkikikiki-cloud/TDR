@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { checkRepository, digest, ROADMAP_FILE, PLAN_FILE } from './preflight.mjs';
+import { digest, ROADMAP_FILE, PLAN_FILE } from './preflight.mjs';
 
 const SHA40 = /^[0-9a-f]{40}$/i;
 const SHA64 = /^[0-9a-f]{64}$/i;
@@ -88,11 +88,28 @@ export function inspectPr({ event, basePlan, baseRoadmap, baseAgents,
   baseClaude, packet, changes, headFileModes = {}, candidateHasManifest = false }) {
   const errors = [];
   const warning = [];
-  const baseInfo = checkRepository({
-    plan: basePlan, roadmap: baseRoadmap,
-    agents: baseAgents, claude: baseClaude,
-  });
-  if (!baseInfo.ok) errors.push(...baseInfo.errors.map(e => 'BASE_' + e));
+  // Validate base-commit roadmap authority independently of the candidate.
+  // Do NOT use Stage-0's permanently-disabled checkRepository here: this
+  // pure checker needs to test hypothetical future offline authorization in
+  // memory without changing the currently disabled repository plan.
+  if (basePlan?.schema !== 'tdr.portfolio.approved-roadmap.v1.0'
+      || basePlan?.approval?.status !== 'OWNER_APPROVED'
+      || basePlan?.approval?.roadmap_version !== '1.0'
+      || basePlan?.roadmap_authoritative_file !== ROADMAP_FILE)
+    errors.push('TRUSTED_BASE_ROADMAP_POLICY_INVALID');
+  if (!String(baseRoadmap ?? '').startsWith('# TDR Master Development Roadmap v1.0'))
+    errors.push('TRUSTED_BASE_ROADMAP_CONTENT_INVALID');
+  for (const [name, text] of [['AGENTS', baseAgents], ['CLAUDE', baseClaude]]) {
+    if (!String(text ?? '').includes(ROADMAP_FILE)
+        || !String(text ?? '').includes(PLAN_FILE)
+        || !String(text ?? '').includes('docs/WORK_STATE.md'))
+      errors.push('TRUSTED_BASE_' + name + '_BOOTSTRAP_MISSING');
+  }
+  for (const cap of ['auto_merge', 'auto_deploy', 'production_access',
+    'paid_ai_or_external_api']) {
+    if (basePlan?.execution?.[cap] !== false)
+      errors.push('TRUSTED_BASE_UNSAFE_PERMISSION:' + cap);
+  }
   const pr = event?.pull_request;
   const baseSha = pr?.base?.sha, headSha = pr?.head?.sha;
   if (!SHA40.test(String(baseSha ?? '')) || !SHA40.test(String(headSha ?? '')))
