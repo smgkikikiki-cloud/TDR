@@ -17,11 +17,23 @@ NAME_RELATIONS = ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FU
 BRAND_RELATIONS = ["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED", "MISMATCH", "UNKNOWN"]
 PAIR_STATES = ["NONE", "PROPOSED", "AUTO", "APPROVED", "LOCKED", "REJECTED"]
 RANK_TIERS = ["auto_eligible", "series_state", "lifecycle_relation", "name_relation", "abs_ln_ratio_ascending", "correlation_descending"]
+LINK_TYPES = ["EQUIVALENT", "PART_OF", "COMPOSED_OF"]
+ABSENT_SEMANTICS = ["ABSENT_IS_ZERO", "ABSENT_IS_UNOBSERVED", "UNKNOWN"]
 
 
 @functools.lru_cache(maxsize=None)
 def policy() -> dict:
     return loader.load_policy()
+
+
+@functools.lru_cache(maxsize=None)
+def capabilities() -> dict:
+    return loader.load_capabilities()
+
+
+@functools.lru_cache(maxsize=None)
+def adoption() -> dict:
+    return loader.load_adoption()
 
 
 @functools.lru_cache(maxsize=None)

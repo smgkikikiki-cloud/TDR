@@ -1,8 +1,9 @@
 """Reference arithmetic for Identity Resolution contract v1 — NOT the resolver.
 
 This module implements only the parts of the SPEC that are pure arithmetic with a single correct answer:
-period maths, the common-window/series statistics of SPEC §6, quantization and banding, the canonical-JSON
-fingerprints of SPEC §11, and the write-matrix lookup of SPEC §10. It exists so the golden corpus can be
+period maths, the common-window/series statistics of SPEC §6 (including the missing-row semantics gap of §6.2a),
+adapter densification under a capability declaration (§3.2), the claim-conflict rules of §7.0, quantization and
+banding, the canonical-JSON fingerprints and link-set ids of §11, and the write-matrix lookup of SPEC §10. It exists so the golden corpus can be
 checked against the written rules *before* an engine exists, and so the future engine can be differentially
 tested against an independent implementation. It deliberately has no brand/name logic and no decision
 logic: those are specified by the corpus itself and arrive with the engine.
@@ -143,10 +144,49 @@ def sum_series(parts: list[dict | None]) -> dict | None:
         values = [part["counts"][index - pidx(part["start"])] for part in parts]
         counts.append(None if any(v is None for v in values) else sum(values))
     partial = sorted({p for part in parts for p in part.get("partial_periods", [])})
-    return {"start": pstr(low), "counts": counts, "partial_periods": partial, "coverage_declared": True}
+    summed = {"start": pstr(low), "counts": counts, "partial_periods": partial, "coverage_declared": True}
+    blocks = [part["absent_rows"] for part in parts if part.get("absent_rows")]
+    if blocks:
+        summed["absent_rows"] = {"source": blocks[0]["source"], "semantics": blocks[0]["semantics"],
+                                 "confirmed": all(block["confirmed"] for block in blocks),
+                                 "months": sorted({m for block in blocks for m in block["months"]})}
+    return summed
 
 
-def compare_series(subject: dict | None, target: dict | None, policy: dict, max_months: int | None = None) -> dict:
+def load_capabilities() -> dict:
+    """provider_capabilities.yaml as {source: {"value", "status"}} (only what the engine needs)."""
+    from identity_resolution.contract import loader
+    return {name: {"value": spec["series.absent_row"]["value"], "status": spec["series.absent_row"]["status"]}
+            for name, spec in loader.load_capabilities()["sources"].items()}
+
+
+def absent_row_refusal(series: dict | None, capabilities: dict) -> str | None:
+    """SPEC §3.2: a series may not claim more than the contract grants, and may not zero-fill an unconfirmed gap."""
+    block = (series or {}).get("absent_rows")
+    if not block:
+        return None
+    declared = capabilities.get(block["source"])
+    if declared is None or declared["value"] != block["semantics"] or (declared["status"] == "confirmed") != block["confirmed"]:
+        return "INPUT_CAPABILITY_MISMATCH"
+    zero_ok = block["semantics"] == "ABSENT_IS_ZERO" and block["confirmed"]
+    start = pidx(series["start"])
+    for month in block["months"]:
+        offset = pidx(month) - start
+        if 0 <= offset < len(series["counts"]) and series["counts"][offset] is not None and not zero_ok:
+            return "INPUT_ABSENT_ROW_ZERO_UNCONFIRMED"
+    return None
+
+
+def unconfirmed_absent_months(series: dict | None) -> set[int]:
+    """Month indexes that are absent rows of a series whose missing-row meaning is unconfirmed (their value is null)."""
+    block = (series or {}).get("absent_rows")
+    if not block or block["confirmed"]:
+        return set()
+    return {pidx(m) for m in block["months"]}
+
+
+def compare_series(subject: dict | None, target: dict | None, policy: dict, max_months: int | None = None,
+                   capabilities: dict | None = None) -> dict:
     """SPEC §6: the common observation window and the statistics computed over it.
 
     Returns a dict with: common_window ({from,to,months}|None), periods, excluded ([{period,reason}]),
@@ -155,7 +195,7 @@ def compare_series(subject: dict | None, target: dict | None, policy: dict, max_
     series = policy["series"]
     max_months = max_months or series["window"]["max_months"]
     result: dict[str, Any] = {"common_window": None, "periods": [], "excluded": [], "codes": [], "state": "UNAVAILABLE",
-                              "stats": None, "refusal": None}
+                              "stats": None, "refusal": None, "semantics_gap_months": 0}
     low, high = policy["time"]["valid_year_range"]
     for item in (subject, target):
         if item is None:
@@ -166,6 +206,12 @@ def compare_series(subject: dict | None, target: dict | None, policy: dict, max_
             return result
         if any(c is not None and c < 0 for c in item["counts"]):
             result["refusal"] = "INPUT_NEGATIVE_COUNT"
+            return result
+    caps = capabilities if capabilities is not None else load_capabilities()
+    for item in (subject, target):
+        refusal = absent_row_refusal(item, caps)
+        if refusal:
+            result["refusal"] = refusal
             return result
     if subject is None or target is None:
         result["codes"].append("SER_NO_COMMON_WINDOW")
@@ -183,6 +229,7 @@ def compare_series(subject: dict | None, target: dict | None, policy: dict, max_
     observed_s = {s0 + i: c for i, c in enumerate(subject["counts"]) if c is not None}
     observed_t = {t0 + i: c for i, c in enumerate(target["counts"]) if c is not None}
     both_covered = set(range(max(s0, t0), min(s1, t1) + 1))
+    unconfirmed_s, unconfirmed_t = unconfirmed_absent_months(subject), unconfirmed_absent_months(target)
     excluded: list[tuple[int, str]] = []
     saw_unobserved = False
     for i in sorted(set(range(s0, s1 + 1)) | set(range(t0, t1 + 1))):
@@ -191,15 +238,23 @@ def compare_series(subject: dict | None, target: dict | None, policy: dict, max_
         elif i not in both_covered:
             excluded.append((i, "outside_common_coverage"))
         elif i not in observed_s:
-            excluded.append((i, "unobserved_in_subject"))
+            excluded.append((i, "unconfirmed_absent_row_in_subject" if i in unconfirmed_s else "unobserved_in_subject"))
             saw_unobserved = True
         elif i not in observed_t:
-            excluded.append((i, "unobserved_in_target"))
+            excluded.append((i, "unconfirmed_absent_row_in_target" if i in unconfirmed_t else "unobserved_in_target"))
             saw_unobserved = True
     if any(reason == "partial_period" for _, reason in excluded):
         result["codes"].append("SER_PARTIAL_PERIOD_EXCLUDED")
     if saw_unobserved:
         result["codes"].append("SER_UNOBSERVED_NOT_ZERO")
+    # SPEC §6.2a: months lost ONLY because a missing-row meaning is unconfirmed, in the last max_months of the coverage intersection.
+    if both_covered:
+        window_end = max(both_covered)
+        gap = sum(1 for i in both_covered
+                  if i > window_end - max_months and i not in partial and (i in unconfirmed_s or i in unconfirmed_t))
+        result["semantics_gap_months"] = gap
+        if gap > 0:
+            result["codes"].append("SER_MISSING_ROW_SEMANTICS_UNCONFIRMED")
 
     common = sorted(i for i in both_covered if i in observed_s and i in observed_t and i not in partial)
     if not common:
@@ -237,7 +292,7 @@ def compare_series(subject: dict | None, target: dict | None, policy: dict, max_
         "common_months": n,
         "joint_nonzero_months": sum(1 for x, y in zip(xs, ys) if x > 0 and y > 0),
         "subject_units": sum(xs), "target_units": sum(ys),
-        "correlation": None, "ratio": None, "monthly_fit_share": None,
+        "correlation": None, "ratio": None, "monthly_fit_share": None, "semantics_gap_months": result["semantics_gap_months"],
     }
     result["stats"] = stats
     if stats["subject_units"] == 0:
@@ -288,6 +343,46 @@ def canonical_json(payload: Any) -> bytes:
 
 def fingerprint(payload: Any) -> str:
     return hashlib.sha256(canonical_json(payload)).hexdigest()
+
+
+def densify(rows: list[dict], coverage: dict, capability: dict) -> dict:
+    """SPEC §3.2 / A2: sparse source rows -> a dense series under a capability declaration {"value", "status"}.
+    An absent month inside coverage is 0 only for ABSENT_IS_ZERO + confirmed; otherwise null. Months outside coverage are never produced."""
+    low, high = pidx(coverage["from"]), pidx(coverage["to"])
+    by_month = {pidx(r["period"]): r["count"] for r in rows}
+    if any(not (low <= m <= high) for m in by_month):
+        raise ValueError("a source row lies outside the declared coverage")
+    zero_ok = capability["value"] == "ABSENT_IS_ZERO" and capability["status"] == "confirmed"
+    counts, absent = [], []
+    for m in range(low, high + 1):
+        if m in by_month:
+            counts.append(by_month[m])
+        else:
+            absent.append(pstr(m))
+            counts.append(0 if zero_ok else None)
+    return {"start": coverage["from"], "counts": counts, "absent_months": absent, "semantics": capability["value"],
+            "confirmed": capability["status"] == "confirmed"}
+
+
+def claim_conflict(a: dict, b: dict) -> tuple[bool, str | None]:
+    """SPEC §7.0 for two ACTIVE claims: C1 one claim per subject; C2 a whole is claimed once unless both are PART_OF."""
+    same = a["subject_id"] == b["subject_id"] and a["link_type"] == b["link_type"] and sorted(a["target_ids"]) == sorted(b["target_ids"])
+    if same:
+        return False, None
+    if a["subject_id"] == b["subject_id"]:
+        return True, "C1"
+    if set(a["target_ids"]) & set(b["target_ids"]) and not (a["link_type"] == "PART_OF" and b["link_type"] == "PART_OF"):
+        return True, "C2"
+    return False, None
+
+
+def link_set_payload(provider: str, subject: str, targets: list[str]) -> dict:
+    return {"v": "link-set/1", "contract": "v1", "provider": provider, "subject": subject, "targets": sorted(targets)}
+
+
+def link_set_id(provider: str, subject: str, targets: list[str]) -> str:
+    """SPEC §10.5 / §11.2a."""
+    return "ls1-" + fingerprint(link_set_payload(provider, subject, targets))[:24]
 
 
 def write_action(existing_state: str, decision: str, fingerprint_flag: str, policy: dict) -> str:

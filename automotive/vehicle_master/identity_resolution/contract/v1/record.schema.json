@@ -15,7 +15,7 @@
     },
     "series": {
       "type": "object",
-      "description": "Dense monthly counts starting at `start`. counts[i] is the month start+i. null = unobserved (outside the source's coverage), 0 = observed zero. coverage_declared=false means the source could not state its coverage, so the series yields no series evidence.",
+      "description": "Dense monthly counts starting at `start`. counts[i] is the month start+i. null = unobserved (outside the source's coverage, or a missing row whose meaning is not confirmed as zero), 0 = observed zero (or a missing row the source confirmed as zero). coverage_declared=false means the source could not state its coverage, so the series yields no series evidence.",
       "required": ["start", "counts"],
       "additionalProperties": false,
       "properties": {
@@ -29,8 +29,27 @@
           "type": "array",
           "items": {"$ref": "#/$defs/period"}
         },
-        "coverage_declared": {"type": "boolean"}
+        "coverage_declared": {"type": "boolean"},
+        "absent_rows": {"$ref": "#/$defs/absent_rows"}
       }
+    },
+    "absent_rows": {
+      "type": "object",
+      "description": "How this series was made dense (SPEC §3.2). `source` names the entry of provider_capabilities.yaml that governs it; `semantics`/`confirmed` copy that entry; `months` lists the months INSIDE the series' coverage for which the source had no row. Those months are 0 only when semantics is ABSENT_IS_ZERO and confirmed is true; otherwise they are null. A series without this block asserts it has no absent in-coverage months.",
+      "required": ["source", "semantics", "confirmed", "months"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {"$ref": "#/$defs/nonempty_string"},
+        "semantics": {"enum": ["ABSENT_IS_ZERO", "ABSENT_IS_UNOBSERVED", "UNKNOWN"]},
+        "confirmed": {"type": "boolean"},
+        "months": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/period"}
+        }
+      }
+    },
+    "link_type": {
+      "enum": ["EQUIVALENT", "PART_OF", "COMPOSED_OF"]
     },
     "subject": {
       "type": "object",
@@ -89,14 +108,17 @@
     },
     "existing_mapping": {
       "type": "object",
-      "description": "Persisted state the engine must respect. REJECTED/APPROVED/LOCKED are human decisions.",
+      "description": "Persisted state the engine must respect. REJECTED/APPROVED/LOCKED are human decisions. One row is one (subject, target, link_type) claim; link_type defaults to EQUIVALENT when absent (a row written before link types existed). A COMPOSED_OF claim is stored as N rows sharing set_id and set_size (SPEC §10.5).",
       "required": ["subject_id", "target_id", "state"],
       "additionalProperties": false,
       "properties": {
         "subject_id": {"$ref": "#/$defs/nonempty_string"},
         "target_id": {"type": ["string", "null"]},
         "state": {"enum": ["PROPOSED", "AUTO", "APPROVED", "LOCKED", "REJECTED"]},
-        "evidence_fingerprint": {"type": ["string", "null"]}
+        "evidence_fingerprint": {"type": ["string", "null"]},
+        "link_type": {"$ref": "#/$defs/link_type"},
+        "set_id": {"type": ["string", "null"]},
+        "set_size": {"type": ["integer", "null"], "minimum": 2}
       }
     },
     "lineage_event": {

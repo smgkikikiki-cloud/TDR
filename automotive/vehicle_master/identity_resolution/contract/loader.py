@@ -9,7 +9,7 @@ import yaml
 
 CONTRACT_ROOT = Path(__file__).resolve().parent
 
-SCHEMA_FILES = ("record.schema.json", "decision.schema.json", "case.schema.json")
+SCHEMA_FILES = ("record.schema.json", "decision.schema.json", "case.schema.json", "capabilities.schema.json")
 
 
 class DuplicateKeyError(ValueError):
@@ -68,6 +68,14 @@ def load_reason_codes(version: str = "v1") -> dict:
 
 def load_taxonomy(version: str = "v1") -> dict:
     return load_yaml("taxonomy.yaml", version)
+
+
+def load_capabilities(version: str = "v1") -> dict:
+    return load_yaml("provider_capabilities.yaml", version)
+
+
+def load_adoption(version: str = "v1") -> dict:
+    return load_yaml("adoption.yaml", version)
 
 
 def load_schema_registry(version: str = "v1") -> dict[str, dict]:

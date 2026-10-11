@@ -52,11 +52,19 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
-## Identity Resolution Contract v1 — DRAFT for owner review (2026-10-10)
+## Identity Resolution Contract v1 — DRAFT, revision 2, NOT FROZEN (2026-10-10; owner review addressed 2026-10-11)
 
 `automotive/vehicle_master/identity_resolution/` now holds a provider-agnostic identity-resolution **contract**: `contract/v1/SPEC.md`,
-`policy.yaml`, `reason_codes.yaml`, `taxonomy.yaml`, the input/output/case JSON schemas and a golden corpus (`cases.jsonl`), plus its
-contract tests (`automotive/vehicle_master/tests/identity_resolution/`) and `README.md` (architecture, evidence base, owner decisions).
+`policy.yaml`, `adoption.yaml`, `provider_capabilities.yaml`, `reason_codes.yaml`, `taxonomy.yaml`, the input/output/case/capability JSON schemas, a
+`CHANGELOG.md` and a golden corpus (`cases.jsonl`), plus its contract tests (`automotive/vehicle_master/tests/identity_resolution/`) and `README.md`
+(architecture, evidence base, owner decisions).
+
+- **Revision 2 (owner review: architecture accepted in principle, contract not frozen).** (1) What a missing row means is now **capability data**
+  (`provider_capabilities.yaml`): Ice and TDR registrations are both *UNKNOWN / unconfirmed* (`Q-ICE-ABSENT-ROW`, `Q-TDR-ABSENT-ROW`), so an absent row is
+  never assumed zero; unconfirmed gaps are counted and cap AUTO. (2) Cardinality separates identity (`EQUIVALENT`), aggregation (`COMPOSED_OF`) and
+  granularity (`PART_OF`, many subjects may share one target, no forced TDR split). (3) A bundle is a **link set** (one decision, one `set_id`, one write
+  action, atomic storage); the review-only alternative is recorded as a decision, not built. Wording is now "complete for the known taxonomy classes and
+  corpus-extensible". The uncalibrated `proposal` thresholds are **not adopted**: `adoption.yaml` has `binding: false`, so any run is a dry run.
 
 - **Documentation, corpus and test tooling only.** There is no resolver, adapter, CLI, persistence, migration, workflow or database access, and
   nothing in production imports the package (a test enforces it). `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain

@@ -4,7 +4,7 @@
     python -m identity_resolution.contract.render --check    # exit 1 if SPEC.md is out of date
     python -m identity_resolution.contract.render --write    # rewrite the generated blocks in SPEC.md
 
-The appendices are DERIVED data (the policy key index, the reason-code registry, the edge-case taxonomy). They are
+The appendices are DERIVED data (the policy key index, the reason-code registry, the edge-case taxonomy, the provider capabilities and the adoption gate). They are
 generated so that SPEC.md can never drift from policy.yaml, reason_codes.yaml and taxonomy.yaml: a test fails when
 the committed blocks differ from what this module renders.
 """
@@ -86,11 +86,33 @@ def render_taxonomy(taxonomy: dict) -> str:
     return "\n".join(rows)
 
 
+def render_capabilities(capabilities: dict) -> str:
+    rows = ["| Source | Role | `series.absent_row` | Status | Hypothesis | Open question |", "|---|---|---|---|---|---|"]
+    for source, spec in capabilities["sources"].items():
+        cap = spec["series.absent_row"]
+        rows.append("| `{}` | {} | `{}` | {} | {} | {} |".format(
+            source, spec["role"], cap["value"], cap["status"], f"`{cap['hypothesis']}`" if cap.get("hypothesis") else "—",
+            f"`{cap['question_id']}` {_cell(cap['question'])}" if cap.get("question_id") else "—"))
+    return "\n".join(rows)
+
+
+def render_adoption(adoption: dict) -> str:
+    rows = [f"`binding: {str(adoption['binding']).lower()}` — status `{adoption['status']}`.", "",
+            "| Entry | Class | Policy keys | Status | Settled by |", "|---|---|---|---|---|"]
+    for entry in adoption["entries"]:
+        rows.append("| `{}` | {} | {} | {} | {} |".format(
+            entry["id"], entry["class"], ", ".join(f"`{k}`" for k in entry["keys"]), entry["status"],
+            _cell(entry.get("settles_with") or entry.get("decision") or "")))
+    return "\n".join(rows)
+
+
 def render_all(version: str = "v1") -> dict[str, str]:
     return {
         "policy-index": render_policy_index(loader.load_policy(version)),
         "reason-codes": render_reason_codes(loader.load_reason_codes(version)),
         "taxonomy": render_taxonomy(loader.load_taxonomy(version)),
+        "capabilities": render_capabilities(loader.load_capabilities(version)),
+        "adoption": render_adoption(loader.load_adoption(version)),
     }
 
 

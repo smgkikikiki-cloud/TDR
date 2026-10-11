@@ -1,11 +1,13 @@
-# TDR Identity Resolution — Policy v1 (DRAFT, pending owner review)
+# TDR Identity Resolution — Policy v1 (DRAFT, NOT FROZEN — revision 2, pending owner review)
 #
 # Every threshold, alias, allow-list and precedence rule that changes a decision lives HERE, not in
 # Python (SPEC §0.4). The engine reads this file; it never carries its own copy of a number.
 #
-# STATUS: draft_for_owner_review. Nothing reads this file in production. Changing any value below
-# requires a new `policy.version`, a new row in the corpus for the behaviour that moved
-# (SPEC §14.4), and an owner decision. `policy.version` follows SemVer:
+# STATUS: draft_not_frozen. Nothing reads this file in production, and the numbers below are NOT adopted:
+# every `proposal` / `assumption` value is provisional until it has been calibrated or accepted by the owner
+# (adoption.yaml records the plan and the gate; SPEC §14.6). Changing any value below requires a new
+# `policy.version` (once frozen), a new row in the corpus for the behaviour that moved (SPEC §14.4), and an
+# owner decision. `policy.version` follows SemVer:
 #   MAJOR  a mapping that was AUTO/PROPOSED could now be a different outcome class
 #   MINOR  a new alias / allow-list entry / new tunable with a no-op default
 #   PATCH  wording only (no behavioural key changes)
@@ -14,14 +16,15 @@
 #   inherited   — taken unchanged from an owner-approved document (docs/vehicle-db/VEHICLE_DB_V3.md §14.2)
 #   observed    — read directly from the real M7.0 package (see README "Evidence base")
 #   proposal    — NEW in this design, NOT calibrated on production data (the first R6 run's rows are not
-#                 in the repository). The owner is asked to confirm or change each.
+#                 in the repository). PROVISIONAL: it is not adopted until adoption.yaml says it is.
 #   assumption  — depends on a fact about the TDR catalog / Ice that this design could not verify.
 
 policy:
   id: tdr-identity-resolution
   version: "1.0.0"
   contract_version: v1
-  status: draft_for_owner_review
+  revision: 2                             # draft revision; the version stays 1.0.0 until the contract is frozen
+  status: draft_not_frozen
 
 # Quantization applies to every threshold comparison and every fingerprint payload (SPEC §6.7, §11.1).
 # Rounding is half-even on the shortest-repr decimal expansion (a SPEC invariant, not a tunable).
@@ -59,6 +62,11 @@ series:
     abs_tolerance_units: 3
     rel_tolerance: 0.25
     min_share_of_months: 0.75
+  absent_row:                             # SPEC §6.2a. What a missing row means is provider_capabilities.yaml's business, not a tunable.
+    # A comparison that had to drop in-coverage months ONLY because a source's missing-row semantics are unconfirmed
+    # (a month with no row on one side) may not be AUTO when more than this many such months fall in the last
+    # `window.max_months` months of the coverage intersection. 0 = any such month caps the pair at PROPOSED.
+    auto_max_unconfirmed_gap_months: 0
 
 # --------------------------------------------------------------------------------------------------
 # Lexical evidence (brand + model name). SPEC §5.
@@ -165,7 +173,7 @@ subject_quality:
     provisional_min_units: 30             # a provisional / raw-name subject this big with no resolution goes to discovery
 
 # --------------------------------------------------------------------------------------------------
-# Candidate generation, bundles, ranking. SPEC §7.
+# Candidate generation, bundles (link type COMPOSED_OF, persisted as a link set), ranking. SPEC §7.
 # --------------------------------------------------------------------------------------------------
 candidates:
   brand_relations_allowed: [EXACT, ALIAS_SAME, ALIAS_RELABEL, ALIAS_RELATED]
@@ -193,13 +201,15 @@ candidates:
     abs_ln_ratio_delta_min: 0.05
 
 # --------------------------------------------------------------------------------------------------
-# Granularity: the provider splits what TDR holds as one model. SPEC §7.4.
+# Granularity: the provider splits what TDR holds as one model (link type PART_OF). SPEC §7.4.
+# Identity (EQUIVALENT), aggregation (COMPOSED_OF) and granularity (PART_OF) are different link types with
+# different cardinality (SPEC §7.0); this block only decides when a subject is a PART of a target.
 # --------------------------------------------------------------------------------------------------
 granularity:
-  provider_finer:
+  part_of:
     subject_name_relations: [SUBJECT_FINER]
     min_ratio_above: 1.1                  # target units / subject units: the target is clearly bigger than the subject
-    arbitration_bundle_check: true        # several subjects whose SUM fits one target are provider-finer too
+    arbitration_sum_check: true           # several subjects whose SUM fits one target are parts of it too
 
 # --------------------------------------------------------------------------------------------------
 # Provider structure (lineage). Processed BEFORE any matching. SPEC §9.
@@ -219,7 +229,8 @@ lineage:
 # State protection & write planning. SPEC §10.
 # --------------------------------------------------------------------------------------------------
 state:
-  # write_matrix[existing pair state][engine decision for that pair] -> action.
+  # write_matrix[existing CLAIM state][engine decision for that claim] -> action. A claim is (subject, link type, sorted targets); a link set
+  # (COMPOSED_OF) is ONE claim, so the action applies to every one of its rows (SPEC §10.1, §10.5).
   # REJECTED additionally keys on whether the evidence fingerprint moved.
   write_matrix:
     NONE:
@@ -291,8 +302,10 @@ review:
   discovery_subject_flags: [SUBJ_PROVISIONAL, SUBJ_UNMAPPED_NAME]
   high_priority_codes:
     - STRUCTURAL_APPROVED_CLAIM_CONFLICT
+    - STRUCTURAL_STORED_CLAIMS_INCONSISTENT
     - STATE_EVIDENCE_CONTRADICTS
     - CARD_TARGET_MISSING
+    - CARD_LINK_TYPE_CONFLICTS_PROTECTED
 
 # --------------------------------------------------------------------------------------------------
 # Provenance of every tunable above (dotted path -> tag). Enforced by tests: every numeric leaf and every
@@ -307,6 +320,7 @@ provenance:
   series.strong: inherited
   series.minimums: proposal
   series.monthly_fit: proposal
+  series.absent_row: proposal
   lexical.token_boundary_characters: proposal
   lexical.generic_tokens: observed
   lexical.token_equivalences: assumption
@@ -330,7 +344,7 @@ provenance:
   candidates.bundle: proposal
   candidates.ranking: proposal
   candidates.margin: proposal
-  granularity.provider_finer: proposal
+  granularity.part_of: proposal
   lineage.quarantine: proposal
   lineage.split_child_structure_card: proposal
   lineage.protected: proposal

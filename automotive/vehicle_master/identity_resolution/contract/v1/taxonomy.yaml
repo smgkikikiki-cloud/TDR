@@ -1,7 +1,10 @@
-# TDR Identity Resolution — edge-case taxonomy v1 (DRAFT, pending owner review)
+# TDR Identity Resolution — edge-case taxonomy v1 (DRAFT, NOT FROZEN — revision 2, pending owner review)
 #
-# The exhaustive list of identity-resolution situations the contract commits to handling. It is DATA, not
-# prose, so tests can enforce two rules mechanically:
+# The identity-resolution situations the contract commits to handling. It is COMPLETE FOR THE KNOWN TAXONOMY
+# CLASSES (the twelve areas below, drawn from the owner's R6 report, the real M7.0 package and the contract's own
+# rules) and CORPUS-EXTENSIBLE: it does not claim that no other situation exists. A situation nobody has seen yet
+# enters as a new id here plus a failing corpus case (SPEC §14.4), never as a Python special case. It is DATA,
+# not prose, so tests can enforce two rules mechanically:
 #   1. every taxonomy id is exercised by at least one case in cases.jsonl, and
 #   2. every case names the taxonomy ids it covers (a case that covers nothing is not allowed).
 # A bug or surprise found later is added here (a new id) AND to the corpus — never as a Python special case
@@ -14,6 +17,7 @@
 #   design           derived from the contract's own rules; no real instance is known yet.
 
 version: v1
+completeness: complete_for_known_classes_and_corpus_extensible
 
 areas:
   CORE: Baseline outcomes
@@ -28,6 +32,7 @@ areas:
   AUTH: Authority between evidence classes
   FP: Fingerprints and determinism
   INPUT: Input integrity
+  ADOPT: Adoption gate and provisional policy
 
 entries:
   # ------------------------------------------------------------------------------------------- CORE
@@ -228,8 +233,8 @@ entries:
   - id: SER-05
     title: Unobserved months inside a series
     origin: ice_m7_data
-    evidence: "518 of 1,200 groups have months with no reg_trend row between their first and last month. 0 of 262,985 reg_trend rows have a non-positive count: Ice ships no zero rows, so the Ice adapter reads an absent row inside reg_range as 0 (an interpretation Ice should confirm)."
-    handling: The engine treats null as unobserved and leaves it out; only the adapter zero-fills, and only inside the source's own declared coverage.
+    evidence: "518 of 1,200 groups have months with no reg_trend row between their first and last month. 0 of 262,985 reg_trend rows have a non-positive count: Ice ships no zero rows. That is consistent with 'absent = zero' and with 'absent = not reported'; no package document says which. The reading is UNCONFIRMED capability data (provider_capabilities.yaml), not an assumption."
+    handling: The engine treats null as unobserved and leaves it out; the adapter zero-fills only inside declared coverage and only where the source has CONFIRMED that a missing row means zero.
     codes: [SER_UNOBSERVED_NOT_ZERO]
   - id: SER-06
     title: Partial period
@@ -298,25 +303,43 @@ entries:
     handling: A monthly-fit gate must also pass.
     codes: [SER_MONTHLY_FIT_FAIL]
   - id: SER-17
-    title: Several TDR models sum to one subject
+    title: Several TDR models sum to one subject (link type COMPOSED_OF)
     origin: ice_m7_data
     evidence: "§14.2 example hilux_travo_cab + hilux_travo_double_cab -> toyota-hilux-travo. Each part alone has ratio ~0.5, so one-at-a-time evaluation can never discover the pair."
-    handling: Bounded bundle enumeration among name-affine same-brand models; PROPOSED at most.
-    codes: [SER_BUNDLE_STRONG, PROPOSE_BUNDLE, CARD_MANY_TO_ONE_ALLOWED]
+    handling: Bounded bundle enumeration among name-affine same-brand models; PROPOSED at most, as ONE link set (atomic rows sharing a set_id), never as independent pair rows.
+    codes: [SER_BUNDLE_STRONG, PROPOSE_COMPOSED_OF, GRAN_PROVIDER_COARSER]
   - id: SER-18
     title: Bundle overshoots the subject
     origin: design
     evidence: "Adding a member can push the summed ratio above the band."
     handling: That bundle is rejected.
     codes: [SER_BUNDLE_OVERSHOOT]
+  - id: SER-19
+    title: Missing-row meaning unconfirmed (the semantics gap)
+    origin: owner_report_r6
+    evidence: "Owner review of rev 1: Ice 'absent row = zero' was an assumption. Ice and TDR registrations are both UNKNOWN in provider_capabilities.yaml (Q-ICE-ABSENT-ROW, Q-TDR-ABSENT-ROW); both ship sparse series."
+    handling: "In-coverage months with no row are null, left out of the comparison, counted as semantics_gap_months and reported; a gap above series.absent_row.auto_max_unconfirmed_gap_months caps the pair at PROPOSED. Never a zero, never a veto."
+    codes: [SER_MISSING_ROW_SEMANTICS_UNCONFIRMED, SER_UNOBSERVED_NOT_ZERO]
+  - id: SER-20
+    title: Missing row confirmed as zero
+    origin: design
+    evidence: "No source has confirmed ABSENT_IS_ZERO yet. If Ice does, its absent in-coverage months become observed zeros by capability."
+    handling: The adapter (never the engine) writes 0 for those months; the engine compares them as observed and the gap is 0. Pinned with a fixture capability so the case does not move until a real confirmation edits provider_capabilities.yaml.
+    codes: []
+  - id: SER-21
+    title: Missing row confirmed as unobserved
+    origin: design
+    evidence: "A source may confirm that a missing row means 'no data'."
+    handling: The months stay null and are excluded as ordinary unobserved months; they do not count toward the semantics gap because nothing is unconfirmed.
+    codes: [SER_UNOBSERVED_NOT_ZERO]
 
   # ------------------------------------------------------------------------------------------- GRAN
   - id: GRAN-01
-    title: Provider finer than TDR (one TDR model, several provider groups)
+    title: Provider finer than TDR, one narrower subject (link type PART_OF)
     origin: ice_m7_data
-    evidence: "honda-city + honda-city-hatchback both relate to a single TDR City. The v63 schema allows one TDR model at most one active Ice group, so it cannot be expressed as a mapping."
-    handling: STRUCTURAL_REVIEW for the owner; nothing is forced onto one group.
-    codes: [STRUCTURAL_PROVIDER_FINER]
+    evidence: "honda-city-hatchback (106,582 units) is narrower than a TDR 'City' that is clearly bigger. An identity link would be wrong (ratio far from 1) and the v63 one-active-group-per-model rule cannot hold several such groups."
+    handling: "PROPOSED as a PART_OF claim (the subject is a part of the target). PART_OF is its own link type, so many subjects may be parts of one target without any TDR split; nothing is forced onto an identity link and TDR is not asked to restructure (the review question may still ask whether TDR wants a split)."
+    codes: [PROPOSE_PART_OF, GRAN_PROVIDER_FINER, NAME_CONTAINMENT_SUBJECT_FINER]
   - id: GRAN-02
     title: Body type disagrees
     origin: owner_report_r6
@@ -341,6 +364,18 @@ entries:
     evidence: "vehicle_models.status may be UNVERIFIED."
     handling: AUTO withheld; PROPOSED allowed.
     codes: [ATTR_TARGET_UNVERIFIED]
+  - id: GRAN-06
+    title: Several provider subjects are parts of one TDR model, their sum fits
+    origin: ice_m7_data
+    evidence: "honda-city (110,131 units) + honda-city-hatchback (106,582 units) against one TDR City: neither alone is strong, their sum is."
+    handling: Both become PROPOSED PART_OF claims on the same target (parts may share a target); the sum is recorded as evidence. Nothing is forced onto one group and TDR is not asked to split City.
+    codes: [PROPOSE_PART_OF, SER_PARTS_SUM_STRONG, GRAN_PROVIDER_FINER]
+  - id: GRAN-07
+    title: Narrower name but the subject is not clearly smaller
+    origin: design
+    evidence: "A narrower provider name whose volume is within the identity band of the target is not a part of it."
+    handling: Not a PART_OF candidate; evaluated as an ordinary (name-containment) candidate.
+    codes: [NAME_CONTAINMENT_SUBJECT_FINER]
 
   # ------------------------------------------------------------------------------------------- CARD
   - id: CARD-01
@@ -353,7 +388,7 @@ entries:
     title: Two subjects claim one TDR target
     origin: design
     evidence: "The v63 unique index allows one active (AUTO/APPROVED) group per TDR model."
-    handling: Neither subject is AUTO; both AMBIGUOUS, unless their sum fits the target (then GRAN-01).
+    handling: Neither subject is AUTO; both AMBIGUOUS, unless their sum fits the target (then they are parts of it, GRAN-06).
     codes: [AMBIGUOUS_TARGET_CONTESTED]
   - id: CARD-03
     title: Target already held by a protected mapping
@@ -380,11 +415,11 @@ entries:
     handling: The protected mapping is untouched; a high-priority structure review is raised.
     codes: [CARD_TARGET_MISSING]
   - id: CARD-07
-    title: New member for a subject that already has a protected mapping
+    title: New member for a subject that already has a protected claim
     origin: design
-    evidence: "Many-to-one is legal, but adding a member changes what the approved mapping means."
-    handling: PROPOSED at most.
-    codes: [CARD_BUNDLE_EXTENDS_PROTECTED]
+    evidence: "A subject holds one claim (SPEC §7.0 C1); adding a target changes what the approved claim means."
+    handling: Listed PROPOSED at most; activating it means replacing the protected claim, which only a human does.
+    codes: [CARD_EXTENDS_PROTECTED]
   - id: CARD-08
     title: Brand exists in TDR but offers no eligible model
     origin: design
@@ -397,6 +432,30 @@ entries:
     evidence: "Tiny raw-name groups against a populated brand."
     handling: "INSUFFICIENT_DATA, not NO_CANDIDATE: absence of evidence never excludes."
     codes: [INSUFFICIENT_DATA_NO_BASIS]
+  - id: CARD-10
+    title: Identity, aggregation and granularity are different link types
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: a single 'one target, one active subject' rule could not say that several finer provider subjects may share one TDR model, nor that one subject may be the sum of several models."
+    handling: "Three link types with fixed cardinality (SPEC §7.0): EQUIVALENT (1:1), COMPOSED_OF (one subject, a set of targets), PART_OF (many subjects, one target). Two active claims conflict iff they belong to one subject (C1) or share a target unless both are PART_OF (C2)."
+    codes: [PROPOSE_PART_OF, PROPOSE_COMPOSED_OF]
+  - id: CARD-11
+    title: A proposed claim conflicts with another subject's AUTO claim
+    origin: design
+    evidence: "Parts and sets are PROPOSED at most; an AUTO identity claim by another subject on the same target is an active, revocable machine link."
+    handling: The proposal is kept and annotated; activating it requires resolving the AUTO claim first.
+    codes: [CARD_CLAIM_CONFLICTS_AUTO]
+  - id: CARD-12
+    title: Candidate claims a protected subject under a different link type
+    origin: design
+    evidence: "An APPROVED EQUIVALENT claim exists and fresh evidence says PART_OF (or the reverse)."
+    handling: PROTECTED_HOLD; the alternative is listed, flagged and routed to structure review at high priority; nothing is changed.
+    codes: [CARD_LINK_TYPE_CONFLICTS_PROTECTED, PROTECTED_HOLD_APPROVED]
+  - id: CARD-13
+    title: Stored active claims break the cardinality rules
+    origin: design
+    evidence: "v63 rows carry no link type; a subject with two AUTO rows to two targets is two EQUIVALENT claims, which C1 forbids (it is a COMPOSED_OF set or an error)."
+    handling: STRUCTURAL_REVIEW for the subject; nothing is changed or repaired.
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
 
   # ------------------------------------------------------------------------------------------- LIN
   - id: LIN-01
@@ -551,6 +610,24 @@ entries:
     evidence: "Every (existing pair state x engine decision) cell is a decided action."
     handling: policy.state.write_matrix.
     codes: [AUTH_HUMAN_OVER_ENGINE]
+  - id: STATE-09
+    title: A link set is persisted as one unit
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: bundle candidates were PROPOSED as independent per-target rows, so approving, rejecting or staling one member left the others meaningless."
+    handling: A COMPOSED_OF claim is N atomic rows sharing a deterministic set_id; the write matrix is evaluated once for the set and every member row gets the same action; humans act on the set, never on a member (SPEC §10.5).
+    codes: [PROPOSE_COMPOSED_OF]
+  - id: STATE-10
+    title: Stored link set incomplete or mixed-state
+    origin: design
+    evidence: "A member row was deleted, or one row of a set was approved alone."
+    handling: STRUCTURAL_REVIEW for the subject; the set is neither repaired nor rewritten.
+    codes: [STRUCTURAL_STORED_CLAIMS_INCONSISTENT]
+  - id: STATE-11
+    title: Claim identity includes the link type
+    origin: design
+    evidence: "A REJECTED 'honda-city is equivalent to City' says nothing about 'honda-city is a part of City'."
+    handling: Existing state, suppression and fingerprints are per claim (subject, link type, sorted targets).
+    codes: [SUPPRESSED_REJECTED_UNCHANGED]
 
   # ------------------------------------------------------------------------------------------- AUTH
   - id: AUTH-01
@@ -623,3 +700,29 @@ entries:
     evidence: "A decision made under policy X must not be silently produced under policy Y."
     handling: Refuse the run.
     codes: [INPUT_POLICY_VERSION_UNSUPPORTED]
+  - id: INPUT-06
+    title: Series claims missing-row semantics the contract does not grant
+    origin: owner_report_r6
+    evidence: "Review of contract rev 1: the Ice adapter read an absent row as zero by assumption. Semantics are capability data; a snapshot may not claim more than provider_capabilities.yaml confirms."
+    handling: Refuse the run.
+    codes: [INPUT_CAPABILITY_MISMATCH]
+  - id: INPUT-07
+    title: Adapter zero-filled an unconfirmed gap
+    origin: owner_report_r6
+    evidence: "A month listed as an absent row carries a number although its source has not confirmed ABSENT_IS_ZERO."
+    handling: Refuse the run.
+    codes: [INPUT_ABSENT_ROW_ZERO_UNCONFIRMED]
+
+  # ------------------------------------------------------------------------------------------- ADOPT
+  - id: ADOPT-01
+    title: Uncalibrated proposal thresholds are not adopted
+    origin: owner_report_r6
+    evidence: "Owner review of rev 1: do not adopt uncalibrated proposal thresholds yet. The first R6 run's review rows are not in the repository, so every proposal/assumption value is provisional."
+    handling: adoption.yaml classifies every such value, records how it will be settled, and keeps binding false; a run under a non-binding policy is a dry run whose writes are advisory (invariant I16).
+    codes: []
+  - id: ADOPT-02
+    title: A case depends on a provisional value
+    origin: design
+    evidence: "A golden case whose expectation moves when a provisional threshold moves would silently freeze that threshold."
+    handling: Such a case carries provisional_keys naming the adoption entries it depends on; recalibrating an entry means re-deriving those cases.
+    codes: []

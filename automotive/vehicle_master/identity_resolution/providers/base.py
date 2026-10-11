@@ -72,5 +72,36 @@ def validate_snapshot(snapshot: dict, version: str = CONTRACT_VERSION) -> None:
     schemas = loader.load_schema_registry(version)
     root = schemas["record.schema.json"]
     errors = schema_subset.validate(snapshot, root["$defs"]["snapshot"], registry=schemas, root=root)
+    errors.extend(capability_violations(snapshot, version))
     if errors:
         raise SnapshotError("; ".join(errors))
+
+
+def capability_violations(snapshot: dict, version: str = CONTRACT_VERSION) -> list[str]:
+    """SPEC §3.2: a series may not claim missing-row semantics the contract does not grant its source, and may not zero-fill an
+    unconfirmed gap. The engine refuses such a snapshot (``INPUT_CAPABILITY_MISMATCH`` / ``INPUT_ABSENT_ROW_ZERO_UNCONFIRMED``);
+    checking here fails the adapter at its own boundary instead. Data only: nothing is inferred and nothing is repaired."""
+    declared = {name: spec["series.absent_row"] for name, spec in loader.load_capabilities(version)["sources"].items()}
+    problems: list[str] = []
+    series_list = [(f"subject {s['entity_id']}", s.get("series")) for s in snapshot.get("subjects", [])]
+    series_list += [(f"target {t['target_id']}", t.get("series")) for t in snapshot.get("targets", [])]
+    for label, series in series_list:
+        block = (series or {}).get("absent_rows")
+        if not block:
+            continue
+        capability = declared.get(block["source"])
+        if capability is None or capability["value"] != block["semantics"] or (capability["status"] == "confirmed") != block["confirmed"]:
+            problems.append(f"INPUT_CAPABILITY_MISMATCH: {label} claims {block['semantics']} (confirmed={block['confirmed']}) for source {block['source']!r}")
+            continue
+        start = _month_index(series["start"])
+        zero_ok = block["semantics"] == "ABSENT_IS_ZERO" and block["confirmed"]
+        for month in block["months"]:
+            offset = _month_index(month) - start
+            if 0 <= offset < len(series["counts"]) and series["counts"][offset] is not None and not zero_ok:
+                problems.append(f"INPUT_ABSENT_ROW_ZERO_UNCONFIRMED: {label} carries a number for the absent month {month}")
+    return problems
+
+
+def _month_index(period: str) -> int:
+    year, month = period.split("-")
+    return int(year) * 12 + int(month) - 1

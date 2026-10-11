@@ -27,8 +27,8 @@ def test_yaml_loader_rejects_duplicate_keys(tmp_path):
 
 
 def test_contract_files_exist():
-    for name in ("SPEC.md", "policy.yaml", "reason_codes.yaml", "taxonomy.yaml", "decision.schema.json", "record.schema.json",
-                 "case.schema.json", "cases.jsonl"):
+    for name in ("SPEC.md", "CHANGELOG.md", "policy.yaml", "provider_capabilities.yaml", "adoption.yaml", "reason_codes.yaml", "taxonomy.yaml",
+                 "decision.schema.json", "record.schema.json", "capabilities.schema.json", "case.schema.json", "cases.jsonl"):
         assert (S.CONTRACT_DIR / name).is_file(), name
 
 
@@ -39,7 +39,8 @@ def test_policy_header():
     header = S.policy()["policy"]
     assert SEMVER.match(header["version"])
     assert header["contract_version"] == "v1"
-    assert header["status"] == "draft_for_owner_review"
+    assert header["status"] == "draft_not_frozen", "contract v1 must not claim to be frozen while adoption.yaml is non-binding"
+    assert isinstance(header["revision"], int) and header["revision"] >= 2
 
 
 def test_policy_provenance_covers_every_key():
@@ -88,6 +89,11 @@ def test_write_matrix_never_produces_auto_from_a_rejection_or_a_proposal_without
     assert "DELETE" not in " ".join(S.WRITE_ACTIONS)
 
 
+def test_absent_row_gap_limit_is_a_non_negative_integer():
+    limit = S.policy()["series"]["absent_row"]["auto_max_unconfirmed_gap_months"]
+    assert isinstance(limit, int) and not isinstance(limit, bool) and 0 <= limit < S.policy()["series"]["window"]["max_months"]
+
+
 def test_series_thresholds_are_sane():
     series = S.policy()["series"]
     strong = series["strong"]
@@ -129,7 +135,8 @@ def test_relation_lists_use_known_relations():
     assert set(candidates["brand_relations_auto_eligible"]) <= set(candidates["brand_relations_allowed"])
     assert "MISMATCH" not in candidates["brand_relations_allowed"] and "UNKNOWN" not in candidates["brand_relations_allowed"]
     assert set(candidates["bundle"]["member_name_relations"]) <= set(S.NAME_RELATIONS)
-    assert set(policy["granularity"]["provider_finer"]["subject_name_relations"]) <= set(S.NAME_RELATIONS)
+    assert set(policy["granularity"]["part_of"]["subject_name_relations"]) <= set(S.NAME_RELATIONS)
+    assert "provider_finer" not in policy["granularity"], "renamed to part_of in revision 2"
 
 
 def test_ranking_lists_are_total_orders_of_known_values():
@@ -253,7 +260,143 @@ def test_codes_named_in_policy_exist():
         assert outcome_code in S.codes()
 
 
+def test_link_type_and_capability_vocabularies_agree_across_files():
+    decision, record, case = S.schemas()["decision.schema.json"], S.schemas()["record.schema.json"], S.schemas()["case.schema.json"]
+    assert decision["$defs"]["link_type"]["enum"] == S.LINK_TYPES == record["$defs"]["link_type"]["enum"]
+    assert record["$defs"]["absent_rows"]["properties"]["semantics"]["enum"] == S.ABSENT_SEMANTICS
+    assert decision["$defs"]["absent_row_ref"]["properties"]["semantics"]["enum"] == S.ABSENT_SEMANTICS
+    assert S.capabilities()["capability_keys"]["series.absent_row"]["values"] == S.ABSENT_SEMANTICS
+    assert set(case["$defs"]["densify_input"]["properties"]["capability"]["properties"]["value"]["enum"]) == set(S.ABSENT_SEMANTICS)
+    write = decision["$defs"]["write"]["properties"]
+    assert write["link_type"] == {"$ref": "#/$defs/link_type"} and "set_id" in write
+
+
+def test_the_retired_codes_are_gone_and_the_link_codes_exist():
+    codes = S.codes()
+    for gone in ("STRUCTURAL_PROVIDER_FINER", "CARD_MANY_TO_ONE_ALLOWED", "PROPOSE_BUNDLE", "CARD_BUNDLE_EXTENDS_PROTECTED", "STRUCTURAL_LINK_SET_INCONSISTENT"):
+        assert gone not in codes, gone
+    for needed in ("PROPOSE_PART_OF", "PROPOSE_COMPOSED_OF", "GRAN_PROVIDER_FINER", "GRAN_PROVIDER_COARSER", "SER_PARTS_SUM_STRONG", "CARD_CLAIM_CONFLICTS_AUTO",
+                   "CARD_LINK_TYPE_CONFLICTS_PROTECTED", "CARD_EXTENDS_PROTECTED", "STRUCTURAL_STORED_CLAIMS_INCONSISTENT", "SER_MISSING_ROW_SEMANTICS_UNCONFIRMED",
+                   "INPUT_CAPABILITY_MISMATCH", "INPUT_ABSENT_ROW_ZERO_UNCONFIRMED"):
+        assert needed in codes, needed
+    assert "PROPOSE" in codes["PROPOSE_PART_OF"]["primary_for"] and "PROPOSE" in codes["PROPOSE_COMPOSED_OF"]["primary_for"]
+
+
+# ------------------------------------------------------------------------------------------------ capabilities (SPEC §3.2)
+
+
+def test_capabilities_file_validates_against_its_schema():
+    from identity_resolution.contract import schema_subset
+    registry = S.schemas()
+    errors = schema_subset.validate(S.capabilities(), registry["capabilities.schema.json"], registry=registry, root=registry["capabilities.schema.json"])
+    assert not errors, errors
+
+
+def test_no_source_has_confirmed_that_a_missing_row_is_zero():
+    """Owner review (rev 2): Ice's 'absent row = zero' must not be assumed until Ice confirms it. Confirming it is a contract change
+    (edit provider_capabilities.yaml AND the cases that pin it, SPEC §3.2) -- this test is the tripwire that makes it deliberate."""
+    sources = S.capabilities()["sources"]
+    assert {"ice", "tdr_registrations"} <= set(sources)
+    for name, spec in sources.items():
+        cap = spec["series.absent_row"]
+        assert cap["value"] == "UNKNOWN" and cap["status"] == "unconfirmed", name
+    ice = sources["ice"]["series.absent_row"]
+    assert ice["hypothesis"] == "ABSENT_IS_ZERO" and ice["question_id"] == "Q-ICE-ABSENT-ROW"
+    assert any("262,985" in line for line in ice["evidence"]), "the Ice evidence must keep the observed counts"
+
+
+def test_a_confirmed_capability_names_who_when_and_where():
+    from identity_resolution.contract import schema_subset
+    registry = S.schemas()
+    schema = registry["capabilities.schema.json"]["$defs"]["absent_row"]
+    base = {"evidence": ["x"], "status": "confirmed", "value": "ABSENT_IS_ZERO"}
+    assert schema_subset.validate(base, schema, registry=registry, root=registry["capabilities.schema.json"]), "confirmed without who/when/reference must be rejected"
+    ok = {**base, "confirmed_by": "Ice", "confirmed_on": "2026-10-20", "reference": "mail"}
+    assert not schema_subset.validate(ok, schema, registry=registry, root=registry["capabilities.schema.json"])
+    unconfirmed_zero = {"evidence": ["x"], "status": "unconfirmed", "value": "ABSENT_IS_ZERO", "confirm_with": "Ice", "question_id": "q", "question": "?", "hypothesis": None}
+    assert schema_subset.validate(unconfirmed_zero, schema, registry=registry, root=registry["capabilities.schema.json"]), "a hypothesis must be UNKNOWN, never an unconfirmed ABSENT_IS_ZERO"
+
+
+# ------------------------------------------------------------------------------------------------ adoption gate (SPEC §14.6)
+
+
+def _numeric(value) -> bool:
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    return isinstance(value, list) and bool(value) and all(_numeric(item) for item in value)
+
+
+def _covers(key: str, path: str) -> bool:
+    return path == key or path.startswith(key + ".")
+
+
+def test_adoption_is_not_binding_and_cannot_become_so_while_anything_is_pending():
+    adoption = S.adoption()
+    assert adoption["binding"] is False and adoption["status"] == "provisional_not_frozen"
+    statuses = [entry["status"] for entry in adoption["entries"]]
+    assert set(statuses) <= {"pending", "calibrated", "owner_accepted"}
+    if adoption["binding"]:
+        assert set(statuses) <= {"calibrated", "owner_accepted"}, "binding: true requires every entry to be calibrated or owner_accepted"
+    assert "pending" in statuses, "revision 2 is the draft that does NOT adopt the uncalibrated proposal thresholds"
+
+
+def test_every_proposal_or_assumption_value_has_exactly_one_adoption_entry():
+    policy, adoption = S.policy(), S.adoption()
+    assert set(e["class"] for e in adoption["entries"]) == {"calibration", "representation", "design_choice"}
+    ids = [e["id"] for e in adoption["entries"]]
+    assert len(ids) == len(set(ids)) and all(re.fullmatch(r"[a-z][a-z0-9_]*", i) for i in ids)
+    leaves = dict(render.policy_leaves(policy))
+    for path, value in leaves.items():
+        tag = render.provenance_of(path, policy["provenance"])
+        owners = [e["id"] for e in adoption["entries"] if any(_covers(key, path) for key in e["keys"])]
+        if tag in ("proposal", "assumption"):
+            assert len(owners) == 1, f"{path} ({tag}) must belong to exactly one adoption entry, found {owners}"
+        else:
+            assert not owners, f"{path} is {tag}: it needs no adoption entry, but {owners} claim it"
+    for entry in adoption["entries"]:
+        for key in entry["keys"]:
+            if key.startswith("alias_provenance."):
+                assert policy["alias_provenance"][key.split(".", 1)[1]] == "assumption", key
+            else:
+                assert any(_covers(key, path) for path in leaves), f"adoption entry {entry['id']} names unknown policy key {key}"
+
+
+def test_numeric_proposals_are_calibration_or_representation_and_never_a_silent_design_choice():
+    policy, adoption = S.policy(), S.adoption()
+    cls = {e["id"]: e["class"] for e in adoption["entries"]}
+    for path, value in render.policy_leaves(policy):
+        if render.provenance_of(path, policy["provenance"]) not in ("proposal", "assumption") or not _numeric(value):
+            continue
+        owner = next(e for e in adoption["entries"] if any(_covers(key, path) for key in e["keys"]))
+        assert cls[owner["id"]] in ("calibration", "representation"), f"numeric {path} must be calibrated or defined, not a design choice"
+    for entry in adoption["entries"]:
+        if entry["class"] == "calibration":
+            assert entry.get("settles_with", "").strip(), entry["id"]
+        else:
+            assert entry.get("decision", "").strip(), entry["id"]
+
+
+def test_alias_assumptions_are_all_in_the_adoption_gate():
+    policy = S.policy()
+    assumed = {f"alias_provenance.{name}" for name, tag in policy["alias_provenance"].items() if tag == "assumption"}
+    listed = {key for entry in S.adoption()["entries"] for key in entry["keys"] if key.startswith("alias_provenance.")}
+    assert assumed == listed
+
+
 # ------------------------------------------------------------------------------------------------ taxonomy
+
+
+def test_taxonomy_claims_completeness_for_known_classes_only():
+    """Owner review (rev 2): never claim an exhaustive list; the taxonomy is complete for the known classes and corpus-extensible."""
+    assert S.taxonomy()["completeness"] == "complete_for_known_classes_and_corpus_extensible"
+    for name in ("taxonomy.yaml", "SPEC.md"):
+        text = (S.CONTRACT_DIR / name).read_text(encoding="utf-8").lower()
+        assert "exhaustive" not in text, f"{name} must not claim an exhaustive list"
+    readme = (S.IR_ROOT / "README.md").read_text(encoding="utf-8").lower()
+    assert "exhaustive" not in readme.replace("no exhaustive", ""), "README must not claim an exhaustive list"
+    assert "complete for the known taxonomy classes" in S.spec_text()
 
 
 def test_taxonomy_entries_are_well_formed():

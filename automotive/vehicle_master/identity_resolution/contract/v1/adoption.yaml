@@ -1,0 +1,166 @@
+# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN)
+#
+# The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
+# production data (the first R6 run's review rows are not in the repository) and have not been signed off.
+# They are PROVISIONAL. This file is the gate that keeps them from being adopted by accident:
+#
+#   * `binding: false` means a run under this policy is a DRY RUN (SPEC invariant I16): the engine may emit
+#     records, but their `writes` are advisory, no AUTO is persisted, and nothing may be APPROVED on their
+#     strength. policy_ref.binding carries the flag in every record.
+#   * Every `proposal` / `assumption` leaf of policy.yaml belongs to EXACTLY ONE entry below (a test enforces it),
+#     with its class, status and what would settle it.
+#   * `binding` may become true only when every entry is `calibrated` or `owner_accepted` (a test enforces it).
+#     Flipping it is a contract change: a policy MAJOR/MINOR bump, a CHANGELOG line and an owner decision.
+#
+# Classes
+#   calibration   a numeric tunable: settle it against labelled data (below), never by taste.
+#   representation  a definition (rounding places, calendar sanity bounds, token boundary characters): no data can
+#                 calibrate it; the owner signs it off.
+#   design_choice a switch, list, order or route: an owner decision, recorded.
+#
+# Labelled data a calibration entry needs ("the label set"): the owner's decisions on the first R6 run's candidate rows
+# (accepted / rejected / changed, with the final TDR model), plus the owner's APPROVED crosswalk rows, joined to the M7.0
+# package and to TDR registrations. Selection protocol: choose on a training part, confirm on a held-out part (split by
+# brand, not by row), and report precision and recall separately for AUTO and for PROPOSE. A value is `calibrated` only
+# when that report exists and the owner has read it; "no AUTO row the owner labels wrong" is the bar for any AUTO gate.
+#
+# Status values: pending | calibrated | owner_accepted.
+
+version: v1
+binding: false
+status: provisional_not_frozen
+
+entries:
+  # ----------------------------------------------------------------------------------- representation
+  - id: representation_constants
+    class: representation
+    keys: [quantization, time.valid_year_range, lexical.token_boundary_characters]
+    status: pending
+    decision: "Confirm: 6-place half-even quantization, 1900-2200 calendar sanity range, and the token boundary character set."
+  # ----------------------------------------------------------------------------------- calibration (numeric)
+  - id: series_minimums
+    class: calibration
+    keys: [series.minimums]
+    status: pending
+    settles_with: "Label set: distribution of common months / joint non-zero months / units for owner-accepted vs owner-rejected rows; choose the lowest AUTO minimum with no wrong AUTO on the held-out brands."
+  - id: series_monthly_fit
+    class: calibration
+    keys: [series.monthly_fit]
+    status: pending
+    settles_with: "Label set: monthly-fit share of accepted vs rejected strong-looking pairs (the outlier-driven correlation cases)."
+  - id: series_absent_row_gap
+    class: calibration
+    keys: [series.absent_row]
+    status: pending
+    settles_with: "Answers to Q-ICE-ABSENT-ROW and Q-TDR-ABSENT-ROW (provider_capabilities.yaml) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then."
+  - id: lexical_fuzzy_min_length
+    class: calibration
+    keys: [lexical.fuzzy_token.min_token_length]
+    status: pending
+    settles_with: "Label set: one-edit name pairs the owner accepted vs rejected, by token length."
+  - id: attributes_lifecycle
+    class: calibration
+    keys: [attributes.lifecycle]
+    status: pending
+    settles_with: "TDR generation dates vs owner-labelled generation mismatches (grace months, within/disjoint shares)."
+  - id: subject_discovery_thresholds
+    class: calibration
+    keys: [subject_quality.discovery]
+    status: pending
+    settles_with: "Size of the discovery queue the owner can actually review; units of subjects the owner later added to the catalog."
+  - id: candidates_bundle_bounds
+    class: calibration
+    keys: [candidates.bundle.max_members, candidates.bundle.max_pool_for_enumeration]
+    status: pending
+    settles_with: "Largest COMPOSED_OF set the owner accepted in the label set; enumeration cost is bounded by these two numbers."
+  - id: candidates_margin
+    class: calibration
+    keys: [candidates.margin]
+    status: pending
+    settles_with: "Label set: pairs of rival candidates the owner judged tied vs separable, by correlation and |ln ratio| gap."
+  - id: granularity_part_of_ratio
+    class: calibration
+    keys: [granularity.part_of.min_ratio_above]
+    status: pending
+    settles_with: "Label set: subjects the owner accepted as PART_OF a larger TDR model, by target/subject ratio."
+  - id: data_sufficiency_wrong_series
+    class: calibration
+    keys: [data_sufficiency.series_decisively_wrong]
+    status: pending
+    settles_with: "Label set: pairs the owner called plainly different, by correlation and ratio; defines when absence of a candidate is affirmative."
+  - id: fingerprint_bands
+    class: calibration
+    keys: [fingerprint.bands]
+    status: pending
+    settles_with: "How often a REJECTED pair's band label changes between consecutive packages for pairs the owner still considers wrong; choose edges that reopen only on a real change."
+  # ----------------------------------------------------------------------------------- design choices (owner decisions)
+  - id: series_window_switches
+    class: design_choice
+    keys: [series.window.trim_inactive_edges, series.window.exclude_partial_periods]
+    status: pending
+    decision: "Confirm trimming of both-zero edge months and exclusion of partial periods."
+  - id: lexical_token_equivalences
+    class: design_choice
+    keys: [lexical.token_equivalences]
+    status: pending
+    decision: "Confirm each equivalence (ev=electric, hatch=hatchback, hev=hybrid); each is an assumption about TDR naming."
+  - id: lexical_fuzzy_switch
+    class: design_choice
+    keys: [lexical.fuzzy_token.enabled]
+    status: pending
+    decision: "Decide whether one-edit typo tolerance exists at all (PROPOSED at most)."
+  - id: lexical_name_relation_roles
+    class: design_choice
+    keys: [lexical.name.auto_relations, lexical.name.candidate_relations, lexical.name.veto_relations, lexical.series_only]
+    status: pending
+    decision: "Confirm which name relations may be AUTO, may be a name-only candidate, or veto."
+  - id: attributes_target_status
+    class: design_choice
+    keys: [attributes.target_status]
+    status: pending
+    decision: "Confirm that UNVERIFIED targets are capped at PROPOSED."
+  - id: subject_never_auto_statuses
+    class: design_choice
+    keys: [subject_quality.never_auto_identity_statuses]
+    status: pending
+    decision: "Confirm that provisional and raw-name subjects are never AUTO."
+  - id: candidates_pool_rules
+    class: design_choice
+    keys: [candidates.brand_relations_allowed, candidates.brand_relations_auto_eligible, candidates.target_statuses_in_pool, candidates.exclude_deleted_targets]
+    status: pending
+    decision: "Confirm the candidate pool and which brand relations are AUTO-eligible (RELATED is capped)."
+  - id: candidates_bundle_rules
+    class: design_choice
+    keys: [candidates.bundle.enabled, candidates.bundle.member_name_relations]
+    status: pending
+    decision: "Confirm COMPOSED_OF link sets exist, and which name relations may be members. If the owner prefers review-only bundles, this entry and SPEC §10.5 change together."
+  - id: candidates_ranking
+    class: design_choice
+    keys: [candidates.ranking]
+    status: pending
+    decision: "Confirm the lexicographic ranking order (never a weighted sum)."
+  - id: granularity_part_of_rules
+    class: design_choice
+    keys: [granularity.part_of.subject_name_relations, granularity.part_of.arbitration_sum_check]
+    status: pending
+    decision: "Confirm that a narrower provider name plus a clearly larger target means PART_OF, and that several subjects whose sum fits one target are all parts."
+  - id: lineage_rules
+    class: design_choice
+    keys: [lineage]
+    status: pending
+    decision: "Confirm quarantine scope, the STRUCTURE card instead of copied rows, and how identity changes treat APPROVED / LOCKED rows."
+  - id: state_write_matrix
+    class: design_choice
+    keys: [state.write_matrix]
+    status: pending
+    decision: "Confirm the action for each (existing state x engine decision) cell."
+  - id: review_routing
+    class: design_choice
+    keys: [review]
+    status: pending
+    decision: "Confirm review queues, discovery flags and which codes are high priority."
+  - id: alias_assumptions
+    class: design_choice
+    keys: [alias_provenance.land_range_rover, alias_provenance.gwm_sub_brands]
+    status: pending
+    decision: "Confirm the two RELATED brand classes marked assumption in alias_provenance (Land Rover/Range Rover; GWM sub-brands)."

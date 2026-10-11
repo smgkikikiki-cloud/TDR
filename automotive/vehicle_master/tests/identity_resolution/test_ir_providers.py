@@ -94,3 +94,37 @@ def test_policy_and_registry_do_not_name_ice_columns_or_files():
 def test_the_corpus_uses_ice_only_as_data():
     providers = {c["input"]["provider"] for c in S.cases() if c["kind"] in ("resolve", "lineage") and "provider" in c["input"]}
     assert providers == {"ice"}
+
+
+# ------------------------------------------------------------------------------------------------ capability data at the adapter boundary (SPEC §3.2)
+
+
+def _snapshot_with(subject_series):
+    class WithSeries(AcmeSubjects):
+        def subjects(self):
+            return [{**super().subjects()[0], "series": subject_series}]
+
+    return WithSeries()
+
+
+def test_an_adapter_that_zero_fills_an_unconfirmed_gap_fails_at_its_own_boundary():
+    block = {"source": "ice", "semantics": "UNKNOWN", "confirmed": False, "months": ["2026-03"]}
+    honest = {"start": "2026-01", "counts": [10, 12, None, 9], "coverage_declared": True, "absent_rows": block}
+    assert base.assemble_snapshot(_snapshot_with(honest), Targets(), policy_version="1.0.0")["subjects"][0]["series"]["absent_rows"] == block
+    zero_filled = {**honest, "counts": [10, 12, 0, 9]}
+    with pytest.raises(base.SnapshotError, match="INPUT_ABSENT_ROW_ZERO_UNCONFIRMED"):
+        base.assemble_snapshot(_snapshot_with(zero_filled), Targets(), policy_version="1.0.0")
+
+
+def test_an_adapter_cannot_claim_semantics_the_contract_does_not_grant():
+    claim = {"start": "2026-01", "counts": [10, 12, 0, 9], "coverage_declared": True,
+             "absent_rows": {"source": "ice", "semantics": "ABSENT_IS_ZERO", "confirmed": True, "months": ["2026-03"]}}
+    with pytest.raises(base.SnapshotError, match="INPUT_CAPABILITY_MISMATCH"):
+        base.assemble_snapshot(_snapshot_with(claim), Targets(), policy_version="1.0.0")
+    unknown_source = {**claim, "absent_rows": {"source": "acme", "semantics": "UNKNOWN", "confirmed": False, "months": ["2026-03"]}, "counts": [10, 12, None, 9]}
+    with pytest.raises(base.SnapshotError, match="INPUT_CAPABILITY_MISMATCH"):
+        base.assemble_snapshot(_snapshot_with(unknown_source), Targets(), policy_version="1.0.0")
+
+
+def test_a_source_the_capability_file_does_not_list_has_no_confirmed_capabilities():
+    assert "acme" not in S.capabilities()["sources"], "the toy provider must stay unlisted: unlisted means nothing is confirmed"

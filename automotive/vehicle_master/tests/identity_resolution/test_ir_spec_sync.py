@@ -52,19 +52,30 @@ def test_spec_prose_mentions_only_real_policy_keys():
 
 def test_spec_invariants_are_numbered_without_gaps():
     numbers = [int(n) for n in re.findall(r"\*\*I(\d+) —", S.spec_text())]
-    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 15
+    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 17
+    assert "**I4a — No assumed zero.**" in S.spec_text(), "invariant I4a (owner review, rev 2) must stay"
 
 
 def test_spec_names_the_companion_files_and_they_exist():
     text = S.spec_text()
-    for name in ("policy.yaml", "reason_codes.yaml", "taxonomy.yaml", "record.schema.json", "decision.schema.json", "case.schema.json", "cases.jsonl"):
+    for name in ("policy.yaml", "provider_capabilities.yaml", "adoption.yaml", "reason_codes.yaml", "taxonomy.yaml", "record.schema.json", "decision.schema.json",
+                 "capabilities.schema.json", "case.schema.json", "cases.jsonl", "CHANGELOG.md"):
         assert name in text, name
         assert (S.CONTRACT_DIR / name).is_file()
 
 
 def test_spec_declares_itself_a_draft_not_in_force():
-    head = S.spec_text()[:600]
-    assert "DRAFT" in head and "Not in force" in head
+    head = S.spec_text()[:900]
+    assert "DRAFT" in head and "NOT FROZEN" in head and "Not in force" in head
+    assert "not adopted" in head, "the head must say the provisional thresholds are not adopted"
+
+
+def test_spec_states_the_three_owner_review_resolutions():
+    """Rev 2: missing-row semantics are capability data; identity/aggregation/granularity are link types; bundles are link sets."""
+    text = S.spec_text()
+    for needle in ("series.absent_row", "Q-ICE-ABSENT-ROW", "ABSENT_IS_ZERO", "`EQUIVALENT`", "`COMPOSED_OF`", "`PART_OF`", "C1", "C2", "link set", "set_id",
+                   "I17", "I16", "binding", "STRUCTURAL_STORED_CLAIMS_INCONSISTENT", "10.5", "10.6"):
+        assert needle in text, needle
 
 
 def test_adapter_obligations_cover_the_input_contract():

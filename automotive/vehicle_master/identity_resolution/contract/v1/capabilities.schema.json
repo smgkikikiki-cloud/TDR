@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-resolution:v1:capabilities",
+  "title": "Identity Resolution v1 — provider capability declarations",
+  "description": "Validates provider_capabilities.yaml. A capability states what a source's data MEANS, as confirmed by someone who can know. An unconfirmed capability never licenses an inference (SPEC §3.2).",
+  "$comment": "Validated by identity_resolution/contract/schema_subset.py. The cross-field rule (confirmed only for ABSENT_IS_ZERO/ABSENT_IS_UNOBSERVED, with who/when/reference) is expressed with if/then below.",
+  "type": "object",
+  "required": ["version", "capability_keys", "sources"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": "v1"},
+    "capability_keys": {
+      "type": "object",
+      "required": ["series.absent_row"],
+      "additionalProperties": false,
+      "properties": {
+        "series.absent_row": {
+          "type": "object",
+          "required": ["values", "zero_fill_allowed_only_when"],
+          "additionalProperties": false,
+          "properties": {
+            "values": {"type": "array", "minItems": 3, "items": {"enum": ["ABSENT_IS_ZERO", "ABSENT_IS_UNOBSERVED", "UNKNOWN"]}},
+            "zero_fill_allowed_only_when": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/source"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["role", "description", "series.absent_row"],
+      "additionalProperties": false,
+      "properties": {
+        "role": {"enum": ["provider", "target_side"]},
+        "description": {"type": "string", "minLength": 1},
+        "series.absent_row": {"$ref": "#/$defs/absent_row"}
+      }
+    },
+    "absent_row": {
+      "type": "object",
+      "required": ["value", "status", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {"enum": ["ABSENT_IS_ZERO", "ABSENT_IS_UNOBSERVED", "UNKNOWN"]},
+        "status": {"enum": ["confirmed", "unconfirmed"]},
+        "hypothesis": {"enum": ["ABSENT_IS_ZERO", "ABSENT_IS_UNOBSERVED", null]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "confirm_with": {"type": "string", "minLength": 1},
+        "question_id": {"type": "string", "minLength": 1},
+        "question": {"type": "string", "minLength": 1},
+        "confirmed_by": {"type": "string", "minLength": 1},
+        "confirmed_on": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "reference": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"value": {"const": "UNKNOWN"}}, "required": ["value"]},
+          "then": {
+            "required": ["hypothesis", "confirm_with", "question_id", "question"],
+            "properties": {"status": {"const": "unconfirmed"}}
+          },
+          "else": {
+            "required": ["confirmed_by", "confirmed_on", "reference"],
+            "properties": {"status": {"const": "confirmed"}}
+          }
+        }
+      ]
+    }
+  }
+}
