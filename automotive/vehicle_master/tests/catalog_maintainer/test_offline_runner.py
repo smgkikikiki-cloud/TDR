@@ -374,6 +374,113 @@ class OfflineRunnerTests(unittest.TestCase):
         self.assertEqual(self.store.list_jobs()[0]["status"],"COMPLETED")
         self.assertEqual(self.store.usage("2026-10-11")["elapsed_seconds"],901)
 
+    def test_scoped_completion_rejects_wrong_or_missing_evidence_and_recovers_after_replan(self):
+        snapshot=fixture()
+        self.policy["runner"]["maximum_retries_per_job"]=6
+        validate_policy(self.policy)
+        task=next(t for t in build_offline_plan(snapshot,self.policy,now=DAY)["tasks"]
+                  if t["target_key"]=="SPEC_ENRICH:byd.atto_3:safety")
+        max_attempts=7
+        self.store.enqueue(task,at=DAY,max_attempts=max_attempts)
+        key=task["idempotency_key"]
+        self.store.bind_job_snapshot(key,snapshot,at=DAY)
+
+        def valid_scope_document():
+            doc=json.loads((ROOT/"fixtures/recorded_docs/th-spec-complete.json").read_text())
+            doc["trim_ids"]=["atto.standard","atto.extended"]
+            doc["content"]="\n".join(line for line in doc["content"].splitlines() if "safety.aeb" not in line)
+            doc["content"] += "\nclaim|safety.aeb|atto.standard|included\nclaim|safety.aeb|atto.extended|included"
+            doc["content_sha256"]=hashlib.sha256(doc["content"].encode()).hexdigest()
+            return doc
+
+        good=valid_scope_document()
+        bad=[]
+        for change in ("wrong_model","wrong_generation","wrong_trim","wrong_field"):
+            doc=copy.deepcopy(good)
+            if change=="wrong_model":
+                doc["model_id"]="honda.city_hatchback"
+            elif change=="wrong_generation":
+                doc["generation_id"]="city_hb.g3"
+            elif change=="wrong_trim":
+                doc["trim_ids"]=["atto.standard"]
+            elif change=="wrong_field":
+                doc["content"]="\n".join(line for line in doc["content"].splitlines() if "safety.aeb" not in line)
+                doc["content_sha256"]=hashlib.sha256(doc["content"].encode()).hexdigest()
+            bad.append({"state":"COMPLETED","source_document":doc,"source_hash":doc["content_sha256"]})
+        bad.append({"state":"COMPLETED"})
+        responses={"SPEC_ENRICH:byd.atto_3:safety":bad+[{
+            "state":"COMPLETED","source_document":good,"source_hash":good["content_sha256"]}]}
+        provider=OfflineFakeProvider(responses=responses,clock=self.clock)
+        runner=OfflineRunner(self.store,self.policy,self.clock,provider)
+
+        result=self.explicit_step(runner)
+        self.assertEqual((result["status"],result["reason"]),("RETRY_WAIT","EVIDENCE_MODEL_MISMATCH"))
+        self.assertEqual(self.store.cached_evidence(),[])
+        self.store.close()
+        self.store=SQLiteJobStore(self.db_path)
+        runner=OfflineRunner(self.store,self.policy,self.clock,provider)
+        # Replanning reproduces the same scoped key; it leaves rejected work retryable.
+        refreshed=next(t for t in build_offline_plan(snapshot,self.policy,now=self.clock.now())["tasks"]
+                       if t["target_key"]==task["target_key"])
+        self.assertEqual(refreshed["idempotency_key"],key)
+        self.assertFalse(self.store.enqueue(refreshed,at=self.clock.now(),max_attempts=max_attempts))
+        self.store.bind_job_snapshot(key,snapshot,at=self.clock.now())
+        row=next(j for j in self.store.list_jobs() if j["idempotency_key"]==key)
+        self.assertEqual(row["status"],"RETRY_WAIT")
+
+        for reason in ("EVIDENCE_GENERATION_MISMATCH","EVIDENCE_TRIM_OR_FIELD_SCOPE_INCOMPLETE",
+                       "EVIDENCE_TRIM_OR_FIELD_SCOPE_INCOMPLETE","COMPLETED_WITHOUT_SOURCE_DOCUMENT"):
+            self.clock.advance(self.policy["runner"]["retry_cooldown_seconds"])
+            result=self.explicit_step(runner)
+            self.assertEqual((result["status"],result["reason"]),("RETRY_WAIT",reason))
+            self.assertEqual(self.store.cached_evidence(),[])
+        self.clock.advance(self.policy["runner"]["retry_cooldown_seconds"])
+        result=self.explicit_step(runner)
+        self.assertEqual(result["status"],"COMPLETED")
+        self.assertEqual(self.store.list_jobs()[0]["attempt_count"],6)
+        self.assertEqual(len(self.store.cached_evidence()),1)
+
+    def test_policy_rejects_lease_shorter_than_safe_renewal_boundary(self):
+        self.policy["runner"]["lease_seconds"]=1
+        with self.assertRaisesRegex(ValueError,"lease_seconds must be an integer from 2"):
+            validate_policy(self.policy)
+        self.policy["runner"]["lease_seconds"]=900
+        validate_policy(self.policy)
+
+    def test_minimum_supported_two_second_lease_renews_before_expiry(self):
+        self.policy["runner"]["lease_seconds"]=2
+        validate_policy(self.policy)
+        self.enqueue_one("min-lease")
+        runner,_=self.runner({"state":"COMPLETED","elapsed_seconds":3})
+        self.assertEqual(self.explicit_step(runner)["status"],"COMPLETED")
+        self.assertEqual(self.store.list_jobs()[0]["attempt_count"],1)
+        self.assertEqual(self.clock.now(),DAY+3)
+        self.assertTrue(any(e["event_type"]=="LEASE_RENEWED" for e in self.store.report()["events"]))
+
+    def test_replan_reopens_legacy_wrong_scope_completion_after_restart(self):
+        snapshot=fixture()
+        task=next(t for t in build_offline_plan(snapshot,self.policy,now=DAY)["tasks"]
+                  if t["target_key"]=="SPEC_ENRICH:byd.atto_3:safety")
+        self.store.enqueue(task,at=DAY,max_attempts=3)
+        key=task["idempotency_key"]
+        self.store.bind_job_snapshot(key,snapshot,at=DAY)
+        wrong=json.loads((ROOT/"fixtures/recorded_docs/th-spec-complete.json").read_text())
+        wrong["model_id"]="honda.city_hatchback"
+        digest=hashlib.sha256(wrong["content"].encode()).hexdigest()
+        with self.store._tx():
+            self.store.db.execute("UPDATE jobs SET status='COMPLETED',attempt_count=1,result_json=? WHERE idempotency_key=?",
+                (json.dumps({"source_document":wrong,"source_hash":digest},sort_keys=True),key))
+            self.store.db.execute("INSERT INTO evidence_cache(target_key,content_sha256,result_json,recorded_at) VALUES(?,?,?,?)",
+                (task["target_key"],digest,json.dumps({"source_document":wrong},sort_keys=True),DAY))
+        self.store.close()
+        self.store=SQLiteJobStore(self.db_path)
+        runner=OfflineRunner(self.store,self.policy,self.clock,OfflineFakeProvider(clock=self.clock))
+        replanned=runner.enqueue_plan(snapshot)
+        self.assertTrue(any(t["target_key"]==task["target_key"] for t in replanned["tasks"]))
+        recovered=next(j for j in self.store.list_jobs() if j["idempotency_key"]==key)
+        self.assertEqual((recovered["status"],recovered["attempt_count"]),("QUEUED",1))
+        self.assertEqual(self.store.cached_evidence(),[])
+
     def test_identity_ambiguity_is_a_terminal_planning_disposition(self):
         snap=fixture()
         snap["models"].append({"id":"orphan.current","status":"CURRENT"})

@@ -191,6 +191,11 @@ class SQLiteJobStore:
           recorded_at INTEGER NOT NULL,
           PRIMARY KEY(target_key, content_sha256)
         );
+        CREATE TABLE IF NOT EXISTS job_contexts (
+          idempotency_key TEXT PRIMARY KEY REFERENCES jobs(idempotency_key) ON DELETE CASCADE,
+          snapshot_json TEXT NOT NULL,
+          updated_at INTEGER NOT NULL
+        );
         CREATE TABLE IF NOT EXISTS planning_dispositions (
           disposition_key TEXT PRIMARY KEY,
           status TEXT NOT NULL,
@@ -239,6 +244,35 @@ class SQLiteJobStore:
               (disposition["idempotency_key"],disposition["status"],disposition["reason"],_json(disposition),at))
             self.event(at, disposition["idempotency_key"], "PLANNING_DISPOSITION", disposition)
 
+    def bind_job_snapshot(self, key: str, snapshot: dict, *, at: int) -> None:
+        validate_fixture(snapshot)
+        with self._tx():
+            self.db.execute("""INSERT INTO job_contexts(idempotency_key,snapshot_json,updated_at)
+              VALUES(?,?,?) ON CONFLICT(idempotency_key) DO UPDATE SET
+              snapshot_json=excluded.snapshot_json,updated_at=excluded.updated_at""",
+              (key,_json(snapshot),at))
+            row=self.db.execute("SELECT * FROM jobs WHERE idempotency_key=?",(key,)).fetchone()
+            if row and row["status"]=="COMPLETED":
+                job=self._job_dict(row)
+                payload=job["payload"]
+                if isinstance(payload.get("model_id"),str) and isinstance(payload.get("field_group"),str):
+                    result=json.loads(row["result_json"])
+                    reason=_document_scope_error(snapshot,job,result.get("source_document"),
+                                                 result.get("source_hash"))
+                    if reason:
+                        if result.get("source_hash"):
+                            self.db.execute("DELETE FROM evidence_cache WHERE target_key=? AND content_sha256=?",
+                                            (row["target_key"],result["source_hash"]))
+                        self.db.execute("""UPDATE jobs SET status='QUEUED',updated_at=?,not_before=?,
+                          lease_owner=NULL,lease_until=NULL,result_json='{}',
+                          failure_code='LEGACY_COMPLETION_SCOPE_REJECTED' WHERE idempotency_key=?""",
+                          (at,at,key))
+                        self.event(at,key,"LEGACY_COMPLETION_REQUEUED",{"reason":reason})
+
+    def job_snapshot(self, key: str) -> dict | None:
+        row=self.db.execute("SELECT snapshot_json FROM job_contexts WHERE idempotency_key=?",(key,)).fetchone()
+        return json.loads(row["snapshot_json"]) if row else None
+
     def cached_hashes(self) -> dict[str, set[str]]:
         result: dict[str, set[str]] = {}
         for row in self.db.execute("SELECT target_key,content_sha256 FROM evidence_cache ORDER BY target_key,content_sha256"):
@@ -286,6 +320,15 @@ class SQLiteJobStore:
             row = self.db.execute("SELECT * FROM jobs WHERE idempotency_key=?", (key,)).fetchone()
             if not row or row["status"] != "LEASED" or row["lease_owner"] != owner or row["lease_until"] <= now:
                 raise ValueError("completion rejected: lease is missing, stale, or owned by another worker")
+            payload=json.loads(row["payload_json"])
+            if isinstance(payload.get("model_id"),str) and isinstance(payload.get("field_group"),str):
+                context=self.db.execute("SELECT snapshot_json FROM job_contexts WHERE idempotency_key=?",(key,)).fetchone()
+                if not context:
+                    raise ValueError("completion rejected: normalized job snapshot is missing")
+                reason=_document_scope_error(json.loads(context["snapshot_json"]),self._job_dict(row),
+                                             source_document,content_sha256)
+                if reason:
+                    raise ValueError("completion rejected: "+reason)
             if source_document is not None:
                 self.db.execute("INSERT OR IGNORE INTO evidence_cache(target_key,content_sha256,result_json,recorded_at) VALUES(?,?,?,?)",
                     (row["target_key"], actual, _json({"source_document": source_document}), now))
@@ -456,6 +499,10 @@ class SQLiteJobStore:
             row = self.db.execute("SELECT * FROM jobs WHERE idempotency_key=?", (key,)).fetchone()
             if not row or row["status"] != "LEASED" or row["lease_owner"] != owner or row["lease_until"] <= now:
                 raise ValueError("completion rejected: lease is missing, stale, or owned by another worker")
+            if status == "COMPLETED":
+                payload=json.loads(row["payload_json"])
+                if isinstance(payload.get("model_id"),str) and isinstance(payload.get("field_group"),str):
+                    raise ValueError("scoped research completion requires finish_with_evidence")
             self.db.execute("""UPDATE jobs SET status=?,updated_at=?,not_before=?,lease_owner=NULL,lease_until=NULL,
               result_json=?,failure_code=? WHERE idempotency_key=?""",
               (status, now, retry_at if retry_at is not None else now, _json(result), failure_code, key))
@@ -610,6 +657,51 @@ def _cache_covers(snapshot: dict, cache_record: dict, model_id: str, generation_
     return bool(required) and required.issubset(covered)
 
 
+def _document_scope_error(snapshot: dict, job: dict, document: dict | None,
+                          source_hash: str | None) -> str | None:
+    """Validate successful evidence against the leased normalized task scope."""
+    payload=job.get("payload",{})
+    # Hand-built journal jobs without a normalized research scope remain useful
+    # for runner mechanics tests; planner-produced retrieval tasks are strict.
+    if not isinstance(payload.get("model_id"),str) or not isinstance(payload.get("field_group"),str):
+        if source_hash is not None and document is None:
+            return "SOURCE_HASH_WITHOUT_SOURCE_DOCUMENT"
+        return None
+    if not isinstance(document,dict):
+        return "COMPLETED_WITHOUT_SOURCE_DOCUMENT"
+    if document.get("model_id") != payload["model_id"]:
+        return "EVIDENCE_MODEL_MISMATCH"
+    generations=payload.get("generation_ids")
+    if not isinstance(generations,list) or document.get("generation_id") not in generations:
+        return "EVIDENCE_GENERATION_MISMATCH"
+    try:
+        from .replay import validate_cached_source_document
+        validated=validate_cached_source_document(snapshot,document)
+    except Exception:
+        return "EVIDENCE_DOCUMENT_INVALID"
+    if source_hash is None or source_hash != document.get("content_sha256"):
+        return "EVIDENCE_HASH_MISMATCH"
+    if payload["field_group"] == "RETAIL_LINEUP":
+        if document.get("source_kind") != "RETAIL_LINEUP" or validated.get("retail_lineup_validated") is not True:
+            return "EVIDENCE_LINEUP_SCOPE_INVALID"
+        return None
+    field_plan=payload.get("field_plan",{})
+    required={(trim,field) for field,trims in field_plan.get("trim_ids_by_field",{}).items() for trim in trims}
+    if not required:
+        return "EVIDENCE_REQUEST_SCOPE_EMPTY"
+    from .registry_adapter import load_registry,resolve_key
+    registry=load_registry()
+    required={(trim,resolve_key(field,registry) or field) for trim,field in required}
+    claims={(row["trim_id"],row["field_key"]) for row in validated["accepted_claims"]
+            if row["model_id"]==payload["model_id"] and row["generation_id"]==document["generation_id"]}
+    claims |= {(trim,alias) for trim,canonical in list(claims)
+               for alias,target in registry["aliases"].items() if target==canonical}
+    claims |= {(trim,canonical.rsplit(".",1)[-1]) for trim,canonical in list(claims)}
+    if not required.issubset(claims):
+        return "EVIDENCE_TRIM_OR_FIELD_SCOPE_INCOMPLETE"
+    return None
+
+
 class OfflineFakeProvider:
     """Canned in-memory responses only; intentionally exposes no transport API."""
     offline_only = True
@@ -671,7 +763,10 @@ class OfflineRunner:
             cached_documents=cached_documents if cached_documents is not None else self.store.cached_evidence(),
             known_hashes=self.store.cached_hashes(),negative_cache=self.store.negative_cache_rows(now))
         max_attempts = 1 + self.policy["runner"]["maximum_retries_per_job"]
-        inserted = sum(self.store.enqueue(task,at=now,max_attempts=max_attempts) for task in plan_doc["tasks"])
+        inserted=0
+        for task in plan_doc["tasks"]:
+            inserted += self.store.enqueue(task,at=now,max_attempts=max_attempts)
+            self.store.bind_job_snapshot(task["idempotency_key"],snapshot,at=now)
         for disposition in plan_doc["dispositions"]:
             self.store.record_disposition(disposition,at=now)
         plan_doc["enqueued_count"] = inserted
@@ -775,15 +870,22 @@ class OfflineRunner:
         now=self.clock.now()
         source_document=response.get("source_document")
         source_hash=response.get("source_hash")
-        if state == "COMPLETED" and source_hash is not None and not isinstance(source_document,dict):
-            state="SOURCE_BROKEN"
-            response={"state":state,"reason":"SOURCE_HASH_WITHOUT_SOURCE_DOCUMENT"}
-            source_hash=None
         if source_hash is not None and (not isinstance(source_hash,str) or len(source_hash)!=64
                 or any(c not in "0123456789abcdef" for c in source_hash)):
             state="SOURCE_BROKEN"
             response={"state":state,"reason":"INVALID_SOURCE_HASH"}
             source_document=None
+        if state == "COMPLETED":
+            payload=job.get("payload",{})
+            if isinstance(payload.get("model_id"),str) and isinstance(payload.get("field_group"),str):
+                snapshot=self.store.job_snapshot(job["idempotency_key"])
+                reason=("JOB_SNAPSHOT_CONTEXT_MISSING" if snapshot is None else
+                        _document_scope_error(snapshot,job,source_document,source_hash))
+                if reason:
+                    return self._reject_evidence_completion(job,owner,reason,elapsed)
+            elif source_hash is not None and not isinstance(source_document,dict):
+                state="SOURCE_BROKEN"
+                response={"state":state,"reason":"SOURCE_HASH_WITHOUT_SOURCE_DOCUMENT"}
         attempts=job["attempt_count"]
         retryable=state=="RETRY" or (state=="SOURCE_BROKEN" and response.get("retryable") is True)
         if retryable and attempts < job["max_attempts"]:
@@ -812,6 +914,18 @@ class OfflineRunner:
             self.store.add_negative_cache(job["target_key"],final_state,
                 expires_at=now+int(days)*86400,source_hash=response.get("source_hash"),at=now)
         return {"status":final_state,"job_key":job["idempotency_key"]}
+
+    def _reject_evidence_completion(self, job: dict, owner: str, reason: str, elapsed: int) -> dict:
+        now=self.clock.now()
+        if job["attempt_count"] < job["max_attempts"]:
+            retry_at=now+self.policy["runner"]["retry_cooldown_seconds"]
+            self.store.finish(job["idempotency_key"],owner=owner,status="RETRY_WAIT",now=now,
+                result={"reason":reason,"elapsed_seconds":elapsed,"evidence_rejected":True},
+                failure_code=reason,retry_at=retry_at)
+            return {"status":"RETRY_WAIT","reason":reason,"job_key":job["idempotency_key"],"retry_at":retry_at}
+        self.store.finish(job["idempotency_key"],owner=owner,status="SOURCE_BROKEN",now=now,
+            result={"reason":reason,"elapsed_seconds":elapsed,"evidence_rejected":True},failure_code=reason)
+        return {"status":"SOURCE_BROKEN","reason":reason,"job_key":job["idempotency_key"]}
 
     def report(self) -> dict:
         return self.store.report()

@@ -62,7 +62,7 @@ def validate_policy(policy: dict) -> None:
         ("max_offline_requests_per_day", 1, 1000),
         ("max_elapsed_seconds_per_day", 1, 86400),
         ("maximum_retries_per_job", 0, 10),
-        ("lease_seconds", 1, 86400),
+        ("lease_seconds", 2, 86400),
         ("retry_cooldown_seconds", 1, 31536000),
     ):
         value = runner.get(key)
