@@ -85,7 +85,8 @@ function normalizedChanges(changes) {
  * not proof tests ran / GH branch rules are configured / any human read docs.
  */
 export function inspectPr({ event, basePlan, baseRoadmap, baseAgents,
-  baseClaude, packet, changes, headFileModes = {}, candidateHasManifest = false }) {
+  baseClaude, packet, changes, headFileModes = {}, baseContracts = {},
+  candidateHasManifest = false }) {
   const errors = [];
   const warning = [];
   // Validate base-commit roadmap authority independently of the candidate.
@@ -191,10 +192,21 @@ export function inspectPr({ event, basePlan, baseRoadmap, baseAgents,
       || !falseOrAbsent(authorized?.permissions?.[cap]))
       errors.push('FORBIDDEN_CAPABILITY:' + cap);
 
-  if (packet?.domain_gate?.status !== 'CLEARED'
-    || authorized?.domain_gate?.status !== 'CLEARED'
-    || packet?.domain_gate?.contract_version !== authorized?.domain_gate?.contract_version
-    || !packet?.domain_gate?.contract_version)
+  // A domain gate is an independent, versioned BASE-file authorization.
+  // Checking only status or "v1" would permit substituting another domain.
+  const gate = packet?.domain_gate, trustedGate = authorized?.domain_gate;
+  if (gate?.status !== 'CLEARED' || trustedGate?.status !== 'CLEARED'
+    || typeof gate?.domain !== 'string' || !gate.domain
+    || gate.domain !== trustedGate.domain
+    || typeof gate?.contract_path !== 'string'
+    || gate.contract_path !== trustedGate.contract_path
+    || !validPath(gate.contract_path) || !gate.contract_path.startsWith('docs/')
+    || gate.contract_version !== trustedGate.contract_version
+    || !gate.contract_version
+    || !SHA64.test(String(gate.contract_sha256 ?? ''))
+    || gate.contract_sha256 !== trustedGate.contract_sha256
+    || typeof baseContracts[gate.contract_path] !== 'string'
+    || digest(baseContracts[gate.contract_path]) !== gate.contract_sha256)
     errors.push('DOMAIN_GATE_NOT_INDEPENDENTLY_CLEARED');
 
   for (const p of files) {
@@ -202,10 +214,19 @@ export function inspectPr({ event, basePlan, baseRoadmap, baseAgents,
     if (reserved(p)) errors.push('MANAGED_TASK_PROTECTED_FILE:' + p);
     else if (!within(p, Array.isArray(authorized?.allowed_paths) ? authorized.allowed_paths : []))
       errors.push('OUT_OF_SCOPE_FILE:' + p);
-    // Mode data come from GitHub checkout, never from packet.
-    const mode = headFileModes[p];
-    if (mode && mode !== '100644' && mode !== '100755')
-      errors.push('UNSAFE_GIT_FILE_MODE:' + p + ':' + mode);
+  }
+  // All HEAD-present changed paths must have a Git tree mode observed by
+  // the independent checker. Deleted files and pre-rename paths have no
+  // required HEAD entry, but *both* paths were already scope-checked above.
+  for (const entry of Array.isArray(changes) ? changes : []) {
+    const currentPaths = entry.kind === 'D' ? []
+      : ('RC'.includes(entry.kind) ? [entry.paths[1]] : entry.paths);
+    for (const p of currentPaths) {
+      if (!Object.hasOwn(headFileModes, p))
+        errors.push('HEAD_FILE_MODE_MISSING:' + p);
+      else if (!['100644', '100755'].includes(headFileModes[p]))
+        errors.push('UNSAFE_GIT_FILE_MODE:' + p + ':' + headFileModes[p]);
+    }
   }
   // No deployed CI/test attestation or side effect follows a passing result.
   return { ok: errors.length === 0, admission: errors.length ? 'DENIED' : 'CHECKS_PASS_ONLY',
@@ -217,7 +238,10 @@ function git(repo, args, encoding = 'utf8') {
     stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 16 * 1024 * 1024 });
 }
 function readPolicy(root, rel) {
-  return fs.readFileSync(path.join(root, rel), 'utf8');
+  if (!validPath(rel)) throw new Error('INVALID_POLICY_FILE_PATH');
+  const full = path.join(root, rel);
+  if (!fs.lstatSync(full).isFile()) throw new Error('POLICY_FILE_NOT_REGULAR:' + rel);
+  return fs.readFileSync(full, 'utf8');
 }
 function findManifest(root) {
   const loc = path.join(root, MANIFEST);
@@ -255,9 +279,21 @@ export function cli(argv) {
     expectedBase + '...' + expectedHead], 'buffer');
   const changes = parseDiffNameStatus(raw);
   const packet = findManifest(repo);
+  const basePlan = JSON.parse(readPolicy(policyRoot, PLAN_FILE));
+  const entry = Array.isArray(basePlan.task_queue)
+    ? basePlan.task_queue.find(t => t?.task_id === packet?.task_id) : null;
+  const contractPath = entry?.domain_gate?.contract_path;
+  const baseContracts = {};
+  if (typeof contractPath === 'string') {
+    // Fail closed rather than trusting packet paths or attempting to read
+    // outside the base checkout; only a known approved queue path is read.
+    if (!validPath(contractPath) || !contractPath.startsWith('docs/'))
+      throw new Error('TRUSTED_QUEUE_CONTRACT_PATH_UNSAFE');
+    baseContracts[contractPath] = readPolicy(policyRoot, contractPath);
+  }
   return inspectPr({
     event, changes, packet, candidateHasManifest: packet !== null,
-    basePlan: JSON.parse(readPolicy(policyRoot, PLAN_FILE)),
+    basePlan, baseContracts,
     baseRoadmap: readPolicy(policyRoot, ROADMAP_FILE),
     baseAgents: readPolicy(policyRoot, 'AGENTS.md'),
     baseClaude: readPolicy(policyRoot, 'CLAUDE.md'),
