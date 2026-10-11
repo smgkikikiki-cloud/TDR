@@ -1,0 +1,43 @@
+name: TDR Roadmap Contract
+
+# Stage-0 read-only verification. No scheduled runs, model calls, external
+# integration, database credentials, deployments, or agent dispatch.
+on:
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'docs/portfolio/**'
+      - 'orchestration/**'
+      - '.github/workflows/portfolio-roadmap.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'docs/portfolio/**'
+      - 'orchestration/**'
+      - '.github/workflows/portfolio-roadmap.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portfolio-roadmap:
+    name: portfolio-roadmap
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify pinned owner-approved roadmap and disabled execution
+        run: node orchestration/preflight.mjs --check-repo
+      - name: Run offline fail-closed gate regressions
+        run: node --test orchestration/preflight.test.mjs
