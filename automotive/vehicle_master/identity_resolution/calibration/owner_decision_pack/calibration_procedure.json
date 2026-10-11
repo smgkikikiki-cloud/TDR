@@ -1,0 +1,40 @@
+{
+ "design": {
+  "folds": "brand_folds.csv: five folds of brand families; every row of a family sits in one fold",
+  "loop": "for each fold k: choose among the candidate values (the swept grid in sensitivity_results.json) on the other four folds, evaluate once on fold k; report pooled out-of-fold predictions",
+  "no_leakage": "no threshold, class or alias list is tuned on a row of the held-out fold's brand family; the owner's seed brand classes are inputs, not tuned values",
+  "selection_rule": "the loosest value whose training false-AUTO count is zero and whose pooled held-out false-AUTO upper bound is within the tolerance the owner sets (open question); a tie goes to the stricter value"
+ },
+ "false_auto_analysis": [
+  "every false-AUTO is listed with its supporting codes, series state, name relation, brand relation and lineage roles",
+  "classify the root cause: series coincidence of different models, granularity (finer or coarser model), lineage (rename / replacement), brand relation, label noise in the owner's verdict",
+  "a root cause that the contract can express as a gate is a proposal for a rule change in a later round, never applied in the same pass as the measurement",
+  "report false-AUTO by brand family and by fold: a single family accounting for the errors means a missing rule, not a miscalibrated threshold"
+ ],
+ "labels_used": {
+  "consistency": "check_label_consistency() runs first; a CONFLICT is resolved by the owner before any metric is computed",
+  "group": "create_candidates.csv verdicts: VALID_MISSING_CANONICAL makes every pooled candidate of the group a negative; EXISTING_IDENTITY / VARIANT_TRIM_CODE make owner_canonical_model_id a positive; AMBIGUOUS is excluded and counted",
+  "negative_sample": "negative_sample.csv: owner_has_tdr_counterpart, weighted by sampling_weight",
+  "pair": "r6_owner_review.csv verdicts. positive for the shown link type: CORRECT_EQUIVALENT (EQUIVALENT), CORRECT_PART_OF (PART_OF), CORRECT_COMPOSED_OF (COMPOSED_OF); negative: WRONG_TARGET, NO_TDR_TARGET; excluded and counted: INSUFFICIENT_EVIDENCE"
+ },
+ "metrics": {
+  "auto_precision": "labelled-correct AUTO pairs / labelled AUTO pairs, Wilson 95% interval; with zero errors the rule-of-three upper bound on false-AUTO is reported instead",
+  "auto_recall": "labelled-correct pairs the contract writes at AUTO / labelled-correct pairs (EQUIVALENT only)",
+  "propose_or_better_recall": "labelled-correct pairs the contract proposes or writes / labelled-correct pairs, with the weighted negative sample adding the correct pairs the contract missed (NO_CANDIDATE)",
+  "propose_precision": "labelled-correct among PROPOSE pairs",
+  "unit_weighted": "each of the above is also reported weighted by lifetime units, because a wrong high-volume pair costs more registrations than a wrong tail pair"
+ },
+ "pending_threshold_sensitivity": [
+  "each pending calibration entry (pending_threshold_sensitivity.csv) is re-evaluated at every swept value on the labelled rows",
+  "report the change in held-out AUTO precision, AUTO recall and false-AUTO count per value; a value that creates a labelled false-AUTO is rejected regardless of recall",
+  "an entry that moves no labelled row stays pending and is reported as not constrained by the labels"
+ ],
+ "schema": "ir-owner-pack-calibration-procedure/1",
+ "status": "NON_AUTHORITATIVE preparation; nothing here is calibrated and no value is chosen",
+ "stop_rules": [
+  "fewer labelled AUTO pairs than ER-T tolerance requires: report the bound that the labels do support and keep the threshold pending",
+  "any CONFLICT from check_label_consistency: stop and return the conflicts to the owner",
+  "any false-AUTO in a held-out fold: stop, analyse (false_auto_analysis), do not tune around it",
+  "nothing is bound until the owner accepts a calibrated value in adoption.yaml; adoption.binding stays false"
+ ]
+}

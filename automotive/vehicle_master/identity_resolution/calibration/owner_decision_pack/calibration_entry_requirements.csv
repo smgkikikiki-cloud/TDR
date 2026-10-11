@@ -1,0 +1,11 @@
+requirement_id,what,needs,computed_from,value,meaning
+ER-01,AUTO pairs that exist to be labelled,labelled v1-AUTO pairs,count of rows with v1_group_outcome=AUTO and a primary candidate,69,the whole AUTO universe on the sheet; no bound on false-AUTO can be tighter than 3/n even if every one is labelled and correct
+ER-02,best demonstrable false-AUTO bound,"all ER-01 pairs labelled, none wrong","rule of three, upper 95%",0.043478,the 95% upper bound on the false-AUTO rate if all AUTO pairs are labelled and none is wrong
+ER-03,false-AUTO bound from the starter batch,"S1 rows labelled, none wrong","rule of three, upper 95%",0.166667,"the starter batch labels 18 AUTO pairs (80.7% of AUTO-pair units): enough to find a systematic failure, not to certify a rate"
+ER-T10,labelled AUTO pairs needed to show false-AUTO <= 10% (zero errors),labelled correct AUTO pairs,ceil(3 / tolerance),30,reachable from the AUTO universe
+ER-T05,labelled AUTO pairs needed to show false-AUTO <= 5% (zero errors),labelled correct AUTO pairs,ceil(3 / tolerance),60,reachable from the AUTO universe
+ER-T02,labelled AUTO pairs needed to show false-AUTO <= 2% (zero errors),labelled correct AUTO pairs,ceil(3 / tolerance),150,"NOT reachable: only 69 AUTO pairs exist on the sheet; a tolerance this tight needs structural argument, more packages, or a wider AUTO set"
+ER-T01,labelled AUTO pairs needed to show false-AUTO <= 1% (zero errors),labelled correct AUTO pairs,ceil(3 / tolerance),300,"NOT reachable: only 69 AUTO pairs exist on the sheet; a tolerance this tight needs structural argument, more packages, or a wider AUTO set"
+ER-F1,brand-separated folds,labelled rows in >= 5 brand families,brand_folds.csv,62,families are never split across folds
+ER-F2,held-out coverage per fold,at least one labelled AUTO pair per fold used for evaluation,S1 rows by fold,0|1|2|3|4,folds that hold an S1 AUTO pair (a fold without one cannot report AUTO precision); the folds are 0..4
+ER-N1,recall denominator,labelled negative sample,negative_sample.csv strata,24,weights make the sample estimate the NO_CANDIDATE population

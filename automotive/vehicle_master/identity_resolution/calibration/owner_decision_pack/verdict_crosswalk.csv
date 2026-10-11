@@ -1,0 +1,25 @@
+r6_pair_verdict,create_group_verdict,reading,consistent
+CORRECT_EQUIVALENT,VALID_MISSING_CANONICAL,the pair says the group IS that TDR model; the group cannot also lack a canonical identity,CONFLICT
+CORRECT_EQUIVALENT,EXISTING_IDENTITY,both say the identity exists; the owner_canonical_model_id of the CREATE row must be the pair's candidate,CONSISTENT_IF_SAME_TARGET
+CORRECT_EQUIVALENT,VARIANT_TRIM_CODE,the group is a variant of the pair's model; no new model,CONSISTENT_IF_SAME_TARGET
+CORRECT_EQUIVALENT,AMBIGUOUS,ambiguity on the missing-identity side does not contradict a correct pair,CONSISTENT
+CORRECT_PART_OF,VALID_MISSING_CANONICAL,the pair says the group is part of / composed of TDR models; a new model for the group is possible only if the owner wants the finer identity: say so in the notes,REVIEW
+CORRECT_PART_OF,EXISTING_IDENTITY,the group is expressed through existing models,CONSISTENT
+CORRECT_PART_OF,VARIANT_TRIM_CODE,the group is expressed through existing models,CONSISTENT
+CORRECT_PART_OF,AMBIGUOUS,the group is expressed through existing models,CONSISTENT
+CORRECT_COMPOSED_OF,VALID_MISSING_CANONICAL,the pair says the group is part of / composed of TDR models; a new model for the group is possible only if the owner wants the finer identity: say so in the notes,REVIEW
+CORRECT_COMPOSED_OF,EXISTING_IDENTITY,the group is expressed through existing models,CONSISTENT
+CORRECT_COMPOSED_OF,VARIANT_TRIM_CODE,the group is expressed through existing models,CONSISTENT
+CORRECT_COMPOSED_OF,AMBIGUOUS,the group is expressed through existing models,CONSISTENT
+WRONG_TARGET,VALID_MISSING_CANONICAL,the candidate is wrong; the missing-identity question is independent,CONSISTENT
+WRONG_TARGET,EXISTING_IDENTITY,the candidate shown is wrong; an existing identity is acceptable only if it is another model than the candidate,CONSISTENT_IF_DIFFERENT_TARGET
+WRONG_TARGET,VARIANT_TRIM_CODE,the candidate is wrong; the missing-identity question is independent,CONSISTENT
+WRONG_TARGET,AMBIGUOUS,the candidate is wrong; the missing-identity question is independent,CONSISTENT
+NO_TDR_TARGET,VALID_MISSING_CANONICAL,no TDR target; a missing canonical identity is the expected companion verdict,CONSISTENT
+NO_TDR_TARGET,EXISTING_IDENTITY,the pair says no TDR model is the target; the group cannot also be an existing identity or a variant of one,CONFLICT
+NO_TDR_TARGET,VARIANT_TRIM_CODE,the pair says no TDR model is the target; the group cannot also be an existing identity or a variant of one,CONFLICT
+NO_TDR_TARGET,AMBIGUOUS,no TDR target; a missing canonical identity is the expected companion verdict,CONSISTENT
+INSUFFICIENT_EVIDENCE,VALID_MISSING_CANONICAL,no pair verdict to contradict,CONSISTENT
+INSUFFICIENT_EVIDENCE,EXISTING_IDENTITY,no pair verdict to contradict,CONSISTENT
+INSUFFICIENT_EVIDENCE,VARIANT_TRIM_CODE,no pair verdict to contradict,CONSISTENT
+INSUFFICIENT_EVIDENCE,AMBIGUOUS,no pair verdict to contradict,CONSISTENT

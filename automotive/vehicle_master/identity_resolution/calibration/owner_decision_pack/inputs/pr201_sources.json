@@ -1,0 +1,10 @@
+{
+ "commit": "30d2618a48b830b4afdbcf1299475f368bd9d214",
+ "files": {
+  "create_adjudication.csv": "automotive/vehicle_master/identity_bootstrap/shadow/review/create_adjudication.csv",
+  "cross_brand_review.csv": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/cross_brand_review.csv",
+  "decisions.csv": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/decisions.csv",
+  "parity_unresolved.csv": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/parity_unresolved.csv"
+ },
+ "what": "where the four vendored files live in PR #201 at the pinned commit (a data file, so that no module in this package names the Identity Bootstrap tree)"
+}
