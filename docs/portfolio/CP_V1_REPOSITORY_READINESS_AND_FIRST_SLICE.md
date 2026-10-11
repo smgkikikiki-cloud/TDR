@@ -16,6 +16,12 @@
 
 **First customer-visible vertical slice does NOT require:** CTPDI headline, national PDI index publication, Dealer Network Watch, modeled sales capture, predictive 90D, automatic vehicle model creation. These are parallel capabilities, not blockers.
 
+## Live source coverage update: CP-00 partial audit performed
+
+[CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md](CP00_SOURCE_COVERAGE_AUDIT_2026-10-11.md) measured: 273/1,431 CURRENT Trims with any LIST_PRICE in ledger, 74/318 CURRENT Models with all current trims represented (not time/retail vetted), 320 LIST_PRICE rows all observed Sep 2026, and 48 promotions with no normalized cash amount or trim scope. Ice model trends cover 69 months but 0 APPROVED group→model links. **CP-00 now has actual SELECT-only evidence but is NOT complete.** 
+
+**Delivery revision (proposed, not owner-approved):** continue CP-01 substitution fixtures and typed org/UX contracts in parallel with CP-00a source classification, but hold historical price-change headlines, PDI, 3M/12M pressure score time-series, CN price gap and dealer outcomes until their separate domain gates are satisfied. A single verified current-position snapshot may be useful, but it is not a pressure-movement series.
+
 ## 2. Actual current-main code availability
 
 | File / path | Verified existing behavior | Reuse decision / missing contract |
