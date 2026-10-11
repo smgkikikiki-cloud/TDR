@@ -88,21 +88,21 @@ async function verifyLive() {
     "Vehicle Master release changed; re-review pilot against new release before using any number");
   assert.equal(state?.seed_as_of,evidence[0].vehicleMaster.seedAsOf);
   for(const e of evidence) {
-    const {data:rs,error:re}=await db.from("vehicle_current_retail_sets")
+    const {data:rs,error:re}: {data:{trim_ids:string[];reviewed_at:string}|null;error:unknown}=await db.from("vehicle_current_retail_sets")
       .select("trim_ids,reviewed_at").eq("model_id",e.vehicleMaster.modelId).single();
     if(re)throw re;
     assert.deepEqual((rs?.trim_ids||[]).slice().sort(),e.trims.map(t=>t.trimId).sort(),
       "Changed current trim membership; re-review OEM pilot");
     assert.equal(rs?.reviewed_at,e.vehicleMaster.reviewedRetailSetAt);
-    const {data:trims,error:te}=await db.from("vehicle_trims")
+    const {data:trims,error:te}: {data:Array<{canonical_id:string;status:string;powertrain:string;deleted_at:string|null}>|null;error:unknown}=await db.from("vehicle_trims")
       .select("canonical_id,status,powertrain,deleted_at").eq("model_id",e.vehicleMaster.modelId);
     if(te)throw te;
     for(const t of e.trims){
-      const found=(trims||[]).find(row=>row.canonical_id===t.trimId);
+      const found:{canonical_id:string;status:string;powertrain:string;deleted_at:string|null}|undefined=(trims||[]).find(row=>row.canonical_id===t.trimId);
       assert.ok(found && found.status==="CURRENT" && !found.deleted_at);
       assert.equal(found.powertrain,t.powertrain);
     }
-    const {data:prices,error:pe}=await db.from("vehicle_price_ledger")
+    const {data:prices,error:pe}: {data:Array<{trim_id:string;amount_thb:number|string;price_type:string;retracted_at:string|null}>|null;error:unknown}=await db.from("vehicle_price_ledger")
       .select("trim_id,amount_thb,price_type,retracted_at")
       .in("trim_id",e.trims.map(t=>t.trimId)).eq("price_type","LIST_PRICE");
     if(pe)throw pe;
