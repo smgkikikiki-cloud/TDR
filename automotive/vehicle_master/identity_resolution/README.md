@@ -9,6 +9,10 @@ A permanent, provider-agnostic subsystem that decides how an **external vehicle 
 > There is **no resolver**, nothing reads this in production, no database state was touched, R6 was not re-run and R7 was not started.
 > `vehreg/ice_crosswalk.py` and `tools/ice_crosswalk_match.py` are unchanged and remain the live matcher. (A test fails if any production module imports this package.)
 
+## Calibration data (2026-10-11) — the first-run R6 rows are now in the repository
+
+[`calibration/`](calibration/README.md) holds the 490 `ice_model_crosswalk` rows of the 2026-10-10 R6 run, recovered **read-only** from production (the workflow artifact itself could not be downloaded from the sandbox), a dataset that sets what the legacy matcher saw against what Contract v1 says on the same pairs, the owner-adjudication sheet [`r6_owner_review.csv`](calibration/r6_owner_review.csv) (owner columns blank, ordered by priority) and [`CALIBRATION_REPORT.md`](calibration/CALIBRATION_REPORT.md). An offline replay of the legacy matcher reproduces all 489 stored matcher rows exactly. **Nothing is calibrated:** there are no owner labels yet, `binding` is still `false`, the contract is not frozen, and no production row, flag or gate was touched. The report lists exactly what still needs the owner's labels, decisions or Ice's answer.
+
 ## What revision 3 adds (owner decisions of 2026-10-11)
 
 The owner answered the open points. They are recorded as `owner_decisions` in [`adoption.yaml`](contract/v1/adoption.yaml) (and listed in SPEC Appendix E); the contract is **still not frozen**.
@@ -131,7 +135,7 @@ D=$(mktemp -d) && python3 -I -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]
   data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip "$D" && ls "$D"        # id_changes.csv, panels/, …
 ```
 
-**State discrepancy, not resolved here.** `docs/WORK_STATE.md` and `docs/market-track/ROADMAP.md` still say *R6 has not been started*. The owner reports that R6 ran once and produced candidate rows. The review rows are not in the repository, so the `owner_report_r6` corpus cases are **reproduced from the stated mechanism and the repo code**, not from row data; replace them with real rows when the review sheet is available. This task did not edit R6/R7 gate state.
+**State discrepancy, partly resolved.** `docs/WORK_STATE.md` and `docs/market-track/ROADMAP.md` still say *R6 has not been started*; the owner reports, and production confirms, that R6 ran once on 2026-10-10 (workflow run 38064404218). Its 490 stored rows were recovered read-only on 2026-10-11 into `calibration/inputs/`, and the calibration dataset replaces the *reproduced-from-mechanism* reading of the `owner_report_r6` corpus cases with real rows (the corpus cases themselves are unchanged). This task did not edit R6/R7 gate state.
 
 ## 4. Verification performed — and what it does not prove
 
@@ -149,7 +153,7 @@ Not committed (throwaway, in the working scratchpad): a prototype of the SPEC's 
 - **198 single-key policy mutations** (every behaviour-bearing key flipped, halved, doubled, incremented or dropped, one at a time): 196 caught; the 2 survivors are equivalent mutants (dropping the last element of an ordering list changes nothing). The sweep also produced each case's `provisional_keys` — **309 of 508 cases depend on at least one still-pending value**, which is the honest size of "the corpus pins mechanics, not calibrated numbers".
 - **27 structural controls** (rule-level mutations that are not policy keys — e.g. "the sum rule ignores an individually STRONG member", "parts conflict with parts", "an incomplete stored set is tolerated", "a confirmed gap counts", "a PART_OF claim can be AUTO", "a stored overlap between two subjects is not reported"): every one is caught by at least one case. One survivor from the first pass (the set-size check was masked by the set-id check) was fixed by changing the case, not the rule.
 
-**It proves the SPEC and the corpus are consistent with each other, not that the rules are right** — it has the same author. The rules need the owner's review and, for thresholds, calibration on real data. With `jsonschema` installed the suite additionally checks that the real Draft 2020-12 validator agrees with the stdlib one on every case (verified for this revision: 312 tests pass, 1 skipped = the engine gate).
+**It proves the SPEC and the corpus are consistent with each other, not that the rules are right** — it has the same author. The rules need the owner's review and, for thresholds, calibration on real data. With `jsonschema` installed the suite additionally checks that the real Draft 2020-12 validator agrees with the stdlib one on every case (verified for revision 3: 312 contract tests pass, 1 skipped = the engine gate; the calibration milestone adds 28 more, 340 in the directory).
 
 **Not verified:** how TDR files Range Rover / GWM sub-brands (alias provenance `assumption`); whether TDR's `body_type` and generation dates are populated; any behaviour on production data; **whether an absent Ice or TDR row means zero** (`Q-ICE-ABSENT-ROW`, `Q-TDR-ABSENT-ROW` — unconfirmed capability data, so the contract treats it as unobserved and caps AUTO).
 

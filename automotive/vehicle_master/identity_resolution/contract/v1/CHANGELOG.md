@@ -3,6 +3,15 @@
 Contract v1 is a **draft and is not frozen**. Nothing reads it in production. Entries are newest first; each names the
 files it touched and the corpus rows that pin the change (SPEC §14.4).
 
+## calibration data milestone (2026-10-11) — no contract change
+
+**No contract file changed** (policy, capabilities, registry, taxonomy, schemas, SPEC and corpus are exactly rev 3; `adoption.yaml` changed only in one comment). Status stays **draft, NOT frozen**, `binding: false`.
+
+- Added `identity_resolution/calibration/`: the first-run R6 rows recovered read-only from production (490 `ice_model_crosswalk` rows, 50 redirects, the matcher's inputs) with provenance and hashes; an offline replay that reproduces all 489 stored matcher rows exactly; a calibration dataset (legacy evidence vs Contract v1 on the common observation window), the owner-adjudication sheet `r6_owner_review.csv` (owner columns blank), a sensitivity run on the real data, a data dictionary and `CALIBRATION_REPORT.md`.
+- Added tests: `test_ir_calibration.py` (25) and `test_ir_reference_evaluator.py` (3); the directory now has 340 passing tests and 1 skipped.
+- `calibration/ref_eval_*.py` is a reference transcription of the SPEC used to produce the v1 columns. It is **not** the engine: no persistence, no adapter registry, no CLI, no production import, the engine gate is unchanged.
+- Nothing is calibrated: no owner label exists. Ice and TDR absent-row semantics stay UNKNOWN.
+
 ## rev 3 — owner decisions (2026-10-11)
 
 The owner decided the open points. Recorded as `owner_decisions` in `adoption.yaml`; **still a draft, NOT frozen**, `binding: false`.

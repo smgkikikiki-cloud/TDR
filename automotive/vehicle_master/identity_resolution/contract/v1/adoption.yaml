@@ -1,7 +1,8 @@
 # TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 3)
 #
 # The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
-# production data (the first R6 run's review rows are not in the repository) and have not been signed off.
+# production data and have not been signed off. (The first R6 run's rows were recovered read-only on 2026-10-11 into calibration/, but they
+# carry no owner labels, so nothing can be calibrated yet.)
 # They are PROVISIONAL. This file is the gate that keeps them from being adopted by accident:
 #
 #   * `binding: false` means a run under this policy is a DRY RUN (SPEC invariant I16): the engine may emit
