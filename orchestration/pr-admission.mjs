@@ -240,6 +240,10 @@ function git(repo, args, encoding = 'utf8') {
 function readPolicy(root, rel) {
   if (!validPath(rel)) throw new Error('INVALID_POLICY_FILE_PATH');
   const full = path.join(root, rel);
+  const realRoot = fs.realpathSync(root);
+  const realFull = fs.realpathSync(full);
+  if (!realFull.startsWith(realRoot + path.sep))
+    throw new Error('POLICY_FILE_ESCAPES_TRUSTED_CHECKOUT');
   if (!fs.lstatSync(full).isFile()) throw new Error('POLICY_FILE_NOT_REGULAR:' + rel);
   return fs.readFileSync(full, 'utf8');
 }
