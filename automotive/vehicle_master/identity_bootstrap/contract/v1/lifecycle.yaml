@@ -1,0 +1,130 @@
+# Identity lifecycle v1. Two axes, deliberately separate:
+#   identity_state    -- does TDR recognise this as a real canonical vehicle, and how far has it been vetted/published
+#   enrichment_state  -- is the enrichment subsystem working on its attributes
+# Neither is the existing vehicle_models.status (CURRENT/HISTORICAL/UNVERIFIED), which says whether the car is on sale.
+# Identity Bootstrap performs exactly ONE lifecycle act: creating a row in (DISCOVERED, PENDING). Every other transition belongs to
+# the enrichment subsystem or an admin and is listed here only so that the states are defined once.
+version: 1
+
+identity_states:
+  DISCOVERED: TDR recognises a real canonical vehicle identity. Attributes are NOT complete and the vehicle is NOT in the consumer catalog.
+  ENRICHING: The enrichment subsystem holds a claim on the identity and is populating attributes.
+  VERIFIED: Attributes meet the Vehicle Master model rules and have been vetted; still not public.
+  PUBLISHED: Visible in the consumer catalog (the current_* serving views).
+  WITHDRAWN: Created in error or superseded. Hidden everywhere, never deleted, its canonical id is never reused.
+
+enrichment_states:
+  PENDING: Waiting for the enrichment subsystem.
+  IN_PROGRESS: Claimed (a lease); the claim can expire.
+  COMPLETE: Enrichment finished.
+  BLOCKED: Enrichment tried and could not proceed (no sources, conflicting sources); needs attention.
+
+# The only combinations a row may hold.
+allowed_state_pairs:
+  - [DISCOVERED, PENDING]
+  - [DISCOVERED, BLOCKED]
+  - [ENRICHING, IN_PROGRESS]
+  - [VERIFIED, COMPLETE]
+  - [PUBLISHED, COMPLETE]
+  - [WITHDRAWN, PENDING]
+  - [WITHDRAWN, IN_PROGRESS]
+  - [WITHDRAWN, COMPLETE]
+  - [WITHDRAWN, BLOCKED]
+
+initial_state: {identity_state: DISCOVERED, enrichment_state: PENDING}
+
+actors: [BOOTSTRAP, ENRICHMENT, ADMIN]
+
+# Each transition: who may do it, the guard that must hold, and what it may write. `proposal_for` lists actors whose attempt is a
+# proposal card instead of an instant change (VEHICLE_DB_V3 §4: AI proposes structural changes, admin applies them).
+transitions:
+  - id: CREATE
+    from: null
+    to: [DISCOVERED, PENDING]
+    actors: [BOOTSTRAP, ADMIN]
+    proposal_for: [BOOTSTRAP]        # while writes.apply_mode is PROPOSE
+    guard: bootstrap_decision_is_CREATE_IDENTITY_and_plan_preconditions_hold
+    writes: [canonical_id, brand_id, slug, name_en, identity_state, enrichment_state]
+    emits: VEHICLE_IDENTITY_CREATED
+  - id: CLAIM
+    from: [DISCOVERED, PENDING]
+    to: [ENRICHING, IN_PROGRESS]
+    actors: [ENRICHMENT, ADMIN]
+    guard: lease_acquired
+    writes: [identity_state, enrichment_state]
+    emits: null
+  - id: RELEASE
+    from: [ENRICHING, IN_PROGRESS]
+    to: [DISCOVERED, PENDING]
+    actors: [ENRICHMENT, ADMIN]
+    guard: lease_expired_or_released
+    writes: [identity_state, enrichment_state]
+    emits: null
+  - id: BLOCK
+    from: [ENRICHING, IN_PROGRESS]
+    to: [DISCOVERED, BLOCKED]
+    actors: [ENRICHMENT, ADMIN]
+    guard: enrichment_cannot_proceed
+    writes: [identity_state, enrichment_state]
+    emits: null
+  - id: VERIFY
+    from: [ENRICHING, IN_PROGRESS]
+    to: [VERIFIED, COMPLETE]
+    actors: [ADMIN, ENRICHMENT]
+    proposal_for: [ENRICHMENT]
+    guard: vehicle_master_model_rules_pass_and_evidence_recorded
+    writes: [identity_state, enrichment_state]
+    emits: null
+  - id: PUBLISH
+    from: [VERIFIED, COMPLETE]
+    to: [PUBLISHED, COMPLETE]
+    actors: [ADMIN]
+    guard: publication_gate_passes     # separately owned; v1 only says nothing below VERIFIED can publish
+    writes: [identity_state]
+    emits: null
+  - id: UNPUBLISH
+    from: [PUBLISHED, COMPLETE]
+    to: [VERIFIED, COMPLETE]
+    actors: [ADMIN]
+    guard: none
+    writes: [identity_state]
+    emits: null
+  - id: WITHDRAW
+    from_states: [DISCOVERED, ENRICHING, VERIFIED]
+    to: [WITHDRAWN, null]              # enrichment_state is kept as it was
+    actors: [ADMIN]
+    guard: no_published_dependents
+    writes: [identity_state]
+    emits: null
+  - id: REINSTATE
+    from_states: [WITHDRAWN]
+    to: [DISCOVERED, PENDING]
+    actors: [ADMIN]
+    guard: admin_decision_recorded
+    writes: [identity_state, enrichment_state]
+    emits: null
+
+# Transitions that must never exist.
+forbidden_transitions:
+  - {from: DISCOVERED, to: VERIFIED}
+  - {from: DISCOVERED, to: PUBLISHED}
+  - {from: ENRICHING, to: PUBLISHED}
+  - {from: PUBLISHED, to: WITHDRAWN}     # unpublish first
+  - {from: PUBLISHED, to: DISCOVERED}
+
+# Who may see an identity in which state. `*` = every state except WITHDRAWN where listed.
+visibility:
+  consumer_catalog: [PUBLISHED]
+  public_links: [PUBLISHED]
+  external_crosswalk_target: [DISCOVERED, ENRICHING, VERIFIED, PUBLISHED]
+  internal_market_engine: [DISCOVERED, ENRICHING, VERIFIED, PUBLISHED]
+  admin_ui: [DISCOVERED, ENRICHING, VERIFIED, PUBLISHED, WITHDRAWN]
+  enrichment_queue: [DISCOVERED, ENRICHING]
+  backup_export: [DISCOVERED, ENRICHING, VERIFIED, PUBLISHED, WITHDRAWN]
+  identity_resolution_pool: [DISCOVERED, ENRICHING, VERIFIED, PUBLISHED]
+
+# Legacy canonical models (every row that exists today) have no identity_state column value yet; the migration proposal backfills PUBLISHED.
+legacy_backfill_state: [PUBLISHED, COMPLETE]
+
+# What survives enrichment, unchanged: provenance rows are append-only and are never written by the enrichment subsystem.
+provenance_immutable_after: CREATE
