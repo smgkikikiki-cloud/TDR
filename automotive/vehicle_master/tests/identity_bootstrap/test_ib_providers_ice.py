@@ -29,7 +29,7 @@ def test_lineage_types_map_and_an_unknown_type_is_refused_not_guessed():
 
 def _build(dims, **kw):
     brand = {"raw": "JAECOO", "brand_id": "jaecoo", "relation": "EXACT"}
-    return ice.build_snapshot(source_label="ice:2569-09:v3:M7.0", policy_version=1, as_of_period_be="2569-09", dims=dims,
+    return ice.build_snapshot(source_label="ice:2569-09:v3:M7.0", policy_version=2, as_of_period_be="2569-09", dims=dims,
                               first_seen_be={r["model_group_id"]: "2567-12" for r in dims}, id_changes=kw.get("id_changes", []), identities=[],
                               brand_for=lambda raw: brand, resolution_for=lambda row: {"outcome": "NO_CANDIDATE", "reason_codes": []}, relations_for=lambda row: [])
 

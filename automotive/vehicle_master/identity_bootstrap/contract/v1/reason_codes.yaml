@@ -201,6 +201,14 @@ codes:
     primary_rank: 54
     summary: A token is a generation, facelift or model-year marker (Gen 2, Mk3, New, 2025).
 
+  POSSIBLE_TRUNCATED_NAME:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 55
+    summary: The name remainder is a single letter or only a dangling word (Jeep Grand, Tesla Model, Chery Q); the provider may have cut the nameplate short. Soft only, never an existence rule.
+
   # ---- evidence ----------------------------------------------------------------------------------------------------------
   INSUFFICIENT_IDENTITY_EVIDENCE:
     area: EVIDENCE

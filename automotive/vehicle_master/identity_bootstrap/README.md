@@ -3,7 +3,7 @@
 A permanent, provider-agnostic subsystem that decides when an **external vehicle identity that Identity Resolution could not map to any TDR vehicle** may become a
 **minimal canonical identity**, plans that creation, and hands the new identity to a separate enrichment process.
 
-> **Status: Contract v1 is a DRAFT for owner review. Milestone 1 (contract, corpus, tests) and milestone 2 (offline engine, Ice adapter, read-only shadow run on the pinned M7.0 package) are done.**
+> **Status: Contract v1 is a DRAFT for owner review. Milestone 1 (contract, corpus, tests) milestone 2 (offline engine, Ice adapter, read-only shadow run on the pinned M7.0 package) and milestone 3 (calibration / false-CREATE reduction, rerun against the live Vehicle Master, owner-adjudication sheet) are done.**
 > There is no persistence, no migration, no workflow, no database access and no enrichment bot. Nothing in production imports the package (a test enforces it). No vehicle was created,
 > R6 was not re-run, R7 was not started, no live serving or catalog behaviour changed, and PR #200 was read, not modified. **Start with [`shadow/FINDINGS.md`](shadow/FINDINGS.md) for the real-data results.**
 
@@ -116,6 +116,10 @@ quality of Identity Resolution's lexical layer is out of this milestone's eviden
 **Next (separately gated):** apply the owner-approved subset of FINDINGS recommendations as a contract v1.1 (policy-only rules first; R1 needs one engine rule); re-run against the **live** Vehicle Master snapshot and the R6 review sheet;
 then M3 persistence (INTEGRATION §2, only after owner decisions 1–2), M4 writer behind the Phase-1 write layer, M5 enrichment hand-off consumer. Nothing in this PR may be wired to production.
 
+**M3 delivered (policy v2):** hyphenated chassis/registration-code segments (R1), powertrain suffix glued to a digit token (R2), displacement/trim codes (R4, evidence/admin-clearable), year pattern restricted to a plausible range and only in context (Peugeot 2008 is a name), marque-only brand spellings with a `sub_brands` guard, a `brand.family` concept in duplicate defence (G2b), and a soft `POSSIBLE_TRUNCATED_NAME` signal — all policy/contract-driven, pinned by 151 corpus cases. Rerun on all 1,200 groups against the live Vehicle Master (read-only; identical to the file snapshot):
+**67 CREATE / 89 REVIEW / 1,044 HOLD** (was 78 / 94 / 1,028); the fuller universe removed 0 CREATEs; 11 were removed by the new rules. `shadow/review/create_adjudication.csv` lists every remaining CREATE with a blank `owner_label` for the owner's truth set (analyst notes are not ground truth). See `shadow/FINDINGS.md` and `shadow/results/…/REPORT.md` §0.
+**Next (separately gated):** owner labels the sheet; false-CREATE rate per class decides any CREATE permission. Persistence stays blocked.
+
 ## 8. Working with the contract
 
 **Adding an edge case** (SPEC §16): add or extend a taxonomy entry → add a failing corpus line with the smallest input → change `policy.yaml` (or, later, the engine) until it passes → bump `policy.version`
@@ -123,5 +127,5 @@ if behaviour moved → `python -m identity_bootstrap.contract.render --write`. N
 
 ## 9. Not done, deliberately
 
-No writer, persistence, migration, workflow or database access (the engine only returns plans; the shadow run only reads the pinned package and the repository's file catalog and writes report files to a directory you name); no change to `vehreg/`, `tools/`, `supabase/`, `.github/`, any `ice_*` table, mapping, `PRODUCTION_*` flag or roadmap gate; no vehicle created or
+No writer, persistence, migration or workflow (the engine only returns plans; the shadow run reads the pinned package and the repository's file catalog and writes report files to a directory you name; the only database access was a one-off read-only `SELECT` in milestone 3, recorded under `shadow/universe/`); no change to `vehreg/`, `tools/`, `supabase/`, `.github/`, any `ice_*` table, mapping, `PRODUCTION_*` flag or roadmap gate; no vehicle created or
 published; no catalog or serving change; no enrichment bot; no change to PR #200; R6 not re-run; R7 not started.

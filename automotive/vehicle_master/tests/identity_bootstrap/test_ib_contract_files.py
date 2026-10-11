@@ -63,7 +63,7 @@ def test_the_required_reason_codes_exist():
 
 def test_clearability_follows_the_two_authorities():
     """Lexical suspicions are clearable by evidence; structural questions about TDR's own catalog only by an admin; duplicates and hard gates never."""
-    lexical = {"POSSIBLE_MODEL_CODE", "POSSIBLE_TRIM_NOT_MODEL", "POSSIBLE_POWERTRAIN_DERIVATIVE", "POSSIBLE_BODY_VARIANT", "POSSIBLE_GENERATION_VARIANT"}
+    lexical = {"POSSIBLE_MODEL_CODE", "POSSIBLE_TRIM_NOT_MODEL", "POSSIBLE_POWERTRAIN_DERIVATIVE", "POSSIBLE_BODY_VARIANT", "POSSIBLE_GENERATION_VARIANT", "POSSIBLE_TRUNCATED_NAME"}
     assert {c for c, e in CODES.items() if e["clearable"] in ("evidence", "evidence_or_admin")} == lexical
     for code in ("DUPLICATE_CANONICAL_SUSPECTED", "IDENTITY_ALREADY_DISCOVERED", "CANONICAL_ID_COLLISION", "BRAND_NOT_IN_TDR", "PROVIDER_IDENTITY_PROVISIONAL",
                  "PROVIDER_RAW_NAME", "NAME_UNSPECIFIED", "BRAND_UNKNOWN", "NOT_ACTIVATED", "LINEAGE_UNRESOLVED", "INSUFFICIENT_IDENTITY_EVIDENCE"):

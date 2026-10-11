@@ -112,7 +112,20 @@ MUTATIONS = {
     "priority.queues": {"IDENTITY_REVIEW": "q1", "HOLD": "q2"},
     "priority.silent_hold_codes": [],
     "priority.alert_bands": [],
-    "version": 2,
+    "version": 3,
+    "subject.raw_name.code_segment_pattern": "^$",
+    "brand.sub_brands": {},
+    "brand.family.duplicate_relations": [],
+    "brand.family.suspect_relations": [],
+    "brand.family.suspect_code": "STRUCTURAL_CONFLICT",
+    "shape.truncation.code": "POSSIBLE_TRIM_NOT_MODEL",
+    "shape.truncation.min_compact_chars": 1,
+    "shape.truncation.exempt_digit_only": False,
+    "shape.truncation.dangling_tokens": [],
+    "shape.generation.contextual_token_patterns": [],
+    "shape.generation.contextual_min_tokens": 1,
+    "shape.powertrain.token_patterns": [],
+    "shape.model_code.token_patterns": ["^[a-z]{1,3}[0-9]{3}[a-z]{0,3}$"],
 }
 
 

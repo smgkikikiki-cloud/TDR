@@ -15,7 +15,7 @@
   },
   "existing_identity": null,
   "fingerprints": {
-   "decision": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+   "decision": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
    "idempotency_key": "sha256:e763b1763f09599ef4866f559a48d9e380e27a38d19dba47850ca3c51fc0a433",
    "identity_key": "honda|jazz",
    "review": "sha256:ab1414caaef5e3a8d3eb6a2ff04927a3edbb20aecc92bb178a48378196e763da"
@@ -36,8 +36,8 @@
   },
   "outcome": "CREATE_IDENTITY",
   "policy": {
-   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
-   "version": 1
+   "digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
+   "version": 2
   },
   "primary_reason": "NEW_IDENTITY_CONFIRMED",
   "provider": "ice",
@@ -83,7 +83,7 @@
      "apply_mode": "PROPOSE",
      "contract_version": 1,
      "creator_type": "machine",
-     "decision_fingerprint": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+     "decision_fingerprint": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
      "evidence": {
       "kinds": [
        "PROVIDER_IDENTITY"
@@ -93,7 +93,7 @@
       ],
       "tier": 0
      },
-     "policy_version": 1,
+     "policy_version": 2,
      "reason_codes": [
       "NEW_IDENTITY_CONFIRMED"
      ]
@@ -171,7 +171,7 @@
       "contract_version": 1,
       "created_at": null,
       "creator_type": "machine",
-      "decision_fingerprint": "sha256:c0ea4f8e6e2e145dd13beb849ba31552e0e5abb44e6192470e77258ff0e926e9",
+      "decision_fingerprint": "sha256:a459b50c3cb53cf985734868c3b7468d4563af8e8f57a3a936fea0281ed503c1",
       "evidence_kinds": [
        "PROVIDER_IDENTITY"
       ],
@@ -182,7 +182,7 @@
       "external_id": "honda-jazz",
       "first_seen_period": "2021-01",
       "identity_key": "honda|jazz",
-      "policy_version": 1,
+      "policy_version": 2,
       "provider": "ice",
       "reason_codes": [
        "NEW_IDENTITY_CONFIRMED"
@@ -211,7 +211,7 @@
      }
     }
    ],
-   "plan_id": "sha256:0fe2e0406c3d511783c4fe1b16fd22680ab06dd2a4cef09407fe06f177dc8328",
+   "plan_id": "sha256:8650324da2ada42adcf298164108d1fe7af77b8a52758e2e1f1a2ef37684dc2e",
    "preconditions": [
     {
      "brand_id": "honda",
@@ -261,7 +261,7 @@
   },
   "existing_identity": null,
   "fingerprints": {
-   "decision": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+   "decision": "sha256:d939d7f2b21e1f6a7ff58121aacd32b3f0401558d683ad533a1fb154cdc5f5b8",
    "idempotency_key": "sha256:b75af3357c937e0560dc67e0aadc32efa928b65f446fac92f07ac65101be33e5",
    "identity_key": "jaecoo|j6",
    "review": "sha256:cfad582208d67df32f6739c747ece3ebb38ec45ab77c38d11fc5109baccdda24"
@@ -282,8 +282,8 @@
   },
   "outcome": "CREATE_IDENTITY",
   "policy": {
-   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
-   "version": 1
+   "digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
+   "version": 2
   },
   "primary_reason": "NEW_IDENTITY_CONFIRMED",
   "provider": "ice",
@@ -329,7 +329,7 @@
      "apply_mode": "PROPOSE",
      "contract_version": 1,
      "creator_type": "machine",
-     "decision_fingerprint": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+     "decision_fingerprint": "sha256:d939d7f2b21e1f6a7ff58121aacd32b3f0401558d683ad533a1fb154cdc5f5b8",
      "evidence": {
       "kinds": [
        "PROVIDER_IDENTITY"
@@ -339,7 +339,7 @@
       ],
       "tier": 0
      },
-     "policy_version": 1,
+     "policy_version": 2,
      "reason_codes": [
       "NEW_IDENTITY_CONFIRMED"
      ]
@@ -418,7 +418,7 @@
       "contract_version": 1,
       "created_at": null,
       "creator_type": "machine",
-      "decision_fingerprint": "sha256:42e534506c457a9a8c09bebcedc5ab26854ec54099a86f884624148deacc46e6",
+      "decision_fingerprint": "sha256:d939d7f2b21e1f6a7ff58121aacd32b3f0401558d683ad533a1fb154cdc5f5b8",
       "evidence_kinds": [
        "PROVIDER_IDENTITY"
       ],
@@ -429,7 +429,7 @@
       "external_id": "jaecoo-jaecoo-j6",
       "first_seen_period": "2024-12",
       "identity_key": "jaecoo|j6",
-      "policy_version": 1,
+      "policy_version": 2,
       "provider": "ice",
       "reason_codes": [
        "NEW_IDENTITY_CONFIRMED"
@@ -458,7 +458,7 @@
      }
     }
    ],
-   "plan_id": "sha256:856368de090aebf2582458c17dd9a3b67d43501811ef1b3212636b60e6a0aec2",
+   "plan_id": "sha256:bfea8a6d2a602422bb4a0b0027cfeeb1fde72fc33268e006658f374eb93f92d3",
    "preconditions": [
     {
      "brand_id": "jaecoo",
@@ -508,7 +508,7 @@
   },
   "existing_identity": null,
   "fingerprints": {
-   "decision": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+   "decision": "sha256:d21e9146667268794f54e1c657cb3a7b6942e1ab28759b2fd67b752b40c235ce",
    "idempotency_key": "sha256:47513d71345e6cae12a3f12e0570e4ac9e23c9dc5945dfeca522cf643d32ac02",
    "identity_key": "toyota|vios",
    "review": "sha256:f1a1e2d87fcaecec0dcf65fedce1497453b8fdfbd07c28c9c9385eafed761f51"
@@ -529,8 +529,8 @@
   },
   "outcome": "CREATE_IDENTITY",
   "policy": {
-   "digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
-   "version": 1
+   "digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
+   "version": 2
   },
   "primary_reason": "NEW_IDENTITY_CONFIRMED",
   "provider": "ice",
@@ -576,7 +576,7 @@
      "apply_mode": "PROPOSE",
      "contract_version": 1,
      "creator_type": "machine",
-     "decision_fingerprint": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+     "decision_fingerprint": "sha256:d21e9146667268794f54e1c657cb3a7b6942e1ab28759b2fd67b752b40c235ce",
      "evidence": {
       "kinds": [
        "PROVIDER_IDENTITY"
@@ -586,7 +586,7 @@
       ],
       "tier": 0
      },
-     "policy_version": 1,
+     "policy_version": 2,
      "reason_codes": [
       "NEW_IDENTITY_CONFIRMED"
      ]
@@ -664,7 +664,7 @@
       "contract_version": 1,
       "created_at": null,
       "creator_type": "machine",
-      "decision_fingerprint": "sha256:a790fe04b8291bdd3f19e1c5202e46c5bf682803b87689462e15069be4cc10a8",
+      "decision_fingerprint": "sha256:d21e9146667268794f54e1c657cb3a7b6942e1ab28759b2fd67b752b40c235ce",
       "evidence_kinds": [
        "PROVIDER_IDENTITY"
       ],
@@ -675,7 +675,7 @@
       "external_id": "toyota-vios",
       "first_seen_period": "2021-01",
       "identity_key": "toyota|vios",
-      "policy_version": 1,
+      "policy_version": 2,
       "provider": "ice",
       "reason_codes": [
        "NEW_IDENTITY_CONFIRMED"
@@ -704,7 +704,7 @@
      }
     }
    ],
-   "plan_id": "sha256:36a7c053428734882c35cdcc44aca63b9c26adc3c841d789a18ed70deba6228b",
+   "plan_id": "sha256:53a17d331cd9f4de91cbf4bfcb214e66a09ed7828f60d5a9076edba346d6c228",
    "preconditions": [
     {
      "brand_id": "toyota",

@@ -14,7 +14,7 @@ from identity_bootstrap import engine
 from identity_bootstrap.engine.lexical import Lexicon
 from identity_bootstrap.engine.fingerprint import canonical_json
 
-from . import run as shadow_run
+from . import calibration, run as shadow_run
 
 RULE_FLAGS = {"R1_HYPHENATED_REGISTRATION_CODE", "R2_GLUED_POWERTRAIN_SUFFIX", "R4_DISPLACEMENT_TRIM_CODE"}
 CLASSES = ("model_code", "trim", "powertrain", "body", "generation")
@@ -94,7 +94,7 @@ def analyse(A: dict, B: dict, notes_path: Path | None = None, refined: dict | No
     out: dict = {"inputs": {
         "package_sha256": pkg["sha256"], "package_index": pkg["index"], "periods": list(pkg["periods"]), "groups": len(pkg["dims"]),
         "units_total": int(sum(units.values())), "units_last12": int(sum(last12.values())),
-        "tdr_catalog": {"brands": len(A["catalog"]["brands"]), "models": len(A["catalog"]["identities"]), "source": "vehreg/data/2026/models/*.json (file snapshot, NOT the live database)"},
+        "tdr_catalog": {"brands": len(A["catalog"]["brands"]), "models": len(A["catalog"]["identities"]), "source": "vehreg/data/2026/models/*.json (repo file catalog, verified identical to the live Vehicle Master on 2026-10-11 by a read-only SELECT)"},
         "policy_digest": A["decisions"][0]["policy"]["digest"], "policy_version": policy["version"],
         "status_mix": dict(collections.Counter(s["identity_status"] for s in snap["subjects"])),
         "engine_seconds": {"A": A["seconds"], "B": B["seconds"]}}}
@@ -329,18 +329,48 @@ def write_files(summary: dict, A: dict, B: dict, out_dir: Path) -> list[Path]:
     return paths
 
 
+def build_all(package_path: Path = shadow_run.DEFAULT_PACKAGE) -> tuple[dict, dict, dict, list[dict]]:
+    """Everything the committed results derive from: runs A and B, the refined-relations what-if, the milestone-3 calibration, and the adjudication rows."""
+    A = shadow_run.run("A", package_path)
+    B = shadow_run.run("B", package_path, pkg=A["package"])
+    refined = {"A": shadow_run.run("A", package_path, pkg=A["package"], refined=True), "B": shadow_run.run("B", package_path, pkg=A["package"], refined=True)}
+    summary = analyse(A, B, refined=refined)
+    notes = yaml.safe_load((Path(__file__).with_name("analyst_notes.yaml")).read_text(encoding="utf-8"))["create_verdicts"]
+    base = calibration.load_baseline()
+    effects = calibration.rule_effects(A, A["package"])
+    diff = calibration.diff_against_baseline(A, B, base, notes)
+    summary["m3"] = {"baseline": "shadow/baseline_m2/decisions.csv (milestone 2: policy v1, same package, same TDR catalog)", "policy_version": A["policy"]["version"], "diff": diff,
+                     "rule_effects": effects, "removed_create_attribution": calibration.attribute_removed(diff["A"]["create_removed"], effects),
+                     "universe": calibration.universe_effect(A, A["package"]), "universe_verification": A["catalog"]["verification"]["comparison_with_file_snapshot"],
+                     "activity": _activity(summary["creates"], A["package"])}
+    rows = calibration.adjudication_rows(A, summary["creates"], notes, calibration.load_r6(), A["catalog"]["verification"]["redirects"])
+    return A, B, summary, rows
+
+
+def _activity(creates: list[dict], pkg: dict) -> dict:
+    out: dict = {}
+    for c in creates:
+        cls = calibration.activity_class(c["id"], pkg)
+        slot = out.setdefault(cls, {"groups": 0, "lifetime_units": 0, "last12_units": 0, "ids": []})
+        slot["groups"] += 1
+        slot["lifetime_units"] += c["units_total"]
+        slot["last12_units"] += c["units_last12"]
+        slot["ids"].append(c["id"])
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     ap = argparse.ArgumentParser(prog="python -m identity_bootstrap.shadow", description="Read-only shadow evaluation on the pinned Ice package.")
     ap.add_argument("--package", type=Path, default=shadow_run.DEFAULT_PACKAGE)
-    ap.add_argument("--out", type=Path, required=True, help="directory for decisions.csv, summary.json, plans_sample.json")
+    ap.add_argument("--out", type=Path, required=True, help="directory for decisions.csv, summary.json, REPORT.md, plans_sample.json")
+    ap.add_argument("--review-dir", type=Path, default=None, help="where create_adjudication.csv goes (default: <shadow>/review)")
     args = ap.parse_args(argv)
-    A = shadow_run.run("A", args.package)
-    B = shadow_run.run("B", args.package, pkg=A["package"])
-    refined = {"A": shadow_run.run("A", args.package, pkg=A["package"], refined=True), "B": shadow_run.run("B", args.package, pkg=A["package"], refined=True)}
-    summary = analyse(A, B, refined=refined)
+    A, B, summary, rows = build_all(args.package)
     for path in write_files(summary, A, B, args.out):
         print(path)
+    calibration.write_adjudication(rows, (args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
+    print((args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
     return 0
 
 
@@ -350,6 +380,45 @@ def _table(head: list[str], rows: list[list]) -> str:
     return "\n".join(["| " + " | ".join(head) + " |", "|" + "---|" * len(head)] + ["| " + " | ".join(esc(c) for c in r) + " |" for r in rows]) + "\n"
 
 
+
+def _m3_md(s: dict, m: dict) -> str:
+    d = m["diff"]
+    L = ["## 0. Milestone 3 — calibration and false-CREATE reduction (before / after)\n",
+         f"Baseline = the frozen milestone-2 run ({m['baseline']}). After = policy v{m['policy_version']}, same package, TDR side = the live Vehicle Master ({m['universe_verification']['models_compared']} models, verified identical to the repo file snapshot by read-only SELECT). **Volume never decides an outcome; it is shown for information.**\n",
+         "### 0.1 Counts and volume\n"]
+    base = s["m3"].get("baseline_counts") or {}
+    rows = []
+    for mode in ("A", "B"):
+        tm = d[mode]["transition_matrix"]
+        old = collections.Counter()
+        new = collections.Counter()
+        for k, n in tm.items():
+            a, b = k.split(" -> ")
+            old[a] += n
+            new[b] += n
+        for o in ("CREATE_IDENTITY", "IDENTITY_REVIEW", "HOLD"):
+            v = s["buckets"][mode][o]
+            rows.append([mode, o, old[o], new[o], f"{v['units_total']:,}", f"{v['units_last12']:,}"])
+    L.append(_table(["Mode", "Outcome", "Before (groups)", "After (groups)", "Units all time (after)", "Units last 12 m (after)"], rows))
+    for mode in ("A", "B"):
+        L.append(f"**Mode {mode} transition matrix (before → after):** " + "; ".join(f"{k} {n}" for k, n in sorted(d[mode]["transition_matrix"].items())) + f". CREATEs added: **{len(d[mode]['create_added'])}**. Groups whose outcome or primary reason changed: {d[mode]['groups_with_any_change']}.\n")
+    L.append("### 0.2 Effect of the fuller Vehicle Master universe\n")
+    u = m["universe"]
+    L.append(f"{u['explanation']}. CREATEs removed because the full universe already contained them: **{len(u['create_removed_by_the_fuller_universe'])}**; added: {len(u['create_added_by_the_fuller_universe'])}. Live vs file snapshot: model ids equal = {m['universe_verification']['model_ids_equal']}; brand/en-name/alias differences = {m['universe_verification']['models_whose_brand_name_en_or_aliases_differ']}; historical ids {m['universe_verification']['historical_ids_equal']}. Not available in this schema: DISCOVERED/pending identities, UNVERIFIED state, deleted/withdrawn ids (the live Vehicle Master has no such columns/rows — see `shadow/universe/vehicle_master_live_2026-10-11.json`). Historical: 5 ids included. **The full Vehicle Master did not materially reduce CREATE (0 of 78 baseline CREATEs).**\n")
+    L.append("### 0.3 CREATEs removed, by rule (single-rule ablation: switch only that rule off)\n")
+    L.append(_table(["Rule", "Groups changed (any outcome/code)", "CREATE → not CREATE", "New REVIEW", "New HOLD", "Became CREATE"],
+                    [[r, e["groups_changed"], ", ".join(e["created_off_not_created_on"]) or "none", ", ".join(e["new_reviews"]) or "none", len(e["new_holds"]), ", ".join(e["became_create"]) or "none"] for r, e in m["rule_effects"].items()]))
+    L.append("Notes: " + " ".join(f"`{r}`: {e['note']}." for r, e in m["rule_effects"].items() if e["note"]) + " `SUB_BRAND_guard` and `BRAND_FAMILY` change nothing in this run because the stand-in resolver already filters sub-brand aliases and pools Changan/Deepal; they are pinned by corpus cases, not by this run. `YEAR_range_and_context` changes no M7 group (no M7 name was misread as a year in the base run either); it is pinned by the Peugeot 2008 / lone-year cases.\n")
+    L.append(f"Removed CREATEs and the rule responsible: {m['removed_create_attribution']}\n")
+    L.append("### 0.4 New REVIEWs (CREATE → REVIEW) and HOLD moves\n")
+    L.append(f"CREATE → REVIEW: {d['A']['review_added']}. REVIEW → HOLD (R1: the same registration-code names are now caught earlier as raw codes): {len(d['A']['review_removed'])} groups {d['A']['review_removed']}.\n")
+    L.append("### 0.5 Remaining CREATEs by activity (informational)\n")
+    L.append(_table(["Class", "Groups", "Lifetime units", "Last 12 m units"], [[c, v["groups"], f"{v['lifetime_units']:,}", f"{v['last12_units']:,}"] for c, v in m["activity"].items()]))
+    L.append(f"Recent discoveries (class RECENT_DISCOVERY): {m['activity'].get('RECENT_DISCOVERY', {}).get('ids')}. DORMANT_LEGACY = ≤{DORMANT_LAST12} registrations in the last 12 months; RECENT_DISCOVERY = more than that and first seen on or after {calibration.ACTIVITY_RECENT_FIRST_SEEN}; ACTIVE_ESTABLISHED = the rest. These are shown separately from genuinely recent discoveries and never alter a decision.\n")
+    L.append("Owner adjudication artifact: `shadow/review/create_adjudication.csv` — one row per remaining CREATE, `owner_label` blank. The analyst column is a note, not ground truth.\n")
+    return "\n".join(L)
+
+
 def render_md(s: dict) -> str:
     i, b = s["inputs"], s["buckets"]
     L = [f"# Identity Bootstrap shadow run — Ice `{i['package_index']['period']}` v{i['package_index']['version']} M{i['package_index']['master_version']}\n",
@@ -357,7 +426,10 @@ def render_md(s: dict) -> str:
          f"- Package sha256 `{i['package_sha256']}` (pinned). {i['groups']} model groups; {i['units_total']:,} registrations in total ({i['units_last12']:,} in the last 12 months).",
          f"- Status mix (adapter): {i['status_mix']}. Policy v{i['policy_version']} `{i['policy_digest'][:23]}…`. TDR side: **{i['tdr_catalog']['models']} models / {i['tdr_catalog']['brands']} brands from {i['tdr_catalog']['source']}**.",
          "- Mode **A**: a lexical stand-in for Identity Resolution lets duplicates of a TDR model stop at the resolver (`NOT_ACTIVATED`). Mode **B** (worst case): every group is offered to Bootstrap as `NO_CANDIDATE`.\n",
-         "## 1. Decisions and registration-volume coverage (informational)\n"]
+         ]
+    if s.get("m3"):
+        L.append(_m3_md(s, s["m3"]))
+    L.append("## 1. Decisions and registration-volume coverage (informational)\n")
     for mode in ("A", "B"):
         L.append(f"**Mode {mode}**\n")
         L.append(_table(["Outcome", "Groups", "Units (all time)", "Share", "Units (last 12 m)", "Share"],
@@ -376,10 +448,11 @@ def render_md(s: dict) -> str:
                       (c["analyst"]["kind"] + ": " + c["analyst"]["why"]) if c["analyst"] else "-"] for c in s["creates"]]))
     f = s["suspected_false_creates"]
     L.append(f"## 4. Suspected false CREATEs\n\nAnalyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **{f['analyst_count']} of {f['creates']}** ({f['units_total']:,} units) — {f['by_kind']}.\n")
-    L.append(f"- Proposed rule R1 (hyphenated registration code) would catch {len(f['caught_by_R1'])}: {', '.join(f['caught_by_R1'])}.")
-    L.append(f"- Proposed rule R2 (powertrain suffix glued to a digit token) would catch {len(f['caught_by_R2'])}: {', '.join(f['caught_by_R2'])}.")
-    L.append(f"- Proposed rule R4 (three digits + letters, a displacement-style trim code) would catch {len(f['caught_by_R4'])}: {', '.join(f['caught_by_R4']) or 'none'}.")
-    L.append(f"- Analyst suspects no rule catches ({len(f['analyst_suspects_missed_by_R1_R2'])}): {', '.join(f['analyst_suspects_missed_by_R1_R2'])}.")
+    L.append("- The milestone-2 proposals R1/R2/R4 are now policy v2 rules (section 0.3); the lists below show what they still catch among the remaining CREATEs (empty = all already removed).")
+    L.append(f"- R1 (hyphenated registration code) still catches {len(f['caught_by_R1'])}: {', '.join(f['caught_by_R1'])}.")
+    L.append(f"- R2 (powertrain suffix glued to a digit token) still catches {len(f['caught_by_R2'])}: {', '.join(f['caught_by_R2'])}.")
+    L.append(f"- R4 (displacement/trim code) still catches {len(f['caught_by_R4'])}: {', '.join(f['caught_by_R4']) or 'none'}.")
+    L.append(f"- Analyst-suspected, not caught by any rule ({len(f['analyst_suspects_missed_by_R1_R2'])}): {', '.join(f['analyst_suspects_missed_by_R1_R2'])}.")
     L.append(f"- Rule flags the analyst did not list (false positives of the proposals): {f['r1_r2_flags_not_in_analyst_list'] or 'none'}.")
     L.append(f"- Dormant (≤{DORMANT_LAST12} registrations in the last 12 months): **{f['dormant']} of {f['creates']}** ({f['dormant_units_total']:,} units all-time); first seen in the last 24 months: **{f['recent']}**.\n")
     r = s["suspected_false_review_hold"]

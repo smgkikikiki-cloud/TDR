@@ -2,48 +2,48 @@
  "buckets": {
   "A": {
    "CREATE_IDENTITY": {
-    "groups": 67,
-    "units_last12": 10272,
-    "units_last12_share_pct": 1.49,
-    "units_share_pct": 1.13,
-    "units_total": 46816
+    "groups": 78,
+    "units_last12": 10624,
+    "units_last12_share_pct": 1.54,
+    "units_share_pct": 1.14,
+    "units_total": 47391
    },
    "HOLD": {
-    "groups": 1044,
-    "units_last12": 655779,
-    "units_last12_share_pct": 95.12,
-    "units_share_pct": 97.08,
-    "units_total": 4020943
+    "groups": 1028,
+    "units_last12": 655477,
+    "units_last12_share_pct": 95.08,
+    "units_share_pct": 97.0,
+    "units_total": 4017882
    },
    "IDENTITY_REVIEW": {
-    "groups": 89,
-    "units_last12": 23378,
-    "units_last12_share_pct": 3.39,
-    "units_share_pct": 1.79,
-    "units_total": 74228
+    "groups": 94,
+    "units_last12": 23328,
+    "units_last12_share_pct": 3.38,
+    "units_share_pct": 1.85,
+    "units_total": 76714
    }
   },
   "B": {
    "CREATE_IDENTITY": {
-    "groups": 67,
-    "units_last12": 10272,
-    "units_last12_share_pct": 1.49,
-    "units_share_pct": 1.13,
-    "units_total": 46816
+    "groups": 78,
+    "units_last12": 10624,
+    "units_last12_share_pct": 1.54,
+    "units_share_pct": 1.14,
+    "units_total": 47391
    },
    "HOLD": {
-    "groups": 753,
-    "units_last12": 3425,
-    "units_last12_share_pct": 0.5,
-    "units_share_pct": 0.52,
-    "units_total": 21703
+    "groups": 737,
+    "units_last12": 3123,
+    "units_last12_share_pct": 0.45,
+    "units_share_pct": 0.45,
+    "units_total": 18642
    },
    "IDENTITY_REVIEW": {
-    "groups": 380,
-    "units_last12": 675732,
+    "groups": 385,
+    "units_last12": 675682,
     "units_last12_share_pct": 98.01,
-    "units_share_pct": 98.35,
-    "units_total": 4073468
+    "units_share_pct": 98.41,
+    "units_total": 4075954
    }
   }
  },
@@ -53,14 +53,14 @@
     "any_code": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67
+      78
      ]
     ],
     "primary": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67,
-      46816
+      78,
+      47391
      ]
     ]
    },
@@ -68,7 +68,7 @@
     "any_code": [
      [
       "PROVIDER_RAW_NAME",
-      628
+      612
      ],
      [
       "NOT_ACTIVATED",
@@ -76,15 +76,11 @@
      ],
      [
       "BRAND_NOT_IN_TDR",
-      197
+      195
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
-      127
-     ],
-     [
-      "POSSIBLE_MODEL_CODE",
-      122
+      124
      ],
      [
       "PROVIDER_IDENTITY_PROVISIONAL",
@@ -97,6 +93,10 @@
      [
       "EXISTING_IDENTITY_SUSPECTED",
       80
+     ],
+     [
+      "POSSIBLE_MODEL_CODE",
+      68
      ],
      [
       "POSSIBLE_TRIM_NOT_MODEL",
@@ -126,8 +126,8 @@
     "primary": [
      [
       "PROVIDER_RAW_NAME",
-      627,
-      19509
+      611,
+      16448
      ],
      [
       "NOT_ACTIVATED",
@@ -150,11 +150,11 @@
     "any_code": [
      [
       "BRAND_NOT_IN_TDR",
-      35
+      37
      ],
      [
       "STRUCTURAL_CONFLICT",
-      22
+      27
      ],
      [
       "EXISTING_IDENTITY_SUSPECTED",
@@ -165,32 +165,28 @@
       17
      ],
      [
-      "PROVIDER_COARSER_THAN_TDR",
-      10
-     ],
-     [
       "POSSIBLE_MODEL_CODE",
-      9
+      13
      ],
      [
       "DUPLICATE_CANONICAL_SUSPECTED",
-      8
+      12
      ],
      [
-      "POSSIBLE_TRUNCATED_NAME",
-      8
+      "PROVIDER_COARSER_THAN_TDR",
+      10
      ],
      [
       "POSSIBLE_TRIM_NOT_MODEL",
       6
      ],
      [
-      "POSSIBLE_POWERTRAIN_DERIVATIVE",
+      "PROVIDER_LINEAGE_AMBIGUOUS",
       6
      ],
      [
-      "PROVIDER_LINEAGE_AMBIGUOUS",
-      6
+      "POSSIBLE_POWERTRAIN_DERIVATIVE",
+      4
      ],
      [
       "POSSIBLE_BODY_VARIANT",
@@ -204,13 +200,13 @@
     "primary": [
      [
       "BRAND_NOT_IN_TDR",
-      35,
-      1132
+      37,
+      1142
      ],
      [
       "STRUCTURAL_CONFLICT",
-      20,
-      9620
+      25,
+      12430
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -229,13 +225,8 @@
      ],
      [
       "POSSIBLE_MODEL_CODE",
-      4,
-      67
-     ],
-     [
-      "POSSIBLE_TRUNCATED_NAME",
-      2,
-      335
+      5,
+      70
      ],
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
@@ -246,11 +237,6 @@
       "POSSIBLE_BODY_VARIANT",
       1,
       1
-     ],
-     [
-      "POSSIBLE_POWERTRAIN_DERIVATIVE",
-      1,
-      2
      ]
     ]
    }
@@ -260,14 +246,14 @@
     "any_code": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67
+      78
      ]
     ],
     "primary": [
      [
       "NEW_IDENTITY_CONFIRMED",
-      67,
-      46816
+      78,
+      47391
      ]
     ]
    },
@@ -275,18 +261,14 @@
     "any_code": [
      [
       "PROVIDER_RAW_NAME",
-      638
+      622
      ],
      [
       "BRAND_NOT_IN_TDR",
-      197
+      195
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
-      127
-     ],
-     [
-      "POSSIBLE_MODEL_CODE",
       124
      ],
      [
@@ -300,6 +282,10 @@
      [
       "EXISTING_IDENTITY_SUSPECTED",
       80
+     ],
+     [
+      "POSSIBLE_MODEL_CODE",
+      68
      ],
      [
       "POSSIBLE_TRIM_NOT_MODEL",
@@ -333,8 +319,8 @@
     "primary": [
      [
       "PROVIDER_RAW_NAME",
-      637,
-      19537
+      621,
+      16476
      ],
      [
       "PROVIDER_IDENTITY_PROVISIONAL",
@@ -352,11 +338,11 @@
     "any_code": [
      [
       "DUPLICATE_CANONICAL_SUSPECTED",
-      300
+      304
      ],
      [
       "STRUCTURAL_CONFLICT",
-      103
+      108
      ],
      [
       "EXISTING_IDENTITY_SUSPECTED",
@@ -364,7 +350,7 @@
      ],
      [
       "BRAND_NOT_IN_TDR",
-      35
+      37
      ],
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
@@ -375,16 +361,12 @@
       27
      ],
      [
-      "POSSIBLE_MODEL_CODE",
-      25
-     ],
-     [
       "PROVIDER_FINER_THAN_TDR",
       24
      ],
      [
-      "POSSIBLE_TRUNCATED_NAME",
-      18
+      "POSSIBLE_MODEL_CODE",
+      21
      ],
      [
       "POSSIBLE_TRIM_NOT_MODEL",
@@ -392,7 +374,7 @@
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
-      10
+      8
      ],
      [
       "POSSIBLE_BODY_VARIANT",
@@ -400,7 +382,7 @@
      ],
      [
       "POSSIBLE_GENERATION_VARIANT",
-      1
+      2
      ]
     ],
     "primary": [
@@ -411,13 +393,13 @@
      ],
      [
       "STRUCTURAL_CONFLICT",
-      101,
-      1799472
+      106,
+      1802282
      ],
      [
       "BRAND_NOT_IN_TDR",
-      35,
-      1132
+      37,
+      1142
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -431,18 +413,13 @@
      ],
      [
       "POSSIBLE_MODEL_CODE",
-      3,
-      65
+      4,
+      68
      ],
      [
       "EXISTING_IDENTITY_SUSPECTED",
       3,
       161
-     ],
-     [
-      "POSSIBLE_TRUNCATED_NAME",
-      2,
-      335
      ],
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
@@ -453,11 +430,6 @@
       "POSSIBLE_BODY_VARIANT",
       1,
       1
-     ],
-     [
-      "POSSIBLE_POWERTRAIN_DERIVATIVE",
-      1,
-      2
      ]
     ]
    }
@@ -631,6 +603,25 @@
   },
   {
    "analyst": {
+    "kind": "LIKELY_REAL",
+    "why": "first seen 2569-08; single-letter name deserves a human look"
+   },
+   "brand": "CHERY",
+   "canonical_id": "chery.q",
+   "canonical_name": "Q",
+   "first_seen": "2569-08",
+   "flags": [
+    "RECENT"
+   ],
+   "id": "chery-chery-q",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "Chery Q",
+   "units_last12": 332,
+   "units_total": 332
+  },
+  {
+   "analyst": {
     "kind": "SUSPECT_VARIANT",
     "why": "performance variant of 2 Series; owner decision whether TDR models M cars separately"
    },
@@ -714,6 +705,26 @@
    "name": "Foton eView",
    "units_last12": 144,
    "units_total": 144
+  },
+  {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fg8jj1a_jjt",
+   "canonical_name": "FG8JJ1A-JJT",
+   "first_seen": "2564-01",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT"
+   ],
+   "id": "hino-hino-fg8jj1a-jjt",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "HINO FG8JJ1A-JJT",
+   "units_last12": 2,
+   "units_total": 125
   },
   {
    "analyst": null,
@@ -963,6 +974,26 @@
    "units_total": 68
   },
   {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fm8jn1d_sgt",
+   "canonical_name": "FM8JN1D-SGT",
+   "first_seen": "2564-01",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT"
+   ],
+   "id": "hino-hino-fm8jn1d-sgt",
+   "in_B": true,
+   "last_seen": "2569-04",
+   "name": "HINO FM8JN1D-SGT",
+   "units_last12": 6,
+   "units_total": 66
+  },
+  {
    "analyst": null,
    "brand": "JEEP",
    "canonical_id": "jeep.gladiator",
@@ -1207,6 +1238,26 @@
    "units_total": 18
   },
   {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fm1an1d_sht",
+   "canonical_name": "FM1AN1D-SHT",
+   "first_seen": "2564-08",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT"
+   ],
+   "id": "hino-hino-fm1an1d-sht",
+   "in_B": true,
+   "last_seen": "2569-02",
+   "name": "HINO FM1AN1D-SHT",
+   "units_last12": 2,
+   "units_total": 17
+  },
+  {
    "analyst": null,
    "brand": "ROLLS ROYCE",
    "canonical_id": "rolls_royce.spectre",
@@ -1255,6 +1306,26 @@
    "units_total": 12
   },
   {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fm2pn1d_xht",
+   "canonical_name": "FM2PN1D-XHT",
+   "first_seen": "2564-09",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT"
+   ],
+   "id": "hino-hino-fm2pn1d-xht",
+   "in_B": true,
+   "last_seen": "2569-01",
+   "name": "HINO FM2PN1D-XHT",
+   "units_last12": 1,
+   "units_total": 11
+  },
+  {
    "analyst": null,
    "brand": "VOLKSWAGEN",
    "canonical_id": "volkswagen.golf",
@@ -1269,6 +1340,27 @@
    "name": "Volkswagen Golf",
    "units_last12": 3,
    "units_total": 10
+  },
+  {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "not a nameplate": null,
+    "why": "Hilux chassis code (KUN51R)"
+   },
+   "brand": "TOYOTA",
+   "canonical_id": "toyota.kun51r_nkpsyt",
+   "canonical_name": "KUN51R-NKPSYT",
+   "first_seen": "2564-01",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT"
+   ],
+   "id": "toyota-toyota-kun51r-nkpsyt",
+   "in_B": true,
+   "last_seen": "2569-04",
+   "name": "Toyota KUN51R-NKPSYT",
+   "units_last12": 1,
+   "units_total": 9
   },
   {
    "analyst": null,
@@ -1301,6 +1393,23 @@
    "last_seen": "2569-09",
    "name": "Prelude",
    "units_last12": 7,
+   "units_total": 7
+  },
+  {
+   "analyst": null,
+   "brand": "MCLAREN",
+   "canonical_id": "mclaren.750s",
+   "canonical_name": "750S",
+   "first_seen": "2567-08",
+   "flags": [
+    "R4_DISPLACEMENT_TRIM_CODE",
+    "DORMANT"
+   ],
+   "id": "mclaren-mclaren-750s",
+   "in_B": true,
+   "last_seen": "2569-06",
+   "name": "Mclaren 750S",
+   "units_last12": 2,
    "units_total": 7
   },
   {
@@ -1370,6 +1479,26 @@
    "units_total": 3
   },
   {
+   "analyst": {
+    "kind": "SUSPECT_TRUNCATED",
+    "why": "\"Grand\" is the start of Grand Cherokee / Grand Wagoneer"
+   },
+   "brand": "JEEP",
+   "canonical_id": "jeep.grand",
+   "canonical_name": "Grand",
+   "first_seen": "2567-11",
+   "flags": [
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "jeep-jeep-grand",
+   "in_B": true,
+   "last_seen": "2569-07",
+   "name": "JEEP Grand",
+   "units_last12": 2,
+   "units_total": 3
+  },
+  {
    "analyst": null,
    "brand": "LEXUS",
    "canonical_id": "lexus.rc",
@@ -1404,6 +1533,27 @@
   },
   {
    "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fg8jj3a_acdmh",
+   "canonical_name": "FG8JJ3A-ACDMH",
+   "first_seen": "2569-07",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "hino-hino-fg8jj3a-acdmh",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "HINO FG8JJ3A-ACDMH",
+   "units_last12": 2,
+   "units_total": 2
+  },
+  {
+   "analyst": {
     "kind": "SUSPECT_ALIAS",
     "why": "Jazz and Fit are one car; honda-jazz is also a CREATE"
    },
@@ -1420,6 +1570,27 @@
    "last_seen": "2569-02",
    "name": "Honda FIT",
    "units_last12": 2,
+   "units_total": 2
+  },
+  {
+   "analyst": {
+    "kind": "SUSPECT_VARIANT",
+    "why": "electric variant of jac-t8 (powertrain suffix glued to the token)"
+   },
+   "brand": "JAC",
+   "canonical_id": "jac.t8ev",
+   "canonical_name": "T8EV",
+   "first_seen": "2568-08",
+   "flags": [
+    "R2_GLUED_POWERTRAIN_SUFFIX",
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "jac-jac-t8ev",
+   "in_B": true,
+   "last_seen": "2569-05",
+   "name": "JAC T8EV",
+   "units_last12": 1,
    "units_total": 2
   },
   {
@@ -1487,6 +1658,27 @@
    "name": "VW Tiguan",
    "units_last12": 2,
    "units_total": 2
+  },
+  {
+   "analyst": {
+    "kind": "SUSPECT_CODE",
+    "why": "Hino chassis/model code with hyphenated suffix"
+   },
+   "brand": "HINO",
+   "canonical_id": "hino.fm8jn3d_cddmh",
+   "canonical_name": "FM8JN3D-CDDMH",
+   "first_seen": "2569-09",
+   "flags": [
+    "R1_HYPHENATED_REGISTRATION_CODE",
+    "DORMANT",
+    "RECENT"
+   ],
+   "id": "hino-hino-fm8jn3d-cddmh",
+   "in_B": true,
+   "last_seen": "2569-09",
+   "name": "HINO FM8JN3D-CDDMH",
+   "units_last12": 1,
+   "units_total": 1
   },
   {
    "analyst": null,
@@ -1578,8 +1770,8 @@
  ],
  "inputs": {
   "engine_seconds": {
-   "A": 0.32,
-   "B": 0.3
+   "A": 0.3,
+   "B": 0.27
   },
   "groups": 1200,
   "package_index": {
@@ -1608,8 +1800,8 @@
    "2564-01",
    "2569-09"
   ],
-  "policy_digest": "sha256:1fc33a12b2f81c3e473814d38b13083938e40014df7ba9c2ff668a68f05c22a4",
-  "policy_version": 2,
+  "policy_digest": "sha256:67d2762891ca12599168ac0f4df108f062cf967b2d3ae3cc01b330ce6011c36b",
+  "policy_version": 1,
   "status_mix": {
    "provisional": 114,
    "settled": 495,
@@ -1618,7 +1810,7 @@
   "tdr_catalog": {
    "brands": 62,
    "models": 323,
-   "source": "vehreg/data/2026/models/*.json (repo file catalog, verified identical to the live Vehicle Master on 2026-10-11 by a read-only SELECT)"
+   "source": "vehreg/data/2026/models/*.json (file snapshot, NOT the live database)"
   },
   "units_last12": 689429,
   "units_total": 4141987
@@ -1684,572 +1876,86 @@
    ]
   ]
  },
- "m3": {
-  "activity": {
-   "ACTIVE_ESTABLISHED": {
-    "groups": 5,
-    "ids": [
-     "bmw-bmw-m3",
-     "bmw-bmw-m2",
-     "bmw-bmw-m4",
-     "subaru-subaru-wrx",
-     "seres-seres-ec31"
-    ],
-    "last12_units": 240,
-    "lifetime_units": 1239
-   },
-   "DORMANT_LEGACY": {
-    "groups": 59,
-    "ids": [
-     "honda-jazz",
-     "toyota-vios",
-     "nissan-nissan-march",
-     "nissan-note",
-     "toyota-toyota-sienta",
-     "nissan-urvan",
-     "volt-volt-volt",
-     "toyota-toyota-tr",
-     "nissan-leaf",
-     "bentley-bentley-continental",
-     "sokon-crc50",
-     "chevrolet-trailblazer",
-     "chevrolet-chevrolet-corvette",
-     "foton-bj1041",
-     "peugeot-peugeot-408",
-     "suzuki-suzuki-spacia",
-     "tata-tata-xenon",
-     "honda-honda-stepwagon",
-     "jac-t8",
-     "honda-honda-n-box",
-     "kia-k2500",
-     "maserati-maserati-ghibli",
-     "jeep-jeep-gladiator",
-     "wuling-e10",
-     "daihatsu-daihatsu-move",
-     "rolls-royce-rolls-royce-cullinan",
-     "ferrari-ferrari-488",
-     "honda-brio",
-     "nissan-nissan-fairlady",
-     "ford-ford-focus",
-     "mclaren-mclaren-artura",
-     "ferrari-ferrari-purosangue",
-     "daihatsu-daihatsu-copen",
-     "ferrari-ferrari-portofino",
-     "hyundai-kona",
-     "bmw-bmw-m5",
-     "maserati-maserati-mc20",
-     "rolls-royce-rolls-royce-spectre",
-     "rolls-royce-rolls-royce-phantom",
-     "maserati-maserati-quattroporte",
-     "volkswagen-volkswagen-golf",
-     "honda-honda-acty",
-     "honda-prelude",
-     "land-rover-land-rover-discovery",
-     "honda-honda-freed",
-     "lamborghini-lamborghini-temerario",
-     "honda-super-one",
-     "lexus-lexus-rc",
-     "volkswagen-volkswagen-caddy",
-     "honda-honda-fit",
-     "suzuki-apv",
-     "toyota-toyota-roomy",
-     "volkswagen-volkswagen-touareg",
-     "volkswagen-vw-tiguan",
-     "honda-honda-amaze",
-     "hyundai-genesis-g80",
-     "hyundai-tucson",
-     "lotus-emira",
-     "suzuki-grand-vitara"
-    ],
-    "last12_units": 173,
-    "lifetime_units": 33882
-   },
-   "RECENT_DISCOVERY": {
-    "groups": 3,
-    "ids": [
-     "jaecoo-jaecoo-j6",
-     "zeekr-zeekr-7x",
-     "foton-eview"
-    ],
-    "last12_units": 9859,
-    "lifetime_units": 11695
-   }
-  },
-  "baseline": "shadow/baseline_m2/decisions.csv (milestone 2: policy v1, same package, same TDR catalog)",
-  "diff": {
-   "A": {
-    "create_added": [],
-    "create_removed": [
-     "chery-chery-q",
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "groups_with_any_change": 20,
-    "removed_detail": {
-     "chery-chery-q": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "hino-hino-fg8jj1a-jjt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fg8jj3a-acdmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm1an1d-sht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm2pn1d-xht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn1d-sgt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn3d-cddmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "jac-jac-t8ev": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_POWERTRAIN_DERIVATIVE"
-      ]
-     ],
-     "jeep-jeep-grand": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "mclaren-mclaren-750s": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_MODEL_CODE"
-      ]
-     ],
-     "toyota-toyota-kun51r-nkpsyt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ]
-    },
-    "review_added": [
-     "chery-chery-q",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s"
-    ],
-    "review_removed": [
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt"
-    ],
-    "transition_matrix": {
-     "CREATE_IDENTITY -> CREATE_IDENTITY": 67,
-     "CREATE_IDENTITY -> HOLD": 7,
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 4,
-     "HOLD -> HOLD": 1028,
-     "IDENTITY_REVIEW -> HOLD": 9,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 85
-    }
-   },
-   "B": {
-    "create_added": [],
-    "create_removed": [
-     "chery-chery-q",
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "groups_with_any_change": 20,
-    "removed_detail": {
-     "chery-chery-q": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "hino-hino-fg8jj1a-jjt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fg8jj3a-acdmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm1an1d-sht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm2pn1d-xht": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn1d-sgt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "hino-hino-fm8jn3d-cddmh": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ],
-     "jac-jac-t8ev": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_POWERTRAIN_DERIVATIVE"
-      ]
-     ],
-     "jeep-jeep-grand": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_TRUNCATED_NAME"
-      ]
-     ],
-     "mclaren-mclaren-750s": [
-      "IDENTITY_REVIEW",
-      [
-       "POSSIBLE_MODEL_CODE"
-      ]
-     ],
-     "toyota-toyota-kun51r-nkpsyt": [
-      "HOLD",
-      [
-       "PROVIDER_RAW_NAME"
-      ]
-     ]
-    },
-    "review_added": [
-     "chery-chery-q",
-     "jac-jac-t8ev",
-     "jeep-jeep-grand",
-     "mclaren-mclaren-750s"
-    ],
-    "review_removed": [
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt"
-    ],
-    "transition_matrix": {
-     "CREATE_IDENTITY -> CREATE_IDENTITY": 67,
-     "CREATE_IDENTITY -> HOLD": 7,
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 4,
-     "HOLD -> HOLD": 737,
-     "IDENTITY_REVIEW -> HOLD": 9,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 376
-    }
-   }
-  },
-  "policy_version": 2,
-  "removed_create_attribution": {
-   "chery-chery-q": [
-    "TRUNCATION_soft_signal"
-   ],
-   "hino-hino-fg8jj1a-jjt": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fg8jj3a-acdmh": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm1an1d-sht": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm2pn1d-xht": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm8jn1d-sgt": [
-    "R1_hyphenated_code"
-   ],
-   "hino-hino-fm8jn3d-cddmh": [
-    "R1_hyphenated_code"
-   ],
-   "jac-jac-t8ev": [
-    "R2_glued_powertrain_suffix"
-   ],
-   "jeep-jeep-grand": [
-    "TRUNCATION_soft_signal"
-   ],
-   "mclaren-mclaren-750s": [
-    "R4_displacement_trim_code"
-   ],
-   "toyota-toyota-kun51r-nkpsyt": [
-    "R1_hyphenated_code"
-   ]
-  },
-  "rule_effects": {
-   "BRAND_FAMILY": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "family input withheld in the 'off' run",
-    "transitions_off_to_on": {}
-   },
-   "R1_hyphenated_code": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "groups_changed": 16,
-    "new_holds": [
-     "hino-hino-fg8jj1a-jjt",
-     "hino-hino-fg8jj3a-acdmh",
-     "hino-hino-fm1an1d-sht",
-     "hino-hino-fm2pn1d-xht",
-     "hino-hino-fm8jn1d-sgt",
-     "hino-hino-fm8jn3d-cddmh",
-     "hino-hino-xzu600r-hkmqlt3",
-     "hino-hino-xzu600r-wkmlst3",
-     "hino-hino-xzu600r-wktlst3",
-     "hino-hino-xzu720r-wkftst3",
-     "jiayuan-jiayuan-jy1320-zlh",
-     "jiayuan-jiayuan-jy7222-zqr",
-     "toyota-toyota-gun122r-btflxt",
-     "toyota-toyota-kdh222r-lemdyt",
-     "toyota-toyota-kdh223r-lemdyt",
-     "toyota-toyota-kun51r-nkpsyt"
-    ],
-    "new_reviews": [],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> HOLD": 7,
-     "IDENTITY_REVIEW -> HOLD": 9
-    }
-   },
-   "R2_glued_powertrain_suffix": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "jac-jac-t8ev"
-    ],
-    "groups_changed": 5,
-    "new_holds": [],
-    "new_reviews": [
-     "jac-jac-t8ev"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 1,
-     "HOLD -> HOLD": 3,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 1
-    }
-   },
-   "R4_displacement_trim_code": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "mclaren-mclaren-750s"
-    ],
-    "groups_changed": 50,
-    "new_holds": [],
-    "new_reviews": [
-     "mclaren-mclaren-750s"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 1,
-     "HOLD -> HOLD": 47,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 2
-    }
-   },
-   "SUB_BRAND_guard": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "measured with a NAIVE adapter that offers every catalog alias (sub-brands included) as a spelling",
-    "transitions_off_to_on": {}
-   },
-   "TRUNCATION_soft_signal": {
-    "became_create": [],
-    "created_off_not_created_on": [
-     "chery-chery-q",
-     "jeep-jeep-grand"
-    ],
-    "groups_changed": 8,
-    "new_holds": [],
-    "new_reviews": [
-     "chery-chery-q",
-     "jeep-jeep-grand"
-    ],
-    "note": "",
-    "transitions_off_to_on": {
-     "CREATE_IDENTITY -> IDENTITY_REVIEW": 2,
-     "IDENTITY_REVIEW -> IDENTITY_REVIEW": 6
-    }
-   },
-   "YEAR_range_and_context": {
-    "became_create": [],
-    "created_off_not_created_on": [],
-    "groups_changed": 0,
-    "new_holds": [],
-    "new_reviews": [],
-    "note": "",
-    "transitions_off_to_on": {}
-   }
-  },
-  "universe": {
-   "create_added_by_the_fuller_universe": [],
-   "create_removed_by_the_fuller_universe": [],
-   "explanation": "the live Vehicle Master is identical to the snapshot on every identity-bearing field; the only difference is that all 323 slugs are now reserved in the collision check",
-   "models_in_live_not_in_snapshot": 0,
-   "models_in_snapshot_not_in_live": 0
-  },
-  "universe_verification": {
-   "brand_digest_equal": true,
-   "conclusion": "the file snapshot used by milestone 2 is identical to the live Vehicle Master on every identity-bearing field; the live universe holds no model that the snapshot lacked",
-   "historical_ids_equal": [
-    "audi.etron",
-    "bmw.i3",
-    "byd.seagull",
-    "gwm.ora_03",
-    "gwm.ora_good_cat"
-   ],
-   "model_ids_equal": true,
-   "models_compared": 323,
-   "models_whose_brand_name_en_or_aliases_differ": 0,
-   "retail_current_ids_equal": [
-    "aion.aion_ut",
-    "aion.aion_v",
-    "aion.aion_y_plus",
-    "toyota.alphard"
-   ]
-  }
- },
  "refined_relations_whatif": {
   "A": {
    "CREATE_IDENTITY": {
-    "groups": 74,
-    "units_last12": 11029,
-    "units_last12_share_pct": 1.6,
-    "units_share_pct": 1.16,
-    "units_total": 47886
+    "groups": 88,
+    "units_last12": 11395,
+    "units_last12_share_pct": 1.65,
+    "units_share_pct": 1.19,
+    "units_total": 49269
    },
    "HOLD": {
-    "groups": 1038,
-    "units_last12": 654527,
-    "units_last12_share_pct": 94.94,
-    "units_share_pct": 96.97,
-    "units_total": 4016524
+    "groups": 1022,
+    "units_last12": 654225,
+    "units_last12_share_pct": 94.89,
+    "units_share_pct": 96.9,
+    "units_total": 4013463
    },
    "IDENTITY_REVIEW": {
-    "groups": 88,
-    "units_last12": 23873,
-    "units_last12_share_pct": 3.46,
-    "units_share_pct": 1.87,
-    "units_total": 77577
+    "groups": 90,
+    "units_last12": 23809,
+    "units_last12_share_pct": 3.45,
+    "units_share_pct": 1.91,
+    "units_total": 79255
    }
   },
   "B": {
    "CREATE_IDENTITY": {
-    "groups": 74,
-    "units_last12": 11029,
-    "units_last12_share_pct": 1.6,
-    "units_share_pct": 1.16,
-    "units_total": 47886
+    "groups": 88,
+    "units_last12": 11395,
+    "units_last12_share_pct": 1.65,
+    "units_share_pct": 1.19,
+    "units_total": 49269
    },
    "HOLD": {
-    "groups": 753,
-    "units_last12": 3425,
-    "units_last12_share_pct": 0.5,
-    "units_share_pct": 0.52,
-    "units_total": 21703
+    "groups": 737,
+    "units_last12": 3123,
+    "units_last12_share_pct": 0.45,
+    "units_share_pct": 0.45,
+    "units_total": 18642
    },
    "IDENTITY_REVIEW": {
-    "groups": 373,
-    "units_last12": 674975,
-    "units_last12_share_pct": 97.9,
-    "units_share_pct": 98.32,
-    "units_total": 4072398
+    "groups": 375,
+    "units_last12": 674911,
+    "units_last12_share_pct": 97.89,
+    "units_share_pct": 98.36,
+    "units_total": 4074076
    }
   },
   "lost_creates_vs_base_A": [],
-  "new_creates_flagged_by_R4": [],
+  "new_creates_flagged_by_R4": [
+   "bmw-bmw-630i",
+   "volvo-volvo-264gl",
+   "volvo-volvo-264gle"
+  ],
   "new_creates_in_B": [
+   "bmw-bmw-630i",
    "mazda-mazda-mx-30",
    "mazda-mazda6e",
    "nissan-nissan-be-1",
    "peugeot-peugeot-5008",
    "volkswagen-volkswagen-t-roc",
    "volkswagen-vw-t-cross",
+   "volvo-volvo-264gl",
+   "volvo-volvo-264gle",
    "volvo-volvo-es90"
   ],
   "new_creates_vs_base_A": [
+   "bmw-bmw-630i",
    "mazda-mazda-mx-30",
    "mazda-mazda6e",
    "nissan-nissan-be-1",
    "peugeot-peugeot-5008",
    "volkswagen-volkswagen-t-roc",
    "volkswagen-vw-t-cross",
+   "volvo-volvo-264gl",
+   "volvo-volvo-264gle",
    "volvo-volvo-es90"
   ],
   "structural_conflict_groups": {
-   "A": 7,
-   "B": 49
+   "A": 12,
+   "B": 54
   }
  },
  "relation_quality": {
@@ -2413,6 +2119,23 @@
    },
    {
     "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-wkmlst3",
+    "name": "HINO XZU600R-WKMLST3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 2634
+   },
+   {
+    "codes": [
      "LINEAGE_UNRESOLVED",
      "STRUCTURAL_CONFLICT",
      "EXISTING_IDENTITY_SUSPECTED",
@@ -2558,6 +2281,21 @@
    },
    {
     "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "toyota-toyota-kdh222r-lemdyt",
+     "toyota-toyota-kdh223r-lemdyt"
+    ],
+    "id": "toyota-toyota-kdh223r-lemdyt",
+    "name": "Toyota KDH223R-LEMDYT",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 92
+   },
+   {
+    "codes": [
      "LINEAGE_UNRESOLVED",
      "STRUCTURAL_CONFLICT",
      "EXISTING_IDENTITY_SUSPECTED",
@@ -2633,6 +2371,21 @@
      "POSSIBLE_MODEL_CODE"
     ],
     "group": [
+     "toyota-toyota-kdh222r-lemdyt",
+     "toyota-toyota-kdh223r-lemdyt"
+    ],
+    "id": "toyota-toyota-kdh222r-lemdyt",
+    "name": "Toyota KDH222R-LEMDYT",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 40
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
      "lexus-lexus-rz350e",
      "lexus-lexus-rz450e"
     ],
@@ -2640,6 +2393,23 @@
     "name": "Lexus RZ350E",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 27
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-wktlst3",
+    "name": "HINO XZU600R-WKTLST3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 25
    },
    {
     "codes": [
@@ -2695,6 +2465,22 @@
    },
    {
     "codes": [
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-hkmqlt3",
+    "name": "HINO XZU600R-HKMQLT3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 19
+   },
+   {
+    "codes": [
      "BRAND_NOT_IN_TDR",
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
@@ -2726,8 +2512,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "volvo-volvo-264gl",
@@ -2754,8 +2539,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "volvo-volvo-264gl",
@@ -3409,6 +3193,23 @@
     "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-wkmlst3",
+    "name": "HINO XZU600R-WKMLST3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 2634
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
      "PROVIDER_LINEAGE_AMBIGUOUS",
      "POSSIBLE_MODEL_CODE"
     ],
@@ -3613,8 +3414,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "BMW|630CI",
@@ -3710,8 +3510,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "BMW|630CI",
@@ -3777,7 +3576,8 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED"
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_GENERATION_VARIANT"
     ],
     "group": [
      "peugeot-peugeot-2008",
@@ -4063,8 +3863,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "BMW|630CI",
@@ -4103,6 +3902,21 @@
     "name": "AUDI RS 5",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 94
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "toyota-toyota-kdh222r-lemdyt",
+     "toyota-toyota-kdh223r-lemdyt"
+    ],
+    "id": "toyota-toyota-kdh223r-lemdyt",
+    "name": "Toyota KDH223R-LEMDYT",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 92
    },
    {
     "codes": [
@@ -4264,6 +4078,20 @@
      "POSSIBLE_MODEL_CODE"
     ],
     "group": [
+     "toyota-toyota-kdh222r-lemdyt",
+     "toyota-toyota-kdh223r-lemdyt"
+    ],
+    "id": "toyota-toyota-kdh222r-lemdyt",
+    "name": "Toyota KDH222R-LEMDYT",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 40
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED"
+    ],
+    "group": [
      "BMW|630CI",
      "BMW|650I",
      "bmw-bmw-320i",
@@ -4353,6 +4181,23 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
+     "DUPLICATE_CANONICAL_SUSPECTED",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-wktlst3",
+    "name": "HINO XZU600R-WKTLST3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 25
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
@@ -4414,6 +4259,22 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [
+     "HINO|XZU650R HKMRLT3",
+     "hino-hino-xzu600r-hkmqlt3",
+     "hino-hino-xzu600r-wkmlst3",
+     "hino-hino-xzu600r-wktlst3"
+    ],
+    "id": "hino-hino-xzu600r-hkmqlt3",
+    "name": "HINO XZU600R-HKMQLT3",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 19
+   },
+   {
+    "codes": [
+     "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED",
      "EXISTING_IDENTITY_SUSPECTED",
      "POSSIBLE_TRIM_NOT_MODEL"
@@ -4467,8 +4328,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "volvo-volvo-264gl",
@@ -4482,8 +4342,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "BMW|630CI",
@@ -4520,8 +4379,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "BMW|630CI",
@@ -4571,8 +4429,7 @@
    {
     "codes": [
      "STRUCTURAL_CONFLICT",
-     "DUPLICATE_CANONICAL_SUSPECTED",
-     "POSSIBLE_MODEL_CODE"
+     "DUPLICATE_CANONICAL_SUSPECTED"
     ],
     "group": [
      "volvo-volvo-264gl",
@@ -4631,7 +4488,7 @@
   ]
  },
  "suspected_false_creates": {
-  "analyst_count": 11,
+  "analyst_count": 20,
   "analyst_suspects_missed_by_R1_R2": [
    "bmw-bmw-m2",
    "bmw-bmw-m3",
@@ -4642,25 +4499,40 @@
    "honda-honda-stepwagon",
    "honda-jazz",
    "hyundai-genesis-g80",
+   "jeep-jeep-grand",
    "sokon-crc50",
    "toyota-toyota-tr"
   ],
   "by_kind": {
    "SUSPECT_ALIAS": 3,
    "SUSPECT_BRAND": 1,
-   "SUSPECT_CODE": 2,
-   "SUSPECT_TRUNCATED": 1,
-   "SUSPECT_VARIANT": 4
+   "SUSPECT_CODE": 9,
+   "SUSPECT_TRUNCATED": 2,
+   "SUSPECT_VARIANT": 5
   },
-  "caught_by_R1": [],
-  "caught_by_R2": [],
-  "caught_by_R4": [],
-  "creates": 67,
-  "dormant": 59,
-  "dormant_units_total": 33882,
-  "r1_r2_flags_not_in_analyst_list": [],
-  "recent": 16,
-  "units_total": 15402
+  "caught_by_R1": [
+   "hino-hino-fg8jj1a-jjt",
+   "hino-hino-fg8jj3a-acdmh",
+   "hino-hino-fm1an1d-sht",
+   "hino-hino-fm2pn1d-xht",
+   "hino-hino-fm8jn1d-sgt",
+   "hino-hino-fm8jn3d-cddmh",
+   "toyota-toyota-kun51r-nkpsyt"
+  ],
+  "caught_by_R2": [
+   "jac-jac-t8ev"
+  ],
+  "caught_by_R4": [
+   "mclaren-mclaren-750s"
+  ],
+  "creates": 78,
+  "dormant": 69,
+  "dormant_units_total": 34125,
+  "r1_r2_flags_not_in_analyst_list": [
+   "mclaren-mclaren-750s"
+  ],
+  "recent": 21,
+  "units_total": 15638
  },
  "suspected_false_review_hold": {
   "clean_looking_raw_top": [
@@ -4700,9 +4572,19 @@
     13
    ],
    [
+    "HINO|XZB70R ZEMHY",
+    "XZB70R-ZEMHY",
+    12
+   ],
+   [
     "VOLKSWAGEN|TRANSPORTER",
     "TRANSPORTER",
     12
+   ],
+   [
+    "MCLAREN|720S SPIDER",
+    "720S SPIDER",
+    11
    ],
    [
     "TOYOTA|C POD",
@@ -4720,6 +4602,11 @@
     9
    ],
    [
+    "HINO|FG8JF1D JGT",
+    "FG8JF1D-JGT",
+    9
+   ],
+   [
     "MG|MG6",
     "MG6",
     9
@@ -4733,6 +4620,16 @@
     "DFSK|EQ1020TF",
     "EQ1020TF",
     8
+   ],
+   [
+    "FERRARI|812 GTS",
+    "812 GTS",
+    8
+   ],
+   [
+    "BMW|740LI LIMOUSINE RHD",
+    "740Li Limousine RHD",
+    7
    ],
    [
     "BMW|I3S 94AH RHD",
@@ -4763,31 +4660,6 @@
     "SSANGYONG|RODIUS",
     "RODIUS",
     7
-   ],
-   [
-    "TOYOTA|COASTER",
-    "COASTER",
-    7
-   ],
-   [
-    "CAVAN|VANTASTIC",
-    "VANTASTIC",
-    6
-   ],
-   [
-    "LAMBORGHINI|AVENTADOR ULTIMAE",
-    "AVENTADOR ULTIMAE",
-    6
-   ],
-   [
-    "MITSUBISHI|MINICAB MIEV",
-    "MINICAB MIEV",
-    6
-   ],
-   [
-    "DFM|GLORY580",
-    "GLORY580",
-    5
    ]
   ],
   "not_activated_by_fuzzy_or_equiv_only": [
@@ -4803,7 +4675,7 @@
    "volvo-volvo-es90"
   ],
   "provisional": 114,
-  "review_total": 89,
+  "review_total": 94,
   "settled_ids_with_registration_code_tokens": [
    "chenglong-chenglong-lz3240m3cc2",
    "dayun-dayun-dyq1033bev1r-h",
@@ -4815,20 +4687,8 @@
    "foton-foton-bj1045v8jd3-fa",
    "foton-foton-bj1045v9jd4-r1",
    "higer-higer-klq6540evn3r",
-   "hino-hino-fg8jj1a-jjt",
-   "hino-hino-fg8jj3a-acdmh",
-   "hino-hino-fm1an1d-sht",
-   "hino-hino-fm2pn1d-xht",
-   "hino-hino-fm8jn1d-sgt",
-   "hino-hino-fm8jn3d-cddmh",
-   "hino-hino-xzu600r-hkmqlt3",
-   "hino-hino-xzu600r-wkmlst3",
-   "hino-hino-xzu600r-wktlst3",
-   "hino-hino-xzu720r-wkftst3",
    "jac-jac-hfc1040ev2",
    "jac-jac-hfc1040ev3",
-   "jiayuan-jiayuan-jy1320-zlh",
-   "jiayuan-jiayuan-jy7222-zqr",
    "mitsubishi-mitsubishi-cy4astxhru",
    "mitsubishi-mitsubishi-lb2tcldjcru",
    "nissan-nissan-bdtarczb172ha",
@@ -4838,10 +4698,6 @@
    "nissan-nissan-vws4rtfe25uway42dy",
    "sany-sany-sym1030t1bevh3",
    "suzuki-suzuki-ap416pum14058",
-   "toyota-toyota-gun122r-btflxt",
-   "toyota-toyota-kdh222r-lemdyt",
-   "toyota-toyota-kdh223r-lemdyt",
-   "toyota-toyota-kun51r-nkpsyt",
    "ud-trucks-ud-trucks-cwe08n43r280css9",
    "ud-trucks-ud-trucks-cwe08n43r350css9",
    "ud-trucks-ud-trucks-cwe11n43r410cssi",
@@ -4852,7 +4708,7 @@
    "yuchai-yuchai-nz5162gss"
   ],
   "unsettled_raw_ids": 591,
-  "unsettled_raw_ids_with_clean_looking_name": 158,
+  "unsettled_raw_ids_with_clean_looking_name": 229,
   "weak_token_sibling_only": [
    "mazda-mazda-mx-30",
    "toyota-toyota-d-cab"
@@ -4862,11 +4718,11 @@
  "word_rules": {
   "all_classes_removed_new_creates_A": [
    "farizon-farizon-mpv-sv6",
+   "hino-hino-xzu720r-wkftst3",
    "honda-honda-s660",
-   "jac-jac-t8ev",
    "lexus-lexus-es350e",
    "lexus-lexus-rz500e",
-   "mclaren-mclaren-750s"
+   "toyota-toyota-gun122r-btflxt"
   ],
   "classes": {
    "body": {
@@ -4888,26 +4744,24 @@
    "model_code": {
     "new_creates_if_removed": {
      "A": [
+      "hino-hino-xzu720r-wkftst3",
       "honda-honda-s660",
       "lexus-lexus-es350e",
       "lexus-lexus-rz500e",
-      "mclaren-mclaren-750s"
+      "toyota-toyota-gun122r-btflxt"
      ],
      "B": [
+      "hino-hino-xzu720r-wkftst3",
       "honda-honda-s660",
       "lexus-lexus-rz500e",
-      "mclaren-mclaren-750s"
+      "toyota-toyota-gun122r-btflxt"
      ]
     }
    },
    "powertrain": {
     "new_creates_if_removed": {
-     "A": [
-      "jac-jac-t8ev"
-     ],
-     "B": [
-      "jac-jac-t8ev"
-     ]
+     "A": [],
+     "B": []
     }
    },
    "trim": {
@@ -5005,23 +4859,30 @@
     ],
     "subjects": 1
    },
-   "model_code.pattern": {
-    "settled": 32,
+   "generation.pattern": {
+    "settled": 1,
     "settled_names": [
-     "BMW 218i",
-     "BMW 320i",
-     "BMW 330i",
-     "BMW 420I",
-     "BMW 430i",
-     "BMW 520i",
-     "BMW 530e",
-     "BMW 630I",
+     "Peugeot 2008"
+    ],
+    "subjects": 1
+   },
+   "model_code.pattern": {
+    "settled": 21,
+    "settled_names": [
      "BMW M760E",
      "HINO XZU600R-HKMQLT3",
      "HINO XZU600R-WKMLST3",
-     "HINO XZU600R-WKTLST3"
+     "HINO XZU600R-WKTLST3",
+     "HINO XZU720R-WKFTST3",
+     "Honda S660",
+     "Lexus ES300H",
+     "Lexus ES350E",
+     "Lexus ES350H",
+     "Lexus IS300H",
+     "Lexus RZ350E",
+     "Lexus RZ450E"
     ],
-    "subjects": 149
+    "subjects": 89
    },
    "powertrain.2wd": {
     "settled": 0,
@@ -5108,14 +4969,6 @@
     "settled": 0,
     "settled_names": [],
     "subjects": 80
-   },
-   "powertrain.pattern": {
-    "settled": 2,
-    "settled_names": [
-     "JAC T8EV",
-     "SRM T3EV"
-    ],
-    "subjects": 6
    },
    "powertrain.petrol": {
     "settled": 0,
@@ -5296,8 +5149,8 @@
   }
  },
  "write_plans": {
-  "A": 67,
-  "B": 67,
+  "A": 78,
+  "B": 78,
   "writes_executed": 0
  }
 }

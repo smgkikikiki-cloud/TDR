@@ -28,7 +28,7 @@ class _Subject:
     def __init__(self, raw: dict, lex: Lexicon):
         self.raw = raw
         self.sid = sid_of(raw["provider"], raw["entity_id"])
-        self.spellings = (raw["brand"]["raw"], *raw["brand"].get("spellings", []))
+        self.spellings = lex.marque_spellings(raw["brand"]["brand_id"], (raw["brand"]["raw"], *raw["brand"].get("spellings", [])))
         self.tokens = lex.tokens(raw["display_name"], self.spellings)
         brand_id = raw["brand"]["brand_id"]
         self.identity_key = f"{brand_id}|{''.join(self.tokens)}" if brand_id and self.tokens else None
@@ -137,6 +137,27 @@ def decide(snapshot: dict, policy: dict, registry: dict, slugger=None) -> list[d
                     s.suggest = (i["canonical_id"], "IDENTITY_ALREADY_DISCOVERED")
                 else:
                     s.fire("DUPLICATE_CANONICAL_SUSPECTED", canonical_id=i["canonical_id"], via="identity_key")
+        # G2b brand family: related / relabelled marques, compared by name WITHOUT treating their names as spellings of this brand
+        fam_cfg = policy["brand"]["family"]
+        for fam in raw["brand"].get("family", []):
+            union = s.spellings + tuple(fam.get("spellings", []))
+            mine_u = "".join(lex.tokens(raw["display_name"], union))
+            if not mine_u:
+                continue
+            for i in by_brand.get(fam["brand_id"], ()):
+                if "".join(lex.tokens(i["name_en"], union)) != mine_u:
+                    continue
+                cls = peer_class(i["identity_state"])
+                if fam["relation"] in fam_cfg["duplicate_relations"]:
+                    if cls == "withdrawn":
+                        s.fire("IDENTITY_PREVIOUSLY_WITHDRAWN", canonical_id=i["canonical_id"], via="brand_family")
+                    elif cls == "pending":
+                        s.fire("IDENTITY_ALREADY_DISCOVERED", canonical_id=i["canonical_id"], via="brand_family")
+                        s.suggest = (i["canonical_id"], "IDENTITY_ALREADY_DISCOVERED")
+                    else:
+                        s.fire("DUPLICATE_CANONICAL_SUSPECTED", canonical_id=i["canonical_id"], via="brand_family")
+                elif fam["relation"] in fam_cfg["suspect_relations"] and cls != "withdrawn":
+                    s.fire(fam_cfg["suspect_code"], canonical_id=i["canonical_id"], via="brand_family")
         # G3 lineage
         lin = lineage_findings(raw, snapshot, bindings, live_ids, policy["lineage"]["actions"])
         for code, detail in lin["codes"]:

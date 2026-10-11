@@ -16,7 +16,21 @@
         "raw": {"type": "string"},
         "brand_id": {"type": ["string", "null"]},
         "relation": {"enum": ["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED", "UNKNOWN", "NOT_IN_TDR"]},
-        "spellings": {"type": "array", "items": {"type": "string"}}
+        "spellings": {"type": "array", "items": {"type": "string"}, "description": "Spellings of THIS marque only. Sub-brands (Ora/Haval/Tank, Omoda/Jetour) are not spellings; the engine drops any listed in policy brand.sub_brands."},
+        "family": {
+          "type": "array",
+          "description": "Related or relabelled marques the duplicate defence must also look in. Their spellings are used only to compare names, never to strip the subject's own.",
+          "items": {
+            "type": "object",
+            "required": ["brand_id", "relation"],
+            "additionalProperties": false,
+            "properties": {
+              "brand_id": {"$ref": "#/$defs/nonempty"},
+              "relation": {"enum": ["ALIAS_RELABEL", "ALIAS_RELATED"]},
+              "spellings": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
       }
     },
     "evidence_item": {

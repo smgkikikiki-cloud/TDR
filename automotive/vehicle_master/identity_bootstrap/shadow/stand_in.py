@@ -14,6 +14,8 @@ TOKEN_EQUIVALENCE = [["ev", "electric"], ["hatch", "hatchback"], ["hev", "hybrid
 FUZZY_MIN_TOKEN = 4
 STRENGTH = ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY", "SUBJECT_FINER", "SUBJECT_COARSER", "SIBLING", "CONTRADICTION"]
 BRAND_CLASSES = [["changan", "deepal"]]        # Ice files Deepal models under CHANGAN (IR README section 3); one marque family for pooling
+#: What Bootstrap's duplicate defence is told about related marques (input brand.family). Names of the family are compared, never stripped from the subject's own.
+FAMILIES = {"changan": [("deepal", "ALIAS_RELABEL", ["Deepal"])], "deepal": [("changan", "ALIAS_RELABEL", ["Changan"])]}
 CURATED_BRAND_ALIASES = {"mercedes": "mercedes_benz", "benz": "mercedes_benz", "mercedesbenz": "mercedes_benz", "vw": "volkswagen"}
 #: Extra spellings a model name may lead with. Catalog aliases that are SUB-BRANDS (gwm: haval/ora/tank, chery: omoda/jetour) are NOT spellings of the brand:
 #: stripping them turned "Ora 5" into the canonical name "5" in the first shadow pass.
@@ -71,9 +73,11 @@ def name_relation(a: list[str], b: list[str], refined: bool = False, non_distinc
 
 
 class StandIn:
-    def __init__(self, catalog: dict, policy: dict, refined: bool = False):
+    def __init__(self, catalog: dict, policy: dict, refined: bool = False, naive_spellings: bool = False, families: bool = True):
         self.lex = Lexicon(policy)
         self.refined = refined
+        self.naive_spellings = naive_spellings      # offer every catalog alias (sub-brands included) as a spelling, as the first shadow pass did
+        self.families = families
         self.non_distinctive = frozenset(w.casefold() for cls in ("trim", "powertrain", "body", "generation") for w in policy["shape"][cls]["tokens"])
         self.brands = catalog["brands"]
         self.identities = catalog["identities"]
@@ -106,7 +110,10 @@ class StandIn:
             out = {"raw": ice_brand, "brand_id": None, "relation": "NOT_IN_TDR"}
         if out["brand_id"]:
             b = self.brands[out["brand_id"]]
-            out["spellings"] = sorted({b["name_en"], out["brand_id"].replace("_", " "), *self._own_aliases(out["brand_id"], b), *CURATED_SPELLINGS.get(out["brand_id"], [])})
+            aliases = b.get("aliases", []) if self.naive_spellings else self._own_aliases(out["brand_id"], b)
+            out["spellings"] = sorted({b["name_en"], out["brand_id"].replace("_", " "), *aliases, *CURATED_SPELLINGS.get(out["brand_id"], [])})
+            if self.families and out["brand_id"] in FAMILIES:
+                out["family"] = [{"brand_id": f, "relation": rel, "spellings": sp} for f, rel, sp in FAMILIES[out["brand_id"]]]
         self._brand_cache[ice_brand] = out
         return out
 

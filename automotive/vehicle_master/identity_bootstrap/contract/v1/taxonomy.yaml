@@ -39,10 +39,13 @@ entries:
   - {id: SUBJ-02, area: SUBJ, outcome: HOLD, codes: [PROVIDER_RAW_NAME], title: Raw registration name or code}
   - {id: SUBJ-03, area: SUBJ, outcome: HOLD, codes: [NAME_UNSPECIFIED], title: Blank, 'ไม่ระบุ', unknown or placeholder name}
   - {id: SUBJ-04, area: SUBJ, outcome: HOLD, codes: [NAME_UNSPECIFIED], title: A name the TDR slug rule reduces to nothing}
+  - {id: SUBJ-05, area: SUBJ, outcome: HOLD, codes: [PROVIDER_RAW_NAME], title: Hyphenated chassis / registration code that the per-token detector cannot see (M7 shadow)}
 
   - {id: BRND-01, area: BRND, outcome: HOLD, codes: [BRAND_UNKNOWN], title: Blank or unresolved brand}
   - {id: BRND-02, area: BRND, outcome: IDENTITY_REVIEW, codes: [BRAND_NOT_IN_TDR], title: Clean brand that TDR does not have}
   - {id: BRND-03, area: BRND, outcome: IDENTITY_REVIEW, codes: [STRUCTURAL_CONFLICT], title: Only a RELATED brand attribution (Maxus vans filed under MG)}
+  - {id: BRND-04, area: BRND, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: A sub-brand is not a spelling of the parent marque (Ora/Haval/Tank, Omoda/Jetour) and is never stripped from a name}
+  - {id: BRND-05, area: BRND, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED, EXISTING_IDENTITY_SUSPECTED], title: Brand family - relabelled or related marques are searched by the duplicate defence without being spellings of each other}
 
   - {id: REL-01, area: REL, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED], title: Exact duplicate of an existing canonical model}
   - {id: REL-02, area: REL, outcome: IDENTITY_REVIEW, codes: [DUPLICATE_CANONICAL_SUSPECTED], title: Spelling or format variant}
@@ -61,6 +64,10 @@ entries:
   - {id: SHP-03, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_POWERTRAIN_DERIVATIVE], title: Engine, powertrain or displacement derivative}
   - {id: SHP-04, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_BODY_VARIANT], title: Body-style or cab variant}
   - {id: SHP-05, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_GENERATION_VARIANT], title: Generation, facelift or model-year marker}
+  - {id: SHP-06, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_TRUNCATED_NAME], title: Single-letter or dangling-word remainder (Jeep Grand, Tesla Model, Chery Q) - soft, clearable}
+  - {id: SHP-07, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_MODEL_CODE], title: Displacement-style trim code (630i, 530e, 264GL, 264GLE; McLaren 750S matches and is clearable)}
+  - {id: SHP-08, area: SHP, outcome: CREATE_IDENTITY, codes: [NEW_IDENTITY_CONFIRMED], title: Four-digit model names (Peugeot 2008, 5008, e-2008) are not model years}
+  - {id: SHP-09, area: SHP, outcome: IDENTITY_REVIEW, codes: [POSSIBLE_POWERTRAIN_DERIVATIVE], title: Powertrain word glued to a digit-bearing token (T8EV, 9HEV, 5PHEV)}
 
   - {id: EVD-01, area: EVD, outcome: HOLD, codes: [INSUFFICIENT_IDENTITY_EVIDENCE], title: No citable evidence}
   - {id: EVD-02, area: EVD, outcome: HOLD, codes: [INSUFFICIENT_IDENTITY_EVIDENCE], title: Provider not onboarded as a creation basis}

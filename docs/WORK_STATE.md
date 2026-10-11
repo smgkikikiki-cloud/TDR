@@ -6,16 +6,17 @@ This file is the persistent execution state for long-running TDR work. Agents mu
 
 `automotive/vehicle_master/identity_bootstrap/` holds a **contract-only** design for creating a minimal `DISCOVERED` canonical vehicle identity when Identity
 Resolution finds no TDR counterpart, and handing it to a separate enrichment process: `contract/v1/SPEC.md`, `policy.yaml`, `reason_codes.yaml`, `taxonomy.yaml`,
-`lifecycle.yaml`, four JSON schemas, a 127-case golden corpus, `README.md` (architecture, owner decisions) and `INTEGRATION.md` (live-schema conflicts, proposed schema change,
+`lifecycle.yaml`, four JSON schemas, a 151-case golden corpus, `README.md` (architecture, owner decisions) and `INTEGRATION.md` (live-schema conflicts, proposed schema change,
 proposed amendments to the Identity Resolution draft). Tests: `automotive/vehicle_master/tests/identity_bootstrap/`.
 
 - **Milestone 2 (2026-10-11): offline engine (`engine/`), Ice adapter (`providers/ice.py`) and a read-only shadow run on the pinned M7.0 package (`shadow/`, results in `shadow/results/2569-09_v3_M7.0/`,
   findings in `shadow/FINDINGS.md`).** Across all 1,200 model groups: 78 CREATE / 94 REVIEW / 1,028 HOLD (TDR side = the repo's file catalog snapshot, not the live DB). Recommendations only; nothing applied.
-- **No persistence, migration, workflow or database access; no vehicle was created or published; no serving or catalog change.** Nothing in production imports it
+- **Milestone 3 (2026-10-11): calibration and false-CREATE reduction (policy v2).** New rules R1 (hyphenated chassis/registration code), R2 (glued powertrain suffix), R4 (displacement/trim code, evidence/admin-clearable), year-range fix, sub-brand/brand-family defence, soft truncation signal; corpus 127 → 151 cases. Rerun on all 1,200 groups against the live Vehicle Master (read-only SELECT; identical to the file snapshot, so the fuller universe removed 0 CREATEs): **67 CREATE / 89 REVIEW / 1,044 HOLD** (was 78 / 94 / 1,028). Owner-adjudication sheet: `shadow/review/create_adjudication.csv` (`owner_label` blank). Stopped here: no persistence.
+- **No persistence, migration or workflow; the only database access was a read-only SELECT (milestone 3, recorded in `shadow/universe/`); no vehicle was created or published; no serving or catalog change.** Nothing in production imports it
   (a test enforces it). `PRODUCTION_*` flags, the roadmap gate, R6 and R7 are untouched; PR #200 (Identity Resolution) was read, not modified.
 - **Finding:** the live `vehicle_models` cannot hold a null-attribute `DISCOVERED` row (v59 model rules, the generation requirement, an unfiltered `current_vehicle_models` view, a closed `status`
   set), and no governed write path exists until Phase 1 — see `INTEGRATION.md` §1. VEHICLE_DB_V3 §4 also lets AI only *propose* model creation, so the plan defaults to `apply_mode: PROPOSE`.
-- **Next step:** owner review of `identity_bootstrap/README.md` §6 ("Decisions for the owner"). The engine, any migration and any write need their own explicit go and gates.
+- **Next step:** owner labels `shadow/review/create_adjudication.csv`, and reviews `identity_bootstrap/README.md` §6 ("Decisions for the owner"). Persistence, any migration and any write need their own explicit go and gates.
 
 ## Vehicle DB v3 platform state (current — read before anything vehicle-related)
 

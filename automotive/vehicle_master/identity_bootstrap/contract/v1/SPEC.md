@@ -122,7 +122,7 @@ and are supplied by the resolution layer; Bootstrap does not recompute them. A r
 `name_tokens(name, spellings)`: NFKC, case-fold; every character in `lexical.token_boundary_characters` and whitespace becomes a space; every other
 character that is not a letter, digit or Thai character is deleted; split on spaces; remove the **longest** brand spelling that is an exact leading token
 sequence, **only if at least one token remains** (`MG4 EV` keeps `mg4`; a model named like its brand keeps its name); drop `lexical.generic_tokens`.
-`spellings` is the brand's `raw` value plus `spellings`. This is Identity Resolution §5.2 restricted to what Bootstrap needs; the day the two
+`spellings` is the brand's `raw` value plus `spellings`, minus any name the policy lists as a sub-brand of that brand (`brand.sub_brands`: Ora/Haval/Tank under GWM, Omoda/Jetour under Chery): a sub-brand is never a spelling of the marque, whoever offers it. This is Identity Resolution §5.2 restricted to what Bootstrap needs; the day the two
 disagree, Identity Resolution wins and this section is re-pinned.
 
 ### 4.3 Canonical name and identity key
@@ -153,11 +153,12 @@ Gates run per subject in this order. Each gate may fire reason codes (appendix B
 | Gate | Fires | Rule |
 |---|---|---|
 | **G0 activation** | `NOT_ACTIVATED`, `STRUCTURAL_CONFLICT` | The resolution outcome MUST equal `activation.required_ir_outcome`. `STRUCTURAL_REVIEW` raises `STRUCTURAL_CONFLICT` and continues; every other outcome stops with `NOT_ACTIVATED`. |
-| **G1 subject** | `PROVIDER_IDENTITY_PROVISIONAL`, `PROVIDER_RAW_NAME`, `NAME_UNSPECIFIED`, `BRAND_UNKNOWN`, `BRAND_NOT_IN_TDR`, `STRUCTURAL_CONFLICT` | `identity_status` other than `settled` maps through `subject.status_codes`. A separator in the id or name, or a registration-code-shaped token, is `PROVIDER_RAW_NAME` even if the adapter said `settled`. No usable token, or a placeholder name, is `NAME_UNSPECIFIED`. A brand relation not in `brand.creatable_relations` maps through `brand.relation_codes`. |
+| **G1 subject** | `PROVIDER_IDENTITY_PROVISIONAL`, `PROVIDER_RAW_NAME`, `NAME_UNSPECIFIED`, `BRAND_UNKNOWN`, `BRAND_NOT_IN_TDR`, `STRUCTURAL_CONFLICT` | `identity_status` other than `settled` maps through `subject.status_codes`. A separator in the id or name, a registration-code-shaped token, or a hyphen-joined chassis/registration code segment (`subject.raw_name.code_segment_pattern`: a 5+ character segment with both a letter and a digit, a hyphen, then 3-7 characters; D-Max, CR-V, X-Trail, CX-5 do not match) is `PROVIDER_RAW_NAME` even if the adapter said `settled`. No usable token, or a placeholder name, is `NAME_UNSPECIFIED`. A brand relation not in `brand.creatable_relations` maps through `brand.relation_codes`. |
 | **G2 state** | `IDENTITY_ALREADY_DISCOVERED`, `DUPLICATE_CANONICAL_SUSPECTED`, `IDENTITY_PREVIOUSLY_WITHDRAWN` | An existing binding for `(provider, entity_id)`, or an identity of the same brand with the same identity key: pending states → already discovered; `VERIFIED`/`PUBLISHED`/legacy → duplicate suspected; `WITHDRAWN` → previously withdrawn. |
+| **G2b brand family** | `DUPLICATE_CANONICAL_SUSPECTED`, `IDENTITY_ALREADY_DISCOVERED`, `IDENTITY_PREVIOUSLY_WITHDRAWN`, `EXISTING_IDENTITY_SUSPECTED` | For each `brand.family` entry of the subject, the subject and the family brand's identities are compared under the union of spellings (the family's spellings are used **only** to compare, never to strip the subject's own name). `brand.family.duplicate_relations` behave like the subject's own brand; `brand.family.suspect_relations` only ever raise `brand.family.suspect_code`. |
 | **G3 lineage** | `LINEAGE_CONTINUITY_EXISTING_IDENTITY`, `LINEAGE_UNRESOLVED`, `PROVIDER_LINEAGE_AMBIGUOUS` | §9. |
 | **G4 relations** | per `relations.*_codes` and `batch.*` | Subject→target by peer-state class (§8.1); subject→subject §8.2. |
-| **G5 shape** | `POSSIBLE_MODEL_CODE`, `POSSIBLE_TRIM_NOT_MODEL`, `POSSIBLE_POWERTRAIN_DERIVATIVE`, `POSSIBLE_BODY_VARIANT`, `POSSIBLE_GENERATION_VARIANT` | Lexicon and patterns in `shape.*` applied to the subject's own tokens (and displacement patterns to the display name). Lexical, so always only a suspicion. |
+| **G5 shape** | `POSSIBLE_MODEL_CODE`, `POSSIBLE_TRIM_NOT_MODEL`, `POSSIBLE_POWERTRAIN_DERIVATIVE`, `POSSIBLE_BODY_VARIANT`, `POSSIBLE_GENERATION_VARIANT` | Lexicon and patterns in `shape.*` applied to the subject's own tokens (and displacement patterns to the display name). Token patterns also see the joined remainder (`E-300` is `e300`). A powertrain word glued to a digit token (`T8EV`) is `POSSIBLE_POWERTRAIN_DERIVATIVE`; a three-digit-plus-letters trim code (`630i`, `264GL`) is `POSSIBLE_MODEL_CODE`; a model-year pattern fires only inside the plausible range and next to a name (`shape.generation.contextual_*`), so Peugeot `2008` is a name. A remainder that is a single letter, or only dangling words (`shape.truncation`; digit-only remainders such as Mazda `3` are exempt), is `POSSIBLE_TRUNCATED_NAME`. Lexical, so always only a suspicion, clearable by evidence or an admin. |
 | **G6 evidence** | `INSUFFICIENT_IDENTITY_EVIDENCE` | Evaluated only if no HOLD code has fired. The provider MUST be in `evidence.providers` with `may_create`, a valid item of its `base_kind` MUST exist (known kind, non-blank `ref`), and the best valid tier MUST reach `evidence.required_tier.create_clean`. |
 | **G7 allocation** | `CANONICAL_ID_COLLISION`, `NAME_UNSPECIFIED` | §10, only for subjects that survive clearing. |
 
@@ -368,16 +369,19 @@ See `README.md` §6.
 | `subject.creatable_identity_statuses` | `["settled"]` | observed |
 | `subject.status_codes` | `{"provisional": "PROVIDER_IDENTITY_PROVISIONAL", "unmapped_name": "PROVIDER_RAW_NAME"}` | observed |
 | `subject.unavailable_name_values` | `["ไม่ระบุ", "unknown", "na", "none", "other", "อื่นๆ"]` | observed |
-| `subject.raw_name` | `{"separator_characters": ["\|"], "registration_code_token_pattern": "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{9,}$"}` | observed |
+| `subject.raw_name` | `{"separator_characters": ["\|"], "registration_code_token_pattern": "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{9,}$", "code_segment_pattern": "(?<![a-z0-9])(?=[a-z0-9]*[0-9])(?=[a-z0-9]*[a-z])[a-z0-9]{5,}-[a-z0-9]{3,7}(?![a-z0-9])"}` | observed |
 | `brand.creatable_relations` | `["EXACT", "ALIAS_SAME", "ALIAS_RELABEL"]` | proposal |
 | `brand.relation_codes` | `{"UNKNOWN": "BRAND_UNKNOWN", "NOT_IN_TDR": "BRAND_NOT_IN_TDR", "ALIAS_RELATED": "STRUCTURAL_CONFLICT"}` | proposal |
+| `brand.sub_brands` | `{"gwm": ["haval", "ora", "tank", "wey"], "chery": ["omoda", "jetour"], "mercedes_benz": ["amg", "maybach"], "hyundai": ["genesis"], "neta": ["hozon"]}` | proposal |
+| `brand.family` | `{"duplicate_relations": ["ALIAS_RELABEL"], "suspect_relations": ["ALIAS_RELATED"], "suspect_code": "EXISTING_IDENTITY_SUSPECTED"}` | proposal |
 | `lexical.token_boundary_characters` | `["-", "_", "/", ".", "+", "&", "\|", "(", ")"]` | observed |
 | `lexical.generic_tokens` | `["series", "class"]` | observed |
-| `shape.model_code` | `{"token_patterns": ["^[a-z]{1,3}[0-9]{3}[a-z]{0,3}$"]}` | proposal |
+| `shape.model_code` | `{"token_patterns": ["^[a-z]{1,3}[0-9]{3}[a-z]{0,3}$", "^[0-9]{3}[a-z]{1,3}$"]}` | proposal |
 | `shape.trim` | `{"tokens": ["sport", "sports", "premium", "luxury", "limited", "edition", "plus", "pro", "ultra", "base", "standard", "deluxe", "comfort", "elite", "exclusive", "signature", "gt", "gti", "rs", "amg", "ex", "lx"]}` | proposal |
-| `shape.powertrain` | `{"tokens": ["ev", "bev", "hev", "phev", "mhev", "hybrid", "electric", "diesel", "petrol", "gasoline", "turbo", "cng", "lpg", "awd", "4wd", "2wd", "fwd", "rwd", "4x4", "4x2", "cvt", "dct", "manual"], "name_patterns": ["(?<![0-9])[0-9]\\.[0-9]{1,2}[a-z]?(?![0-9])"]}` | proposal |
+| `shape.powertrain` | `{"tokens": ["ev", "bev", "hev", "phev", "mhev", "hybrid", "electric", "diesel", "petrol", "gasoline", "turbo", "cng", "lpg", "awd", "4wd", "2wd", "fwd", "rwd", "4x4", "4x2", "cvt", "dct", "manual"], "token_patterns": ["[0-9](ev\|hev\|phev\|mhev)$"], "name_patterns": ["(?<![0-9])[0-9]\\.[0-9]{1,2}[a-z]?(?![0-9])"]}` | proposal |
 | `shape.body` | `{"tokens": ["hatchback", "hatch", "sedan", "wagon", "estate", "coupe", "convertible", "cabriolet", "roadster", "cab", "double", "single", "smart", "pickup", "van", "suv", "mpv", "crossover", "truck"]}` | proposal |
-| `shape.generation` | `{"tokens": ["new", "facelift", "refresh", "redesign", "generation", "gen", "โฉมใหม่", "ไมเนอร์เชนจ์", "เจนใหม่"], "token_patterns": ["^gen[0-9]+$", "^mk[0-9]+$", "^mk[ivx]+$", "^(19\|20)[0-9]{2}$", "^[0-9]{1,2}(st\|nd\|rd\|th)$"]}` | proposal |
+| `shape.generation` | `{"tokens": ["new", "facelift", "refresh", "redesign", "generation", "gen", "โฉมใหม่", "ไมเนอร์เชนจ์", "เจนใหม่"], "token_patterns": ["^gen[0-9]+$", "^mk[0-9]+$", "^mk[ivx]+$", "^[0-9]{1,2}(st\|nd\|rd\|th)$"], "contextual_token_patterns": ["^20(1[5-9]\|[23][0-9])$"], "contextual_min_tokens": 2}` | proposal |
+| `shape.truncation` | `{"code": "POSSIBLE_TRUNCATED_NAME", "min_compact_chars": 2, "exempt_digit_only": true, "dangling_tokens": ["grand", "super", "flying", "model", "range"]}` | proposal |
 | `shape.codes` | `{"model_code": "POSSIBLE_MODEL_CODE", "trim": "POSSIBLE_TRIM_NOT_MODEL", "powertrain": "POSSIBLE_POWERTRAIN_DERIVATIVE", "body": "POSSIBLE_BODY_VARIANT", "generation": "POSSIBLE_GENERATION_VARIANT"}` | proposal |
 | `relations.name_classes` | `{"duplicate": ["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY"], "finer": ["SUBJECT_FINER"], "coarser": ["SUBJECT_COARSER"], "sibling": ["SIBLING"], "ignored": ["CONTRADICTION", "UNAVAILABLE"]}` | proposal |
 | `relations.peer_state_classes` | `{"DISCOVERED": "pending", "ENRICHING": "pending", "VERIFIED": "canonical", "PUBLISHED": "canonical", "WITHDRAWN": "withdrawn", "legacy": "canonical"}` | proposal |
@@ -456,6 +460,7 @@ See `README.md` §6.
 | `POSSIBLE_POWERTRAIN_DERIVATIVE` | SHAPE | flag | REVIEW | evidence_or_admin | 52 | A token is an engine/powertrain/drivetrain word or displacement (EV, HEV, 2.4, AWD, Diesel). |
 | `POSSIBLE_BODY_VARIANT` | SHAPE | flag | REVIEW | evidence_or_admin | 53 | A token is a body-style or cab word (Hatchback, Sedan, Double Cab). |
 | `POSSIBLE_GENERATION_VARIANT` | SHAPE | flag | REVIEW | evidence_or_admin | 54 | A token is a generation, facelift or model-year marker (Gen 2, Mk3, New, 2025). |
+| `POSSIBLE_TRUNCATED_NAME` | SHAPE | flag | REVIEW | evidence_or_admin | 55 | The name remainder is a single letter or only a dangling word (Jeep Grand, Tesla Model, Chery Q); the provider may have cut the nameplate short. Soft only, never an existence rule. |
 | `CANONICAL_ID_COLLISION` | ALLOCATION | flag | REVIEW | never | 60 | The deterministic canonical id is already taken by a different identity (or two creatable subjects in this batch derive the same id). Ids are never auto-suffixed. |
 | `NEW_IDENTITY_CONFIRMED` | OUTCOME | decision | CREATE | never | 90 | Settled, structurally clean provider identity with no credible existing counterpart; evidence tier requirement met. |
 | `FLAG_CLEARED_BY_EVIDENCE` | INFO | info | NONE | never | 95 | A lexical suspicion was cleared by tier>=2 evidence attesting a model nameplate. The cleared codes are listed in the evidence basis. |
@@ -488,9 +493,12 @@ See `README.md` §6.
 | `SUBJ-02` | HOLD | `PROVIDER_RAW_NAME` | Raw registration name or code |
 | `SUBJ-03` | HOLD | `NAME_UNSPECIFIED` | Blank |
 | `SUBJ-04` | HOLD | `NAME_UNSPECIFIED` | A name the TDR slug rule reduces to nothing |
+| `SUBJ-05` | HOLD | `PROVIDER_RAW_NAME` | Hyphenated chassis / registration code that the per-token detector cannot see (M7 shadow) |
 | `BRND-01` | HOLD | `BRAND_UNKNOWN` | Blank or unresolved brand |
 | `BRND-02` | IDENTITY_REVIEW | `BRAND_NOT_IN_TDR` | Clean brand that TDR does not have |
 | `BRND-03` | IDENTITY_REVIEW | `STRUCTURAL_CONFLICT` | Only a RELATED brand attribution (Maxus vans filed under MG) |
+| `BRND-04` | CREATE_IDENTITY | `NEW_IDENTITY_CONFIRMED` | A sub-brand is not a spelling of the parent marque (Ora/Haval/Tank |
+| `BRND-05` | IDENTITY_REVIEW | `DUPLICATE_CANONICAL_SUSPECTED`, `EXISTING_IDENTITY_SUSPECTED` | Brand family - relabelled or related marques are searched by the duplicate defence without being spellings of each other |
 | `REL-01` | IDENTITY_REVIEW | `DUPLICATE_CANONICAL_SUSPECTED` | Exact duplicate of an existing canonical model |
 | `REL-02` | IDENTITY_REVIEW | `DUPLICATE_CANONICAL_SUSPECTED` | Spelling or format variant |
 | `REL-03` | IDENTITY_REVIEW | `DUPLICATE_CANONICAL_SUSPECTED` | Alias under a relabelled brand |
@@ -506,6 +514,10 @@ See `README.md` §6.
 | `SHP-03` | IDENTITY_REVIEW | `POSSIBLE_POWERTRAIN_DERIVATIVE` | Engine |
 | `SHP-04` | IDENTITY_REVIEW | `POSSIBLE_BODY_VARIANT` | Body-style or cab variant |
 | `SHP-05` | IDENTITY_REVIEW | `POSSIBLE_GENERATION_VARIANT` | Generation |
+| `SHP-06` | IDENTITY_REVIEW | `POSSIBLE_TRUNCATED_NAME` | Single-letter or dangling-word remainder (Jeep Grand |
+| `SHP-07` | IDENTITY_REVIEW | `POSSIBLE_MODEL_CODE` | Displacement-style trim code (630i |
+| `SHP-08` | CREATE_IDENTITY | `NEW_IDENTITY_CONFIRMED` | Four-digit model names (Peugeot 2008 |
+| `SHP-09` | IDENTITY_REVIEW | `POSSIBLE_POWERTRAIN_DERIVATIVE` | Powertrain word glued to a digit-bearing token (T8EV |
 | `EVD-01` | HOLD | `INSUFFICIENT_IDENTITY_EVIDENCE` | No citable evidence |
 | `EVD-02` | HOLD | `INSUFFICIENT_IDENTITY_EVIDENCE` | Provider not onboarded as a creation basis |
 | `EVD-03` | CREATE_IDENTITY | `FLAG_CLEARED_BY_EVIDENCE` | Tier-2 evidence attesting a nameplate clears a lexical suspicion (and only that) |

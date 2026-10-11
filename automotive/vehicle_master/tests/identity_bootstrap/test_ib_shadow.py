@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import collections
 import copy
+import csv
 import hashlib
 import json
 from pathlib import Path
@@ -11,7 +12,7 @@ import pytest
 
 import ib_support as S
 from identity_bootstrap import shadow
-from identity_bootstrap.shadow import package, report, run as shadow_run, stand_in
+from identity_bootstrap.shadow import calibration, package, report, run as shadow_run, stand_in
 
 PKG_PATH = shadow_run.DEFAULT_PACKAGE
 needs_package = pytest.mark.skipif(not PKG_PATH.exists(), reason="pinned Ice package not in this checkout")
@@ -78,8 +79,8 @@ def test_golden_shadow_numbers(runs):
     """Pinned so that any change to a word list, a pattern, the stand-in or the engine is a visible, reviewed change to these numbers."""
     a, b = runs
     count = lambda r: dict(collections.Counter(d["outcome"] for d in r["decisions"]))
-    assert count(a) == {"CREATE_IDENTITY": 78, "IDENTITY_REVIEW": 94, "HOLD": 1028}
-    assert count(b) == {"CREATE_IDENTITY": 78, "IDENTITY_REVIEW": 385, "HOLD": 737}
+    assert count(a) == {"CREATE_IDENTITY": 67, "IDENTITY_REVIEW": 89, "HOLD": 1044}
+    assert count(b) == {"CREATE_IDENTITY": 67, "IDENTITY_REVIEW": 380, "HOLD": 753}
 
 
 @needs_package
@@ -175,15 +176,83 @@ def test_the_shadow_run_is_read_only(runs, tmp_path):
     assert {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in watched} == before
 
 
+@pytest.fixture(scope="module")
+def built():
+    if not PKG_PATH.exists():
+        pytest.skip("pinned Ice package not in this checkout")
+    return report.build_all()
+
+
 @needs_package
-def test_the_committed_results_match_the_run(runs, tmp_path):
-    """The reviewed REPORT.md / decisions.csv in the repo are exactly what the current code produces."""
+def test_the_committed_results_match_the_run(built, tmp_path):
+    """The reviewed REPORT.md / decisions.csv / adjudication CSV in the repo are exactly what the current code produces."""
     committed = Path(shadow_run.__file__).parent / "results" / "2569-09_v3_M7.0"
     if not committed.exists():
         pytest.skip("results not committed yet")
-    a, b = runs
-    refined = {"A": shadow_run.run("A", pkg=a["package"], refined=True), "B": shadow_run.run("B", pkg=a["package"], refined=True)}
-    summary = report.analyse(a, b, refined=refined)
+    a, b, summary, rows = built
     report.write_files(summary, a, b, tmp_path)
     for name in ("decisions.csv", "REPORT.md"):
         assert (tmp_path / name).read_text(encoding="utf-8") == (committed / name).read_text(encoding="utf-8"), f"{name} is stale: re-run python -m identity_bootstrap.shadow --out {committed}"
+    review = Path(shadow_run.__file__).parent / "review" / "create_adjudication.csv"
+    calibration.write_adjudication(rows, tmp_path / "create_adjudication.csv")
+    assert (tmp_path / "create_adjudication.csv").read_text(encoding="utf-8") == review.read_text(encoding="utf-8"), "create_adjudication.csv is stale"
+
+
+@needs_package
+def test_the_adjudication_artifact_covers_every_create_and_leaves_the_owner_label_blank(built):
+    a, _, _, rows = built
+    creates = {d["subject"]["entity_id"] for d in a["decisions"] if d["outcome"] == "CREATE_IDENTITY"}
+    path = Path(shadow_run.__file__).parent / "review" / "create_adjudication.csv"
+    text = path.read_text(encoding="utf-8")
+    assert text.startswith("# owner_label must be one of: TRUE_NEW_IDENTITY | EXISTING_IDENTITY | VARIANT_TRIM_CODE | AMBIGUOUS")
+    got = list(csv.DictReader(text.splitlines()[1:]))
+    assert {r["external_id"] for r in got} == creates and len(got) == len(creates) == 67
+    needed = {"provider", "external_id", "brand", "name", "proposed_canonical_id", "first_seen", "last_seen", "lifetime_units", "last12_units", "nearest_existing_identities",
+              "relation_evidence", "lineage_state", "shape_flags", "evidence_tier", "machine_decision", "analyst_note", "owner_label"}
+    assert needed <= set(got[0])
+    assert all(r["owner_label"] == "" for r in got), "the owner fills owner_label; the shadow run must never pre-fill it"
+    assert all(r["provider"] == "ice" and r["machine_decision"].startswith("CREATE_IDENTITY") for r in got)
+
+
+@needs_package
+def test_milestone_3_removed_creates_are_attributed_to_the_new_rules(built):
+    _, _, summary, _ = built
+    attr = summary["m3"]["removed_create_attribution"]
+    assert {r for rules in attr.values() for r in rules} == {"R1_hyphenated_code", "R2_glued_powertrain_suffix", "R4_displacement_trim_code", "TRUNCATION_soft_signal"}
+    assert sum(1 for r in attr.values() if r == ["R1_hyphenated_code"]) == 7
+    assert attr["jac-jac-t8ev"] == ["R2_glued_powertrain_suffix"] and attr["mclaren-mclaren-750s"] == ["R4_displacement_trim_code"]
+    assert summary["m3"]["diff"]["A"]["create_added"] == [] and summary["m3"]["diff"]["B"]["create_added"] == []
+    assert summary["m3"]["universe"]["create_removed_by_the_fuller_universe"] == [] and summary["m3"]["universe"]["create_added_by_the_fuller_universe"] == []
+    assert "d-max" not in " ".join(summary["m3"]["rule_effects"]["R1_hyphenated_code"]["created_off_not_created_on"])
+
+
+@needs_package
+def test_the_adapter_never_offers_a_sub_brand_as_a_parent_brand_spelling(runs):
+    a, _ = runs
+    policy = S.policy()
+    forbidden = {"gwm": {"haval", "ora", "tank", "wey"}, "chery": {"omoda", "jetour"}}
+    for s in a["snapshot"]["subjects"]:
+        bid = s["brand"].get("brand_id")
+        if bid in forbidden:
+            assert not ({x.lower() for x in s["brand"]["spellings"]} & forbidden[bid]), (s["entity_id"], bid)
+    assert policy["brand"]["sub_brands"]["gwm"] and policy["brand"]["family"]["duplicate_relations"] == ["ALIAS_RELABEL"]
+
+
+@needs_package
+def test_related_marques_are_passed_as_family_not_as_spellings(runs):
+    a, _ = runs
+    changan = [s for s in a["snapshot"]["subjects"] if s["brand"].get("brand_id") == "changan"]
+    assert changan and all("deepal" not in {x.lower() for x in s["brand"]["spellings"]} for s in changan)
+    assert all(s["brand"]["family"] == [{"brand_id": "deepal", "relation": "ALIAS_RELABEL", "spellings": ["Deepal"]}] for s in changan)
+
+
+@needs_package
+def test_the_live_universe_record_is_read_only_evidence_and_consistent(runs):
+    rec = json.loads((Path(shadow_run.__file__).parent / "universe" / "vehicle_master_live_2026-10-11.json").read_text(encoding="utf-8"))
+    a, _ = runs
+    assert a["catalog"]["verification"]["comparison_with_file_snapshot"]["model_ids_equal"] is True
+    assert len(a["catalog"]["identities"]) == 323 and rec
+    r6 = json.loads((Path(shadow_run.__file__).parent / "universe" / "r6_crosswalk_for_create_candidates.json").read_text(encoding="utf-8"))["rows"]
+    creates = {d["subject"]["entity_id"] for d in a["decisions"] if d["outcome"] == "CREATE_IDENTITY"}
+    assert set(r6) == creates
+    assert all(row[1] == "PROPOSED" for rows in r6.values() for row in rows), "no remaining CREATE group has an approved/matched legacy R6 row"

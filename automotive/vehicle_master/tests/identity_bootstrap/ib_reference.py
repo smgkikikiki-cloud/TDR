@@ -84,13 +84,15 @@ def canonical_name(display_name: str, spellings: list[str], policy: dict) -> str
     return " ".join(words) if cfg["collapse_whitespace"] else display_name
 
 
-def _spellings(subject: dict) -> list[str]:
+def _spellings(subject: dict, policy: dict) -> list[str]:
+    """Spellings of the marque itself: anything the policy lists as a sub-brand of this brand is not one, whoever offered it."""
     brand = subject["brand"]
-    return [brand["raw"], *brand.get("spellings", [])]
+    banned = {"".join(_plain_tokens(n, policy)) for n in policy["brand"]["sub_brands"].get(brand["brand_id"] or "", [])}
+    return [s for s in [brand["raw"], *brand.get("spellings", [])] if "".join(_plain_tokens(s, policy)) not in banned]
 
 
 def _is_unavailable(subject: dict, policy: dict) -> bool:
-    spellings = _spellings(subject)
+    spellings = _spellings(subject, policy)
     tokens = name_tokens(subject["display_name"], spellings, policy)
     if not tokens:
         return True
@@ -100,7 +102,7 @@ def _is_unavailable(subject: dict, policy: dict) -> bool:
 
 def shape_codes(subject: dict, policy: dict) -> set[str]:
     shape = policy["shape"]
-    tokens = name_tokens(subject["display_name"], _spellings(subject), policy)
+    tokens = name_tokens(subject["display_name"], _spellings(subject, policy), policy)
     lowered = _norm(subject["display_name"])
     out: set[str] = set()
 
@@ -112,11 +114,19 @@ def shape_codes(subject: dict, policy: dict) -> set[str]:
         candidates = tokens + (["".join(tokens)] if len(tokens) > 1 else [])   # 'E-300' is the code e300 however it is spaced
         if any(re.search(p, t) for p in spec.get("token_patterns", []) for t in candidates):
             return True
+        if len(tokens) >= spec.get("contextual_min_tokens", 2) and any(re.search(p, t) for p in spec.get("contextual_token_patterns", []) for t in tokens):
+            return True
         return any(re.search(p, lowered) for p in spec.get("name_patterns", []))
 
     for cls, code in shape["codes"].items():
         if has(cls):
             out.add(code)
+    trunc = shape["truncation"]
+    if tokens:
+        compact_name = "".join(tokens)
+        too_short = len(compact_name) < trunc["min_compact_chars"] and not (trunc["exempt_digit_only"] and compact_name.isdigit())
+        if too_short or all(t in {_norm(w) for w in trunc["dangling_tokens"]} for t in tokens):
+            out.add(trunc["code"])
     return out
 
 
@@ -205,7 +215,7 @@ def decide(snapshot: dict, policy: dict, registry: dict, slugger=None) -> list[d
 
     # ---- per-subject facts and gates G0-G5 -----------------------------------------------------------------------------------
     for sid, s in sorted(subjects.items()):
-        spell = _spellings(s)
+        spell = _spellings(s, policy)
         tokens = name_tokens(s["display_name"], spell, policy)
         brand_id = s["brand"]["brand_id"]
         key = f"{brand_id}|{''.join(tokens)}" if brand_id and tokens else None
@@ -228,7 +238,8 @@ def decide(snapshot: dict, policy: dict, registry: dict, slugger=None) -> list[d
             fire(sid, policy["subject"]["status_codes"][s["identity_status"]])
         raw = policy["subject"]["raw_name"]
         if any(ch in s["entity_id"] or ch in s["display_name"] for ch in raw["separator_characters"]) \
-                or any(re.search(raw["registration_code_token_pattern"], t) for t in tokens):
+                or any(re.search(raw["registration_code_token_pattern"], t) for t in tokens) \
+                or re.search(raw["code_segment_pattern"], _norm(s["display_name"])):
             fire(sid, "PROVIDER_RAW_NAME")
         if _is_unavailable(s, policy):
             fire(sid, "NAME_UNSPECIFIED")
@@ -256,6 +267,28 @@ def decide(snapshot: dict, policy: dict, registry: dict, slugger=None) -> list[d
                     facts[sid]["suggest"] = (i["canonical_id"], "IDENTITY_ALREADY_DISCOVERED")
                 else:
                     fire(sid, "DUPLICATE_CANONICAL_SUSPECTED", canonical_id=i["canonical_id"], via="identity_key")
+
+        # G2b brand family: compare names under the union of spellings; the family's spellings never enter this subject's own tokens
+        fam_cfg = policy["brand"]["family"]
+        for fam in s["brand"].get("family", []):
+            union = spell + list(fam.get("spellings", []))
+            mine_union = compact(s["display_name"], union, policy)
+            if not mine_union:
+                continue
+            for i in identities:
+                if i["brand_id"] != fam["brand_id"] or compact(i["name_en"], union, policy) != mine_union:
+                    continue
+                cls = _peer_class(i["identity_state"], policy)
+                if fam["relation"] in fam_cfg["duplicate_relations"]:
+                    if cls == "withdrawn":
+                        fire(sid, "IDENTITY_PREVIOUSLY_WITHDRAWN", canonical_id=i["canonical_id"], via="brand_family")
+                    elif cls == "pending":
+                        fire(sid, "IDENTITY_ALREADY_DISCOVERED", canonical_id=i["canonical_id"], via="brand_family")
+                        facts[sid]["suggest"] = (i["canonical_id"], "IDENTITY_ALREADY_DISCOVERED")
+                    else:
+                        fire(sid, "DUPLICATE_CANONICAL_SUSPECTED", canonical_id=i["canonical_id"], via="brand_family")
+                elif fam["relation"] in fam_cfg["suspect_relations"] and cls != "withdrawn":
+                    fire(sid, fam_cfg["suspect_code"], canonical_id=i["canonical_id"], via="brand_family")
 
         # G3 lineage
         _lineage(sid, s, snapshot, bindings, policy, fire, facts)
