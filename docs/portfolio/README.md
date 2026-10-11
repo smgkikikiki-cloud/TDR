@@ -19,6 +19,7 @@ Start with [OWNER_REVIEW.md](OWNER_REVIEW.md): three short passes covering (A) w
 
 ## Folder index
 
+- [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md): draft observable-pressure methodology, formulas/tests, and whole-engine validity rubric. **Requires owner review; scoring remains unapproved.**
 - [G0_RECONCILIATION.md](G0_RECONCILIATION.md): observed states, conflicts, required decisions and evidence, including the R6/run discrepancy and migration number collision.
 - [DOMAIN_BOUNDARIES.md](DOMAIN_BOUNDARIES.md): workstream contracts, data and product boundaries, dependency gates, first vertical slice, detailed owner-locked Toolkit behavior.
 - [portfolio.plan.json](portfolio.plan.json): **non-executable** candidate queue/dependency catalog for a future Enforcer.
