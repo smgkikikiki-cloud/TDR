@@ -17,6 +17,10 @@ This folder inventories shared development workstreams and their interfaces; it 
 
 Start with [OWNER_REVIEW.md](OWNER_REVIEW.md): three short passes covering (A) what each workstream must do, (B) proposed sequencing and first Layer 3 product, and (C) governance roles **for design only**. All three verdicts are PENDING; do not treat the roadmap as approved.
 
+## Current product readiness finding
+
+[CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md](CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md) inventories actual current-main Price/Vehicle/Ice code and proposes CP-00...CP-05 evidence-to-product work packets. **No owner approval or execution rights granted.** It flags the existing market-price adapter's explicit 1,000-row cap, which must not be treated as a complete historical price source.
+
 ## Folder index
 
 - [ENGINE_VALIDITY_AND_DEPENDENCIES.md](ENGINE_VALIDITY_AND_DEPENDENCIES.md): six measurement/evidence/falsification gates, integration requirements, and a staged delivery graph; proposed for review.
