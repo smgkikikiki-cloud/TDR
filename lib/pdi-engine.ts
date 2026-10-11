@@ -116,8 +116,11 @@ function resolveMsrp(trim:PdiTrim,date:string): PdiMsrp | null {
   return candidates[0];
 }
 function conflictingMsrp(trim:PdiTrim,date:string):boolean {
-  const c=[...(trim.msrp?[trim.msrp]:[]),...(trim.competingMsrpClaims||[])].filter(p=>applicable(p,date));
-  return c.some(p=>p.disputed) || new Set(c.map(p=>p.amountThb)).size>1;
+  const all=[...(trim.msrp?[trim.msrp]:[]),...(trim.competingMsrpClaims||[])];
+  const explicitlyDisputed=all.some(p=>p.disputed && p.verified && p.observedAt<=date &&
+    (!p.effectiveFrom || p.effectiveFrom<=date) && (!p.effectiveTo || p.effectiveTo>=date));
+  const confirmed=all.filter(p=>applicable(p,date));
+  return explicitlyDisputed || new Set(confirmed.map(p=>p.amountThb)).size>1;
 }
 function resolveCash(trim:PdiTrim,date:string): {amount:number|null;status:PdiTrimResult["discountStatus"];refs:string[]} {
   const dispute=trim.cashEvidence.some(e=>e.disputed && e.verified && e.observedAt<=date);
