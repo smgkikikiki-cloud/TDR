@@ -68,6 +68,8 @@ QA correction record (2026-10-11): replay now canonicalizes all existing payload
 - Honor owner-approved complete sets, Admin status and protected records. Do not touch model/generation IDs.
 - Gate: adversarial golden corpus covering false trim additions, renames, reactivations, facelift, same-model MY, limited edition, options vs trims, broken pages, incomplete source, and all-trims-disappeared => HOLD; outputs remain proposals only.
 
+Implementation record (2026-10-11, QA pending): Chunk 3 adds capture-manifest and publisher-assertion validation, exact `MarketTrim` identity comparison, and deterministic `KEEP` / `ADD_PROPOSAL` / `SOFT_DISCONTINUE_PROPOSAL` / `HOLD` / `REVIEW` outputs. Missing trims in incomplete sources are held; historical and owner/Admin-protected memberships are not silently retired. Add and soft-discontinue outputs are proposals only. The carried-forward P1-gap, mixed-fact-order, and qualifier-review regressions are included. This is the current stop-for-QA boundary; Chunk 4 has not started.
+
 ### Chunk 4: Bounded Research Planner + Persistent OFFLINE Runner (ZERO TOKEN)
 - Local durable job store (e.g. SQLite or serializable journal, *not* Production Supabase): separate RETAIL_AUDIT/SPEC_ENRICH queues, leases, attempt count, checkpoints, restart/replay and per-job/policy revision, jobs remain idempotent.
 - Document-first research plan, existing snapshot/cache first, then official sources, limited secondary corroboration; P3 never justifies retrieval. Track `SOURCE_EXHAUSTED`, `BUDGET_EXHAUSTED`, `SOURCE_BROKEN`, `IDENTITY_AMBIGUOUS`, `CONFLICT` separately.

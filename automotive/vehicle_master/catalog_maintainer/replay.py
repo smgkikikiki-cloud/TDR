@@ -12,6 +12,7 @@ from .eligibility import evaluate_model
 from .gap_inventory import gaps_for_model
 from .registry_adapter import adapt_snapshot, load_registry, resolve_key
 from .replay_contracts import FieldCandidate, FieldDisposition, ReplayReport, ReplaySummary, SourceClaim, SourceDocument
+from .retail_reconcile import validate_source_completeness
 from .validation import validate_fixture
 
 SCHEMA_VERSION = "1.0"
@@ -97,6 +98,11 @@ def _valid_document(doc: dict) -> SourceDocument:
             raise ReplayContractError("COMPLETE_LINEUP requires a complete paginated capture")
         if doc["completeness"] == "PARTIAL_TRIM_LIST" and manifest["pagination_complete"]:
             raise ReplayContractError("partial lineup cannot claim a complete paginated capture")
+        if doc["completeness"] == "COMPLETE_LINEUP":
+            completeness = validate_source_completeness(doc)
+            if not completeness["complete"]:
+                raise ReplayContractError("complete lineup lacks validated completeness evidence: "
+                                          + ",".join(completeness["reason_codes"]))
     return SourceDocument(doc["document_id"], doc["source_id"], doc["market"], doc["model_id"],
                           doc["generation_id"], tuple(doc["trim_ids"]), doc["content_sha256"],
                           doc["local_source_id"], doc["captured_at"], doc.get("published_at"),

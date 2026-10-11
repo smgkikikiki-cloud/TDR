@@ -22,6 +22,7 @@ from automotive.vehicle_master.catalog_maintainer.simulator import simulate
 from automotive.vehicle_master.catalog_maintainer.prioritizer import registration_relevance
 from automotive.vehicle_master.catalog_maintainer.validation import validate_fixture, validate_policy
 from automotive.vehicle_master.catalog_maintainer.replay import replay, ReplayContractError
+from automotive.vehicle_master.catalog_maintainer.retail_reconcile import reconcile_retail_lineup, validate_source_completeness
 from automotive.vehicle_master.catalog_maintainer.registry_adapter import load_registry, resolve_key, RegistryDriftError
 from automotive.vehicle_master.catalog_maintainer.replay_contracts import SourceDocument
 
@@ -84,6 +85,9 @@ class CatalogMaintainerTests(unittest.TestCase):
     def test_replay_qualifiers_separate_range_facts_and_candidates(self):
         snap = fixture()
         snap["facts"] = [f for f in snap["facts"] if f["field_key"] not in {"rated_range_km", "ev.rated_range_km"}]
+        snap["field_registry"].append({"key":"ev.rated_range_km","group":"electrification","tier":"P1",
+                                        "applicable_powertrains":["BEV","PHEV","REEV"],
+                                        "comparison_qualifiers":["measurement_basis","range_scope"]})
         for basis, scope, value in (("NEDC", "FULL", 420), ("WLTP", "FULL", 500), ("CLTC", "ELECTRIC_ONLY", 450)):
             snap["facts"].append({"trim_id":"atto.standard", "field_key":"rated_range_km", "value":value,
                                   "value_state":"KNOWN", "verification_status":"VERIFIED", "source_ref":"fixture://range",
@@ -139,6 +143,172 @@ class CatalogMaintainerTests(unittest.TestCase):
         snap["trims"].append(copy.deepcopy(snap["trims"][0]))
         with self.assertRaisesRegex(ValueError, "identifiers must be present and unique"):
             self.run_replay(snap, [self.recorded("th-spec-complete.json")])
+
+    def test_official_thai_candidate_closes_a_genuinely_missing_p1_gap(self):
+        snap = fixture()
+        snap["facts"] = [f for f in snap["facts"] if not (f["trim_id"] == "atto.standard" and f["field_key"] == "length_mm")]
+        for layer in (snap["trims"], snap["variants"], snap["generations"], snap["models"]):
+            for row in layer:
+                row.get("specs", {}).pop("length_mm", None)
+        doc = self.claim_doc("claim|vehicle.length_mm|atto.standard|4455 mm", document_id="official-missing-p1")
+        doc["source_authority"] = "OFFICIAL"
+        summary, gap, rows = self.run_replay(snap, [doc])
+        candidate = next(r for r in rows if r["field_key"] == "vehicle.length_mm")
+        self.assertEqual(candidate["candidate_status"], "ACCEPTED_CANDIDATE")
+        self.assertGreater(summary["priority_gap_items_before_replay"], 0)
+        self.assertEqual(summary["priority_gap_items_after_replay"], summary["priority_gap_items_before_replay"] - 1)
+        disposition = next(x for x in gap["dispositions"] if x["trim_id"] == "atto.standard" and x["field_key"] == "vehicle.length_mm")
+        self.assertEqual(disposition["replay_state"], "CANDIDATE_PROPOSED")
+        # Proposal status is not a canonical fact verification/write.
+        self.assertEqual(summary["production_writes"], 0)
+
+    def test_mixed_fact_states_are_order_independent_and_conflicting(self):
+        snap = fixture()
+        snap["facts"] = [f for f in snap["facts"] if not (f["trim_id"] == "atto.standard" and f["field_key"] == "length_mm")]
+        mixed = [
+            {"trim_id":"atto.standard","field_key":"length_mm","value":4400,"value_state":"KNOWN","verification_status":"VERIFIED"},
+            {"trim_id":"atto.standard","field_key":"length_mm","value":None,"value_state":"UNKNOWN"},
+        ]
+        outcomes = []
+        for rows in (mixed, list(reversed(mixed))):
+            snap["facts"] = [f for f in snap["facts"] if not (f["trim_id"] == "atto.standard" and f["field_key"] == "length_mm")] + rows
+            outcomes.append(gaps_for_model(snap, ("atto.standard",)))
+        self.assertEqual(outcomes[0], outcomes[1])
+        state = next(d["state"] for d in outcomes[0]["dispositions"] if d["field_key"] == "length_mm")
+        self.assertEqual(state, "CONFLICT")
+
+    def test_qualifier_review_stays_explicit_and_does_not_become_proposed(self):
+        snap = fixture()
+        snap["facts"] = [f for f in snap["facts"] if f["field_key"] not in {"rated_range_km", "ev.rated_range_km"}]
+        snap["field_registry"].append({"key":"ev.rated_range_km","group":"electrification","tier":"P1",
+                                        "applicable_powertrains":["BEV","PHEV","REEV"],
+                                        "comparison_qualifiers":["measurement_basis","range_scope"]})
+        snap["facts"].append({"trim_id":"atto.standard","field_key":"rated_range_km","value":420,
+                              "value_state":"KNOWN","verification_status":"VERIFIED","source_ref":"fixture://range"})
+        doc = self.claim_doc("claim|rated_range_km|atto.standard|420 km|measurement_basis=NEDC;range_scope=FULL")
+        summary, gap, rows = self.run_replay(snap, [doc])
+        disposition = next(x for x in gap["dispositions"] if x["trim_id"] == "atto.standard" and x["field_key"] == "ev.rated_range_km")
+        self.assertEqual(disposition["state"], "NEEDS_QUALIFIER_REVIEW")
+        self.assertEqual(disposition["replay_state"], "NEEDS_QUALIFIER_REVIEW")
+        self.assertEqual(next(r for r in rows if r["field_key"] == "ev.rated_range_km")["candidate_status"], "HELD")
+        self.assertEqual(summary["priority_gap_items_proposed"], 0)
+
+    def _complete_lineup_doc(self, ids):
+        doc = self.recorded("complete-lineup.json")
+        doc["trim_ids"] = list(ids)
+        doc["capture_manifest"].update(listed_trim_ids=list(ids), row_count=len(ids))
+        lines = [f"lineup|trim|{tid}" for tid in ids]
+        lines.append("Publisher statement: complete current Thai retail lineup.")
+        doc["content"] = "\n".join(lines)
+        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
+        doc["completeness_evidence"] = {"publisher_declared_complete":True,"quote":lines[-1],
+            "locator":f"line:{len(lines)}","capture_status":"COMPLETE","expected_page_count":1,"captured_page_count":1}
+        doc["lineup_rows"] = []
+        for tid in ids:
+            t = next((x for x in fixture()["trims"] if x["id"] == tid), None)
+            doc["lineup_rows"].append({"market_trim_id":tid,"model_id":doc["model_id"],
+                "generation_id":doc["generation_id"],"grade":None,"powertrain":t["powertrain"] if t else "BEV",
+                "model_year":None,"facelift_id":None})
+        return doc
+
+    def test_retail_source_completeness_requires_explicit_bound_evidence(self):
+        doc = self.recorded("complete-lineup.json")
+        self.assertTrue(validate_source_completeness(doc)["complete"])
+        incomplete = copy.deepcopy(doc)
+        incomplete["capture_manifest"]["pagination_complete"] = False
+        self.assertFalse(validate_source_completeness(incomplete)["complete"])
+        incomplete = copy.deepcopy(doc)
+        incomplete["completeness_evidence"]["quote"] = "Complete lineup"
+        self.assertIn("PUBLISHER_COMPLETENESS_NOT_EVIDENCED", validate_source_completeness(incomplete)["reason_codes"])
+
+    def test_pure_retail_reconciliation_keeps_exact_identity_and_proposes_new_trim(self):
+        snap = fixture()
+        doc = self._complete_lineup_doc(["atto.extended", "atto.standard", "atto.new_grade"])
+        next(r for r in doc["lineup_rows"] if r["market_trim_id"] == "atto.new_grade")["grade"] = "New Grade"
+        result = reconcile_retail_lineup(snap, doc)
+        statuses = {x["market_trim_id"]:x["outcome"] for x in result["outcomes"]}
+        self.assertEqual(statuses["atto.standard"], "KEEP")
+        self.assertEqual(statuses["atto.new_grade"], "ADD_PROPOSAL")
+        self.assertEqual(result["canonical_writes"], 0)
+
+    def test_incomplete_lineup_never_discontinues_and_protected_set_is_reviewed(self):
+        snap = fixture()
+        doc = self._complete_lineup_doc(["atto.extended"])
+        doc["completeness_evidence"]["capture_status"] = "PARTIAL"
+        result = reconcile_retail_lineup(snap, doc)
+        self.assertTrue(all(x["outcome"] == "HOLD" for x in result["outcomes"]))
+        complete = self._complete_lineup_doc(["atto.extended"])
+        result = reconcile_retail_lineup(snap, complete)
+        protected = next(x for x in result["outcomes"] if x["market_trim_id"] == "atto.standard")
+        self.assertEqual(protected["outcome"], "REVIEW")
+        self.assertIn("OWNER_OR_ADMIN_PROTECTED_TRIM", protected["reason_codes"])
+
+    def test_historical_trim_in_active_model_is_never_auto_discontinued(self):
+        snap = fixture()
+        doc = self._complete_lineup_doc(["city.sv"])
+        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3")
+        doc["source_id"] = "official-city"
+        # Rebuild capture proof while retaining city's exact source lineage.
+        doc = self._complete_lineup_doc(["city.sv"])
+        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3", source_id="official-city")
+        doc["lineup_rows"][0].update(model_id=doc["model_id"], generation_id=doc["generation_id"], powertrain="ICE")
+        result = reconcile_retail_lineup(snap, doc)
+        old = next(x for x in result["outcomes"] if x["market_trim_id"] == "city.old")
+        self.assertEqual(old["outcome"], "REVIEW")
+        self.assertIn("HISTORICAL_TRIM_NOT_AUTO_RETIRED", old["reason_codes"])
+
+    def test_identity_collision_is_review_not_fuzzy_merge(self):
+        snap = fixture()
+        doc = self._complete_lineup_doc(["atto.extended", "atto.standard"])
+        doc["lineup_rows"][0]["grade"] = "Collision"
+        result = reconcile_retail_lineup(snap, doc)
+        row = next(x for x in result["outcomes"] if x["market_trim_id"] == "atto.extended")
+        self.assertEqual(row["outcome"], "REVIEW")
+        self.assertIn("CANONICAL_IDENTITY_COLLISION", row["reason_codes"])
+
+    def test_soft_discontinue_requires_auditable_first_party_or_independent_complete_sources(self):
+        snap = fixture()
+        snap["trims"].append({"id":"city.base","model_id":"honda.city_hatchback","generation_id":"city_hb.g3",
+                              "status":"CURRENT","powertrain":"ICE"})
+        doc = self._complete_lineup_doc(["city.sv"])
+        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3", source_id="official-city-current",
+                   lineage_id="city-current-lineage", captured_at="2026-10-10")
+        doc["lineup_rows"][0].update(model_id=doc["model_id"],generation_id=doc["generation_id"],powertrain="ICE")
+        absent = next(x for x in reconcile_retail_lineup(snap, doc)["outcomes"] if x["market_trim_id"] == "city.base")
+        self.assertEqual(absent["outcome"], "HOLD")
+        self.assertEqual(absent["reason_codes"], ["ABSENCE_IN_COMPLETE_LINEUP_INSUFFICIENT"])
+
+        # Explicit end-of-sale is only honored when the exact quoted line is bound to this official Thai document.
+        doc["content"] += "\nCity Base production ended 2026-09-01."
+        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
+        doc["end_of_sale_evidence"] = [{"market_trim_id":"city.base","first_party_end_of_sale":True,
+                                        "quote":"City Base production ended 2026-09-01.","locator":"line:3"}]
+        proposed = next(x for x in reconcile_retail_lineup(snap, doc)["outcomes"] if x["market_trim_id"] == "city.base")
+        self.assertEqual(proposed["outcome"], "SOFT_DISCONTINUE_PROPOSAL")
+        self.assertTrue(proposed["soft_archive_only"])
+
+        previous = self._complete_lineup_doc(["city.sv", "city.base"])
+        previous.update(model_id=doc["model_id"],generation_id=doc["generation_id"],source_id="other-official-source",
+                        lineage_id="independent-older-lineage",captured_at="2026-08-01",published_at="2026-07-25")
+        for row in previous["lineup_rows"]:
+            row.update(model_id=doc["model_id"],generation_id=doc["generation_id"],powertrain="ICE")
+        doc.pop("end_of_sale_evidence")
+        doc["content"] = "\n".join(doc["content"].splitlines()[:2])
+        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
+        doc["completeness_evidence"]["locator"] = "line:2"
+        doc["completeness_evidence"]["quote"] = doc["content"].splitlines()[1]
+        doc["capture_manifest"].update(listed_trim_ids=["city.sv"],row_count=1)
+        doc["trim_ids"] = ["city.sv"]
+        repeated = next(x for x in reconcile_retail_lineup(snap, doc, prior_complete_documents=[previous])["outcomes"]
+                        if x["market_trim_id"] == "city.base")
+        self.assertEqual(repeated["outcome"], "SOFT_DISCONTINUE_PROPOSAL")
+
+    def test_normalized_complete_lineup_contract_rejects_flag_without_manifest_and_proof(self):
+        snap = fixture()
+        validate_fixture(snap)
+        snap["models"][2]["lineup_evidence"].pop("completeness_evidence")
+        with self.assertRaisesRegex(ValueError, "capture_manifest and completeness_evidence"):
+            validate_fixture(snap)
 
     def test_canonical_registry_adapter_is_pinned_and_aliases_are_canonical(self):
         registry = load_registry(root=REPOSITORY_ROOT)

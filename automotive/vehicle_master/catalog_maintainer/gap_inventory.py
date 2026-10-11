@@ -1,6 +1,8 @@
 """Applicable gaps using Vehicle Master value_state, locks, and payload layers."""
 from __future__ import annotations
 
+import json
+
 PRICE_KEYS = {"LIST_PRICE", "CAMPAIGN_PRICE", "ECO_STICKER_PRICE", "MSRP", "PRICE"}
 VALID_VALUE_STATES = {"KNOWN", "UNKNOWN", "NOT_AVAILABLE", "NOT_APPLICABLE", "ABSENT", None}
 
@@ -50,6 +52,11 @@ def _qualifiers(fact: dict, required: set[str] | None = None) -> dict | None:
 def _conflicting(rows: list[dict], required_qualifiers: set[str] | None = None) -> bool:
     if len(rows) < 2:
         return any(f.get("value_state") == "CONFLICT" for f in rows)
+    # Different Vehicle Master states are semantically different assertions.
+    # Picking rows[0] made KNOWN/UNKNOWN or KNOWN/NOT_APPLICABLE depend on input order.
+    states = {f.get("value_state") for f in rows}
+    if len(states) > 1:
+        return True
     required_qualifiers = required_qualifiers or set()
     signatures: dict[tuple, set[tuple]] = {}
     for fact in rows:
@@ -76,7 +83,8 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
                 dispositions.append({"trim_id": trim_id, "field_key": key, "state": "NOT_APPLICABLE"})
                 continue
 
-            rows = _facts_for(facts, trim_id, key, as_of)
+            rows = sorted(_facts_for(facts, trim_id, key, as_of),
+                          key=lambda row: json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
             required_qualifiers = set(field.get("comparison_qualifiers", []))
             locked_clears = [f for f in rows if f.get("locked") and f.get("value") is None
                              and f.get("value_state") is None]

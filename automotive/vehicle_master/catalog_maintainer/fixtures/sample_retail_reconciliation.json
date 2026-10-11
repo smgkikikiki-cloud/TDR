@@ -1,0 +1,23 @@
+{
+  "canonical_writes": 0,
+  "model_id": "byd.atto_3",
+  "model_outcome": "KEEP",
+  "outcomes": [
+    {
+      "market_trim_id": "atto.extended",
+      "outcome": "KEEP",
+      "reason_codes": [
+        "EXACT_MARKET_TRIM_IDENTITY"
+      ]
+    },
+    {
+      "market_trim_id": "atto.standard",
+      "outcome": "KEEP",
+      "reason_codes": [
+        "EXACT_MARKET_TRIM_IDENTITY"
+      ]
+    }
+  ],
+  "proposal_count": 0,
+  "reason_codes": []
+}

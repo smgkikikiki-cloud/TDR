@@ -64,6 +64,22 @@ def validate_fixture(snapshot: dict) -> None:
             date.fromisoformat(e.get("captured_at", ""))
             if not isinstance(e.get("trim_ids"), list) or any(tid not in trims for tid in e["trim_ids"]):
                 raise ValueError(f"lineup evidence trim_ids must reference existing trims: {model['id']}")
+            if e.get("completeness") == "COMPLETE_LINEUP":
+                manifest, proof = e.get("capture_manifest"), e.get("completeness_evidence")
+                if not isinstance(manifest, dict) or not isinstance(proof, dict):
+                    raise ValueError(f"complete lineup requires capture_manifest and completeness_evidence: {model['id']}")
+                if (manifest.get("pagination_complete") is not True or type(manifest.get("source_page_count")) is not int
+                        or manifest.get("source_page_count", 0) < 1 or type(manifest.get("row_count")) is not int
+                        or manifest.get("row_count", 0) < 1 or manifest.get("row_count") != len(e["trim_ids"])
+                        or manifest.get("listed_trim_ids") != e["trim_ids"]):
+                    raise ValueError(f"complete lineup capture manifest is incomplete or inconsistent: {model['id']}")
+                if (proof.get("publisher_declared_complete") is not True or not proof.get("quote")
+                        or not str(proof.get("locator", "")).startswith("line:")
+                        or proof.get("capture_status") != "COMPLETE"
+                        or type(proof.get("expected_page_count")) is not int
+                        or proof.get("expected_page_count", 0) < 1
+                        or proof.get("expected_page_count") != proof.get("captured_page_count")):
+                    raise ValueError(f"complete lineup requires explicit publisher completeness evidence: {model['id']}")
         if model.get("registration_series") and (model.get("registration_series") not in {"RY1", "RY3"}
                                                   or not model.get("registration_stratum")):
             raise ValueError("registration series requires an RY1/RY3 series and a comparable stratum")

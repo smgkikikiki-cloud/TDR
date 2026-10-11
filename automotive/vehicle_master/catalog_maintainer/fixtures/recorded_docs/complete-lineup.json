@@ -27,5 +27,33 @@
   "trim_ids": [
     "atto.extended",
     "atto.standard"
+  ],
+  "completeness_evidence": {
+    "publisher_declared_complete": true,
+    "quote": "model=byd.atto_3; generation=atto_3.g1; current Thai lineup complete for this brochure edition.",
+    "locator": "line:3",
+    "capture_status": "COMPLETE",
+    "expected_page_count": 1,
+    "captured_page_count": 1
+  },
+  "lineup_rows": [
+    {
+      "market_trim_id": "atto.extended",
+      "model_id": "byd.atto_3",
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "powertrain": "BEV",
+      "model_year": null,
+      "facelift_id": null
+    },
+    {
+      "market_trim_id": "atto.standard",
+      "model_id": "byd.atto_3",
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "powertrain": "BEV",
+      "model_year": null,
+      "facelift_id": null
+    }
   ]
 }

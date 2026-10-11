@@ -15,6 +15,10 @@ python -m automotive.vehicle_master.catalog_maintainer.cli replay \
   --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
   --documents automotive/vehicle_master/catalog_maintainer/fixtures/recorded_docs/*.json \
   --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_replay_output
+python -m automotive.vehicle_master.catalog_maintainer.cli retail-reconcile \
+  --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
+  --document automotive/vehicle_master/catalog_maintainer/fixtures/recorded_docs/complete-lineup.json \
+  --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_retail_reconciliation.json
 ```
 
 Reproduce the fixture output from the package directory's parent repository root using those exact commands. No credentials, optional packages, external services, or database are used. `--budget 0` returns empty queues. A positive `--budget` caps each queue independently, so a Retail Audit backlog cannot consume the Spec Enrichment allowance. The merged queue follows a finite policy-configured service cycle. Output contains `queue.csv`, `decisions.jsonl`, and `summary.json`.
@@ -43,3 +47,15 @@ Replay writes `replay_evidence.jsonl`, `field_candidates.jsonl`, `gap_diff.json`
 Implemented the offline Evidence Replay + Unified Gap Adapter scope described in `ROADMAP.md`. This record describes implementation status only; owner acceptance is pending. The deterministic parser covers engine displacement, motor power, catalog battery capacity, qualified rated range, dimensions/seats, and basic safety values. It does not perform AI extraction, HTTP acquisition, lineup reconciliation, live research, or writes. Both repository GitHub Actions workflows must complete successfully on the correction commit before owner acceptance.
 
 The current QA correction sample replays 11 documents: 8 unique accepted into the evidence ledger, 3 documents held because identical bytes declare conflicting source/market/coverage metadata, 3 accepted field candidates, and 0 of 2 tracked priority gaps proposed for change. Accepted source candidates and gap reduction are separate measures. MOCK reports 0 HTTP, paid calls/tokens/spend, and writes.
+
+## Chunk 3 — offline retail evidence and reconciliation
+
+Complete lineups require more than a completeness label: the normalized source must carry a complete pagination/row manifest, a publisher completeness assertion with exact quote and locator, matching expected/captured page counts, a bound content SHA, and explicit rows. A partial, empty, or mismatched capture yields `HOLD`; omission from it can never be treated as discontinuation. The normalized snapshot contract applies the same explicit evidence requirement to source-confirmed current lineups.
+
+`retail-reconcile` performs pure same-model `MarketTrim` comparison using exact IDs plus model, generation, grade, powertrain, model-year and facelift identity. Aliases remain evidence metadata and are never used to merge canonical identity. Outcomes are `KEEP`, `ADD_PROPOSAL`, `SOFT_DISCONTINUE_PROPOSAL`, `HOLD`, or `REVIEW`. Identity collisions, historical/admin/owner-retired trims, and owner-protected Retail Set members receive review protection. Soft discontinuation requires quote-bound first-party Thai end-of-sale evidence or two distinct official complete captures with independent source, lineage, and content hashes separated by the policy interval. All structural outcomes remain proposals/dispositions; canonical writes stay zero and Price Ledger remains separately owned.
+
+The sample reconciliation output is `fixtures/sample_retail_reconciliation.json`. `CANDIDATE_PROPOSED` remains a proposal state; qualification review, canonical conflicts, and verification status cannot be converted into verified facts by this module.
+
+### Chunk 3 implementation record — QA pending
+
+Added explicit normalized completeness evidence, deterministic source validation, exact identity reconciliation, and adversarial proposal gates. Carried-forward regressions prove an eligible official Thai source reduces one genuinely missing P1 gap, mixed fact states are order-independent, and qualifier review remains unresolved. Local focused suite: 46 tests pass from repository root and `automotive/vehicle_master/`. Offline sample replay and trim reconciliation outputs regenerated. Full GitHub Actions status is pending for this correction commit; no live calls or canonical writes were enabled.
