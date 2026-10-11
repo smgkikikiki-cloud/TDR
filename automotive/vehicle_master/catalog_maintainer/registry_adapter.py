@@ -13,8 +13,8 @@ import re
 
 REGISTRY_RELATIVE = Path("automotive/vehicle_master/vehreg/data/2026/product/comparable_specs/registry.json")
 EDITOR_RELATIVE = Path("lib/trim-editor-fields.ts")
-REGISTRY_SHA256 = "2e2f344005aaba99ea613e47b45af14e72a42e3029d942d21bda4a0be34c6d2b"
-EDITOR_SHA256 = "defbfc98aea9502ed6a689a6fb2b485a25b8fe7fbaf731a84ecf5b2821596ba7"
+REGISTRY_SHA256 = "dff3100caec596fa6911f25b622f1cce65b3ffa6247bf5ce1e6d133acd5f419c"
+EDITOR_SHA256 = "31ce6feef19e1b477f8fa28ff9ca4d9afff32d7ae0c436aa56404063afba6f8b"
 
 
 class RegistryDriftError(ValueError):

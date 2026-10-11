@@ -143,6 +143,8 @@ class CatalogMaintainerTests(unittest.TestCase):
     def test_canonical_registry_adapter_is_pinned_and_aliases_are_canonical(self):
         registry = load_registry(root=REPOSITORY_ROOT)
         self.assertEqual(registry["schema_version"], 1)
+        self.assertEqual(registry["registry_sha256"], "dff3100caec596fa6911f25b622f1cce65b3ffa6247bf5ce1e6d133acd5f419c")
+        self.assertEqual(registry["editor_sha256"], "31ce6feef19e1b477f8fa28ff9ca4d9afff32d7ae0c436aa56404063afba6f8b")
         self.assertEqual(resolve_key("engine_cc", registry), "engine.displacement_cc")
         self.assertEqual(resolve_key("battery_kwh", registry), "battery.catalog_capacity_kwh")
         self.assertEqual(registry["fields"]["ev.rated_range_km"]["comparison_qualifiers"], ["measurement_basis", "range_scope"])
