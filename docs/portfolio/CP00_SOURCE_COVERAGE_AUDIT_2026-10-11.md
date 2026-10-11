@@ -66,6 +66,14 @@ Universe for this diagnostic only: 1,431 `vehicle_trims` where status=CURRENT an
 
 The preexisting `lib/market-price-state.ts` explicitly caps its three serving queries at 1,000 rows; do not treat that reader as a complete index/time-history API. A new full-coverage read contract or audit-safe pagination is required before backfill or time-series scoring.
 
+### Cross-check against served Trim JSON projections
+
+To test whether the index-ready historical list-price data lived in a different serving projection rather than the canonical ledger, a second **aggregate-only** query inspected `vehicle_trims.price_history` and `vehicle_trims.campaign_quote`:
+
+- Across 1,569 Trims, `price_history` arrays contain **1,004 total entries**, exactly the same count as the Ledger. Grouping nested entries by `price_type='LIST_PRICE'` gave **320**, observed from **2026-09-08 to 2026-09-28**, spanning **one distinct month**. The nested projection does **not** reveal an additional independent historical monthly LIST_PRICE series. Exact row-by-row parity was **not** checked, so equal totals alone do not prove all row payloads identical.
+- `campaign_quote` objects are present on 1,466 Trim records, but actual nested `campaign_options` total **18 options across 16 Trims**. The presence of a populated metadata object must **not** be mistaken for a recorded, cash-eligible promotion.
+- This audit is still about the **currently mounted canonical DB/projection**; uninspected original documents, archived files or external licensed sources may contain useful historical data. No conclusion about their absence is justified.
+
 ### Promotions: source-present is not numerical cash-offer-ready
 
 - 48 promotion options linked to **all 48** valid `vehicle_campaigns` records (44 distinct campaign IDs; 14 parent brands). This is a **campaign relationship**, NOT a Trim-specific price association.
