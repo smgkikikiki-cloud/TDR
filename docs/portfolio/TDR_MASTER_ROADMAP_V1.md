@@ -2,7 +2,7 @@
 
 **Owner decision:** APPROVED 2026-10-11, after review of the full portfolio roadmap (PR #204).  
 **Scope of approval:** overall product/system architecture, workstream responsibilities, engineering sequencing and dependencies, release order, evidence-first engine discipline, proposed governance model as the direction of development.  
-**Repository adoption:** APPROVED ON THIS BRANCH; **NOT YET MERGED INTO `main`**. Source-of-truth for review and future adoption; it cannot bind branches not containing this file until promoted into their instruction/bootstrap paths.
+**Repository adoption:** owner approved on 2026-10-11; initial merge tracked in [PR #204](https://github.com/smgkikikiki-cloud/TDR/pull/204). Consult GitHub for current merge state. Agents only receive this contract when the file exists in their working branch and their bootstrap rules reference it.
 **Execution:** NOT ENABLED. Existing PRs, Market Track, migrations, releases, billing, production and autonomous runners still require their own gates and any separately required owner authorization.
 
 This is the concise central entrypoint for the approved development **roadmap**, not an assertion that all attached formulas, external-data licensing and data quality are validated. No hypothetical event or historical coverage becomes real because this roadmap is approved.
@@ -85,11 +85,11 @@ Detailed source/review documents:
 **Planning approved:** the team/agents should use this roadmap as *the* unified source for what is being built, in what order, and which acceptance gates apply.
 
 **Not yet activated:**
-- merge this draft PR into `main`, rewrite existing agent bootstrap rules, or change GitHub branch protection;
+- autonomously merge future PRs, bypass branch review/CI, activate a runner or change GitHub branch protection without a separately reviewed implementation;
 - grant a Task Packet or permission to run the Night Shift;
 - run paid AI or HTTP research, R6/R7/R8, canonical data writers, schema changes, migrations, billing changes or deployments;
 - implicitly approve open draft PR #200/#201/#203 or their separate correction QA gates.
 
-**Future enforcement after a separate narrow authorization:** add roadmap links to both `AGENTS.md` and `CLAUDE.md`; enforce `roadmap_version`, pinned source SHA, path allowlist, domain gate, offline/production boundaries, reviewer tests and branch protection. `portfolio.plan.json` stays `execution.enabled=false`, `task_queue=[]` until separately enabled.
+**Enforcement implementation after owner go:** add roadmap links to both `AGENTS.md` and `CLAUDE.md`; enforce `roadmap_version`, pinned source SHA, path allowlist, domain gate, offline/production boundaries and reviewer tests. Prompt loading alone is not proof; CI/Enforcer adoption and actual required-branch-check configuration must be separately verified. `portfolio.plan.json` stays `execution.enabled=false`, `task_queue=[]` until separately enabled.
 
 **Change control:** edits to **product boundaries, release order, layer split or measurement doctrine** create v1.1+ and require new owner review; factual evidence updates and execution status can append dated observations without rewriting v1.0 design approval. No developer/AI may unilaterally reinterpret this approval as permission to alter a previously frozen domain contract.
