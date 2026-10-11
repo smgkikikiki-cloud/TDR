@@ -2,6 +2,22 @@
 
 `smgkikikiki-cloud/TDR` is the single active repository for TDR Automotive Intelligence.
 
+## Mandatory Master Roadmap bootstrap (owner-approved v1.0)
+
+**Before planning, modifying, reviewing or dispatching any TDR development task**, read:
+1. `docs/portfolio/TDR_MASTER_ROADMAP_V1.md` — approved portfolio scope, product boundaries, Layer 3 order and G0–G5 delivery dependencies.
+2. `docs/portfolio/portfolio.plan.json` — machine-readable owner approval, execution permissions and task queue. This JSON is **non-executable unless its explicitly controlled execution gate permits a real, owner-approved task**.
+3. `docs/portfolio/ENGINE_VALIDITY_AND_DEPENDENCIES.md` and `docs/portfolio/DOMAIN_BOUNDARIES.md` — common validity requirements and workstream boundaries. Read the specific methodology/review attachment for the affected engine; proposed numerical formulas remain separate from roadmap approval.
+4. The existing authoritative `docs/WORK_STATE.md` and the **applicable** gate/contract: Ice → `docs/market-track/ROADMAP.md`, Vehicle Master → `docs/vehicle-db/VEHICLE_DB_V3.md`, website design → `docs/MERGE_DECISIONS.md` and `design/GRAFT_PLAN.md`. A portfolio milestone cannot override a domain's permission flag.
+
+Each task handoff must name the **roadmap version**, the exact **source commit SHA**, the **domain**, any **source/acceptance contract**, a **bounded file scope** and **tests**. If a source/roadmap conflict or required permission remains unresolved, report the specific blocker; do not let two AI agents approve each other or treat a draft contract as adopted.
+
+**Enforcement distinction:** `orchestration/preflight.mjs` is the deterministic, read-only gate for machine checks. An LLM merely asserting “I read the roadmap” does not pass the gate. Agent prompts are advisory by themselves. The GitHub workflow can verify repository invariants, but making its check required for merging must be configured and independently verified in GitHub branch protection/rulesets.
+
+**Current safety locks:** roadmap v1.0 APPROVED, but `portfolio.plan.json` still has `execution.enabled=false`, `task_queue=[]`, no autonomous implementer dispatch, auto-merge, deployment, production write, paid API or Ice gate advancement. These controls cannot be bypassed by a prompt, branch convention, or local environment flag. Existing independently authorized manual/offline PR work retains its own gate.
+
+**Existing, pre-roadmap branches** do not inherit a file merged later into `main` automatically: their agent sessions must load the approved v1.0 from `main` and apply domain contracts without rewriting or silently rebasing active work. A future Enforcer must pin the actual source commit and reject stale/unapproved task packets.
+
 ## Canonical vehicle boundary
 
 Vehicle-market facts — Brand, Model, Generation, Variant, MarketTrim, exact powertrain, specifications, fitment, source evidence, Price Ledger, campaigns, ECO ingestion, DLT resolution, price harvesting — are authoritative in the **Supabase Vehicle Master tables** (`vehicle_brands`, `vehicle_models`, `vehicle_generations`, `vehicle_variants`, `vehicle_trims`, `vehicle_facts`, `vehicle_price_ledger`, `vehicle_campaigns`, `vehicle_promotions`, and related tables — `migration_v57` onward). The Vehicle Master DB is the **sole canonical source of truth** for these facts. All future editing/writer work for it follows `docs/vehicle-db/VEHICLE_DB_V3.md`.
