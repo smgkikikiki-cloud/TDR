@@ -13,6 +13,10 @@ This folder inventories shared development workstreams and their interfaces; it 
 5. For standalone B2B Toolkit design, the 2026-10-10 owner-locked Spatial/UX handoff governs locked behavior **as historical design evidence**; it is not yet an adopted in-repository implementation contract. Port approved decisions only after owner review. Conflicts involving actual product entitlements/billing must be surfaced.
 6. This folder: *derived, provisional portfolio mapping only*. Every unapproved formula, status, new interface and scheduling target is a proposal.
 
+## Read this first (owner review)
+
+Start with [OWNER_REVIEW.md](OWNER_REVIEW.md): three short passes covering (A) what each workstream must do, (B) proposed sequencing and first Layer 3 product, and (C) governance roles **for design only**. All three verdicts are PENDING; do not treat the roadmap as approved.
+
 ## Folder index
 
 - [G0_RECONCILIATION.md](G0_RECONCILIATION.md): observed states, conflicts, required decisions and evidence, including the R6/run discrepancy and migration number collision.
