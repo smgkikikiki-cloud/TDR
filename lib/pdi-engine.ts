@@ -49,6 +49,8 @@ export type PdiInput = {
   universeVersion: string;
   models: PdiModel[];
   publicationApproved?: boolean;
+  methodologyApproved?: boolean;
+  completeUniverseAttested?: boolean;
   approvedMinimumCoveragePct?: number;
 };
 export type PdiTrimResult = {
@@ -79,6 +81,8 @@ export type PdiResult = {
   modelResults: PdiModelResult[];
   eligibleModelCount: number;
   scoredModelCount: number;
+  pendingCandidateCount: number;
+  scopeConflictCount: number;
   eligibleTrimCount: number;
   verifiedTrimCount: number;
   modelCoveragePct: number | null;
@@ -198,13 +202,20 @@ export function calculatePdi(input:PdiInput):PdiResult {
       promoTrimBreadth:discounts.filter(v=>v>0).length/discounts.length
     });
   }
+  const pendingCandidateCount=modelResults.filter(x=>x.status==="CANDIDATE").length;
+  const scopeConflictCount=modelResults.filter(x=>x.status==="SCOPE_CONFLICT").length;
   const eligible=modelResults.filter(x=>["SCORED","PARTIAL","CONFLICT"].includes(x.status));
   const scored=eligible.filter(x=>x.status==="SCORED");
   const eligibleTrims=eligible.reduce((n,x)=>n+x.includedTrimIds.length,0);
   const verifiedTrims=eligible.reduce((n,x)=>n+x.trims.filter(t=>t.msrpThb!==null && t.discountThb!==null && t.discountStatus!=="CONFLICT").length,0);
   const coverage=eligible.length ? 100*scored.length/eligible.length : null;
   const mean=scored.length ? scored.reduce((n,x)=>n+(x.pdiPct as number),0)/scored.length : null;
+  // A selected pilot basket can have 100% internal coverage while representing
+  // almost none of the Thai market. Never allow a headline without explicit
+  // source-universe attestation and reviewed calculation methodology.
   const publishable=mean!==null && input.publicationApproved===true &&
+    input.methodologyApproved===true && input.completeUniverseAttested===true &&
+    pendingCandidateCount===0 && scopeConflictCount===0 &&
     typeof input.approvedMinimumCoveragePct==="number" &&
     Number.isFinite(input.approvedMinimumCoveragePct) &&
     input.approvedMinimumCoveragePct>=0 && input.approvedMinimumCoveragePct<=100 &&
@@ -212,6 +223,7 @@ export function calculatePdi(input:PdiInput):PdiResult {
   return {methodologyVersion:PDI_METHOD,asOf:input.asOf,sourceSnapshot:input.sourceSnapshot,
     universeVersion:input.universeVersion,modelResults,
     eligibleModelCount:eligible.length,scoredModelCount:scored.length,
+    pendingCandidateCount,scopeConflictCount,
     eligibleTrimCount:eligibleTrims,verifiedTrimCount:verifiedTrims,
     modelCoveragePct:coverage,trimCoveragePct:eligibleTrims?100*verifiedTrims/eligibleTrims:null,
     researchMeanPdiPct:mean,publishableHeadlinePdiPct:publishable?mean:null,
