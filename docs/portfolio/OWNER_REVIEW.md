@@ -87,4 +87,4 @@ These three passes record the **completed portfolio review**. Specific unvalidat
 | B — Roadmap ordering / first Layer 3 slice | **APPROVED (2026-10-11)** | G0–G5 dependency direction, V1→V1.5→V2 rollout; no fixed dates |
 | C — Governance roles (design only) | **APPROVED (2026-10-11)** | Architectural design only; runner/CI disabled |
 
-**Postapproval:** v1.0 is the agreed portfolio roadmap for future work, but remains on the unmerged PR branch until separately adopted into main. Retain original task authorizations, domain-specific gates and explicit production release approvals; a material scope/order change requires owner review and a new roadmap version.
+**Postapproval:** v1.0 is the agreed portfolio roadmap for future work; main adoption is tracked through PR #204. Retain original task authorizations, domain-specific gates and explicit production release approvals; a material scope/order change requires owner review and a new roadmap version.
