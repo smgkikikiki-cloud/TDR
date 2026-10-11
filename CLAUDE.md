@@ -1,4 +1,13 @@
 # TDR Automotive Intelligence — กฎสำหรับ Claude ในโปรเจกต์นี้
+
+## Portfolio Master Roadmap v1.0 — บังคับอ่านก่อนเริ่มงานทุกครั้ง
+
+ก่อน Claude Code จะวางแผน แก้โค้ด ส่ง Review หรือรับคำสั่งต่อจาก Enforcer ต้องอ่าน **`AGENTS.md` ก่อน** แล้วอ่าน **`docs/portfolio/TDR_MASTER_ROADMAP_V1.md`** และ **`docs/portfolio/portfolio.plan.json`** เพื่อทราบขอบเขตโครงการ, Dependency G0–G5, งานที่ได้รับอนุมัติจริง และข้อห้ามด้านการ Execute. ถ้าทำงานเกี่ยวกับ Engine ต้องอ่าน `docs/portfolio/ENGINE_VALIDITY_AND_DEPENDENCIES.md`, `docs/portfolio/DOMAIN_BOUNDARIES.md` รวมถึง Contract ของ Engine นั้นโดยเฉพาะ
+
+ให้ยึด `docs/WORK_STATE.md` และ Roadmap ประจำ Domain ในเรื่อง Gate/Production/Identity/Writer/Design **เหนือข้อสรุปภาพรวม** ห้ามใช้แผนใหญ่เปิด Ice R6/R7/R8, สร้าง Writer, Merge หรือ Deploy เอง และห้ามถือว่าเอกสารสูตรที่ยังรอทดสอบเป็นสูตรที่อนุมัติแล้ว
+
+ทุก Task Packet ต้องระบุ `roadmap_version=1.0`, commit ที่อ่าน, เอกสารอ้างอิง, scope ของไฟล์, เงื่อนไข stop และการทดสอบ. ก่อน Enforcer dispatch ให้ผ่านการตรวจเชิง Deterministic จาก `orchestration/preflight.mjs`; การตอบว่าอ่านแล้วไม่ใช่หลักฐานการผ่าน Gate. ณ วันที่อนุมัติ Roadmap ระบบ Night Shift ยังปิด `execution.enabled=false` และ Queue ว่าง. ห้ามเปิดจากการตีความ Prompt.
+
 ก่อนเปิดหรือนำเข้าข้อมูลใน `data/packages/` หรือไฟล์ `TDR_FULL_*.zip` ให้อ่าน `.claude/skills/tdr-package-import/SKILL.md` ก่อนทุกครั้ง แล้วทำตามขั้นนำเข้าและกฎการแสดงผลในนั้น
 
 Vehicle identity and market engine work follows docs/vehicle-db/VEHICLE_DB_V3.md.
