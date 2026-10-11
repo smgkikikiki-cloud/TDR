@@ -144,6 +144,12 @@ export function calculatePdi(input:PdiInput):PdiResult {
     if(seenModels.has(model.modelId)) throw new Error("duplicate modelId: "+model.modelId);
     seenModels.add(model.modelId);
     const trims=model.trims.filter(t=>t.currentRetail);
+    // A derived CURRENT flag is not a reviewed retail trim set. Keep the
+    // model visible for discovery but never score with an unconfirmed
+    // denominator. Older callers that do not attach basis remain test fixtures.
+    if(model.retailSetBasis==="MASTER_CURRENT_STATUS") {
+      modelResults.push(emptyModel(model,"CANDIDATE","CURRENT_RETAIL_SET_NOT_REVIEWED",trims));continue;
+    }
     if(!model.currentRetail || !trims.length || !["CN","JP"].includes(model.brandOrigin) || model.japaneseAdmission==="REJECTED" && model.brandOrigin==="JP") {
       modelResults.push(emptyModel(model,"NOT_ELIGIBLE","OUTSIDE_CURRENT_UNIVERSE"));continue;
     }
