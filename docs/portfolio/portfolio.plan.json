@@ -1,8 +1,8 @@
 {
-  "schema": "tdr.portfolio.reconciliation-plan.v0.1",
+  "schema": "tdr.portfolio.approved-roadmap.v1.0",
   "snapshot_date": "2026-10-11",
-  "state": "PROPOSED_NON_EXECUTABLE",
-  "scope": "Documentation and G0 reconciliation; NOT authority to start code or change policies",
+  "state": "OWNER_APPROVED_AWAITING_MAIN_ADOPTION",
+  "scope": "Owner-approved portfolio plan and guardrails. This JSON is non-executable; methodology and operational domain gates remain separate.",
   "repository": "smgkikikiki-cloud/TDR",
   "execution": {
     "enabled": false,
@@ -69,11 +69,18 @@
     {
       "id": "G0",
       "name": "Portfolio authority reconciliation",
-      "status": "REVIEW_REQUIRED",
+      "status": "ROADMAP_APPROVED_AUTHORITY_RECONCILIATION_OPEN",
       "pass": [
         "C01-C04 resolved with observed evidence and owner-reviewed decisions",
         "owner accepts portfolio domain contract",
         "no automatic task permission inferred"
+      ],
+      "approved_portfolio_direction": true,
+      "remaining_execution_conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
       ]
     },
     {
@@ -354,5 +361,40 @@
         "not evidence of universal retail lineup verification"
       ]
     }
-  ]
+  ],
+  "approval": {
+    "roadmap_version": "1.0",
+    "owner_approved_on": "2026-10-11",
+    "status": "OWNER_APPROVED",
+    "approved_for": [
+      "portfolio product/workstream scope",
+      "system boundaries and architecture",
+      "relative dependencies and G0–G5 delivery sequence",
+      "Layer 3 release order Competitive Pressure → Dealer Geography → Network Watch",
+      "methodology validity doctrine and independent QA direction",
+      "governance design direction"
+    ],
+    "not_approved_by_this_record": [
+      "specific unresolved pricing/pressure scores and formulas",
+      "source data sufficiency or factual R6 authorization",
+      "existing PR #200/#201/#203 merge or acceptance",
+      "CI or Enforcer activation",
+      "automatic task packets or queued execution",
+      "GitHub merge/branch protection changes",
+      "paid AI/HTTP",
+      "database migrations/Production writes",
+      "deployments",
+      "billing plan changes"
+    ],
+    "document": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md",
+    "repository_adoption": "PENDING_MERGE",
+    "human_gate_overrides": false
+  },
+  "conflicts_blocking_operational_activation": [
+    "C01",
+    "C02",
+    "C03",
+    "C04"
+  ],
+  "roadmap_authoritative_file": "docs/portfolio/TDR_MASTER_ROADMAP_V1.md"
 }
