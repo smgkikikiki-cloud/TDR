@@ -47,3 +47,11 @@ B. Owner-approved Japanese admission rules (review and versioning), scope confli
 C. Versioned output storage and publication gate once freshness/coverage thresholds and draft formula are approved; compute daily/weekly/monthly histories, peer groups, breadth/velocity/price actions. Then integrate with Competitive Pressure Layer 3. CTPDI consumes approved PDI signals later; don't conflate two indices.
 
 **Do not:** merge/deploy without review, mutate the Vehicle Master in this branch, make new authoritative MSRP tables, generate unverified promotions with an LLM, write customer-facing APIs, or treat trial calculation outputs as commercially publishable.
+
+## Update — October 11 operational pilot and publication guard
+
+The branch now includes `lib/pdi-universe-policy.ts`, `data/pdi/pilot-2026-10-{e07,s07}.json`, `scripts/pdi-oem-pilot.ts`, the delegated Japanese allowlist, and exact October official-source model values. See [PDI_WORKING_PILOT_2026_10.md](./PDI_WORKING_PILOT_2026_10.md).
+
+A research basket with 100% observed selected-model coverage is **not** complete-market coverage. `calculatePdi()` therefore refuses a publishable headline until **all** of the following are true: `publicationApproved`, `methodologyApproved`, `completeUniverseAttested`, approved minimum completeness threshold, and no unresolved `CANDIDATE`/`SCOPE_CONFLICT`. The live audit never supplies those attestations and has no public-facing publication path. The pilot is intended only for internal validation.
+
+Run `npm run pdi:pilot` for reproducible official OEM model scores and `npm run pdi:pilot:verify` for an optional server-only current Vehicle Master parity check.
