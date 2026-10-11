@@ -59,7 +59,8 @@ export function classifyHistoricalPr({ event, changes, candidateHasManifest = fa
     errors.push('PR_NUMBER_INVALID');
   if (pr?.base?.ref !== 'main') errors.push('BASE_BRANCH_NOT_MAIN');
   if (!safeSha(baseSha) || !safeSha(headSha)) errors.push('EVENT_SHA_INVALID');
-  if (!Array.isArray(changes)) errors.push('DIFF_NOT_AVAILABLE');
+  if (!Array.isArray(changes) || changes.length === 0)
+    errors.push('DIFF_NOT_AVAILABLE_OR_EMPTY');
   const paths = [];
   for (const entry of Array.isArray(changes) ? changes : []) {
     if (!entry || typeof entry.kind !== 'string'
