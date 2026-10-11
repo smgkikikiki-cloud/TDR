@@ -25,6 +25,8 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 
 **Owner question A:** Are these functions and product boundaries faithful to the intended TDR architecture? The existence of this table does NOT imply 'approved'.
 
+**Methodology attachment for review (not approved):** [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md). Recommends demand-substitution gate → comparable documented price movement → qualified registration corroboration → evidence-ranked signal; no guessed causal sales loss or 0–100 score. Also gives a falsifiability rubric for other engines. This document does **not** mark Pass A approved.
+
 ### PASS B — Proposed *ordering*, not a 10-week deadline
 
 - **Track I, already underway:** leave PR #200, #201 and #203 as independently scoped draft branches; complete their existing approved correction/calibration reviews first. The original TDR website UI continues according to the existing GRAFT_PLAN and owner go per row. Keep those four streams distinct.
