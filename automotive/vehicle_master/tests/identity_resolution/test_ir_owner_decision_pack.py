@@ -8,7 +8,9 @@ What is pinned:
   * every evidence reference in every row resolves to a real record;
   * the nine catalog-alias collisions, the eleven brand cases, the 82 CREATE candidates and the 560 R6 rows are all present exactly once, and the R6 sheet / CREATE set reconcile;
   * the two verdict vocabularies stay apart: `check_label_consistency` flags only labels that cannot both be true;
-  * brand folds never split a brand family, the negative sample is a weighted deterministic stratified sample, and the first wave is small.
+  * brand folds never split a brand family, the negative sample is a weighted deterministic stratified sample, and the first wave is small;
+  * ground truth is derived per link type (a missing canonical identity is EQUIVALENT-negative only; a variant infers nothing), threshold selection sees training folds only, and the first-wave
+    count is exactly the number of ACTION_REQUIRED queue rows, every other row being a SUPPORTING_ROW that names the one action that resolves it.
 
 Everything not marked `needs_package` runs from committed files only. Nothing here changes a rule, a policy value, the export or any sheet.
 """
@@ -73,6 +75,7 @@ def test_manifest_pins_every_file_and_every_input():
     assert m["export_manifest_sha256"] == O.sha256_file(E.OUT / "MANIFEST.json"), "built from the accepted export"
     assert m["r6_owner_review_sha256"] == O.sha256_file(A.CALIBRATION_DIR / "r6_owner_review.csv"), "built from the unchanged R6 sheet"
     assert m["series_evidence_sha256"] == O.sha256_file(O.SERIES_JSON)
+    assert m["sensitivity_results_sha256"] == O.sha256_file(A.CALIBRATION_DIR / "sensitivity_results.json"), "the registered threshold grid is pinned"
     assert m["binding"] is False and inp().adoption["binding"] is False
 
 
@@ -191,7 +194,8 @@ def test_decision_ids_are_unique_and_queue_covers_each_item_once():
     assert max(q.values()) == 1
     expected = {("ALIAS_ROW", r["decision_id"]) for r in t["alias"]} | {("BRAND_CASE", r["decision_id"]) for r in t["brand"]} | {("CREATE_ROW", r["decision_id"]) for r in t["create"]} \
         | {("R6_ROW", f"R6-{r['review_rank']}") for r in t["view"]} | {("NEGATIVE_SAMPLE", r["sample_id"]) for r in t["neg"]} | {(i["kind"], i["item_id"]) for i in t["init"]}
-    assert set(q) == expected
+    assert set(q) == expected, "no underlying record is dropped: 82 CREATE, 560 R6, 9 alias, 11 brand, 24 negative-sample rows and the 4 questions"
+    assert len(t["queue"]) == 82 + 560 + 9 + 11 + 24 + 4
     assert [r["queue_position"] for r in t["queue"]] == list(range(1, len(t["queue"]) + 1)) and [r["wave"] for r in t["queue"]] == sorted(r["wave"] for r in t["queue"])
 
 
@@ -370,12 +374,54 @@ def test_first_wave_is_small_and_names_what_it_resolves():
     t = tables()
     st = t["istats"]
     assert st["owner_actions"] < 100 and st["owner_actions"] == st["contract_questions"] + st["alias_verdicts"] + st["create_verdicts"] + st["r6_rows_alone"]
-    init_ids = {i["item_id"] for i in t["init"]}
-    assert {"INIT-01", "INIT-02", "INIT-03", "INIT-04"} <= init_ids
+    assert [i["item_id"] for i in t["init"]] == ["INIT-01", "INIT-02", "INIT-03", "INIT-04"], "initial_owner_decisions.csv holds only decisions that have no row of their own elsewhere"
     resolved = {x for i in t["init"] for x in i["resolves"]}
     assert {r["decision_id"] for r in t["brand"]} <= resolved, "every brand case is closed by a contract-level answer"
-    assert "OD-C11" in resolved and {"OD-C04", "OD-C06"} <= resolved
+    assert "OD-C11" in resolved
     assert all(i["owner_answer"] == "" for i in t["init"])
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-3: action vs evidence semantics
+def test_wave_1_has_exactly_65_distinct_decisions_and_every_other_row_names_its_resolver():
+    t = tables()
+    queue = pack_csv("decision_queue.csv")
+    assert [r["queue_role"] for r in queue] and set(r["queue_role"] for r in queue) == {"ACTION_REQUIRED", "SUPPORTING_ROW"}
+    w1 = [r for r in queue if r["wave"] == "1"]
+    actions = [r for r in w1 if r["queue_role"] == "ACTION_REQUIRED"]
+    assert len(actions) == 65 == len({r["action_id"] for r in actions}) == t["istats"]["owner_actions"]
+    kinds = collections.Counter(r["item_kind"] for r in actions)
+    assert kinds == {"CONTRACT": 3, "CATALOG": 1, "ALIAS_ROW": 5, "CREATE_ROW": 9, "R6_ROW": 47}
+    assert len(w1) == 83 == len(actions) + t["istats"]["supporting_rows_wave1"] == 65 + 18
+    all_actions = {r["action_id"]: r for r in queue if r["queue_role"] == "ACTION_REQUIRED"}
+    for r in queue:
+        if r["queue_role"] == "ACTION_REQUIRED":
+            assert r["action_id"] == r["item_id"] and r["resolved_by_action_id"] == "" and r["answer_destination"], r["item_id"]
+        else:
+            assert r["action_id"] == "" and r["resolved_by_action_id"] in all_actions, f"{r['item_id']} must name exactly one ACTION_REQUIRED row"
+            assert int(all_actions[r["resolved_by_action_id"]]["wave"]) <= int(r["wave"]), "a wave-1 supporting row never hangs on a later action"
+            assert r["answer_destination"]
+    # every underlying record is kept; the headline reconciles with the starter batch and the report text
+    starter = {r["review_rank"] for r in t["view"] if r["starter_batch"]}
+    assert len(starter) == 48
+    w1_r6 = {r["item_id"] for r in w1 if r["item_kind"] == "R6_ROW"}
+    assert w1_r6 == {f"R6-{x}" for x in starter}
+    assert len([r for r in w1 if r["item_kind"] == "R6_ROW" and r["queue_role"] == "ACTION_REQUIRED"]) == 47 and t["istats"]["r6_rows_also_decided_elsewhere"] == 1
+    assert {r["item_id"] for r in queue if r["item_kind"] == "CREATE_ROW"} == {c["decision_id"] for c in t["create"]} and len([r for r in queue if r["item_kind"] == "R6_ROW"]) == 560
+    text = (OUT / "OWNER_DECISION_PACK.md").read_text(encoding="utf-8")
+    assert "**65 owner decisions**" in text and "lists 83 first-wave rows" in text and "18 `SUPPORTING_ROW`s" in text
+
+
+def test_supporting_rows_do_not_hold_a_second_writable_decision():
+    t = tables()
+    queue = {(r["item_kind"], r["item_id"]): r for r in pack_csv("decision_queue.csv")}
+    for b in t["brand"]:
+        assert queue[("BRAND_CASE", b["decision_id"])]["queue_role"] == "SUPPORTING_ROW"
+    for c in t["create"]:
+        row = queue[("CREATE_ROW", c["decision_id"])]
+        assert (row["queue_role"] == "SUPPORTING_ROW") == bool(c["alias_decision_id"] or c["brand_case_id"]), c["decision_id"]
+    # the alias file no longer carries a second group-verdict field: the group verdict is written once, in the CREATE row
+    assert O.OWNER_FIELDS["catalog_alias_collisions.csv"] == ["owner_alias_class", "owner_notes"]
+    assert O.OWNER_FIELDS["brand_resolution_cases.csv"] == ["owner_case_override", "owner_notes"]
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- two verdict vocabularies
@@ -483,3 +529,184 @@ def test_calibration_procedure_covers_what_was_asked():
     for must in ("brand_folds.csv", "auto_precision", "auto_recall", "propose_precision", "propose_or_better_recall", "false_auto_analysis", "pending_threshold_sensitivity", "held-out", "stop_rules"):
         assert must in text, must
     assert "adoption.binding stays false" in text
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-1: ground truth per link type
+POOL = ["t.a", "t.b"]
+
+
+def pair(c, verdict, link=""):
+    return {"candidate": c, "verdict": verdict, "link_type": link or O.PAIR_LINK.get(verdict, ""), "canonical": ""}
+
+
+def cell_states(cells, link):
+    return {c: st for (c, l), st in cells.items() if l == link}
+
+
+def test_missing_canonical_identity_is_equivalent_negative_only():
+    cells, notes = O.derive_truth(POOL, [], {"verdict": "VALID_MISSING_CANONICAL"})
+    assert cell_states(cells, "EQUIVALENT") == {"t.a": "NEGATIVE", "t.b": "NEGATIVE"}
+    assert set(cell_states(cells, "PART_OF").values()) == {"UNKNOWN"} and set(cell_states(cells, "COMPOSED_OF").values()) == {"UNKNOWN"}, "no structural relation is inferred negative"
+    assert notes == []
+
+
+@pytest.mark.parametrize("verdict,link", [("CORRECT_PART_OF", "PART_OF"), ("CORRECT_COMPOSED_OF", "COMPOSED_OF")])
+def test_missing_identity_with_a_valid_structural_relation_is_kept_and_flagged_for_review(verdict, link):
+    cells, notes = O.derive_truth(POOL, [pair("t.a", verdict)], {"verdict": "VALID_MISSING_CANONICAL"})
+    assert cells[("t.a", link)] == "POSITIVE", "the structural relation stays a positive for its own link type"
+    assert cells[("t.a", "EQUIVALENT")] == "NEGATIVE" and cells[("t.b", link)] == "UNKNOWN"
+    assert [n["kind"] for n in notes] == ["MISSING_IDENTITY_WITH_STRUCTURAL_RELATION"] and notes[0]["severity"] == "REVIEW"
+    assert not [n for n in notes if n["severity"] == "CONFLICT"]
+    # the metric preparation: scored per link type, so a proposed PART_OF/COMPOSED_OF is a true positive there and is not an EQUIVALENT false positive
+    preds = {("t.a", link): "PROPOSE"}
+    rows, skipped = O.metric_rows(link, cells, preds)
+    assert [r["truth"] for r in rows] == ["POSITIVE"] and O.confusion(rows)["tp_prop"] == 1 and O.confusion(rows).get("fp_prop", 0) == 0 and skipped == {"UNKNOWN": 1}
+    rows_eq, _ = O.metric_rows("EQUIVALENT", cells, {})
+    assert {r["truth"] for r in rows_eq} == {"NEGATIVE"} and O.confusion(rows_eq).get("fp_auto", 0) == 0
+
+
+def test_missing_identity_and_a_correct_equivalent_pair_is_a_conflict():
+    cells, notes = O.derive_truth(POOL, [pair("t.a", "CORRECT_EQUIVALENT")], {"verdict": "VALID_MISSING_CANONICAL"})
+    assert cells[("t.a", "EQUIVALENT")] == "CONFLICT" and any(n["severity"] == "CONFLICT" for n in notes)
+    rows, skipped = O.metric_rows("EQUIVALENT", cells, {("t.a", "EQUIVALENT"): "AUTO"})
+    assert ("t.a", "EQUIVALENT") not in {r["cell"] for r in rows} and skipped.get("CONFLICT") == 1, "a conflicting cell is counted and not scored"
+
+
+def test_a_variant_infers_no_equivalent_pair():
+    cells, notes = O.derive_truth(POOL, [], {"verdict": "VARIANT_TRIM_CODE", "canonical": "t.a"})
+    assert set(cells.values()) == {"UNKNOWN"} and notes == []
+    # only an explicit, correct owner link label makes the pair a positive
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "CORRECT_EQUIVALENT")], {"verdict": "VARIANT_TRIM_CODE", "canonical": "t.a"})
+    assert cells[("t.a", "EQUIVALENT")] == "POSITIVE" and cells[("t.b", "EQUIVALENT")] == "NEGATIVE", "the second candidate is negative by C1 from the explicit pair label"
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "CORRECT_PART_OF")], {"verdict": "VARIANT_TRIM_CODE", "canonical": "t.a"})
+    assert cells[("t.a", "PART_OF")] == "POSITIVE" and cells[("t.a", "EQUIVALENT")] == "UNKNOWN"
+    cells, _ = O.derive_truth(POOL, [], {"verdict": "AMBIGUOUS"})
+    assert set(cells.values()) == {"UNKNOWN"}
+
+
+def test_existing_identity_names_one_equivalent_target_and_infers_nothing_structural():
+    cells, notes = O.derive_truth(POOL, [], {"verdict": "EXISTING_IDENTITY", "canonical": "t.a"})
+    assert cell_states(cells, "EQUIVALENT") == {"t.a": "POSITIVE", "t.b": "NEGATIVE"}
+    assert set(cell_states(cells, "PART_OF").values()) == {"UNKNOWN"}
+    cells, notes = O.derive_truth(POOL, [], {"verdict": "EXISTING_IDENTITY", "canonical": "t.zzz"})
+    assert set(cells.values()) == {"UNKNOWN"} and notes[0]["kind"] == "GROUP_TARGET_OUTSIDE_POOL"
+    cells, notes = O.derive_truth(POOL, [pair("t.a", "WRONG_TARGET")], {"verdict": "EXISTING_IDENTITY", "canonical": "t.a"})
+    assert cells[("t.a", "EQUIVALENT")] == "CONFLICT"
+
+
+def test_a_wrong_target_is_negative_only_for_the_link_type_the_row_proposed():
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "WRONG_TARGET")], None, {"t.a": "PART_OF"})
+    assert cells[("t.a", "PART_OF")] == "NEGATIVE" and cells[("t.a", "EQUIVALENT")] == "UNKNOWN" and cells[("t.a", "COMPOSED_OF")] == "UNKNOWN"
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "NO_TDR_TARGET")], None)
+    assert cells[("t.a", "EQUIVALENT")] == "NEGATIVE" and cells[("t.a", "PART_OF")] == "UNKNOWN"
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "INSUFFICIENT_EVIDENCE")], {"verdict": "VALID_MISSING_CANONICAL"})
+    assert {st for (c, l), st in cells.items() if c == "t.a"} == {"EXCLUDED"}, "an excluded candidate stays excluded under a group label"
+
+
+def test_truth_table_over_every_pair_and_group_verdict():
+    """Adversarial sweep: for every (pair verdict, group verdict) the derived cells obey the stated invariants, and a derivation CONFLICT is always also a crosswalk CONFLICT."""
+    for pv in O.R6_VERDICTS:
+        for gv in O.CREATE_VERDICTS:
+            for canon in ("t.a", "t.b"):
+                cells, notes = O.derive_truth(POOL, [pair("t.a", pv)], {"verdict": gv, "canonical": canon})
+                tag = (pv, gv, canon)
+                if gv == "VALID_MISSING_CANONICAL":
+                    assert not [k for k, st in cells.items() if k[1] != "EQUIVALENT" and st == "NEGATIVE" and not (pv in ("WRONG_TARGET", "NO_TDR_TARGET") and k == ("t.a", "EQUIVALENT"))], tag
+                if gv in ("VARIANT_TRIM_CODE", "AMBIGUOUS"):
+                    explicit = {k for k, st in cells.items() if st != "UNKNOWN"}
+                    assert all(k[0] == "t.a" or k[1] == "EQUIVALENT" for k in explicit), tag   # nothing beyond what the explicit pair label (and C1) says
+                if pv not in O.PAIR_LINK and gv != "EXISTING_IDENTITY" and gv != "VALID_MISSING_CANONICAL":
+                    assert "POSITIVE" not in cells.values(), tag
+                if any(st == "CONFLICT" for st in cells.values()):
+                    assert O._crosswalk_reading(pv, gv)[0] in ("CONFLICT", "CONSISTENT_IF_SAME_TARGET", "CONSISTENT_IF_DIFFERENT_TARGET"), tag
+                assert set(cells.values()) <= set(O.TRUTH_STATES)
+
+
+def test_negative_for_equivalent_never_leaks_into_structural_metrics():
+    """The defect this guards: scoring a PART_OF/COMPOSED_OF candidate of a VALID_MISSING_CANONICAL group as a false positive."""
+    cells, _ = O.derive_truth(POOL, [pair("t.a", "CORRECT_PART_OF")], {"verdict": "VALID_MISSING_CANONICAL"})
+    preds = {("t.a", "PART_OF"): "AUTO", ("t.a", "EQUIVALENT"): "NONE"}
+    part_rows, _ = O.metric_rows("PART_OF", cells, preds)
+    eq_rows, _ = O.metric_rows("EQUIVALENT", cells, preds)
+    assert O.confusion(part_rows)["tp_auto"] == 1 and O.confusion(part_rows).get("fp_auto", 0) == 0
+    assert O.confusion(eq_rows).get("fp_auto", 0) == 0 and O.confusion(eq_rows).get("tp_auto", 0) == 0
+    old_buggy = [{"truth": "NEGATIVE", "predicted": "AUTO"}]   # what "every pooled candidate is a negative" would have scored
+    assert O.confusion(old_buggy)["fp_auto"] == 1
+
+
+def test_procedure_text_states_the_per_link_type_semantics():
+    g = O.CALIBRATION_PROCEDURE["labels_used"]
+    assert "every pooled candidate of the group a negative" not in json.dumps(g)
+    assert "EQUIVALENT NEGATIVE" in g["group"] and "PART_OF / COMPOSED_OF are NOT inferred" in g["group"] and "VARIANT_TRIM_CODE: no pair truth is inferred" in g["group"]
+    assert "scored on its own" in g["scoring"]
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-2: selection sees training folds only
+GRID = [0.90, 0.95, 0.97, 0.99]   # loosest -> strictest
+
+
+def mk(fold, truth, first_auto_value_index):
+    """auto_at is True for every grid value up to (and including) index first_auto_value_index: a looser value fires on more rows."""
+    return {"fold": fold, "truth": truth, "auto_at": {v: i <= first_auto_value_index for i, v in enumerate(GRID)}}
+
+
+def dataset():
+    rows = []
+    for k in range(5):
+        rows += [mk(k, "POSITIVE", 3), mk(k, "POSITIVE", 2), mk(k, "POSITIVE", 1), mk(k, "NEGATIVE", 0)]   # only the loosest value fires on the negative
+    return rows
+
+
+def test_selection_rule_is_loosest_eligible_with_most_true_auto_and_stricter_tie_break():
+    train = [r for r in dataset() if r["fold"] != 0]
+    sel = O.select_threshold(GRID, train)
+    assert sel["selected"] == 0.95 and sel["flag"] == "" and sel["train"][0.90]["train_false_auto"] == 4
+    tie = [mk(1, "POSITIVE", 3)]
+    assert O.select_threshold(GRID, tie)["selected"] == 0.99, "equal training true-AUTO: the stricter value"
+    none = [mk(1, "NEGATIVE", 3), mk(1, "POSITIVE", 3)]
+    out = O.select_threshold(GRID, none)
+    assert out["selected"] == 0.99 and out["flag"] == "NO_VALUE_WITHOUT_TRAINING_FALSE_AUTO"
+
+
+def test_changing_held_out_labels_cannot_change_a_folds_selected_threshold():
+    base = O.calibrate_by_fold(GRID, dataset(), 5)
+    for k in range(5):
+        altered = []
+        for r in dataset():
+            r = {**r, "auto_at": dict(r["auto_at"])}
+            if r["fold"] == k:   # flip every held-out label and every held-out prediction
+                r["truth"] = "NEGATIVE" if r["truth"] == "POSITIVE" else "POSITIVE"
+                r["auto_at"] = {v: not a for v, a in r["auto_at"].items()}
+            altered.append(r)
+        again = O.calibrate_by_fold(GRID, altered, 5)
+        assert again["selections"][k] == base["selections"][k], f"fold {k}: held-out rows leaked into its own selection"
+        assert again["folds"][k] != base["folds"][k], "but the held-out evaluation does see them"
+    # dropping the held-out fold entirely gives the same selection
+    for k in range(5):
+        assert O.select_threshold(GRID, [r for r in dataset() if r["fold"] != k])["selected"] == base["selections"][k]
+
+
+def test_selection_function_takes_no_held_out_input_and_names_no_gate():
+    import inspect
+    assert list(inspect.signature(O.select_threshold).parameters) == ["grid", "train_rows"]
+    tree = ast.parse(inspect.getsource(O.select_threshold))
+    names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)} | {n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+    assert not {n for n in names if any(w in n.lower() for w in ("heldout", "held_out", "tolerance", "acceptance", "fold", "pooled"))}, names
+
+
+def test_acceptance_gate_is_post_selection_evidence_that_cannot_retune():
+    res = O.calibrate_by_fold(GRID, dataset(), 5)
+    frozen = dict(res["selections"])
+    gate = O.acceptance_gate(res["pooled"], 0.05)
+    assert gate["retune_allowed"] is False and res["selections"] == frozen
+    assert gate["verdict"] == "FAILED_REPORT_NOT_CALIBRATED" and gate["false_auto_upper_95"] == O.rule_of_three(res["pooled"]["heldout_auto_predictions"])
+    assert O.acceptance_gate(res["pooled"], 0.5)["verdict"] == "ACCEPTANCE_EVIDENCE_MET"
+    # a failing gate changes nothing about the selections: there is no code path from the gate back to the grid
+    assert O.acceptance_gate({"heldout_rows": 10, "heldout_false_auto": 2, "heldout_true_auto": 3, "heldout_positives": 5, "heldout_auto_predictions": 5}, 0.05)["verdict"] == "FAILED_REPORT_NOT_CALIBRATED"
+
+
+def test_procedure_text_separates_selection_from_acceptance():
+    d = O.CALIBRATION_PROCEDURE["design"]
+    assert "pooled held-out false-AUTO upper bound is within" not in json.dumps(d)
+    assert "TRAINING" in d["selection_rule"] and "never an input" in d["selection_rule"]
+    assert "registered" in d["registration"] and "ONCE" in d["loop"] and "never used to retune" in d["failure_handling"] and "AFTER selection" in d["acceptance_gate"]

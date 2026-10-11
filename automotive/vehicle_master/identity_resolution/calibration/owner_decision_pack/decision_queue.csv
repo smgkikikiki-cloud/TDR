@@ -1,709 +1,691 @@
-queue_position,wave,item_kind,item_id,detail_file,units_at_stake,why_in_this_wave
-1,1,CONTRACT,INIT-01,initial_owner_decisions.csv,15,one rule closes seven of the eight unresolved parity cases
-2,1,CONTRACT,INIT-02,initial_owner_decisions.csv,3,closes the one case where the consumer resolves a brand the producer does not relate
-3,1,CATALOG,INIT-03,initial_owner_decisions.csv,3032,"blocks the V80 CREATE, two Mifa identity reviews and the EPC1A parity case"
-4,1,CONTRACT,INIT-04,initial_owner_decisions.csv,26946,the answer is the rule for all nine alias rows and for any alias the catalog gains later
-5,1,ALIAS_VERDICT,INIT-OD-A01,initial_owner_decisions.csv,24045,alias with decisive registration-series evidence and real volume
-6,1,ALIAS_VERDICT,INIT-OD-A02,initial_owner_decisions.csv,1285,alias with decisive registration-series evidence and real volume
-7,1,ALIAS_VERDICT,INIT-OD-A03,initial_owner_decisions.csv,1091,alias with decisive registration-series evidence and real volume
-8,1,ALIAS_VERDICT,INIT-OD-A04,initial_owner_decisions.csv,420,alias with decisive registration-series evidence and real volume
-9,1,ALIAS_VERDICT,INIT-OD-A05,initial_owner_decisions.csv,51,alias with decisive registration-series evidence and real volume
-10,1,CREATE_VERDICT,INIT-OD-C04,initial_owner_decisions.csv,484,SERIES_COINCIDES_WITH_POOL_MODEL; LEGACY_R6_STRONG_PROPOSAL
-11,1,CREATE_VERDICT,INIT-OD-C06,initial_owner_decisions.csv,8659,SERIES_COINCIDES_WITH_POOL_MODEL; CURRENT_MARKET; HIGH_VOLUME
-12,1,CREATE_VERDICT,INIT-OD-C07,initial_owner_decisions.csv,2892,LEGACY_R6_STRONG_PROPOSAL; CURRENT_MARKET; HIGH_VOLUME
-13,1,CREATE_VERDICT,INIT-OD-C08,initial_owner_decisions.csv,604,LEGACY_R6_STRONG_PROPOSAL; CURRENT_MARKET; HIGH_VOLUME
-14,1,CREATE_VERDICT,INIT-OD-C10,initial_owner_decisions.csv,316,LEGACY_R6_STRONG_PROPOSAL
-15,1,CREATE_VERDICT,INIT-OD-C19,initial_owner_decisions.csv,6647,HIGH_VOLUME
-16,1,CREATE_VERDICT,INIT-OD-C20,initial_owner_decisions.csv,4000,HIGH_VOLUME
-17,1,CREATE_VERDICT,INIT-OD-C21,initial_owner_decisions.csv,3667,HIGH_VOLUME
-18,1,CREATE_VERDICT,INIT-OD-C22,initial_owner_decisions.csv,2645,HIGH_VOLUME
-19,1,R6_PAIR_VERDICTS,INIT-R6-S1,initial_owner_decisions.csv,1355944,v1 AUTO pairs that carry 80% of AUTO-pair units
-20,1,R6_PAIR_VERDICTS,INIT-R6-S2,initial_owner_decisions.csv,73927,legacy AUTO rows that v1 does not AUTO (the units-heaviest 80%)
-21,1,R6_PAIR_VERDICTS,INIT-R6-S3,initial_owner_decisions.csv,1481061,the largest row of each known-case family
-22,1,R6_PAIR_VERDICTS,INIT-R6-S4,initial_owner_decisions.csv,66914,PART_OF / COMPOSED_OF and several-viable-candidate rows
-23,1,ALIAS_ROW,OD-A01,catalog_alias_collisions.csv,24045,decisive series evidence and real volume
-24,1,ALIAS_ROW,OD-A02,catalog_alias_collisions.csv,1285,decisive series evidence and real volume
-25,1,ALIAS_ROW,OD-A03,catalog_alias_collisions.csv,1091,decisive series evidence and real volume
-26,1,ALIAS_ROW,OD-A04,catalog_alias_collisions.csv,420,decisive series evidence and real volume
-27,1,ALIAS_ROW,OD-A05,catalog_alias_collisions.csv,51,decisive series evidence and real volume
-28,1,BRAND_CASE,OD-B01,brand_resolution_cases.csv,3,closed by the contract-level answer (INIT-01..03)
-29,1,BRAND_CASE,OD-B02,brand_resolution_cases.csv,2,closed by the contract-level answer (INIT-01..03)
-30,1,BRAND_CASE,OD-B03,brand_resolution_cases.csv,1,closed by the contract-level answer (INIT-01..03)
-31,1,BRAND_CASE,OD-B04,brand_resolution_cases.csv,2,closed by the contract-level answer (INIT-01..03)
-32,1,BRAND_CASE,OD-B05,brand_resolution_cases.csv,2,closed by the contract-level answer (INIT-01..03)
-33,1,BRAND_CASE,OD-B06,brand_resolution_cases.csv,1,closed by the contract-level answer (INIT-01..03)
-34,1,BRAND_CASE,OD-B07,brand_resolution_cases.csv,1,closed by the contract-level answer (INIT-01..03)
-35,1,BRAND_CASE,OD-B08,brand_resolution_cases.csv,6,closed by the contract-level answer (INIT-01..03)
-36,1,BRAND_CASE,OD-B09,brand_resolution_cases.csv,135,closed by the contract-level answer (INIT-01..03)
-37,1,BRAND_CASE,OD-B10,brand_resolution_cases.csv,934,closed by the contract-level answer (INIT-01..03)
-38,1,BRAND_CASE,OD-B11,brand_resolution_cases.csv,1963,closed by the contract-level answer (INIT-01..03)
-39,1,CREATE_ROW,OD-C01,create_candidates.csv,1285,first wave
-40,1,CREATE_ROW,OD-C02,create_candidates.csv,1091,first wave
-41,1,CREATE_ROW,OD-C03,create_candidates.csv,24045,first wave
-42,1,CREATE_ROW,OD-C04,create_candidates.csv,484,first wave
-43,1,CREATE_ROW,OD-C06,create_candidates.csv,8659,first wave
-44,1,CREATE_ROW,OD-C07,create_candidates.csv,2892,first wave
-45,1,CREATE_ROW,OD-C08,create_candidates.csv,604,first wave
-46,1,CREATE_ROW,OD-C09,create_candidates.csv,420,first wave
-47,1,CREATE_ROW,OD-C10,create_candidates.csv,316,first wave
-48,1,CREATE_ROW,OD-C11,create_candidates.csv,135,first wave
-49,1,CREATE_ROW,OD-C12,create_candidates.csv,51,first wave
-50,1,CREATE_ROW,OD-C19,create_candidates.csv,6647,first wave
-51,1,CREATE_ROW,OD-C20,create_candidates.csv,4000,first wave
-52,1,CREATE_ROW,OD-C21,create_candidates.csv,3667,first wave
-53,1,CREATE_ROW,OD-C22,create_candidates.csv,2645,first wave
-54,1,R6_ROW,R6-1,r6_priority_view.csv,45283,starter batch
-55,1,R6_ROW,R6-2,r6_priority_view.csv,44588,starter batch
-56,1,R6_ROW,R6-3,r6_priority_view.csv,11136,starter batch
-57,1,R6_ROW,R6-6,r6_priority_view.csv,31459,starter batch
-58,1,R6_ROW,R6-7,r6_priority_view.csv,4072,starter batch
-59,1,R6_ROW,R6-8,r6_priority_view.csv,3856,starter batch
-60,1,R6_ROW,R6-9,r6_priority_view.csv,2562,starter batch
-61,1,R6_ROW,R6-10,r6_priority_view.csv,2238,starter batch
-62,1,R6_ROW,R6-11,r6_priority_view.csv,14905,starter batch
-63,1,R6_ROW,R6-20,r6_priority_view.csv,3688,starter batch
-64,1,R6_ROW,R6-21,r6_priority_view.csv,4456,starter batch
-65,1,R6_ROW,R6-23,r6_priority_view.csv,3001,starter batch
-66,1,R6_ROW,R6-25,r6_priority_view.csv,2003,starter batch
-67,1,R6_ROW,R6-29,r6_priority_view.csv,6068,starter batch
-68,1,R6_ROW,R6-30,r6_priority_view.csv,2020,starter batch
-69,1,R6_ROW,R6-46,r6_priority_view.csv,4130,starter batch
-70,1,R6_ROW,R6-54,r6_priority_view.csv,5737,starter batch
-71,1,R6_ROW,R6-56,r6_priority_view.csv,4055,starter batch
-72,1,R6_ROW,R6-83,r6_priority_view.csv,257146,starter batch
-73,1,R6_ROW,R6-84,r6_priority_view.csv,615360,starter batch
-74,1,R6_ROW,R6-85,r6_priority_view.csv,550946,starter batch
-75,1,R6_ROW,R6-86,r6_priority_view.csv,99875,starter batch
-76,1,R6_ROW,R6-87,r6_priority_view.csv,105452,starter batch
-77,1,R6_ROW,R6-88,r6_priority_view.csv,106582,starter batch
-78,1,R6_ROW,R6-90,r6_priority_view.csv,115433,starter batch
-79,1,R6_ROW,R6-92,r6_priority_view.csv,92980,starter batch
-80,1,R6_ROW,R6-93,r6_priority_view.csv,110131,starter batch
-81,1,R6_ROW,R6-94,r6_priority_view.csv,75495,starter batch
-82,1,R6_ROW,R6-95,r6_priority_view.csv,109610,starter batch
-83,1,R6_ROW,R6-96,r6_priority_view.csv,29161,starter batch
-84,1,R6_ROW,R6-98,r6_priority_view.csv,81068,starter batch
-85,1,R6_ROW,R6-99,r6_priority_view.csv,47508,starter batch
-86,1,R6_ROW,R6-105,r6_priority_view.csv,29337,starter batch
-87,1,R6_ROW,R6-106,r6_priority_view.csv,11983,starter batch
-88,1,R6_ROW,R6-114,r6_priority_view.csv,61313,starter batch
-89,1,R6_ROW,R6-116,r6_priority_view.csv,32347,starter batch
-90,1,R6_ROW,R6-126,r6_priority_view.csv,43660,starter batch
-91,1,R6_ROW,R6-142,r6_priority_view.csv,28194,starter batch
-92,1,R6_ROW,R6-184,r6_priority_view.csv,1963,starter batch
-93,1,R6_ROW,R6-508,r6_priority_view.csv,11798,starter batch
-94,1,R6_ROW,R6-509,r6_priority_view.csv,29506,starter batch
-95,1,R6_ROW,R6-510,r6_priority_view.csv,327,starter batch
-96,1,R6_ROW,R6-511,r6_priority_view.csv,514,starter batch
-97,1,R6_ROW,R6-512,r6_priority_view.csv,22782,starter batch
-98,1,R6_ROW,R6-513,r6_priority_view.csv,978,starter batch
-99,1,R6_ROW,R6-514,r6_priority_view.csv,1005,starter batch
-100,1,R6_ROW,R6-515,r6_priority_view.csv,2,starter batch
-101,1,R6_ROW,R6-516,r6_priority_view.csv,2,starter batch
-102,2,ALIAS_ROW,OD-A06,catalog_alias_collisions.csv,22,thin volume: follows from the INIT-04 rule
-103,2,ALIAS_ROW,OD-A07,catalog_alias_collisions.csv,20,thin volume: follows from the INIT-04 rule
-104,2,ALIAS_ROW,OD-A08,catalog_alias_collisions.csv,6,thin volume: follows from the INIT-04 rule
-105,2,ALIAS_ROW,OD-A09,catalog_alias_collisions.csv,6,thin volume: follows from the INIT-04 rule
-106,2,CREATE_ROW,OD-C05,create_candidates.csv,22,P1/P2: needs a row review
-107,2,CREATE_ROW,OD-C13,create_candidates.csv,20,P1/P2: needs a row review
-108,2,CREATE_ROW,OD-C14,create_candidates.csv,7,P1/P2: needs a row review
-109,2,CREATE_ROW,OD-C15,create_candidates.csv,6,P1/P2: needs a row review
-110,2,CREATE_ROW,OD-C16,create_candidates.csv,6,P1/P2: needs a row review
-111,2,CREATE_ROW,OD-C17,create_candidates.csv,1,P1/P2: needs a row review
-112,2,CREATE_ROW,OD-C18,create_candidates.csv,1,P1/P2: needs a row review
-113,2,CREATE_ROW,OD-C23,create_candidates.csv,639,P1/P2: needs a row review
-114,2,CREATE_ROW,OD-C24,create_candidates.csv,550,P1/P2: needs a row review
-115,2,CREATE_ROW,OD-C25,create_candidates.csv,300,P1/P2: needs a row review
-116,2,CREATE_ROW,OD-C26,create_candidates.csv,250,P1/P2: needs a row review
-117,2,CREATE_ROW,OD-C27,create_candidates.csv,147,P1/P2: needs a row review
-118,2,CREATE_ROW,OD-C28,create_candidates.csv,145,P1/P2: needs a row review
-119,2,CREATE_ROW,OD-C29,create_candidates.csv,144,P1/P2: needs a row review
-120,2,CREATE_ROW,OD-C30,create_candidates.csv,101,P1/P2: needs a row review
-121,2,CREATE_ROW,OD-C31,create_candidates.csv,81,P1/P2: needs a row review
-122,2,CREATE_ROW,OD-C32,create_candidates.csv,73,P1/P2: needs a row review
-123,2,CREATE_ROW,OD-C33,create_candidates.csv,73,P1/P2: needs a row review
-124,2,CREATE_ROW,OD-C34,create_candidates.csv,68,P1/P2: needs a row review
-125,2,CREATE_ROW,OD-C35,create_candidates.csv,64,P1/P2: needs a row review
-126,2,CREATE_ROW,OD-C36,create_candidates.csv,18,P1/P2: needs a row review
-127,2,CREATE_ROW,OD-C37,create_candidates.csv,18,P1/P2: needs a row review
-128,2,CREATE_ROW,OD-C38,create_candidates.csv,3,P1/P2: needs a row review
-129,2,CREATE_ROW,OD-C43,create_candidates.csv,80,"P3 bulk, in the spot-check sample"
-130,2,CREATE_ROW,OD-C44,create_candidates.csv,79,"P3 bulk, in the spot-check sample"
-131,2,CREATE_ROW,OD-C62,create_candidates.csv,17,"P3 bulk, in the spot-check sample"
-132,2,CREATE_ROW,OD-C64,create_candidates.csv,12,"P3 bulk, in the spot-check sample"
-133,2,CREATE_ROW,OD-C67,create_candidates.csv,5,"P3 bulk, in the spot-check sample"
-134,2,CREATE_ROW,OD-C74,create_candidates.csv,2,"P3 bulk, in the spot-check sample"
-135,2,CREATE_ROW,OD-C75,create_candidates.csv,2,"P3 bulk, in the spot-check sample"
-136,2,CREATE_ROW,OD-C82,create_candidates.csv,1,"P3 bulk, in the spot-check sample"
-137,2,R6_ROW,R6-4,r6_priority_view.csv,6272,"first 176 rows, not in the starter batch"
-138,2,R6_ROW,R6-5,r6_priority_view.csv,22130,"first 176 rows, not in the starter batch"
-139,2,R6_ROW,R6-12,r6_priority_view.csv,15258,"first 176 rows, not in the starter batch"
-140,2,R6_ROW,R6-13,r6_priority_view.csv,9586,"first 176 rows, not in the starter batch"
-141,2,R6_ROW,R6-14,r6_priority_view.csv,1689,"first 176 rows, not in the starter batch"
-142,2,R6_ROW,R6-15,r6_priority_view.csv,1285,"first 176 rows, not in the starter batch"
-143,2,R6_ROW,R6-16,r6_priority_view.csv,1524,"first 176 rows, not in the starter batch"
-144,2,R6_ROW,R6-17,r6_priority_view.csv,12179,"first 176 rows, not in the starter batch"
-145,2,R6_ROW,R6-18,r6_priority_view.csv,4308,"first 176 rows, not in the starter batch"
-146,2,R6_ROW,R6-19,r6_priority_view.csv,1163,"first 176 rows, not in the starter batch"
-147,2,R6_ROW,R6-22,r6_priority_view.csv,6613,"first 176 rows, not in the starter batch"
-148,2,R6_ROW,R6-24,r6_priority_view.csv,696,"first 176 rows, not in the starter batch"
-149,2,R6_ROW,R6-26,r6_priority_view.csv,6003,"first 176 rows, not in the starter batch"
-150,2,R6_ROW,R6-27,r6_priority_view.csv,712,"first 176 rows, not in the starter batch"
-151,2,R6_ROW,R6-28,r6_priority_view.csv,8235,"first 176 rows, not in the starter batch"
-152,2,R6_ROW,R6-31,r6_priority_view.csv,859,"first 176 rows, not in the starter batch"
-153,2,R6_ROW,R6-32,r6_priority_view.csv,1628,"first 176 rows, not in the starter batch"
-154,2,R6_ROW,R6-33,r6_priority_view.csv,1584,"first 176 rows, not in the starter batch"
-155,2,R6_ROW,R6-34,r6_priority_view.csv,277,"first 176 rows, not in the starter batch"
-156,2,R6_ROW,R6-35,r6_priority_view.csv,1131,"first 176 rows, not in the starter batch"
-157,2,R6_ROW,R6-36,r6_priority_view.csv,651,"first 176 rows, not in the starter batch"
-158,2,R6_ROW,R6-37,r6_priority_view.csv,993,"first 176 rows, not in the starter batch"
-159,2,R6_ROW,R6-38,r6_priority_view.csv,1161,"first 176 rows, not in the starter batch"
-160,2,R6_ROW,R6-39,r6_priority_view.csv,421,"first 176 rows, not in the starter batch"
-161,2,R6_ROW,R6-40,r6_priority_view.csv,229,"first 176 rows, not in the starter batch"
-162,2,R6_ROW,R6-41,r6_priority_view.csv,214,"first 176 rows, not in the starter batch"
-163,2,R6_ROW,R6-42,r6_priority_view.csv,139,"first 176 rows, not in the starter batch"
-164,2,R6_ROW,R6-43,r6_priority_view.csv,759,"first 176 rows, not in the starter batch"
-165,2,R6_ROW,R6-44,r6_priority_view.csv,765,"first 176 rows, not in the starter batch"
-166,2,R6_ROW,R6-45,r6_priority_view.csv,299,"first 176 rows, not in the starter batch"
-167,2,R6_ROW,R6-47,r6_priority_view.csv,486,"first 176 rows, not in the starter batch"
-168,2,R6_ROW,R6-48,r6_priority_view.csv,152,"first 176 rows, not in the starter batch"
-169,2,R6_ROW,R6-49,r6_priority_view.csv,566,"first 176 rows, not in the starter batch"
-170,2,R6_ROW,R6-50,r6_priority_view.csv,939,"first 176 rows, not in the starter batch"
-171,2,R6_ROW,R6-51,r6_priority_view.csv,101,"first 176 rows, not in the starter batch"
-172,2,R6_ROW,R6-52,r6_priority_view.csv,106,"first 176 rows, not in the starter batch"
-173,2,R6_ROW,R6-53,r6_priority_view.csv,183,"first 176 rows, not in the starter batch"
-174,2,R6_ROW,R6-55,r6_priority_view.csv,264,"first 176 rows, not in the starter batch"
-175,2,R6_ROW,R6-57,r6_priority_view.csv,63,"first 176 rows, not in the starter batch"
-176,2,R6_ROW,R6-58,r6_priority_view.csv,85,"first 176 rows, not in the starter batch"
-177,2,R6_ROW,R6-59,r6_priority_view.csv,95,"first 176 rows, not in the starter batch"
-178,2,R6_ROW,R6-60,r6_priority_view.csv,118,"first 176 rows, not in the starter batch"
-179,2,R6_ROW,R6-61,r6_priority_view.csv,164,"first 176 rows, not in the starter batch"
-180,2,R6_ROW,R6-62,r6_priority_view.csv,294,"first 176 rows, not in the starter batch"
-181,2,R6_ROW,R6-63,r6_priority_view.csv,153,"first 176 rows, not in the starter batch"
-182,2,R6_ROW,R6-64,r6_priority_view.csv,189,"first 176 rows, not in the starter batch"
-183,2,R6_ROW,R6-65,r6_priority_view.csv,39,"first 176 rows, not in the starter batch"
-184,2,R6_ROW,R6-66,r6_priority_view.csv,122,"first 176 rows, not in the starter batch"
-185,2,R6_ROW,R6-67,r6_priority_view.csv,165,"first 176 rows, not in the starter batch"
-186,2,R6_ROW,R6-68,r6_priority_view.csv,76,"first 176 rows, not in the starter batch"
-187,2,R6_ROW,R6-69,r6_priority_view.csv,215,"first 176 rows, not in the starter batch"
-188,2,R6_ROW,R6-70,r6_priority_view.csv,10,"first 176 rows, not in the starter batch"
-189,2,R6_ROW,R6-71,r6_priority_view.csv,104,"first 176 rows, not in the starter batch"
-190,2,R6_ROW,R6-72,r6_priority_view.csv,90,"first 176 rows, not in the starter batch"
-191,2,R6_ROW,R6-73,r6_priority_view.csv,22,"first 176 rows, not in the starter batch"
-192,2,R6_ROW,R6-74,r6_priority_view.csv,347,"first 176 rows, not in the starter batch"
-193,2,R6_ROW,R6-75,r6_priority_view.csv,186,"first 176 rows, not in the starter batch"
-194,2,R6_ROW,R6-76,r6_priority_view.csv,14,"first 176 rows, not in the starter batch"
-195,2,R6_ROW,R6-77,r6_priority_view.csv,9,"first 176 rows, not in the starter batch"
-196,2,R6_ROW,R6-78,r6_priority_view.csv,34,"first 176 rows, not in the starter batch"
-197,2,R6_ROW,R6-79,r6_priority_view.csv,30,"first 176 rows, not in the starter batch"
-198,2,R6_ROW,R6-80,r6_priority_view.csv,47,"first 176 rows, not in the starter batch"
-199,2,R6_ROW,R6-81,r6_priority_view.csv,31,"first 176 rows, not in the starter batch"
-200,2,R6_ROW,R6-82,r6_priority_view.csv,250,"first 176 rows, not in the starter batch"
-201,2,R6_ROW,R6-89,r6_priority_view.csv,103951,"first 176 rows, not in the starter batch"
-202,2,R6_ROW,R6-91,r6_priority_view.csv,30119,"first 176 rows, not in the starter batch"
-203,2,R6_ROW,R6-97,r6_priority_view.csv,22310,"first 176 rows, not in the starter batch"
-204,2,R6_ROW,R6-100,r6_priority_view.csv,37053,"first 176 rows, not in the starter batch"
-205,2,R6_ROW,R6-101,r6_priority_view.csv,53534,"first 176 rows, not in the starter batch"
-206,2,R6_ROW,R6-102,r6_priority_view.csv,38413,"first 176 rows, not in the starter batch"
-207,2,R6_ROW,R6-103,r6_priority_view.csv,12545,"first 176 rows, not in the starter batch"
-208,2,R6_ROW,R6-104,r6_priority_view.csv,13675,"first 176 rows, not in the starter batch"
-209,2,R6_ROW,R6-107,r6_priority_view.csv,12017,"first 176 rows, not in the starter batch"
-210,2,R6_ROW,R6-108,r6_priority_view.csv,11657,"first 176 rows, not in the starter batch"
-211,2,R6_ROW,R6-109,r6_priority_view.csv,89839,"first 176 rows, not in the starter batch"
-212,2,R6_ROW,R6-110,r6_priority_view.csv,10296,"first 176 rows, not in the starter batch"
-213,2,R6_ROW,R6-111,r6_priority_view.csv,20823,"first 176 rows, not in the starter batch"
-214,2,R6_ROW,R6-112,r6_priority_view.csv,9264,"first 176 rows, not in the starter batch"
-215,2,R6_ROW,R6-113,r6_priority_view.csv,10490,"first 176 rows, not in the starter batch"
-216,2,R6_ROW,R6-115,r6_priority_view.csv,11650,"first 176 rows, not in the starter batch"
-217,2,R6_ROW,R6-117,r6_priority_view.csv,23985,"first 176 rows, not in the starter batch"
-218,2,R6_ROW,R6-118,r6_priority_view.csv,31043,"first 176 rows, not in the starter batch"
-219,2,R6_ROW,R6-119,r6_priority_view.csv,12594,"first 176 rows, not in the starter batch"
-220,2,R6_ROW,R6-120,r6_priority_view.csv,7711,"first 176 rows, not in the starter batch"
-221,2,R6_ROW,R6-121,r6_priority_view.csv,14168,"first 176 rows, not in the starter batch"
-222,2,R6_ROW,R6-122,r6_priority_view.csv,9720,"first 176 rows, not in the starter batch"
-223,2,R6_ROW,R6-123,r6_priority_view.csv,9986,"first 176 rows, not in the starter batch"
-224,2,R6_ROW,R6-124,r6_priority_view.csv,11798,"first 176 rows, not in the starter batch"
-225,2,R6_ROW,R6-125,r6_priority_view.csv,22492,"first 176 rows, not in the starter batch"
-226,2,R6_ROW,R6-127,r6_priority_view.csv,16645,"first 176 rows, not in the starter batch"
-227,2,R6_ROW,R6-128,r6_priority_view.csv,19028,"first 176 rows, not in the starter batch"
-228,2,R6_ROW,R6-129,r6_priority_view.csv,4679,"first 176 rows, not in the starter batch"
-229,2,R6_ROW,R6-130,r6_priority_view.csv,18388,"first 176 rows, not in the starter batch"
-230,2,R6_ROW,R6-131,r6_priority_view.csv,4346,"first 176 rows, not in the starter batch"
-231,2,R6_ROW,R6-132,r6_priority_view.csv,4459,"first 176 rows, not in the starter batch"
-232,2,R6_ROW,R6-133,r6_priority_view.csv,4207,"first 176 rows, not in the starter batch"
-233,2,R6_ROW,R6-134,r6_priority_view.csv,3959,"first 176 rows, not in the starter batch"
-234,2,R6_ROW,R6-135,r6_priority_view.csv,17222,"first 176 rows, not in the starter batch"
-235,2,R6_ROW,R6-136,r6_priority_view.csv,12839,"first 176 rows, not in the starter batch"
-236,2,R6_ROW,R6-137,r6_priority_view.csv,4809,"first 176 rows, not in the starter batch"
-237,2,R6_ROW,R6-138,r6_priority_view.csv,26287,"first 176 rows, not in the starter batch"
-238,2,R6_ROW,R6-139,r6_priority_view.csv,23988,"first 176 rows, not in the starter batch"
-239,2,R6_ROW,R6-140,r6_priority_view.csv,3585,"first 176 rows, not in the starter batch"
-240,2,R6_ROW,R6-141,r6_priority_view.csv,11743,"first 176 rows, not in the starter batch"
-241,2,R6_ROW,R6-143,r6_priority_view.csv,12009,"first 176 rows, not in the starter batch"
-242,2,R6_ROW,R6-144,r6_priority_view.csv,6394,"first 176 rows, not in the starter batch"
-243,2,R6_ROW,R6-145,r6_priority_view.csv,3266,"first 176 rows, not in the starter batch"
-244,2,R6_ROW,R6-146,r6_priority_view.csv,4266,"first 176 rows, not in the starter batch"
-245,2,R6_ROW,R6-147,r6_priority_view.csv,8405,"first 176 rows, not in the starter batch"
-246,2,R6_ROW,R6-148,r6_priority_view.csv,2892,"first 176 rows, not in the starter batch"
-247,2,R6_ROW,R6-149,r6_priority_view.csv,22782,"first 176 rows, not in the starter batch"
-248,2,R6_ROW,R6-150,r6_priority_view.csv,12225,"first 176 rows, not in the starter batch"
-249,2,R6_ROW,R6-151,r6_priority_view.csv,29506,"first 176 rows, not in the starter batch"
-250,2,R6_ROW,R6-152,r6_priority_view.csv,2236,"first 176 rows, not in the starter batch"
-251,2,R6_ROW,R6-153,r6_priority_view.csv,9315,"first 176 rows, not in the starter batch"
-252,2,R6_ROW,R6-154,r6_priority_view.csv,6862,"first 176 rows, not in the starter batch"
-253,2,R6_ROW,R6-155,r6_priority_view.csv,4635,"first 176 rows, not in the starter batch"
-254,2,R6_ROW,R6-156,r6_priority_view.csv,5079,"first 176 rows, not in the starter batch"
-255,2,R6_ROW,R6-157,r6_priority_view.csv,2437,"first 176 rows, not in the starter batch"
-256,2,R6_ROW,R6-158,r6_priority_view.csv,5091,"first 176 rows, not in the starter batch"
-257,2,R6_ROW,R6-159,r6_priority_view.csv,5192,"first 176 rows, not in the starter batch"
-258,2,R6_ROW,R6-160,r6_priority_view.csv,11882,"first 176 rows, not in the starter batch"
-259,2,R6_ROW,R6-161,r6_priority_view.csv,1409,"first 176 rows, not in the starter batch"
-260,2,R6_ROW,R6-162,r6_priority_view.csv,4168,"first 176 rows, not in the starter batch"
-261,2,R6_ROW,R6-163,r6_priority_view.csv,5426,"first 176 rows, not in the starter batch"
-262,2,R6_ROW,R6-164,r6_priority_view.csv,10815,"first 176 rows, not in the starter batch"
-263,2,R6_ROW,R6-165,r6_priority_view.csv,1425,"first 176 rows, not in the starter batch"
-264,2,R6_ROW,R6-166,r6_priority_view.csv,1308,"first 176 rows, not in the starter batch"
-265,2,R6_ROW,R6-167,r6_priority_view.csv,1256,"first 176 rows, not in the starter batch"
-266,2,R6_ROW,R6-168,r6_priority_view.csv,2473,"first 176 rows, not in the starter batch"
-267,2,R6_ROW,R6-169,r6_priority_view.csv,2153,"first 176 rows, not in the starter batch"
-268,2,R6_ROW,R6-170,r6_priority_view.csv,1772,"first 176 rows, not in the starter batch"
-269,2,R6_ROW,R6-171,r6_priority_view.csv,1472,"first 176 rows, not in the starter batch"
-270,2,R6_ROW,R6-172,r6_priority_view.csv,1091,"first 176 rows, not in the starter batch"
-271,2,R6_ROW,R6-173,r6_priority_view.csv,3399,"first 176 rows, not in the starter batch"
-272,2,R6_ROW,R6-174,r6_priority_view.csv,1568,"first 176 rows, not in the starter batch"
-273,2,R6_ROW,R6-175,r6_priority_view.csv,2572,"first 176 rows, not in the starter batch"
-274,2,R6_ROW,R6-176,r6_priority_view.csv,1057,"first 176 rows, not in the starter batch"
-275,3,CREATE_ROW,OD-C39,create_candidates.csv,237,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-276,3,CREATE_ROW,OD-C40,create_candidates.csv,117,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-277,3,CREATE_ROW,OD-C41,create_candidates.csv,88,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-278,3,CREATE_ROW,OD-C42,create_candidates.csv,82,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-279,3,CREATE_ROW,OD-C45,create_candidates.csv,78,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-280,3,CREATE_ROW,OD-C46,create_candidates.csv,76,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-281,3,CREATE_ROW,OD-C47,create_candidates.csv,71,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-282,3,CREATE_ROW,OD-C48,create_candidates.csv,68,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-283,3,CREATE_ROW,OD-C49,create_candidates.csv,50,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-284,3,CREATE_ROW,OD-C50,create_candidates.csv,50,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-285,3,CREATE_ROW,OD-C51,create_candidates.csv,41,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-286,3,CREATE_ROW,OD-C52,create_candidates.csv,36,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-287,3,CREATE_ROW,OD-C53,create_candidates.csv,35,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-288,3,CREATE_ROW,OD-C54,create_candidates.csv,31,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-289,3,CREATE_ROW,OD-C55,create_candidates.csv,31,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-290,3,CREATE_ROW,OD-C56,create_candidates.csv,29,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-291,3,CREATE_ROW,OD-C57,create_candidates.csv,29,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-292,3,CREATE_ROW,OD-C58,create_candidates.csv,23,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-293,3,CREATE_ROW,OD-C59,create_candidates.csv,22,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-294,3,CREATE_ROW,OD-C60,create_candidates.csv,21,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-295,3,CREATE_ROW,OD-C61,create_candidates.csv,19,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-296,3,CREATE_ROW,OD-C63,create_candidates.csv,14,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-297,3,CREATE_ROW,OD-C65,create_candidates.csv,10,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-298,3,CREATE_ROW,OD-C66,create_candidates.csv,7,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-299,3,CREATE_ROW,OD-C68,create_candidates.csv,4,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-300,3,CREATE_ROW,OD-C69,create_candidates.csv,4,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-301,3,CREATE_ROW,OD-C70,create_candidates.csv,3,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-302,3,CREATE_ROW,OD-C71,create_candidates.csv,3,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-303,3,CREATE_ROW,OD-C72,create_candidates.csv,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-304,3,CREATE_ROW,OD-C73,create_candidates.csv,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-305,3,CREATE_ROW,OD-C76,create_candidates.csv,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-306,3,CREATE_ROW,OD-C77,create_candidates.csv,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-307,3,CREATE_ROW,OD-C78,create_candidates.csv,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-308,3,CREATE_ROW,OD-C79,create_candidates.csv,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-309,3,CREATE_ROW,OD-C80,create_candidates.csv,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-310,3,CREATE_ROW,OD-C81,create_candidates.csv,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
-311,3,R6_ROW,R6-177,r6_priority_view.csv,615360,tiers 3-7
-312,3,R6_ROW,R6-178,r6_priority_view.csv,550946,tiers 3-7
-313,3,R6_ROW,R6-179,r6_priority_view.csv,30119,tiers 3-7
-314,3,R6_ROW,R6-180,r6_priority_view.csv,81068,tiers 3-7
-315,3,R6_ROW,R6-181,r6_priority_view.csv,23988,tiers 3-7
-316,3,R6_ROW,R6-182,r6_priority_view.csv,1512,tiers 3-7
-317,3,R6_ROW,R6-183,r6_priority_view.csv,934,tiers 3-7
-318,3,R6_ROW,R6-185,r6_priority_view.csv,289,tiers 3-7
-319,3,R6_ROW,R6-186,r6_priority_view.csv,5170,tiers 3-7
-320,3,R6_ROW,R6-187,r6_priority_view.csv,33,tiers 3-7
-321,3,R6_ROW,R6-188,r6_priority_view.csv,4000,tiers 3-7
-322,3,R6_ROW,R6-189,r6_priority_view.csv,7,tiers 3-7
-323,3,R6_ROW,R6-190,r6_priority_view.csv,135,tiers 3-7
-324,3,R6_ROW,R6-191,r6_priority_view.csv,25,tiers 3-7
-325,3,R6_ROW,R6-192,r6_priority_view.csv,6,tiers 3-7
-326,3,R6_ROW,R6-193,r6_priority_view.csv,2,tiers 3-7
-327,3,R6_ROW,R6-194,r6_priority_view.csv,5,tiers 3-7
-328,3,R6_ROW,R6-195,r6_priority_view.csv,5,tiers 3-7
-329,3,R6_ROW,R6-196,r6_priority_view.csv,3,tiers 3-7
-330,3,R6_ROW,R6-197,r6_priority_view.csv,2,tiers 3-7
-331,3,R6_ROW,R6-198,r6_priority_view.csv,1,tiers 3-7
-332,3,R6_ROW,R6-199,r6_priority_view.csv,1,tiers 3-7
-333,3,R6_ROW,R6-200,r6_priority_view.csv,1,tiers 3-7
-334,3,R6_ROW,R6-201,r6_priority_view.csv,6,tiers 3-7
-335,3,R6_ROW,R6-202,r6_priority_view.csv,3,tiers 3-7
-336,3,R6_ROW,R6-203,r6_priority_view.csv,2,tiers 3-7
-337,3,R6_ROW,R6-204,r6_priority_view.csv,2,tiers 3-7
-338,3,R6_ROW,R6-205,r6_priority_view.csv,2,tiers 3-7
-339,3,R6_ROW,R6-206,r6_priority_view.csv,2,tiers 3-7
-340,3,R6_ROW,R6-207,r6_priority_view.csv,1,tiers 3-7
-341,3,R6_ROW,R6-208,r6_priority_view.csv,1,tiers 3-7
-342,3,R6_ROW,R6-209,r6_priority_view.csv,1,tiers 3-7
-343,3,R6_ROW,R6-210,r6_priority_view.csv,1,tiers 3-7
-344,3,R6_ROW,R6-211,r6_priority_view.csv,1,tiers 3-7
-345,3,R6_ROW,R6-212,r6_priority_view.csv,1,tiers 3-7
-346,3,R6_ROW,R6-213,r6_priority_view.csv,1,tiers 3-7
-347,3,R6_ROW,R6-214,r6_priority_view.csv,1,tiers 3-7
-348,3,R6_ROW,R6-215,r6_priority_view.csv,1,tiers 3-7
-349,3,R6_ROW,R6-216,r6_priority_view.csv,1,tiers 3-7
-350,3,R6_ROW,R6-217,r6_priority_view.csv,24045,tiers 3-7
-351,3,R6_ROW,R6-218,r6_priority_view.csv,53534,tiers 3-7
-352,3,R6_ROW,R6-219,r6_priority_view.csv,8659,tiers 3-7
-353,3,R6_ROW,R6-220,r6_priority_view.csv,9986,tiers 3-7
-354,3,R6_ROW,R6-221,r6_priority_view.csv,10029,tiers 3-7
-355,3,R6_ROW,R6-222,r6_priority_view.csv,5660,tiers 3-7
-356,3,R6_ROW,R6-223,r6_priority_view.csv,10733,tiers 3-7
-357,3,R6_ROW,R6-224,r6_priority_view.csv,4650,tiers 3-7
-358,3,R6_ROW,R6-225,r6_priority_view.csv,6443,tiers 3-7
-359,3,R6_ROW,R6-226,r6_priority_view.csv,3399,tiers 3-7
-360,3,R6_ROW,R6-227,r6_priority_view.csv,1698,tiers 3-7
-361,3,R6_ROW,R6-228,r6_priority_view.csv,3628,tiers 3-7
-362,3,R6_ROW,R6-229,r6_priority_view.csv,3083,tiers 3-7
-363,3,R6_ROW,R6-230,r6_priority_view.csv,926,tiers 3-7
-364,3,R6_ROW,R6-231,r6_priority_view.csv,978,tiers 3-7
-365,3,R6_ROW,R6-232,r6_priority_view.csv,1946,tiers 3-7
-366,3,R6_ROW,R6-233,r6_priority_view.csv,3659,tiers 3-7
-367,3,R6_ROW,R6-234,r6_priority_view.csv,1288,tiers 3-7
-368,3,R6_ROW,R6-235,r6_priority_view.csv,896,tiers 3-7
-369,3,R6_ROW,R6-236,r6_priority_view.csv,946,tiers 3-7
-370,3,R6_ROW,R6-237,r6_priority_view.csv,3685,tiers 3-7
-371,3,R6_ROW,R6-238,r6_priority_view.csv,766,tiers 3-7
-372,3,R6_ROW,R6-239,r6_priority_view.csv,741,tiers 3-7
-373,3,R6_ROW,R6-240,r6_priority_view.csv,2513,tiers 3-7
-374,3,R6_ROW,R6-241,r6_priority_view.csv,675,tiers 3-7
-375,3,R6_ROW,R6-242,r6_priority_view.csv,580,tiers 3-7
-376,3,R6_ROW,R6-243,r6_priority_view.csv,645,tiers 3-7
-377,3,R6_ROW,R6-244,r6_priority_view.csv,564,tiers 3-7
-378,3,R6_ROW,R6-245,r6_priority_view.csv,2432,tiers 3-7
-379,3,R6_ROW,R6-246,r6_priority_view.csv,974,tiers 3-7
-380,3,R6_ROW,R6-247,r6_priority_view.csv,790,tiers 3-7
-381,3,R6_ROW,R6-248,r6_priority_view.csv,1233,tiers 3-7
-382,3,R6_ROW,R6-249,r6_priority_view.csv,4823,tiers 3-7
-383,3,R6_ROW,R6-250,r6_priority_view.csv,604,tiers 3-7
-384,3,R6_ROW,R6-251,r6_priority_view.csv,1162,tiers 3-7
-385,3,R6_ROW,R6-252,r6_priority_view.csv,415,tiers 3-7
-386,3,R6_ROW,R6-253,r6_priority_view.csv,521,tiers 3-7
-387,3,R6_ROW,R6-254,r6_priority_view.csv,1423,tiers 3-7
-388,3,R6_ROW,R6-255,r6_priority_view.csv,1067,tiers 3-7
-389,3,R6_ROW,R6-256,r6_priority_view.csv,350,tiers 3-7
-390,3,R6_ROW,R6-257,r6_priority_view.csv,1245,tiers 3-7
-391,3,R6_ROW,R6-258,r6_priority_view.csv,893,tiers 3-7
-392,3,R6_ROW,R6-259,r6_priority_view.csv,1191,tiers 3-7
-393,3,R6_ROW,R6-260,r6_priority_view.csv,333,tiers 3-7
-394,3,R6_ROW,R6-261,r6_priority_view.csv,604,tiers 3-7
-395,3,R6_ROW,R6-262,r6_priority_view.csv,690,tiers 3-7
-396,3,R6_ROW,R6-263,r6_priority_view.csv,631,tiers 3-7
-397,3,R6_ROW,R6-264,r6_priority_view.csv,272,tiers 3-7
-398,3,R6_ROW,R6-265,r6_priority_view.csv,581,tiers 3-7
-399,3,R6_ROW,R6-266,r6_priority_view.csv,292,tiers 3-7
-400,3,R6_ROW,R6-267,r6_priority_view.csv,529,tiers 3-7
-401,3,R6_ROW,R6-268,r6_priority_view.csv,639,tiers 3-7
-402,3,R6_ROW,R6-269,r6_priority_view.csv,385,tiers 3-7
-403,3,R6_ROW,R6-270,r6_priority_view.csv,232,tiers 3-7
-404,3,R6_ROW,R6-271,r6_priority_view.csv,209,tiers 3-7
-405,3,R6_ROW,R6-272,r6_priority_view.csv,477,tiers 3-7
-406,3,R6_ROW,R6-273,r6_priority_view.csv,350,tiers 3-7
-407,3,R6_ROW,R6-274,r6_priority_view.csv,327,tiers 3-7
-408,3,R6_ROW,R6-275,r6_priority_view.csv,409,tiers 3-7
-409,3,R6_ROW,R6-276,r6_priority_view.csv,300,tiers 3-7
-410,3,R6_ROW,R6-277,r6_priority_view.csv,517,tiers 3-7
-411,3,R6_ROW,R6-278,r6_priority_view.csv,549,tiers 3-7
-412,3,R6_ROW,R6-279,r6_priority_view.csv,369,tiers 3-7
-413,3,R6_ROW,R6-280,r6_priority_view.csv,429,tiers 3-7
-414,3,R6_ROW,R6-281,r6_priority_view.csv,145,tiers 3-7
-415,3,R6_ROW,R6-282,r6_priority_view.csv,266,tiers 3-7
-416,3,R6_ROW,R6-283,r6_priority_view.csv,562,tiers 3-7
-417,3,R6_ROW,R6-284,r6_priority_view.csv,420,tiers 3-7
-418,3,R6_ROW,R6-285,r6_priority_view.csv,97,tiers 3-7
-419,3,R6_ROW,R6-286,r6_priority_view.csv,280,tiers 3-7
-420,3,R6_ROW,R6-287,r6_priority_view.csv,88,tiers 3-7
-421,3,R6_ROW,R6-288,r6_priority_view.csv,184,tiers 3-7
-422,3,R6_ROW,R6-289,r6_priority_view.csv,184,tiers 3-7
-423,3,R6_ROW,R6-290,r6_priority_view.csv,79,tiers 3-7
-424,3,R6_ROW,R6-291,r6_priority_view.csv,194,tiers 3-7
-425,3,R6_ROW,R6-292,r6_priority_view.csv,366,tiers 3-7
-426,3,R6_ROW,R6-293,r6_priority_view.csv,508,tiers 3-7
-427,3,R6_ROW,R6-294,r6_priority_view.csv,261,tiers 3-7
-428,3,R6_ROW,R6-295,r6_priority_view.csv,68,tiers 3-7
-429,3,R6_ROW,R6-296,r6_priority_view.csv,64,tiers 3-7
-430,3,R6_ROW,R6-297,r6_priority_view.csv,175,tiers 3-7
-431,3,R6_ROW,R6-298,r6_priority_view.csv,147,tiers 3-7
-432,3,R6_ROW,R6-299,r6_priority_view.csv,182,tiers 3-7
-433,3,R6_ROW,R6-300,r6_priority_view.csv,61,tiers 3-7
-434,3,R6_ROW,R6-301,r6_priority_view.csv,250,tiers 3-7
-435,3,R6_ROW,R6-302,r6_priority_view.csv,295,tiers 3-7
-436,3,R6_ROW,R6-303,r6_priority_view.csv,97,tiers 3-7
-437,3,R6_ROW,R6-304,r6_priority_view.csv,332,tiers 3-7
-438,3,R6_ROW,R6-305,r6_priority_view.csv,550,tiers 3-7
-439,3,R6_ROW,R6-306,r6_priority_view.csv,151,tiers 3-7
-440,3,R6_ROW,R6-307,r6_priority_view.csv,6647,tiers 3-7
-441,3,R6_ROW,R6-308,r6_priority_view.csv,73,tiers 3-7
-442,3,R6_ROW,R6-309,r6_priority_view.csv,37,tiers 3-7
-443,3,R6_ROW,R6-310,r6_priority_view.csv,85,tiers 3-7
-444,3,R6_ROW,R6-311,r6_priority_view.csv,484,tiers 3-7
-445,3,R6_ROW,R6-312,r6_priority_view.csv,152,tiers 3-7
-446,3,R6_ROW,R6-313,r6_priority_view.csv,29,tiers 3-7
-447,3,R6_ROW,R6-314,r6_priority_view.csv,45,tiers 3-7
-448,3,R6_ROW,R6-315,r6_priority_view.csv,183,tiers 3-7
-449,3,R6_ROW,R6-316,r6_priority_view.csv,183,tiers 3-7
-450,3,R6_ROW,R6-317,r6_priority_view.csv,81,tiers 3-7
-451,3,R6_ROW,R6-318,r6_priority_view.csv,94,tiers 3-7
-452,3,R6_ROW,R6-319,r6_priority_view.csv,27,tiers 3-7
-453,3,R6_ROW,R6-320,r6_priority_view.csv,103,tiers 3-7
-454,3,R6_ROW,R6-321,r6_priority_view.csv,59,tiers 3-7
-455,3,R6_ROW,R6-322,r6_priority_view.csv,149,tiers 3-7
-456,3,R6_ROW,R6-323,r6_priority_view.csv,114,tiers 3-7
-457,3,R6_ROW,R6-324,r6_priority_view.csv,316,tiers 3-7
-458,3,R6_ROW,R6-325,r6_priority_view.csv,117,tiers 3-7
-459,3,R6_ROW,R6-326,r6_priority_view.csv,81,tiers 3-7
-460,3,R6_ROW,R6-327,r6_priority_view.csv,78,tiers 3-7
-461,3,R6_ROW,R6-328,r6_priority_view.csv,31,tiers 3-7
-462,3,R6_ROW,R6-329,r6_priority_view.csv,23,tiers 3-7
-463,3,R6_ROW,R6-330,r6_priority_view.csv,2645,tiers 3-7
-464,3,R6_ROW,R6-331,r6_priority_view.csv,107,tiers 3-7
-465,3,R6_ROW,R6-332,r6_priority_view.csv,15,tiers 3-7
-466,3,R6_ROW,R6-333,r6_priority_view.csv,499,tiers 3-7
-467,3,R6_ROW,R6-334,r6_priority_view.csv,499,tiers 3-7
-468,3,R6_ROW,R6-335,r6_priority_view.csv,13,tiers 3-7
-469,3,R6_ROW,R6-336,r6_priority_view.csv,73,tiers 3-7
-470,3,R6_ROW,R6-337,r6_priority_view.csv,374,tiers 3-7
-471,3,R6_ROW,R6-338,r6_priority_view.csv,237,tiers 3-7
-472,3,R6_ROW,R6-339,r6_priority_view.csv,34,tiers 3-7
-473,3,R6_ROW,R6-340,r6_priority_view.csv,20,tiers 3-7
-474,3,R6_ROW,R6-341,r6_priority_view.csv,22,tiers 3-7
-475,3,R6_ROW,R6-342,r6_priority_view.csv,13,tiers 3-7
-476,3,R6_ROW,R6-343,r6_priority_view.csv,10,tiers 3-7
-477,3,R6_ROW,R6-344,r6_priority_view.csv,44,tiers 3-7
-478,3,R6_ROW,R6-345,r6_priority_view.csv,7,tiers 3-7
-479,3,R6_ROW,R6-346,r6_priority_view.csv,7,tiers 3-7
-480,3,R6_ROW,R6-347,r6_priority_view.csv,6,tiers 3-7
-481,3,R6_ROW,R6-348,r6_priority_view.csv,3667,tiers 3-7
-482,3,R6_ROW,R6-349,r6_priority_view.csv,171,tiers 3-7
-483,3,R6_ROW,R6-350,r6_priority_view.csv,50,tiers 3-7
-484,3,R6_ROW,R6-351,r6_priority_view.csv,35,tiers 3-7
-485,3,R6_ROW,R6-352,r6_priority_view.csv,16,tiers 3-7
-486,3,R6_ROW,R6-353,r6_priority_view.csv,3,tiers 3-7
-487,3,R6_ROW,R6-354,r6_priority_view.csv,3,tiers 3-7
-488,3,R6_ROW,R6-355,r6_priority_view.csv,31,tiers 3-7
-489,3,R6_ROW,R6-356,r6_priority_view.csv,16,tiers 3-7
-490,3,R6_ROW,R6-357,r6_priority_view.csv,9,tiers 3-7
-491,3,R6_ROW,R6-358,r6_priority_view.csv,5,tiers 3-7
-492,3,R6_ROW,R6-359,r6_priority_view.csv,4,tiers 3-7
-493,3,R6_ROW,R6-360,r6_priority_view.csv,3,tiers 3-7
-494,3,R6_ROW,R6-361,r6_priority_view.csv,2,tiers 3-7
-495,3,R6_ROW,R6-362,r6_priority_view.csv,2,tiers 3-7
-496,3,R6_ROW,R6-363,r6_priority_view.csv,2,tiers 3-7
-497,3,R6_ROW,R6-364,r6_priority_view.csv,64,tiers 3-7
-498,3,R6_ROW,R6-365,r6_priority_view.csv,33,tiers 3-7
-499,3,R6_ROW,R6-366,r6_priority_view.csv,19,tiers 3-7
-500,3,R6_ROW,R6-367,r6_priority_view.csv,12,tiers 3-7
-501,3,R6_ROW,R6-368,r6_priority_view.csv,7,tiers 3-7
-502,3,R6_ROW,R6-369,r6_priority_view.csv,6,tiers 3-7
-503,3,R6_ROW,R6-370,r6_priority_view.csv,5,tiers 3-7
-504,3,R6_ROW,R6-371,r6_priority_view.csv,4,tiers 3-7
-505,3,R6_ROW,R6-372,r6_priority_view.csv,4,tiers 3-7
-506,3,R6_ROW,R6-373,r6_priority_view.csv,4,tiers 3-7
-507,3,R6_ROW,R6-374,r6_priority_view.csv,4,tiers 3-7
-508,3,R6_ROW,R6-375,r6_priority_view.csv,3,tiers 3-7
-509,3,R6_ROW,R6-376,r6_priority_view.csv,2,tiers 3-7
-510,3,R6_ROW,R6-377,r6_priority_view.csv,2,tiers 3-7
-511,3,R6_ROW,R6-378,r6_priority_view.csv,2,tiers 3-7
-512,3,R6_ROW,R6-379,r6_priority_view.csv,2,tiers 3-7
-513,3,R6_ROW,R6-380,r6_priority_view.csv,2,tiers 3-7
-514,3,R6_ROW,R6-381,r6_priority_view.csv,1,tiers 3-7
-515,3,R6_ROW,R6-382,r6_priority_view.csv,1,tiers 3-7
-516,3,R6_ROW,R6-383,r6_priority_view.csv,1,tiers 3-7
-517,3,R6_ROW,R6-384,r6_priority_view.csv,1,tiers 3-7
-518,3,R6_ROW,R6-385,r6_priority_view.csv,1,tiers 3-7
-519,3,R6_ROW,R6-386,r6_priority_view.csv,1,tiers 3-7
-520,3,R6_ROW,R6-387,r6_priority_view.csv,1,tiers 3-7
-521,3,R6_ROW,R6-388,r6_priority_view.csv,1,tiers 3-7
-522,3,R6_ROW,R6-389,r6_priority_view.csv,1,tiers 3-7
-523,3,R6_ROW,R6-390,r6_priority_view.csv,1,tiers 3-7
-524,3,R6_ROW,R6-391,r6_priority_view.csv,1,tiers 3-7
-525,3,R6_ROW,R6-392,r6_priority_view.csv,1,tiers 3-7
-526,3,R6_ROW,R6-393,r6_priority_view.csv,1,tiers 3-7
-527,3,R6_ROW,R6-394,r6_priority_view.csv,1,tiers 3-7
-528,3,R6_ROW,R6-395,r6_priority_view.csv,1,tiers 3-7
-529,3,R6_ROW,R6-396,r6_priority_view.csv,1,tiers 3-7
-530,3,R6_ROW,R6-397,r6_priority_view.csv,550,tiers 3-7
-531,3,R6_ROW,R6-398,r6_priority_view.csv,101,tiers 3-7
-532,3,R6_ROW,R6-399,r6_priority_view.csv,37,tiers 3-7
-533,3,R6_ROW,R6-400,r6_priority_view.csv,28,tiers 3-7
-534,3,R6_ROW,R6-401,r6_priority_view.csv,19,tiers 3-7
-535,3,R6_ROW,R6-402,r6_priority_view.csv,18,tiers 3-7
-536,3,R6_ROW,R6-403,r6_priority_view.csv,18,tiers 3-7
-537,3,R6_ROW,R6-404,r6_priority_view.csv,12,tiers 3-7
-538,3,R6_ROW,R6-405,r6_priority_view.csv,11,tiers 3-7
-539,3,R6_ROW,R6-406,r6_priority_view.csv,7,tiers 3-7
-540,3,R6_ROW,R6-407,r6_priority_view.csv,7,tiers 3-7
-541,3,R6_ROW,R6-408,r6_priority_view.csv,6,tiers 3-7
-542,3,R6_ROW,R6-409,r6_priority_view.csv,5,tiers 3-7
-543,3,R6_ROW,R6-410,r6_priority_view.csv,5,tiers 3-7
-544,3,R6_ROW,R6-411,r6_priority_view.csv,4,tiers 3-7
-545,3,R6_ROW,R6-412,r6_priority_view.csv,4,tiers 3-7
-546,3,R6_ROW,R6-413,r6_priority_view.csv,3,tiers 3-7
-547,3,R6_ROW,R6-414,r6_priority_view.csv,3,tiers 3-7
-548,3,R6_ROW,R6-415,r6_priority_view.csv,3,tiers 3-7
-549,3,R6_ROW,R6-416,r6_priority_view.csv,3,tiers 3-7
-550,3,R6_ROW,R6-417,r6_priority_view.csv,3,tiers 3-7
-551,3,R6_ROW,R6-418,r6_priority_view.csv,3,tiers 3-7
-552,3,R6_ROW,R6-419,r6_priority_view.csv,3,tiers 3-7
-553,3,R6_ROW,R6-420,r6_priority_view.csv,3,tiers 3-7
-554,3,R6_ROW,R6-421,r6_priority_view.csv,3,tiers 3-7
-555,3,R6_ROW,R6-422,r6_priority_view.csv,2,tiers 3-7
-556,3,R6_ROW,R6-423,r6_priority_view.csv,2,tiers 3-7
-557,3,R6_ROW,R6-424,r6_priority_view.csv,2,tiers 3-7
-558,3,R6_ROW,R6-425,r6_priority_view.csv,2,tiers 3-7
-559,3,R6_ROW,R6-426,r6_priority_view.csv,2,tiers 3-7
-560,3,R6_ROW,R6-427,r6_priority_view.csv,2,tiers 3-7
-561,3,R6_ROW,R6-428,r6_priority_view.csv,2,tiers 3-7
-562,3,R6_ROW,R6-429,r6_priority_view.csv,2,tiers 3-7
-563,3,R6_ROW,R6-430,r6_priority_view.csv,2,tiers 3-7
-564,3,R6_ROW,R6-431,r6_priority_view.csv,2,tiers 3-7
-565,3,R6_ROW,R6-432,r6_priority_view.csv,2,tiers 3-7
-566,3,R6_ROW,R6-433,r6_priority_view.csv,2,tiers 3-7
-567,3,R6_ROW,R6-434,r6_priority_view.csv,2,tiers 3-7
-568,3,R6_ROW,R6-435,r6_priority_view.csv,2,tiers 3-7
-569,3,R6_ROW,R6-436,r6_priority_view.csv,2,tiers 3-7
-570,3,R6_ROW,R6-437,r6_priority_view.csv,2,tiers 3-7
-571,3,R6_ROW,R6-438,r6_priority_view.csv,2,tiers 3-7
-572,3,R6_ROW,R6-439,r6_priority_view.csv,1,tiers 3-7
-573,3,R6_ROW,R6-440,r6_priority_view.csv,1,tiers 3-7
-574,3,R6_ROW,R6-441,r6_priority_view.csv,1,tiers 3-7
-575,3,R6_ROW,R6-442,r6_priority_view.csv,1,tiers 3-7
-576,3,R6_ROW,R6-443,r6_priority_view.csv,1,tiers 3-7
-577,3,R6_ROW,R6-444,r6_priority_view.csv,1,tiers 3-7
-578,3,R6_ROW,R6-445,r6_priority_view.csv,1,tiers 3-7
-579,3,R6_ROW,R6-446,r6_priority_view.csv,1,tiers 3-7
-580,3,R6_ROW,R6-447,r6_priority_view.csv,1,tiers 3-7
-581,3,R6_ROW,R6-448,r6_priority_view.csv,1,tiers 3-7
-582,3,R6_ROW,R6-449,r6_priority_view.csv,1,tiers 3-7
-583,3,R6_ROW,R6-450,r6_priority_view.csv,1,tiers 3-7
-584,3,R6_ROW,R6-451,r6_priority_view.csv,1,tiers 3-7
-585,3,R6_ROW,R6-452,r6_priority_view.csv,1,tiers 3-7
-586,3,R6_ROW,R6-453,r6_priority_view.csv,1,tiers 3-7
-587,3,R6_ROW,R6-454,r6_priority_view.csv,1,tiers 3-7
-588,3,R6_ROW,R6-455,r6_priority_view.csv,1,tiers 3-7
-589,3,R6_ROW,R6-456,r6_priority_view.csv,1,tiers 3-7
-590,3,R6_ROW,R6-457,r6_priority_view.csv,1,tiers 3-7
-591,3,R6_ROW,R6-458,r6_priority_view.csv,1,tiers 3-7
-592,3,R6_ROW,R6-459,r6_priority_view.csv,1,tiers 3-7
-593,3,R6_ROW,R6-460,r6_priority_view.csv,1,tiers 3-7
-594,3,R6_ROW,R6-461,r6_priority_view.csv,1,tiers 3-7
-595,3,R6_ROW,R6-462,r6_priority_view.csv,1,tiers 3-7
-596,3,R6_ROW,R6-463,r6_priority_view.csv,1,tiers 3-7
-597,3,R6_ROW,R6-464,r6_priority_view.csv,1,tiers 3-7
-598,3,R6_ROW,R6-465,r6_priority_view.csv,1,tiers 3-7
-599,3,R6_ROW,R6-466,r6_priority_view.csv,1,tiers 3-7
-600,3,R6_ROW,R6-467,r6_priority_view.csv,1,tiers 3-7
-601,3,R6_ROW,R6-468,r6_priority_view.csv,1,tiers 3-7
-602,3,R6_ROW,R6-469,r6_priority_view.csv,1,tiers 3-7
-603,3,R6_ROW,R6-470,r6_priority_view.csv,1,tiers 3-7
-604,3,R6_ROW,R6-471,r6_priority_view.csv,1,tiers 3-7
-605,3,R6_ROW,R6-472,r6_priority_view.csv,1,tiers 3-7
-606,3,R6_ROW,R6-473,r6_priority_view.csv,1,tiers 3-7
-607,3,R6_ROW,R6-474,r6_priority_view.csv,1,tiers 3-7
-608,3,R6_ROW,R6-475,r6_priority_view.csv,1,tiers 3-7
-609,3,R6_ROW,R6-476,r6_priority_view.csv,1,tiers 3-7
-610,3,R6_ROW,R6-477,r6_priority_view.csv,1,tiers 3-7
-611,3,R6_ROW,R6-478,r6_priority_view.csv,1,tiers 3-7
-612,3,R6_ROW,R6-479,r6_priority_view.csv,1,tiers 3-7
-613,3,R6_ROW,R6-480,r6_priority_view.csv,1,tiers 3-7
-614,3,R6_ROW,R6-481,r6_priority_view.csv,1,tiers 3-7
-615,3,R6_ROW,R6-482,r6_priority_view.csv,1,tiers 3-7
-616,3,R6_ROW,R6-483,r6_priority_view.csv,1,tiers 3-7
-617,3,R6_ROW,R6-484,r6_priority_view.csv,1,tiers 3-7
-618,3,R6_ROW,R6-485,r6_priority_view.csv,1,tiers 3-7
-619,3,R6_ROW,R6-486,r6_priority_view.csv,1,tiers 3-7
-620,3,R6_ROW,R6-487,r6_priority_view.csv,1,tiers 3-7
-621,3,R6_ROW,R6-488,r6_priority_view.csv,1,tiers 3-7
-622,3,R6_ROW,R6-489,r6_priority_view.csv,1,tiers 3-7
-623,3,R6_ROW,R6-490,r6_priority_view.csv,1,tiers 3-7
-624,3,R6_ROW,R6-491,r6_priority_view.csv,1,tiers 3-7
-625,3,R6_ROW,R6-492,r6_priority_view.csv,1,tiers 3-7
-626,3,R6_ROW,R6-493,r6_priority_view.csv,1,tiers 3-7
-627,3,R6_ROW,R6-494,r6_priority_view.csv,1,tiers 3-7
-628,3,R6_ROW,R6-495,r6_priority_view.csv,1,tiers 3-7
-629,3,R6_ROW,R6-496,r6_priority_view.csv,1,tiers 3-7
-630,3,R6_ROW,R6-497,r6_priority_view.csv,1,tiers 3-7
-631,3,R6_ROW,R6-498,r6_priority_view.csv,1,tiers 3-7
-632,3,R6_ROW,R6-499,r6_priority_view.csv,1,tiers 3-7
-633,3,R6_ROW,R6-500,r6_priority_view.csv,1,tiers 3-7
-634,3,R6_ROW,R6-501,r6_priority_view.csv,1,tiers 3-7
-635,3,R6_ROW,R6-502,r6_priority_view.csv,1,tiers 3-7
-636,3,R6_ROW,R6-503,r6_priority_view.csv,1,tiers 3-7
-637,3,R6_ROW,R6-504,r6_priority_view.csv,1,tiers 3-7
-638,3,R6_ROW,R6-505,r6_priority_view.csv,1,tiers 3-7
-639,3,R6_ROW,R6-506,r6_priority_view.csv,1,tiers 3-7
-640,3,R6_ROW,R6-507,r6_priority_view.csv,1,tiers 3-7
-641,3,R6_ROW,R6-517,r6_priority_view.csv,12508,tiers 3-7
-642,3,R6_ROW,R6-518,r6_priority_view.csv,5524,tiers 3-7
-643,3,R6_ROW,R6-519,r6_priority_view.csv,2549,tiers 3-7
-644,3,R6_ROW,R6-520,r6_priority_view.csv,4473,tiers 3-7
-645,3,R6_ROW,R6-521,r6_priority_view.csv,2634,tiers 3-7
-646,3,R6_ROW,R6-522,r6_priority_view.csv,361,tiers 3-7
-647,3,R6_ROW,R6-523,r6_priority_view.csv,1044,tiers 3-7
-648,3,R6_ROW,R6-524,r6_priority_view.csv,349,tiers 3-7
-649,3,R6_ROW,R6-525,r6_priority_view.csv,1177,tiers 3-7
-650,3,R6_ROW,R6-526,r6_priority_view.csv,851,tiers 3-7
-651,3,R6_ROW,R6-527,r6_priority_view.csv,851,tiers 3-7
-652,3,R6_ROW,R6-528,r6_priority_view.csv,514,tiers 3-7
-653,3,R6_ROW,R6-529,r6_priority_view.csv,802,tiers 3-7
-654,3,R6_ROW,R6-530,r6_priority_view.csv,150,tiers 3-7
-655,3,R6_ROW,R6-531,r6_priority_view.csv,685,tiers 3-7
-656,3,R6_ROW,R6-532,r6_priority_view.csv,504,tiers 3-7
-657,3,R6_ROW,R6-533,r6_priority_view.csv,487,tiers 3-7
-658,3,R6_ROW,R6-534,r6_priority_view.csv,248,tiers 3-7
-659,3,R6_ROW,R6-535,r6_priority_view.csv,102,tiers 3-7
-660,3,R6_ROW,R6-536,r6_priority_view.csv,87,tiers 3-7
-661,3,R6_ROW,R6-537,r6_priority_view.csv,209,tiers 3-7
-662,3,R6_ROW,R6-538,r6_priority_view.csv,144,tiers 3-7
-663,3,R6_ROW,R6-539,r6_priority_view.csv,829,tiers 3-7
-664,3,R6_ROW,R6-540,r6_priority_view.csv,125,tiers 3-7
-665,3,R6_ROW,R6-541,r6_priority_view.csv,13790,tiers 3-7
-666,3,R6_ROW,R6-542,r6_priority_view.csv,122,tiers 3-7
-667,3,R6_ROW,R6-543,r6_priority_view.csv,212,tiers 3-7
-668,3,R6_ROW,R6-544,r6_priority_view.csv,332,tiers 3-7
-669,3,R6_ROW,R6-545,r6_priority_view.csv,10,tiers 3-7
-670,3,R6_ROW,R6-546,r6_priority_view.csv,10,tiers 3-7
-671,3,R6_ROW,R6-547,r6_priority_view.csv,15,tiers 3-7
-672,3,R6_ROW,R6-548,r6_priority_view.csv,14,tiers 3-7
-673,3,R6_ROW,R6-549,r6_priority_view.csv,14,tiers 3-7
-674,3,R6_ROW,R6-550,r6_priority_view.csv,370,tiers 3-7
-675,3,R6_ROW,R6-551,r6_priority_view.csv,139,tiers 3-7
-676,3,R6_ROW,R6-552,r6_priority_view.csv,2,tiers 3-7
-677,3,R6_ROW,R6-553,r6_priority_view.csv,2,tiers 3-7
-678,3,R6_ROW,R6-554,r6_priority_view.csv,1,tiers 3-7
-679,3,R6_ROW,R6-555,r6_priority_view.csv,1,tiers 3-7
-680,3,R6_ROW,R6-556,r6_priority_view.csv,290,tiers 3-7
-681,3,R6_ROW,R6-557,r6_priority_view.csv,248,tiers 3-7
-682,3,R6_ROW,R6-558,r6_priority_view.csv,140,tiers 3-7
-683,3,R6_ROW,R6-559,r6_priority_view.csv,117,tiers 3-7
-684,3,R6_ROW,R6-560,r6_priority_view.csv,1,tiers 3-7
-685,3,NEGATIVE_SAMPLE,NS-001,negative_sample.csv,15,recall denominator: needed after labels exist
-686,3,NEGATIVE_SAMPLE,NS-002,negative_sample.csv,14,recall denominator: needed after labels exist
-687,3,NEGATIVE_SAMPLE,NS-003,negative_sample.csv,20,recall denominator: needed after labels exist
-688,3,NEGATIVE_SAMPLE,NS-004,negative_sample.csv,17,recall denominator: needed after labels exist
-689,3,NEGATIVE_SAMPLE,NS-005,negative_sample.csv,2,recall denominator: needed after labels exist
-690,3,NEGATIVE_SAMPLE,NS-006,negative_sample.csv,2,recall denominator: needed after labels exist
-691,3,NEGATIVE_SAMPLE,NS-007,negative_sample.csv,4,recall denominator: needed after labels exist
-692,3,NEGATIVE_SAMPLE,NS-008,negative_sample.csv,9,recall denominator: needed after labels exist
-693,3,NEGATIVE_SAMPLE,NS-009,negative_sample.csv,24,recall denominator: needed after labels exist
-694,3,NEGATIVE_SAMPLE,NS-010,negative_sample.csv,18,recall denominator: needed after labels exist
-695,3,NEGATIVE_SAMPLE,NS-011,negative_sample.csv,11,recall denominator: needed after labels exist
-696,3,NEGATIVE_SAMPLE,NS-012,negative_sample.csv,39,recall denominator: needed after labels exist
-697,3,NEGATIVE_SAMPLE,NS-013,negative_sample.csv,95,recall denominator: needed after labels exist
-698,3,NEGATIVE_SAMPLE,NS-014,negative_sample.csv,86,recall denominator: needed after labels exist
-699,3,NEGATIVE_SAMPLE,NS-015,negative_sample.csv,92,recall denominator: needed after labels exist
-700,3,NEGATIVE_SAMPLE,NS-016,negative_sample.csv,27,recall denominator: needed after labels exist
-701,3,NEGATIVE_SAMPLE,NS-017,negative_sample.csv,7,recall denominator: needed after labels exist
-702,3,NEGATIVE_SAMPLE,NS-018,negative_sample.csv,8,recall denominator: needed after labels exist
-703,3,NEGATIVE_SAMPLE,NS-019,negative_sample.csv,1,recall denominator: needed after labels exist
-704,3,NEGATIVE_SAMPLE,NS-020,negative_sample.csv,1,recall denominator: needed after labels exist
-705,3,NEGATIVE_SAMPLE,NS-021,negative_sample.csv,1,recall denominator: needed after labels exist
-706,3,NEGATIVE_SAMPLE,NS-022,negative_sample.csv,3,recall denominator: needed after labels exist
-707,3,NEGATIVE_SAMPLE,NS-023,negative_sample.csv,7,recall denominator: needed after labels exist
-708,3,NEGATIVE_SAMPLE,NS-024,negative_sample.csv,2,recall denominator: needed after labels exist
+queue_position,wave,queue_role,item_kind,item_id,action_id,resolved_by_action_id,answer_destination,detail_file,group_tag,units_at_stake,why_in_this_wave
+1,1,ACTION_REQUIRED,CONTRACT,INIT-01,INIT-01,,initial_owner_decisions.csv owner_answer,initial_owner_decisions.csv,,15,one rule closes seven of the eight unresolved parity cases
+2,1,ACTION_REQUIRED,CONTRACT,INIT-02,INIT-02,,initial_owner_decisions.csv owner_answer,initial_owner_decisions.csv,,3,closes the one case where the consumer resolves a brand the producer does not relate
+3,1,ACTION_REQUIRED,CATALOG,INIT-03,INIT-03,,initial_owner_decisions.csv owner_answer,initial_owner_decisions.csv,,3032,"blocks the V80 CREATE, two Mifa identity reviews and the EPC1A parity case"
+4,1,ACTION_REQUIRED,CONTRACT,INIT-04,INIT-04,,initial_owner_decisions.csv owner_answer,initial_owner_decisions.csv,,26946,the answer is the rule for all nine alias rows and for any alias the catalog gains later
+5,1,ACTION_REQUIRED,ALIAS_ROW,OD-A01,OD-A01,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C03",catalog_alias_collisions.csv,,24045,decisive series evidence and real volume
+6,1,ACTION_REQUIRED,ALIAS_ROW,OD-A02,OD-A02,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C01",catalog_alias_collisions.csv,,1285,decisive series evidence and real volume
+7,1,ACTION_REQUIRED,ALIAS_ROW,OD-A03,OD-A03,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C02",catalog_alias_collisions.csv,,1091,decisive series evidence and real volume
+8,1,ACTION_REQUIRED,ALIAS_ROW,OD-A04,OD-A04,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C09",catalog_alias_collisions.csv,,420,decisive series evidence and real volume
+9,1,ACTION_REQUIRED,ALIAS_ROW,OD-A05,OD-A05,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C12",catalog_alias_collisions.csv,,51,decisive series evidence and real volume
+10,1,ACTION_REQUIRED,CREATE_ROW,OD-C04,OD-C04,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,484,first wave
+11,1,ACTION_REQUIRED,CREATE_ROW,OD-C06,OD-C06,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,8659,first wave
+12,1,ACTION_REQUIRED,CREATE_ROW,OD-C07,OD-C07,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2892,first wave
+13,1,ACTION_REQUIRED,CREATE_ROW,OD-C08,OD-C08,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,604,first wave
+14,1,ACTION_REQUIRED,CREATE_ROW,OD-C10,OD-C10,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,316,first wave
+15,1,ACTION_REQUIRED,CREATE_ROW,OD-C19,OD-C19,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,6647,first wave
+16,1,ACTION_REQUIRED,CREATE_ROW,OD-C20,OD-C20,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,4000,first wave
+17,1,ACTION_REQUIRED,CREATE_ROW,OD-C21,OD-C21,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,3667,first wave
+18,1,ACTION_REQUIRED,CREATE_ROW,OD-C22,OD-C22,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2645,first wave
+19,1,ACTION_REQUIRED,R6_ROW,R6-1,R6-1,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=1,r6_priority_view.csv,S1_AUTO_PAIRS,45283,starter batch
+20,1,ACTION_REQUIRED,R6_ROW,R6-2,R6-2,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=2,r6_priority_view.csv,S1_AUTO_PAIRS,44588,starter batch
+21,1,ACTION_REQUIRED,R6_ROW,R6-3,R6-3,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=3,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,11136,starter batch
+22,1,ACTION_REQUIRED,R6_ROW,R6-6,R6-6,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=6,r6_priority_view.csv,S1_AUTO_PAIRS,31459,starter batch
+23,1,ACTION_REQUIRED,R6_ROW,R6-7,R6-7,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=7,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,4072,starter batch
+24,1,ACTION_REQUIRED,R6_ROW,R6-8,R6-8,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=8,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,3856,starter batch
+25,1,ACTION_REQUIRED,R6_ROW,R6-9,R6-9,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=9,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,2562,starter batch
+26,1,ACTION_REQUIRED,R6_ROW,R6-10,R6-10,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=10,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,2238,starter batch
+27,1,ACTION_REQUIRED,R6_ROW,R6-11,R6-11,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=11,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,14905,starter batch
+28,1,ACTION_REQUIRED,R6_ROW,R6-20,R6-20,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=20,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,3688,starter batch
+29,1,ACTION_REQUIRED,R6_ROW,R6-21,R6-21,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=21,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,4456,starter batch
+30,1,ACTION_REQUIRED,R6_ROW,R6-23,R6-23,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=23,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,3001,starter batch
+31,1,ACTION_REQUIRED,R6_ROW,R6-25,R6-25,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=25,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,2003,starter batch
+32,1,ACTION_REQUIRED,R6_ROW,R6-29,R6-29,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=29,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,6068,starter batch
+33,1,ACTION_REQUIRED,R6_ROW,R6-30,R6-30,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=30,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,2020,starter batch
+34,1,ACTION_REQUIRED,R6_ROW,R6-46,R6-46,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=46,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,4130,starter batch
+35,1,ACTION_REQUIRED,R6_ROW,R6-54,R6-54,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=54,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,5737,starter batch
+36,1,ACTION_REQUIRED,R6_ROW,R6-56,R6-56,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=56,r6_priority_view.csv,S2_LEGACY_AUTO_NOT_AUTO,4055,starter batch
+37,1,ACTION_REQUIRED,R6_ROW,R6-83,R6-83,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=83,r6_priority_view.csv,S1_AUTO_PAIRS,257146,starter batch
+38,1,ACTION_REQUIRED,R6_ROW,R6-84,R6-84,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=84,r6_priority_view.csv,S3_KNOWN_FAMILY,615360,starter batch
+39,1,ACTION_REQUIRED,R6_ROW,R6-85,R6-85,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=85,r6_priority_view.csv,S3_KNOWN_FAMILY,550946,starter batch
+40,1,ACTION_REQUIRED,R6_ROW,R6-86,R6-86,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=86,r6_priority_view.csv,S1_AUTO_PAIRS,99875,starter batch
+41,1,ACTION_REQUIRED,R6_ROW,R6-87,R6-87,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=87,r6_priority_view.csv,S1_AUTO_PAIRS,105452,starter batch
+42,1,ACTION_REQUIRED,R6_ROW,R6-88,R6-88,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=88,r6_priority_view.csv,S1_AUTO_PAIRS,106582,starter batch
+43,1,ACTION_REQUIRED,R6_ROW,R6-90,R6-90,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=90,r6_priority_view.csv,S1_AUTO_PAIRS,115433,starter batch
+44,1,ACTION_REQUIRED,R6_ROW,R6-92,R6-92,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=92,r6_priority_view.csv,S1_AUTO_PAIRS,92980,starter batch
+45,1,ACTION_REQUIRED,R6_ROW,R6-93,R6-93,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=93,r6_priority_view.csv,"S1_AUTO_PAIRS,S3_KNOWN_FAMILY",110131,starter batch
+46,1,ACTION_REQUIRED,R6_ROW,R6-94,R6-94,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=94,r6_priority_view.csv,S1_AUTO_PAIRS,75495,starter batch
+47,1,ACTION_REQUIRED,R6_ROW,R6-95,R6-95,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=95,r6_priority_view.csv,S3_KNOWN_FAMILY,109610,starter batch
+48,1,ACTION_REQUIRED,R6_ROW,R6-96,R6-96,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=96,r6_priority_view.csv,S1_AUTO_PAIRS,29161,starter batch
+49,1,ACTION_REQUIRED,R6_ROW,R6-98,R6-98,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=98,r6_priority_view.csv,S3_KNOWN_FAMILY,81068,starter batch
+50,1,ACTION_REQUIRED,R6_ROW,R6-99,R6-99,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=99,r6_priority_view.csv,S1_AUTO_PAIRS,47508,starter batch
+51,1,ACTION_REQUIRED,R6_ROW,R6-105,R6-105,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=105,r6_priority_view.csv,S1_AUTO_PAIRS,29337,starter batch
+52,1,ACTION_REQUIRED,R6_ROW,R6-106,R6-106,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=106,r6_priority_view.csv,S3_KNOWN_FAMILY,11983,starter batch
+53,1,ACTION_REQUIRED,R6_ROW,R6-114,R6-114,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=114,r6_priority_view.csv,S1_AUTO_PAIRS,61313,starter batch
+54,1,ACTION_REQUIRED,R6_ROW,R6-116,R6-116,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=116,r6_priority_view.csv,S1_AUTO_PAIRS,32347,starter batch
+55,1,ACTION_REQUIRED,R6_ROW,R6-126,R6-126,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=126,r6_priority_view.csv,S1_AUTO_PAIRS,43660,starter batch
+56,1,ACTION_REQUIRED,R6_ROW,R6-142,R6-142,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=142,r6_priority_view.csv,S1_AUTO_PAIRS,28194,starter batch
+57,1,ACTION_REQUIRED,R6_ROW,R6-508,R6-508,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=508,r6_priority_view.csv,S4_STRUCTURAL,11798,starter batch
+58,1,ACTION_REQUIRED,R6_ROW,R6-509,R6-509,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=509,r6_priority_view.csv,S4_STRUCTURAL,29506,starter batch
+59,1,ACTION_REQUIRED,R6_ROW,R6-510,R6-510,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=510,r6_priority_view.csv,S4_STRUCTURAL,327,starter batch
+60,1,ACTION_REQUIRED,R6_ROW,R6-511,R6-511,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=511,r6_priority_view.csv,S4_STRUCTURAL,514,starter batch
+61,1,ACTION_REQUIRED,R6_ROW,R6-512,R6-512,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=512,r6_priority_view.csv,S4_STRUCTURAL,22782,starter batch
+62,1,ACTION_REQUIRED,R6_ROW,R6-513,R6-513,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=513,r6_priority_view.csv,S4_STRUCTURAL,978,starter batch
+63,1,ACTION_REQUIRED,R6_ROW,R6-514,R6-514,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=514,r6_priority_view.csv,S4_STRUCTURAL,1005,starter batch
+64,1,ACTION_REQUIRED,R6_ROW,R6-515,R6-515,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=515,r6_priority_view.csv,S4_STRUCTURAL,2,starter batch
+65,1,ACTION_REQUIRED,R6_ROW,R6-516,R6-516,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=516,r6_priority_view.csv,S4_STRUCTURAL,2,starter batch
+66,1,SUPPORTING_ROW,BRAND_CASE,OD-B01,,INIT-02,initial_owner_decisions.csv INIT-02 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,3,closed by the contract-level answer INIT-02
+67,1,SUPPORTING_ROW,BRAND_CASE,OD-B02,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,2,closed by the contract-level answer INIT-01
+68,1,SUPPORTING_ROW,BRAND_CASE,OD-B03,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,1,closed by the contract-level answer INIT-01
+69,1,SUPPORTING_ROW,BRAND_CASE,OD-B04,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,2,closed by the contract-level answer INIT-01
+70,1,SUPPORTING_ROW,BRAND_CASE,OD-B05,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,2,closed by the contract-level answer INIT-01
+71,1,SUPPORTING_ROW,BRAND_CASE,OD-B06,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,1,closed by the contract-level answer INIT-01
+72,1,SUPPORTING_ROW,BRAND_CASE,OD-B07,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,1,closed by the contract-level answer INIT-01
+73,1,SUPPORTING_ROW,BRAND_CASE,OD-B08,,INIT-01,initial_owner_decisions.csv INIT-01 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,6,closed by the contract-level answer INIT-01
+74,1,SUPPORTING_ROW,BRAND_CASE,OD-B09,,INIT-03,initial_owner_decisions.csv INIT-03 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,135,closed by the contract-level answer INIT-03
+75,1,SUPPORTING_ROW,BRAND_CASE,OD-B10,,INIT-03,initial_owner_decisions.csv INIT-03 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,934,closed by the contract-level answer INIT-03
+76,1,SUPPORTING_ROW,BRAND_CASE,OD-B11,,INIT-03,initial_owner_decisions.csv INIT-03 owner_answer (owner_case_override here only if the answer should not apply to this case),brand_resolution_cases.csv,,1963,closed by the contract-level answer INIT-03
+77,1,SUPPORTING_ROW,CREATE_ROW,OD-C01,,OD-A02,create_candidates.csv owner_verdict (written together with OD-A02; no second decision),create_candidates.csv,,1285,companion verdict of OD-A02
+78,1,SUPPORTING_ROW,CREATE_ROW,OD-C02,,OD-A03,create_candidates.csv owner_verdict (written together with OD-A03; no second decision),create_candidates.csv,,1091,companion verdict of OD-A03
+79,1,SUPPORTING_ROW,CREATE_ROW,OD-C03,,OD-A01,create_candidates.csv owner_verdict (written together with OD-A01; no second decision),create_candidates.csv,,24045,companion verdict of OD-A01
+80,1,SUPPORTING_ROW,CREATE_ROW,OD-C09,,OD-A04,create_candidates.csv owner_verdict (written together with OD-A04; no second decision),create_candidates.csv,,420,companion verdict of OD-A04
+81,1,SUPPORTING_ROW,CREATE_ROW,OD-C11,,INIT-03,create_candidates.csv owner_verdict (written together with INIT-03; no second decision),create_candidates.csv,,135,companion verdict of INIT-03
+82,1,SUPPORTING_ROW,CREATE_ROW,OD-C12,,OD-A05,create_candidates.csv owner_verdict (written together with OD-A05; no second decision),create_candidates.csv,,51,companion verdict of OD-A05
+83,1,SUPPORTING_ROW,R6_ROW,R6-184,,INIT-03,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=184 (written together with INIT-03; no separate review),r6_priority_view.csv,S3_KNOWN_FAMILY,1963,pair question of a group decided by INIT-03
+84,2,ACTION_REQUIRED,ALIAS_ROW,OD-A06,OD-A06,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C05",catalog_alias_collisions.csv,,22,thin volume: follows from the INIT-04 rule
+85,2,ACTION_REQUIRED,ALIAS_ROW,OD-A07,OD-A07,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C13",catalog_alias_collisions.csv,,20,thin volume: follows from the INIT-04 rule
+86,2,ACTION_REQUIRED,ALIAS_ROW,OD-A08,OD-A08,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C15",catalog_alias_collisions.csv,,6,thin volume: follows from the INIT-04 rule
+87,2,ACTION_REQUIRED,ALIAS_ROW,OD-A09,OD-A09,,"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at OD-C16",catalog_alias_collisions.csv,,6,thin volume: follows from the INIT-04 rule
+88,2,ACTION_REQUIRED,CREATE_ROW,OD-C14,OD-C14,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,7,P1/P2: needs a row review
+89,2,ACTION_REQUIRED,CREATE_ROW,OD-C17,OD-C17,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,P1/P2: needs a row review
+90,2,ACTION_REQUIRED,CREATE_ROW,OD-C18,OD-C18,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,P1/P2: needs a row review
+91,2,ACTION_REQUIRED,CREATE_ROW,OD-C23,OD-C23,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,639,P1/P2: needs a row review
+92,2,ACTION_REQUIRED,CREATE_ROW,OD-C24,OD-C24,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,550,P1/P2: needs a row review
+93,2,ACTION_REQUIRED,CREATE_ROW,OD-C25,OD-C25,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,300,P1/P2: needs a row review
+94,2,ACTION_REQUIRED,CREATE_ROW,OD-C26,OD-C26,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,250,P1/P2: needs a row review
+95,2,ACTION_REQUIRED,CREATE_ROW,OD-C27,OD-C27,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,147,P1/P2: needs a row review
+96,2,ACTION_REQUIRED,CREATE_ROW,OD-C28,OD-C28,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,145,P1/P2: needs a row review
+97,2,ACTION_REQUIRED,CREATE_ROW,OD-C29,OD-C29,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,144,P1/P2: needs a row review
+98,2,ACTION_REQUIRED,CREATE_ROW,OD-C30,OD-C30,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,101,P1/P2: needs a row review
+99,2,ACTION_REQUIRED,CREATE_ROW,OD-C31,OD-C31,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,81,P1/P2: needs a row review
+100,2,ACTION_REQUIRED,CREATE_ROW,OD-C32,OD-C32,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,73,P1/P2: needs a row review
+101,2,ACTION_REQUIRED,CREATE_ROW,OD-C33,OD-C33,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,73,P1/P2: needs a row review
+102,2,ACTION_REQUIRED,CREATE_ROW,OD-C34,OD-C34,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,68,P1/P2: needs a row review
+103,2,ACTION_REQUIRED,CREATE_ROW,OD-C35,OD-C35,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,64,P1/P2: needs a row review
+104,2,ACTION_REQUIRED,CREATE_ROW,OD-C36,OD-C36,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,18,P1/P2: needs a row review
+105,2,ACTION_REQUIRED,CREATE_ROW,OD-C37,OD-C37,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,18,P1/P2: needs a row review
+106,2,ACTION_REQUIRED,CREATE_ROW,OD-C38,OD-C38,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,3,P1/P2: needs a row review
+107,2,ACTION_REQUIRED,CREATE_ROW,OD-C43,OD-C43,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,80,"P3 bulk, in the spot-check sample"
+108,2,ACTION_REQUIRED,CREATE_ROW,OD-C44,OD-C44,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,79,"P3 bulk, in the spot-check sample"
+109,2,ACTION_REQUIRED,CREATE_ROW,OD-C62,OD-C62,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,17,"P3 bulk, in the spot-check sample"
+110,2,ACTION_REQUIRED,CREATE_ROW,OD-C64,OD-C64,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,12,"P3 bulk, in the spot-check sample"
+111,2,ACTION_REQUIRED,CREATE_ROW,OD-C67,OD-C67,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,5,"P3 bulk, in the spot-check sample"
+112,2,ACTION_REQUIRED,CREATE_ROW,OD-C74,OD-C74,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2,"P3 bulk, in the spot-check sample"
+113,2,ACTION_REQUIRED,CREATE_ROW,OD-C75,OD-C75,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2,"P3 bulk, in the spot-check sample"
+114,2,ACTION_REQUIRED,CREATE_ROW,OD-C82,OD-C82,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk, in the spot-check sample"
+115,2,ACTION_REQUIRED,R6_ROW,R6-4,R6-4,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=4,r6_priority_view.csv,,6272,"first 176 rows, not in the starter batch"
+116,2,ACTION_REQUIRED,R6_ROW,R6-5,R6-5,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=5,r6_priority_view.csv,,22130,"first 176 rows, not in the starter batch"
+117,2,ACTION_REQUIRED,R6_ROW,R6-12,R6-12,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=12,r6_priority_view.csv,,15258,"first 176 rows, not in the starter batch"
+118,2,ACTION_REQUIRED,R6_ROW,R6-13,R6-13,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=13,r6_priority_view.csv,,9586,"first 176 rows, not in the starter batch"
+119,2,ACTION_REQUIRED,R6_ROW,R6-14,R6-14,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=14,r6_priority_view.csv,,1689,"first 176 rows, not in the starter batch"
+120,2,ACTION_REQUIRED,R6_ROW,R6-16,R6-16,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=16,r6_priority_view.csv,,1524,"first 176 rows, not in the starter batch"
+121,2,ACTION_REQUIRED,R6_ROW,R6-17,R6-17,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=17,r6_priority_view.csv,,12179,"first 176 rows, not in the starter batch"
+122,2,ACTION_REQUIRED,R6_ROW,R6-18,R6-18,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=18,r6_priority_view.csv,,4308,"first 176 rows, not in the starter batch"
+123,2,ACTION_REQUIRED,R6_ROW,R6-19,R6-19,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=19,r6_priority_view.csv,,1163,"first 176 rows, not in the starter batch"
+124,2,ACTION_REQUIRED,R6_ROW,R6-22,R6-22,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=22,r6_priority_view.csv,,6613,"first 176 rows, not in the starter batch"
+125,2,ACTION_REQUIRED,R6_ROW,R6-24,R6-24,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=24,r6_priority_view.csv,,696,"first 176 rows, not in the starter batch"
+126,2,ACTION_REQUIRED,R6_ROW,R6-26,R6-26,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=26,r6_priority_view.csv,,6003,"first 176 rows, not in the starter batch"
+127,2,ACTION_REQUIRED,R6_ROW,R6-27,R6-27,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=27,r6_priority_view.csv,,712,"first 176 rows, not in the starter batch"
+128,2,ACTION_REQUIRED,R6_ROW,R6-28,R6-28,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=28,r6_priority_view.csv,,8235,"first 176 rows, not in the starter batch"
+129,2,ACTION_REQUIRED,R6_ROW,R6-31,R6-31,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=31,r6_priority_view.csv,,859,"first 176 rows, not in the starter batch"
+130,2,ACTION_REQUIRED,R6_ROW,R6-32,R6-32,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=32,r6_priority_view.csv,,1628,"first 176 rows, not in the starter batch"
+131,2,ACTION_REQUIRED,R6_ROW,R6-33,R6-33,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=33,r6_priority_view.csv,,1584,"first 176 rows, not in the starter batch"
+132,2,ACTION_REQUIRED,R6_ROW,R6-34,R6-34,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=34,r6_priority_view.csv,,277,"first 176 rows, not in the starter batch"
+133,2,ACTION_REQUIRED,R6_ROW,R6-35,R6-35,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=35,r6_priority_view.csv,,1131,"first 176 rows, not in the starter batch"
+134,2,ACTION_REQUIRED,R6_ROW,R6-36,R6-36,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=36,r6_priority_view.csv,,651,"first 176 rows, not in the starter batch"
+135,2,ACTION_REQUIRED,R6_ROW,R6-37,R6-37,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=37,r6_priority_view.csv,,993,"first 176 rows, not in the starter batch"
+136,2,ACTION_REQUIRED,R6_ROW,R6-38,R6-38,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=38,r6_priority_view.csv,,1161,"first 176 rows, not in the starter batch"
+137,2,ACTION_REQUIRED,R6_ROW,R6-39,R6-39,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=39,r6_priority_view.csv,,421,"first 176 rows, not in the starter batch"
+138,2,ACTION_REQUIRED,R6_ROW,R6-40,R6-40,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=40,r6_priority_view.csv,,229,"first 176 rows, not in the starter batch"
+139,2,ACTION_REQUIRED,R6_ROW,R6-41,R6-41,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=41,r6_priority_view.csv,,214,"first 176 rows, not in the starter batch"
+140,2,ACTION_REQUIRED,R6_ROW,R6-42,R6-42,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=42,r6_priority_view.csv,,139,"first 176 rows, not in the starter batch"
+141,2,ACTION_REQUIRED,R6_ROW,R6-43,R6-43,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=43,r6_priority_view.csv,,759,"first 176 rows, not in the starter batch"
+142,2,ACTION_REQUIRED,R6_ROW,R6-44,R6-44,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=44,r6_priority_view.csv,,765,"first 176 rows, not in the starter batch"
+143,2,ACTION_REQUIRED,R6_ROW,R6-45,R6-45,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=45,r6_priority_view.csv,,299,"first 176 rows, not in the starter batch"
+144,2,ACTION_REQUIRED,R6_ROW,R6-47,R6-47,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=47,r6_priority_view.csv,,486,"first 176 rows, not in the starter batch"
+145,2,ACTION_REQUIRED,R6_ROW,R6-48,R6-48,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=48,r6_priority_view.csv,,152,"first 176 rows, not in the starter batch"
+146,2,ACTION_REQUIRED,R6_ROW,R6-49,R6-49,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=49,r6_priority_view.csv,,566,"first 176 rows, not in the starter batch"
+147,2,ACTION_REQUIRED,R6_ROW,R6-50,R6-50,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=50,r6_priority_view.csv,,939,"first 176 rows, not in the starter batch"
+148,2,ACTION_REQUIRED,R6_ROW,R6-51,R6-51,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=51,r6_priority_view.csv,,101,"first 176 rows, not in the starter batch"
+149,2,ACTION_REQUIRED,R6_ROW,R6-52,R6-52,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=52,r6_priority_view.csv,,106,"first 176 rows, not in the starter batch"
+150,2,ACTION_REQUIRED,R6_ROW,R6-53,R6-53,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=53,r6_priority_view.csv,,183,"first 176 rows, not in the starter batch"
+151,2,ACTION_REQUIRED,R6_ROW,R6-55,R6-55,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=55,r6_priority_view.csv,,264,"first 176 rows, not in the starter batch"
+152,2,ACTION_REQUIRED,R6_ROW,R6-57,R6-57,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=57,r6_priority_view.csv,,63,"first 176 rows, not in the starter batch"
+153,2,ACTION_REQUIRED,R6_ROW,R6-58,R6-58,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=58,r6_priority_view.csv,,85,"first 176 rows, not in the starter batch"
+154,2,ACTION_REQUIRED,R6_ROW,R6-59,R6-59,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=59,r6_priority_view.csv,,95,"first 176 rows, not in the starter batch"
+155,2,ACTION_REQUIRED,R6_ROW,R6-60,R6-60,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=60,r6_priority_view.csv,,118,"first 176 rows, not in the starter batch"
+156,2,ACTION_REQUIRED,R6_ROW,R6-61,R6-61,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=61,r6_priority_view.csv,,164,"first 176 rows, not in the starter batch"
+157,2,ACTION_REQUIRED,R6_ROW,R6-62,R6-62,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=62,r6_priority_view.csv,,294,"first 176 rows, not in the starter batch"
+158,2,ACTION_REQUIRED,R6_ROW,R6-63,R6-63,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=63,r6_priority_view.csv,,153,"first 176 rows, not in the starter batch"
+159,2,ACTION_REQUIRED,R6_ROW,R6-64,R6-64,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=64,r6_priority_view.csv,,189,"first 176 rows, not in the starter batch"
+160,2,ACTION_REQUIRED,R6_ROW,R6-65,R6-65,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=65,r6_priority_view.csv,,39,"first 176 rows, not in the starter batch"
+161,2,ACTION_REQUIRED,R6_ROW,R6-66,R6-66,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=66,r6_priority_view.csv,,122,"first 176 rows, not in the starter batch"
+162,2,ACTION_REQUIRED,R6_ROW,R6-67,R6-67,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=67,r6_priority_view.csv,,165,"first 176 rows, not in the starter batch"
+163,2,ACTION_REQUIRED,R6_ROW,R6-68,R6-68,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=68,r6_priority_view.csv,,76,"first 176 rows, not in the starter batch"
+164,2,ACTION_REQUIRED,R6_ROW,R6-69,R6-69,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=69,r6_priority_view.csv,,215,"first 176 rows, not in the starter batch"
+165,2,ACTION_REQUIRED,R6_ROW,R6-70,R6-70,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=70,r6_priority_view.csv,,10,"first 176 rows, not in the starter batch"
+166,2,ACTION_REQUIRED,R6_ROW,R6-71,R6-71,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=71,r6_priority_view.csv,,104,"first 176 rows, not in the starter batch"
+167,2,ACTION_REQUIRED,R6_ROW,R6-72,R6-72,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=72,r6_priority_view.csv,,90,"first 176 rows, not in the starter batch"
+168,2,ACTION_REQUIRED,R6_ROW,R6-74,R6-74,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=74,r6_priority_view.csv,,347,"first 176 rows, not in the starter batch"
+169,2,ACTION_REQUIRED,R6_ROW,R6-75,R6-75,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=75,r6_priority_view.csv,,186,"first 176 rows, not in the starter batch"
+170,2,ACTION_REQUIRED,R6_ROW,R6-76,R6-76,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=76,r6_priority_view.csv,,14,"first 176 rows, not in the starter batch"
+171,2,ACTION_REQUIRED,R6_ROW,R6-77,R6-77,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=77,r6_priority_view.csv,,9,"first 176 rows, not in the starter batch"
+172,2,ACTION_REQUIRED,R6_ROW,R6-78,R6-78,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=78,r6_priority_view.csv,,34,"first 176 rows, not in the starter batch"
+173,2,ACTION_REQUIRED,R6_ROW,R6-79,R6-79,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=79,r6_priority_view.csv,,30,"first 176 rows, not in the starter batch"
+174,2,ACTION_REQUIRED,R6_ROW,R6-80,R6-80,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=80,r6_priority_view.csv,,47,"first 176 rows, not in the starter batch"
+175,2,ACTION_REQUIRED,R6_ROW,R6-81,R6-81,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=81,r6_priority_view.csv,,31,"first 176 rows, not in the starter batch"
+176,2,ACTION_REQUIRED,R6_ROW,R6-82,R6-82,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=82,r6_priority_view.csv,,250,"first 176 rows, not in the starter batch"
+177,2,ACTION_REQUIRED,R6_ROW,R6-89,R6-89,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=89,r6_priority_view.csv,,103951,"first 176 rows, not in the starter batch"
+178,2,ACTION_REQUIRED,R6_ROW,R6-91,R6-91,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=91,r6_priority_view.csv,,30119,"first 176 rows, not in the starter batch"
+179,2,ACTION_REQUIRED,R6_ROW,R6-97,R6-97,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=97,r6_priority_view.csv,,22310,"first 176 rows, not in the starter batch"
+180,2,ACTION_REQUIRED,R6_ROW,R6-100,R6-100,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=100,r6_priority_view.csv,,37053,"first 176 rows, not in the starter batch"
+181,2,ACTION_REQUIRED,R6_ROW,R6-101,R6-101,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=101,r6_priority_view.csv,,53534,"first 176 rows, not in the starter batch"
+182,2,ACTION_REQUIRED,R6_ROW,R6-102,R6-102,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=102,r6_priority_view.csv,,38413,"first 176 rows, not in the starter batch"
+183,2,ACTION_REQUIRED,R6_ROW,R6-103,R6-103,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=103,r6_priority_view.csv,,12545,"first 176 rows, not in the starter batch"
+184,2,ACTION_REQUIRED,R6_ROW,R6-104,R6-104,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=104,r6_priority_view.csv,,13675,"first 176 rows, not in the starter batch"
+185,2,ACTION_REQUIRED,R6_ROW,R6-107,R6-107,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=107,r6_priority_view.csv,,12017,"first 176 rows, not in the starter batch"
+186,2,ACTION_REQUIRED,R6_ROW,R6-108,R6-108,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=108,r6_priority_view.csv,,11657,"first 176 rows, not in the starter batch"
+187,2,ACTION_REQUIRED,R6_ROW,R6-109,R6-109,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=109,r6_priority_view.csv,,89839,"first 176 rows, not in the starter batch"
+188,2,ACTION_REQUIRED,R6_ROW,R6-110,R6-110,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=110,r6_priority_view.csv,,10296,"first 176 rows, not in the starter batch"
+189,2,ACTION_REQUIRED,R6_ROW,R6-111,R6-111,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=111,r6_priority_view.csv,,20823,"first 176 rows, not in the starter batch"
+190,2,ACTION_REQUIRED,R6_ROW,R6-112,R6-112,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=112,r6_priority_view.csv,,9264,"first 176 rows, not in the starter batch"
+191,2,ACTION_REQUIRED,R6_ROW,R6-113,R6-113,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=113,r6_priority_view.csv,,10490,"first 176 rows, not in the starter batch"
+192,2,ACTION_REQUIRED,R6_ROW,R6-115,R6-115,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=115,r6_priority_view.csv,,11650,"first 176 rows, not in the starter batch"
+193,2,ACTION_REQUIRED,R6_ROW,R6-117,R6-117,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=117,r6_priority_view.csv,,23985,"first 176 rows, not in the starter batch"
+194,2,ACTION_REQUIRED,R6_ROW,R6-118,R6-118,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=118,r6_priority_view.csv,,31043,"first 176 rows, not in the starter batch"
+195,2,ACTION_REQUIRED,R6_ROW,R6-119,R6-119,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=119,r6_priority_view.csv,,12594,"first 176 rows, not in the starter batch"
+196,2,ACTION_REQUIRED,R6_ROW,R6-120,R6-120,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=120,r6_priority_view.csv,,7711,"first 176 rows, not in the starter batch"
+197,2,ACTION_REQUIRED,R6_ROW,R6-121,R6-121,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=121,r6_priority_view.csv,,14168,"first 176 rows, not in the starter batch"
+198,2,ACTION_REQUIRED,R6_ROW,R6-122,R6-122,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=122,r6_priority_view.csv,,9720,"first 176 rows, not in the starter batch"
+199,2,ACTION_REQUIRED,R6_ROW,R6-123,R6-123,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=123,r6_priority_view.csv,,9986,"first 176 rows, not in the starter batch"
+200,2,ACTION_REQUIRED,R6_ROW,R6-124,R6-124,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=124,r6_priority_view.csv,,11798,"first 176 rows, not in the starter batch"
+201,2,ACTION_REQUIRED,R6_ROW,R6-125,R6-125,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=125,r6_priority_view.csv,,22492,"first 176 rows, not in the starter batch"
+202,2,ACTION_REQUIRED,R6_ROW,R6-127,R6-127,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=127,r6_priority_view.csv,,16645,"first 176 rows, not in the starter batch"
+203,2,ACTION_REQUIRED,R6_ROW,R6-128,R6-128,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=128,r6_priority_view.csv,,19028,"first 176 rows, not in the starter batch"
+204,2,ACTION_REQUIRED,R6_ROW,R6-129,R6-129,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=129,r6_priority_view.csv,,4679,"first 176 rows, not in the starter batch"
+205,2,ACTION_REQUIRED,R6_ROW,R6-130,R6-130,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=130,r6_priority_view.csv,,18388,"first 176 rows, not in the starter batch"
+206,2,ACTION_REQUIRED,R6_ROW,R6-131,R6-131,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=131,r6_priority_view.csv,,4346,"first 176 rows, not in the starter batch"
+207,2,ACTION_REQUIRED,R6_ROW,R6-132,R6-132,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=132,r6_priority_view.csv,,4459,"first 176 rows, not in the starter batch"
+208,2,ACTION_REQUIRED,R6_ROW,R6-133,R6-133,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=133,r6_priority_view.csv,,4207,"first 176 rows, not in the starter batch"
+209,2,ACTION_REQUIRED,R6_ROW,R6-134,R6-134,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=134,r6_priority_view.csv,,3959,"first 176 rows, not in the starter batch"
+210,2,ACTION_REQUIRED,R6_ROW,R6-135,R6-135,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=135,r6_priority_view.csv,,17222,"first 176 rows, not in the starter batch"
+211,2,ACTION_REQUIRED,R6_ROW,R6-136,R6-136,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=136,r6_priority_view.csv,,12839,"first 176 rows, not in the starter batch"
+212,2,ACTION_REQUIRED,R6_ROW,R6-137,R6-137,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=137,r6_priority_view.csv,,4809,"first 176 rows, not in the starter batch"
+213,2,ACTION_REQUIRED,R6_ROW,R6-138,R6-138,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=138,r6_priority_view.csv,,26287,"first 176 rows, not in the starter batch"
+214,2,ACTION_REQUIRED,R6_ROW,R6-139,R6-139,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=139,r6_priority_view.csv,,23988,"first 176 rows, not in the starter batch"
+215,2,ACTION_REQUIRED,R6_ROW,R6-140,R6-140,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=140,r6_priority_view.csv,,3585,"first 176 rows, not in the starter batch"
+216,2,ACTION_REQUIRED,R6_ROW,R6-141,R6-141,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=141,r6_priority_view.csv,,11743,"first 176 rows, not in the starter batch"
+217,2,ACTION_REQUIRED,R6_ROW,R6-143,R6-143,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=143,r6_priority_view.csv,,12009,"first 176 rows, not in the starter batch"
+218,2,ACTION_REQUIRED,R6_ROW,R6-144,R6-144,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=144,r6_priority_view.csv,,6394,"first 176 rows, not in the starter batch"
+219,2,ACTION_REQUIRED,R6_ROW,R6-145,R6-145,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=145,r6_priority_view.csv,,3266,"first 176 rows, not in the starter batch"
+220,2,ACTION_REQUIRED,R6_ROW,R6-146,R6-146,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=146,r6_priority_view.csv,,4266,"first 176 rows, not in the starter batch"
+221,2,ACTION_REQUIRED,R6_ROW,R6-147,R6-147,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=147,r6_priority_view.csv,,8405,"first 176 rows, not in the starter batch"
+222,2,ACTION_REQUIRED,R6_ROW,R6-149,R6-149,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=149,r6_priority_view.csv,,22782,"first 176 rows, not in the starter batch"
+223,2,ACTION_REQUIRED,R6_ROW,R6-150,R6-150,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=150,r6_priority_view.csv,,12225,"first 176 rows, not in the starter batch"
+224,2,ACTION_REQUIRED,R6_ROW,R6-151,R6-151,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=151,r6_priority_view.csv,,29506,"first 176 rows, not in the starter batch"
+225,2,ACTION_REQUIRED,R6_ROW,R6-152,R6-152,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=152,r6_priority_view.csv,,2236,"first 176 rows, not in the starter batch"
+226,2,ACTION_REQUIRED,R6_ROW,R6-153,R6-153,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=153,r6_priority_view.csv,,9315,"first 176 rows, not in the starter batch"
+227,2,ACTION_REQUIRED,R6_ROW,R6-154,R6-154,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=154,r6_priority_view.csv,,6862,"first 176 rows, not in the starter batch"
+228,2,ACTION_REQUIRED,R6_ROW,R6-155,R6-155,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=155,r6_priority_view.csv,,4635,"first 176 rows, not in the starter batch"
+229,2,ACTION_REQUIRED,R6_ROW,R6-156,R6-156,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=156,r6_priority_view.csv,,5079,"first 176 rows, not in the starter batch"
+230,2,ACTION_REQUIRED,R6_ROW,R6-157,R6-157,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=157,r6_priority_view.csv,,2437,"first 176 rows, not in the starter batch"
+231,2,ACTION_REQUIRED,R6_ROW,R6-158,R6-158,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=158,r6_priority_view.csv,,5091,"first 176 rows, not in the starter batch"
+232,2,ACTION_REQUIRED,R6_ROW,R6-159,R6-159,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=159,r6_priority_view.csv,,5192,"first 176 rows, not in the starter batch"
+233,2,ACTION_REQUIRED,R6_ROW,R6-160,R6-160,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=160,r6_priority_view.csv,,11882,"first 176 rows, not in the starter batch"
+234,2,ACTION_REQUIRED,R6_ROW,R6-161,R6-161,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=161,r6_priority_view.csv,,1409,"first 176 rows, not in the starter batch"
+235,2,ACTION_REQUIRED,R6_ROW,R6-162,R6-162,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=162,r6_priority_view.csv,,4168,"first 176 rows, not in the starter batch"
+236,2,ACTION_REQUIRED,R6_ROW,R6-163,R6-163,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=163,r6_priority_view.csv,,5426,"first 176 rows, not in the starter batch"
+237,2,ACTION_REQUIRED,R6_ROW,R6-164,R6-164,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=164,r6_priority_view.csv,,10815,"first 176 rows, not in the starter batch"
+238,2,ACTION_REQUIRED,R6_ROW,R6-165,R6-165,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=165,r6_priority_view.csv,,1425,"first 176 rows, not in the starter batch"
+239,2,ACTION_REQUIRED,R6_ROW,R6-166,R6-166,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=166,r6_priority_view.csv,,1308,"first 176 rows, not in the starter batch"
+240,2,ACTION_REQUIRED,R6_ROW,R6-167,R6-167,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=167,r6_priority_view.csv,,1256,"first 176 rows, not in the starter batch"
+241,2,ACTION_REQUIRED,R6_ROW,R6-168,R6-168,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=168,r6_priority_view.csv,,2473,"first 176 rows, not in the starter batch"
+242,2,ACTION_REQUIRED,R6_ROW,R6-169,R6-169,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=169,r6_priority_view.csv,,2153,"first 176 rows, not in the starter batch"
+243,2,ACTION_REQUIRED,R6_ROW,R6-170,R6-170,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=170,r6_priority_view.csv,,1772,"first 176 rows, not in the starter batch"
+244,2,ACTION_REQUIRED,R6_ROW,R6-171,R6-171,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=171,r6_priority_view.csv,,1472,"first 176 rows, not in the starter batch"
+245,2,ACTION_REQUIRED,R6_ROW,R6-173,R6-173,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=173,r6_priority_view.csv,,3399,"first 176 rows, not in the starter batch"
+246,2,ACTION_REQUIRED,R6_ROW,R6-174,R6-174,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=174,r6_priority_view.csv,,1568,"first 176 rows, not in the starter batch"
+247,2,ACTION_REQUIRED,R6_ROW,R6-175,R6-175,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=175,r6_priority_view.csv,,2572,"first 176 rows, not in the starter batch"
+248,2,ACTION_REQUIRED,R6_ROW,R6-176,R6-176,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=176,r6_priority_view.csv,,1057,"first 176 rows, not in the starter batch"
+249,2,SUPPORTING_ROW,CREATE_ROW,OD-C05,,OD-A06,create_candidates.csv owner_verdict (written together with OD-A06; no second decision),create_candidates.csv,,22,companion verdict of OD-A06
+250,2,SUPPORTING_ROW,CREATE_ROW,OD-C13,,OD-A07,create_candidates.csv owner_verdict (written together with OD-A07; no second decision),create_candidates.csv,,20,companion verdict of OD-A07
+251,2,SUPPORTING_ROW,CREATE_ROW,OD-C15,,OD-A08,create_candidates.csv owner_verdict (written together with OD-A08; no second decision),create_candidates.csv,,6,companion verdict of OD-A08
+252,2,SUPPORTING_ROW,CREATE_ROW,OD-C16,,OD-A09,create_candidates.csv owner_verdict (written together with OD-A09; no second decision),create_candidates.csv,,6,companion verdict of OD-A09
+253,2,SUPPORTING_ROW,R6_ROW,R6-15,,OD-A02,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=15 (written together with OD-A02; no separate review),r6_priority_view.csv,,1285,pair question of a group decided by OD-A02
+254,2,SUPPORTING_ROW,R6_ROW,R6-73,,OD-A06,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=73 (written together with OD-A06; no separate review),r6_priority_view.csv,,22,pair question of a group decided by OD-A06
+255,2,SUPPORTING_ROW,R6_ROW,R6-148,,OD-C07,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=148 (written together with OD-C07; no separate review),r6_priority_view.csv,,2892,pair question of a group decided by OD-C07
+256,2,SUPPORTING_ROW,R6_ROW,R6-172,,OD-A03,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=172 (written together with OD-A03; no separate review),r6_priority_view.csv,,1091,pair question of a group decided by OD-A03
+257,3,ACTION_REQUIRED,CREATE_ROW,OD-C39,OD-C39,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,237,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+258,3,ACTION_REQUIRED,CREATE_ROW,OD-C40,OD-C40,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,117,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+259,3,ACTION_REQUIRED,CREATE_ROW,OD-C41,OD-C41,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,88,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+260,3,ACTION_REQUIRED,CREATE_ROW,OD-C42,OD-C42,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,82,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+261,3,ACTION_REQUIRED,CREATE_ROW,OD-C45,OD-C45,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,78,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+262,3,ACTION_REQUIRED,CREATE_ROW,OD-C46,OD-C46,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,76,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+263,3,ACTION_REQUIRED,CREATE_ROW,OD-C47,OD-C47,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,71,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+264,3,ACTION_REQUIRED,CREATE_ROW,OD-C48,OD-C48,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,68,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+265,3,ACTION_REQUIRED,CREATE_ROW,OD-C49,OD-C49,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,50,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+266,3,ACTION_REQUIRED,CREATE_ROW,OD-C50,OD-C50,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,50,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+267,3,ACTION_REQUIRED,CREATE_ROW,OD-C51,OD-C51,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,41,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+268,3,ACTION_REQUIRED,CREATE_ROW,OD-C52,OD-C52,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,36,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+269,3,ACTION_REQUIRED,CREATE_ROW,OD-C53,OD-C53,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,35,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+270,3,ACTION_REQUIRED,CREATE_ROW,OD-C54,OD-C54,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,31,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+271,3,ACTION_REQUIRED,CREATE_ROW,OD-C55,OD-C55,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,31,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+272,3,ACTION_REQUIRED,CREATE_ROW,OD-C56,OD-C56,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,29,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+273,3,ACTION_REQUIRED,CREATE_ROW,OD-C57,OD-C57,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,29,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+274,3,ACTION_REQUIRED,CREATE_ROW,OD-C58,OD-C58,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,23,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+275,3,ACTION_REQUIRED,CREATE_ROW,OD-C59,OD-C59,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,22,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+276,3,ACTION_REQUIRED,CREATE_ROW,OD-C60,OD-C60,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,21,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+277,3,ACTION_REQUIRED,CREATE_ROW,OD-C61,OD-C61,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,19,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+278,3,ACTION_REQUIRED,CREATE_ROW,OD-C63,OD-C63,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,14,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+279,3,ACTION_REQUIRED,CREATE_ROW,OD-C65,OD-C65,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,10,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+280,3,ACTION_REQUIRED,CREATE_ROW,OD-C66,OD-C66,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,7,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+281,3,ACTION_REQUIRED,CREATE_ROW,OD-C68,OD-C68,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,4,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+282,3,ACTION_REQUIRED,CREATE_ROW,OD-C69,OD-C69,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,4,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+283,3,ACTION_REQUIRED,CREATE_ROW,OD-C70,OD-C70,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,3,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+284,3,ACTION_REQUIRED,CREATE_ROW,OD-C71,OD-C71,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,3,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+285,3,ACTION_REQUIRED,CREATE_ROW,OD-C72,OD-C72,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+286,3,ACTION_REQUIRED,CREATE_ROW,OD-C73,OD-C73,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+287,3,ACTION_REQUIRED,CREATE_ROW,OD-C76,OD-C76,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,2,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+288,3,ACTION_REQUIRED,CREATE_ROW,OD-C77,OD-C77,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+289,3,ACTION_REQUIRED,CREATE_ROW,OD-C78,OD-C78,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+290,3,ACTION_REQUIRED,CREATE_ROW,OD-C79,OD-C79,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+291,3,ACTION_REQUIRED,CREATE_ROW,OD-C80,OD-C80,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+292,3,ACTION_REQUIRED,CREATE_ROW,OD-C81,OD-C81,,"create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",create_candidates.csv,,1,"P3 bulk: confirm after the spot check, escalate if it finds one wrong"
+293,3,ACTION_REQUIRED,R6_ROW,R6-177,R6-177,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=177,r6_priority_view.csv,,615360,tiers 3-7
+294,3,ACTION_REQUIRED,R6_ROW,R6-178,R6-178,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=178,r6_priority_view.csv,,550946,tiers 3-7
+295,3,ACTION_REQUIRED,R6_ROW,R6-179,R6-179,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=179,r6_priority_view.csv,,30119,tiers 3-7
+296,3,ACTION_REQUIRED,R6_ROW,R6-180,R6-180,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=180,r6_priority_view.csv,,81068,tiers 3-7
+297,3,ACTION_REQUIRED,R6_ROW,R6-181,R6-181,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=181,r6_priority_view.csv,,23988,tiers 3-7
+298,3,ACTION_REQUIRED,R6_ROW,R6-182,R6-182,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=182,r6_priority_view.csv,,1512,tiers 3-7
+299,3,ACTION_REQUIRED,R6_ROW,R6-185,R6-185,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=185,r6_priority_view.csv,,289,tiers 3-7
+300,3,ACTION_REQUIRED,R6_ROW,R6-186,R6-186,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=186,r6_priority_view.csv,,5170,tiers 3-7
+301,3,ACTION_REQUIRED,R6_ROW,R6-187,R6-187,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=187,r6_priority_view.csv,,33,tiers 3-7
+302,3,ACTION_REQUIRED,R6_ROW,R6-191,R6-191,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=191,r6_priority_view.csv,,25,tiers 3-7
+303,3,ACTION_REQUIRED,R6_ROW,R6-193,R6-193,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=193,r6_priority_view.csv,,2,tiers 3-7
+304,3,ACTION_REQUIRED,R6_ROW,R6-194,R6-194,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=194,r6_priority_view.csv,,5,tiers 3-7
+305,3,ACTION_REQUIRED,R6_ROW,R6-195,R6-195,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=195,r6_priority_view.csv,,5,tiers 3-7
+306,3,ACTION_REQUIRED,R6_ROW,R6-196,R6-196,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=196,r6_priority_view.csv,,3,tiers 3-7
+307,3,ACTION_REQUIRED,R6_ROW,R6-197,R6-197,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=197,r6_priority_view.csv,,2,tiers 3-7
+308,3,ACTION_REQUIRED,R6_ROW,R6-198,R6-198,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=198,r6_priority_view.csv,,1,tiers 3-7
+309,3,ACTION_REQUIRED,R6_ROW,R6-199,R6-199,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=199,r6_priority_view.csv,,1,tiers 3-7
+310,3,ACTION_REQUIRED,R6_ROW,R6-200,R6-200,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=200,r6_priority_view.csv,,1,tiers 3-7
+311,3,ACTION_REQUIRED,R6_ROW,R6-201,R6-201,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=201,r6_priority_view.csv,,6,tiers 3-7
+312,3,ACTION_REQUIRED,R6_ROW,R6-202,R6-202,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=202,r6_priority_view.csv,,3,tiers 3-7
+313,3,ACTION_REQUIRED,R6_ROW,R6-203,R6-203,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=203,r6_priority_view.csv,,2,tiers 3-7
+314,3,ACTION_REQUIRED,R6_ROW,R6-204,R6-204,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=204,r6_priority_view.csv,,2,tiers 3-7
+315,3,ACTION_REQUIRED,R6_ROW,R6-205,R6-205,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=205,r6_priority_view.csv,,2,tiers 3-7
+316,3,ACTION_REQUIRED,R6_ROW,R6-206,R6-206,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=206,r6_priority_view.csv,,2,tiers 3-7
+317,3,ACTION_REQUIRED,R6_ROW,R6-207,R6-207,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=207,r6_priority_view.csv,,1,tiers 3-7
+318,3,ACTION_REQUIRED,R6_ROW,R6-208,R6-208,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=208,r6_priority_view.csv,,1,tiers 3-7
+319,3,ACTION_REQUIRED,R6_ROW,R6-209,R6-209,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=209,r6_priority_view.csv,,1,tiers 3-7
+320,3,ACTION_REQUIRED,R6_ROW,R6-210,R6-210,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=210,r6_priority_view.csv,,1,tiers 3-7
+321,3,ACTION_REQUIRED,R6_ROW,R6-211,R6-211,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=211,r6_priority_view.csv,,1,tiers 3-7
+322,3,ACTION_REQUIRED,R6_ROW,R6-212,R6-212,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=212,r6_priority_view.csv,,1,tiers 3-7
+323,3,ACTION_REQUIRED,R6_ROW,R6-213,R6-213,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=213,r6_priority_view.csv,,1,tiers 3-7
+324,3,ACTION_REQUIRED,R6_ROW,R6-214,R6-214,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=214,r6_priority_view.csv,,1,tiers 3-7
+325,3,ACTION_REQUIRED,R6_ROW,R6-215,R6-215,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=215,r6_priority_view.csv,,1,tiers 3-7
+326,3,ACTION_REQUIRED,R6_ROW,R6-216,R6-216,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=216,r6_priority_view.csv,,1,tiers 3-7
+327,3,ACTION_REQUIRED,R6_ROW,R6-218,R6-218,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=218,r6_priority_view.csv,,53534,tiers 3-7
+328,3,ACTION_REQUIRED,R6_ROW,R6-220,R6-220,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=220,r6_priority_view.csv,,9986,tiers 3-7
+329,3,ACTION_REQUIRED,R6_ROW,R6-221,R6-221,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=221,r6_priority_view.csv,,10029,tiers 3-7
+330,3,ACTION_REQUIRED,R6_ROW,R6-222,R6-222,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=222,r6_priority_view.csv,,5660,tiers 3-7
+331,3,ACTION_REQUIRED,R6_ROW,R6-223,R6-223,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=223,r6_priority_view.csv,,10733,tiers 3-7
+332,3,ACTION_REQUIRED,R6_ROW,R6-224,R6-224,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=224,r6_priority_view.csv,,4650,tiers 3-7
+333,3,ACTION_REQUIRED,R6_ROW,R6-225,R6-225,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=225,r6_priority_view.csv,,6443,tiers 3-7
+334,3,ACTION_REQUIRED,R6_ROW,R6-226,R6-226,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=226,r6_priority_view.csv,,3399,tiers 3-7
+335,3,ACTION_REQUIRED,R6_ROW,R6-227,R6-227,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=227,r6_priority_view.csv,,1698,tiers 3-7
+336,3,ACTION_REQUIRED,R6_ROW,R6-228,R6-228,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=228,r6_priority_view.csv,,3628,tiers 3-7
+337,3,ACTION_REQUIRED,R6_ROW,R6-229,R6-229,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=229,r6_priority_view.csv,,3083,tiers 3-7
+338,3,ACTION_REQUIRED,R6_ROW,R6-230,R6-230,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=230,r6_priority_view.csv,,926,tiers 3-7
+339,3,ACTION_REQUIRED,R6_ROW,R6-231,R6-231,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=231,r6_priority_view.csv,,978,tiers 3-7
+340,3,ACTION_REQUIRED,R6_ROW,R6-232,R6-232,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=232,r6_priority_view.csv,,1946,tiers 3-7
+341,3,ACTION_REQUIRED,R6_ROW,R6-233,R6-233,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=233,r6_priority_view.csv,,3659,tiers 3-7
+342,3,ACTION_REQUIRED,R6_ROW,R6-234,R6-234,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=234,r6_priority_view.csv,,1288,tiers 3-7
+343,3,ACTION_REQUIRED,R6_ROW,R6-235,R6-235,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=235,r6_priority_view.csv,,896,tiers 3-7
+344,3,ACTION_REQUIRED,R6_ROW,R6-236,R6-236,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=236,r6_priority_view.csv,,946,tiers 3-7
+345,3,ACTION_REQUIRED,R6_ROW,R6-237,R6-237,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=237,r6_priority_view.csv,,3685,tiers 3-7
+346,3,ACTION_REQUIRED,R6_ROW,R6-238,R6-238,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=238,r6_priority_view.csv,,766,tiers 3-7
+347,3,ACTION_REQUIRED,R6_ROW,R6-239,R6-239,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=239,r6_priority_view.csv,,741,tiers 3-7
+348,3,ACTION_REQUIRED,R6_ROW,R6-240,R6-240,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=240,r6_priority_view.csv,,2513,tiers 3-7
+349,3,ACTION_REQUIRED,R6_ROW,R6-241,R6-241,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=241,r6_priority_view.csv,,675,tiers 3-7
+350,3,ACTION_REQUIRED,R6_ROW,R6-242,R6-242,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=242,r6_priority_view.csv,,580,tiers 3-7
+351,3,ACTION_REQUIRED,R6_ROW,R6-243,R6-243,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=243,r6_priority_view.csv,,645,tiers 3-7
+352,3,ACTION_REQUIRED,R6_ROW,R6-244,R6-244,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=244,r6_priority_view.csv,,564,tiers 3-7
+353,3,ACTION_REQUIRED,R6_ROW,R6-245,R6-245,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=245,r6_priority_view.csv,,2432,tiers 3-7
+354,3,ACTION_REQUIRED,R6_ROW,R6-246,R6-246,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=246,r6_priority_view.csv,,974,tiers 3-7
+355,3,ACTION_REQUIRED,R6_ROW,R6-247,R6-247,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=247,r6_priority_view.csv,,790,tiers 3-7
+356,3,ACTION_REQUIRED,R6_ROW,R6-248,R6-248,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=248,r6_priority_view.csv,,1233,tiers 3-7
+357,3,ACTION_REQUIRED,R6_ROW,R6-249,R6-249,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=249,r6_priority_view.csv,,4823,tiers 3-7
+358,3,ACTION_REQUIRED,R6_ROW,R6-250,R6-250,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=250,r6_priority_view.csv,,604,tiers 3-7
+359,3,ACTION_REQUIRED,R6_ROW,R6-251,R6-251,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=251,r6_priority_view.csv,,1162,tiers 3-7
+360,3,ACTION_REQUIRED,R6_ROW,R6-252,R6-252,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=252,r6_priority_view.csv,,415,tiers 3-7
+361,3,ACTION_REQUIRED,R6_ROW,R6-253,R6-253,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=253,r6_priority_view.csv,,521,tiers 3-7
+362,3,ACTION_REQUIRED,R6_ROW,R6-254,R6-254,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=254,r6_priority_view.csv,,1423,tiers 3-7
+363,3,ACTION_REQUIRED,R6_ROW,R6-255,R6-255,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=255,r6_priority_view.csv,,1067,tiers 3-7
+364,3,ACTION_REQUIRED,R6_ROW,R6-256,R6-256,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=256,r6_priority_view.csv,,350,tiers 3-7
+365,3,ACTION_REQUIRED,R6_ROW,R6-257,R6-257,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=257,r6_priority_view.csv,,1245,tiers 3-7
+366,3,ACTION_REQUIRED,R6_ROW,R6-258,R6-258,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=258,r6_priority_view.csv,,893,tiers 3-7
+367,3,ACTION_REQUIRED,R6_ROW,R6-259,R6-259,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=259,r6_priority_view.csv,,1191,tiers 3-7
+368,3,ACTION_REQUIRED,R6_ROW,R6-260,R6-260,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=260,r6_priority_view.csv,,333,tiers 3-7
+369,3,ACTION_REQUIRED,R6_ROW,R6-262,R6-262,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=262,r6_priority_view.csv,,690,tiers 3-7
+370,3,ACTION_REQUIRED,R6_ROW,R6-263,R6-263,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=263,r6_priority_view.csv,,631,tiers 3-7
+371,3,ACTION_REQUIRED,R6_ROW,R6-264,R6-264,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=264,r6_priority_view.csv,,272,tiers 3-7
+372,3,ACTION_REQUIRED,R6_ROW,R6-265,R6-265,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=265,r6_priority_view.csv,,581,tiers 3-7
+373,3,ACTION_REQUIRED,R6_ROW,R6-266,R6-266,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=266,r6_priority_view.csv,,292,tiers 3-7
+374,3,ACTION_REQUIRED,R6_ROW,R6-267,R6-267,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=267,r6_priority_view.csv,,529,tiers 3-7
+375,3,ACTION_REQUIRED,R6_ROW,R6-269,R6-269,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=269,r6_priority_view.csv,,385,tiers 3-7
+376,3,ACTION_REQUIRED,R6_ROW,R6-270,R6-270,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=270,r6_priority_view.csv,,232,tiers 3-7
+377,3,ACTION_REQUIRED,R6_ROW,R6-271,R6-271,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=271,r6_priority_view.csv,,209,tiers 3-7
+378,3,ACTION_REQUIRED,R6_ROW,R6-272,R6-272,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=272,r6_priority_view.csv,,477,tiers 3-7
+379,3,ACTION_REQUIRED,R6_ROW,R6-273,R6-273,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=273,r6_priority_view.csv,,350,tiers 3-7
+380,3,ACTION_REQUIRED,R6_ROW,R6-274,R6-274,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=274,r6_priority_view.csv,,327,tiers 3-7
+381,3,ACTION_REQUIRED,R6_ROW,R6-275,R6-275,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=275,r6_priority_view.csv,,409,tiers 3-7
+382,3,ACTION_REQUIRED,R6_ROW,R6-277,R6-277,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=277,r6_priority_view.csv,,517,tiers 3-7
+383,3,ACTION_REQUIRED,R6_ROW,R6-278,R6-278,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=278,r6_priority_view.csv,,549,tiers 3-7
+384,3,ACTION_REQUIRED,R6_ROW,R6-279,R6-279,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=279,r6_priority_view.csv,,369,tiers 3-7
+385,3,ACTION_REQUIRED,R6_ROW,R6-280,R6-280,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=280,r6_priority_view.csv,,429,tiers 3-7
+386,3,ACTION_REQUIRED,R6_ROW,R6-282,R6-282,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=282,r6_priority_view.csv,,266,tiers 3-7
+387,3,ACTION_REQUIRED,R6_ROW,R6-283,R6-283,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=283,r6_priority_view.csv,,562,tiers 3-7
+388,3,ACTION_REQUIRED,R6_ROW,R6-285,R6-285,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=285,r6_priority_view.csv,,97,tiers 3-7
+389,3,ACTION_REQUIRED,R6_ROW,R6-286,R6-286,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=286,r6_priority_view.csv,,280,tiers 3-7
+390,3,ACTION_REQUIRED,R6_ROW,R6-287,R6-287,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=287,r6_priority_view.csv,,88,tiers 3-7
+391,3,ACTION_REQUIRED,R6_ROW,R6-288,R6-288,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=288,r6_priority_view.csv,,184,tiers 3-7
+392,3,ACTION_REQUIRED,R6_ROW,R6-289,R6-289,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=289,r6_priority_view.csv,,184,tiers 3-7
+393,3,ACTION_REQUIRED,R6_ROW,R6-291,R6-291,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=291,r6_priority_view.csv,,194,tiers 3-7
+394,3,ACTION_REQUIRED,R6_ROW,R6-292,R6-292,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=292,r6_priority_view.csv,,366,tiers 3-7
+395,3,ACTION_REQUIRED,R6_ROW,R6-293,R6-293,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=293,r6_priority_view.csv,,508,tiers 3-7
+396,3,ACTION_REQUIRED,R6_ROW,R6-294,R6-294,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=294,r6_priority_view.csv,,261,tiers 3-7
+397,3,ACTION_REQUIRED,R6_ROW,R6-295,R6-295,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=295,r6_priority_view.csv,,68,tiers 3-7
+398,3,ACTION_REQUIRED,R6_ROW,R6-296,R6-296,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=296,r6_priority_view.csv,,64,tiers 3-7
+399,3,ACTION_REQUIRED,R6_ROW,R6-297,R6-297,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=297,r6_priority_view.csv,,175,tiers 3-7
+400,3,ACTION_REQUIRED,R6_ROW,R6-299,R6-299,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=299,r6_priority_view.csv,,182,tiers 3-7
+401,3,ACTION_REQUIRED,R6_ROW,R6-300,R6-300,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=300,r6_priority_view.csv,,61,tiers 3-7
+402,3,ACTION_REQUIRED,R6_ROW,R6-302,R6-302,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=302,r6_priority_view.csv,,295,tiers 3-7
+403,3,ACTION_REQUIRED,R6_ROW,R6-303,R6-303,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=303,r6_priority_view.csv,,97,tiers 3-7
+404,3,ACTION_REQUIRED,R6_ROW,R6-304,R6-304,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=304,r6_priority_view.csv,,332,tiers 3-7
+405,3,ACTION_REQUIRED,R6_ROW,R6-305,R6-305,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=305,r6_priority_view.csv,,550,tiers 3-7
+406,3,ACTION_REQUIRED,R6_ROW,R6-306,R6-306,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=306,r6_priority_view.csv,,151,tiers 3-7
+407,3,ACTION_REQUIRED,R6_ROW,R6-309,R6-309,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=309,r6_priority_view.csv,,37,tiers 3-7
+408,3,ACTION_REQUIRED,R6_ROW,R6-310,R6-310,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=310,r6_priority_view.csv,,85,tiers 3-7
+409,3,ACTION_REQUIRED,R6_ROW,R6-312,R6-312,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=312,r6_priority_view.csv,,152,tiers 3-7
+410,3,ACTION_REQUIRED,R6_ROW,R6-313,R6-313,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=313,r6_priority_view.csv,,29,tiers 3-7
+411,3,ACTION_REQUIRED,R6_ROW,R6-314,R6-314,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=314,r6_priority_view.csv,,45,tiers 3-7
+412,3,ACTION_REQUIRED,R6_ROW,R6-315,R6-315,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=315,r6_priority_view.csv,,183,tiers 3-7
+413,3,ACTION_REQUIRED,R6_ROW,R6-316,R6-316,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=316,r6_priority_view.csv,,183,tiers 3-7
+414,3,ACTION_REQUIRED,R6_ROW,R6-317,R6-317,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=317,r6_priority_view.csv,,81,tiers 3-7
+415,3,ACTION_REQUIRED,R6_ROW,R6-318,R6-318,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=318,r6_priority_view.csv,,94,tiers 3-7
+416,3,ACTION_REQUIRED,R6_ROW,R6-319,R6-319,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=319,r6_priority_view.csv,,27,tiers 3-7
+417,3,ACTION_REQUIRED,R6_ROW,R6-320,R6-320,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=320,r6_priority_view.csv,,103,tiers 3-7
+418,3,ACTION_REQUIRED,R6_ROW,R6-321,R6-321,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=321,r6_priority_view.csv,,59,tiers 3-7
+419,3,ACTION_REQUIRED,R6_ROW,R6-322,R6-322,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=322,r6_priority_view.csv,,149,tiers 3-7
+420,3,ACTION_REQUIRED,R6_ROW,R6-323,R6-323,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=323,r6_priority_view.csv,,114,tiers 3-7
+421,3,ACTION_REQUIRED,R6_ROW,R6-326,R6-326,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=326,r6_priority_view.csv,,81,tiers 3-7
+422,3,ACTION_REQUIRED,R6_ROW,R6-331,R6-331,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=331,r6_priority_view.csv,,107,tiers 3-7
+423,3,ACTION_REQUIRED,R6_ROW,R6-332,R6-332,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=332,r6_priority_view.csv,,15,tiers 3-7
+424,3,ACTION_REQUIRED,R6_ROW,R6-333,R6-333,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=333,r6_priority_view.csv,,499,tiers 3-7
+425,3,ACTION_REQUIRED,R6_ROW,R6-334,R6-334,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=334,r6_priority_view.csv,,499,tiers 3-7
+426,3,ACTION_REQUIRED,R6_ROW,R6-335,R6-335,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=335,r6_priority_view.csv,,13,tiers 3-7
+427,3,ACTION_REQUIRED,R6_ROW,R6-336,R6-336,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=336,r6_priority_view.csv,,73,tiers 3-7
+428,3,ACTION_REQUIRED,R6_ROW,R6-337,R6-337,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=337,r6_priority_view.csv,,374,tiers 3-7
+429,3,ACTION_REQUIRED,R6_ROW,R6-339,R6-339,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=339,r6_priority_view.csv,,34,tiers 3-7
+430,3,ACTION_REQUIRED,R6_ROW,R6-341,R6-341,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=341,r6_priority_view.csv,,22,tiers 3-7
+431,3,ACTION_REQUIRED,R6_ROW,R6-342,R6-342,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=342,r6_priority_view.csv,,13,tiers 3-7
+432,3,ACTION_REQUIRED,R6_ROW,R6-343,R6-343,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=343,r6_priority_view.csv,,10,tiers 3-7
+433,3,ACTION_REQUIRED,R6_ROW,R6-344,R6-344,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=344,r6_priority_view.csv,,44,tiers 3-7
+434,3,ACTION_REQUIRED,R6_ROW,R6-345,R6-345,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=345,r6_priority_view.csv,,7,tiers 3-7
+435,3,ACTION_REQUIRED,R6_ROW,R6-346,R6-346,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=346,r6_priority_view.csv,,7,tiers 3-7
+436,3,ACTION_REQUIRED,R6_ROW,R6-347,R6-347,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=347,r6_priority_view.csv,,6,tiers 3-7
+437,3,ACTION_REQUIRED,R6_ROW,R6-349,R6-349,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=349,r6_priority_view.csv,,171,tiers 3-7
+438,3,ACTION_REQUIRED,R6_ROW,R6-352,R6-352,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=352,r6_priority_view.csv,,16,tiers 3-7
+439,3,ACTION_REQUIRED,R6_ROW,R6-353,R6-353,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=353,r6_priority_view.csv,,3,tiers 3-7
+440,3,ACTION_REQUIRED,R6_ROW,R6-354,R6-354,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=354,r6_priority_view.csv,,3,tiers 3-7
+441,3,ACTION_REQUIRED,R6_ROW,R6-356,R6-356,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=356,r6_priority_view.csv,,16,tiers 3-7
+442,3,ACTION_REQUIRED,R6_ROW,R6-357,R6-357,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=357,r6_priority_view.csv,,9,tiers 3-7
+443,3,ACTION_REQUIRED,R6_ROW,R6-358,R6-358,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=358,r6_priority_view.csv,,5,tiers 3-7
+444,3,ACTION_REQUIRED,R6_ROW,R6-359,R6-359,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=359,r6_priority_view.csv,,4,tiers 3-7
+445,3,ACTION_REQUIRED,R6_ROW,R6-360,R6-360,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=360,r6_priority_view.csv,,3,tiers 3-7
+446,3,ACTION_REQUIRED,R6_ROW,R6-361,R6-361,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=361,r6_priority_view.csv,,2,tiers 3-7
+447,3,ACTION_REQUIRED,R6_ROW,R6-362,R6-362,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=362,r6_priority_view.csv,,2,tiers 3-7
+448,3,ACTION_REQUIRED,R6_ROW,R6-365,R6-365,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=365,r6_priority_view.csv,,33,tiers 3-7
+449,3,ACTION_REQUIRED,R6_ROW,R6-367,R6-367,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=367,r6_priority_view.csv,,12,tiers 3-7
+450,3,ACTION_REQUIRED,R6_ROW,R6-368,R6-368,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=368,r6_priority_view.csv,,7,tiers 3-7
+451,3,ACTION_REQUIRED,R6_ROW,R6-369,R6-369,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=369,r6_priority_view.csv,,6,tiers 3-7
+452,3,ACTION_REQUIRED,R6_ROW,R6-371,R6-371,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=371,r6_priority_view.csv,,4,tiers 3-7
+453,3,ACTION_REQUIRED,R6_ROW,R6-372,R6-372,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=372,r6_priority_view.csv,,4,tiers 3-7
+454,3,ACTION_REQUIRED,R6_ROW,R6-373,R6-373,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=373,r6_priority_view.csv,,4,tiers 3-7
+455,3,ACTION_REQUIRED,R6_ROW,R6-376,R6-376,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=376,r6_priority_view.csv,,2,tiers 3-7
+456,3,ACTION_REQUIRED,R6_ROW,R6-377,R6-377,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=377,r6_priority_view.csv,,2,tiers 3-7
+457,3,ACTION_REQUIRED,R6_ROW,R6-378,R6-378,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=378,r6_priority_view.csv,,2,tiers 3-7
+458,3,ACTION_REQUIRED,R6_ROW,R6-379,R6-379,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=379,r6_priority_view.csv,,2,tiers 3-7
+459,3,ACTION_REQUIRED,R6_ROW,R6-381,R6-381,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=381,r6_priority_view.csv,,1,tiers 3-7
+460,3,ACTION_REQUIRED,R6_ROW,R6-382,R6-382,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=382,r6_priority_view.csv,,1,tiers 3-7
+461,3,ACTION_REQUIRED,R6_ROW,R6-383,R6-383,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=383,r6_priority_view.csv,,1,tiers 3-7
+462,3,ACTION_REQUIRED,R6_ROW,R6-384,R6-384,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=384,r6_priority_view.csv,,1,tiers 3-7
+463,3,ACTION_REQUIRED,R6_ROW,R6-385,R6-385,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=385,r6_priority_view.csv,,1,tiers 3-7
+464,3,ACTION_REQUIRED,R6_ROW,R6-386,R6-386,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=386,r6_priority_view.csv,,1,tiers 3-7
+465,3,ACTION_REQUIRED,R6_ROW,R6-387,R6-387,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=387,r6_priority_view.csv,,1,tiers 3-7
+466,3,ACTION_REQUIRED,R6_ROW,R6-388,R6-388,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=388,r6_priority_view.csv,,1,tiers 3-7
+467,3,ACTION_REQUIRED,R6_ROW,R6-389,R6-389,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=389,r6_priority_view.csv,,1,tiers 3-7
+468,3,ACTION_REQUIRED,R6_ROW,R6-390,R6-390,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=390,r6_priority_view.csv,,1,tiers 3-7
+469,3,ACTION_REQUIRED,R6_ROW,R6-391,R6-391,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=391,r6_priority_view.csv,,1,tiers 3-7
+470,3,ACTION_REQUIRED,R6_ROW,R6-392,R6-392,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=392,r6_priority_view.csv,,1,tiers 3-7
+471,3,ACTION_REQUIRED,R6_ROW,R6-393,R6-393,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=393,r6_priority_view.csv,,1,tiers 3-7
+472,3,ACTION_REQUIRED,R6_ROW,R6-394,R6-394,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=394,r6_priority_view.csv,,1,tiers 3-7
+473,3,ACTION_REQUIRED,R6_ROW,R6-395,R6-395,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=395,r6_priority_view.csv,,1,tiers 3-7
+474,3,ACTION_REQUIRED,R6_ROW,R6-399,R6-399,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=399,r6_priority_view.csv,,37,tiers 3-7
+475,3,ACTION_REQUIRED,R6_ROW,R6-400,R6-400,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=400,r6_priority_view.csv,,28,tiers 3-7
+476,3,ACTION_REQUIRED,R6_ROW,R6-401,R6-401,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=401,r6_priority_view.csv,,19,tiers 3-7
+477,3,ACTION_REQUIRED,R6_ROW,R6-402,R6-402,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=402,r6_priority_view.csv,,18,tiers 3-7
+478,3,ACTION_REQUIRED,R6_ROW,R6-404,R6-404,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=404,r6_priority_view.csv,,12,tiers 3-7
+479,3,ACTION_REQUIRED,R6_ROW,R6-405,R6-405,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=405,r6_priority_view.csv,,11,tiers 3-7
+480,3,ACTION_REQUIRED,R6_ROW,R6-406,R6-406,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=406,r6_priority_view.csv,,7,tiers 3-7
+481,3,ACTION_REQUIRED,R6_ROW,R6-407,R6-407,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=407,r6_priority_view.csv,,7,tiers 3-7
+482,3,ACTION_REQUIRED,R6_ROW,R6-408,R6-408,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=408,r6_priority_view.csv,,6,tiers 3-7
+483,3,ACTION_REQUIRED,R6_ROW,R6-409,R6-409,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=409,r6_priority_view.csv,,5,tiers 3-7
+484,3,ACTION_REQUIRED,R6_ROW,R6-410,R6-410,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=410,r6_priority_view.csv,,5,tiers 3-7
+485,3,ACTION_REQUIRED,R6_ROW,R6-411,R6-411,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=411,r6_priority_view.csv,,4,tiers 3-7
+486,3,ACTION_REQUIRED,R6_ROW,R6-412,R6-412,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=412,r6_priority_view.csv,,4,tiers 3-7
+487,3,ACTION_REQUIRED,R6_ROW,R6-413,R6-413,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=413,r6_priority_view.csv,,3,tiers 3-7
+488,3,ACTION_REQUIRED,R6_ROW,R6-414,R6-414,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=414,r6_priority_view.csv,,3,tiers 3-7
+489,3,ACTION_REQUIRED,R6_ROW,R6-415,R6-415,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=415,r6_priority_view.csv,,3,tiers 3-7
+490,3,ACTION_REQUIRED,R6_ROW,R6-416,R6-416,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=416,r6_priority_view.csv,,3,tiers 3-7
+491,3,ACTION_REQUIRED,R6_ROW,R6-417,R6-417,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=417,r6_priority_view.csv,,3,tiers 3-7
+492,3,ACTION_REQUIRED,R6_ROW,R6-418,R6-418,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=418,r6_priority_view.csv,,3,tiers 3-7
+493,3,ACTION_REQUIRED,R6_ROW,R6-419,R6-419,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=419,r6_priority_view.csv,,3,tiers 3-7
+494,3,ACTION_REQUIRED,R6_ROW,R6-421,R6-421,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=421,r6_priority_view.csv,,3,tiers 3-7
+495,3,ACTION_REQUIRED,R6_ROW,R6-422,R6-422,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=422,r6_priority_view.csv,,2,tiers 3-7
+496,3,ACTION_REQUIRED,R6_ROW,R6-423,R6-423,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=423,r6_priority_view.csv,,2,tiers 3-7
+497,3,ACTION_REQUIRED,R6_ROW,R6-424,R6-424,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=424,r6_priority_view.csv,,2,tiers 3-7
+498,3,ACTION_REQUIRED,R6_ROW,R6-425,R6-425,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=425,r6_priority_view.csv,,2,tiers 3-7
+499,3,ACTION_REQUIRED,R6_ROW,R6-426,R6-426,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=426,r6_priority_view.csv,,2,tiers 3-7
+500,3,ACTION_REQUIRED,R6_ROW,R6-427,R6-427,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=427,r6_priority_view.csv,,2,tiers 3-7
+501,3,ACTION_REQUIRED,R6_ROW,R6-428,R6-428,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=428,r6_priority_view.csv,,2,tiers 3-7
+502,3,ACTION_REQUIRED,R6_ROW,R6-429,R6-429,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=429,r6_priority_view.csv,,2,tiers 3-7
+503,3,ACTION_REQUIRED,R6_ROW,R6-430,R6-430,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=430,r6_priority_view.csv,,2,tiers 3-7
+504,3,ACTION_REQUIRED,R6_ROW,R6-431,R6-431,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=431,r6_priority_view.csv,,2,tiers 3-7
+505,3,ACTION_REQUIRED,R6_ROW,R6-432,R6-432,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=432,r6_priority_view.csv,,2,tiers 3-7
+506,3,ACTION_REQUIRED,R6_ROW,R6-433,R6-433,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=433,r6_priority_view.csv,,2,tiers 3-7
+507,3,ACTION_REQUIRED,R6_ROW,R6-434,R6-434,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=434,r6_priority_view.csv,,2,tiers 3-7
+508,3,ACTION_REQUIRED,R6_ROW,R6-435,R6-435,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=435,r6_priority_view.csv,,2,tiers 3-7
+509,3,ACTION_REQUIRED,R6_ROW,R6-436,R6-436,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=436,r6_priority_view.csv,,2,tiers 3-7
+510,3,ACTION_REQUIRED,R6_ROW,R6-437,R6-437,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=437,r6_priority_view.csv,,2,tiers 3-7
+511,3,ACTION_REQUIRED,R6_ROW,R6-438,R6-438,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=438,r6_priority_view.csv,,2,tiers 3-7
+512,3,ACTION_REQUIRED,R6_ROW,R6-439,R6-439,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=439,r6_priority_view.csv,,1,tiers 3-7
+513,3,ACTION_REQUIRED,R6_ROW,R6-440,R6-440,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=440,r6_priority_view.csv,,1,tiers 3-7
+514,3,ACTION_REQUIRED,R6_ROW,R6-441,R6-441,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=441,r6_priority_view.csv,,1,tiers 3-7
+515,3,ACTION_REQUIRED,R6_ROW,R6-442,R6-442,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=442,r6_priority_view.csv,,1,tiers 3-7
+516,3,ACTION_REQUIRED,R6_ROW,R6-443,R6-443,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=443,r6_priority_view.csv,,1,tiers 3-7
+517,3,ACTION_REQUIRED,R6_ROW,R6-444,R6-444,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=444,r6_priority_view.csv,,1,tiers 3-7
+518,3,ACTION_REQUIRED,R6_ROW,R6-445,R6-445,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=445,r6_priority_view.csv,,1,tiers 3-7
+519,3,ACTION_REQUIRED,R6_ROW,R6-446,R6-446,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=446,r6_priority_view.csv,,1,tiers 3-7
+520,3,ACTION_REQUIRED,R6_ROW,R6-447,R6-447,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=447,r6_priority_view.csv,,1,tiers 3-7
+521,3,ACTION_REQUIRED,R6_ROW,R6-448,R6-448,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=448,r6_priority_view.csv,,1,tiers 3-7
+522,3,ACTION_REQUIRED,R6_ROW,R6-449,R6-449,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=449,r6_priority_view.csv,,1,tiers 3-7
+523,3,ACTION_REQUIRED,R6_ROW,R6-450,R6-450,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=450,r6_priority_view.csv,,1,tiers 3-7
+524,3,ACTION_REQUIRED,R6_ROW,R6-451,R6-451,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=451,r6_priority_view.csv,,1,tiers 3-7
+525,3,ACTION_REQUIRED,R6_ROW,R6-452,R6-452,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=452,r6_priority_view.csv,,1,tiers 3-7
+526,3,ACTION_REQUIRED,R6_ROW,R6-453,R6-453,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=453,r6_priority_view.csv,,1,tiers 3-7
+527,3,ACTION_REQUIRED,R6_ROW,R6-454,R6-454,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=454,r6_priority_view.csv,,1,tiers 3-7
+528,3,ACTION_REQUIRED,R6_ROW,R6-455,R6-455,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=455,r6_priority_view.csv,,1,tiers 3-7
+529,3,ACTION_REQUIRED,R6_ROW,R6-456,R6-456,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=456,r6_priority_view.csv,,1,tiers 3-7
+530,3,ACTION_REQUIRED,R6_ROW,R6-457,R6-457,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=457,r6_priority_view.csv,,1,tiers 3-7
+531,3,ACTION_REQUIRED,R6_ROW,R6-458,R6-458,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=458,r6_priority_view.csv,,1,tiers 3-7
+532,3,ACTION_REQUIRED,R6_ROW,R6-459,R6-459,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=459,r6_priority_view.csv,,1,tiers 3-7
+533,3,ACTION_REQUIRED,R6_ROW,R6-460,R6-460,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=460,r6_priority_view.csv,,1,tiers 3-7
+534,3,ACTION_REQUIRED,R6_ROW,R6-461,R6-461,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=461,r6_priority_view.csv,,1,tiers 3-7
+535,3,ACTION_REQUIRED,R6_ROW,R6-462,R6-462,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=462,r6_priority_view.csv,,1,tiers 3-7
+536,3,ACTION_REQUIRED,R6_ROW,R6-463,R6-463,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=463,r6_priority_view.csv,,1,tiers 3-7
+537,3,ACTION_REQUIRED,R6_ROW,R6-464,R6-464,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=464,r6_priority_view.csv,,1,tiers 3-7
+538,3,ACTION_REQUIRED,R6_ROW,R6-465,R6-465,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=465,r6_priority_view.csv,,1,tiers 3-7
+539,3,ACTION_REQUIRED,R6_ROW,R6-466,R6-466,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=466,r6_priority_view.csv,,1,tiers 3-7
+540,3,ACTION_REQUIRED,R6_ROW,R6-467,R6-467,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=467,r6_priority_view.csv,,1,tiers 3-7
+541,3,ACTION_REQUIRED,R6_ROW,R6-468,R6-468,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=468,r6_priority_view.csv,,1,tiers 3-7
+542,3,ACTION_REQUIRED,R6_ROW,R6-469,R6-469,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=469,r6_priority_view.csv,,1,tiers 3-7
+543,3,ACTION_REQUIRED,R6_ROW,R6-470,R6-470,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=470,r6_priority_view.csv,,1,tiers 3-7
+544,3,ACTION_REQUIRED,R6_ROW,R6-471,R6-471,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=471,r6_priority_view.csv,,1,tiers 3-7
+545,3,ACTION_REQUIRED,R6_ROW,R6-472,R6-472,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=472,r6_priority_view.csv,,1,tiers 3-7
+546,3,ACTION_REQUIRED,R6_ROW,R6-473,R6-473,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=473,r6_priority_view.csv,,1,tiers 3-7
+547,3,ACTION_REQUIRED,R6_ROW,R6-474,R6-474,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=474,r6_priority_view.csv,,1,tiers 3-7
+548,3,ACTION_REQUIRED,R6_ROW,R6-475,R6-475,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=475,r6_priority_view.csv,,1,tiers 3-7
+549,3,ACTION_REQUIRED,R6_ROW,R6-476,R6-476,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=476,r6_priority_view.csv,,1,tiers 3-7
+550,3,ACTION_REQUIRED,R6_ROW,R6-477,R6-477,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=477,r6_priority_view.csv,,1,tiers 3-7
+551,3,ACTION_REQUIRED,R6_ROW,R6-478,R6-478,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=478,r6_priority_view.csv,,1,tiers 3-7
+552,3,ACTION_REQUIRED,R6_ROW,R6-479,R6-479,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=479,r6_priority_view.csv,,1,tiers 3-7
+553,3,ACTION_REQUIRED,R6_ROW,R6-480,R6-480,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=480,r6_priority_view.csv,,1,tiers 3-7
+554,3,ACTION_REQUIRED,R6_ROW,R6-481,R6-481,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=481,r6_priority_view.csv,,1,tiers 3-7
+555,3,ACTION_REQUIRED,R6_ROW,R6-482,R6-482,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=482,r6_priority_view.csv,,1,tiers 3-7
+556,3,ACTION_REQUIRED,R6_ROW,R6-483,R6-483,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=483,r6_priority_view.csv,,1,tiers 3-7
+557,3,ACTION_REQUIRED,R6_ROW,R6-484,R6-484,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=484,r6_priority_view.csv,,1,tiers 3-7
+558,3,ACTION_REQUIRED,R6_ROW,R6-485,R6-485,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=485,r6_priority_view.csv,,1,tiers 3-7
+559,3,ACTION_REQUIRED,R6_ROW,R6-486,R6-486,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=486,r6_priority_view.csv,,1,tiers 3-7
+560,3,ACTION_REQUIRED,R6_ROW,R6-487,R6-487,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=487,r6_priority_view.csv,,1,tiers 3-7
+561,3,ACTION_REQUIRED,R6_ROW,R6-488,R6-488,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=488,r6_priority_view.csv,,1,tiers 3-7
+562,3,ACTION_REQUIRED,R6_ROW,R6-489,R6-489,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=489,r6_priority_view.csv,,1,tiers 3-7
+563,3,ACTION_REQUIRED,R6_ROW,R6-490,R6-490,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=490,r6_priority_view.csv,,1,tiers 3-7
+564,3,ACTION_REQUIRED,R6_ROW,R6-491,R6-491,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=491,r6_priority_view.csv,,1,tiers 3-7
+565,3,ACTION_REQUIRED,R6_ROW,R6-492,R6-492,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=492,r6_priority_view.csv,,1,tiers 3-7
+566,3,ACTION_REQUIRED,R6_ROW,R6-493,R6-493,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=493,r6_priority_view.csv,,1,tiers 3-7
+567,3,ACTION_REQUIRED,R6_ROW,R6-494,R6-494,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=494,r6_priority_view.csv,,1,tiers 3-7
+568,3,ACTION_REQUIRED,R6_ROW,R6-495,R6-495,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=495,r6_priority_view.csv,,1,tiers 3-7
+569,3,ACTION_REQUIRED,R6_ROW,R6-496,R6-496,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=496,r6_priority_view.csv,,1,tiers 3-7
+570,3,ACTION_REQUIRED,R6_ROW,R6-497,R6-497,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=497,r6_priority_view.csv,,1,tiers 3-7
+571,3,ACTION_REQUIRED,R6_ROW,R6-498,R6-498,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=498,r6_priority_view.csv,,1,tiers 3-7
+572,3,ACTION_REQUIRED,R6_ROW,R6-499,R6-499,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=499,r6_priority_view.csv,,1,tiers 3-7
+573,3,ACTION_REQUIRED,R6_ROW,R6-501,R6-501,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=501,r6_priority_view.csv,,1,tiers 3-7
+574,3,ACTION_REQUIRED,R6_ROW,R6-502,R6-502,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=502,r6_priority_view.csv,,1,tiers 3-7
+575,3,ACTION_REQUIRED,R6_ROW,R6-503,R6-503,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=503,r6_priority_view.csv,,1,tiers 3-7
+576,3,ACTION_REQUIRED,R6_ROW,R6-504,R6-504,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=504,r6_priority_view.csv,,1,tiers 3-7
+577,3,ACTION_REQUIRED,R6_ROW,R6-505,R6-505,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=505,r6_priority_view.csv,,1,tiers 3-7
+578,3,ACTION_REQUIRED,R6_ROW,R6-506,R6-506,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=506,r6_priority_view.csv,,1,tiers 3-7
+579,3,ACTION_REQUIRED,R6_ROW,R6-507,R6-507,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=507,r6_priority_view.csv,,1,tiers 3-7
+580,3,ACTION_REQUIRED,R6_ROW,R6-517,R6-517,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=517,r6_priority_view.csv,,12508,tiers 3-7
+581,3,ACTION_REQUIRED,R6_ROW,R6-518,R6-518,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=518,r6_priority_view.csv,,5524,tiers 3-7
+582,3,ACTION_REQUIRED,R6_ROW,R6-519,R6-519,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=519,r6_priority_view.csv,,2549,tiers 3-7
+583,3,ACTION_REQUIRED,R6_ROW,R6-520,R6-520,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=520,r6_priority_view.csv,,4473,tiers 3-7
+584,3,ACTION_REQUIRED,R6_ROW,R6-521,R6-521,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=521,r6_priority_view.csv,,2634,tiers 3-7
+585,3,ACTION_REQUIRED,R6_ROW,R6-522,R6-522,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=522,r6_priority_view.csv,,361,tiers 3-7
+586,3,ACTION_REQUIRED,R6_ROW,R6-523,R6-523,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=523,r6_priority_view.csv,,1044,tiers 3-7
+587,3,ACTION_REQUIRED,R6_ROW,R6-524,R6-524,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=524,r6_priority_view.csv,,349,tiers 3-7
+588,3,ACTION_REQUIRED,R6_ROW,R6-525,R6-525,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=525,r6_priority_view.csv,,1177,tiers 3-7
+589,3,ACTION_REQUIRED,R6_ROW,R6-526,R6-526,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=526,r6_priority_view.csv,,851,tiers 3-7
+590,3,ACTION_REQUIRED,R6_ROW,R6-527,R6-527,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=527,r6_priority_view.csv,,851,tiers 3-7
+591,3,ACTION_REQUIRED,R6_ROW,R6-528,R6-528,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=528,r6_priority_view.csv,,514,tiers 3-7
+592,3,ACTION_REQUIRED,R6_ROW,R6-529,R6-529,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=529,r6_priority_view.csv,,802,tiers 3-7
+593,3,ACTION_REQUIRED,R6_ROW,R6-530,R6-530,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=530,r6_priority_view.csv,,150,tiers 3-7
+594,3,ACTION_REQUIRED,R6_ROW,R6-531,R6-531,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=531,r6_priority_view.csv,,685,tiers 3-7
+595,3,ACTION_REQUIRED,R6_ROW,R6-532,R6-532,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=532,r6_priority_view.csv,,504,tiers 3-7
+596,3,ACTION_REQUIRED,R6_ROW,R6-533,R6-533,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=533,r6_priority_view.csv,,487,tiers 3-7
+597,3,ACTION_REQUIRED,R6_ROW,R6-534,R6-534,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=534,r6_priority_view.csv,,248,tiers 3-7
+598,3,ACTION_REQUIRED,R6_ROW,R6-535,R6-535,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=535,r6_priority_view.csv,,102,tiers 3-7
+599,3,ACTION_REQUIRED,R6_ROW,R6-536,R6-536,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=536,r6_priority_view.csv,,87,tiers 3-7
+600,3,ACTION_REQUIRED,R6_ROW,R6-537,R6-537,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=537,r6_priority_view.csv,,209,tiers 3-7
+601,3,ACTION_REQUIRED,R6_ROW,R6-539,R6-539,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=539,r6_priority_view.csv,,829,tiers 3-7
+602,3,ACTION_REQUIRED,R6_ROW,R6-540,R6-540,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=540,r6_priority_view.csv,,125,tiers 3-7
+603,3,ACTION_REQUIRED,R6_ROW,R6-541,R6-541,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=541,r6_priority_view.csv,,13790,tiers 3-7
+604,3,ACTION_REQUIRED,R6_ROW,R6-542,R6-542,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=542,r6_priority_view.csv,,122,tiers 3-7
+605,3,ACTION_REQUIRED,R6_ROW,R6-543,R6-543,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=543,r6_priority_view.csv,,212,tiers 3-7
+606,3,ACTION_REQUIRED,R6_ROW,R6-544,R6-544,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=544,r6_priority_view.csv,,332,tiers 3-7
+607,3,ACTION_REQUIRED,R6_ROW,R6-545,R6-545,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=545,r6_priority_view.csv,,10,tiers 3-7
+608,3,ACTION_REQUIRED,R6_ROW,R6-546,R6-546,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=546,r6_priority_view.csv,,10,tiers 3-7
+609,3,ACTION_REQUIRED,R6_ROW,R6-547,R6-547,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=547,r6_priority_view.csv,,15,tiers 3-7
+610,3,ACTION_REQUIRED,R6_ROW,R6-548,R6-548,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=548,r6_priority_view.csv,,14,tiers 3-7
+611,3,ACTION_REQUIRED,R6_ROW,R6-549,R6-549,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=549,r6_priority_view.csv,,14,tiers 3-7
+612,3,ACTION_REQUIRED,R6_ROW,R6-550,R6-550,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=550,r6_priority_view.csv,,370,tiers 3-7
+613,3,ACTION_REQUIRED,R6_ROW,R6-551,R6-551,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=551,r6_priority_view.csv,,139,tiers 3-7
+614,3,ACTION_REQUIRED,R6_ROW,R6-552,R6-552,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=552,r6_priority_view.csv,,2,tiers 3-7
+615,3,ACTION_REQUIRED,R6_ROW,R6-553,R6-553,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=553,r6_priority_view.csv,,2,tiers 3-7
+616,3,ACTION_REQUIRED,R6_ROW,R6-554,R6-554,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=554,r6_priority_view.csv,,1,tiers 3-7
+617,3,ACTION_REQUIRED,R6_ROW,R6-555,R6-555,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=555,r6_priority_view.csv,,1,tiers 3-7
+618,3,ACTION_REQUIRED,R6_ROW,R6-556,R6-556,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=556,r6_priority_view.csv,,290,tiers 3-7
+619,3,ACTION_REQUIRED,R6_ROW,R6-557,R6-557,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=557,r6_priority_view.csv,,248,tiers 3-7
+620,3,ACTION_REQUIRED,R6_ROW,R6-558,R6-558,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=558,r6_priority_view.csv,,140,tiers 3-7
+621,3,ACTION_REQUIRED,R6_ROW,R6-559,R6-559,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=559,r6_priority_view.csv,,117,tiers 3-7
+622,3,ACTION_REQUIRED,R6_ROW,R6-560,R6-560,,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=560,r6_priority_view.csv,,1,tiers 3-7
+623,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-001,NS-001,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,15,recall denominator: needed after labels exist
+624,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-002,NS-002,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,14,recall denominator: needed after labels exist
+625,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-003,NS-003,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,20,recall denominator: needed after labels exist
+626,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-004,NS-004,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,17,recall denominator: needed after labels exist
+627,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-005,NS-005,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,2,recall denominator: needed after labels exist
+628,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-006,NS-006,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,2,recall denominator: needed after labels exist
+629,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-007,NS-007,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,4,recall denominator: needed after labels exist
+630,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-008,NS-008,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,9,recall denominator: needed after labels exist
+631,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-009,NS-009,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,24,recall denominator: needed after labels exist
+632,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-010,NS-010,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,18,recall denominator: needed after labels exist
+633,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-011,NS-011,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,11,recall denominator: needed after labels exist
+634,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-012,NS-012,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,39,recall denominator: needed after labels exist
+635,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-013,NS-013,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,95,recall denominator: needed after labels exist
+636,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-014,NS-014,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,86,recall denominator: needed after labels exist
+637,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-015,NS-015,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,92,recall denominator: needed after labels exist
+638,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-016,NS-016,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,27,recall denominator: needed after labels exist
+639,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-017,NS-017,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,7,recall denominator: needed after labels exist
+640,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-018,NS-018,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,8,recall denominator: needed after labels exist
+641,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-019,NS-019,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,1,recall denominator: needed after labels exist
+642,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-020,NS-020,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,1,recall denominator: needed after labels exist
+643,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-021,NS-021,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,1,recall denominator: needed after labels exist
+644,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-022,NS-022,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,3,recall denominator: needed after labels exist
+645,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-023,NS-023,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,7,recall denominator: needed after labels exist
+646,3,ACTION_REQUIRED,NEGATIVE_SAMPLE,NS-024,NS-024,,"negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)",negative_sample.csv,,2,recall denominator: needed after labels exist
+647,3,SUPPORTING_ROW,R6_ROW,R6-183,,INIT-03,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=183 (written together with INIT-03; no separate review),r6_priority_view.csv,,934,pair question of a group decided by INIT-03
+648,3,SUPPORTING_ROW,R6_ROW,R6-188,,OD-C20,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=188 (written together with OD-C20; no separate review),r6_priority_view.csv,,4000,pair question of a group decided by OD-C20
+649,3,SUPPORTING_ROW,R6_ROW,R6-189,,OD-C14,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=189 (written together with OD-C14; no separate review),r6_priority_view.csv,,7,pair question of a group decided by OD-C14
+650,3,SUPPORTING_ROW,R6_ROW,R6-190,,INIT-03,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=190 (written together with INIT-03; no separate review),r6_priority_view.csv,,135,pair question of a group decided by INIT-03
+651,3,SUPPORTING_ROW,R6_ROW,R6-192,,OD-A08,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=192 (written together with OD-A08; no separate review),r6_priority_view.csv,,6,pair question of a group decided by OD-A08
+652,3,SUPPORTING_ROW,R6_ROW,R6-217,,OD-A01,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=217 (written together with OD-A01; no separate review),r6_priority_view.csv,,24045,pair question of a group decided by OD-A01
+653,3,SUPPORTING_ROW,R6_ROW,R6-219,,OD-C06,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=219 (written together with OD-C06; no separate review),r6_priority_view.csv,,8659,pair question of a group decided by OD-C06
+654,3,SUPPORTING_ROW,R6_ROW,R6-261,,OD-C08,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=261 (written together with OD-C08; no separate review),r6_priority_view.csv,,604,pair question of a group decided by OD-C08
+655,3,SUPPORTING_ROW,R6_ROW,R6-268,,OD-C23,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=268 (written together with OD-C23; no separate review),r6_priority_view.csv,,639,pair question of a group decided by OD-C23
+656,3,SUPPORTING_ROW,R6_ROW,R6-276,,OD-C25,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=276 (written together with OD-C25; no separate review),r6_priority_view.csv,,300,pair question of a group decided by OD-C25
+657,3,SUPPORTING_ROW,R6_ROW,R6-281,,OD-C28,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=281 (written together with OD-C28; no separate review),r6_priority_view.csv,,145,pair question of a group decided by OD-C28
+658,3,SUPPORTING_ROW,R6_ROW,R6-284,,OD-A04,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=284 (written together with OD-A04; no separate review),r6_priority_view.csv,,420,pair question of a group decided by OD-A04
+659,3,SUPPORTING_ROW,R6_ROW,R6-290,,OD-C44,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=290 (written together with OD-C44; no separate review),r6_priority_view.csv,,79,pair question of a group decided by OD-C44
+660,3,SUPPORTING_ROW,R6_ROW,R6-298,,OD-C27,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=298 (written together with OD-C27; no separate review),r6_priority_view.csv,,147,pair question of a group decided by OD-C27
+661,3,SUPPORTING_ROW,R6_ROW,R6-301,,OD-C26,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=301 (written together with OD-C26; no separate review),r6_priority_view.csv,,250,pair question of a group decided by OD-C26
+662,3,SUPPORTING_ROW,R6_ROW,R6-307,,OD-C19,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=307 (written together with OD-C19; no separate review),r6_priority_view.csv,,6647,pair question of a group decided by OD-C19
+663,3,SUPPORTING_ROW,R6_ROW,R6-308,,OD-C33,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=308 (written together with OD-C33; no separate review),r6_priority_view.csv,,73,pair question of a group decided by OD-C33
+664,3,SUPPORTING_ROW,R6_ROW,R6-311,,OD-C04,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=311 (written together with OD-C04; no separate review),r6_priority_view.csv,,484,pair question of a group decided by OD-C04
+665,3,SUPPORTING_ROW,R6_ROW,R6-324,,OD-C10,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=324 (written together with OD-C10; no separate review),r6_priority_view.csv,,316,pair question of a group decided by OD-C10
+666,3,SUPPORTING_ROW,R6_ROW,R6-325,,OD-C40,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=325 (written together with OD-C40; no separate review),r6_priority_view.csv,,117,pair question of a group decided by OD-C40
+667,3,SUPPORTING_ROW,R6_ROW,R6-327,,OD-C45,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=327 (written together with OD-C45; no separate review),r6_priority_view.csv,,78,pair question of a group decided by OD-C45
+668,3,SUPPORTING_ROW,R6_ROW,R6-328,,OD-C55,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=328 (written together with OD-C55; no separate review),r6_priority_view.csv,,31,pair question of a group decided by OD-C55
+669,3,SUPPORTING_ROW,R6_ROW,R6-329,,OD-C58,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=329 (written together with OD-C58; no separate review),r6_priority_view.csv,,23,pair question of a group decided by OD-C58
+670,3,SUPPORTING_ROW,R6_ROW,R6-330,,OD-C22,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=330 (written together with OD-C22; no separate review),r6_priority_view.csv,,2645,pair question of a group decided by OD-C22
+671,3,SUPPORTING_ROW,R6_ROW,R6-338,,OD-C39,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=338 (written together with OD-C39; no separate review),r6_priority_view.csv,,237,pair question of a group decided by OD-C39
+672,3,SUPPORTING_ROW,R6_ROW,R6-340,,OD-A07,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=340 (written together with OD-A07; no separate review),r6_priority_view.csv,,20,pair question of a group decided by OD-A07
+673,3,SUPPORTING_ROW,R6_ROW,R6-348,,OD-C21,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=348 (written together with OD-C21; no separate review),r6_priority_view.csv,,3667,pair question of a group decided by OD-C21
+674,3,SUPPORTING_ROW,R6_ROW,R6-350,,OD-C49,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=350 (written together with OD-C49; no separate review),r6_priority_view.csv,,50,pair question of a group decided by OD-C49
+675,3,SUPPORTING_ROW,R6_ROW,R6-351,,OD-C53,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=351 (written together with OD-C53; no separate review),r6_priority_view.csv,,35,pair question of a group decided by OD-C53
+676,3,SUPPORTING_ROW,R6_ROW,R6-355,,OD-C54,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=355 (written together with OD-C54; no separate review),r6_priority_view.csv,,31,pair question of a group decided by OD-C54
+677,3,SUPPORTING_ROW,R6_ROW,R6-363,,OD-C73,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=363 (written together with OD-C73; no separate review),r6_priority_view.csv,,2,pair question of a group decided by OD-C73
+678,3,SUPPORTING_ROW,R6_ROW,R6-364,,OD-C35,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=364 (written together with OD-C35; no separate review),r6_priority_view.csv,,64,pair question of a group decided by OD-C35
+679,3,SUPPORTING_ROW,R6_ROW,R6-366,,OD-C61,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=366 (written together with OD-C61; no separate review),r6_priority_view.csv,,19,pair question of a group decided by OD-C61
+680,3,SUPPORTING_ROW,R6_ROW,R6-370,,OD-C67,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=370 (written together with OD-C67; no separate review),r6_priority_view.csv,,5,pair question of a group decided by OD-C67
+681,3,SUPPORTING_ROW,R6_ROW,R6-374,,OD-C68,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=374 (written together with OD-C68; no separate review),r6_priority_view.csv,,4,pair question of a group decided by OD-C68
+682,3,SUPPORTING_ROW,R6_ROW,R6-375,,OD-C38,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=375 (written together with OD-C38; no separate review),r6_priority_view.csv,,3,pair question of a group decided by OD-C38
+683,3,SUPPORTING_ROW,R6_ROW,R6-380,,OD-C75,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=380 (written together with OD-C75; no separate review),r6_priority_view.csv,,2,pair question of a group decided by OD-C75
+684,3,SUPPORTING_ROW,R6_ROW,R6-396,,OD-C18,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=396 (written together with OD-C18; no separate review),r6_priority_view.csv,,1,pair question of a group decided by OD-C18
+685,3,SUPPORTING_ROW,R6_ROW,R6-397,,OD-C24,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=397 (written together with OD-C24; no separate review),r6_priority_view.csv,,550,pair question of a group decided by OD-C24
+686,3,SUPPORTING_ROW,R6_ROW,R6-398,,OD-C30,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=398 (written together with OD-C30; no separate review),r6_priority_view.csv,,101,pair question of a group decided by OD-C30
+687,3,SUPPORTING_ROW,R6_ROW,R6-403,,OD-C36,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=403 (written together with OD-C36; no separate review),r6_priority_view.csv,,18,pair question of a group decided by OD-C36
+688,3,SUPPORTING_ROW,R6_ROW,R6-420,,OD-C70,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=420 (written together with OD-C70; no separate review),r6_priority_view.csv,,3,pair question of a group decided by OD-C70
+689,3,SUPPORTING_ROW,R6_ROW,R6-500,,OD-C17,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=500 (written together with OD-C17; no separate review),r6_priority_view.csv,,1,pair question of a group decided by OD-C17
+690,3,SUPPORTING_ROW,R6_ROW,R6-538,,OD-C29,r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank=538 (written together with OD-C29; no separate review),r6_priority_view.csv,,144,pair question of a group decided by OD-C29

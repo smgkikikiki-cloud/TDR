@@ -6,34 +6,25 @@ Two kinds of verdict are kept apart (`verdict_crosswalk.csv`): the R6 sheet asks
 
 ## 1. The smallest first set
 
-Nothing here requires all 560 R6 rows to be labelled. The first wave is **65 owner actions**: 4 rule/filing questions, 5 alias verdicts, 9 CREATE verdicts and 47 R6 pair verdicts (48 starter rows; 1 of them is answered together with an alias or CREATE verdict). It covers 80.7% of the lifetime units of all 69 AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, and 93.1% of the lifetime units of the 82 CREATE candidates (15 rows). It is built to find a systematic failure early, not to certify a rate (see §7).
+Nothing here requires all 560 R6 rows to be labelled. The first wave is **65 owner decisions**, each counted once: 4 rule/filing questions, 5 alias decisions, 9 CREATE verdicts and 47 R6 pair verdicts. `decision_queue.csv` lists 83 first-wave rows because it keeps every underlying record: the 65 rows with `queue_role = ACTION_REQUIRED`, plus 18 `SUPPORTING_ROW`s (11 BRAND_CASE, 6 CREATE_ROW, 1 R6_ROW). A supporting row is evidence or a companion field: `resolved_by_action_id` names the one action that settles it, and it never asks for a second decision. The 48 starter R6 rows are all kept (47 actions, 1 answered together with its group's action); all 82 CREATE candidates and all 560 R6 rows stay in their files. The first wave covers 80.7% of the lifetime units of all 69 AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, and 93.1% of the lifetime units of the 82 CREATE candidates (15 rows). It is built to find a systematic failure early, not to certify a rate (see §7).
 
-| item | kind | question | resolves | units |
+| action group | count | members | answer goes to |
+|---|---|---|---|
+| rule / filing questions | 4 | INIT-01, INIT-02, INIT-03, INIT-04 | `initial_owner_decisions.csv` owner_answer |
+| alias decisions | 5 | OD-A01, OD-A02, OD-A03, OD-A04, OD-A05 | `catalog_alias_collisions.csv` owner_alias_class (group verdict: its CREATE row) |
+| CREATE verdicts | 9 | OD-C04, OD-C06, OD-C07, OD-C08, OD-C10, OD-C19, OD-C20, OD-C21, OD-C22 | `create_candidates.csv` owner_verdict |
+| R6 pair verdicts | 47 | S1_AUTO_PAIRS: ranks 1, 2, 6, 83, 86, 87, 88, 90, 92, 93, 94, 96, 99, 105, 114, 116, 126, 142; S2_LEGACY_AUTO_NOT_AUTO: ranks 3, 7, 8, 9, 10, 11, 20, 21, 23, 25, 29, 30, 46, 54, 56; S3_KNOWN_FAMILY: ranks 84, 85, 93, 95, 98, 106; S4_STRUCTURAL: ranks 508, 509, 510, 511, 512, 513, 514, 515, 516 | `r6_owner_review.csv` |
+
+The four rule / filing questions:
+
+| item | kind | question | supporting rows it settles | units |
 |---|---|---|---|---|
 | INIT-01 | CONTRACT | When the producer's brand relation to a TDR brand is RELATED (capped at PROPOSE), must a consumer take its candidate set from the producer instead of resolving the brand itself from catalog labels? | OD-B02 .. OD-B08 (7) | 15 |
 | INIT-02 | CONTRACT | May a catalog brand `aliases` entry ever be a brand relation, and if so as which typed class (SAME / RELABEL / RELATED) and with which provenance? Decide the one label in the pack (JETOUR under Chery). | OD-B01 | 3 |
 | INIT-03 | CATALOG | Where are Maxus-badged models filed: under the registration brand MG (as mg.mg_maxus_7 / mg.mg_maxus_9 are today) or under a Maxus brand? | OD-B09 .. OD-C11 (4) | 3032 |
 | INIT-04 | CONTRACT | What does a TDR catalog model `aliases` entry assert: the same model, a registration-attribution label that may cover a broader family, or a lookup convenience? (The nine alias rows show all three readings occur.) | OD-A01 .. OD-A09 (9) | 26946 |
-| INIT-OD-A01 | ALIAS_VERDICT | Jaecoo J5 (jaecoo-jaecoo-j5) vs catalog alias on jaecoo.jaecoo_5_ev: which alias class, and is the group that model? | OD-A01 | 24045 |
-| INIT-OD-A02 | ALIAS_VERDICT | Binguo (wuling-binguo) vs catalog alias on wuling.wuling_bingo: which alias class, and is the group that model? | OD-A02 | 1285 |
-| INIT-OD-A03 | ALIAS_VERDICT | Jaecoo J7 (jaecoo-jaecoo-j7) vs catalog alias on jaecoo.jaecoo_7: which alias class, and is the group that model? | OD-A03 | 1091 |
-| INIT-OD-A04 | ALIAS_VERDICT | e6 (byd-e6) vs catalog alias on byd.byd_m6: which alias class, and is the group that model? | OD-A04 | 420 |
-| INIT-OD-A05 | ALIAS_VERDICT | VW ID.Buzz (volkswagen-vw-idbuzz) vs catalog alias on volkswagen.caravelle: which alias class, and is the group that model? | OD-A05 | 51 |
-| INIT-OD-C04 | CREATE_VERDICT | Should TDR have a canonical model for VOLT VOLT Volt (volt.volt)? | OD-C04 | 484 |
-| INIT-OD-C06 | CREATE_VERDICT | Should TDR have a canonical model for JAECOO Jaecoo J6 (jaecoo.j6)? | OD-C06 | 8659 |
-| INIT-OD-C07 | CREATE_VERDICT | Should TDR have a canonical model for ZEEKR Zeekr 7X (zeekr.7x)? | OD-C07 | 2892 |
-| INIT-OD-C08 | CREATE_VERDICT | Should TDR have a canonical model for MAZDA Mazda6e (mazda.mazda6e)? | OD-C08 | 604 |
-| INIT-OD-C10 | CREATE_VERDICT | Should TDR have a canonical model for PEUGEOT Peugeot 5008 (peugeot.5008)? | OD-C10 | 316 |
-| INIT-OD-C19 | CREATE_VERDICT | Should TDR have a canonical model for TOYOTA Vios (toyota.vios)? | OD-C19 | 6647 |
-| INIT-OD-C20 | CREATE_VERDICT | Should TDR have a canonical model for NISSAN Nissan March (nissan.march)? | OD-C20 | 4000 |
-| INIT-OD-C21 | CREATE_VERDICT | Should TDR have a canonical model for NISSAN Nissan Note (nissan.note)? | OD-C21 | 3667 |
-| INIT-OD-C22 | CREATE_VERDICT | Should TDR have a canonical model for TOYOTA Toyota Sienta (toyota.sienta)? | OD-C22 | 2645 |
-| INIT-R6-S1 | R6_PAIR_VERDICTS | Pair verdicts for review ranks 1, 2, 6, 83, 86, 87, 88, 90, 92, 93, 94, 96, 99, 105, 114, 116, 126, 142 (v1 AUTO pairs that carry 80% of AUTO-pair units). | R6-1 .. R6-142 (18) | 1355944 |
-| INIT-R6-S2 | R6_PAIR_VERDICTS | Pair verdicts for review ranks 3, 7, 8, 9, 10, 11, 20, 21, 23, 25, 29, 30, 46, 54, 56 (legacy AUTO rows that v1 does not AUTO (the units-heaviest 80%)). | R6-3 .. R6-56 (15) | 73927 |
-| INIT-R6-S3 | R6_PAIR_VERDICTS | Pair verdicts for review ranks 84, 85, 93, 95, 98, 106, 184 (the largest row of each known-case family). | R6-84 .. R6-184 (7) | 1481061 |
-| INIT-R6-S4 | R6_PAIR_VERDICTS | Pair verdicts for review ranks 508, 509, 510, 511, 512, 513, 514, 515, 516 (PART_OF / COMPOSED_OF and several-viable-candidate rows). | R6-508 .. R6-516 (9) | 66914 |
 
-The full order, with later waves, is `decision_queue.csv`.
+The full order, with later waves, is `decision_queue.csv` (`queue_role`, `action_id`, `resolved_by_action_id`, `answer_destination`).
 
 ## 2. R6 owner sheet vs PR #201's 82 provisional CREATE candidates
 
@@ -119,8 +110,8 @@ P1 = contradicting evidence (alias, brand collision, coinciding series, strong l
 
 ## 7. Calibration after labels exist (`calibration_procedure.json`)
 
-- **Labels → ground truth**: pair labels give positives (per link type) and negatives; group labels make every pooled candidate of a VALID_MISSING_CANONICAL group a negative; AMBIGUOUS / INSUFFICIENT_EVIDENCE are excluded and counted. `check_label_consistency()` runs first.
-- **Brand-separated evaluation**: 5 folds of brand families (`brand_folds.csv`); tune on four, evaluate once on the fifth, report pooled out-of-fold predictions. No threshold is tuned on a family it is evaluated on.
+- **Labels → ground truth, per link type**: a pair label speaks for the link type it names (CORRECT_EQUIVALENT / PART_OF / COMPOSED_OF positive; WRONG_TARGET / NO_TDR_TARGET negative for the link type the row proposed). A group label speaks only about EQUIVALENT identity: VALID_MISSING_CANONICAL is EQUIVALENT-negative and says nothing about PART_OF / COMPOSED_OF (a group with no model of its own can still be part of existing ones: a REVIEW prompt, not a negative); VARIANT_TRIM_CODE infers no pair at all until the owner gives an explicit link label. Each link type is scored on its own POSITIVE / NEGATIVE cells; UNKNOWN, EXCLUDED and CONFLICT cells are counted, not scored (`derive_truth`, `metric_rows`). `check_label_consistency()` runs first.
+- **Brand-separated evaluation, selection on training folds only**: 5 folds of brand families (`brand_folds.csv`). The candidate grid, tie-break and selection rule are registered before any label is read. Pass 1 selects one value per fold from the other four folds and freezes it (`select_threshold` is handed no held-out row and no tolerance); pass 2 evaluates each frozen value once on its own fold. Pooled held-out precision, recall and the false-AUTO bound are **acceptance / failure evidence only** (`acceptance_gate`): a failure is reported as 'not calibrated' and any further attempt is a separately versioned experiment, never a retune on the same held-out outcomes.
 - **Metrics**: AUTO precision and false-AUTO count (Wilson interval; rule of three when zero), AUTO recall, PROPOSE precision, PROPOSE-or-better recall using the weighted negative sample for the pairs the contract missed; each also unit-weighted.
 - **False-AUTO analysis**: each false-AUTO is listed with its codes and classified (series coincidence, granularity, lineage, brand relation, label noise); a root cause that a gate could express is a proposal for a later round, never applied in the same pass.
 - **Pending thresholds**: each is re-run at its swept values on the labelled rows (`pending_threshold_sensitivity.csv`); an entry that moves no labelled row stays pending.

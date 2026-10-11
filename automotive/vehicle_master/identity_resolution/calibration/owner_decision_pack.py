@@ -277,7 +277,7 @@ ALIAS_COLUMNS = [
     "series_state", "series_correlation", "series_ratio", "series_common_months", "provider_units_in_window", "existing_units_in_window", "other_ice_claimants_equal",
     "other_ice_claimants_granular", "claimants_alone_series", "claimants_plus_provider_series", "legacy_r6", "r6_sheet_ranks", "signals",
     "machine_suggested_alias_class_NON_AUTHORITATIVE", "suggestion_basis_NON_AUTHORITATIVE", "evidence_sufficiency", "also_series_coincident_without_alias_hit", "evidence_refs",
-    "owner_alias_class", "owner_provider_verdict", "owner_canonical_model_id", "owner_notes"]
+    "owner_alias_class", "owner_notes"]
 
 
 def _fmt_series(s: dict | None) -> str:
@@ -362,7 +362,7 @@ def build_alias_table(inp: Inputs) -> list[dict]:
             "other_ice_claimants_granular": granular, "claimants_alone_series": _fmt_series(alone), "claimants_plus_provider_series": _fmt_series(withp), "legacy_r6": legacy_text(inp.crosswalk.get(g)),
             "r6_sheet_ranks": rr, "signals": sorted(sig), "machine_suggested_alias_class_NON_AUTHORITATIVE": cls, "suggestion_basis_NON_AUTHORITATIVE": basis, "evidence_sufficiency": sufficiency,
             "also_series_coincident_without_alias_hit": "", "evidence_refs": refs,
-            "owner_alias_class": "", "owner_provider_verdict": "", "owner_canonical_model_id": "", "owner_notes": ""})
+            "owner_alias_class": "", "owner_notes": ""})
     return rows
 
 
@@ -602,7 +602,7 @@ BRAND_COLUMNS = [
     "decision_id", "case_kind", "provider_group_id", "provider_name", "provider_brand_label", "brands_observed", "units_lifetime", "units_last12", "pr201_outcome", "pr201_parity_reason",
     "producer_brand_relations", "producer_pool_size", "producer_pool_brands", "producer_best_relation", "consumer_catalog_label_resolution", "catalog_brand_records", "disagreement_kind",
     "policy_alias_classes_involved", "candidate_pool_provenance", "other_groups_with_same_label", "catalog_precedent", "contract_level_options_NON_AUTHORITATIVE", "recommended_resolution_NON_AUTHORITATIVE",
-    "evidence_refs", "owner_decision", "owner_notes"]
+    "evidence_refs", "owner_case_override", "owner_notes"]
 
 
 def _policy_classes_for(inp: Inputs, label: str) -> list[str]:
@@ -660,7 +660,7 @@ def build_brand_cases(inp: Inputs) -> list[dict]:
             "candidate_pool_provenance": (f"pool of {len(s['pool'])} model(s) of brand(s) {', '.join(pool_brands)}, admitted because the producer's brand relation to those brand(s) is "
                                           f"{', '.join(sorted({p['relation'] for p in prod if p['brand_id'] in pool_brands}))}") if s["pool"] else "empty pool: the producer admits no brand relation from this label to any TDR brand",
             "other_groups_with_same_label": f"{len(same)} other Ice group(s), {same_units} lifetime units" if same else "none", "catalog_precedent": precedent,
-            "contract_level_options_NON_AUTHORITATIVE": "", "recommended_resolution_NON_AUTHORITATIVE": "", "evidence_refs": refs, "owner_decision": "", "owner_notes": ""})
+            "contract_level_options_NON_AUTHORITATIVE": "", "recommended_resolution_NON_AUTHORITATIVE": "", "evidence_refs": refs, "owner_case_override": "", "owner_notes": ""})
     for r in rows:
         r["contract_level_options_NON_AUTHORITATIVE"], r["recommended_resolution_NON_AUTHORITATIVE"] = brand_options(r["disagreement_kind"])
     return rows
@@ -987,24 +987,176 @@ def build_entry_requirements(inp: Inputs, view: list[dict], meta: dict, neg_summ
     return [dict(zip(ENTRY_COLUMNS, r)) for r in out]
 
 
+# ----------------------------------------------------------------------------------------------------------------------------- ground truth per link type (ODP-1)
+LINKS = ("EQUIVALENT", "PART_OF", "COMPOSED_OF")
+PAIR_LINK = {"CORRECT_EQUIVALENT": "EQUIVALENT", "CORRECT_PART_OF": "PART_OF", "CORRECT_COMPOSED_OF": "COMPOSED_OF"}
+TRUTH_STATES = ("POSITIVE", "NEGATIVE", "UNKNOWN", "EXCLUDED", "CONFLICT")
+
+
+def derive_truth(pool: list[str], pair_labels: list[dict], group_label: dict | None, proposed_link: dict[str, str] | None = None) -> tuple[dict, list[dict]]:
+    """Per-(candidate, link type) ground truth for one group, from the owner's labels. Nothing is inferred across link types.
+
+    * a pair label speaks for the link type it names: CORRECT_EQUIVALENT / CORRECT_PART_OF / CORRECT_COMPOSED_OF are POSITIVE for that link type; WRONG_TARGET / NO_TDR_TARGET are NEGATIVE for the
+      link type the sheet row proposed (default EQUIVALENT) and say nothing about the others; INSUFFICIENT_EVIDENCE excludes the candidate;
+    * a group label speaks only about EQUIVALENT identity: VALID_MISSING_CANONICAL = no exact canonical identity = EQUIVALENT NEGATIVE for every pooled candidate, and nothing about PART_OF /
+      COMPOSED_OF (a group may have no model of its own and still be part of, or composed of, existing ones); EXISTING_IDENTITY names the one EQUIVALENT target (every other candidate is EQUIVALENT
+      NEGATIVE by cardinality rule C1); VARIANT_TRIM_CODE and AMBIGUOUS assert no pair relation at all (a variant is not an EQUIVALENT pair until the owner labels the link);
+    * an explicit pair label always wins over a group-derived value only when they agree; a disagreement on the same cell is a CONFLICT (returned, and the cell is unusable until resolved).
+    Returns ({(candidate, link): state}, [conflicts and review notes])."""
+    proposed_link = proposed_link or {}
+    cells = {(c, l): "UNKNOWN" for c in pool for l in LINKS}
+    notes: list[dict] = []
+    explicit: set = set()
+
+    def put(cell, state, source):
+        cur = cells[cell]
+        if cur in ("UNKNOWN",):
+            cells[cell] = state
+        elif cur == "CONFLICT" or cur == state:
+            pass
+        elif state == "EXCLUDED" or cur == "EXCLUDED":
+            cells[cell] = "EXCLUDED"
+        else:
+            cells[cell] = "CONFLICT"
+            notes.append({"severity": "CONFLICT", "kind": "TRUTH_CELL_DISAGREES", "cell": cell, "detail": f"{cur} vs {state} ({source})"})
+
+    for p in pair_labels:
+        c, v = p["candidate"], p["verdict"]
+        if c not in pool:
+            notes.append({"severity": "REVIEW", "kind": "LABEL_CANDIDATE_OUTSIDE_POOL", "cell": (c, ""), "detail": v})
+            continue
+        if v in PAIR_LINK:
+            put((c, PAIR_LINK[v]), "POSITIVE", "pair")
+            explicit.add((c, PAIR_LINK[v]))
+        elif v in ("WRONG_TARGET", "NO_TDR_TARGET"):
+            put((c, proposed_link.get(c, "EQUIVALENT")), "NEGATIVE", "pair")
+            explicit.add((c, proposed_link.get(c, "EQUIVALENT")))
+        elif v == "INSUFFICIENT_EVIDENCE":
+            for l in LINKS:
+                cells[(c, l)] = "EXCLUDED"
+    if group_label:
+        gv, canon = group_label["verdict"], group_label.get("canonical")
+        if gv == "VALID_MISSING_CANONICAL":
+            for c in pool:
+                put((c, "EQUIVALENT"), "NEGATIVE", "group")
+            for p in pair_labels:
+                if p["verdict"] in ("CORRECT_PART_OF", "CORRECT_COMPOSED_OF"):
+                    notes.append({"severity": "REVIEW", "kind": "MISSING_IDENTITY_WITH_STRUCTURAL_RELATION", "cell": (p["candidate"], PAIR_LINK[p["verdict"]]),
+                                  "detail": "no exact canonical identity, valid structural relation: kept as a positive for that link type only"})
+        elif gv == "EXISTING_IDENTITY":
+            if canon in pool:
+                put((canon, "EQUIVALENT"), "POSITIVE", "group")
+                for c in pool:
+                    if c != canon:
+                        put((c, "EQUIVALENT"), "NEGATIVE", "group (C1)")
+            else:
+                notes.append({"severity": "REVIEW", "kind": "GROUP_TARGET_OUTSIDE_POOL", "cell": (canon or "", "EQUIVALENT"), "detail": "the owner's model is not a pooled candidate: a recall miss, not a pair label"})
+        # VARIANT_TRIM_CODE and AMBIGUOUS: no pair truth is inferred
+    # C1: a CORRECT_EQUIVALENT candidate makes every other candidate EQUIVALENT-negative
+    for c, l in sorted(explicit):
+        if l == "EQUIVALENT" and cells[(c, l)] == "POSITIVE":
+            for o in pool:
+                if o != c:
+                    put((o, "EQUIVALENT"), "NEGATIVE", "pair (C1)")
+    return cells, notes
+
+
+def metric_rows(link: str, cells: dict, predictions: dict) -> tuple[list[dict], dict]:
+    """The rows one link type's metrics may use: only POSITIVE / NEGATIVE cells of THAT link type. `predictions[(candidate, link)]` is AUTO / PROPOSE / NONE. Everything else is counted, not scored."""
+    rows, skipped = [], collections.Counter()
+    for (c, l), st in sorted(cells.items()):
+        if l != link:
+            continue
+        if st in ("POSITIVE", "NEGATIVE"):
+            rows.append({"cell": (c, l), "truth": st, "predicted": predictions.get((c, l), "NONE")})
+        else:
+            skipped[st] += 1
+    return rows, dict(skipped)
+
+
+def confusion(rows: list[dict]) -> dict:
+    n = collections.Counter()
+    for r in rows:
+        pos, auto, prop = r["truth"] == "POSITIVE", r["predicted"] == "AUTO", r["predicted"] in ("AUTO", "PROPOSE")
+        n["tp_auto"] += pos and auto
+        n["fp_auto"] += (not pos) and auto
+        n["fn_auto"] += pos and not auto
+        n["tp_prop"] += pos and prop
+        n["fp_prop"] += (not pos) and prop
+        n["fn_prop"] += pos and not prop
+    return dict(n)
+
+
+# ----------------------------------------------------------------------------------------------------------------------------- threshold selection on training folds only (ODP-2)
+def select_threshold(grid: list, train_rows: list[dict]) -> dict:
+    """Choose one value from `grid` (ordered loosest -> strictest, registered before any label is read) using TRAINING rows only. Row: {"truth": POSITIVE | NEGATIVE, "auto_at": {value: bool}}.
+    Eligible = zero training false-AUTO; among eligible, most training true-AUTO; a tie goes to the stricter value; if nothing is eligible the strictest value is chosen and flagged. The function is handed
+    no held-out row and no tolerance: it cannot depend on them."""
+    stats = {}
+    for v in grid:
+        fa = sum(1 for r in train_rows if r["truth"] == "NEGATIVE" and r["auto_at"][v])
+        tp = sum(1 for r in train_rows if r["truth"] == "POSITIVE" and r["auto_at"][v])
+        stats[v] = {"train_false_auto": fa, "train_true_auto": tp}
+    eligible = [v for v in grid if stats[v]["train_false_auto"] == 0]
+    if not eligible:
+        return {"selected": grid[-1], "flag": "NO_VALUE_WITHOUT_TRAINING_FALSE_AUTO", "train": stats}
+    best = max(stats[v]["train_true_auto"] for v in eligible)
+    chosen = [v for v in eligible if stats[v]["train_true_auto"] == best][-1]
+    return {"selected": chosen, "flag": "", "train": stats}
+
+
+def calibrate_by_fold(grid: list, rows: list[dict], n_folds: int) -> dict:
+    """Pass 1 selects one value per fold from the other folds' rows and freezes it; pass 2 evaluates each frozen value ONCE on its own held-out fold. Nothing from pass 2 flows back."""
+    selections = {k: select_threshold(grid, [r for r in rows if r["fold"] != k]) for k in range(n_folds)}
+    folds = {}
+    for k in range(n_folds):
+        held = [r for r in rows if r["fold"] == k]
+        v = selections[k]["selected"]
+        folds[k] = {"selected": v, "flag": selections[k]["flag"], "heldout_rows": len(held),
+                    "heldout_false_auto": sum(1 for r in held if r["truth"] == "NEGATIVE" and r["auto_at"][v]), "heldout_true_auto": sum(1 for r in held if r["truth"] == "POSITIVE" and r["auto_at"][v]),
+                    "heldout_positives": sum(1 for r in held if r["truth"] == "POSITIVE"), "heldout_auto_predictions": sum(1 for r in held if r["auto_at"][v])}
+    pooled = {key: sum(f[key] for f in folds.values()) for key in ("heldout_rows", "heldout_false_auto", "heldout_true_auto", "heldout_positives", "heldout_auto_predictions")}
+    return {"selections": {k: v["selected"] for k, v in selections.items()}, "folds": folds, "pooled": pooled}
+
+
+def acceptance_gate(pooled: dict, tolerance: float) -> dict:
+    """Final acceptance / failure evidence from the pooled held-out counts. It reads results; it is never an input to `select_threshold`. A failure means: report 'not calibrated' and plan a separately versioned experiment."""
+    n, fa = pooled["heldout_auto_predictions"], pooled["heldout_false_auto"]
+    upper = rule_of_three(n) if fa == 0 else wilson(fa, n)[1]
+    precision = None if n == 0 else round((n - fa) / n, 6)
+    recall = None if pooled["heldout_positives"] == 0 else round(pooled["heldout_true_auto"] / pooled["heldout_positives"], 6)
+    ok = upper is not None and upper <= tolerance
+    return {"false_auto_upper_95": upper, "auto_precision": precision, "auto_recall": recall, "tolerance": tolerance,
+            "verdict": "ACCEPTANCE_EVIDENCE_MET" if ok else "FAILED_REPORT_NOT_CALIBRATED", "retune_allowed": False}
+
+
 CALIBRATION_PROCEDURE = {
-    "schema": "ir-owner-pack-calibration-procedure/1",
+    "schema": "ir-owner-pack-calibration-procedure/2",
     "status": "NON_AUTHORITATIVE preparation; nothing here is calibrated and no value is chosen",
     "labels_used": {
-        "pair": "r6_owner_review.csv verdicts. positive for the shown link type: CORRECT_EQUIVALENT (EQUIVALENT), CORRECT_PART_OF (PART_OF), CORRECT_COMPOSED_OF (COMPOSED_OF); negative: WRONG_TARGET, NO_TDR_TARGET; excluded and counted: INSUFFICIENT_EVIDENCE",
-        "group": "create_candidates.csv verdicts: VALID_MISSING_CANONICAL makes every pooled candidate of the group a negative; EXISTING_IDENTITY / VARIANT_TRIM_CODE make owner_canonical_model_id a positive; AMBIGUOUS is excluded and counted",
-        "negative_sample": "negative_sample.csv: owner_has_tdr_counterpart, weighted by sampling_weight",
+        "pair": "r6_owner_review.csv verdicts, per link type. POSITIVE for the link type named: CORRECT_EQUIVALENT (EQUIVALENT), CORRECT_PART_OF (PART_OF), CORRECT_COMPOSED_OF (COMPOSED_OF). NEGATIVE for the link type the sheet row proposed: WRONG_TARGET, NO_TDR_TARGET; "
+                "nothing is said about the other link types. INSUFFICIENT_EVIDENCE excludes the candidate (counted, not scored)",
+        "group": "create_candidates.csv verdicts speak about EQUIVALENT identity only. VALID_MISSING_CANONICAL: EQUIVALENT NEGATIVE for every pooled candidate; PART_OF / COMPOSED_OF are NOT inferred (a group with no model of its own can still be part of, or composed of, existing models: "
+                 "that combination is a REVIEW prompt, and the structural pair label stays a positive for its own link type). EXISTING_IDENTITY: the named model is EQUIVALENT POSITIVE and every other pooled candidate EQUIVALENT NEGATIVE (cardinality C1). "
+                 "VARIANT_TRIM_CODE: no pair truth is inferred - a variant is not an EQUIVALENT pair until the owner gives an explicit, correct link label. AMBIGUOUS: excluded and counted",
+        "disagreement": "a pair-derived and a group-derived value for the same (candidate, link type) cell that disagree make the cell a CONFLICT: unusable until the owner resolves it (derive_truth, check_label_consistency)",
+        "scoring": "each link type is scored on its own: only POSITIVE and NEGATIVE cells of that link type enter its metrics (metric_rows); UNKNOWN, EXCLUDED and CONFLICT cells are counted and not scored",
+        "negative_sample": "negative_sample.csv: owner_has_tdr_counterpart (+ owner_link_type), weighted by sampling_weight; a counterpart under another link type is not a negative for EQUIVALENT-only metrics by default",
         "consistency": "check_label_consistency() runs first; a CONFLICT is resolved by the owner before any metric is computed"},
     "design": {
         "folds": "brand_folds.csv: five folds of brand families; every row of a family sits in one fold",
-        "loop": "for each fold k: choose among the candidate values (the swept grid in sensitivity_results.json) on the other four folds, evaluate once on fold k; report pooled out-of-fold predictions",
-        "selection_rule": "the loosest value whose training false-AUTO count is zero and whose pooled held-out false-AUTO upper bound is within the tolerance the owner sets (open question); a tie goes to the stricter value",
+        "registration": "before any label is read, the candidate grid per pending entry (ordered loosest to strictest, from the swept values in sensitivity_results.json), the tie-break and the selection rule are registered (this file + the sha256 of sensitivity_results.json in MANIFEST.json)",
+        "loop": "pass 1: for each fold k, select one value from the grid using the OTHER four folds only (select_threshold is handed no held-out row and no tolerance) and freeze it; pass 2: evaluate each frozen value ONCE on its own held-out fold (calibrate_by_fold)",
+        "selection_rule": "among grid values with zero TRAINING false-AUTO, the one with the most TRAINING true-AUTO pairs; a tie goes to the stricter value; if no value has zero training false-AUTO the strictest is chosen and flagged. Held-out results, pooled or per fold, are never an input",
+        "acceptance_gate": "AFTER selection: the pooled held-out false-AUTO upper bound (rule of three when zero, Wilson otherwise), precision and recall are reported against the tolerance the owner sets (acceptance_gate). They are acceptance / failure evidence only",
+        "failure_handling": "a failed gate freezes the result as 'not calibrated' and is reported. Any further attempt is a separately versioned experiment with a new registration; the held-out outcomes of this experiment are never used to retune it",
         "no_leakage": "no threshold, class or alias list is tuned on a row of the held-out fold's brand family; the owner's seed brand classes are inputs, not tuned values"},
     "metrics": {
         "auto_precision": "labelled-correct AUTO pairs / labelled AUTO pairs, Wilson 95% interval; with zero errors the rule-of-three upper bound on false-AUTO is reported instead",
         "auto_recall": "labelled-correct pairs the contract writes at AUTO / labelled-correct pairs (EQUIVALENT only)",
         "propose_precision": "labelled-correct among PROPOSE pairs",
         "propose_or_better_recall": "labelled-correct pairs the contract proposes or writes / labelled-correct pairs, with the weighted negative sample adding the correct pairs the contract missed (NO_CANDIDATE)",
+        "per_link_type": "every metric above is computed separately for EQUIVALENT, PART_OF and COMPOSED_OF on that link type's scored cells",
         "unit_weighted": "each of the above is also reported weighted by lifetime units, because a wrong high-volume pair costs more registrations than a wrong tail pair"},
     "false_auto_analysis": [
         "every false-AUTO is listed with its supporting codes, series state, name relation, brand relation and lineage roles",
@@ -1012,104 +1164,132 @@ CALIBRATION_PROCEDURE = {
         "a root cause that the contract can express as a gate is a proposal for a rule change in a later round, never applied in the same pass as the measurement",
         "report false-AUTO by brand family and by fold: a single family accounting for the errors means a missing rule, not a miscalibrated threshold"],
     "pending_threshold_sensitivity": [
-        "each pending calibration entry (pending_threshold_sensitivity.csv) is re-evaluated at every swept value on the labelled rows",
-        "report the change in held-out AUTO precision, AUTO recall and false-AUTO count per value; a value that creates a labelled false-AUTO is rejected regardless of recall",
+        "each pending calibration entry (pending_threshold_sensitivity.csv) is evaluated at every registered grid value on the labelled rows; selection per fold uses training folds only",
+        "report the change in held-out AUTO precision, AUTO recall and false-AUTO count per value as evidence; a value with a TRAINING false-AUTO is not eligible",
         "an entry that moves no labelled row stays pending and is reported as not constrained by the labels"],
     "stop_rules": [
         "fewer labelled AUTO pairs than ER-T tolerance requires: report the bound that the labels do support and keep the threshold pending",
-        "any CONFLICT from check_label_consistency: stop and return the conflicts to the owner",
+        "any CONFLICT from check_label_consistency / derive_truth: stop and return the conflicts to the owner",
         "any false-AUTO in a held-out fold: stop, analyse (false_auto_analysis), do not tune around it",
         "nothing is bound until the owner accepts a calibrated value in adoption.yaml; adoption.binding stays false"]}
 
 
-# ----------------------------------------------------------------------------------------------------------------------------- the smallest first set, and the whole queue
+# ----------------------------------------------------------------------------------------------------------------------------- the smallest first set, and the whole queue (ODP-3)
+# One queue row per underlying record. A row is either an ACTION_REQUIRED (one owner decision, counted once) or a SUPPORTING_ROW (evidence or a companion field: it is settled by exactly one action,
+# named in `resolved_by_action_id`, and does not ask for a second decision). The 65 of the first wave are the ACTION_REQUIRED rows of wave 1.
 INIT_COLUMNS = ["item_id", "wave", "kind", "question", "resolves", "units_at_stake", "why_first", "where_the_answer_goes", "owner_answer", "owner_notes"]
-QUEUE_COLUMNS = ["queue_position", "wave", "item_kind", "item_id", "detail_file", "units_at_stake", "why_in_this_wave"]
+QUEUE_COLUMNS = ["queue_position", "wave", "queue_role", "item_kind", "item_id", "action_id", "resolved_by_action_id", "answer_destination", "detail_file", "group_tag", "units_at_stake", "why_in_this_wave"]
 FIRST_WAVE = {"p1_min_units": 100, "p2_min_units": 1000}
+ACTION, SUPPORT = "ACTION_REQUIRED", "SUPPORTING_ROW"
 
 
 def build_initial(inp: Inputs, alias_rows, brand_rows, create_rows, view, meta) -> tuple[list[dict], dict]:
+    """The four rule / filing questions (the only rows of initial_owner_decisions.csv: they are decisions that have no row of their own elsewhere), and the plan of the other first-wave actions."""
     brand_ids = lambda kind: [r["decision_id"] for r in brand_rows if r["disagreement_kind"] == kind]
-    units = lambda ids, rows, key="units_lifetime": sum(r[key] for r in rows if r["decision_id"] in ids)
+    units = lambda ids: sum(r["units_lifetime"] for r in brand_rows if r["decision_id"] in ids)
     rel = brand_ids("PRODUCER_ADMITS_RELATED_BRAND__CATALOG_LABEL_LOOKUP_FINDS_NONE")
     jet = brand_ids("CATALOG_ALIAS_RESOLVES__PRODUCER_HAS_NO_BRAND_RELATION")
     mx = brand_ids("FILING_OF_A_SUB_BRAND_THE_CATALOG_HOLDS_UNDER_ANOTHER_BRAND")
     items = [
         ("INIT-01", "CONTRACT", "When the producer's brand relation to a TDR brand is RELATED (capped at PROPOSE), must a consumer take its candidate set from the producer instead of resolving the brand itself from catalog labels?",
-         rel, units(rel, brand_rows), "one rule closes seven of the eight unresolved parity cases", "adoption.yaml (candidates_pool_rules) / a PR #201 consumer note"),
+         rel, units(rel), "one rule closes seven of the eight unresolved parity cases", "adoption.yaml (candidates_pool_rules) / a PR #201 consumer note"),
         ("INIT-02", "CONTRACT", "May a catalog brand `aliases` entry ever be a brand relation, and if so as which typed class (SAME / RELABEL / RELATED) and with which provenance? Decide the one label in the pack (JETOUR under Chery).",
-         jet, units(jet, brand_rows), "closes the one case where the consumer resolves a brand the producer does not relate", "policy.yaml aliases.brand + alias_provenance"),
+         jet, units(jet), "closes the one case where the consumer resolves a brand the producer does not relate", "policy.yaml aliases.brand + alias_provenance"),
         ("INIT-03", "CATALOG", "Where are Maxus-badged models filed: under the registration brand MG (as mg.mg_maxus_7 / mg.mg_maxus_9 are today) or under a Maxus brand?",
-         mx + ["OD-C11"], units(mx, brand_rows), "blocks the V80 CREATE, two Mifa identity reviews and the EPC1A parity case", "catalog brand records / PR #201 identity review"),
+         mx + ["OD-C11"], units(mx), "blocks the V80 CREATE, two Mifa identity reviews and the EPC1A parity case", "catalog brand records / PR #201 identity review"),
         ("INIT-04", "CONTRACT", "What does a TDR catalog model `aliases` entry assert: the same model, a registration-attribution label that may cover a broader family, or a lookup convenience? "
-         "(The nine alias rows show all three readings occur.)", [r["decision_id"] for r in alias_rows], sum(r["provider_units_lifetime"] if isinstance(r["provider_units_lifetime"], int) else int0(r["provider_units_lifetime"]) for r in alias_rows),
+         "(The nine alias rows show all three readings occur.)", [r["decision_id"] for r in alias_rows], sum(int0(r["provider_units_lifetime"]) for r in alias_rows),
          "the answer is the rule for all nine alias rows and for any alias the catalog gains later", "policy / VEHICLE_DB_V3 note"),
     ]
     out = [{"item_id": i, "wave": 1, "kind": k, "question": q, "resolves": ids, "units_at_stake": u, "why_first": w, "where_the_answer_goes": g, "owner_answer": "", "owner_notes": ""} for i, k, q, ids, u, w, g in items]
-    strong = [r for r in alias_rows if r["evidence_sufficiency"] == "STRONG_PACK_EVIDENCE"]
-    for r in strong:
-        out.append({"item_id": f"INIT-{r['decision_id']}", "wave": 1, "kind": "ALIAS_VERDICT", "question": f"{r['provider_name']} ({r['provider_group_id']}) vs catalog alias on {r['existing_identity_id']}: which alias class, and is the group that model?",
-                    "resolves": [r["decision_id"]], "units_at_stake": int0(r["provider_units_lifetime"]), "why_first": "alias with decisive registration-series evidence and real volume", "where_the_answer_goes": "catalog_alias_collisions.csv owner_* and create_candidates.csv",
-                    "owner_answer": "", "owner_notes": ""})
     alias_groups = {r["provider_group_id"] for r in alias_rows}
     brand_groups = {r["provider_group_id"] for r in brand_rows}
-    first_create = [c for c in create_rows if c["provider_group_id"] not in alias_groups | brand_groups and
+    first_alias = [r["decision_id"] for r in alias_rows if r["evidence_sufficiency"] == "STRONG_PACK_EVIDENCE"]
+    first_create = [c["decision_id"] for c in create_rows if c["provider_group_id"] not in alias_groups | brand_groups and
                     ((c["risk_tier"].startswith("P1") and c["units_lifetime"] >= FIRST_WAVE["p1_min_units"]) or (c["risk_tier"].startswith("P2") and c["units_lifetime"] >= FIRST_WAVE["p2_min_units"]))]
-    for c in first_create:
-        out.append({"item_id": f"INIT-{c['decision_id']}", "wave": 1, "kind": "CREATE_VERDICT", "question": f"Should TDR have a canonical model for {c['provider_brand']} {c['provider_name']} ({c['proposed_canonical_id']})?",
-                    "resolves": [c["decision_id"]], "units_at_stake": c["units_lifetime"], "why_first": "; ".join(c["risk_categories"][:3]), "where_the_answer_goes": "create_candidates.csv owner_verdict (+ owner_discovery_class)", "owner_answer": "", "owner_notes": ""})
-    starter = [r for r in view if r["starter_batch"]]
-    decided_elsewhere = {r["model_group_id"] for r in starter if r["interacts_with"]}
-    for b, label in (("S1_AUTO_PAIRS", "v1 AUTO pairs that carry 80% of AUTO-pair units"), ("S2_LEGACY_AUTO_NOT_AUTO", "legacy AUTO rows that v1 does not AUTO (the units-heaviest 80%)"),
-                     ("S3_KNOWN_FAMILY", "the largest row of each known-case family"), ("S4_STRUCTURAL", "PART_OF / COMPOSED_OF and several-viable-candidate rows")):
-        rows = [r for r in starter if b in r["starter_batch"]]
-        out.append({"item_id": f"INIT-R6-{b.split('_')[0]}", "wave": 1, "kind": "R6_PAIR_VERDICTS", "question": f"Pair verdicts for review ranks {', '.join(r['review_rank'] for r in sorted(rows, key=lambda x: int(x['review_rank'])))} ({label}).",
-                    "resolves": [f"R6-{r['review_rank']}" for r in rows], "units_at_stake": sum(r["ice_lifetime_units"] for r in rows), "why_first": label,
-                    "where_the_answer_goes": "r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id (not this pack)", "owner_answer": "", "owner_notes": ""})
-    distinct = sorted({r["review_rank"] for r in starter}, key=int)
-    create_units = sum(c["units_lifetime"] for c in create_rows)
-    stats = {"contract_questions": 3 + 1, "alias_verdicts": len(strong), "create_verdicts": len(first_create), "r6_rows_distinct": len(distinct), "r6_rows_also_decided_elsewhere": len(decided_elsewhere),
-             "r6_rows_alone": len(distinct) - len(decided_elsewhere), "owner_actions": 4 + len(strong) + len(first_create) + len(distinct) - len(decided_elsewhere),
-             "create_units_first_wave": sum(c["units_lifetime"] for c in first_create) + sum(r["units_lifetime"] for r in brand_rows if r["provider_group_id"] in {c["provider_group_id"] for c in create_rows}) + sum(int0(r["provider_units_lifetime"]) for r in strong),
-             "create_units_total": create_units, "r6_units_first_wave": sum(r["ice_lifetime_units"] for r in starter), "starter_ranks": distinct}
-    return out, stats
+    starter = sorted({r["review_rank"] for r in view if r["starter_batch"]}, key=int)
+    return out, {"alias": first_alias, "create": first_create, "starter_ranks": starter}
 
 
-def build_queue(inp: Inputs, init: list[dict], alias_rows, brand_rows, create_rows, view, neg_rows) -> list[dict]:
-    done = set()
-    rows = []
+def brand_resolver(r: dict) -> str:
+    return {"PRODUCER_ADMITS_RELATED_BRAND__CATALOG_LABEL_LOOKUP_FINDS_NONE": "INIT-01", "CATALOG_ALIAS_RESOLVES__PRODUCER_HAS_NO_BRAND_RELATION": "INIT-02"}.get(r["disagreement_kind"], "INIT-03")
 
-    def add(wave, kind, item, file, units, why):
-        if (kind, item) in done:
-            return
-        done.add((kind, item))
-        rows.append({"queue_position": len(rows) + 1, "wave": wave, "item_kind": kind, "item_id": item, "detail_file": file, "units_at_stake": units, "why_in_this_wave": why})
+
+def build_queue(inp: Inputs, init: list[dict], plan: dict, alias_rows, brand_rows, create_rows, view, neg_rows) -> list[dict]:
+    rows: list[dict] = []
+    alias_of = {r["provider_group_id"]: r for r in alias_rows}
+    brand_of = {r["provider_group_id"]: r for r in brand_rows}
+    create_of = {r["provider_group_id"]: r for r in create_rows}
+    first_alias, first_create, starter = set(plan["alias"]), set(plan["create"]), set(plan["starter_ranks"])
+
+    def add(wave, role, kind, item, action, resolved_by, dest, file, tag, units, why):
+        rows.append({"queue_position": 0, "wave": wave, "queue_role": role, "item_kind": kind, "item_id": item, "action_id": action, "resolved_by_action_id": resolved_by, "answer_destination": dest,
+                     "detail_file": file, "group_tag": tag, "units_at_stake": units, "why_in_this_wave": why})
 
     for i in init:
-        add(1, i["kind"], i["item_id"], "initial_owner_decisions.csv", i["units_at_stake"], i["why_first"])
-    init_ids = {i["item_id"] for i in init}
-    first = {x for i in init for x in i["resolves"]}
+        add(1, ACTION, i["kind"], i["item_id"], i["item_id"], "", "initial_owner_decisions.csv owner_answer", "initial_owner_decisions.csv", "", i["units_at_stake"], i["why_first"])
     for r in alias_rows:
-        w1 = f"INIT-{r['decision_id']}" in init_ids
-        add(1 if w1 else 2, "ALIAS_ROW", r["decision_id"], "catalog_alias_collisions.csv", int0(r["provider_units_lifetime"]), "decisive series evidence and real volume" if w1 else "thin volume: follows from the INIT-04 rule")
+        d = r["decision_id"]
+        c = create_of.get(r["provider_group_id"])
+        add(1 if d in first_alias else 2, ACTION, "ALIAS_ROW", d, d, "", f"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at {c['decision_id'] if c else '(no CREATE row)'}",
+            "catalog_alias_collisions.csv", "", int0(r["provider_units_lifetime"]), "decisive series evidence and real volume" if d in first_alias else "thin volume: follows from the INIT-04 rule")
     for r in brand_rows:
-        add(1, "BRAND_CASE", r["decision_id"], "brand_resolution_cases.csv", r["units_lifetime"], "closed by the contract-level answer (INIT-01..03)")
+        res = brand_resolver(r)
+        add(1, SUPPORT, "BRAND_CASE", r["decision_id"], "", res, f"initial_owner_decisions.csv {res} owner_answer (owner_case_override here only if the answer should not apply to this case)", "brand_resolution_cases.csv", "", r["units_lifetime"],
+            f"closed by the contract-level answer {res}")
+
+    def parent_of_group(g: str) -> str:
+        if g in alias_of:
+            return alias_of[g]["decision_id"]
+        if g in brand_of:
+            return brand_resolver(brand_of[g])
+        return ""
+
+    create_parent = {}
     for c in create_rows:
-        w1 = f"INIT-{c['decision_id']}" in init_ids or c["decision_id"] in first or f"INIT-{c['alias_decision_id']}" in init_ids
-        tier3 = c["risk_tier"].startswith("P3")
+        pr = parent_of_group(c["provider_group_id"])
+        create_parent[c["decision_id"]] = pr
         spot = c["p3_spot_check_sample"] == "yes"
-        add(1 if w1 else (2 if (spot or not tier3) else 3), "CREATE_ROW", c["decision_id"], "create_candidates.csv", c["units_lifetime"],
-            "first wave" if w1 else (("P3 bulk, in the spot-check sample" if spot else "P3 bulk: confirm after the spot check, escalate if it finds one wrong") if tier3 else "P1/P2: needs a row review"))
-    starter_ranks = set(first)
+        tier3 = c["risk_tier"].startswith("P3")
+        if pr:
+            add(1 if (pr in first_alias or pr.startswith("INIT")) else 2, SUPPORT, "CREATE_ROW", c["decision_id"], "", pr,
+                f"create_candidates.csv owner_verdict (written together with {pr}; no second decision)", "create_candidates.csv", "", c["units_lifetime"], f"companion verdict of {pr}")
+        else:
+            w1 = c["decision_id"] in first_create
+            add(1 if w1 else (2 if (spot or not tier3) else 3), ACTION, "CREATE_ROW", c["decision_id"], c["decision_id"], "", "create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",
+                "create_candidates.csv", "", c["units_lifetime"], "first wave" if w1 else (("P3 bulk, in the spot-check sample" if spot else "P3 bulk: confirm after the spot check, escalate if it finds one wrong") if tier3 else "P1/P2: needs a row review"))
     for r in view:
-        rid = f"R6-{r['review_rank']}"
-        add(1 if rid in starter_ranks else (2 if r["in_first_176"] == "yes" else 3), "R6_ROW", rid, "r6_priority_view.csv", r["ice_lifetime_units"], "starter batch" if rid in starter_ranks else ("first 176 rows, not in the starter batch" if r["in_first_176"] == "yes" else "tiers 3-7"))
+        g, rid = r["model_group_id"], f"R6-{r['review_rank']}"
+        pr = parent_of_group(g)
+        if not pr and g in create_of and not create_parent[create_of[g]["decision_id"]]:
+            pr = create_of[g]["decision_id"]
+        tag = ",".join(r["starter_batch"])
+        dest = f"r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank={r['review_rank']}"
+        if pr:
+            add(1 if r["review_rank"] in starter else (2 if r["in_first_176"] == "yes" else 3), SUPPORT, "R6_ROW", rid, "", pr, dest + f" (written together with {pr}; no separate review)", "r6_priority_view.csv", tag, r["ice_lifetime_units"],
+                f"pair question of a group decided by {pr}")
+        else:
+            w = 1 if r["review_rank"] in starter else (2 if r["in_first_176"] == "yes" else 3)
+            add(w, ACTION, "R6_ROW", rid, rid, "", dest, "r6_priority_view.csv", tag, r["ice_lifetime_units"], "starter batch" if w == 1 else ("first 176 rows, not in the starter batch" if w == 2 else "tiers 3-7"))
     for n in neg_rows:
-        add(3, "NEGATIVE_SAMPLE", n["sample_id"], "negative_sample.csv", n["units_lifetime"], "recall denominator: needed after labels exist")
-    rows.sort(key=lambda r: (r["wave"], r["queue_position"]))
+        add(3, ACTION, "NEGATIVE_SAMPLE", n["sample_id"], n["sample_id"], "", "negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)", "negative_sample.csv", "", n["units_lifetime"],
+            "recall denominator: needed after labels exist")
+    order = {ACTION: 0, SUPPORT: 1}
+    seq = {id(r): i for i, r in enumerate(rows)}
+    rows.sort(key=lambda r: (r["wave"], order[r["queue_role"]], seq[id(r)]))
     for i, r in enumerate(rows, start=1):
         r["queue_position"] = i
     return rows
+
+
+def wave1_stats(queue: list[dict]) -> dict:
+    w1 = [q for q in queue if q["wave"] == 1]
+    act = [q for q in w1 if q["queue_role"] == ACTION]
+    kinds = collections.Counter(q["item_kind"] for q in act)
+    r6_all = [q for q in w1 if q["item_kind"] == "R6_ROW"]
+    return {"queue_rows_wave1": len(w1), "supporting_rows_wave1": len(w1) - len(act), "owner_actions": len(act), "contract_questions": kinds["CONTRACT"] + kinds["CATALOG"], "alias_verdicts": kinds["ALIAS_ROW"],
+            "create_verdicts": kinds["CREATE_ROW"], "r6_rows_alone": kinds["R6_ROW"], "r6_rows_distinct": len(r6_all), "r6_rows_also_decided_elsewhere": len(r6_all) - kinds["R6_ROW"],
+            "supporting_by_kind": dict(collections.Counter(q["item_kind"] for q in w1 if q["queue_role"] == SUPPORT))}
 
 
 # ----------------------------------------------------------------------------------------------------------------------------- assembling the pack
@@ -1118,8 +1298,8 @@ FILES = {
     "r6_create_reconciliation.csv": (RECON_COLUMNS, "recon"), "verdict_crosswalk.csv": (CROSSWALK_COLUMNS, "crosswalk"), "r6_priority_view.csv": (R6_VIEW_COLUMNS, "view"),
     "brand_folds.csv": (FOLD_COLUMNS, "folds"), "negative_sample.csv": (NEG_COLUMNS, "neg"), "pending_threshold_sensitivity.csv": (THRESH_COLUMNS, "thresh"),
     "calibration_entry_requirements.csv": (ENTRY_COLUMNS, "entry"), "initial_owner_decisions.csv": (INIT_COLUMNS, "init"), "decision_queue.csv": (QUEUE_COLUMNS, "queue")}
-OWNER_FIELDS = {"catalog_alias_collisions.csv": ["owner_alias_class", "owner_provider_verdict", "owner_canonical_model_id", "owner_notes"],
-                "brand_resolution_cases.csv": ["owner_decision", "owner_notes"], "create_candidates.csv": ["owner_verdict", "owner_canonical_model_id", "owner_discovery_class", "owner_notes"],
+OWNER_FIELDS = {"catalog_alias_collisions.csv": ["owner_alias_class", "owner_notes"],
+                "brand_resolution_cases.csv": ["owner_case_override", "owner_notes"], "create_candidates.csv": ["owner_verdict", "owner_canonical_model_id", "owner_discovery_class", "owner_notes"],
                 "negative_sample.csv": ["owner_has_tdr_counterpart", "owner_canonical_model_id", "owner_link_type", "owner_notes"], "initial_owner_decisions.csv": ["owner_answer", "owner_notes"]}
 
 
@@ -1137,12 +1317,14 @@ def build_tables(inp: Inputs) -> dict:
         r["fold"] = fold_for(meta, r["brand_family"])
     starter_groups = {r["model_group_id"] for r in view if r["starter_batch"]}
     neg, neg_summary = build_negative_sample(inp, meta)
-    init, istats = build_initial(inp, alias, brand, create, view, meta)
+    init, plan = build_initial(inp, alias, brand, create, view, meta)
+    queue = build_queue(inp, init, plan, alias, brand, create, view, neg)
+    istats = wave1_stats(queue)
     for rows_ in (alias, brand, create, view, neg):
         for r in rows_:
             r["evidence_refs"] = REF_SEP.join(r["evidence_refs"])
     return {"alias": alias, "brand": brand, "create": create, "recon": build_reconciliation(inp, create), "crosswalk": verdict_crosswalk(), "view": view, "folds": build_folds(inp, view, meta, create, neg),
-            "neg": neg, "thresh": build_threshold_table(inp, starter_groups), "entry": build_entry_requirements(inp, view, meta, neg_summary), "init": init, "queue": build_queue(inp, init, alias, brand, create, view, neg),
+            "neg": neg, "thresh": build_threshold_table(inp, starter_groups), "entry": build_entry_requirements(inp, view, meta, neg_summary), "init": init, "queue": queue,
             "meta": meta, "neg_summary": neg_summary, "istats": istats}
 
 
@@ -1199,13 +1381,29 @@ def render_report(inp: Inputs, T: dict) -> str:
     w("Two kinds of verdict are kept apart (`verdict_crosswalk.csv`): the R6 sheet asks **is this Ice group this TDR model?** (a pair); PR #201's adjudication asks **should TDR have a model for this group at all?** (a group). "
       "A pair verdict never implies a group verdict or the reverse; `check_label_consistency()` only flags answers that cannot both be true.\n")
     w("## 1. The smallest first set\n")
-    w(f"Nothing here requires all {n_r6} R6 rows to be labelled. The first wave is **{ist['owner_actions']} owner actions**: {ist['contract_questions']} rule/filing questions, {ist['alias_verdicts']} alias verdicts, {ist['create_verdicts']} CREATE verdicts and "
-      f"{ist['r6_rows_alone']} R6 pair verdicts ({ist['r6_rows_distinct']} starter rows; {ist['r6_rows_also_decided_elsewhere']} of them is answered together with an alias or CREATE verdict). "
-      f"It covers {round(100 * meta['s1_units'] / meta['auto_pair_units'], 1)}% of the lifetime units of all {meta['auto_pairs']} AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, "
-      f"and {round(100 * wave1_units / total_units, 1)}% of the lifetime units of the {n_create} CREATE candidates ({wave1_rows} rows). "
-      "It is built to find a systematic failure early, not to certify a rate (see §7).\n")
-    w(md_table(["item", "kind", "question", "resolves", "units"], [[i["item_id"], i["kind"], i["question"], span(i["resolves"]), i["units_at_stake"]] for i in init]))
-    w("\nThe full order, with later waves, is `decision_queue.csv`.\n")
+    wq = [q for q in T["queue"] if q["wave"] == 1]
+    acts = [q for q in wq if q["queue_role"] == ACTION]
+    w(f"Nothing here requires all {n_r6} R6 rows to be labelled. The first wave is **{ist['owner_actions']} owner decisions**, each counted once: {ist['contract_questions']} rule/filing questions, {ist['alias_verdicts']} alias decisions, "
+      f"{ist['create_verdicts']} CREATE verdicts and {ist['r6_rows_alone']} R6 pair verdicts. `decision_queue.csv` lists {ist['queue_rows_wave1']} first-wave rows because it keeps every underlying record: "
+      f"the {ist['owner_actions']} rows with `queue_role = ACTION_REQUIRED`, plus {ist['supporting_rows_wave1']} `SUPPORTING_ROW`s ({', '.join(f'{v} {k}' for k, v in sorted(ist['supporting_by_kind'].items()))}). "
+      "A supporting row is evidence or a companion field: `resolved_by_action_id` names the one action that settles it, and it never asks for a second decision. "
+      f"The {ist['r6_rows_distinct']} starter R6 rows are all kept ({ist['r6_rows_alone']} actions, {ist['r6_rows_also_decided_elsewhere']} answered together with its group's action); all {n_create} CREATE candidates and all {n_r6} R6 rows stay in their files. "
+      f"The first wave covers {round(100 * meta['s1_units'] / meta['auto_pair_units'], 1)}% of the lifetime units of all {meta['auto_pairs']} AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, "
+      f"and {round(100 * wave1_units / total_units, 1)}% of the lifetime units of the {n_create} CREATE candidates ({wave1_rows} rows). It is built to find a systematic failure early, not to certify a rate (see §7).\n")
+    byk = lambda k: [q["item_id"] for q in acts if q["item_kind"] == k]
+    r6s = collections.defaultdict(list)
+    for q in acts:
+        if q["item_kind"] == "R6_ROW":
+            for t_ in q["group_tag"].split(","):
+                r6s[t_].append(q["item_id"].split("-")[1])
+    w(md_table(["action group", "count", "members", "answer goes to"], [
+        ["rule / filing questions", len(init), ", ".join(i["item_id"] for i in init), "`initial_owner_decisions.csv` owner_answer"],
+        ["alias decisions", len(byk("ALIAS_ROW")), ", ".join(byk("ALIAS_ROW")), "`catalog_alias_collisions.csv` owner_alias_class (group verdict: its CREATE row)"],
+        ["CREATE verdicts", len(byk("CREATE_ROW")), ", ".join(byk("CREATE_ROW")), "`create_candidates.csv` owner_verdict"],
+        ["R6 pair verdicts", len(byk("R6_ROW")), "; ".join(f"{k}: ranks {', '.join(sorted(v, key=int))}" for k, v in sorted(r6s.items())), "`r6_owner_review.csv`"]]))
+    w("\nThe four rule / filing questions:\n")
+    w(md_table(["item", "kind", "question", "supporting rows it settles", "units"], [[i["item_id"], i["kind"], i["question"], span(i["resolves"]), i["units_at_stake"]] for i in init]))
+    w("\nThe full order, with later waves, is `decision_queue.csv` (`queue_role`, `action_id`, `resolved_by_action_id`, `answer_destination`).\n")
     w("## 2. R6 owner sheet vs PR #201's 82 provisional CREATE candidates\n")
     w(f"- {len(in_sheet)} of the {n_create} candidates appear in `r6_owner_review.csv` ({len(rec) - c(r['in_r6_sheet'] for r in rec)['no']} sheet rows): "
       f"{c(r['relationship'] for r in rec)['LEGACY_PAIR_OPEN_AND_CREATE_OPEN']} legacy-proposed pairs, {c(r['relationship'] for r in rec)['V1_ONLY_PAIR_OPEN_AND_CREATE_OPEN']} v1-only pairs, "
@@ -1249,8 +1447,11 @@ def render_report(inp: Inputs, T: dict) -> str:
     w(f"\nP1 = contradicting evidence (alias, brand collision, coinciding series, strong legacy proposal). P2 = high volume, current market or a code-like name with no contradicting evidence. P3 = historical bulk. "
       f"Age and volume never make a candidate false (PR #201's rule); they only order the work. The spot-check sample is the first {SPOT_CHECK_N} P3 rows by a fixed hash.\n")
     w("## 7. Calibration after labels exist (`calibration_procedure.json`)\n")
-    w("- **Labels → ground truth**: pair labels give positives (per link type) and negatives; group labels make every pooled candidate of a VALID_MISSING_CANONICAL group a negative; AMBIGUOUS / INSUFFICIENT_EVIDENCE are excluded and counted. `check_label_consistency()` runs first.")
-    w(f"- **Brand-separated evaluation**: {TRIAGE['folds']} folds of brand families (`brand_folds.csv`); tune on four, evaluate once on the fifth, report pooled out-of-fold predictions. No threshold is tuned on a family it is evaluated on.")
+    w("- **Labels → ground truth, per link type**: a pair label speaks for the link type it names (CORRECT_EQUIVALENT / PART_OF / COMPOSED_OF positive; WRONG_TARGET / NO_TDR_TARGET negative for the link type the row proposed). A group label speaks only about EQUIVALENT identity: "
+      "VALID_MISSING_CANONICAL is EQUIVALENT-negative and says nothing about PART_OF / COMPOSED_OF (a group with no model of its own can still be part of existing ones: a REVIEW prompt, not a negative); VARIANT_TRIM_CODE infers no pair at all until the owner gives an explicit link label. "
+      "Each link type is scored on its own POSITIVE / NEGATIVE cells; UNKNOWN, EXCLUDED and CONFLICT cells are counted, not scored (`derive_truth`, `metric_rows`). `check_label_consistency()` runs first.")
+    w(f"- **Brand-separated evaluation, selection on training folds only**: {TRIAGE['folds']} folds of brand families (`brand_folds.csv`). The candidate grid, tie-break and selection rule are registered before any label is read. Pass 1 selects one value per fold from the other four folds and freezes it "
+      "(`select_threshold` is handed no held-out row and no tolerance); pass 2 evaluates each frozen value once on its own fold. Pooled held-out precision, recall and the false-AUTO bound are **acceptance / failure evidence only** (`acceptance_gate`): a failure is reported as 'not calibrated' and any further attempt is a separately versioned experiment, never a retune on the same held-out outcomes.")
     w("- **Metrics**: AUTO precision and false-AUTO count (Wilson interval; rule of three when zero), AUTO recall, PROPOSE precision, PROPOSE-or-better recall using the weighted negative sample for the pairs the contract missed; each also unit-weighted.")
     w("- **False-AUTO analysis**: each false-AUTO is listed with its codes and classified (series coincidence, granularity, lineage, brand relation, label noise); a root cause that a gate could express is a proposal for a later round, never applied in the same pass.")
     w("- **Pending thresholds**: each is re-run at its swept values on the labelled rows (`pending_threshold_sensitivity.csv`); an entry that moves no labelled row stays pending.\n")
@@ -1286,7 +1487,7 @@ def build_files(inp: Inputs) -> dict[str, bytes]:
     files["OWNER_DECISION_PACK.md"] = render_report(inp, T).encode("utf-8")
     manifest = {"schema": "ir-owner-decision-pack-manifest/1", "pack": PACK_ID, "binding": inp.adoption["binding"], "pr201_commit": PR201_COMMIT,
                 "export_manifest_sha256": sha256_file(E.OUT / "MANIFEST.json"), "r6_owner_review_sha256": sha256_file(A.CALIBRATION_DIR / "r6_owner_review.csv"),
-                "series_evidence_sha256": sha256_file(SERIES_JSON), "pr201_inputs": json.loads((IN201 / "PROVENANCE.json").read_text(encoding="utf-8"))["files"],
+                "series_evidence_sha256": sha256_file(SERIES_JSON), "sensitivity_results_sha256": sha256_file(A.CALIBRATION_DIR / "sensitivity_results.json"), "pr201_inputs": json.loads((IN201 / "PROVENANCE.json").read_text(encoding="utf-8"))["files"],
                 "counts": {"alias_rows": len(T["alias"]), "brand_cases": len(T["brand"]), "create_rows": len(T["create"]), "r6_view_rows": len(T["view"]), "starter_rows": T["istats"]["r6_rows_distinct"],
                            "negative_sample": len(T["neg"]), "first_wave_owner_actions": T["istats"]["owner_actions"], "queue": len(T["queue"])},
                 "files": {n: {"sha256": sha256_bytes(b), "bytes": len(b)} for n, b in sorted(files.items())}}
