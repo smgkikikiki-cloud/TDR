@@ -15,19 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      # Only run Enforcer self-tests from a trusted, versioned checkout of
+      # default-branch code. Historical PR HEADs do not contain these scripts.
+      - name: Checkout trusted central Enforcer implementation
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted-enforcer
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run offline pure unit tests
+      - name: Record trusted Enforcer version and verify self-tests
+        working-directory: trusted-enforcer
         run: |
+          echo "Trusted Enforcer SHA: $(git rev-parse HEAD)"
           node --test orchestration/preflight.test.mjs
           node --test orchestration/pr-admission.test.mjs
           node --test orchestration/pr-admission.integration.test.mjs
-      - name: Verify Stage-0 plan remains disabled
+          if [ -f orchestration/historical-pr-audit.test.mjs ]; then
+            node --test orchestration/historical-pr-audit.test.mjs
+          fi
+      - name: Verify trusted Stage-0 plan remains disabled
+        working-directory: trusted-enforcer
         run: node orchestration/preflight.mjs --check-repo
 
   enforcer-pr-admission:
@@ -35,8 +45,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # Critical trust split: approved master & checker from PR BASE, NEVER from
-      # the PR candidate. This first bootstrap PR predates checker in its BASE.
+      # Central compatibility code comes from trusted main; any BASE-supplied
+      # checker still takes precedence when it exists in the target PR base.
+      # Never execute candidate HEAD scripts as CI governance authority.
+      - name: Checkout trusted central Enforcer for historical fallback
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted-enforcer
+          persist-credentials: false
       - name: Checkout trusted base-commit policy
         uses: actions/checkout@v4
         with:
@@ -55,13 +72,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify authentic PR diff using base policy
+      - name: Verify authentic PR diff and preserve historical audit-only mode
         run: |
-          if [ ! -f policy/orchestration/pr-admission.mjs ]; then
-            echo "::notice::Stage 1 bootstrap PR: BASE has no trusted checker yet. No managed task is authorized by this check."
-            exit 0
+          echo "Central Enforcer implementation SHA: $(git -C trusted-enforcer rev-parse HEAD)"
+          if [ -f policy/orchestration/pr-admission.mjs ]; then
+            # Modern PR: retain the exact trusted BASE policy, not HEAD or main.
+            node policy/orchestration/pr-admission.mjs \
+              --event "$GITHUB_EVENT_PATH" \
+              --policy-root "$PWD/policy" \
+              --candidate-root "$PWD/candidate"
+          else
+            # Historical base: never imply task admission. A managed packet or
+            # a governance-tampering candidate is DENIED, not auto-accepted.
+            node trusted-enforcer/orchestration/historical-pr-audit.mjs \
+              --event "$GITHUB_EVENT_PATH" \
+              --policy-root "$PWD/policy" \
+              --candidate-root "$PWD/candidate"
           fi
-          node policy/orchestration/pr-admission.mjs \
-            --event "$GITHUB_EVENT_PATH" \
-            --policy-root "$PWD/policy" \
-            --candidate-root "$PWD/candidate"
