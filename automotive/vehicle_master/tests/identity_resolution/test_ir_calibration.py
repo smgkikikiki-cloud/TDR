@@ -378,6 +378,10 @@ def test_the_per_entry_notes_in_the_report_agree_with_the_sensitivity_numbers():
     assert by["auto.units=240"]["auto_lost"] > 0 and not any(moved("auto.common_months") + moved("auto.joint_nonzero") + moved("propose.common_months")), "the series_minimums note"
     assert by["what-if: Ice confirms absent = zero"]["groups_changed"] == 0 < by["what-if: Ice and TDR confirm absent = zero"]["groups_changed"], "the series_absent_row_gap note"
     assert max(moved("lifecycle.")) <= 12, "the attributes_lifecycle note"
+    # revision 4: the distinctive-token knobs are outcome-neutral on this data (SIBLING and CONTRADICTION both veto); the digit rule moves exactly one group; the containment extension is the one that would move decisions
+    assert not any(moved("distinctive.min_length") + moved("distinctive.exclude_numeric") + moved("distinctive.vocabulary") + moved("distinctive.patterns") + moved("distinctive.required_for=none")), "the lexical_distinctive_* notes"
+    assert moved("fuzzy.allow_tokens_with_digits") == [1] and by["fuzzy.allow_tokens_with_digits=true"]["examples_changed"] == ["mazda-mazda6e"]
+    assert moved("distinctive.required_for=siblings+containment")[0] > 0 and by["distinctive.required_for=siblings+containment"]["auto_gained"] == 0
     summary = report_summary()
     assert summary["gap_composition"]["sum_of_parts_equals_gap_everywhere"] is True
     gc = summary["gap_composition"]

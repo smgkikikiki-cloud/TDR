@@ -246,7 +246,7 @@ codes:
     kind: decision
     roles: [blocking]
     effect: cap_proposed
-    summary: Equal only through a one-edit typo tolerance on a long token; PROPOSED at most.
+    summary: Equal only through a one-edit typo tolerance on a long letters-only token (never a token that contains a digit); PROPOSED at most.
   NAME_CONTAINMENT_SUBJECT_COARSER:
     area: NAME
     kind: decision
@@ -264,13 +264,13 @@ codes:
     kind: decision
     roles: [info]
     effect: veto_candidate
-    summary: Both names share a stem but each carries a distinguishing token the other lacks (Hilux Revo / Hilux Travo).
+    summary: Both names share a distinctive token but each carries a distinguishing token the other lacks (Hilux Revo / Hilux Travo).
   NAME_CONTRADICTION:
     area: NAME
     kind: decision
     roles: [info]
     effect: veto_candidate
-    summary: Names carry disjoint distinguishing tokens (D-Max / MU-X, 3 Series / X3).
+    summary: Names carry disjoint distinguishing tokens, or share only tokens that cannot carry identity (D-Max / MU-X, 3 Series / X3, HR-V / WR-V, CX-30 / MX-30).
   NAME_UNAVAILABLE:
     area: NAME
     kind: decision

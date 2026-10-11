@@ -1,8 +1,8 @@
 # TDR Identity Resolution Contract — SPEC v1
 
-**Status: DRAFT, revision 3 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
+**Status: DRAFT, revision 4 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
 The policy values tagged `proposal` / `assumption` are provisional and are **not adopted** (§14.6, `adoption.yaml`,
-`binding: false`). `CHANGELOG.md` lists what changed after the owner's reviews; the owner's decisions of 2026-10-11 (link types, the two cardinality rules, atomic link sets, `link_type` in persistence identity, UNKNOWN missing-row semantics, `binding: false`, no freeze) are recorded in `adoption.yaml` under `owner_decisions` (Appendix E).
+`binding: false`). `CHANGELOG.md` lists what changed after the owner's reviews; the owner's decisions of 2026-10-11 (link types, the two cardinality rules, atomic link sets, `link_type` in persistence identity, UNKNOWN missing-row semantics, `binding: false`, no freeze, and the lexical-relation correction `od_lexical_relation_correction`) are recorded in `adoption.yaml` under `owner_decisions` (Appendix E).
 Companion files in this directory: `policy.yaml` (every tunable), `provider_capabilities.yaml` (what each source's data means),
 `adoption.yaml` (the adoption gate), `reason_codes.yaml` (the code registry), `taxonomy.yaml` (the edge-case taxonomy as data),
 `record.schema.json` (engine input), `decision.schema.json` (engine output), `capabilities.schema.json`, `case.schema.json` +
@@ -120,6 +120,7 @@ These hold for every conforming engine, whatever the policy says.
 - **I17 — A link set is one unit.** The rows of a `COMPOSED_OF` claim are written, refreshed, demoted, staled, suppressed, approved, rejected and locked together or not at all (§10.5).
 - **I18 — Stored overlaps are reported, never auto-repaired.** Stored active claims that break the cardinality rules (§7.0) — two active claims of one subject (C1), two subjects whose active claims overlap on a target contrary to C2, or an incomplete / mixed-state / mis-identified link set — are reported on every subject involved
   (`STRUCTURAL_STORED_CLAIMS_INCONSISTENT`, §8.2 step 0) and nothing is written for them: the engine, and any writer acting on its output, never demotes, moves, merges, splits, retypes, completes or deletes such rows. Only a human decision changes them. (Owner decision 2026-10-11.)
+- **I19 — A lexical tightening never promotes.** Making a name relation stricter (typo tolerance refused for tokens that contain a digit; `SIBLING` requiring a distinctive shared token, §5.3) can only demote a pair: AUTO needs an `EQUAL*` name relation, no tightening creates one, and a removed candidate is never replaced by a better-looking one that the looser rule did not already have. A case that was not AUTO under the looser rule is therefore not AUTO under the stricter one. The only way a name rule adds an `EQUAL*` relation is an explicit model alias (§5.4), which still has to pass every other AUTO gate. A change to §5.3 ships corpus rows for each demoted pair and for the case that survives it, and the lexical-pass measurement lists every subject whose outcome changed. (Owner decision 2026-10-11, `od_lexical_relation_correction`.)
 
 ---
 
@@ -230,15 +231,28 @@ For subject tokens `A` and target tokens `B` (both available), the relation is t
 2. `EQUAL_VIA_MODEL_ALIAS` — equal through a pair in `aliases.model` whose `brand_alias_ids` contains the alias id of the brand relation (§5.4).
 3. `EQUAL_VIA_TOKEN_EQUIV` — equal after mapping each token to the first member of its group in `lexical.token_equivalences` (`ev`/`electric`).
 4. `FUZZY` — `lexical.fuzzy_token.enabled`, and every token that differs is paired with a differing token of the other side, each of length ≥
-   `min_token_length`, at edit distance exactly one. Tokens shorter than that get no tolerance.
+   `min_token_length`, at edit distance exactly one, and — unless `lexical.fuzzy_token.allow_tokens_with_digits` (`false` in v1) — neither containing a digit: tokens that
+   differ in a digit are different versions, not typos (`KDH222R` / `KDH223R`, `Mazda2` / `Mazda3`, `Mazda6` / `Mazda6e`). Tokens shorter than that get no tolerance. A digit in a token both
+   names share does not matter (`Velfire 2400` / `Vellfire 2400` is `FUZZY`).
 5. `SUBJECT_COARSER` — `A` is a proper subset of `B` (the subject is the broader nameplate: Ice `Hilux Travo` vs TDR `Hilux Travo Cab`).
 6. `SUBJECT_FINER` — `A` is a proper superset of `B` (Ice `City Hatchback` vs TDR `City`).
-7. `SIBLING` — `A` and `B` share at least one token and each has a token the other lacks (`Hilux Revo` / `Hilux Travo`).
+7. `SIBLING` — `A` and `B` share at least one token and each has a token the other lacks (`Hilux Revo` / `Hilux Travo`), **and at least one shared token is distinctive** (below). Shared
+   tokens none of which is distinctive leave the pair with no lexical relation, which is `CONTRADICTION`.
 8. `CONTRADICTION` — `A` and `B` share no token (`D-Max` / `MU-X`, `3 Series` / `X3`).
 9. `UNAVAILABLE` — either name is unavailable.
 
+**Distinctive token.** A shared token can carry identity by itself only if it is at least `lexical.distinctive_token.min_length` long, is not purely numeric
+(`lexical.distinctive_token.exclude_numeric`), is not in the descriptor vocabulary `lexical.distinctive_token.non_distinctive` (by class: body, powertrain, trim,
+generation, market; matched on the token or any member of its token-equivalence group), and matches none of `lexical.distinctive_token.non_distinctive_patterns` (descriptor
+shapes such as `4x2`, `V10`, `25hev`, `Gen2`, `Mk4`). A relation listed in `lexical.distinctive_token.required_for_relations` (v1: `SIBLING`) whose shared tokens include no
+distinctive one is `CONTRADICTION`: `HR-V` / `WR-V` (shared `v`), `CX-30` / `MX-30` (shared `30`), `GR Yaris` / `GR Corolla`, `RS 3` / `RS 6`, `T-Roc` / `T-Cross`,
+`AMG C` / `AMG SL`, `Corolla Hybrid` / `Camry Hybrid`. The rule is data: no model name is in the engine, and `V` / `CX` / `GR` / `RS` fall out of the length floor alone. `Ioniq 5` /
+`Ioniq 6`, `Hilux Revo Cab` / `Hilux Travo Cab` and `720S Coupe` / `720S Spider` stay siblings. `SIBLING` and `CONTRADICTION` are both veto relations, so this demotion changes the
+recorded reason (`NAME_CONTRADICTION` instead of `NAME_SIBLING_VARIANT`) and what a consumer counts as a same-provider conflict, never a candidate's eligibility. Containment (`SUBJECT_COARSER` /
+`SUBJECT_FINER`) is not in `required_for_relations`: a subset that rests only on a descriptor remains a granularity relation (a known gap, measured in `calibration/lexical_pass/`).
+
 **Score.** The Sørensen–Dice coefficient over the token sets (equivalence-mapped, fuzzy-paired tokens counted as matches): `2·|A∩B| / (|A|+|B|)`, quantized (§6.7). Every
-`EQUAL*` relation scores `1.0`. The score is informational and feeds the evidence-fingerprint bands; **the relation drives decisions.** (VEHICLE_DB_V3 §14.2's
+`EQUAL*` relation scores `1.0`. The score is informational and feeds the evidence-fingerprint bands; **the relation drives decisions.** A relation demoted by the rules above keeps the score it would have had (`HR-V` / `WR-V` is `CONTRADICTION` at 0.5). (VEHICLE_DB_V3 §14.2's
 "name ≥ 0.8" is satisfied by construction: AUTO requires an `EQUAL*` relation, which scores 1.0. The legacy character-ratio metric is retired — see §15.)
 
 **Roles.** `auto_relations` may be AUTO; `candidate_relations` may carry a name-only PROPOSE; `veto_relations` (`SIBLING`, `CONTRADICTION`) exclude the candidate; `SUBJECT_COARSER`
@@ -248,7 +262,10 @@ and `PART_OF` detection (§7.4).
 ### 5.4 Scoped model aliases
 
 An `aliases.model` entry is an explicit pair `[subject name, target name]`, matched on normalized tokens in either orientation, valid only when the brand relation
-is an alias relation whose alias id is in the entry's `brand_alias_ids`. It exists for cases like Ice `9` (brand MG Maxus) ↔ TDR `Mifa 9` (brand MAXUS). It is never a general fuzzy rule.
+is an alias relation whose alias id is in the entry's `brand_alias_ids` **or**, for an entry that lists `brands`, when both names carry the same brand (`EXACT` / `ALIAS_SAME`) spelled as
+one of them. It exists for cases like Ice `9` (brand MG Maxus) ↔ TDR `Mifa 9` (brand MAXUS), and for the Honda synonyms `Jazz` ↔ `Fit` and `Stepwagon` ↔ `Step WGN` (owner decision
+2026-10-11, `od_lexical_relation_correction`; scoped to the brand Honda, so a Toyota `Jazz` is not a Toyota `Fit`). A pair is a **whole name**: `Jazz Hybrid` / `Fit Hybrid` is not covered.
+It is never a general fuzzy rule. `EQUAL_VIA_MODEL_ALIAS` is an auto relation like `EQUAL`, and every other AUTO gate still applies (a name-only synonym is PROPOSED, `NAME_ONLY_NOT_AUTO`).
 
 ### 5.5 Unspecified names
 
@@ -762,12 +779,22 @@ Generated from `policy.yaml` (`python -m identity_resolution.contract.render --w
 | `lexical.unavailable_name_values` | `["ไม่ระบุ", "unknown", "n/a"]` | observed |
 | `lexical.fuzzy_token.enabled` | `true` | proposal |
 | `lexical.fuzzy_token.min_token_length` | `6` | proposal |
+| `lexical.fuzzy_token.allow_tokens_with_digits` | `false` | proposal |
+| `lexical.distinctive_token.required_for_relations` | `["SIBLING"]` | proposal |
+| `lexical.distinctive_token.min_length` | `3` | proposal |
+| `lexical.distinctive_token.exclude_numeric` | `true` | proposal |
+| `lexical.distinctive_token.non_distinctive.body` | `(25 entries — see policy.yaml)` | proposal |
+| `lexical.distinctive_token.non_distinctive.powertrain` | `(28 entries — see policy.yaml)` | proposal |
+| `lexical.distinctive_token.non_distinctive.trim` | `(23 entries — see policy.yaml)` | proposal |
+| `lexical.distinctive_token.non_distinctive.generation` | `["new", "facelift", "refresh", "redesign", "generation", "gen"]` | proposal |
+| `lexical.distinctive_token.non_distinctive.market` | `["rhd", "lhd"]` | proposal |
+| `lexical.distinctive_token.non_distinctive_patterns` | `(5 entries — see policy.yaml)` | proposal |
 | `lexical.name.auto_relations` | `["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV"]` | proposal |
 | `lexical.name.candidate_relations` | `["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY"]` | proposal |
 | `lexical.name.veto_relations` | `["SIBLING", "CONTRADICTION"]` | proposal |
 | `lexical.series_only.allow_with_name_veto` | `false` | proposal |
 | `aliases.brand` | `(8 entries — see policy.yaml)` | observed |
-| `aliases.model` | `(1 entries — see policy.yaml)` | inherited |
+| `aliases.model` | `(2 entries — see policy.yaml)` | inherited |
 | `attributes.body.compatibility` | `(11 entries — see policy.yaml)` | observed |
 | `attributes.lifecycle.grace_months` | `6` | proposal |
 | `attributes.lifecycle.within_min_share` | `0.8` | proposal |
@@ -847,11 +874,11 @@ Generated from `reason_codes.yaml`.
 | `NAME_EQUAL` | decision | supporting | none | — | Normalized token sets (or compact forms) are identical. |
 | `NAME_EQUAL_VIA_MODEL_ALIAS` | decision | supporting | none | — | Equal only through a scoped model-name alias (aliases.model). |
 | `NAME_EQUAL_VIA_TOKEN_EQUIV` | decision | supporting | none | — | Equal only through a declared token equivalence (e.g. ev = electric). |
-| `NAME_FUZZY_TOKEN` | decision | blocking | cap_proposed | — | Equal only through a one-edit typo tolerance on a long token; PROPOSED at most. |
+| `NAME_FUZZY_TOKEN` | decision | blocking | cap_proposed | — | Equal only through a one-edit typo tolerance on a long letters-only token (never a token that contains a digit); PROPOSED at most. |
 | `NAME_CONTAINMENT_SUBJECT_COARSER` | decision | blocking, info | cap_proposed | — | The subject's name tokens are a proper subset of the target's (the subject is the broader nameplate). |
 | `NAME_CONTAINMENT_SUBJECT_FINER` | decision | blocking, info | cap_proposed | — | The target's name tokens are a proper subset of the subject's (the subject is the narrower nameplate). |
-| `NAME_SIBLING_VARIANT` | decision | info | veto_candidate | — | Both names share a stem but each carries a distinguishing token the other lacks (Hilux Revo / Hilux Travo). |
-| `NAME_CONTRADICTION` | decision | info | veto_candidate | — | Names carry disjoint distinguishing tokens (D-Max / MU-X, 3 Series / X3). |
+| `NAME_SIBLING_VARIANT` | decision | info | veto_candidate | — | Both names share a distinctive token but each carries a distinguishing token the other lacks (Hilux Revo / Hilux Travo). |
+| `NAME_CONTRADICTION` | decision | info | veto_candidate | — | Names carry disjoint distinguishing tokens, or share only tokens that cannot carry identity (D-Max / MU-X, 3 Series / X3, HR-V / WR-V, CX-30 / MX-30). |
 | `NAME_UNAVAILABLE` | decision | blocking, info | name_unavailable | — | One side has no usable name (blocking when a strong series would otherwise have been AUTO). |
 | `NAME_ONLY_NOT_AUTO` | decision | blocking | cap_proposed | — | Lexical agreement without strong series evidence can never be AUTO (§14.2). |
 | `SER_STRONG` | decision | supporting | none | — | Correlation, ratio and monthly-fit gates all pass over the common window. |
@@ -956,6 +983,10 @@ Generated from `taxonomy.yaml`.
 | `NAME-11` | Name unavailable or non-Latin only | ice_m7_data | `NAME_UNAVAILABLE`, `NAME_ONLY_NOT_AUTO` |
 | `NAME-12` | Provider groups by trim code | ice_m7_data | `NAME_CONTRADICTION` |
 | `NAME-13` | Name-only agreement | owner_report_r6 | `NAME_ONLY_NOT_AUTO`, `PROPOSE_NAME_MATCH_SERIES_NOT_STRONG` |
+| `NAME-14` | Tokens that differ in a digit are different versions, not typos | ice_m7_data | `NAME_FUZZY_TOKEN`, `NAME_CONTRADICTION` |
+| `NAME-15` | A sibling needs a shared token that can carry identity | ice_m7_data | `NAME_SIBLING_VARIANT`, `NAME_CONTRADICTION` |
+| `NAME-16` | One vehicle, two market names within a brand | ice_m7_data | `NAME_EQUAL_VIA_MODEL_ALIAS`, `NAME_ONLY_NOT_AUTO` |
+| `NAME-17` | Tightening a lexical relation never promotes an uncertain case | design | `NAME_CONTRADICTION`, `NO_CANDIDATE_ALL_EXCLUDED` |
 | `SER-01` | The two sources cover different spans | owner_report_r6 | `SER_COVERAGE_ASYMMETRIC` |
 | `SER-02` | Window anchored on the provider's newest month | owner_report_r6 | `SER_COVERAGE_ASYMMETRIC`, `SER_STRONG` |
 | `SER-03` | Leading zeros before a launch | ice_m7_data | `SER_WINDOW_TRIMMED_INACTIVE` |
@@ -1069,6 +1100,7 @@ Owner decisions about the contract:
 | `od_cardinality_rules` | 2026-10-11 | accepted | Accept the two cardinality rules as v1: C1 (one active claim per subject) and C2 (a target claimed whole is claimed once; PART_OF claims may share a target). |
 | `od_atomic_link_sets` | 2026-10-11 | accepted | Keep bundles as real atomic link sets, not review-only evidence. |
 | `od_persistence_link_type_identity` | 2026-10-11 | accepted | Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired. |
+| `od_lexical_relation_correction` | 2026-10-11 | accepted | Correct the name-relation ladder after the M7 lexical/relation analysis: FUZZY must not fuzzy-match differing tokens containing digits; SIBLING must require a genuinely distinctive shared token, by a generic policy-driven rule and not by hardcoding V / CX / GR / RS / AMG as model exceptions; add the Honda-scoped model synonyms Jazz <-> Fit and Stepwagon <-> Step WGN. |
 | `od_ice_absent_row_unknown` | 2026-10-11 | standing | Keep Ice absent-row semantics UNKNOWN until Ice explicitly confirms them. |
 | `od_tdr_absent_row_traced` | 2026-10-11 | standing | For TDR registrations do not assume: trace the actual source pipeline, and declare absent=zero only if complete month x dimension coverage is contractually guaranteed; otherwise keep UNKNOWN. |
 | `od_binding_false` | 2026-10-11 | standing | Keep adoption binding=false and every provisional threshold non-authoritative until calibration against the real R6 review data. |
@@ -1093,6 +1125,10 @@ Policy values:
 | `series_window_switches` | design_choice | `series.window.trim_inactive_edges`, `series.window.exclude_partial_periods` | pending | Confirm trimming of both-zero edge months and exclusion of partial periods. |
 | `lexical_token_equivalences` | design_choice | `lexical.token_equivalences` | pending | Confirm each equivalence (ev=electric, hatch=hatchback, hev=hybrid); each is an assumption about TDR naming. |
 | `lexical_fuzzy_switch` | design_choice | `lexical.fuzzy_token.enabled` | pending | Decide whether one-edit typo tolerance exists at all (PROPOSED at most). |
+| `lexical_fuzzy_digits` | design_choice | `lexical.fuzzy_token.allow_tokens_with_digits` | owner_accepted | A token that contains a digit is never paired as a typo (KDH222R / KDH223R, Mazda2 / Mazda3, Mazda6 / Mazda6e are different versions). |
+| `lexical_distinctive_rule` | design_choice | `lexical.distinctive_token.required_for_relations` | owner_accepted | SIBLING needs at least one genuinely distinctive shared token; otherwise the pair has no lexical relation (CONTRADICTION). A policy-driven rule, not a model-specific exception list. |
+| `lexical_distinctive_min_length` | calibration | `lexical.distinctive_token.min_length` | pending | Label set: shared-token lengths of name pairs the owner called the same nameplate vs different nameplates (3 keeps NSX / Han / Model, drops V / CX / GR / RS / HR). |
+| `lexical_distinctive_vocabulary` | design_choice | `lexical.distinctive_token.exclude_numeric`, `lexical.distinctive_token.non_distinctive`, `lexical.distinctive_token.non_distinctive_patterns` | pending | Confirm what 'distinctive' excludes: purely numeric tokens, the generic descriptor vocabulary by class (body, powertrain, trim, generation, market) and the descriptor patterns (4x2, V10, 25hev, Gen2, Mk4). Data about descriptors, never a list of models; 'amg' is the one performance-trim label of three letters that needs a vocabulary entry. |
 | `lexical_name_relation_roles` | design_choice | `lexical.name.auto_relations`, `lexical.name.candidate_relations`, `lexical.name.veto_relations`, `lexical.series_only` | pending | Confirm which name relations may be AUTO, may be a name-only candidate, or veto. |
 | `attributes_target_status` | design_choice | `attributes.target_status` | pending | Confirm that UNVERIFIED targets are capped at PROPOSED. |
 | `subject_never_auto_statuses` | design_choice | `subject_quality.never_auto_identity_statuses` | pending | Confirm that provisional and raw-name subjects are never AUTO. |

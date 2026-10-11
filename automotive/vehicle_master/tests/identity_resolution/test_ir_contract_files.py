@@ -171,6 +171,9 @@ def test_alias_classes_are_well_formed():
     for entry in S.policy()["aliases"]["model"]:
         assert set(entry["brand_alias_ids"]) <= set(ids)
         assert all(len(pair) == 2 for pair in entry["pairs"])
+        # an alias is scoped: by brand alias id, by brand name (`brands`), or both; never to every brand
+        assert entry["brand_alias_ids"] or entry.get("brands"), entry["id"]
+        assert set(entry) <= {"id", "brand_alias_ids", "brands", "pairs"}, entry["id"]
 
 
 def test_body_compatibility_uses_tdr_body_types():
@@ -400,13 +403,19 @@ def test_owner_decisions_are_recorded_and_the_standing_ones_hold():
     adoption = S.adoption()
     decisions = {d["id"]: d for d in adoption["owner_decisions"]}
     assert len(decisions) == len(adoption["owner_decisions"])
-    assert set(decisions) >= {"od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity", "od_ice_absent_row_unknown",
-                              "od_tdr_absent_row_traced", "od_binding_false", "od_not_frozen"}
+    assert set(decisions) >= {"od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity", "od_lexical_relation_correction",
+                              "od_ice_absent_row_unknown", "od_tdr_absent_row_traced", "od_binding_false", "od_not_frozen"}
     for item in decisions.values():
         assert item["status"] in {"accepted", "standing", "lifted"} and re.fullmatch(r"\d{4}-\d{2}-\d{2}", item["decided_on"]), item["id"]
         assert item["decision"].strip() and item["refs"], item["id"]
-    for name in ("od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity"):
+    for name in ("od_link_types", "od_cardinality_rules", "od_atomic_link_sets", "od_persistence_link_type_identity", "od_lexical_relation_correction"):
         assert decisions[name]["status"] == "accepted", name
+    # the owner decided the rules; the vocabulary and the floor that implement 'distinctive' are the pass's proposals and stay pending
+    entries = {e["id"]: e for e in adoption["entries"]}
+    for name in ("lexical_fuzzy_digits", "lexical_distinctive_rule"):
+        assert entries[name]["status"] == "owner_accepted" and entries[name]["owner_decision"] == "od_lexical_relation_correction", name
+    for name in ("lexical_distinctive_min_length", "lexical_distinctive_vocabulary"):
+        assert entries[name]["status"] == "pending", name
     for name in ("od_ice_absent_row_unknown", "od_tdr_absent_row_traced", "od_binding_false", "od_not_frozen"):
         assert decisions[name]["status"] == "standing", f"{name}: lifting a standing owner decision is the owner's act, recorded with a dated note"
     for entry in adoption["entries"]:

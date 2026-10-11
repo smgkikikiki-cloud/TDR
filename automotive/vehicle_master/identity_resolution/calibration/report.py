@@ -67,6 +67,17 @@ def near_miss_fuzzy(r) -> bool:
     return P._lev1(x, y) and x != y and min(len(x), len(y)) < loader.load_policy()["lexical"]["fuzzy_token"]["min_token_length"] and min(len(x), len(y)) >= 4
 
 
+def near_miss_distinctive(r) -> bool:
+    """A SIBLING / CONTRADICTION pair whose longest non-descriptor shared token is at, or one letter below, the distinctive-token floor: moving the floor one step flips it."""
+    if r["v1_name_relation"] not in ("SIBLING", "CONTRADICTION"):
+        return False
+    sa = {P._equiv_rep(t) for t in r["v1_name_subject_tokens"].split()}
+    sb = {P._equiv_rep(t) for t in r["v1_name_target_tokens"].split()}
+    shared = [t for t in sa & sb if not P.is_descriptor(t)]
+    floor = loader.load_policy()["lexical"]["distinctive_token"]["min_length"]
+    return bool(shared) and bool(sa - sb) and bool(sb - sa) and max(len(t) for t in shared) in (floor - 1, floor)
+
+
 BOUNDARIES = [
     ("series.strong.correlation_min = 0.98", "series_strong", "pairs with a usable series and ratio inside 0.9..1.1 whose correlation is within 0.97 .. < 0.99",
      lambda r: _usable(r) and r["v1_ratio"] is not None and 0.9 <= r["v1_ratio"] <= 1.1 and 0.97 <= r["v1_correlation"] < 0.99, lambda r: f"corr {r['v1_correlation']:.4f}"),
@@ -90,6 +101,8 @@ BOUNDARIES = [
      lambda r: r["v1_series_state"] == "STRONG" and (r["v1_semantics_gap_months"] or 0) > 0, lambda r: f"gap {r['v1_semantics_gap_months']} months"),
     ("lexical.fuzzy_token.min_token_length = 6", "lexical_fuzzy_min_length", "name pairs that differ by exactly one one-edit token pair shorter than 6 letters (and >= 4)",
      near_miss_fuzzy, lambda r: f"{r['v1_name_subject_tokens']!r} vs {r['v1_name_target_tokens']!r}"),
+    ("lexical.distinctive_token.min_length = 3", "lexical_distinctive_min_length", "name pairs that share tokens, where the longest shared non-descriptor token has 2 or 3 letters",
+     near_miss_distinctive, lambda r: f"{r['v1_name_subject_tokens']!r} vs {r['v1_name_target_tokens']!r}"),
     ("data_sufficiency.series_decisively_wrong.correlation_below = 0.5", "data_sufficiency_wrong_series", "usable pairs with correlation within 0.4 .. < 0.6 and a non-candidate name",
      lambda r: _usable(r) and 0.4 <= r["v1_correlation"] < 0.6 and r["v1_name_relation"] not in ("EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY"), lambda r: f"corr {r['v1_correlation']:.3f}"),
     ("data_sufficiency.series_decisively_wrong.ratio_outside = [0.5, 2.0]", "data_sufficiency_wrong_series", "usable pairs with ratio within 0.4 .. < 0.6 or 1.6 .. < 2.5 and a non-candidate name",
@@ -325,6 +338,8 @@ ENTRY_NOTES = {
     "subject_discovery_thresholds": "Changes the size of the discovery queue, never an outcome.",
     "series_absent_row_gap": "Most gap months are months in which BOTH sources have no row (before a launch, after a withdrawal); Ice's answer alone lifts almost nothing (see the gap section).",
     "lexical_fuzzy_min_length": "The near-miss pairs mix real typos (Binguo/Bingo) with look-alike model codes (EX30/EX40, XC60/XC90): the length rule cannot tell them apart, labels can.",
+    "lexical_distinctive_min_length": "Moving the floor to 2 or 4 moves no decision on this data (SIBLING and CONTRADICTION both veto): it changes the recorded reason and what a consumer counts as a same-provider conflict, not an outcome.",
+    "lexical_distinctive_vocabulary": "Dropping the numeric rule, the descriptor vocabulary or the descriptor shapes moves no decision on this data (both relations veto): it matters for the recorded reason and for conflict reporting, not for outcomes.",
     "data_sufficiency_wrong_series": "Many pairs sit near the bounds, but few of them decide a group (the name relation usually decides first).",
     "attributes_lifecycle": "Only launch dates can act (almost no generation has an end date); the grace and share values move up to ~10 groups.",
     "series_minimums": "The AUTO volume minimum is the one that moves AUTO (240 units removes 6 AUTO groups); the month minimums move none on this data.",

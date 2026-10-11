@@ -17,6 +17,7 @@ Read first: [`CALIBRATION_REPORT.md`](CALIBRATION_REPORT.md) (the numbers), then
 | `CALIBRATION_REPORT.md`, `calibration_summary.json` | The report and the numbers behind it. |
 | `sensitivity_results.json` | For each provisional value: how many real decisions change when that one value moves (and two hypotheses about absent-row semantics, labelled as hypotheses). |
 | `adapters.py`, `legacy.py`, `pairs.py`, `review.py`, `report.py`, `render_report.py`, `sensitivity.py`, `build.py` | The tooling. Offline, stdlib + PyYAML, no network, no database. |
+| `lexical_pass.py`, `lexical_pass/` | The M7 lexical-relation measurement of the rev 4 correction pass: `before_rev3.json` (the rev 3 rules re-derived live), `after_rev4.json`, `comparison.json` and `LEXICAL_PASS_REPORT.md` (FUZZY / SIBLING counts, structural conflicts, decisions, newly exposed CREATE risk). Regenerate with `python -m identity_resolution.calibration.lexical_pass measure …` / `report`. |
 | `ref_eval_core.py`, `ref_eval_resolve.py` | The **reference evaluator**: a transcription of SPEC sections 5-9 that says what Contract v1 would conclude. **It is not the engine** (see below). |
 
 ## How to rebuild
@@ -31,7 +32,7 @@ python -m identity_resolution.calibration.sensitivity run  # ~10 minutes; rewrit
 ## Three kinds of evidence, kept apart
 
 * `legacy_*` — the first run, replayed offline with the legacy module's own functions. The replay reproduces **489 of 489** stored matcher rows exactly (candidate, status, method, reason text, full fingerprint), so these are the run's numbers, not a re-interpretation. The `legacy_*` window columns say exactly which months were compared: the group's newest 24 months *with an Ice row*, every month the TDR side lacked turned into 0.
-* `v1_*` — Contract v1, rev 3, as a **dry run** (`binding: false`, invariant I16): common observation window, `null` is never 0, brand/name relation, link type, reason codes. Ice and TDR absent-row semantics stay **UNKNOWN**; an unresolved gap caps AUTO exactly as the SPEC says.
+* `v1_*` — Contract v1, rev 4, as a **dry run** (`binding: false`, invariant I16): common observation window, `null` is never 0, brand/name relation, link type, reason codes. Ice and TDR absent-row semantics stay **UNKNOWN**; an unresolved gap caps AUTO exactly as the SPEC says.
 * `owner_*` — blank. The legacy status is in `legacy_r6_status`; it is never copied into an owner column and never used as a label.
 
 ## Filling in the sheet

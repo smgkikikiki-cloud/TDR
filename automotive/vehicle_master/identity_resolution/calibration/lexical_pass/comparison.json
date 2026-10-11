@@ -1,0 +1,691 @@
+{
+ "relations": {
+  "ice_ice": {
+   "before": {
+    "EQUAL": 4,
+    "EQUAL_VIA_MODEL_ALIAS": 0,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 54,
+    "SUBJECT_COARSER": 78,
+    "SUBJECT_FINER": 40,
+    "SIBLING": 1152,
+    "CONTRADICTION": 24449,
+    "UNAVAILABLE": 727
+   },
+   "after": {
+    "EQUAL": 4,
+    "EQUAL_VIA_MODEL_ALIAS": 2,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 7,
+    "SUBJECT_COARSER": 78,
+    "SUBJECT_FINER": 40,
+    "SIBLING": 307,
+    "CONTRADICTION": 25339,
+    "UNAVAILABLE": 727
+   }
+  },
+  "ice_tdr": {
+   "before": {
+    "EQUAL": 239,
+    "EQUAL_VIA_MODEL_ALIAS": 0,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 9,
+    "SUBJECT_COARSER": 58,
+    "SUBJECT_FINER": 35,
+    "SIBLING": 184,
+    "CONTRADICTION": 11648,
+    "UNAVAILABLE": 238
+   },
+   "after": {
+    "EQUAL": 239,
+    "EQUAL_VIA_MODEL_ALIAS": 1,
+    "EQUAL_VIA_TOKEN_EQUIV": 1,
+    "FUZZY": 2,
+    "SUBJECT_COARSER": 58,
+    "SUBJECT_FINER": 35,
+    "SIBLING": 55,
+    "CONTRADICTION": 11783,
+    "UNAVAILABLE": 238
+   }
+  }
+ },
+ "fuzzy": {
+  "ice_ice": {
+   "before": {
+    "total": 54,
+    "differing_token_has_digit": 47
+   },
+   "after": {
+    "total": 7,
+    "differing_token_has_digit": 0
+   }
+  },
+  "ice_tdr": {
+   "before": {
+    "total": 9,
+    "differing_token_has_digit": 7
+   },
+   "after": {
+    "total": 2,
+    "differing_token_has_digit": 0
+   }
+  }
+ },
+ "sibling": {
+  "ice_ice": {
+   "before": {
+    "total": 1152,
+    "only_non_distinctive_shared_tokens": 847
+   },
+   "after": {
+    "total": 307,
+    "only_non_distinctive_shared_tokens": 0
+   }
+  },
+  "ice_tdr": {
+   "before": {
+    "total": 184,
+    "only_non_distinctive_shared_tokens": 129
+   },
+   "after": {
+    "total": 55,
+    "only_non_distinctive_shared_tokens": 0
+   }
+  }
+ },
+ "containment_not_changed": {
+  "ice_ice": {
+   "before": {
+    "SUBJECT_COARSER": 15,
+    "SUBJECT_FINER": 16
+   },
+   "after": {
+    "SUBJECT_COARSER": 15,
+    "SUBJECT_FINER": 16
+   }
+  },
+  "ice_tdr": {
+   "before": {
+    "SUBJECT_FINER": 19,
+    "SUBJECT_COARSER": 7
+   },
+   "after": {
+    "SUBJECT_FINER": 19,
+    "SUBJECT_COARSER": 7
+   }
+  }
+ },
+ "transitions": {
+  "ice_ice": {
+   "(other) -> EQUAL_VIA_MODEL_ALIAS": 2,
+   "FUZZY -> (other)": 45,
+   "FUZZY -> SIBLING": 2,
+   "SIBLING -> (other)": 847
+  },
+  "ice_tdr": {
+   "(other) -> EQUAL_VIA_MODEL_ALIAS": 1,
+   "FUZZY -> (other)": 7,
+   "SIBLING -> (other)": 129
+  }
+ },
+ "conflicts": {
+  "before": {
+   "all_groups": 522,
+   "settled_groups": 109,
+   "by_class": {
+    "duplicate": 91,
+    "finer": 105,
+    "sibling": 448
+   }
+  },
+  "after": {
+   "all_groups": 322,
+   "settled_groups": 55,
+   "by_class": {
+    "duplicate": 28,
+    "finer": 105,
+    "sibling": 257
+   }
+  },
+  "released": 204,
+  "entered": [
+   "honda-honda-fit",
+   "honda-honda-stepwagon",
+   "honda-jazz",
+   "honda-step-wgn"
+  ]
+ },
+ "outcomes": {
+  "before": {
+   "AUTO": 69,
+   "INSUFFICIENT_DATA": 53,
+   "NO_CANDIDATE": 883,
+   "PROPOSE": 195
+  },
+  "after": {
+   "AUTO": 69,
+   "INSUFFICIENT_DATA": 53,
+   "NO_CANDIDATE": 883,
+   "PROPOSE": 195
+  }
+ },
+ "structural": {
+  "before": {
+   "STRUCTURAL_REVIEW": 0,
+   "AMBIGUOUS": 0,
+   "AMBIGUOUS_TARGET_CONTESTED": 0,
+   "proposals_annotated_CARD_CLAIM_CONFLICTS_AUTO": 1,
+   "PART_OF_decisions": 3,
+   "COMPOSED_OF_decisions": 12,
+   "targets_decided_for_more_than_one_group": 5
+  },
+  "after": {
+   "STRUCTURAL_REVIEW": 0,
+   "AMBIGUOUS": 0,
+   "AMBIGUOUS_TARGET_CONTESTED": 0,
+   "proposals_annotated_CARD_CLAIM_CONFLICTS_AUTO": 2,
+   "PART_OF_decisions": 3,
+   "COMPOSED_OF_decisions": 12,
+   "targets_decided_for_more_than_one_group": 5
+  }
+ },
+ "changed_decisions": [
+  {
+   "group": "honda-honda-stepwagon",
+   "name": "Honda Stepwagon",
+   "brand": "HONDA",
+   "units": 73,
+   "before": [
+    "NO_CANDIDATE",
+    "NO_CANDIDATE_ALL_EXCLUDED",
+    "",
+    "",
+    0
+   ],
+   "after": [
+    "PROPOSE",
+    "PROPOSE_NAME_MATCH_SERIES_NOT_STRONG",
+    "honda.step_wgn",
+    "EQUIVALENT",
+    1
+   ]
+  },
+  {
+   "group": "mazda-mazda6e",
+   "name": "Mazda6e",
+   "brand": "MAZDA",
+   "units": 604,
+   "before": [
+    "PROPOSE",
+    "PROPOSE_NAME_MATCH_SERIES_NOT_STRONG",
+    "mazda.mazda6",
+    "EQUIVALENT",
+    0
+   ],
+   "after": [
+    "NO_CANDIDATE",
+    "NO_CANDIDATE_ALL_EXCLUDED",
+    "",
+    "",
+    0
+   ]
+  }
+ ],
+ "auto": {
+  "before": 69,
+  "after": 69,
+  "same_set": true,
+  "newly_auto": [],
+  "no_longer_auto": []
+ },
+ "released_by_outcome": {
+  "AUTO": 6,
+  "INSUFFICIENT_DATA": 7,
+  "NO_CANDIDATE": 177,
+  "PROPOSE": 14
+ },
+ "create_eligible_released": {
+  "count": 177,
+  "units": 3308,
+  "by_cause": {
+   "fuzzy_across_digit": 48,
+   "fuzzy_across_digit+sibling_without_distinctive_token": 6,
+   "sibling_without_distinctive_token": 123
+  },
+  "top_by_units": [
+   {
+    "group": "mazda-mazda6e",
+    "name": "Mazda6e",
+    "brand": "MAZDA",
+    "units": 604,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "foton-foton-bj1031evja3",
+    "name": "Foton BJ1031EVJA3",
+    "brand": "FOTON",
+    "units": 487,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "foton-foton-bj1045v9jd4-r1",
+    "name": "Foton BJ1045V9JD4-R1",
+    "brand": "FOTON",
+    "units": 361,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "lexus-lexus-es300h",
+    "name": "Lexus ES300H",
+    "brand": "LEXUS",
+    "units": 332,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "lexus-lexus-is300h",
+    "name": "Lexus IS300H",
+    "brand": "LEXUS",
+    "units": 295,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "mercedes-benz-mercedes-benz-amg-g63",
+    "name": "Mercedes-Benz AMG G63",
+    "brand": "MERCEDES BENZ",
+    "units": 209,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "lexus-lexus-rz450e",
+    "name": "Lexus RZ450E",
+    "brand": "LEXUS",
+    "units": 151,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "jac-jac-hfc1040ev3",
+    "name": "JAC HFC1040EV3",
+    "brand": "JAC",
+    "units": 97,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "honda-honda-n-box",
+    "name": "Honda N-BOX",
+    "brand": "HONDA",
+    "units": 71,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "foton-foton-bj1044v9jb3-r1",
+    "name": "Foton BJ1044V9JB3-R1",
+    "brand": "FOTON",
+    "units": 59,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "volkswagen-vw-idbuzz",
+    "name": "VW ID.Buzz",
+    "brand": "VOLKSWAGEN",
+    "units": 51,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "linxys-linxys-g100-r",
+    "name": "Linxys G100-R",
+    "brand": "LINXYS",
+    "units": 34,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "ud-trucks-ud-trucks-pke250chlrm",
+    "name": "UD Trucks PKE250CHLRM",
+    "brand": "UD TRUCKS",
+    "units": 29,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "foton-foton-bj1031evja4",
+    "name": "Foton BJ1031EVJA4",
+    "brand": "FOTON",
+    "units": 27,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "lexus-lexus-rz350e",
+    "name": "Lexus RZ350E",
+    "brand": "LEXUS",
+    "units": 27,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "ud-trucks-ud-trucks-pke250celrm",
+    "name": "UD Trucks PKE250CELRM",
+    "brand": "UD TRUCKS",
+    "units": 27,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "toyota-toyota-d-cab",
+    "name": "Toyota D-CAB",
+    "brand": "TOYOTA",
+    "units": 25,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "mercedes-benz-mercedes-benz-amg-sl",
+    "name": "Mercedes-Benz AMG SL",
+    "brand": "MERCEDES BENZ",
+    "units": 22,
+    "cause": "sibling_without_distinctive_token"
+   },
+   {
+    "group": "NISSAN|TDWARFZE12EHA",
+    "name": "TDWARFZE12EHA-----",
+    "brand": "NISSAN",
+    "units": 18,
+    "cause": "fuzzy_across_digit"
+   },
+   {
+    "group": "BMW|118I M SPORT",
+    "name": "118i M Sport",
+    "brand": "BMW",
+    "units": 17,
+    "cause": "sibling_without_distinctive_token"
+   }
+  ],
+  "groups": [
+   "AIWAYS|U5 LITE SAMPLE",
+   "AIWAYS|U5 PRIME WITH",
+   "ALFA ROMEO|4C COUPE",
+   "ALFA ROMEO|4C SPIDER",
+   "ASTON MARTIN|DB9 COUPE",
+   "AUDI|R8 SPYDER V10",
+   "BMW|118D M SPORT HATCH MANUAL",
+   "BMW|118I M SPORT",
+   "BMW|318D M SPORT SALOON MANUAL",
+   "BMW|328I M SPORT",
+   "BMW|528I LUXURY",
+   "BMW|530I LIMOUSINE RHD",
+   "BMW|740LI LIMOUSINE RHD",
+   "BMW|I3S 94AH RHD",
+   "CITROEN|C5 X 1 6PHEV",
+   "CITROEN|DS5 1 6",
+   "FERRARI|812 COMPETIZIONE",
+   "FERRARI|812 GTS",
+   "FERRARI|812 SUPERFAST",
+   "FERRARI|CALIFORNIA T",
+   "FERRARI|GTC4LUSSO T",
+   "FIAT|500 HATCHBACK CONVERTIBLE",
+   "HINO|XZU650R HKMRLT3",
+   "HONDA|N VAN",
+   "JAGUAR|F TYPE S 3 0L V6 S C RWD",
+   "JAGUAR|XE 2 0L I4P PETROL RWD",
+   "JAGUAR|XF PRESTIGE 2 0 DIESEL",
+   "LINXYS|G100P R",
+   "MAN|TGL 12 250 4X2 BB",
+   "MAN|TGM 13 290 4X4 BB CH",
+   "MAZDA|RX 7 TYPE RB",
+   "MCLAREN|570GT COUPE",
+   "MCLAREN|620R COUPE",
+   "MCLAREN|GT COUPE",
+   "MERCEDES AMG|SL 43",
+   "MERCEDES AMG|SL 55 4MATIC",
+   "MERCEDES BENZ|G350 D HERITAGE EDITION",
+   "MERCEDES BENZ|S500 HYBRID",
+   "MERCEDES BENZ|SL350 ROADSTER",
+   "MERCEDES BENZ|SLK200",
+   "MERCEDES BENZ|SLK280",
+   "MITSUBISHI|A03AXTHHRU",
+   "MITSUBISHI|A03AXTMHRU",
+   "NEX|DYQ1031BEV1R",
+   "NEX|DYQ1033BEV1R",
+   "NISSAN|ADB2RCYD23IHL C",
+   "NISSAN|BDB2RHYD23IHN C",
+   "NISSAN|BDBARGZL33MHA A",
+   "NISSAN|BDBGRTYD40EHG A",
+   "NISSAN|BDRAREZL33MHA B",
+   "NISSAN|BDSARGZB172HA A",
+   "NISSAN|BDTARCFB172HA",
+   "NISSAN|BDTARGZB172HA",
+   "NISSAN|BDWARBZN17XHA",
+   "NISSAN|BDWARBZN17XHAF B",
+   "NISSAN|BDWARBZN17XHAFA B",
+   "NISSAN|BDWARGZN17XHA",
+   "NISSAN|BDWARGZN17XHAA",
+   "NISSAN|BDWARGZN17XHAB",
+   "NISSAN|BDWARGZN17XHAG",
+   "NISSAN|BDWARGZN17XHAGB",
+   "NISSAN|BVL2RDYD23FHN CA",
+   "NISSAN|BVL2RHYD23FHN CA",
+   "NISSAN|BVL2RTYD23FHP A",
+   "NISSAN|BVL2RWLD23FHP",
+   "NISSAN|BVL4RWYD23IHP A G",
+   "NISSAN|CVL2RSYD23FHP AA",
+   "NISSAN|CVL2RTLD23FHP A A",
+   "NISSAN|CVL2RWLD23FHP",
+   "NISSAN|FDTARUZF15EHA2 1",
+   "NISSAN|FDTARUZF15EHA6 1",
+   "NISSAN|FDWURQFK13EH5 A",
+   "NISSAN|FDWURTFK13EH5 BA",
+   "NISSAN|FDWURTZK13EH5",
+   "NISSAN|FDWURTZK13EH5A",
+   "NISSAN|FDWURVZK13EH5",
+   "NISSAN|SAKURA G",
+   "NISSAN|TDWAREZE12EHA",
+   "NISSAN|TDWARFZE12EHA",
+   "RELY|Q22 1 2L",
+   "RELY|Q22B 1 1L",
+   "SCANIA|P 420 B6X4NZ",
+   "SCANIA|P 460 B10X4 6NA",
+   "SUZUKI|AQ416PUM14058",
+   "SUZUKI|WAGON R SMILE HYBRID X",
+   "THOMAS|ARFF 4X4",
+   "THOMAS|VP 22 54 4X4",
+   "TOYOTA|1 8E",
+   "TOYOTA|1 8ESPORT",
+   "TOYOTA|2 0G EXTREMO",
+   "TOYOTA|2 5 HV AVN",
+   "TOYOTA|2 5 HV CD",
+   "TOYOTA|2 5 HV PREMIUM",
+   "TOYOTA|2 5HV",
+   "TOYOTA|2 7V A T",
+   "TOYOTA|ACV40R JEAGKT A1",
+   "TOYOTA|ACV41R JEPNKT AB",
+   "TOYOTA|ASV50R JETEKT A1",
+   "TOYOTA|AYGO 1 0 X CLUSIV",
+   "TOYOTA|C CAB 2X4 2 4E A T",
+   "TOYOTA|C POD",
+   "TOYOTA|KDH213R KDPNYT D1",
+   "TOYOTA|TUNDRA 3 5L",
+   "UD TRUCKS|CWE08N43R350SS9",
+   "UD TRUCKS|PKE250ELRM",
+   "UD TRUCKS|PKE250HLRM",
+   "VOLKSWAGEN|ID 3 PRO S",
+   "VOLKSWAGEN|PASSAT ESTATE 2 0 TDI",
+   "VOLKSWAGEN|VW E LAVIDA",
+   "VOLVO|FM1164R49370AASI TH",
+   "VOLVO|FM1342R49400ALSI TH",
+   "VOLVO|FM1364R49420CLSI TH",
+   "VOLVO|FMX1364R56480ALHI TH",
+   "YUCHAI|NZ5161ZYSH",
+   "YUCHAI|NZ5161ZYSR",
+   "audi-a3-20tdi-s-line-saloon-manual__provisional",
+   "audi-r8-cp-v10-performance-q__provisional",
+   "audi-sq8-vorsprung-tdi-quattro__provisional",
+   "bmw-420d-coupe-rhd__provisional",
+   "bmw-840d-xdrive__provisional",
+   "bmw-m8-competition-coupe__provisional",
+   "bmw-m8-coupe-rhd__provisional",
+   "bmw-m850i-xdrive-rhd__provisional",
+   "foton-foton-bj1031evja3",
+   "foton-foton-bj1031evja4",
+   "foton-foton-bj1044v9jb3-r1",
+   "foton-foton-bj1045v9jd4-r1",
+   "honda-honda-n-box",
+   "jac-jac-hfc1040ev2",
+   "jac-jac-hfc1040ev3",
+   "jaguar-f-type-20l-tc-rwd-auto__provisional",
+   "jaguar-f-type-r-dynamic-coupe__provisional",
+   "jaguar-xf-20l-tc-rwd-auto-portfolio__provisional",
+   "jeep-cherokee-20__provisional",
+   "lexus-lexus-es300h",
+   "lexus-lexus-es350e",
+   "lexus-lexus-es350h",
+   "lexus-lexus-is300h",
+   "lexus-lexus-rz350e",
+   "lexus-lexus-rz450e",
+   "linxys-linxys-g100-r",
+   "lotus-elise-sport-220__provisional",
+   "lotus-exige-sport-350__provisional",
+   "mazda-mazda-mx-30",
+   "mazda-mazda6e",
+   "mazda-rx-7-spirit-r-type-a__provisional",
+   "mercedes-benz-2508__provisional",
+   "mercedes-benz-mercedes-benz-amg-g63",
+   "mercedes-benz-mercedes-benz-amg-sl",
+   "mercedes-benz-slk-200-be-roadster__provisional",
+   "nissan-nissan-bdtarczb172ha",
+   "nissan-nissan-be-1",
+   "nissan-nissan-udb4rdre26ewdder-c",
+   "nissan-nissan-udb4rgke26ewb-s-c",
+   "suzuki-landy-hybrid-g-2wd__provisional",
+   "suzuki-suzuki-ap416pum14058",
+   "toyota-15s-touring__provisional",
+   "toyota-16g__provisional",
+   "toyota-a-cab-4x2-25e__provisional",
+   "toyota-a-cab-4x2-25j__provisional",
+   "toyota-a-cab-4x2-27j__provisional",
+   "toyota-b-cab-4x2-24j__provisional",
+   "toyota-b-cab-4x2-25j-no-ps__provisional",
+   "toyota-b-cab-4x2-27j__provisional",
+   "toyota-b-cab-4x4-28j__provisional",
+   "toyota-c-cab-2x4-28g__provisional",
+   "toyota-c-cab-4x2-24j__provisional",
+   "toyota-c-cab-4x4-28g__provisional",
+   "toyota-toyota-d-cab",
+   "ud-trucks-ud-trucks-cwe08n43r350css9",
+   "ud-trucks-ud-trucks-pke250celrm",
+   "ud-trucks-ud-trucks-pke250chlra",
+   "ud-trucks-ud-trucks-pke250chlrm",
+   "volkswagen-volkswagen-t-roc",
+   "volkswagen-vw-idbuzz",
+   "volkswagen-vw-t-cross",
+   "volkswagen-vw-tiguan"
+  ]
+ },
+ "named_in_pr201": {
+  "before": {
+   "mazda-mazda-mx-30": {
+    "present": true,
+    "in_batch_conflict": true,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "mazda-mazda6e": {
+    "present": true,
+    "in_batch_conflict": true,
+    "outcome": "PROPOSE",
+    "primary": "PROPOSE_NAME_MATCH_SERIES_NOT_STRONG"
+   },
+   "nissan-nissan-be-1": {
+    "present": true,
+    "in_batch_conflict": true,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "peugeot-peugeot-5008": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volkswagen-volkswagen-t-roc": {
+    "present": true,
+    "in_batch_conflict": true,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volkswagen-vw-t-cross": {
+    "present": true,
+    "in_batch_conflict": true,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volvo-volvo-es90": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   }
+  },
+  "after": {
+   "mazda-mazda-mx-30": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "mazda-mazda6e": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "nissan-nissan-be-1": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "peugeot-peugeot-5008": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volkswagen-volkswagen-t-roc": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volkswagen-vw-t-cross": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   },
+   "volvo-volvo-es90": {
+    "present": true,
+    "in_batch_conflict": false,
+    "outcome": "NO_CANDIDATE",
+    "primary": "NO_CANDIDATE_ALL_EXCLUDED"
+   }
+  }
+ },
+ "synonym_pairs": {
+  "ice_ice": [
+   "honda-honda-fit|honda-jazz",
+   "honda-honda-stepwagon|honda-step-wgn"
+  ],
+  "ice_tdr": [
+   "honda-honda-stepwagon|honda.step_wgn"
+  ]
+ },
+ "remaining_fuzzy": {
+  "ice_ice": [
+   "KIA|CANIVAL|kia-carnival",
+   "TOYOTA|AVV50R JEXGBT A1|TOYOTA|AVV50R JEXVBT A1",
+   "TOYOTA|KUN25R PRMSHT A4|TOYOTA|KUN25R URMSHT A4",
+   "TOYOTA|KUN35R PRMDHT A6|TOYOTA|KUN35R PRMSHT A6",
+   "TOYOTA|KUN35R PRMDHT A8|TOYOTA|KUN35R PRMSHT A8",
+   "TOYOTA|ZRE172R GEXEGT A1|TOYOTA|ZRE172R GEXGGT A1",
+   "foton-foton-etunland|foton-tunland"
+  ],
+  "ice_tdr": [
+   "KIA|CANIVAL|kia.carnival",
+   "TOYOTA|COMUTER|toyota.commuter"
+  ]
+ }
+}

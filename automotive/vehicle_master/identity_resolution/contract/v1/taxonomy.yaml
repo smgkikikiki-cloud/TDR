@@ -1,4 +1,4 @@
-# TDR Identity Resolution — edge-case taxonomy v1 (DRAFT, NOT FROZEN — revision 2, pending owner review)
+# TDR Identity Resolution — edge-case taxonomy v1 (DRAFT, NOT FROZEN — revision 4, pending owner review)
 #
 # The identity-resolution situations the contract commits to handling. It is COMPLETE FOR THE KNOWN TAXONOMY
 # CLASSES (the twelve areas below, drawn from the owner's R6 report, the real M7.0 package and the contract's own
@@ -204,6 +204,30 @@ entries:
     evidence: "§14.2: name similarity is never sufficient alone for AUTO."
     handling: Equal name + matching brand without strong series is PROPOSED.
     codes: [NAME_ONLY_NOT_AUTO, PROPOSE_NAME_MATCH_SERIES_NOT_STRONG]
+  - id: NAME-14
+    title: Tokens that differ in a digit are different versions, not typos
+    origin: ice_m7_data
+    evidence: "Rev 3 paired any two long tokens one edit apart. In the real M7.0 package that produced 54 Ice x Ice FUZZY pairs (47 whose differing token has a digit: KDH222R / KDH223R, XZU600R / XZU650R, ES300h / ES350h, SLK200 / SLK280) and 9 Ice x TDR pairs (7 with a digit: Mazda2 / Mazda3, Mazda2 / Mazda6, Mazda6 / Mazda6e). A FUZZY name is a PROPOSE candidate, so a strong series proposed Mazda2 as Mazda3."
+    handling: "lexical.fuzzy_token.allow_tokens_with_digits is false: a token that contains a digit never takes part in a typo pairing. A letters-only one-edit typo (Canival / Carnival) keeps its tolerance; a digit in a token both names share does not matter."
+    codes: [NAME_FUZZY_TOKEN, NAME_CONTRADICTION]
+  - id: NAME-15
+    title: A sibling needs a shared token that can carry identity
+    origin: ice_m7_data
+    evidence: "Rev 3 called any two names that share a token and each add one a SIBLING, so HR-V / WR-V (shared 'v'), CX-30 / MX-30 (shared '30'), GR Yaris / GR Corolla, RS 3 / RS 6, T-Roc / T-Cross, AMG C / AMG SL and 'Corolla Hybrid' / 'Camry Hybrid' were siblings of one nameplate: 1,152 Ice x Ice and 184 Ice x TDR pairs, 847 and 129 of them resting only on a shared token with no identity (a single letter, a number, a body/powertrain/trim/generation/market label, a drive or engine layout)."
+    handling: "lexical.distinctive_token: a shared token is distinctive if it is at least min_length long, not purely numeric, not in the descriptor vocabulary (by class) and not a descriptor pattern. A relation listed in required_for_relations (SIBLING) without a distinctive shared token is CONTRADICTION. Generic and policy-driven: no model is named in code, and Ioniq 5 / Ioniq 6, Hilux Revo / Hilux Travo, 720S Coupe / 720S Spider stay siblings. Both relations veto, so no outcome moves; the recorded reason and the structural-conflict reporting do."
+    codes: [NAME_SIBLING_VARIANT, NAME_CONTRADICTION]
+  - id: NAME-16
+    title: One vehicle, two market names within a brand
+    origin: ice_m7_data
+    evidence: "Honda sells the Jazz as the Fit and the Stepwagon as the Step WGN. Ice holds honda-jazz, honda-honda-fit, honda-honda-stepwagon and honda-step-wgn as four groups; TDR names the model 'Step WGN'. The owner named both pairs on 2026-10-11."
+    handling: "An aliases.model entry scoped by `brands` (the brand relation must be EXACT / ALIAS_SAME and the brand one of the listed ones), not by a brand alias id; whole-name pairs, either orientation. EQUAL_VIA_MODEL_ALIAS is an auto relation but every other AUTO gate applies; a name-only synonym is PROPOSED. A compound name ('Jazz Hybrid') is not covered."
+    codes: [NAME_EQUAL_VIA_MODEL_ALIAS, NAME_ONLY_NOT_AUTO]
+  - id: NAME-17
+    title: Tightening a lexical relation never promotes an uncertain case
+    origin: design
+    evidence: "Demoting FUZZY or SIBLING to CONTRADICTION removes candidates. The risk is the surviving candidate: a wrong strong-series FUZZY target ranked above the right name-only one (Mazda2 with Mazda3), or a runner-up removed so the best looks unopposed."
+    handling: "AUTO needs an EQUAL* name relation, and no demotion creates one, so every demotion can only move a case away from AUTO or leave it. The case that was wrongly proposed becomes NO_CANDIDATE (a CREATE risk, reported) or falls to the right name-only PROPOSED target. Invariant I19, pinned by the corpus and a regression test over the real M7 snapshot."
+    codes: [NAME_CONTRADICTION, NO_CANDIDATE_ALL_EXCLUDED]
 
   # ------------------------------------------------------------------------------------------- SER
   - id: SER-01

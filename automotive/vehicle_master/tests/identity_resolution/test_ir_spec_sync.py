@@ -52,8 +52,9 @@ def test_spec_prose_mentions_only_real_policy_keys():
 
 def test_spec_invariants_are_numbered_without_gaps():
     numbers = [int(n) for n in re.findall(r"\*\*I(\d+) —", S.spec_text())]
-    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 18
+    assert numbers == list(range(1, len(numbers) + 1)) and len(numbers) >= 19
     assert "**I4a — No assumed zero.**" in S.spec_text(), "invariant I4a (owner review, rev 2) must stay"
+    assert "**I19 — A lexical tightening never promotes.**" in S.spec_text(), "invariant I19 (lexical-relation correction, rev 4) must stay"
 
 
 def test_spec_names_the_companion_files_and_they_exist():

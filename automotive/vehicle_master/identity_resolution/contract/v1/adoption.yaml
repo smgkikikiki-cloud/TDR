@@ -1,4 +1,4 @@
-# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 3)
+# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 4)
 #
 # The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
 # production data and have not been signed off. (The first R6 run's rows were recovered read-only on 2026-10-11 into calibration/, but they
@@ -57,6 +57,12 @@ owner_decisions:
     decision: "Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired."
     refs: ["SPEC §10.6", "SPEC §8.2 step 0", "SPEC I18"]
     note: "Logical contract only. No DDL, migration or write path is authorised by this decision."
+  - id: od_lexical_relation_correction
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Correct the name-relation ladder after the M7 lexical/relation analysis: FUZZY must not fuzzy-match differing tokens containing digits; SIBLING must require a genuinely distinctive shared token, by a generic policy-driven rule and not by hardcoding V / CX / GR / RS / AMG as model exceptions; add the Honda-scoped model synonyms Jazz <-> Fit and Stepwagon <-> Step WGN."
+    refs: ["SPEC §5.3", "SPEC §5.4", "SPEC I19", "calibration/lexical_pass/LEXICAL_PASS_REPORT.md", "taxonomy NAME-14..NAME-17"]
+    note: "The RULES are the owner's. The descriptor vocabulary, the token-length floor and the patterns that implement 'distinctive' are the pass's proposals and stay pending (lexical_distinctive_min_length, lexical_distinctive_vocabulary). Production, DB state, mappings, R6/R7, migrations, engine wiring, adoption binding and freeze state were not touched."
   - id: od_ice_absent_row_unknown
     decided_on: "2026-10-11"
     status: standing
@@ -158,6 +164,28 @@ entries:
     keys: [lexical.fuzzy_token.enabled]
     status: pending
     decision: "Decide whether one-edit typo tolerance exists at all (PROPOSED at most)."
+  - id: lexical_fuzzy_digits
+    class: design_choice
+    keys: [lexical.fuzzy_token.allow_tokens_with_digits]
+    status: owner_accepted
+    owner_decision: od_lexical_relation_correction
+    decision: "A token that contains a digit is never paired as a typo (KDH222R / KDH223R, Mazda2 / Mazda3, Mazda6 / Mazda6e are different versions)."
+  - id: lexical_distinctive_rule
+    class: design_choice
+    keys: [lexical.distinctive_token.required_for_relations]
+    status: owner_accepted
+    owner_decision: od_lexical_relation_correction
+    decision: "SIBLING needs at least one genuinely distinctive shared token; otherwise the pair has no lexical relation (CONTRADICTION). A policy-driven rule, not a model-specific exception list."
+  - id: lexical_distinctive_min_length
+    class: calibration
+    keys: [lexical.distinctive_token.min_length]
+    status: pending
+    settles_with: "Label set: shared-token lengths of name pairs the owner called the same nameplate vs different nameplates (3 keeps NSX / Han / Model, drops V / CX / GR / RS / HR)."
+  - id: lexical_distinctive_vocabulary
+    class: design_choice
+    keys: [lexical.distinctive_token.exclude_numeric, lexical.distinctive_token.non_distinctive, lexical.distinctive_token.non_distinctive_patterns]
+    status: pending
+    decision: "Confirm what 'distinctive' excludes: purely numeric tokens, the generic descriptor vocabulary by class (body, powertrain, trim, generation, market) and the descriptor patterns (4x2, V10, 25hev, Gen2, Mk4). Data about descriptors, never a list of models; 'amg' is the one performance-trim label of three letters that needs a vocabulary entry."
   - id: lexical_name_relation_roles
     class: design_choice
     keys: [lexical.name.auto_relations, lexical.name.candidate_relations, lexical.name.veto_relations, lexical.series_only]

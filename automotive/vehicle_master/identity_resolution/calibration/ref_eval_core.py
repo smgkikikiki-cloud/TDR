@@ -138,6 +138,36 @@ def _lev1(a, b):
         i += 1
     return a[i + 1:] == b[i + 1:] or a[i:] == b[i + 1:] or a[i + 1:] == b[i:]
 
+def _has_digit(t):
+    return any(ch.isdigit() for ch in t)
+
+def _forms(t):
+    """The token and every member of its token-equivalence group, so a descriptor listed under one spelling covers the other."""
+    for grp in POL["lexical"]["token_equivalences"]:
+        if t in grp:
+            return set(grp)
+    return {t}
+
+def is_descriptor(t):
+    """A token that is, by policy, a descriptor and not a nameplate: purely numeric (when excluded), listed descriptor vocabulary, or a descriptor shape."""
+    dt = POL["lexical"]["distinctive_token"]
+    if dt["exclude_numeric"] and t.isdigit():
+        return True
+    vocab = {w.casefold() for words in dt["non_distinctive"].values() for w in words}
+    return bool(_forms(t) & vocab) or any(re.fullmatch(p, t) for p in dt["non_distinctive_patterns"])
+
+def is_distinctive(t):
+    """A token that can carry identity by itself (policy lexical.distinctive_token): long enough and not a descriptor."""
+    return len(t) >= POL["lexical"]["distinctive_token"]["min_length"] and not is_descriptor(t)
+
+def _model_alias_in_scope(entry, brel, aid, tbrand):
+    """An aliases.model entry applies under a listed brand alias id, or - when it lists `brands` - to the same brand (EXACT / ALIAS_SAME) spelled as one of them."""
+    if aid is not None and aid in entry.get("brand_alias_ids", []):
+        return True
+    if brel in ("EXACT", "ALIAS_SAME") and entry.get("brands"):
+        return _cls(compact(tbrand)) in {_cls(compact(b)) for b in entry["brands"]}
+    return False
+
 def name_relation(sname, sbrand, tname, tbrand, observed=()):
     st, _, sav = name_tokens(sname, sbrand, extra=(tbrand, *observed))
     tt, _, tav = name_tokens(tname, tbrand, extra=(sbrand, *observed))
@@ -147,7 +177,7 @@ def name_relation(sname, sbrand, tname, tbrand, observed=()):
         return "EQUAL", 1.0, st, tt
     brel, aid = brand_relation(sbrand, tbrand, observed)
     for m in POL["aliases"]["model"]:
-        if aid in m["brand_alias_ids"]:
+        if _model_alias_in_scope(m, brel, aid, tbrand):
             for a, b in m["pairs"]:
                 at, bt = _tokens_raw(a), _tokens_raw(b)
                 if ("".join(st) == "".join(at) and "".join(tt) == "".join(bt)) or \
@@ -162,7 +192,8 @@ def name_relation(sname, sbrand, tname, tbrand, observed=()):
     matched = 0
     if fz["enabled"]:
         pairs = [(a, b) for a in sorted(only_a) for b in sorted(only_b)
-                 if len(a) >= fz["min_token_length"] and len(b) >= fz["min_token_length"] and _lev1(a, b)]
+                 if len(a) >= fz["min_token_length"] and len(b) >= fz["min_token_length"] and _lev1(a, b)
+                 and (fz["allow_tokens_with_digits"] or not (_has_digit(a) or _has_digit(b)))]
         used_a, used_b = set(), set()
         for a, b in pairs:
             if a not in used_a and b not in used_b:
@@ -172,12 +203,17 @@ def name_relation(sname, sbrand, tname, tbrand, observed=()):
     inter = len(SA & SB) + matched
     dice = 2 * inter / (len(SA) + len(SB))
     if SA < SB:
-        return "SUBJECT_COARSER", dice, st, tt
-    if SA > SB:
-        return "SUBJECT_FINER", dice, st, tt
-    if SA & SB:
-        return "SIBLING", dice, st, tt
-    return "CONTRADICTION", dice, st, tt
+        rel = "SUBJECT_COARSER"
+    elif SA > SB:
+        rel = "SUBJECT_FINER"
+    elif SA & SB:
+        rel = "SIBLING"
+    else:
+        return "CONTRADICTION", dice, st, tt
+    # a relation that rests on shared tokens needs one that can carry identity (a shared 'v', '30', 'sport' or '4x2' is not a shared nameplate)
+    if rel in POL["lexical"]["distinctive_token"]["required_for_relations"] and not any(is_distinctive(t) for t in SA & SB):
+        return "CONTRADICTION", dice, st, tt
+    return rel, dice, st, tt
 
 # ----------------------------------------------------------------------------- series
 def pidx(p):

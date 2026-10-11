@@ -94,13 +94,13 @@
   "legacy_class_to_v1_state_all_pairs": {
    "STRONG -> STRONG": 84,
    "STRONG -> UNAVAILABLE": 18,
-   "UNDEFINED -> UNAVAILABLE": 431,
+   "UNDEFINED -> UNAVAILABLE": 364,
    "WEAK -> STRONG": 127,
-   "WEAK -> UNAVAILABLE": 274,
-   "WEAK -> WEAK": 568
+   "WEAK -> UNAVAILABLE": 266,
+   "WEAK -> WEAK": 563
   },
-  "all_pairs": 1502,
-  "all_pairs_material": 811,
+  "all_pairs": 1422,
+  "all_pairs_material": 798,
   "legacy_strong_but_v1_not_strong_stored": 17,
   "legacy_not_strong_but_v1_strong_stored": 107,
   "legacy_group_status_to_v1_outcome": {
@@ -160,12 +160,13 @@
    "1.0": 202
   },
   "stored_rows_v1_name_relation": {
-   "CONTRADICTION": 212,
+   "CONTRADICTION": 226,
    "EQUAL": 207,
    "SUBJECT_COARSER": 26,
-   "SIBLING": 25,
    "SUBJECT_FINER": 16,
-   "FUZZY": 2,
+   "SIBLING": 11,
+   "FUZZY": 1,
+   "EQUAL_VIA_MODEL_ALIAS": 1,
    "EQUAL_VIA_TOKEN_EQUIV": 1
   },
   "stored_rows_v1_brand_relation": {
@@ -177,32 +178,34 @@
    "PART_OF": 1
   },
   "all_pairs_v1_name_relation": {
-   "CONTRADICTION": 964,
+   "CONTRADICTION": 1019,
    "EQUAL": 239,
-   "SIBLING": 184,
    "SUBJECT_COARSER": 70,
+   "SIBLING": 55,
    "SUBJECT_FINER": 35,
-   "FUZZY": 9,
+   "FUZZY": 2,
+   "EQUAL_VIA_MODEL_ALIAS": 1,
    "EQUAL_VIA_TOKEN_EQUIV": 1
   },
   "all_pairs_v1_series_state": {
-   "UNAVAILABLE": 723,
-   "WEAK": 568,
+   "UNAVAILABLE": 648,
+   "WEAK": 563,
    "STRONG": 211
   },
   "all_pairs_v1_link_candidate": {
-   "EQUIVALENT": 1488,
+   "EQUIVALENT": 1408,
    "COMPOSED_OF": 12,
    "PART_OF": 2
   },
   "stored_rows_name_relation_by_legacy_status": {
    "AUTO / CONTRADICTION": 2,
    "AUTO / EQUAL": 80,
-   "PROPOSED / CONTRADICTION": 210,
+   "PROPOSED / CONTRADICTION": 224,
    "PROPOSED / EQUAL": 127,
+   "PROPOSED / EQUAL_VIA_MODEL_ALIAS": 1,
    "PROPOSED / EQUAL_VIA_TOKEN_EQUIV": 1,
-   "PROPOSED / FUZZY": 2,
-   "PROPOSED / SIBLING": 25,
+   "PROPOSED / FUZZY": 1,
+   "PROPOSED / SIBLING": 11,
    "PROPOSED / SUBJECT_COARSER": 26,
    "PROPOSED / SUBJECT_FINER": 16
   },
@@ -230,7 +233,7 @@
     "jaecoo-jaecoo-j6 -> jaecoo.jaecoo_6_ev [CONTRADICTION: 'j6' vs '6 ev'; corr 0.994 ratio 0.918]",
     "wuling-binguo -> wuling.wuling_bingo [CONTRADICTION: 'binguo' vs 'bingo'; corr 1.000 ratio 1.000]",
     "jaecoo-jaecoo-j7 -> jaecoo.jaecoo_7 [CONTRADICTION: 'j7' vs '7'; corr 1.000 ratio 1.000]",
-    "maxus-mifa-7 -> mg.mg_maxus_7 [SIBLING: 'mifa 7' vs 'maxus 7'; corr 0.983 ratio 0.961]",
+    "maxus-mifa-7 -> mg.mg_maxus_7 [CONTRADICTION: 'mifa 7' vs 'maxus 7'; corr 0.983 ratio 0.961]",
     "jac-jac-hfc1040ev3 -> jac.jac_truck [CONTRADICTION: 'hfc1040ev3' vs 'truck'; corr 1.000 ratio 1.000]",
     "lexus-lexus-is300h -> lexus.lexus_is [CONTRADICTION: 'is300h' vs 'is'; corr 1.000 ratio 1.000]",
     "lexus-lexus-es300h -> lexus.lexus_es [CONTRADICTION: 'es300h' vs 'es'; corr 1.000 ratio 1.000]",
@@ -350,10 +353,10 @@
    "key": "series.minimums.propose.common_months = 6",
    "adoption_entry": "series_minimums",
    "band": "pairs with 4 .. < 9 common months (some are UNAVAILABLE because of this minimum)",
-   "pairs": 38,
-   "legacy_rows": 25,
-   "in_review_sheet": 36,
-   "groups": 34,
+   "pairs": 32,
+   "legacy_rows": 23,
+   "in_review_sheet": 32,
+   "groups": 30,
    "examples": [
     "byd-dolphin -> byd.seagull [4 months, UNAVAILABLE]",
     "byd-atto-3 -> byd.atto2 [5 months, UNAVAILABLE]",
@@ -369,10 +372,10 @@
    "key": "series.minimums.propose.units_each_side = 30",
    "adoption_entry": "series_minimums",
    "band": "pairs whose smaller side has 15 .. < 60 units in the window",
-   "pairs": 45,
-   "legacy_rows": 29,
-   "in_review_sheet": 45,
-   "groups": 36,
+   "pairs": 41,
+   "legacy_rows": 30,
+   "in_review_sheet": 41,
+   "groups": 37,
    "examples": [
     "hyundai-ioniq-5 -> hyundai.ioniq6 [57 units, WEAK]",
     "land-rover-land-rover-range -> land_rover.range_rover_sport [43 units, WEAK]",
@@ -423,13 +426,32 @@
    ]
   },
   {
+   "key": "lexical.distinctive_token.min_length = 3",
+   "adoption_entry": "lexical_distinctive_min_length",
+   "band": "name pairs that share tokens, where the longest shared non-descriptor token has 2 or 3 letters",
+   "pairs": 22,
+   "legacy_rows": 3,
+   "in_review_sheet": 22,
+   "groups": 12,
+   "examples": [
+    "gwm-ora-good-cat -> gwm.ora_03 ['ora good cat' vs 'ora 03']",
+    "gwm-ora-5 -> gwm.ora_03 ['ora 5' vs 'ora 03']",
+    "gwm-ora-5 -> gwm.ora_good_cat ['ora 5' vs 'ora good cat']",
+    "mazda-mazda-cx-30 -> mazda.cx3 ['cx 30' vs 'cx 3']",
+    "mazda-mazda-cx-30 -> mazda.cx5 ['cx 30' vs 'cx 5']",
+    "mazda-mazda-cx-30 -> mazda.cx8 ['cx 30' vs 'cx 8']",
+    "mazda-mazda-cx-3 -> mazda.cx30 ['cx 3' vs 'cx 30']",
+    "mazda-mazda-cx-3 -> mazda.cx5 ['cx 3' vs 'cx 5']"
+   ]
+  },
+  {
    "key": "data_sufficiency.series_decisively_wrong.correlation_below = 0.5",
    "adoption_entry": "data_sufficiency_wrong_series",
    "band": "usable pairs with correlation within 0.4 .. < 0.6 and a non-candidate name",
-   "pairs": 125,
+   "pairs": 124,
    "legacy_rows": 6,
-   "in_review_sheet": 125,
-   "groups": 79,
+   "in_review_sheet": 124,
+   "groups": 78,
    "examples": [
     "toyota-hilux-revo -> toyota.harrier [corr 0.554]",
     "toyota-hilux-revo -> toyota.hiace [corr 0.469]",
@@ -445,10 +467,10 @@
    "key": "data_sufficiency.series_decisively_wrong.ratio_outside = [0.5, 2.0]",
    "adoption_entry": "data_sufficiency_wrong_series",
    "band": "usable pairs with ratio within 0.4 .. < 0.6 or 1.6 .. < 2.5 and a non-candidate name",
-   "pairs": 95,
+   "pairs": 94,
    "legacy_rows": 8,
-   "in_review_sheet": 95,
-   "groups": 63,
+   "in_review_sheet": 94,
+   "groups": 62,
    "examples": [
     "isuzu-isuzu-d-max -> isuzu.dmax_cab [ratio 0.475]",
     "isuzu-isuzu-d-max -> isuzu.dmax_double_cab [ratio 0.522]",
@@ -480,9 +502,9 @@
    "key": "attributes.lifecycle.within_min_share = 0.8",
    "adoption_entry": "attributes_lifecycle",
    "band": "pairs with a lifecycle share within 0.7 .. < 0.9",
-   "pairs": 174,
+   "pairs": 173,
    "legacy_rows": 36,
-   "in_review_sheet": 174,
+   "in_review_sheet": 173,
    "groups": 84,
    "examples": [
     "toyota-yaris-ativ -> toyota.harrier [share 0.875]",
@@ -531,16 +553,16 @@
    "pairs": 0,
    "legacy_rows": 0,
    "in_review_sheet": 0,
-   "groups": 19,
+   "groups": 20,
    "examples": [
     "maxus-mifa-7 [934 units]",
     "bmw-bmw-630i [802 units]",
     "toyota-land-cruiser [790 units]",
     "bmw-bmw-m3 [639 units]",
+    "mazda-mazda6e [604 units]",
     "mini-mini-jcw-rhd [581 units]",
     "nissan-urvan [550 units]",
-    "mercedes-benz-mercedes-benz-s350d [504 units]",
-    "foton-foton-bj1031evja3 [487 units]"
+    "mercedes-benz-mercedes-benz-s350d [504 units]"
    ]
   },
   {
@@ -552,7 +574,7 @@
    "in_review_sheet": 0,
    "groups": 19,
    "examples": [
-    "enumeration ran for 775 groups; eligible members per group: 0x694, 1x62, 2x16, 3x1, 5x2",
+    "enumeration ran for 775 groups; eligible members per group: 0x693, 1x63, 2x16, 3x1, 5x2",
     "groups whose eligible pool exceeded the cap of 12: 0",
     "COMPOSED_OF decisions by number of members: 2 members x11, 3 members x1"
    ]
@@ -597,9 +619,9 @@
    "PROPOSE_PART_OF": 3
   },
   "groups_all_review_queue": {
-   "none": 971,
+   "none": 970,
    "crosswalk_review": 195,
-   "discovery": 34
+   "discovery": 35
   },
   "groups_with_legacy_row": {
    "NO_CANDIDATE": 221,
@@ -617,7 +639,7 @@
    "PROPOSED -> PROPOSE": 115
   },
   "v1_auto_units_share_of_total": 0.4056,
-  "v1_propose_units_share_of_total": 0.526,
+  "v1_propose_units_share_of_total": 0.5259,
   "legacy_auto_units_share_of_total": 0.0748,
   "v1_propose_capped_only_by_gap": 32,
   "v1_propose_strong_capped": 121,
@@ -1338,25 +1360,20 @@
     "adoption_entry": "lexical_fuzzy_min_length",
     "description": "one-edit tolerance from 4-letter tokens (was 6)",
     "hypothetical": false,
-    "groups_changed": 4,
-    "groups_changed_in_legacy_rows": 4,
+    "groups_changed": 1,
+    "groups_changed_in_legacy_rows": 1,
     "auto_gained": 0,
     "auto_lost": 0,
     "outcomes": {
-     "AMBIGUOUS": 1,
      "AUTO": 69,
      "INSUFFICIENT_DATA": 53,
-     "NO_CANDIDATE": 879,
-     "PROPOSE": 198
+     "NO_CANDIDATE": 882,
+     "PROPOSE": 196
     },
     "moves": {
-     "NO_CANDIDATE->AMBIGUOUS": 1,
-     "NO_CANDIDATE->PROPOSE": 3
+     "NO_CANDIDATE->PROPOSE": 1
     },
     "examples_changed": [
-     "SOKON|EC31",
-     "peugeot-peugeot-5008",
-     "volvo-volvo-es90",
      "wuling-binguo"
     ]
    },
@@ -1387,23 +1404,22 @@
     "adoption_entry": "lexical_fuzzy_min_length",
     "description": "one-edit tolerance only from 8-letter tokens",
     "hypothetical": false,
-    "groups_changed": 3,
-    "groups_changed_in_legacy_rows": 3,
+    "groups_changed": 2,
+    "groups_changed_in_legacy_rows": 2,
     "auto_gained": 0,
     "auto_lost": 0,
     "outcomes": {
      "AUTO": 69,
      "INSUFFICIENT_DATA": 53,
-     "NO_CANDIDATE": 886,
-     "PROPOSE": 192
+     "NO_CANDIDATE": 885,
+     "PROPOSE": 193
     },
     "moves": {
-     "PROPOSE->NO_CANDIDATE": 3
+     "PROPOSE->NO_CANDIDATE": 2
     },
     "examples_changed": [
      "KIA|CANIVAL",
-     "TOYOTA|COMUTER",
-     "mazda-mazda6e"
+     "TOYOTA|COMUTER"
     ]
    },
    {
@@ -1411,24 +1427,188 @@
     "adoption_entry": "lexical_fuzzy_switch",
     "description": "no one-edit typo tolerance at all",
     "hypothetical": false,
-    "groups_changed": 3,
-    "groups_changed_in_legacy_rows": 3,
+    "groups_changed": 2,
+    "groups_changed_in_legacy_rows": 2,
     "auto_gained": 0,
     "auto_lost": 0,
     "outcomes": {
      "AUTO": 69,
      "INSUFFICIENT_DATA": 53,
-     "NO_CANDIDATE": 886,
-     "PROPOSE": 192
+     "NO_CANDIDATE": 885,
+     "PROPOSE": 193
     },
     "moves": {
-     "PROPOSE->NO_CANDIDATE": 3
+     "PROPOSE->NO_CANDIDATE": 2
     },
     "examples_changed": [
      "KIA|CANIVAL",
-     "TOYOTA|COMUTER",
+     "TOYOTA|COMUTER"
+    ]
+   },
+   {
+    "id": "fuzzy.allow_tokens_with_digits=true",
+    "adoption_entry": "lexical_fuzzy_digits (owner_accepted)",
+    "description": "digit-bearing tokens may be typo-paired again (the rev 3 behaviour; shown for size only)",
+    "hypothetical": false,
+    "groups_changed": 1,
+    "groups_changed_in_legacy_rows": 1,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 882,
+     "PROPOSE": 196
+    },
+    "moves": {
+     "NO_CANDIDATE->PROPOSE": 1
+    },
+    "examples_changed": [
      "mazda-mazda6e"
     ]
+   },
+   {
+    "id": "distinctive.required_for=none",
+    "adoption_entry": "lexical_distinctive_rule (owner_accepted)",
+    "description": "SIBLING needs no distinctive shared token (the rev 3 behaviour; shown for size only)",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
+   },
+   {
+    "id": "distinctive.required_for=siblings+containment",
+    "adoption_entry": "lexical_distinctive_rule (owner_accepted)",
+    "description": "containment also needs a distinctive shared token (not adopted: the owner asked for SIBLING only; shown for size)",
+    "hypothetical": false,
+    "groups_changed": 22,
+    "groups_changed_in_legacy_rows": 17,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 36,
+     "NO_CANDIDATE": 903,
+     "PROPOSE": 192
+    },
+    "moves": {
+     "INSUFFICIENT_DATA->NO_CANDIDATE": 17,
+     "PROPOSE->NO_CANDIDATE": 3,
+     "PROPOSE->PROPOSE": 2
+    },
+    "examples_changed": [
+     "BMW|I8 HYBRID",
+     "BMW|I8 RHD",
+     "BMW|I8 ROADSTER",
+     "BMW|I8 ROADSTER RHD",
+     "MERCEDES BENZ|A 180",
+     "MERCEDES BENZ|C 180",
+     "MERCEDES BENZ|S 500L MILD HYBRID",
+     "audi-audi-q6",
+     "audi-audi-q8",
+     "audi-audi-rs-3",
+     "audi-audi-rs-4",
+     "audi-audi-rs-5"
+    ]
+   },
+   {
+    "id": "distinctive.min_length=2",
+    "adoption_entry": "lexical_distinctive_min_length",
+    "description": "a shared token of 2 letters is distinctive (was 3)",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
+   },
+   {
+    "id": "distinctive.min_length=4",
+    "adoption_entry": "lexical_distinctive_min_length",
+    "description": "a shared token needs 4 letters",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
+   },
+   {
+    "id": "distinctive.exclude_numeric=false",
+    "adoption_entry": "lexical_distinctive_vocabulary",
+    "description": "a purely numeric shared token (180, 300) is distinctive",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
+   },
+   {
+    "id": "distinctive.vocabulary=none",
+    "adoption_entry": "lexical_distinctive_vocabulary",
+    "description": "no descriptor vocabulary: only length, numbers and shapes exclude a token",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
+   },
+   {
+    "id": "distinctive.patterns=none",
+    "adoption_entry": "lexical_distinctive_vocabulary",
+    "description": "no descriptor shapes (4x2, V10, 25hev, Gen2, Mk4)",
+    "hypothetical": false,
+    "groups_changed": 0,
+    "groups_changed_in_legacy_rows": 0,
+    "auto_gained": 0,
+    "auto_lost": 0,
+    "outcomes": {
+     "AUTO": 69,
+     "INSUFFICIENT_DATA": 53,
+     "NO_CANDIDATE": 883,
+     "PROPOSE": 195
+    },
+    "moves": {},
+    "examples_changed": []
    },
    {
     "id": "series_only.allow_with_name_veto=true",
