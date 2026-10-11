@@ -8,14 +8,49 @@
     "row_count": 2,
     "source_page_count": 1
   },
+  "capture_provenance": {
+    "capture_id": "capture-atto-2026-10-10-a",
+    "capture_method": "LOCAL_FIXTURE_CAPTURE",
+    "captured_at": "2026-10-10",
+    "captured_page_count": 1
+  },
   "captured_at": "2026-10-10",
   "completeness": "COMPLETE_LINEUP",
-  "content": "lineup|trim|atto.extended\nlineup|trim|atto.standard\nmodel=byd.atto_3; generation=atto_3.g1; current Thai lineup complete for this brochure edition.\nclaim|battery_kwh|atto.standard|60.48 kWh",
-  "content_sha256": "ec2109fc9f21b9b4b1f6a5630fc94e8e1d60e23f6bf21d8fb4b17a91bb167ef4",
+  "completeness_evidence": {
+    "capture_status": "COMPLETE",
+    "captured_page_count": 1,
+    "expected_page_count": 1,
+    "locator": "line:3",
+    "publisher_declared_complete": true,
+    "quote": "lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=byd.atto_3|generation=atto_3.g1|model_year=NONE|facelift=NONE"
+  },
+  "content": "lineup|trim|atto.extended\nlineup|trim|atto.standard\nlineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=byd.atto_3|generation=atto_3.g1|model_year=NONE|facelift=NONE\ncapture|edition=synthetic-oem-edition-2026-10|capture_id=capture-atto-2026-10-10-a|captured_at=2026-10-10|method=LOCAL_FIXTURE_CAPTURE",
+  "content_sha256": "b418a8dd8da8045a2ae7616effcefb139e558f4c574f68d633657d7a3c9d7ef2",
   "document_id": "doc-complete-lineup",
+  "edition_id": "synthetic-oem-edition-2026-10",
   "extraction_method": "CONTROLLED_LINE_READER_V1",
   "generation_id": "atto_3.g1",
   "lineage_id": "lineage-atto-release",
+  "lineup_rows": [
+    {
+      "facelift_id": null,
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "market_trim_id": "atto.extended",
+      "model_id": "byd.atto_3",
+      "model_year": null,
+      "powertrain": "BEV"
+    },
+    {
+      "facelift_id": null,
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "market_trim_id": "atto.standard",
+      "model_id": "byd.atto_3",
+      "model_year": null,
+      "powertrain": "BEV"
+    }
+  ],
   "local_source_id": "fixture://doc-complete-lineup",
   "market": "TH",
   "model_id": "byd.atto_3",
@@ -27,33 +62,5 @@
   "trim_ids": [
     "atto.extended",
     "atto.standard"
-  ],
-  "completeness_evidence": {
-    "publisher_declared_complete": true,
-    "quote": "model=byd.atto_3; generation=atto_3.g1; current Thai lineup complete for this brochure edition.",
-    "locator": "line:3",
-    "capture_status": "COMPLETE",
-    "expected_page_count": 1,
-    "captured_page_count": 1
-  },
-  "lineup_rows": [
-    {
-      "market_trim_id": "atto.extended",
-      "model_id": "byd.atto_3",
-      "generation_id": "atto_3.g1",
-      "grade": null,
-      "powertrain": "BEV",
-      "model_year": null,
-      "facelift_id": null
-    },
-    {
-      "market_trim_id": "atto.standard",
-      "model_id": "byd.atto_3",
-      "generation_id": "atto_3.g1",
-      "grade": null,
-      "powertrain": "BEV",
-      "model_year": null,
-      "facelift_id": null
-    }
   ]
 }

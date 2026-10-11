@@ -44,26 +44,68 @@
         "market": "TH",
         "source_authority": "OFFICIAL",
         "completeness": "COMPLETE_LINEUP",
-        "document_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "document_id": "city-official-complete-2026-10-01",
+        "document_sha256": "3dae10d902e0e998d26d45944ac879baf74db826d0335921f7cf362403f3cb59",
         "captured_at": "2026-10-01",
+        "model_id": "honda.city_hatchback",
+        "generation_id": "city_hb.g3",
         "trim_ids": [
           "city.sv"
         ],
-        "capture_manifest": {
-          "pagination_complete": true,
-          "source_page_count": 1,
-          "row_count": 1,
-          "listed_trim_ids": [
+        "source_document": {
+          "schema_version": "1.0",
+          "document_id": "city-official-complete-2026-10-01",
+          "source_id": "synthetic-honda-th",
+          "source_authority": "OFFICIAL",
+          "market": "TH",
+          "model_id": "honda.city_hatchback",
+          "generation_id": "city_hb.g3",
+          "trim_ids": [
             "city.sv"
+          ],
+          "local_source_id": "fixture://city-official-complete",
+          "content": "lineup|trim|city.sv\nlineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=honda.city_hatchback|generation=city_hb.g3|model_year=NONE|facelift=NONE\ncapture|edition=honda-retail-edition-2026-10|capture_id=capture-honda-2026-10-01-a|captured_at=2026-10-01|method=LOCAL_FIXTURE_CAPTURE",
+          "content_sha256": "3dae10d902e0e998d26d45944ac879baf74db826d0335921f7cf362403f3cb59",
+          "published_at": "2026-09-30",
+          "captured_at": "2026-10-01",
+          "completeness": "COMPLETE_LINEUP",
+          "source_kind": "RETAIL_LINEUP",
+          "lineage_id": "synthetic-honda-th-lineup",
+          "edition_id": "honda-retail-edition-2026-10",
+          "capture_provenance": {
+            "capture_id": "capture-honda-2026-10-01-a",
+            "capture_method": "LOCAL_FIXTURE_CAPTURE",
+            "captured_at": "2026-10-01",
+            "captured_page_count": 1
+          },
+          "extraction_method": "CONTROLLED_LINE_READER_V1",
+          "capture_manifest": {
+            "pagination_complete": true,
+            "source_page_count": 1,
+            "row_count": 1,
+            "listed_trim_ids": [
+              "city.sv"
+            ]
+          },
+          "completeness_evidence": {
+            "publisher_declared_complete": true,
+            "quote": "lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=honda.city_hatchback|generation=city_hb.g3|model_year=NONE|facelift=NONE",
+            "locator": "line:2",
+            "capture_status": "COMPLETE",
+            "expected_page_count": 1,
+            "captured_page_count": 1
+          },
+          "lineup_rows": [
+            {
+              "market_trim_id": "city.sv",
+              "model_id": "honda.city_hatchback",
+              "generation_id": "city_hb.g3",
+              "grade": null,
+              "powertrain": "ICE",
+              "model_year": null,
+              "facelift_id": null
+            }
           ]
-        },
-        "completeness_evidence": {
-          "publisher_declared_complete": true,
-          "quote": "Complete current Thai retail lineup.",
-          "locator": "line:1",
-          "capture_status": "COMPLETE",
-          "expected_page_count": 1,
-          "captured_page_count": 1
         }
       },
       "priority_cohort": "UNDERREPRESENTED",

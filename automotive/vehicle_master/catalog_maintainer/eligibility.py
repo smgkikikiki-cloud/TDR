@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from .retail_reconcile import validate_model_lineup_binding
 
 
 @dataclass(frozen=True)
@@ -13,29 +14,13 @@ class Eligibility:
     conflicting_trim_ids: tuple[str, ...] = ()
 
 
-def _complete_official_lineup(model: dict) -> bool:
+def _complete_official_lineup(snapshot: dict, model: dict) -> bool:
     evidence = model.get("lineup_evidence") or {}
-    manifest = evidence.get("capture_manifest") or {}
-    proof = evidence.get("completeness_evidence") or {}
-    trim_ids = evidence.get("trim_ids")
-    complete_capture = (manifest.get("pagination_complete") is True
-                        and type(manifest.get("source_page_count")) is int and manifest["source_page_count"] > 0
-                        and type(manifest.get("row_count")) is int and manifest["row_count"] > 0
-                        and manifest.get("row_count") == len(trim_ids or [])
-                        and manifest.get("listed_trim_ids") == trim_ids)
-    explicit_publisher_proof = (proof.get("publisher_declared_complete") is True
-                                and isinstance(proof.get("quote"), str) and bool(proof["quote"].strip())
-                                and isinstance(proof.get("locator"), str) and proof["locator"].startswith("line:")
-                                and proof.get("capture_status") == "COMPLETE"
-                                and type(proof.get("expected_page_count")) is int
-                                and proof.get("expected_page_count") == proof.get("captured_page_count")
-                                and proof.get("expected_page_count", 0) > 0)
+    bound, _ = validate_model_lineup_binding(snapshot, model)
     return (evidence.get("market") == "TH"
             and evidence.get("source_authority") == "OFFICIAL"
             and evidence.get("completeness") == "COMPLETE_LINEUP"
-            and bool(evidence.get("document_sha256")) and complete_capture and explicit_publisher_proof
-            and bool(evidence.get("captured_at"))
-            and isinstance(evidence.get("trim_ids"), list))
+            and bound)
 
 
 def evaluate_model(snapshot: dict, model: dict) -> Eligibility:
@@ -85,7 +70,7 @@ def evaluate_model(snapshot: dict, model: dict) -> Eligibility:
                            tuple(sorted(t["id"] for t in conflicts)))
 
     evidence = model.get("lineup_evidence") or {}
-    confirmed = _complete_official_lineup(model)
+    confirmed = _complete_official_lineup(snapshot, model)
     if not confirmed:
         partial = evidence.get("completeness") in {"PARTIAL_TRIM_LIST", "INDIVIDUAL_TRIM"}
         return Eligibility("RETAIL_AUDIT_ONLY", ("LINEUP_PARTIAL" if partial else "RETAIL_UNVERIFIED",), generations)

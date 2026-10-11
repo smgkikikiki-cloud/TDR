@@ -193,22 +193,35 @@ class CatalogMaintainerTests(unittest.TestCase):
         self.assertEqual(next(r for r in rows if r["field_key"] == "ev.rated_range_km")["candidate_status"], "HELD")
         self.assertEqual(summary["priority_gap_items_proposed"], 0)
 
-    def _complete_lineup_doc(self, ids):
+    def _complete_lineup_doc(self, ids, *, model_id="byd.atto_3", generation_id="atto_3.g1",
+                             captured_at="2026-10-10", edition_id="oem-edition-a",
+                             capture_id="capture-a", powertrain_by_id=None,
+                             model_year=None, facelift_id=None):
         doc = self.recorded("complete-lineup.json")
+        doc.update(model_id=model_id, generation_id=generation_id, captured_at=captured_at,
+                   published_at=min(captured_at, "2026-10-01"), source_id="synthetic-oem-th",
+                   edition_id=edition_id, lineage_id="synthetic-oem-lineage")
         doc["trim_ids"] = list(ids)
-        doc["capture_manifest"].update(listed_trim_ids=list(ids), row_count=len(ids))
+        doc["capture_manifest"].update(listed_trim_ids=list(ids), row_count=len(ids),source_page_count=1)
+        scope_line = (f"lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model={model_id}|"
+                      f"generation={generation_id}|model_year={model_year if model_year is not None else 'NONE'}|"
+                      f"facelift={facelift_id if facelift_id is not None else 'NONE'}")
         lines = [f"lineup|trim|{tid}" for tid in ids]
-        lines.append("Publisher statement: complete current Thai retail lineup.")
+        lines.extend([scope_line, f"capture|edition={edition_id}|capture_id={capture_id}|captured_at={captured_at}|method=LOCAL_FIXTURE_CAPTURE"])
         doc["content"] = "\n".join(lines)
         doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
         doc["completeness_evidence"] = {"publisher_declared_complete":True,"quote":lines[-1],
-            "locator":f"line:{len(lines)}","capture_status":"COMPLETE","expected_page_count":1,"captured_page_count":1}
+            "locator":f"line:{len(lines)-1}","capture_status":"COMPLETE","expected_page_count":1,"captured_page_count":1}
+        doc["completeness_evidence"]["quote"] = scope_line
+        doc["capture_provenance"] = {"capture_id":capture_id,"capture_method":"LOCAL_FIXTURE_CAPTURE",
+                                      "captured_at":captured_at,"captured_page_count":1}
         doc["lineup_rows"] = []
         for tid in ids:
             t = next((x for x in fixture()["trims"] if x["id"] == tid), None)
-            doc["lineup_rows"].append({"market_trim_id":tid,"model_id":doc["model_id"],
-                "generation_id":doc["generation_id"],"grade":None,"powertrain":t["powertrain"] if t else "BEV",
-                "model_year":None,"facelift_id":None})
+            doc["lineup_rows"].append({"market_trim_id":tid,"model_id":model_id,
+                "generation_id":generation_id,"grade":t.get("grade") if t else None,
+                "powertrain":(powertrain_by_id or {}).get(tid,t["powertrain"] if t else "BEV"),
+                "model_year":model_year,"facelift_id":facelift_id})
         return doc
 
     def test_retail_source_completeness_requires_explicit_bound_evidence(self):
@@ -225,7 +238,7 @@ class CatalogMaintainerTests(unittest.TestCase):
         snap = fixture()
         doc = self._complete_lineup_doc(["atto.extended", "atto.standard", "atto.new_grade"])
         next(r for r in doc["lineup_rows"] if r["market_trim_id"] == "atto.new_grade")["grade"] = "New Grade"
-        result = reconcile_retail_lineup(snap, doc)
+        result = reconcile_retail_lineup(snap, doc, policy=policy())
         statuses = {x["market_trim_id"]:x["outcome"] for x in result["outcomes"]}
         self.assertEqual(statuses["atto.standard"], "KEEP")
         self.assertEqual(statuses["atto.new_grade"], "ADD_PROPOSAL")
@@ -235,24 +248,19 @@ class CatalogMaintainerTests(unittest.TestCase):
         snap = fixture()
         doc = self._complete_lineup_doc(["atto.extended"])
         doc["completeness_evidence"]["capture_status"] = "PARTIAL"
-        result = reconcile_retail_lineup(snap, doc)
+        result = reconcile_retail_lineup(snap, doc, policy=policy())
         self.assertTrue(all(x["outcome"] == "HOLD" for x in result["outcomes"]))
         complete = self._complete_lineup_doc(["atto.extended"])
-        result = reconcile_retail_lineup(snap, complete)
+        result = reconcile_retail_lineup(snap, complete, policy=policy())
         protected = next(x for x in result["outcomes"] if x["market_trim_id"] == "atto.standard")
         self.assertEqual(protected["outcome"], "REVIEW")
         self.assertIn("OWNER_OR_ADMIN_PROTECTED_TRIM", protected["reason_codes"])
 
     def test_historical_trim_in_active_model_is_never_auto_discontinued(self):
         snap = fixture()
-        doc = self._complete_lineup_doc(["city.sv"])
-        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3")
-        doc["source_id"] = "official-city"
-        # Rebuild capture proof while retaining city's exact source lineage.
-        doc = self._complete_lineup_doc(["city.sv"])
-        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3", source_id="official-city")
-        doc["lineup_rows"][0].update(model_id=doc["model_id"], generation_id=doc["generation_id"], powertrain="ICE")
-        result = reconcile_retail_lineup(snap, doc)
+        doc = self._complete_lineup_doc(["city.sv"],model_id="honda.city_hatchback",generation_id="city_hb.g3",
+                                        powertrain_by_id={"city.sv":"ICE"})
+        result = reconcile_retail_lineup(snap, doc, policy=policy())
         old = next(x for x in result["outcomes"] if x["market_trim_id"] == "city.old")
         self.assertEqual(old["outcome"], "REVIEW")
         self.assertIn("HISTORICAL_TRIM_NOT_AUTO_RETIRED", old["reason_codes"])
@@ -261,53 +269,176 @@ class CatalogMaintainerTests(unittest.TestCase):
         snap = fixture()
         doc = self._complete_lineup_doc(["atto.extended", "atto.standard"])
         doc["lineup_rows"][0]["grade"] = "Collision"
-        result = reconcile_retail_lineup(snap, doc)
+        result = reconcile_retail_lineup(snap, doc, policy=policy())
         row = next(x for x in result["outcomes"] if x["market_trim_id"] == "atto.extended")
         self.assertEqual(row["outcome"], "REVIEW")
         self.assertIn("CANONICAL_IDENTITY_COLLISION", row["reason_codes"])
 
-    def test_soft_discontinue_requires_auditable_first_party_or_independent_complete_sources(self):
+    def test_previous_positive_then_one_negative_lineup_is_not_discontinuation(self):
         snap = fixture()
         snap["trims"].append({"id":"city.base","model_id":"honda.city_hatchback","generation_id":"city_hb.g3",
                               "status":"CURRENT","powertrain":"ICE"})
-        doc = self._complete_lineup_doc(["city.sv"])
-        doc.update(model_id="honda.city_hatchback", generation_id="city_hb.g3", source_id="official-city-current",
-                   lineage_id="city-current-lineage", captured_at="2026-10-10")
-        doc["lineup_rows"][0].update(model_id=doc["model_id"],generation_id=doc["generation_id"],powertrain="ICE")
-        absent = next(x for x in reconcile_retail_lineup(snap, doc)["outcomes"] if x["market_trim_id"] == "city.base")
+        current = self._complete_lineup_doc(["city.sv"],model_id="honda.city_hatchback",generation_id="city_hb.g3",
+            captured_at="2026-10-10",edition_id="city-edition-current",capture_id="city-capture-current",
+            powertrain_by_id={"city.sv":"ICE"})
+        prior_positive = self._complete_lineup_doc(["city.sv","city.base"],model_id="honda.city_hatchback",
+            generation_id="city_hb.g3",captured_at="2026-08-01",edition_id="city-edition-positive",
+            capture_id="city-capture-positive",powertrain_by_id={"city.sv":"ICE","city.base":"ICE"})
+        absent = next(x for x in reconcile_retail_lineup(snap,current,policy=policy(),
+            prior_complete_documents=[prior_positive])["outcomes"] if x["market_trim_id"] == "city.base")
         self.assertEqual(absent["outcome"], "HOLD")
         self.assertEqual(absent["reason_codes"], ["ABSENCE_IN_COMPLETE_LINEUP_INSUFFICIENT"])
 
-        # Explicit end-of-sale is only honored when the exact quoted line is bound to this official Thai document.
-        doc["content"] += "\nCity Base production ended 2026-09-01."
-        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
-        doc["end_of_sale_evidence"] = [{"market_trim_id":"city.base","first_party_end_of_sale":True,
-                                        "quote":"City Base production ended 2026-09-01.","locator":"line:3"}]
-        proposed = next(x for x in reconcile_retail_lineup(snap, doc)["outcomes"] if x["market_trim_id"] == "city.base")
-        self.assertEqual(proposed["outcome"], "SOFT_DISCONTINUE_PROPOSAL")
-        self.assertTrue(proposed["soft_archive_only"])
+    def _city_discontinuation_case(self):
+        snap = fixture()
+        snap["trims"].append({"id":"city.base","model_id":"honda.city_hatchback","generation_id":"city_hb.g3",
+                              "status":"CURRENT","powertrain":"ICE"})
+        current = self._complete_lineup_doc(["city.sv"],model_id="honda.city_hatchback",generation_id="city_hb.g3",
+            captured_at="2026-10-10",edition_id="city-edition-current",capture_id="city-capture-current",
+            powertrain_by_id={"city.sv":"ICE"})
+        older_negative = self._complete_lineup_doc(["city.sv"],model_id="honda.city_hatchback",generation_id="city_hb.g3",
+            captured_at="2026-08-01",edition_id="city-edition-older",capture_id="city-capture-older",
+            powertrain_by_id={"city.sv":"ICE"})
+        return snap,current,older_negative
 
-        previous = self._complete_lineup_doc(["city.sv", "city.base"])
-        previous.update(model_id=doc["model_id"],generation_id=doc["generation_id"],source_id="other-official-source",
-                        lineage_id="independent-older-lineage",captured_at="2026-08-01",published_at="2026-07-25")
-        for row in previous["lineup_rows"]:
-            row.update(model_id=doc["model_id"],generation_id=doc["generation_id"],powertrain="ICE")
-        doc.pop("end_of_sale_evidence")
-        doc["content"] = "\n".join(doc["content"].splitlines()[:2])
-        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
-        doc["completeness_evidence"]["locator"] = "line:2"
-        doc["completeness_evidence"]["quote"] = doc["content"].splitlines()[1]
-        doc["capture_manifest"].update(listed_trim_ids=["city.sv"],row_count=1)
-        doc["trim_ids"] = ["city.sv"]
-        repeated = next(x for x in reconcile_retail_lineup(snap, doc, prior_complete_documents=[previous])["outcomes"]
-                        if x["market_trim_id"] == "city.base")
-        self.assertEqual(repeated["outcome"], "SOFT_DISCONTINUE_PROPOSAL")
+    def test_two_ordered_independent_negative_lineups_propose_soft_discontinuation(self):
+        snap,current,older_negative=self._city_discontinuation_case()
+        outcome=next(x for x in reconcile_retail_lineup(snap,current,policy=policy(),
+            prior_complete_documents=[older_negative])["outcomes"] if x["market_trim_id"]=="city.base")
+        self.assertEqual(outcome["outcome"],"SOFT_DISCONTINUE_PROPOSAL")
+        self.assertTrue(outcome["soft_archive_only"])
 
-    def test_normalized_complete_lineup_contract_rejects_flag_without_manifest_and_proof(self):
+    def test_reversed_dates_same_edition_or_same_capture_do_not_confirm_absence(self):
+        for mutation in ("reversed", "same_edition", "same_capture"):
+            with self.subTest(mutation=mutation):
+                snap,current,old=self._city_discontinuation_case()
+                if mutation=="reversed":
+                    old["captured_at"]="2026-10-11"; old["published_at"]="2026-10-11"
+                    old["capture_provenance"]["captured_at"]="2026-10-11"
+                    old["content"]=old["content"].replace("captured=2026-08-01","captured=2026-10-11")
+                    old["content_sha256"]=hashlib.sha256(old["content"].encode()).hexdigest()
+                elif mutation=="same_edition":
+                    old["edition_id"]=current["edition_id"]
+                else:
+                    old["capture_provenance"]["capture_id"]=current["capture_provenance"]["capture_id"]
+                outcome=next(x for x in reconcile_retail_lineup(snap,current,policy=policy(),
+                    prior_complete_documents=[old])["outcomes"] if x["market_trim_id"]=="city.base")
+                self.assertEqual(outcome["outcome"],"HOLD")
+
+    def test_two_editions_from_same_publisher_can_be_independent_negative_captures(self):
+        snap,current,old=self._city_discontinuation_case()
+        self.assertEqual(old["source_id"],current["source_id"])
+        self.assertNotEqual(old["edition_id"],current["edition_id"])
+        self.assertNotEqual(old["capture_provenance"]["capture_id"],current["capture_provenance"]["capture_id"])
+        outcome=next(x for x in reconcile_retail_lineup(snap,current,policy=policy(),prior_complete_documents=[old])["outcomes"]
+                     if x["market_trim_id"]=="city.base")
+        self.assertEqual(outcome["outcome"],"SOFT_DISCONTINUE_PROPOSAL")
+
+    def test_generation_model_year_and_facelift_omissions_are_out_of_scope(self):
+        snap=fixture()
+        snap["generations"].append({"id":"atto_3.g2","model_id":"byd.atto_3"})
+        snap["trims"].append({"id":"atto.next_gen","model_id":"byd.atto_3","generation_id":"atto_3.g2",
+                              "status":"CURRENT","powertrain":"BEV"})
+        snap["trims"].append({"id":"atto.refresh","model_id":"byd.atto_3","generation_id":"atto_3.g1",
+                              "status":"CURRENT","powertrain":"BEV","model_year":2027,"facelift_id":"refresh-27"})
+        doc=self._complete_lineup_doc(["atto.extended","atto.standard"])
+        result=reconcile_retail_lineup(snap,doc,policy=policy())
+        states={x["market_trim_id"]:(x["outcome"],x["reason_codes"]) for x in result["outcomes"]}
+        self.assertEqual(states["atto.next_gen"],("HOLD",["OUT_OF_SCOPE_GENERATION"]))
+        self.assertEqual(states["atto.refresh"],("HOLD",["OUT_OF_SCOPE_MODEL_YEAR_OR_FACELIFT"]))
+
+    def test_completeness_requires_scope_attestation_and_matching_page_counts(self):
+        doc=self.recorded("complete-lineup.json")
+        self.assertTrue(validate_source_completeness(doc)["complete"])
+        invalid=copy.deepcopy(doc); invalid["completeness_evidence"]["expected_page_count"]=2
+        self.assertIn("PAGE_COUNT_MISMATCH",validate_source_completeness(invalid)["reason_codes"])
+        invalid=copy.deepcopy(doc); invalid["completeness_evidence"]["quote"]="Complete current Thai lineup"
+        self.assertIn("PUBLISHER_COMPLETENESS_NOT_EVIDENCED",validate_source_completeness(invalid)["reason_codes"])
+        invalid=copy.deepcopy(doc); invalid["content"]=invalid["content"].replace("COMPLETE_CURRENT_THAI_RETAIL_LINEUP","PRODUCTION_COMPLETE")
+        invalid["content_sha256"]=hashlib.sha256(invalid["content"].encode()).hexdigest()
+        self.assertIn("PUBLISHER_ATTESTATION_SEMANTICS_OR_SCOPE_INVALID",validate_source_completeness(invalid)["reason_codes"])
+
+    def test_capture_independence_metadata_must_be_bound_to_exact_source_content(self):
+        doc=self.recorded("complete-lineup.json")
+        self.assertTrue(validate_source_completeness(doc)["complete"])
+        for key, value in (("edition_id", "invented-edition"),
+                           ("capture_provenance", {"capture_id":"invented-capture",
+                            "capture_method":"LOCAL_FIXTURE_CAPTURE","captured_at":doc["captured_at"],
+                            "captured_page_count":1})):
+            invalid=copy.deepcopy(doc); invalid[key]=value
+            self.assertIn("CAPTURE_PROVENANCE_NOT_BOUND_TO_CONTENT",
+                          validate_source_completeness(invalid)["reason_codes"])
+        invalid=copy.deepcopy(doc)
+        invalid["capture_provenance"]="not-an-object"
+        self.assertIn("CAPTURE_PROVENANCE_MISSING_OR_INVALID",
+                      validate_source_completeness(invalid)["reason_codes"])
+
+    def test_numeric_model_year_and_facelift_attestation_scope_matches_exact_trim(self):
+        snap=fixture()
+        snap["trims"].append({"id":"atto.refresh27","model_id":"byd.atto_3","generation_id":"atto_3.g1",
+                              "status":"CURRENT","powertrain":"BEV","grade":"Extended",
+                              "model_year":2027,"facelift_id":"refresh-27"})
+        doc=self._complete_lineup_doc(["atto.refresh27"],model_year=2027,facelift_id="refresh-27")
+        doc["lineup_rows"][0]["grade"]="Extended"
+        self.assertTrue(validate_source_completeness(doc)["complete"])
+        result=reconcile_retail_lineup(snap,doc,policy=policy())
+        state=next(x for x in result["outcomes"] if x["market_trim_id"]=="atto.refresh27")
+        self.assertEqual(state["outcome"],"KEEP")
+        old_scope=next(x for x in result["outcomes"] if x["market_trim_id"]=="atto.standard")
+        self.assertEqual(old_scope["reason_codes"],["OUT_OF_SCOPE_MODEL_YEAR_OR_FACELIFT"])
+
+    def test_forged_model_level_lineup_metadata_cannot_unlock_spec_enrichment(self):
+        snap=fixture(); model=snap["models"][2]
+        model["lineup_evidence"]["source_document"]["content"] += "\nforged complete assertion"
+        self.assertEqual(evaluate_model(snap,model).decision,"RETAIL_AUDIT_ONLY")
+        with self.assertRaisesRegex(ValueError,"document-bound evidence"):
+            validate_fixture(snap)
+
+    def test_production_end_is_not_retail_end_of_sale(self):
+        snap,current,_=self._city_discontinuation_case()
+        production="production_end|model=honda.city_hatchback|trim=city.base|effective_date=2026-09-01"
+        current["content"] += "\n"+production
+        current["content_sha256"]=hashlib.sha256(current["content"].encode()).hexdigest()
+        current["end_of_sale_evidence"]=[{"market_trim_id":"city.base","first_party_end_of_sale":True,
+                                          "quote":production,"locator":"line:4"}]
+        outcome=next(x for x in reconcile_retail_lineup(snap,current,policy=policy())["outcomes"]
+                     if x["market_trim_id"]=="city.base")
+        self.assertEqual(outcome["outcome"],"HOLD")
+
+    def test_quote_bound_explicit_retail_sale_end_is_proposal_only(self):
+        snap,current,_=self._city_discontinuation_case()
+        line="retail_end_of_sale|market=TH|model=honda.city_hatchback|generation=city_hb.g3|trim=city.base|model_year=NONE|facelift=NONE|effective_date=2026-09-01"
+        current["content"] += "\n"+line
+        current["content_sha256"]=hashlib.sha256(current["content"].encode()).hexdigest()
+        current["end_of_sale_evidence"]=[{"event_type":"RETAIL_SALE_ENDED","market_trim_id":"city.base",
+            "model_id":"honda.city_hatchback","generation_id":"city_hb.g3","effective_date":"2026-09-01",
+            "quote":line,"locator":"line:4"}]
+        outcome=next(x for x in reconcile_retail_lineup(snap,current,policy=policy())["outcomes"]
+                     if x["market_trim_id"]=="city.base")
+        self.assertEqual(outcome["outcome"],"SOFT_DISCONTINUE_PROPOSAL")
+
+    def test_structural_interval_is_validated_policy_and_reported_pending_approval(self):
+        snap,current,old=self._city_discontinuation_case()
+        p=policy(); p["structural_evidence"]["minimum_independent_negative_interval_days"]=90
+        result=reconcile_retail_lineup(snap,current,policy=p,prior_complete_documents=[old])
+        outcome=next(x for x in result["outcomes"] if x["market_trim_id"]=="city.base")
+        self.assertEqual(outcome["outcome"],"HOLD")
+        self.assertEqual(result["evidence_policy"],{"approval_status":"PENDING_OWNER_APPROVAL",
+            "minimum_independent_negative_interval_days":90})
+        p["structural_evidence"]["approval_status"]="APPROVED"
+        with self.assertRaisesRegex(ValueError,"PENDING_OWNER_APPROVAL"):
+            validate_policy(p)
+        p=policy(); p["structural_evidence"]["minimum_independent_negative_interval_days"]=90
+        p["structural_evidence"]["minimum_interval_constraints"]["maximum_days"]=60
+        with self.assertRaisesRegex(ValueError,"structural_evidence interval"):
+            validate_policy(p)
+
+    def test_normalized_complete_lineup_contract_requires_document_binding(self):
         snap = fixture()
         validate_fixture(snap)
-        snap["models"][2]["lineup_evidence"].pop("completeness_evidence")
-        with self.assertRaisesRegex(ValueError, "capture_manifest and completeness_evidence"):
+        snap["models"][2]["lineup_evidence"].pop("source_document")
+        self.assertEqual(evaluate_model(snap,snap["models"][2]).decision,"RETAIL_AUDIT_ONLY")
+        with self.assertRaisesRegex(ValueError, "document-bound evidence"):
             validate_fixture(snap)
 
     def test_canonical_registry_adapter_is_pinned_and_aliases_are_canonical(self):

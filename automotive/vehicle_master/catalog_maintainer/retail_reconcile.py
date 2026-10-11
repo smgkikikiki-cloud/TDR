@@ -6,9 +6,81 @@ from __future__ import annotations
 
 from datetime import date
 import hashlib
+import re
 
 
 OUTCOMES = {"KEEP", "ADD_PROPOSAL", "SOFT_DISCONTINUE_PROPOSAL", "HOLD", "REVIEW"}
+ATTESTATION_RE = re.compile(
+    r"^lineup_attestation\|COMPLETE_CURRENT_THAI_RETAIL_LINEUP\|model=([^|]+)\|generation=([^|]+)\|model_year=([^|]+)\|facelift=([^|]+)$")
+RETAIL_END_RE = re.compile(
+    r"^retail_end_of_sale\|market=TH\|model=([^|]+)\|generation=([^|]+)\|trim=([^|]+)\|model_year=([^|]+)\|facelift=([^|]+)\|effective_date=(\d{4}-\d{2}-\d{2})$")
+CAPTURE_RE = re.compile(
+    r"^capture\|edition=([^|]+)\|capture_id=([^|]+)\|captured_at=(\d{4}-\d{2}-\d{2})\|method=LOCAL_FIXTURE_CAPTURE$")
+
+
+def _scope_value(value: object) -> str:
+    return "NONE" if value is None else str(value)
+
+
+def _parse_scope_value(value: str) -> object:
+    if value == "NONE":
+        return None
+    if re.fullmatch(r"20[0-9]{2}", value):
+        return int(value)
+    return value
+
+
+def _document_attestation(document: dict, lines: list[str]) -> dict | None:
+    proof = document.get("completeness_evidence") or {}
+    locator, quote = proof.get("locator"), proof.get("quote")
+    try:
+        line_no = int(locator.split(":", 1)[1]) if isinstance(locator, str) and locator.startswith("line:") else -1
+    except ValueError:
+        line_no = -1
+    if not (1 <= line_no <= len(lines) and lines[line_no - 1] == quote):
+        return None
+    match = ATTESTATION_RE.fullmatch(quote)
+    if not match:
+        return None
+    model_id, generation_id, model_year, facelift_id = match.groups()
+    return {"model_id": model_id, "generation_id": generation_id,
+            "model_year": _parse_scope_value(model_year), "facelift_id": _parse_scope_value(facelift_id)}
+
+
+def validate_model_lineup_binding(snapshot: dict, model: dict) -> tuple[bool, str]:
+    """Validate the same document-bound source contract used by retail reconciliation."""
+    evidence = model.get("lineup_evidence") or {}
+    document = evidence.get("source_document")
+    if not isinstance(document, dict):
+        return False, "LINEUP_SOURCE_DOCUMENT_MISSING"
+    verdict = validate_source_completeness(document)
+    if not verdict["complete"]:
+        return False, "LINEUP_SOURCE_DOCUMENT_INVALID"
+    if (evidence.get("document_id") != document.get("document_id")
+            or evidence.get("document_sha256") != document.get("content_sha256")
+            or evidence.get("market") != document.get("market")
+            or evidence.get("source_authority") != document.get("source_authority")
+            or evidence.get("completeness") != document.get("completeness")
+            or evidence.get("model_id") != model.get("id")
+            or evidence.get("generation_id") != document.get("generation_id")
+            or evidence.get("trim_ids") != document.get("trim_ids")
+            or evidence.get("captured_at") != document.get("captured_at")):
+        return False, "LINEUP_SOURCE_REFERENCE_MISMATCH"
+    generations = {g["id"]: g for g in snapshot.get("generations", [])}
+    trims = {t["id"]: t for t in snapshot.get("trims", [])}
+    gen = generations.get(document.get("generation_id"))
+    if not gen or gen.get("model_id") != model.get("id"):
+        return False, "LINEUP_GENERATION_SCOPE_MISMATCH"
+    for row in document.get("lineup_rows", []):
+        trim = trims.get(row["market_trim_id"])
+        if not trim or trim.get("model_id") != model.get("id") or trim.get("generation_id") != gen["id"]:
+            return False, "LINEUP_TRIM_IDENTITY_UNRESOLVED"
+        model_year = trim.get("model_year", gen.get("model_year"))
+        facelift = trim.get("facelift_id", gen.get("facelift_id"))
+        if (row.get("powertrain") != trim.get("powertrain") or row.get("grade") != trim.get("grade")
+                or row.get("model_year") != model_year or row.get("facelift_id") != facelift):
+            return False, "LINEUP_TRIM_SCOPE_MISMATCH"
+    return True, "DOCUMENT_BOUND_COMPLETE_LINEUP"
 
 
 def validate_reconciliation_output(result: dict) -> None:
@@ -16,6 +88,11 @@ def validate_reconciliation_output(result: dict) -> None:
         raise ValueError("retail reconciliation output is missing outcomes")
     if result.get("canonical_writes") != 0:
         raise ValueError("retail reconciliation output cannot write canonical data")
+    policy = result.get("evidence_policy")
+    if (not isinstance(policy, dict) or policy.get("approval_status") != "PENDING_OWNER_APPROVAL"
+            or type(policy.get("minimum_independent_negative_interval_days")) is not int
+            or policy["minimum_independent_negative_interval_days"] < 1):
+        raise ValueError("reconciliation output must expose the pending structural evidence policy")
     for row in result["outcomes"]:
         if row.get("outcome") not in OUTCOMES or not isinstance(row.get("reason_codes"), list):
             raise ValueError("invalid retail reconciliation outcome contract")
@@ -46,6 +123,19 @@ def validate_source_completeness(document: dict) -> dict:
                 reasons.append("PUBLICATION_AFTER_CAPTURE")
     except (TypeError, ValueError):
         reasons.append("SOURCE_DATE_INVALID")
+    provenance = document.get("capture_provenance")
+    if (not isinstance(document.get("edition_id"), str) or not document.get("edition_id")
+            or not isinstance(document.get("capture_provenance"), dict)
+            or not isinstance(provenance.get("capture_id"), str) or not provenance.get("capture_id")
+            or provenance.get("capture_method") != "LOCAL_FIXTURE_CAPTURE"
+            or provenance.get("captured_at") != document.get("captured_at")):
+        reasons.append("CAPTURE_PROVENANCE_MISSING_OR_INVALID")
+    provenance_data = provenance if isinstance(provenance, dict) else {}
+    capture_line = (f"capture|edition={document.get('edition_id')}|"
+                    f"capture_id={provenance_data.get('capture_id')}|"
+                    f"captured_at={provenance_data.get('captured_at')}|method=LOCAL_FIXTURE_CAPTURE")
+    if not isinstance(content, str) or capture_line not in content.splitlines():
+        reasons.append("CAPTURE_PROVENANCE_NOT_BOUND_TO_CONTENT")
     if not isinstance(manifest, dict):
         reasons.append("CAPTURE_MANIFEST_MISSING")
     else:
@@ -76,8 +166,24 @@ def validate_source_completeness(document: dict) -> dict:
             reasons.append("CAPTURE_NOT_COMPLETE")
         if (type(proof.get("expected_page_count")) is not int or type(proof.get("captured_page_count")) is not int
                 or proof.get("expected_page_count", 0) < 1
-                or proof.get("expected_page_count") != proof.get("captured_page_count")):
+                or proof.get("expected_page_count") != proof.get("captured_page_count")
+                or (isinstance(manifest, dict)
+                    and (proof.get("expected_page_count") != manifest.get("source_page_count")
+                         or proof.get("captured_page_count") != manifest.get("source_page_count"))
+                    or (isinstance(provenance, dict)
+                        and provenance.get("captured_page_count") != proof.get("captured_page_count")))):
             reasons.append("PAGE_COUNT_MISMATCH")
+    lines = content.splitlines() if isinstance(content, str) else []
+    attested_scope = _document_attestation(document, lines)
+    if (not attested_scope or attested_scope.get("model_id") != document.get("model_id")
+            or attested_scope.get("generation_id") != document.get("generation_id")):
+        reasons.append("PUBLISHER_ATTESTATION_SEMANTICS_OR_SCOPE_INVALID")
+    captured_lines = [CAPTURE_RE.fullmatch(line) for line in lines if CAPTURE_RE.fullmatch(line)]
+    captured_line = captured_lines[0] if len(captured_lines) == 1 else None
+    if (not captured_line or captured_line.group(1) != document.get("edition_id")
+            or captured_line.group(2) != provenance_data.get("capture_id")
+            or captured_line.group(3) != document.get("captured_at")):
+        reasons.append("CAPTURE_PROVENANCE_NOT_BOUND_TO_CONTENT")
     if document.get("completeness") == "COMPLETE_LINEUP":
         rows = document.get("lineup_rows")
         manifest_ids = manifest.get("listed_trim_ids", []) if isinstance(manifest, dict) else []
@@ -90,6 +196,9 @@ def validate_source_completeness(document: dict) -> dict:
                                                        "powertrain", "model_year", "facelift_id"))
                            or r.get("model_id") != document.get("model_id")
                            or r.get("generation_id") != document.get("generation_id")
+                           or not attested_scope
+                           or r.get("model_year") != attested_scope.get("model_year")
+                           or r.get("facelift_id") != attested_scope.get("facelift_id")
                            or not isinstance(r.get("powertrain"), str) or not r.get("powertrain") for r in rows)):
                 reasons.append("NORMALIZED_LINEUP_ROWS_INVALID")
     return {"complete": not reasons, "reason_codes": sorted(set(reasons)),
@@ -102,9 +211,98 @@ def _identity(row: dict) -> tuple:
             row.get("powertrain"), row.get("model_year"), row.get("facelift_id"))
 
 
-def reconcile_retail_lineup(snapshot: dict, document: dict, *, prior_complete_documents: list[dict] | None = None,
-                            minimum_interval_days: int = 30) -> dict:
+def _scope(document: dict) -> dict | None:
+    content = document.get("content", "")
+    return _document_attestation(document, content.splitlines())
+
+
+def _trim_in_scope(trim: dict, generation: dict, scope: dict) -> bool:
+    year = trim.get("model_year", generation.get("model_year"))
+    facelift = trim.get("facelift_id", generation.get("facelift_id"))
+    return (trim.get("generation_id") == scope["generation_id"]
+            and year == scope["model_year"] and facelift == scope["facelift_id"])
+
+
+def _independent_negative(old: dict, current: dict, trim_id: str, scope: dict,
+                          minimum_interval_days: int) -> bool:
+    old_check = validate_source_completeness(old)
+    old_scope = _scope(old)
+    if not old_check["complete"] or not old_scope or old_scope != scope:
+        return False
+    if (old.get("market") != "TH" or old.get("source_authority") != "OFFICIAL"
+            or old.get("model_id") != current.get("model_id")
+            or old.get("generation_id") != current.get("generation_id")
+            or trim_id in set(old.get("trim_ids", []))):
+        return False
+    provenance_old = old.get("capture_provenance") or {}
+    provenance_current = current.get("capture_provenance") or {}
+    if (old.get("content_sha256") == current.get("content_sha256")
+            or old.get("edition_id") == current.get("edition_id")
+            or provenance_old.get("capture_id") == provenance_current.get("capture_id")):
+        return False
+    try:
+        old_date = date.fromisoformat(old["captured_at"])
+        current_date = date.fromisoformat(current["captured_at"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    return old_date < current_date and (current_date - old_date).days >= minimum_interval_days
+
+
+def _validated_retail_end_of_sale(document: dict, trim_id: str, trim: dict,
+                                  generation: dict, scope: dict, as_of: str) -> bool:
+    lines = document.get("content", "").splitlines()
+    try:
+        captured = date.fromisoformat(document["captured_at"])
+        snapshot_date = date.fromisoformat(as_of)
+    except (KeyError, TypeError, ValueError):
+        return False
+    if captured > snapshot_date:
+        return False
+    for evidence in document.get("end_of_sale_evidence", []):
+        if not isinstance(evidence, dict) or evidence.get("event_type") != "RETAIL_SALE_ENDED":
+            continue
+        quote, locator = evidence.get("quote"), evidence.get("locator", "")
+        try:
+            line_no = int(locator.split(":", 1)[1]) if locator.startswith("line:") else -1
+        except ValueError:
+            line_no = -1
+        match = RETAIL_END_RE.fullmatch(quote or "")
+        if not match or not (1 <= line_no <= len(lines) and lines[line_no - 1] == quote):
+            continue
+        model_id, generation_id, stated_trim, year_text, facelift_text, effective_text = match.groups()
+        try:
+            effective = date.fromisoformat(effective_text)
+        except ValueError:
+            continue
+        trim_year = trim.get("model_year", generation.get("model_year"))
+        trim_facelift = trim.get("facelift_id", generation.get("facelift_id"))
+        if (stated_trim == trim_id and model_id == document.get("model_id")
+                and generation_id == scope["generation_id"]
+                and _parse_scope_value(year_text) == trim_year == scope["model_year"]
+                and _parse_scope_value(facelift_text) == trim_facelift == scope["facelift_id"]
+                and evidence.get("market_trim_id") == trim_id
+                and evidence.get("model_id") == model_id and evidence.get("generation_id") == generation_id
+                and evidence.get("effective_date") == effective_text
+                and effective <= captured and effective <= snapshot_date):
+            return True
+    return False
+
+
+def reconcile_retail_lineup(snapshot: dict, document: dict, *, policy: dict,
+                            prior_complete_documents: list[dict] | None = None) -> dict:
     """Return deterministic per-MarketTrim outcomes; all structural changes are proposals."""
+    from .validation import validate_policy
+    validate_policy(policy)
+    structural_policy = policy["structural_evidence"]
+    minimum_interval_days = structural_policy["minimum_independent_negative_interval_days"]
+    evidence_policy = {"approval_status": structural_policy["approval_status"],
+                       "minimum_independent_negative_interval_days": minimum_interval_days}
+
+    def finish(result: dict) -> dict:
+        result["evidence_policy"] = evidence_policy
+        validate_reconciliation_output(result)
+        return result
+
     completeness = validate_source_completeness(document)
     model_id = document.get("model_id")
     model = next((x for x in snapshot.get("models", []) if x.get("id") == model_id), None)
@@ -112,41 +310,41 @@ def reconcile_retail_lineup(snapshot: dict, document: dict, *, prior_complete_do
     if not model or not generation or generation.get("model_id") != model_id:
         result = {"model_id": model_id, "outcomes": [], "model_outcome": "REVIEW",
                   "reason_codes": ["MODEL_GENERATION_IDENTITY_UNRESOLVED"], "canonical_writes": 0}
-        validate_reconciliation_output(result)
-        return result
+        return finish(result)
     if model.get("status") != "CURRENT" or model.get("admin_retired"):
         result = {"model_id": model_id, "outcomes": [], "model_outcome": "REVIEW",
                   "reason_codes": ["MODEL_NOT_ELIGIBLE_FOR_RETAIL_RECONCILIATION"], "canonical_writes": 0}
-        validate_reconciliation_output(result)
-        return result
+        return finish(result)
     try:
         if date.fromisoformat(document["captured_at"]) > date.fromisoformat(snapshot["as_of"]):
             result = {"model_id": model_id, "outcomes": [{"market_trim_id": None, "outcome": "HOLD",
                       "reason_codes": ["SOURCE_CAPTURE_AFTER_SNAPSHOT"]}], "model_outcome": "HOLD",
                       "reason_codes": ["SOURCE_CAPTURE_AFTER_SNAPSHOT"], "canonical_writes": 0}
-            validate_reconciliation_output(result)
-            return result
+            return finish(result)
     except (KeyError, TypeError, ValueError):
         result = {"model_id": model_id, "outcomes": [{"market_trim_id": None, "outcome": "HOLD",
                   "reason_codes": ["SOURCE_OR_SNAPSHOT_DATE_INVALID"]}], "model_outcome": "HOLD",
                   "reason_codes": ["SOURCE_OR_SNAPSHOT_DATE_INVALID"], "canonical_writes": 0}
-        validate_reconciliation_output(result)
-        return result
-    trims = {t["id"]: t for t in snapshot.get("trims", []) if t.get("model_id") == model_id}
+        return finish(result)
+    all_model_trims = {t["id"]: t for t in snapshot.get("trims", []) if t.get("model_id") == model_id}
+    scope = _scope(document) if completeness["complete"] else None
+    generation_rows = {g["id"]: g for g in snapshot.get("generations", [])}
+    trims = {tid: trim for tid, trim in all_model_trims.items()
+             if scope and _trim_in_scope(trim, generation_rows.get(trim.get("generation_id"), {}), scope)}
     approved = next((s for s in snapshot.get("current_retail_sets", []) if s.get("model_id") == model_id), None)
     protected = set(approved.get("trim_ids", [])) if approved else set()
     listed = set(completeness["trim_ids"])
     results: list[dict] = []
     if not completeness["complete"]:
-        targets = sorted(listed | protected)
-        results.extend({"market_trim_id": tid, "outcome": "HOLD", "reason_codes": completeness["reason_codes"]}
-                       for tid in targets)
-        if not targets:
+        results.extend({"market_trim_id": tid, "outcome": "HOLD",
+                        "reason_codes": ["OUT_OF_SCOPE_GENERATION"] if trim.get("generation_id") != document.get("generation_id")
+                                        else completeness["reason_codes"]}
+                       for tid, trim in sorted(all_model_trims.items()))
+        if not results:
             results.append({"market_trim_id": None, "outcome": "HOLD", "reason_codes": completeness["reason_codes"]})
         result = {"model_id": model_id, "outcomes": results, "model_outcome": "HOLD",
                   "reason_codes": completeness["reason_codes"], "canonical_writes": 0}
-        validate_reconciliation_output(result)
-        return result
+        return finish(result)
 
     # An exact ID plus exact identity tuple is required; aliases are retained as source metadata only.
     rows = document.get("lineup_rows", [])
@@ -159,19 +357,22 @@ def reconcile_retail_lineup(snapshot: dict, document: dict, *, prior_complete_do
         return result
     for tid in sorted(listed):
         row = rows_by_id[tid]
-        if row.get("model_id") != model_id or row.get("generation_id") != document.get("generation_id"):
+        if (row.get("model_id") != model_id or row.get("generation_id") != document.get("generation_id")
+                or row.get("model_year") != scope["model_year"] or row.get("facelift_id") != scope["facelift_id"]):
             results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["CROSS_MODEL_OR_GENERATION_IDENTITY"]})
             continue
-        existing = trims.get(tid)
+        existing = all_model_trims.get(tid)
         if existing:
-            if _identity(row) != _identity(existing):
+            if existing.get("generation_id") != scope["generation_id"]:
+                results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["CANONICAL_ID_OTHER_GENERATION"]})
+            elif not _trim_in_scope(existing, generation_rows.get(existing.get("generation_id"), {}), scope) or _identity(row) != _identity(existing):
                 results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["CANONICAL_IDENTITY_COLLISION"]})
             elif existing.get("status") != "CURRENT" or existing.get("admin_retired") or existing.get("owner_retired"):
                 results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["NON_CURRENT_OR_RETIRED_TRIM_PROTECTED"]})
             else:
                 results.append({"market_trim_id": tid, "outcome": "KEEP", "reason_codes": ["EXACT_MARKET_TRIM_IDENTITY"]})
         else:
-            collision = any(_identity(t) == _identity(row) for t in trims.values())
+            collision = any(_identity(t) == _identity(row) for t in all_model_trims.values())
             if collision:
                 results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["MARKET_TRIM_IDENTITY_COLLISION"]})
             else:
@@ -187,40 +388,27 @@ def reconcile_retail_lineup(snapshot: dict, document: dict, *, prior_complete_do
         if trim.get("status") == "HISTORICAL":
             results.append({"market_trim_id": tid, "outcome": "REVIEW", "reason_codes": ["HISTORICAL_TRIM_NOT_AUTO_RETIRED"]})
             continue
-        explicit = False
-        content_lines = document.get("content", "").splitlines()
-        for evidence in document.get("end_of_sale_evidence", []):
-            locator = evidence.get("locator", "")
-            try:
-                line_no = int(locator.split(":", 1)[1]) if locator.startswith("line:") else -1
-            except ValueError:
-                line_no = -1
-            if (evidence.get("market_trim_id") == tid and evidence.get("first_party_end_of_sale") is True
-                    and document.get("source_authority") == "OFFICIAL" and document.get("market") == "TH"
-                    and 1 <= line_no <= len(content_lines) and content_lines[line_no - 1] == evidence.get("quote")):
-                explicit = True
-                break
-        independent = []
-        for old in prior:
-            verdict = validate_source_completeness(old)
-            if (verdict["complete"] and old.get("market") == "TH" and old.get("source_authority") == "OFFICIAL"
-                    and old.get("model_id") == model_id and old.get("generation_id") == document.get("generation_id")
-                    and tid in set(old.get("trim_ids", [])) and old.get("source_id") != document.get("source_id")
-                    and old.get("lineage_id") != document.get("lineage_id")
-                    and old.get("content_sha256") != document.get("content_sha256")):
-                independent.append(old)
-        enough_interval = any(abs((date.fromisoformat(document["captured_at"]) - date.fromisoformat(old["captured_at"])).days)
-                              >= minimum_interval_days for old in independent)
+        generation = generation_rows[trim["generation_id"]]
+        explicit = _validated_retail_end_of_sale(document, tid, trim, generation, scope, snapshot["as_of"])
+        enough_interval = any(_independent_negative(old, document, tid, scope, minimum_interval_days)
+                              for old in prior)
         if trim.get("status") == "CURRENT" and (explicit or enough_interval):
             reason = "FIRST_PARTY_END_OF_SALE" if explicit else "TWO_INDEPENDENT_COMPLETE_LINEUPS"
             results.append({"market_trim_id": tid, "outcome": "SOFT_DISCONTINUE_PROPOSAL", "reason_codes": [reason],
                             "soft_archive_only": True})
         else:
             results.append({"market_trim_id": tid, "outcome": "HOLD", "reason_codes": ["ABSENCE_IN_COMPLETE_LINEUP_INSUFFICIENT"]})
+    # Captures apply only to the attested generation/model-year/facelift slice.
+    # Other slices are surfaced as HOLD without interpreting absence.
+    for tid, trim in sorted(all_model_trims.items()):
+        if tid in trims:
+            continue
+        code = ("OUT_OF_SCOPE_GENERATION" if trim.get("generation_id") != scope["generation_id"]
+                else "OUT_OF_SCOPE_MODEL_YEAR_OR_FACELIFT")
+        results.append({"market_trim_id": tid, "outcome": "HOLD", "reason_codes": [code]})
     outcomes = [x["outcome"] for x in results]
     model_outcome = "REVIEW" if "REVIEW" in outcomes else ("HOLD" if "HOLD" in outcomes else "KEEP")
     result = {"model_id": model_id, "outcomes": results, "model_outcome": model_outcome,
               "reason_codes": [], "canonical_writes": 0,
               "proposal_count": sum(x["outcome"].endswith("_PROPOSAL") for x in results)}
-    validate_reconciliation_output(result)
-    return result
+    return finish(result)

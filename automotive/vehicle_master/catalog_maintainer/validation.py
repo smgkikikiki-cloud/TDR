@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from datetime import date
 import re
+from .retail_reconcile import validate_model_lineup_binding
 
 VALUE_STATES = {"KNOWN", "UNKNOWN", "NOT_AVAILABLE", "NOT_APPLICABLE", "ABSENT", None}
 TIERS = {"P0", "P1", "P2", "P3"}
@@ -17,6 +18,16 @@ def validate_policy(policy: dict) -> None:
             raise ValueError(f"policy priority_policy.{key} must be nonnegative weights summing to 1")
     if abs(sum(p.get("spec_missingness_weights", {}).values()) - 1) > 1e-9:
         raise ValueError("policy spec_missingness_weights must sum to 1")
+    structural = policy.get("structural_evidence", {})
+    interval = structural.get("minimum_independent_negative_interval_days")
+    constraints = structural.get("minimum_interval_constraints", {})
+    minimum = constraints.get("minimum_days")
+    maximum = constraints.get("maximum_days")
+    if (type(minimum) is not int or type(maximum) is not int or minimum < 1 or maximum > 365
+            or minimum > maximum or type(interval) is not int or not minimum <= interval <= maximum
+            or constraints.get("chronology") != "STRICTLY_OLDER_CAPTURE_BEFORE_CURRENT"
+            or structural.get("approval_status") != "PENDING_OWNER_APPROVAL"):
+        raise ValueError("structural_evidence interval must be 1..365 days and remain PENDING_OWNER_APPROVAL")
     q = policy.get("queue_policy", {})
     if int(q.get("cycle_size", 0)) < 2:
         raise ValueError("queue_policy.cycle_size must be >= 2 to serve both queues")
@@ -64,22 +75,6 @@ def validate_fixture(snapshot: dict) -> None:
             date.fromisoformat(e.get("captured_at", ""))
             if not isinstance(e.get("trim_ids"), list) or any(tid not in trims for tid in e["trim_ids"]):
                 raise ValueError(f"lineup evidence trim_ids must reference existing trims: {model['id']}")
-            if e.get("completeness") == "COMPLETE_LINEUP":
-                manifest, proof = e.get("capture_manifest"), e.get("completeness_evidence")
-                if not isinstance(manifest, dict) or not isinstance(proof, dict):
-                    raise ValueError(f"complete lineup requires capture_manifest and completeness_evidence: {model['id']}")
-                if (manifest.get("pagination_complete") is not True or type(manifest.get("source_page_count")) is not int
-                        or manifest.get("source_page_count", 0) < 1 or type(manifest.get("row_count")) is not int
-                        or manifest.get("row_count", 0) < 1 or manifest.get("row_count") != len(e["trim_ids"])
-                        or manifest.get("listed_trim_ids") != e["trim_ids"]):
-                    raise ValueError(f"complete lineup capture manifest is incomplete or inconsistent: {model['id']}")
-                if (proof.get("publisher_declared_complete") is not True or not proof.get("quote")
-                        or not str(proof.get("locator", "")).startswith("line:")
-                        or proof.get("capture_status") != "COMPLETE"
-                        or type(proof.get("expected_page_count")) is not int
-                        or proof.get("expected_page_count", 0) < 1
-                        or proof.get("expected_page_count") != proof.get("captured_page_count")):
-                    raise ValueError(f"complete lineup requires explicit publisher completeness evidence: {model['id']}")
         if model.get("registration_series") and (model.get("registration_series") not in {"RY1", "RY3"}
                                                   or not model.get("registration_stratum")):
             raise ValueError("registration series requires an RY1/RY3 series and a comparable stratum")
@@ -117,6 +112,12 @@ def validate_fixture(snapshot: dict) -> None:
         if signal.get("series") not in {"RY1", "RY3"}: raise ValueError("registration series must be RY1 or RY3")
         if signal.get("source_class", "MODEL") not in {"MODEL", "*"}: raise ValueError("invalid registration source_class")
         date.fromisoformat(signal.get("period", "") + "-01")
+    for model in models.values():
+        evidence = model.get("lineup_evidence") or {}
+        if evidence.get("completeness") == "COMPLETE_LINEUP":
+            bound, reason = validate_model_lineup_binding(snapshot, model)
+            if not bound:
+                raise ValueError(f"complete lineup lacks document-bound evidence for {model['id']}: {reason}")
 
 
 def validate_plan(result: dict) -> None:

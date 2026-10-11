@@ -7,7 +7,7 @@ from pathlib import Path
 from .simulator import simulate
 from .replay import replay
 from .retail_reconcile import reconcile_retail_lineup
-from .validation import validate_fixture
+from .validation import validate_fixture, validate_policy
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -24,6 +24,7 @@ def main(argv: list[str] | None = None) -> int:
     retail = sub.add_parser("retail-reconcile", help="validate and diff a recorded Thai retail lineup offline")
     retail.add_argument("--fixture", required=True)
     retail.add_argument("--document", required=True)
+    retail.add_argument("--policy", default=str(Path(__file__).parent / "contract" / "policy.yaml"))
     retail.add_argument("--out", required=True)
     args = parser.parse_args(argv)
     if args.command == "simulate":
@@ -37,8 +38,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "retail-reconcile":
         snapshot = json.loads(Path(args.fixture).read_text(encoding="utf-8"))
         document = json.loads(Path(args.document).read_text(encoding="utf-8"))
+        policy = json.loads(Path(args.policy).read_text(encoding="utf-8"))
         validate_fixture(snapshot)
-        result = reconcile_retail_lineup(snapshot, document)
+        validate_policy(policy)
+        result = reconcile_retail_lineup(snapshot, document, policy=policy)
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
