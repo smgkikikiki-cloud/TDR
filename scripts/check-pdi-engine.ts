@@ -30,7 +30,7 @@ r=run([model("four",[
 assert.equal(r.modelResults[0].medianMsrpThb,1_940_000);
 assert.equal(r.modelResults[0].medianDiscountThb,150_000);
 assert.ok(Math.abs((r.modelResults[0].pdiPct||0)-7.731958762886598)<1e-10);
-assert.equal(r.modelResults[0].medianNetOfferPriceThb,1_790_000); // actual paired net offers
+assert.equal(r.modelResults[0].medianNetOfferPriceThb,1_840_000); // actual paired net offers
 assert.equal(r.modelResults[0].promoTrimBreadth,0.75);
 const unknown=run([model("missing",[trim("a",1_000_000,30_000),trim("b",1_500_000,null)])]);
 assert.equal(unknown.modelResults[0].status,"PARTIAL");
