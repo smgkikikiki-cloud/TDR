@@ -46,7 +46,7 @@ Neither #200 nor #201 may silently overwrite the other's identity rules; #203 ne
 - Deterministic fixture, eligibility, gap inventory, two queues, priorities, policy validation, scoped job keys, synthetic outputs, proposal-only structural gates.
 - Exit: 20 new focused unittest tests; no networking, paid AI, DB client or writer. **Accepted for next chunk only; PR stays draft.**
 
-### NEXT — Chunk 2: Offline Evidence Replay + Unified Gap Adapter (ZERO TOKEN)
+### IMPLEMENTED — Chunk 2: Offline Evidence Replay + Unified Gap Adapter (ZERO TOKEN; QA pending)
 Purpose: prove evidence/field identity correctness without live retrieval or an AI provider.
 - Add versioned recorded-document fixtures (official Thai mock brochure, complete/partial price-list lineup, trim-specific table, invalid/out-of-market/old document). Local UTF-8 text/HTML/JSON fixtures only; synthetic or permissibly retained examples.
 - Define immutable `SourceDocument`, `EvidenceClaim`, `FieldCandidate`, `FieldDisposition`, `ReplayReport` contracts with document hash, locator, quote, applicability, source authority, time, and lineage.
@@ -56,6 +56,8 @@ Purpose: prove evidence/field identity correctness without live retrieval or an 
 - Outputs (offline only): `replay_evidence.jsonl`, `field_candidates.jsonl`, `gap_diff.json`, `replay_summary.json`. Include costs = 0, matched/mismatched/held counts, reason codes.
 - Tests: wrong market, wrong trim/year/variant, partial lineup, stale/conflicting source, duplicated facts, wrong units, misleading nearby text, locked null, independent model and trim changes, unchanged hash replay, no P3 independent retrieval, byte-stable outputs.
 - Gate: focused tests + full GitHub Actions green; replay never creates a master write, external request, paid-model call, new identity or live research job. **STOP for review before Chunk 3.**
+
+Implementation record (2026-10-11): pinned read-only adapter consumes the real 2026 canonical comparable-spec registry and editor alias mappings; deterministic local replay and frozen contracts/schemas added; 11 synthetic recorded documents exercise complete/partial capture manifests, market/trim/variant/powertrain/year checks, exact quote/hash binding, units/range qualifiers, duplicates/conflicts, and stale sources. The unified adapter resolves supported payload/fact aliases and preserves canonical value states/locks while treating the synthetic tier list as fixture-only policy. CLI replay sample produced 3 accepted candidates, held conflicts and scope mismatches, 2 duplicate-hash suppressions, 0 canonical writes, 0 HTTP, 0 paid calls/tokens/spend. Focused suite: 30 tests pass at both required working directories. Full GitHub CI is attached to the implementation commit; owner QA is pending. This is not acceptance to begin Chunk 3.
 
 ### Chunk 3: Retail Evidence Verification + Pure Trim Reconciliation (ZERO TOKEN)
 - Replace trust in a mere `COMPLETE_LINEUP` flag with explicit evidence contract and validated complete source capture; detect incomplete scrapes/0 rows/partial landing pages, source drift, discontinued claims and identity collisions.
@@ -139,3 +141,4 @@ Purpose: prove evidence/field identity correctness without live retrieval or an 
 - PR changes for Chunk 2 stay under `automotive/vehicle_master/catalog_maintainer/` and its tests, except an explicitly justified read-only registry adapter; do not touch #200/#201 directories or retired paths.
 - End each chunk with: change inventory, evidence/gap examples, focused + full CI, zero-call/writes proof, scoped cost report, unresolved decisions, updated fixture outputs, and explicit stop for owner review.
 - A later approval to `continue` means **next offline chunk**, not authority to turn on paid research, Production, structural auto-writes, cron or deployment.
+

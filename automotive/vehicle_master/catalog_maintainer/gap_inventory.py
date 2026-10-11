@@ -94,6 +94,9 @@ def gaps_for_model(snapshot: dict, trim_ids: tuple[str, ...]) -> dict:
                     continue
                 if fact.get("verification_status") != "VERIFIED" or not fact.get("source_ref"):
                     dispositions.append({"trim_id": trim_id, "field_key": key, "state": "NEEDS_SOURCE_TRACE"})
+                else:
+                    dispositions.append({"trim_id": trim_id, "field_key": key,
+                                         "state": "ALREADY_KNOWN", "layer": "CANONICAL_FACT"})
                 continue
             if fact and fact.get("value_state") == "KNOWN" and not _present(fact.get("value")):
                 dispositions.append({"trim_id": trim_id, "field_key": key, "state": "CONFLICT"})

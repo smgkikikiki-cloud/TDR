@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-10",
+  "completeness": "SPEC_ONLY",
+  "content": "claim|battery_kwh|atto.standard|60.48 kWh\nclaim|rated_range_km|atto.standard|420 km|measurement_basis=NEDC;range_scope=FULL\nclaim|max_power_kw|atto.standard|150 kW|output_scope=TOTAL;rating_basis=PEAK\nclaim|safety.aeb|atto.standard|included",
+  "content_sha256": "3ac32c01c9bb7f9e03848b2f9248c9d32f3a2ce6f305f85e631f2b0c69a01580",
+  "document_id": "doc-complete",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-atto-release",
+  "local_source_id": "fixture://doc-complete",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "SPEC_SHEET",
+  "trim_ids": [
+    "atto.standard"
+  ]
+}

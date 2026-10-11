@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import sys
 import tempfile
@@ -20,6 +21,9 @@ from automotive.vehicle_master.catalog_maintainer.reconcile import evaluate_trim
 from automotive.vehicle_master.catalog_maintainer.simulator import simulate
 from automotive.vehicle_master.catalog_maintainer.prioritizer import registration_relevance
 from automotive.vehicle_master.catalog_maintainer.validation import validate_fixture, validate_policy
+from automotive.vehicle_master.catalog_maintainer.replay import replay, ReplayContractError
+from automotive.vehicle_master.catalog_maintainer.registry_adapter import load_registry, resolve_key, RegistryDriftError
+from automotive.vehicle_master.catalog_maintainer.replay_contracts import SourceDocument
 
 ROOT = Path(__file__).parents[2] / "catalog_maintainer"
 
@@ -33,6 +37,218 @@ def policy():
 
 
 class CatalogMaintainerTests(unittest.TestCase):
+    def recorded(self, name):
+        return json.loads((ROOT / "fixtures" / "recorded_docs" / name).read_text(encoding="utf-8"))
+
+    def test_canonical_registry_adapter_is_pinned_and_aliases_are_canonical(self):
+        registry = load_registry(root=REPOSITORY_ROOT)
+        self.assertEqual(registry["schema_version"], 1)
+        self.assertEqual(resolve_key("engine_cc", registry), "engine.displacement_cc")
+        self.assertEqual(resolve_key("battery_kwh", registry), "battery.catalog_capacity_kwh")
+        self.assertEqual(registry["fields"]["ev.rated_range_km"]["comparison_qualifiers"], ["measurement_basis", "range_scope"])
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            target = root / "automotive/vehicle_master/vehreg/data/2026/product/comparable_specs/registry.json"
+            target.parent.mkdir(parents=True)
+            target.write_text("{}")
+            with self.assertRaisesRegex(RegistryDriftError, "checksum drift"):
+                load_registry(root=root)
+
+    def test_replay_accepts_exact_trim_evidence_without_writes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            summary = replay(ROOT / "fixtures/sample_snapshot.json",
+                             [ROOT / "fixtures/recorded_docs/th-spec-complete.json"], out,
+                             root=REPOSITORY_ROOT)
+            rows = [json.loads(line) for line in (out / "field_candidates.jsonl").read_text().splitlines()]
+            self.assertEqual(summary["accepted_candidates"], 3)
+            self.assertEqual(summary["proposed_canonical_writes"], 0)
+            self.assertEqual(summary["paid_model_calls"], 0)
+            self.assertEqual({r["field_key"] for r in rows}, {"battery.catalog_capacity_kwh", "ev.rated_range_km", "powertrain.max_power_kw", "safety.aeb"})
+            battery = next(r for r in rows if r["field_key"] == "battery.catalog_capacity_kwh")
+            self.assertEqual((battery["candidate_status"], battery["reason_code"]), ("HELD", "ALREADY_PRESENT"))
+            self.assertEqual(sum(r["candidate_status"] == "ACCEPTED_CANDIDATE" for r in rows), 3)
+            self.assertEqual(summary["applicable_gaps_after_replay"], summary["applicable_gaps_before"])
+            self.assertEqual(next(r for r in rows if r["field_key"] == "ev.rated_range_km")["locator"], "line:2")
+
+    def test_replay_rejects_forged_hash_invalid_contract_and_bad_lineage(self):
+        forged = self.recorded("th-spec-complete.json")
+        forged["content"] += "\nclaim|battery_kwh|atto.standard|70 kWh"
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "forged.json"
+            p.write_text(json.dumps(forged))
+            with self.assertRaisesRegex(ReplayContractError, "content hash mismatch"):
+                replay(ROOT / "fixtures/sample_snapshot.json", [p], Path(temp) / "out", root=REPOSITORY_ROOT)
+        for name, reason in (("wrong-market.json", "WRONG_MARKET"), ("wrong-trim.json", "TRIM_MISMATCH"),
+                             ("wrong-powertrain.json", "POWERTRAIN_NOT_APPLICABLE"),
+                             ("wrong-variant.json", "VARIANT_MISMATCH"), ("old-spec.json", "SOURCE_STALE")):
+            with tempfile.TemporaryDirectory() as temp:
+                out = Path(temp) / "out"
+                replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs" / name], out,
+                       root=REPOSITORY_ROOT)
+                gap = json.loads((out / "gap_diff.json").read_text())
+                self.assertIn(reason, {x["reason_code"] for x in gap["held_or_rejected"]})
+        wrong_year = self.recorded("th-spec-complete.json")
+        wrong_year["model_year_by_trim"] = {"atto.standard": 2026}
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "year.json"; p.write_text(json.dumps(wrong_year))
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [p], out, root=REPOSITORY_ROOT)
+            gap = json.loads((out / "gap_diff.json").read_text())
+            self.assertIn("MODEL_YEAR_UNRESOLVED", {x["reason_code"] for x in gap["held_or_rejected"]})
+        wrong_generation = self.recorded("th-spec-complete.json")
+        wrong_generation["generation_id"] = "city_hb.g3"
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "generation.json"; p.write_text(json.dumps(wrong_generation))
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [p], out, root=REPOSITORY_ROOT)
+            gap = json.loads((out / "gap_diff.json").read_text())
+            self.assertIn("MODEL_GENERATION_MISMATCH", {x["reason_code"] for x in gap["held_or_rejected"]})
+        bad = self.recorded("th-spec-complete.json"); bad.pop("local_source_id")
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "bad.json"; p.write_text(json.dumps(bad))
+            with self.assertRaisesRegex(ReplayContractError, "missing keys"):
+                replay(ROOT / "fixtures/sample_snapshot.json", [p], Path(temp) / "out", root=REPOSITORY_ROOT)
+
+    def test_partial_lineup_and_unverified_trim_never_unlock_evidence(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/partial-lineup.json"], out,
+                   root=REPOSITORY_ROOT)
+            gap = json.loads((out / "gap_diff.json").read_text())
+            self.assertIn("TRIM_NOT_EXPLICITLY_ADMITTED", {x["reason_code"] for x in gap["held_or_rejected"]})
+            self.assertEqual(json.loads((out / "field_candidates.jsonl").read_text() or "{}"), {})
+        complete = self.recorded("complete-lineup.json")
+        self.assertEqual(complete["capture_manifest"]["listed_trim_ids"], ["atto.extended", "atto.standard"])
+        self.assertEqual(set(complete["trim_ids"]), set(complete["capture_manifest"]["listed_trim_ids"]))
+        forged = copy.deepcopy(complete)
+        forged["capture_manifest"]["pagination_complete"] = False
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "false-complete.json"; p.write_text(json.dumps(forged))
+            with self.assertRaisesRegex(ReplayContractError, "COMPLETE_LINEUP requires"):
+                replay(ROOT / "fixtures/sample_snapshot.json", [p], Path(temp) / "out", root=REPOSITORY_ROOT)
+
+    def test_replay_known_provisional_trace_match_and_locked_tombstone_hold(self):
+        snap = fixture()
+        snap["facts"] = [f for f in snap["facts"] if not (f["trim_id"] == "atto.standard" and f["field_key"] == "length_mm")]
+        snap["facts"].append({"trim_id":"atto.standard","field_key":"length_mm","value":4400,
+                              "value_state":"KNOWN","verification_status":"PROVISIONAL","source_ref":"fixture://provisional"})
+        doc = self.recorded("th-spec-complete.json")
+        doc["document_id"] = "doc-trace-and-tombstone"
+        doc["content"] = "claim|length_mm|atto.standard|4400 mm\nclaim|seats|atto.standard|5 seat"
+        doc["content_sha256"] = hashlib.sha256(doc["content"].encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as temp:
+            snap_path, doc_path = Path(temp)/"snapshot.json", Path(temp)/"doc.json"
+            snap_path.write_text(json.dumps(snap)); doc_path.write_text(json.dumps(doc))
+            out = Path(temp)/"out"
+            replay(snap_path,[doc_path],out,root=REPOSITORY_ROOT)
+            rows = [json.loads(line) for line in (out/"field_candidates.jsonl").read_text().splitlines()]
+            by_key = {r["field_key"]: r for r in rows}
+            self.assertEqual((by_key["vehicle.length_mm"]["candidate_status"], by_key["vehicle.length_mm"]["reason_code"]),
+                             ("ACCEPTED_CANDIDATE", "SOURCE_TRACE_MATCHED"))
+            self.assertEqual((by_key["vehicle.seats"]["candidate_status"], by_key["vehicle.seats"]["reason_code"]),
+                             ("HELD", "ADMIN_LOCKED_TOMBSTONE"))
+
+    def test_range_basis_and_scope_are_distinct_and_p3_price_are_not_retrieval_fields(self):
+        nedc = self.recorded("th-spec-complete.json")
+        wltp = copy.deepcopy(nedc)
+        wltp["document_id"] = "doc-wltp-electric-only"
+        wltp["local_source_id"] = "fixture://doc-wltp-electric-only"
+        wltp["content"] = "claim|rated_range_km|atto.standard|310 km|measurement_basis=WLTP;range_scope=ELECTRIC_ONLY"
+        wltp["content_sha256"] = hashlib.sha256(wltp["content"].encode()).hexdigest()
+        p3 = copy.deepcopy(nedc)
+        p3["document_id"] = "doc-p3-price"
+        p3["local_source_id"] = "fixture://doc-p3-price"
+        p3["content"] = "claim|wheel_size|atto.standard|18 inch\nclaim|LIST_PRICE|atto.standard|1200000 THB"
+        p3["content_sha256"] = hashlib.sha256(p3["content"].encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as temp:
+            wpath, ppath = Path(temp) / "wltp.json", Path(temp) / "p3.json"
+            wpath.write_text(json.dumps(wltp)); ppath.write_text(json.dumps(p3))
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/th-spec-complete.json", wpath, ppath],
+                   out, root=REPOSITORY_ROOT)
+            rows = [json.loads(line) for line in (out / "field_candidates.jsonl").read_text().splitlines()]
+            ranges = [r for r in rows if r["field_key"] == "ev.rated_range_km"]
+            self.assertEqual({(r["qualifiers"]["measurement_basis"], r["qualifiers"]["range_scope"]) for r in ranges},
+                             {("NEDC", "FULL"), ("WLTP", "ELECTRIC_ONLY")})
+            self.assertNotIn("wheel_size", {r["field_key"] for r in rows})
+            self.assertNotIn("LIST_PRICE", {r["field_key"] for r in rows})
+            diff = json.loads((out / "gap_diff.json").read_text())
+            out_rows = [r for r in diff["dispositions"] if r["state"] == "OUT_OF_SCOPE"]
+            self.assertIn(("wheel_size", "P3_NO_STANDALONE_RETRIEVAL"), {(r["field_key"], r["reason_code"]) for r in out_rows})
+            self.assertIn(("LIST_PRICE", "PRICE_LEDGER_OWNED"), {(r["field_key"], r["reason_code"]) for r in out_rows})
+
+    def test_replay_gap_adapter_preserves_fact_states_and_out_of_scope_semantics(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/th-spec-complete.json"], out,
+                   root=REPOSITORY_ROOT)
+            diff = json.loads((out / "gap_diff.json").read_text())
+            states = {(r["trim_id"], r["field_key"], r["state"]) for r in diff["dispositions"]}
+            self.assertIn(("atto.standard", "vehicle.length_mm", "UNKNOWN"), states)
+            self.assertIn(("atto.standard", "vehicle.seats", "TOMBSTONED_LOCKED"), states)
+            self.assertIn(("atto.standard", "battery.catalog_capacity_kwh", "ALREADY_KNOWN"), states)
+            self.assertIn(("atto.extended", "battery.catalog_capacity_kwh", "ALREADY_KNOWN"), states)
+            self.assertIn(("city.sv", "engine.displacement_cc", "TOMBSTONED_LOCKED"), states)
+            self.assertIn(("atto.standard", "drive_type", "OUT_OF_SCOPE"), states)
+
+    def test_documents_from_same_lineage_do_not_count_as_independent(self):
+        first = self.recorded("th-spec-complete.json")
+        second = copy.deepcopy(first)
+        second["document_id"] = "doc-second-capture-same-release"
+        second["local_source_id"] = "fixture://second-capture"
+        second["content"] = "reformatted copy of the same release\n" + first["content"].splitlines()[2]
+        second["content_sha256"] = hashlib.sha256(second["content"].encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as temp:
+            p = Path(temp) / "same-lineage.json"; p.write_text(json.dumps(second))
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/th-spec-complete.json", p], out,
+                   root=REPOSITORY_ROOT)
+            summary = json.loads((out / "replay_summary.json").read_text())
+            rows = [json.loads(line) for line in (out / "field_candidates.jsonl").read_text().splitlines()]
+            powers = [r for r in rows if r["field_key"] == "powertrain.max_power_kw"]
+            self.assertEqual(summary["lineage_independent_source_count"], 1)
+            self.assertEqual(sum(r["candidate_status"] == "ACCEPTED_CANDIDATE" for r in powers), 1)
+            self.assertEqual(sum(r.get("reason_code") == "DUPLICATE_LINEAGE_CLAIM" for r in powers), 1)
+
+    def test_replay_range_basis_scope_units_and_source_conflicts_are_fail_closed(self):
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/misleading-range.json"], out,
+                   root=REPOSITORY_ROOT)
+            gap = json.loads((out / "gap_diff.json").read_text())
+            self.assertIn("MISSING_MEASUREMENT_QUALIFIER", {x["reason_code"] for x in gap["held_or_rejected"]})
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/wrong-unit.json"], out,
+                   root=REPOSITORY_ROOT)
+            gap = json.loads((out / "gap_diff.json").read_text())
+            self.assertIn("UNIT_MISMATCH", {x["reason_code"] for x in gap["held_or_rejected"]})
+        with tempfile.TemporaryDirectory() as temp:
+            out = Path(temp) / "out"
+            replay(ROOT / "fixtures/sample_snapshot.json",
+                   [ROOT / "fixtures/recorded_docs/th-spec-complete.json", ROOT / "fixtures/recorded_docs/conflict.json"],
+                   out, root=REPOSITORY_ROOT)
+            rows = [json.loads(line) for line in (out / "field_candidates.jsonl").read_text().splitlines()]
+            battery = [r for r in rows if r["field_key"] == "battery.catalog_capacity_kwh"]
+            self.assertEqual(len(battery), 2)
+            self.assertTrue(all(r["candidate_status"] == "HELD" and r["reason_code"] == "CONFLICTING_SOURCE_VALUES" for r in battery))
+
+    def test_replay_duplicate_hash_lineage_and_byte_stability(self):
+        doc = self.recorded("th-spec-complete.json")
+        duplicate = copy.deepcopy(doc); duplicate["document_id"] = "same-hash-copy"
+        duplicate["local_source_id"] = "fixture://copy"
+        with tempfile.TemporaryDirectory() as temp:
+            a, b = Path(temp) / "a", Path(temp) / "b"
+            source = Path(temp) / "duplicate.json"; source.write_text(json.dumps(duplicate))
+            replay(ROOT / "fixtures/sample_snapshot.json", [ROOT / "fixtures/recorded_docs/th-spec-complete.json", source], a,
+                   root=REPOSITORY_ROOT)
+            replay(ROOT / "fixtures/sample_snapshot.json", [source, ROOT / "fixtures/recorded_docs/th-spec-complete.json"], b,
+                   root=REPOSITORY_ROOT)
+            self.assertEqual({p.name:p.read_bytes() for p in a.iterdir()}, {p.name:p.read_bytes() for p in b.iterdir()})
+            summary = json.loads((a / "replay_summary.json").read_text())
+            self.assertEqual(summary["duplicate_hash_suppressions"], 1)
+
     def test_eligibility_scope_and_two_queues(self):
         snap = fixture()
         statuses = {r["model_id"]: r["eligibility"] for r in plan(snap, policy())["decisions"]}

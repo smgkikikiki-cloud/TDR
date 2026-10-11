@@ -1,0 +1,31 @@
+{
+  "capture_manifest": {
+    "listed_trim_ids": [
+      "atto.extended",
+      "atto.standard"
+    ],
+    "pagination_complete": true,
+    "row_count": 2,
+    "source_page_count": 1
+  },
+  "captured_at": "2026-10-10",
+  "completeness": "COMPLETE_LINEUP",
+  "content": "lineup|trim|atto.extended\nlineup|trim|atto.standard\nmodel=byd.atto_3; generation=atto_3.g1; current Thai lineup complete for this brochure edition.\nclaim|battery_kwh|atto.standard|60.48 kWh",
+  "content_sha256": "ec2109fc9f21b9b4b1f6a5630fc94e8e1d60e23f6bf21d8fb4b17a91bb167ef4",
+  "document_id": "doc-complete-lineup",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-atto-release",
+  "local_source_id": "fixture://doc-complete-lineup",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "RETAIL_LINEUP",
+  "trim_ids": [
+    "atto.extended",
+    "atto.standard"
+  ]
+}

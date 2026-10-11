@@ -1,0 +1,22 @@
+{
+  "captured_at": "2026-10-10",
+  "completeness": "SPEC_ONLY",
+  "content": "claim|engine_cc|atto.standard|1498 cc",
+  "content_sha256": "47af41cea4d87f87f6c399256f26be11884c5ab0d7f34d08eac19efd7c5c0202",
+  "document_id": "doc-wrong-powertrain",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-atto-release",
+  "local_source_id": "fixture://doc-wrong-powertrain",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "SPEC_SHEET",
+  "trim_ids": [
+    "atto.extended",
+    "atto.standard"
+  ]
+}

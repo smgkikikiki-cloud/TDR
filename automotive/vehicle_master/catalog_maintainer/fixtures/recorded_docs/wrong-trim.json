@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-10",
+  "completeness": "SPEC_ONLY",
+  "content": "claim|battery_kwh|atto.other|60.48 kWh",
+  "content_sha256": "776d351fed2cd78ac5d229e237512d243f01f3ca63e73853de061c84229f6317",
+  "document_id": "doc-trim",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-atto-release",
+  "local_source_id": "fixture://doc-trim",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "SPEC_SHEET",
+  "trim_ids": [
+    "atto.standard"
+  ]
+}

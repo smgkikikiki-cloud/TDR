@@ -1,0 +1,29 @@
+{
+  "capture_manifest": {
+    "listed_trim_ids": [
+      "yaris.smart"
+    ],
+    "pagination_complete": false,
+    "row_count": 1,
+    "source_page_count": 1
+  },
+  "captured_at": "2026-10-10",
+  "completeness": "PARTIAL_TRIM_LIST",
+  "content": "lineup|trim|yaris.smart\nLineup title: Complete Yaris range\nclaim|engine_cc|yaris.smart|1197 cc",
+  "content_sha256": "3b5bde431676c77706a8f0f7dedeea23b3abd56a2f174889f79273e66319885b",
+  "document_id": "doc-partial",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "yaris_ativ.g4",
+  "lineage_id": "lineage-yaris-launch",
+  "local_source_id": "fixture://doc-partial",
+  "market": "TH",
+  "model_id": "toyota.yaris_ativ",
+  "published_at": "2026-10-02",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "RETAIL_LINEUP",
+  "trim_ids": [
+    "yaris.smart"
+  ]
+}
