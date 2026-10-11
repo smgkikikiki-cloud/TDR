@@ -1,12 +1,12 @@
-# OWNER REVIEW — TDR Development Roadmap (first-pass, NOT APPROVED)
+# OWNER REVIEW — TDR Master Development Roadmap v1.0 (OWNER APPROVED)
 
 **Date:** 2026-10-11
-**Purpose:** enable a *human* product-roadmap review before agent enforcement.  
-**Current decision:** `REVIEW_PENDING`. Creating this review sheet, discussing it, or merging an informational PR is NOT an approval of methodology, code execution, R6, migrations, deployments or paid services.
+**Purpose:** record owner review and portfolio approval before agent enforcement.  
+**Owner decision 2026-10-11:** user explicitly reviewed the entire roadmap, found no issues and said proceed as written. **Portfolio Roadmap v1.0 APPROVED.** Specific unvalidated method choices, actual production/merge/deploy/billing permissions and existing PR acceptance remain separately gated. See [TDR_MASTER_ROADMAP_V1.md](TDR_MASTER_ROADMAP_V1.md).
 
 ## What the owner is being asked to review
 
-Please review in **three small passes**. It is NOT necessary to sign off on all unresolved engineering details at once.
+These three passes record the **completed portfolio review**. Specific unvalidated data, methodology and deployment gates remain open; roadmap approval is not an automatic product release.
 
 ### PASS A — What are we building? (product and functional boundaries)
 
@@ -34,11 +34,11 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 
 **Concrete next-step audit:** [CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md](CP_V1_REPOSITORY_READINESS_AND_FIRST_SLICE.md) identifies existing code, source gaps and six proposed development packets CP-00→CP-05. Critical discovery: existing market-price-state view caps read results at 1,000 by design, not a complete pricing-index/history reader. No production rows were accessed. CP-00 itself needs a separately scoped go before run.
 
-**Methodology choices awaiting owner verdict:** Should V1 pressure be an evidence-ranked observational radar (recommended), should reviewed substitute relationships be a first-class graph (recommended), should MSRP and verified cash-net be separate lanes (recommended), and should the 0–100 score remain null until independently calibrated (recommended)? **Do not treat this review attachment as permission to implement or to alter the existing locked five-section model-analysis UX.**
+**Roadmap methodology direction APPROVED:** evidence-ranked observational Pressure, a reviewed first-class substitution relationship, separate MSRP/verified general-cash price lanes and no invented uncalibrated score. The exact published 0–100 weights, PDI/CTPDI headline formulas, materiality/confidence thresholds, licensing and data coverage still require their named method gates and independent evidence. This approval does not change the locked five-section UX.
 
-**Owner question A:** Are these functions and product boundaries faithful to the intended TDR architecture? The existence of this table does NOT imply 'approved'.
+**Owner verdict A: APPROVED 2026-10-11** at portfolio domain-boundary level. Per-PR internal execution/calibration contracts retain their owner and CI gates.
 
-**Methodology attachment for review (not approved):** [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md). Recommends demand-substitution gate → comparable documented price movement → qualified registration corroboration → evidence-ranked signal; no guessed causal sales loss or 0–100 score. Also gives a falsifiability rubric for other engines. This document does **not** mark Pass A approved.
+**Methodology attachment (direction approved; specific formulas/validation still gated):** [COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md](COMPETITIVE_PRESSURE_METHODOLOGY_REVIEW.md). Recommends demand-substitution gate → comparable documented price movement → qualified registration corroboration → evidence-ranked signal; no guessed causal sales loss or 0–100 score. Also gives a falsifiability rubric for other engines. Pass A portfolio direction is approved; exact method settings remain gated.
 
 ### PASS B — Proposed *ordering*, not a 10-week deadline
 
@@ -55,7 +55,7 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 
 **Owner decision recorded 2026-10-11 — APPROVED, LIMITED TO PRODUCT ROLLOUT ORDER:** Competitive Pressure is the **first** Layer 3 product to pilot/release; **Dealer Geography follows**, then **Competitive Network Watch**. All three must advance progressively and follow through to delivery, rather than leaving Geography/Network Watch as indefinite backlog ideas. Shared Spatial workspace is still one product workspace with two local modes. **Schedule interpretation:** staged customer release **does not require sequential design or foundational engineering**: Dealer Master, spatial contracts, network event evidence and UX can progress in parallel while Competitive Pressure is built. No fixed dates, formula adoption, production activation, gate overrides or autonomous work have been approved by this statement. The order of the latter two is the working interpretation of "ไล่ตามมาเรื่อยๆ", consistent with prior V1.5/V2 design handoff, and remains open to revision if the owner directs a different order.
 
-**Still to review for Pass B:** cross-project integration milestones, exact dependency gates, and timelines. **Still to review for Pass A:** remaining workstream functional boundaries.
+**Portfolio passes A and B approved.** The dependency sequence is endorsed without imposing an unsupported calendar deadline. Domain-specific execution blockers C01–C04 remain open.
 
 ### PASS C — Who controls what?
 
@@ -66,7 +66,7 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 - **GitHub CI (future):** validates task manifest & file diff; branch protection makes required checks mandatory. Prompt-only acknowledgements never prove compliance.
 - **No automatic CI/Enforcer enabled now:** `docs/portfolio/portfolio.plan.json` has `execution.enabled=false` and an empty queue.
 
-**Owner question C:** Once A and B are approved, do we approve *designing* this governance system? This question is separate from enabling night-shift automation.
+**Owner verdict C: APPROVED 2026-10-11 for the governance design direction.** Enforcer, CLI agents, task packets and CI are still inactive; activation remains separately controlled.
 
 ## Matters requiring evidence/explicit future decisions — not assumed approved
 
@@ -79,14 +79,12 @@ Please review in **three small passes**. It is NOT necessary to sign off on all 
 7. **Dealer Master:** closure/change evidence and regional privacy acceptance unresolved.
 8. **PR #203:** latest correction round test/CI outcome and reviewer acceptance needed before expansion.
 
-## Immediate G0 review record (fill only with explicit owner feedback)
+## Owner approval record — portfolio level only
 
 | Pass | Owner verdict | Notes |
 | --- | --- | --- |
-| A — Product functions | **PENDING** | |
-| B — Roadmap ordering / first Layer 3 slice | **PARTIALLY APPROVED** | Competitive Pressure first; Dealer Geography and Network Watch follow progressively; dependencies/dates pending |
-| C — Governance roles (design only) | **PENDING** | |
+| A — Product functions | **APPROVED (2026-10-11)** | Portfolio design and responsibilities; specific system formulas still gated |
+| B — Roadmap ordering / first Layer 3 slice | **APPROVED (2026-10-11)** | G0–G5 dependency direction, V1→V1.5→V2 rollout; no fixed dates |
+| C — Governance roles (design only) | **APPROVED (2026-10-11)** | Architectural design only; runner/CI disabled |
 
-**After Pass A:** record approved differences as narrow patches in this draft PR; do not mark unrelated decisions approved.  
-**After Pass B:** freeze only reviewed functional/dependency contracts and prepare scoped G1 tasks; do not start or merge by implication.  
-**After Pass C:** design Enforcer preflight and CI gates in a *separate* proposal; never execute the portfolio directly.
+**Postapproval:** v1.0 is the agreed portfolio roadmap for future work, but remains on the unmerged PR branch until separately adopted into main. Retain original task authorizations, domain-specific gates and explicit production release approvals; a material scope/order change requires owner review and a new roadmap version.
