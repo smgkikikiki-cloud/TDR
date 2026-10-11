@@ -18,6 +18,17 @@ Use the existing comparable-spec field registry as authority in production. The 
 
 Known values are resolved across canonical facts and payload layers. A canonical fact is preferred; payload/variant/model/generation values suppress duplicate gaps and may be flagged for trace/reconciliation, never copied blindly. `UNKNOWN`, `NO`, `ABSENT`, `NOT_APPLICABLE`, locked tombstones, conflicts, and source-trace needs remain distinct. Price fields are excluded from spec gap fill. Registration is a score input only.
 
+## Existing-code inventory and boundary map
+
+- `lib/spec-field-registry.ts` reads the canonical comparable-spec registry and defines the serving/editor semantics, including empty `applicablePowertrains` meaning universal. The simulator mirrors the shape in its synthetic fixture only; production code must consume the canonical registry rather than establish another production registry.
+- `vehreg/current_retail.py` defines `vehicle_current_retail_sets` as a sparse owner-approved *complete* model lineup. A missing model entry is no opinion; a present entry is authoritative membership. The simulator preserves that distinction.
+- `vehreg/retail_scope.py` answers price-fact eligibility (active generations and lifecycle stops). Its `CURRENT` status and generation dates do not establish a complete actual showroom lineup, so it is not the Retail Audit gate.
+- `vehreg/trim_reconciliation.py` records source-backed trim candidates and unresolved powertrain/lifecycle ambiguity. It is useful as a future proposal-validation boundary; it does not grant trim creation or lifecycle-write authority.
+- `docs/RETAIL_LINEUP_BOOTSTRAP.md` is an admin-only complete-set reset flow, not an autonomous maintenance API. Existing bootstrap/legacy file-release writers remain outside this package.
+- `docs/vehicle-db/VEHICLE_DB_V3.md` §4 limits AI structural trim changes to proposals. `docs/WORK_STATE.md` says Phase 0 is live, the legacy writer is closed, and the Phase 1 governed writer is not implemented. This simulator therefore stops at local plans/proposals.
+
+No new scheduler, production agent, Supabase adapter, migration, storage write, or call into the retired canonical input/release pipeline is added.
+
 ## Decisions
 
 `ELIGIBLE_ENRICH`, `RETAIL_AUDIT_ONLY`, `EXCLUDED_HISTORICAL`, `EXCLUDED_UPCOMING`, `EXCLUDED_DISCOVERED`, `EXCLUDED_ADMIN_RETIRED`, `EXCLUDED_NON_MEMBER`, `HOLD_IDENTITY`.
