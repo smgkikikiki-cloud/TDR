@@ -103,6 +103,7 @@ async function main() {
   }
   const pdiModels:PdiModel[]=[];
   const policyDecisions:Record<string,number>={};
+  const policyReviewQueue:{modelId:string;reason:string}[]=[];
   for(const m of models) {
     if(m.deleted_at || m.status!=="CURRENT")continue;
     const decision=classifyPdiUniverse({
@@ -114,7 +115,9 @@ async function main() {
     policyDecisions[key]=(policyDecisions[key]||0)+1;
     // Commercial/off-universe models remain in discovery audit counts, never
     // contaminate the passenger-car national index calculation denominator.
-    if(decision.bucket==="OUTSIDE_POLICY"||decision.bucket==="COMMERCIAL_FUTURE")continue;
+    if(decision.bucket==="REVIEW_REQUIRED")
+      policyReviewQueue.push({modelId:m.canonical_id,reason:decision.reason});
+    if(decision.bucket!=="PASSENGER_HEADLINE")continue;
     const selected:Set<string>|undefined=set.get(m.canonical_id);
     const current=(byModel.get(m.canonical_id)||[]).filter(t=>selected?selected.has(t.canonical_id):t.status==="CURRENT");
     if(!current.length)continue;
@@ -142,7 +145,8 @@ async function main() {
     });
     pdiModels.push({modelId:m.canonical_id,brandOrigin:origin.get(m.brand_id)||"",
       currentRetail:true,japaneseAdmission:decision.japanAdmission,trims:calcTrims,
-      retailSetBasis:selected?"REVIEWED":"MASTER_CURRENT_STATUS"});
+      retailSetBasis:selected&&current.every(t=>t.status==="CURRENT")
+        ?"REVIEWED":"MASTER_CURRENT_STATUS"});
   }
   const output=calculatePdi({asOf,sourceSnapshot:state.seed_release_id+":"+state.seed_source_hash,
     universeVersion:asOf.slice(0,7)+":draft-discovery",models:pdiModels});
@@ -162,6 +166,7 @@ async function main() {
       qualifiedCashBundleCount,
       policyVersion:PDI_UNIVERSE_POLICY,
       policyDecisions,
+      policyReviewQueue,
       japaneseAdmission:"EXPLICIT_DELEGATED_PILOT_MODEL_ALLOWLIST",
       statusCounts},
     index:{methodologyVersion:output.methodologyVersion,
