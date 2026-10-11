@@ -41,6 +41,14 @@ Ledger year detail: `ECO_STICKER_PRICE` 2019=3, 2020=43, **2021=30**, 2022=87, 2
 
 `LIST_PRICE` `source` labels: `owner_pricing_directory` 161 rows (all `source_ref` present), `admin` 150 (80 refs), `official_oem` 5 (5 refs), `autolifethailand` 4 (4 refs). These are **raw source labels**, not an independent verification that every row meets official list-price licensing and effective-date rules. All 320 `LIST_PRICE` ledger rows have null `authority` and `vat_included` fields; applying a method requiring source authority or consistent VAT needs provenance validation and potential field mapping, not automatic default values.
 
+### Time-window audit — no established monthly retail price change series
+
+An additional SELECT grouped all **320** `LIST_PRICE` ledger rows by `observed_at` calendar month. **Every row is dated September 2026** (304 distinct trim IDs). Just 13/320 have a non-null `effective_from`, and only those may carry distinct stated validity start dates. Thus the ledger's multiple rows or old ECO sticker records must not be interpreted as an observed month-by-month official MSRP time series. An individual verified earlier-effective official change remains theoretically possible, but the present bulk record does **not** substantiate the 2021–Sep 2026 comparable retail price time-series promised by the roadmap.
+
+Second SELECT applied **2026-10-11 as-of** to stored promotion `valid_from/valid_to` windows: **4 options have a date window covering audit day, 30 have a past end date, 14 have incomplete date windows, 0 future-dated**. These are *syntactic window outcomes*, not verified current cash offers. The free-form `conditions.text` field is blank on 28 options; cash/discount-related Thai keywords occur in only 2 option texts each, **not** definitive financial classifications. The remaining dated 'current' options still have empty normalized `amount_thb/promo_price_thb/type/scope` columns.
+
+**Gate effect:** Model-level retrospective `3M Δ price advantage` and `12M pressure history` must be `UNAVAILABLE` unless an independently documented and sufficiently complete valid retrospective source is identified. Neither `observed_at=2026-09` nor an assumed campaign expiration can be inserted as a fabricated price movement. A limited current-price *position* snapshot for source-verified, same-basis pairs may be investigated, but it is not a price-*change* radar yet.
+
 ### Current-retail price coverage: biggest immediate defect
 
 Universe for this diagnostic only: 1,431 `vehicle_trims` where status=CURRENT and not deleted, across 318 models. Match `LIST_PRICE` by exact `trim_id` irrespective of current validity date.
@@ -128,6 +136,20 @@ SELECT price_type, extract(year FROM coalesce(effective_from,observed_at))::int 
        count(*) records, count(distinct trim_id) trims
 FROM public.vehicle_price_ledger
 GROUP BY 1,2 ORDER BY 1,2;
+
+-- Observation month is distinct from historical validity and retail cut events.
+SELECT to_char(observed_at,'YYYY-MM') observed_month,
+       count(*) n, count(distinct trim_id) trims
+FROM public.vehicle_price_ledger
+WHERE price_type='LIST_PRICE'
+GROUP BY 1 ORDER BY 1;
+
+-- Campaign windows describe possible validity only; not verified cash discounts.
+SELECT count(*) FILTER (WHERE valid_from <= date '2026-10-11'
+                             AND valid_to >= date '2026-10-11') possibly_in_window,
+       count(*) FILTER (WHERE valid_to < date '2026-10-11') past_window,
+       count(*) FILTER (WHERE valid_from IS NULL OR valid_to IS NULL) undated
+FROM public.vehicle_promotions;
 
 -- Exact current-trim-to-LIST_PRICE diagnostic; does not claim source validity
 WITH a AS (
