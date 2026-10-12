@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P27 Admin Upcoming — R0 offline flow preview (synthetic)</title>
+  <link rel="stylesheet" href="../../tokens.css">
+  <link rel="stylesheet" href="../../components.css">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+<div class="tdr">
+  <div class="preview-alert"><strong>R0 STATIC PREVIEW · SYNTHETIC SAMPLE DATA · NOT AN APPROVED MOCKUP</strong>แบบร่าง P27 สำหรับทบทวนข้อมูลและขั้นตอนเท่านั้น · ไม่มีปุ่มทำงานจริง ไม่มีข้อมูลลูกค้า/รถ/สิทธิ์การใช้งานจริง</div>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <span class="wordmark">TDR</span>
+      <span class="admin-header-label">Admin · Upcoming Cars · P27</span>
+      <span class="admin-preview-pill">OFFLINE / READ-ONLY STUDY</span>
+    </div>
+  </header>
+  <main class="admin-page">
+    <p class="preview-caption"><strong>ตัวอย่างจำลอง:</strong> ข้อมูลทุกรายการเป็น SYNTHETIC SAMPLE DATA · หน้าต่างป้อนข้อมูลถูกปิดใช้งานทั้งหมด · การสร้าง/แก้ไข/Publish/Archive ไม่มี backend และยังต้องผ่าน owner review</p>
+    <div class="pagehead">
+      <div><p class="eyebrow">Editorial management · P27</p><h1>จัดการรถที่กำลังมา</h1><p class="lead">แยกขั้นข้อมูล, สถานะวงจรชีวิต, ระดับความเชื่อมั่น และสถานะเผยแพร่เป็นคนละเรื่อง</p></div>
+      <div class="count-row"><div class="count-pill"><b>3</b>รายการจำลอง</div><div class="count-pill"><b>1</b>รอเผยแพร่</div></div>
+    </div>
+    <div class="admin-layout">
+      <aside class="admin-sidebar" aria-label="รายการตัวอย่าง">
+        <div class="admin-panel-head"><h2>รายการบรรณาธิการ</h2><button class="tdr-btn tdr-btn--secondary" type="button" disabled>+ สร้างรายการ</button></div>
+        <div class="admin-list">
+          <div class="admin-list-row selected"><strong>รถตัวอย่าง A</strong><span>RUMOR · ACTIVE</span><small>draft · ยังคงเป็นข้อมูลสมมติ</small></div>
+          <div class="admin-list-row"><strong>รถตัวอย่าง B</strong><span>OEM_CONFIRMED · DELAYED</span><small>published · ข้อมูลสมมติ</small></div>
+          <div class="admin-list-row"><strong>รถตัวอย่าง C</strong><span>PRE_ORDER · ACTIVE</span><small>published · ข้อมูลสมมติ</small></div>
+        </div>
+        <p class="updated">ไม่ใช่ข้อมูลของจริง · ไม่มีรายการจากฐานข้อมูล</p>
+      </aside>
+      <div class="admin-content">
+        <section class="panel admin-panel">
+          <div class="admin-panel-head"><div><h2>ข้อมูลหลัก · Create / Edit</h2><p class="updated">UUID editorial แยกจาก canonical vehicle ID · ทุก input เป็น preview</p></div><span class="tdr-chip">draft</span></div>
+          <div class="admin-grid">
+            <label class="admin-field">Slug <input disabled value="sample-upcoming-a" aria-label="Editorial slug"></label>
+            <label class="admin-field">ชื่อที่แสดง <input disabled value="รถตัวอย่าง A"></label>
+            <label class="admin-field">ชนิดชื่อ <select disabled><option>WORKING — ชื่อชั่วคราว</option><option>OFFICIAL</option><option>SEGMENT_CODE</option></select></label>
+            <label class="admin-field">แบรนด์ (ข้อความ) <input disabled value="แบรนด์ตัวอย่าง"></label>
+            <label class="admin-field">Thailand scope <select disabled><option>TH_EXPECTED</option><option>TH_CONFIRMED</option><option>GLOBAL_ONLY</option></select></label>
+            <label class="admin-field">Canonical model link <input disabled placeholder="อ้างอิงเฉพาะ ID ที่มีอยู่แล้ว"></label>
+          </div>
+          <div class="admin-section-sep"></div>
+          <h3>การจัดประเภท 4 มิติ · ห้ามรวมเป็น status เดียว</h3>
+          <div class="admin-grid">
+            <label class="admin-field">Stage — 6 ระดับ
+              <select disabled><option>RUMOR</option><option>REPORTED</option><option>OEM_TEASED</option><option>OEM_CONFIRMED</option><option>LAUNCH_DATE_SET</option><option>PRE_ORDER</option></select>
+            </label>
+            <label class="admin-field">Lifecycle state — แยกจาก Stage
+              <select disabled><option>ACTIVE</option><option>DELAYED</option><option>CANCELLED</option><option>LAUNCHED</option></select>
+            </label>
+            <label class="admin-field">Confidence — 4 ระดับ
+              <select disabled><option>MEDIUM</option><option>LOW</option><option>HIGH</option><option>CONFIRMED</option></select>
+            </label>
+            <label class="admin-field">Publication status
+              <select disabled><option>draft</option><option>published</option></select>
+            </label>
+          </div>
+          <p class="admin-hint">Validation: RUMOR ≤ MEDIUM · LAUNCH_DATE_SET และ PRE_ORDER ต้อง CONFIRMED · source ≥ 1 ก่อน publish · สถานะ LAUNCHED ต้องมี canonical link ที่ตรวจสอบได้ (ยังรอ owner decision)</p>
+          <div class="admin-section-sep"></div>
+          <h3>Launch window + editorial estimates</h3>
+          <div class="admin-grid">
+            <label class="admin-field">Window precision <select disabled><option>HALF</option><option>YEAR</option><option>QUARTER</option><option>MONTH</option><option>DAY</option></select></label>
+            <label class="admin-field">window_from <input disabled value="2027-07-01"></label>
+            <label class="admin-field">window_to <input disabled value="2027-12-31"></label>
+            <label class="admin-field">last_verified_at <input disabled value="2026-10-12"></label>
+            <label class="admin-field">Price estimate (THB) <input disabled placeholder="ยังไม่ระบุ · ประมาณการเท่านั้น"></label>
+            <label class="admin-field">Confidence note <input disabled value="ตัวอย่างหมายเหตุ · ไม่ใช่ข่าวจริง"></label>
+          </div>
+          <p class="admin-hint">Powertrain, body, segment, production, expected price เป็น editorial estimates เท่านั้น ห้ามส่งเข้า Vehicle Master, PDI หรือยอดจดทะเบียน</p>
+        </section>
+        <section class="panel admin-panel">
+          <h2>หลักฐานและสิทธิ์ภาพ (sources / image_license)</h2>
+          <div class="admin-grid">
+            <label class="admin-field">Source #1 URL <input disabled placeholder="https://example.invalid/oem-source (sample only)"></label>
+            <label class="admin-field">ชนิดแหล่ง <select disabled><option>OEM</option><option>MEDIA</option><option>LEAK</option><option>GOV</option></select></label>
+            <label class="admin-field">Visibility <select disabled><option>public=true</option><option>public=false — ซ่อนรายละเอียด</option></select></label>
+            <label class="admin-field">Image license <select disabled><option>NONE — ไม่มีภาพ</option><option>OWN</option><option>PRESS_KIT</option><option>LICENSED</option></select></label>
+          </div>
+          <p class="admin-hint">source จะต้องมีชื่อผู้เผยแพร่ วัน/URL/ชนิด และการเปิดเผยข้อมูลก่อน publish · image_path ใช้ได้เมื่อสิทธิ์และเครดิตผ่านการตรวจ · หลักฐานการอนุญาต/อายุสิทธิ์ภาพยังรอ owner decision</p>
+          <div class="admin-section-sep"></div>
+          <h3>Private notes · ห้ามหลุดไป public DTO</h3>
+          <p class="admin-note">Legacy internal_notes และข้อความ update ทั่วไปยังไม่มีข้อตกลงเก็บรักษา · ห้ามนำไปใส่ public summary / source / HTML / API โดยอัตโนมัติ</p>
+          <div class="admin-actions">
+            <button class="tdr-btn tdr-btn--secondary" type="button" disabled>บันทึก draft (ตัวอย่าง)</button>
+            <button class="tdr-btn tdr-btn--primary" type="button" disabled>ตรวจหลักฐานและ Publish</button>
+            <button class="tdr-btn tdr-btn--secondary" type="button" disabled>Archive · รออนุมัติกติกา</button>
+          </div>
+          <p class="updated">ไม่มีปุ่ม Hard DELETE · ไม่ย้ายพฤติกรรม ON DELETE CASCADE จาก Admin เก่า · ทุก action ถูกปิดใช้งาน</p>
+        </section>
+        <section class="panel admin-panel">
+          <h2>Immutable history · conceptual Admin read view</h2>
+          <ol class="timeline">
+            <li><span class="timeline-dot"></span><div><strong>CREATE · draft</strong><small>2026-10-12 · author/evidence/revision · SYNTHETIC</small></div></li>
+            <li><span class="timeline-dot"></span><div><strong>STAGE REVIEW · RUMOR</strong><small>2026-10-12 · previous/new, source, actor · SYNTHETIC</small></div></li>
+          </ol>
+          <p class="admin-hint">History/event rows append-only, ไม่แก้/ลบย้อนหลัง · ตัดสินใจเรื่อง retention, archive/purge permissions, transitions และ revert ก่อน R1</p>
+        </section>
+      </div>
+    </div>
+    <footer class="site-footer">TDR · P27 offline Admin contract preview · no submit/no API · SYNTHETIC SAMPLE DATA</footer>
+  </main>
+</div>
+</body>
+</html>

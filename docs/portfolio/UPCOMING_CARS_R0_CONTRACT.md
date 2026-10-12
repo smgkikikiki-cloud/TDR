@@ -66,3 +66,11 @@ Resolve before R1:
 - Migration authority reconciliation: current repo candidate v66 is not proof of the deployed migration ledger; recheck with explicit future authorization.
 
 R0 acceptance authorizes neither schema work nor R1–R3. Current `/upcoming` redirect, P02/P05/P06 behavior, Admin, data, and production state remain unchanged.
+
+## R0 correction/verification record (2026-10-12; docs and static preview only)
+
+Static P27 Admin flow handoff: `design/previews/upcoming-r0/p27.html` (disabled noninteractive controls). Its stages, independent lifecycle, confidence, dates, canonical references, publishing gates, source/privacy/image licensing fields and history are illustration of a *proposed Admin contract*, not implementation or owner-approved UI. Do not interpret `draft`/`published` as evidence of a production entitlement. Existing legacy hard-delete semantics remain forbidden in the future contract pending owner approval.
+
+**Visual QA status: UNVERIFIED.** P16, P17 and P27 are three static HTML/CSS source previews. Responsive rules exist at 1023px and 767px, using existing theme tokens; **no screenshot-based/visual browser review has been performed for 1440/1366/1280/1024/834/390 widths or both light/dark themes**. No accessibility/overflow assertions from a rendered browser are claimed. Pixel-level owner review and light/dark cross-width screenshots remain open before R1 UI design approval. Static check script verifies only file content, strings, offline/no-asset/scope and migration-snapshot invariants, **not** real Admin validation, permission enforcement, publisher correctness, CSS rendering, or deployed ledger state.
+
+The R0-only change log and checkpoint belong to Draft PR #220 and Issue #218. Changes to `docs/WORK_STATE.md` and the approved Master Roadmap were removed from this branch under the original R0 scope; #216/#217 remain independently reviewed governance-note PRs. `v66` is still **only** a prospective name chosen from the repo v65 snapshot, not a slot reserved or endorsed by any owner/migration ledger.
