@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "execution_mode": "PRERECORDED_FIXTURE_ONLY",
+  "live_requests_enabled": false,
+  "redirects_enabled": false,
+  "sources": [
+    {
+      "source_id": "synthetic-oem-th",
+      "display_name": "Synthetic official Thai OEM fixture source",
+      "authority": "OFFICIAL",
+      "market": "TH",
+      "host_allowlist": ["oem-fixture.example"],
+      "path_prefix_allowlist": ["/th/"],
+      "allowed_methods": ["GET"],
+      "allowed_content_types": ["application/json", "application/pdf", "text/html"],
+      "permission_status": "SYNTHETIC_FIXTURE_ONLY",
+      "permission_notes": "Fixture metadata exercises the official Thai source contract; it is synthetic and proves no real publisher permission or authenticity.",
+      "content_license_policy": "Store only SYNTHETIC or explicitly OWNER_LICENSED fixture content; reject unknown license labels.",
+      "allowed_fixture_licenses": ["SYNTHETIC", "OWNER_LICENSED"],
+      "robots_policy": "No live robots.txt request. Require each prerecorded response to carry robots_allowed=true; live access remains disabled.",
+      "rate_limit": {
+        "minimum_interval_seconds": 1,
+        "maximum_requests_per_utc_day": 6,
+        "retry_after_cap_seconds": 3600
+      },
+      "retry_policy": {
+        "maximum_attempts": 2,
+        "cooldown_seconds": 60
+      }
+    }
+  ]
+}

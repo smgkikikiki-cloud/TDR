@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "mode": "MOCK",
+  "model_id": "claude-haiku-4-5-20251001",
+  "responses": {
+    "2227ba49e0977bd4fc883ce2e9a2fbecf97261c56834e4ed6128c0255fc69d5d": {
+      "schema_version": "1.0",
+      "mode": "MOCK",
+      "model_id": "claude-haiku-4-5-20251001",
+      "request_key": "2227ba49e0977bd4fc883ce2e9a2fbecf97261c56834e4ed6128c0255fc69d5d",
+      "claims": [
+        {
+          "field_key": "vehicle.length_mm",
+          "trim_id": "atto.standard",
+          "value_text": "4455 mm",
+          "qualifiers": {},
+          "quote": "BYD ATTO 3 Standard overall vehicle length is 4455 mm.",
+          "locator": "line:1"
+        }
+      ]
+    }
+  }
+}

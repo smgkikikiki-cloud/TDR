@@ -1,0 +1,243 @@
+{
+  "dispositions": [
+    {
+      "field_key": "LIST_PRICE",
+      "reason_code": "PRICE_LEDGER_OWNED",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P0",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "aeb",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P2",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "battery.catalog_capacity_kwh",
+      "layer": "CANONICAL_FACT",
+      "replay_state": "ALREADY_KNOWN",
+      "state": "ALREADY_KNOWN",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "drive_type",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P1",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "engine.displacement_cc",
+      "replay_state": "NOT_APPLICABLE",
+      "state": "NOT_APPLICABLE",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "vehicle.length_mm",
+      "replay_state": "MISSING",
+      "state": "MISSING",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "vehicle.seats",
+      "layer": "VARIANT_PAYLOAD",
+      "replay_state": "ALREADY_KNOWN",
+      "state": "ALREADY_KNOWN",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "wheel_size",
+      "reason_code": "P3_NO_STANDALONE_RETRIEVAL",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P3",
+      "trim_id": "atto.extended"
+    },
+    {
+      "field_key": "LIST_PRICE",
+      "reason_code": "PRICE_LEDGER_OWNED",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P0",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "aeb",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P2",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "battery.catalog_capacity_kwh",
+      "layer": "VARIANT_PAYLOAD",
+      "replay_state": "ALREADY_KNOWN",
+      "state": "ALREADY_KNOWN",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "drive_type",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P1",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "engine.displacement_cc",
+      "replay_state": "NOT_APPLICABLE",
+      "state": "NOT_APPLICABLE",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "vehicle.length_mm",
+      "replay_state": "UNKNOWN",
+      "state": "UNKNOWN",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "vehicle.seats",
+      "replay_state": "TOMBSTONED_LOCKED",
+      "state": "TOMBSTONED_LOCKED",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "wheel_size",
+      "reason_code": "P3_NO_STANDALONE_RETRIEVAL",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P3",
+      "trim_id": "atto.standard"
+    },
+    {
+      "field_key": "LIST_PRICE",
+      "reason_code": "PRICE_LEDGER_OWNED",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P0",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "aeb",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P2",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "battery.catalog_capacity_kwh",
+      "replay_state": "NOT_APPLICABLE",
+      "state": "NOT_APPLICABLE",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "drive_type",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P1",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "engine.displacement_cc",
+      "replay_state": "TOMBSTONED_LOCKED",
+      "state": "TOMBSTONED_LOCKED",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "torque_nm",
+      "reason_code": "UNRESOLVED_SYNTHETIC_FIELD_ALIAS",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P2",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "vehicle.length_mm",
+      "replay_state": "CONFLICT",
+      "state": "CONFLICT",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "vehicle.seats",
+      "layer": "TRIM_PAYLOAD",
+      "replay_state": "ALREADY_KNOWN",
+      "state": "ALREADY_KNOWN",
+      "trim_id": "city.sv"
+    },
+    {
+      "field_key": "wheel_size",
+      "reason_code": "P3_NO_STANDALONE_RETRIEVAL",
+      "state": "OUT_OF_SCOPE",
+      "tier": "P3",
+      "trim_id": "city.sv"
+    }
+  ],
+  "held_or_rejected": [
+    {
+      "document_id": "doc-complete",
+      "field_key": "battery.catalog_capacity_kwh",
+      "reason_code": "CONFLICTING_SOURCE_VALUES",
+      "status": "HELD",
+      "trim_id": "atto.standard"
+    },
+    {
+      "document_id": "doc-conflict",
+      "field_key": "battery.catalog_capacity_kwh",
+      "reason_code": "CONFLICTING_SOURCE_VALUES",
+      "status": "HELD",
+      "trim_id": "atto.standard"
+    },
+    {
+      "document_id": "doc-misleading",
+      "fields": [
+        "measurement_basis",
+        "range_scope"
+      ],
+      "locator": "line:2",
+      "reason_code": "MISSING_MEASUREMENT_QUALIFIER",
+      "status": "HELD",
+      "trim_id": "atto.standard"
+    },
+    {
+      "document_id": "doc-old",
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
+      "status": "HELD"
+    },
+    {
+      "document_id": "doc-partial",
+      "locator": "line:3",
+      "reason_code": "TRIM_NOT_EXPLICITLY_ADMITTED",
+      "status": "HELD",
+      "trim_id": "yaris.smart"
+    },
+    {
+      "document_id": "doc-trim",
+      "locator": "line:1",
+      "reason_code": "TRIM_MISMATCH",
+      "status": "REJECTED",
+      "trim_id": "atto.other"
+    },
+    {
+      "document_id": "doc-unit",
+      "locator": "line:1",
+      "reason_code": "UNIT_MISMATCH",
+      "source_field": "length_mm",
+      "status": "HELD",
+      "trim_id": "city.sv"
+    },
+    {
+      "document_id": "doc-wrong-market",
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
+      "status": "HELD"
+    },
+    {
+      "document_id": "doc-wrong-powertrain",
+      "locator": "line:1",
+      "reason_code": "POWERTRAIN_NOT_APPLICABLE",
+      "status": "HELD",
+      "trim_id": "atto.standard"
+    },
+    {
+      "document_id": "doc-wrong-variant",
+      "reason_code": "DUPLICATE_HASH_METADATA_CONFLICT",
+      "status": "HELD"
+    }
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,81 @@
+{
+  "attempts": 1,
+  "body_sha256": "5db647392c4bf1cc457f22fb321881299c257bbf385c59a768694e55ef286920",
+  "canonical_writes": 0,
+  "content_type": "application/json",
+  "disposition": "FETCH_OK",
+  "external_http_calls": 0,
+  "fake_transport_requests": 1,
+  "fixture_only_mode": true,
+  "local_source_id": "fixture://cas/sha256/5db647392c4bf1cc457f22fb321881299c257bbf385c59a768694e55ef286920",
+  "measured_usage": {
+    "elapsed_seconds": 2,
+    "external_http_calls": 0,
+    "paid_spend_thb": 0,
+    "paid_tokens": 0,
+    "requests": 1
+  },
+  "paid_calls": 0,
+  "paid_spend_thb": 0,
+  "paid_tokens": 0,
+  "production_accesses": 0,
+  "reason": "SOURCE_DOCUMENT_VALIDATED",
+  "request_id": "8f84f66dd6859142a37bc54bef2aa1bd4df16632c61421086511d88c77840744",
+  "request_url": "https://oem-fixture.example/th/yaris/lineup.json",
+  "source_document": {
+    "capture_manifest": {
+      "listed_trim_ids": [
+        "yaris.smart"
+      ],
+      "pagination_complete": true,
+      "row_count": 1,
+      "source_page_count": 1
+    },
+    "capture_provenance": {
+      "capture_id": "capture-yaris",
+      "capture_method": "LOCAL_FIXTURE_CAPTURE",
+      "captured_at": "2026-10-10",
+      "captured_page_count": 1
+    },
+    "captured_at": "2026-10-10",
+    "completeness": "COMPLETE_LINEUP",
+    "completeness_evidence": {
+      "capture_status": "COMPLETE",
+      "captured_page_count": 1,
+      "expected_page_count": 1,
+      "locator": "line:2",
+      "publisher_declared_complete": true,
+      "quote": "lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=toyota.yaris_ativ|generation=yaris_ativ.g4|model_year=NONE|facelift=NONE"
+    },
+    "content": "lineup|trim|yaris.smart\nlineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=toyota.yaris_ativ|generation=yaris_ativ.g4|model_year=NONE|facelift=NONE\ncapture|edition=synthetic-yaris-edition|capture_id=capture-yaris|captured_at=2026-10-10|method=LOCAL_FIXTURE_CAPTURE",
+    "content_sha256": "58b2fab56127e38204a67cb1cb2e839349a0507fd2a0dcde2096c51d4e9fae9b",
+    "document_id": "synthetic-yaris-lineup",
+    "edition_id": "synthetic-yaris-edition",
+    "extraction_method": "CONTROLLED_LINE_READER_V1",
+    "generation_id": "yaris_ativ.g4",
+    "lineage_id": "synthetic-yaris-lineage",
+    "lineup_rows": [
+      {
+        "facelift_id": null,
+        "generation_id": "yaris_ativ.g4",
+        "grade": null,
+        "market_trim_id": "yaris.smart",
+        "model_id": "toyota.yaris_ativ",
+        "model_year": null,
+        "powertrain": "ICE"
+      }
+    ],
+    "local_source_id": "fixture://cas/sha256/5db647392c4bf1cc457f22fb321881299c257bbf385c59a768694e55ef286920",
+    "market": "TH",
+    "model_id": "toyota.yaris_ativ",
+    "published_at": "2026-10-01",
+    "schema_version": "1.0",
+    "source_authority": "OFFICIAL",
+    "source_id": "synthetic-oem-th",
+    "source_kind": "RETAIL_LINEUP",
+    "trim_ids": [
+      "yaris.smart"
+    ]
+  },
+  "source_hash": "58b2fab56127e38204a67cb1cb2e839349a0507fd2a0dcde2096c51d4e9fae9b"
+}

@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-10",
+  "completeness": "SPEC_ONLY",
+  "content": "Nearby text says range 520 km but no test-cycle or range-scope qualifier.\nclaim|rated_range_km|atto.standard|520 km",
+  "content_sha256": "949e6bddbccbb28cae8ece8b6ac04a21778e76612c2f0cd8973e5651c468a253",
+  "document_id": "doc-misleading",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-misleading",
+  "local_source_id": "fixture://doc-misleading",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "SPEC_SHEET",
+  "trim_ids": [
+    "atto.standard"
+  ]
+}

@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vehicle-master-shadow/1.0",
+  "title": "Local Vehicle Master Shadow Export",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "provenance",
+    "vehicle_master_state",
+    "tables",
+    "field_priority_overlay",
+    "evidence_cache"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "vehicle-master-shadow/1.0"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "snapshot_id",
+        "exported_at",
+        "anonymized",
+        "source_contract",
+        "source_schema_version"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "SYNTHETIC_FIXTURE",
+            "AUTHORIZED_LOCAL_EXPORT",
+            "ANONYMIZED_LOCAL_EXPORT"
+          ]
+        },
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exported_at": {
+          "type": "string"
+        },
+        "anonymized": {
+          "type": "boolean"
+        },
+        "source_contract": {
+          "const": "docs/vehicle-db/MASTER_TABLES.md + supabase/migration_v57_vehicle_master_tables.sql"
+        },
+        "source_schema_version": {
+          "type": "string"
+        }
+      }
+    },
+    "vehicle_master_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "seed_release_id",
+        "seed_as_of",
+        "seed_source_hash",
+        "seed_canonical_revision"
+      ],
+      "properties": {
+        "scope": {
+          "const": "vehicle_master"
+        },
+        "seed_release_id": {
+          "type": "string"
+        },
+        "seed_as_of": {
+          "type": "string",
+          "format": "date"
+        },
+        "seed_source_hash": {
+          "type": "string"
+        },
+        "seed_canonical_revision": {
+          "type": "string"
+        }
+      }
+    },
+    "field_priority_overlay": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "P1",
+          "P2",
+          "P3"
+        ]
+      }
+    },
+    "tables": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vehicle_models",
+        "vehicle_generations",
+        "vehicle_trims",
+        "vehicle_facts"
+      ],
+      "properties": {
+        "vehicle_models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "canonical_id",
+              "generation_id",
+              "status",
+              "payload"
+            ],
+            "properties": {
+              "body_type": {},
+              "brand_id": {},
+              "canonical_id": {},
+              "created_at": {},
+              "deleted_at": {},
+              "generation_id": {},
+              "name_en": {},
+              "name_th": {},
+              "payload": {},
+              "retail_price_max": {},
+              "retail_price_min": {},
+              "revision": {},
+              "seed_release_id": {},
+              "segment": {},
+              "served_as_of": {},
+              "slug": {},
+              "status": {},
+              "tdr_model_id": {},
+              "updated_at": {}
+            }
+          }
+        },
+        "vehicle_generations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "canonical_id",
+              "model_id",
+              "payload"
+            ],
+            "properties": {
+              "canonical_id": {},
+              "code": {},
+              "created_at": {},
+              "deleted_at": {},
+              "ended": {},
+              "launched": {},
+              "model_id": {},
+              "payload": {},
+              "revision": {},
+              "seed_release_id": {},
+              "segment": {},
+              "updated_at": {}
+            }
+          }
+        },
+        "vehicle_trims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "canonical_id",
+              "model_id",
+              "generation_id",
+              "name",
+              "powertrain",
+              "status",
+              "payload"
+            ],
+            "properties": {
+              "campaign_quote": {},
+              "canonical_id": {},
+              "catalog_payload": {},
+              "created_at": {},
+              "current_list_price": {},
+              "deleted_at": {},
+              "generation_id": {},
+              "model_id": {},
+              "name": {},
+              "origin": {},
+              "payload": {},
+              "powertrain": {},
+              "price_history": {},
+              "revision": {},
+              "seed_release_id": {},
+              "served_as_of": {},
+              "source_refs": {},
+              "status": {},
+              "updated_at": {},
+              "variant_id": {}
+            }
+          }
+        },
+        "vehicle_variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "canonical_id",
+              "generation_id",
+              "model_id",
+              "name",
+              "powertrain",
+              "payload"
+            ],
+            "properties": {
+              "canonical_id": {},
+              "created_at": {},
+              "deleted_at": {},
+              "generation_id": {},
+              "import_type": {},
+              "model_id": {},
+              "name": {},
+              "origin_country": {},
+              "payload": {},
+              "powertrain": {},
+              "revision": {},
+              "seed_release_id": {},
+              "updated_at": {}
+            }
+          }
+        },
+        "vehicle_facts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_id",
+              "trim_id",
+              "field_key",
+              "value_state",
+              "value",
+              "unit",
+              "qualifiers",
+              "verification_status",
+              "source",
+              "source_ref",
+              "source_locator",
+              "authority",
+              "locked"
+            ],
+            "properties": {
+              "authority": {},
+              "claim_ids": {},
+              "created_at": {},
+              "effective_from": {},
+              "effective_to": {},
+              "fact_id": {},
+              "field_key": {},
+              "locked": {},
+              "observed_at": {},
+              "payload": {},
+              "qualifiers": {},
+              "revision": {},
+              "seed_release_id": {},
+              "served_in_release": {},
+              "source": {},
+              "source_locator": {},
+              "source_ref": {},
+              "trim_id": {},
+              "unit": {},
+              "updated_at": {},
+              "value": {},
+              "value_state": {},
+              "verification_status": {}
+            }
+          }
+        },
+        "vehicle_price_ledger": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "record_id",
+              "trim_id",
+              "amount_thb",
+              "price_type",
+              "in_release"
+            ],
+            "properties": {
+              "amount_thb": {},
+              "authority": {},
+              "campaign_id": {},
+              "created_at": {},
+              "effective_from": {},
+              "effective_to": {},
+              "in_release": {},
+              "notes": {},
+              "observed_at": {},
+              "option_id": {},
+              "payload": {},
+              "price_type": {},
+              "record_id": {},
+              "reference_price_thb": {},
+              "retracted_at": {},
+              "retraction_reason": {},
+              "reviewed_by": {},
+              "seed_release_id": {},
+              "source": {},
+              "source_document_id": {},
+              "source_ref": {},
+              "trim_id": {},
+              "vat_included": {}
+            }
+          }
+        },
+        "vehicle_current_retail_sets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model_id",
+              "trim_ids",
+              "reviewer",
+              "reviewed_at"
+            ],
+            "properties": {
+              "created_at": {},
+              "model_id": {},
+              "notes": {},
+              "payload": {},
+              "reviewed_at": {},
+              "reviewer": {},
+              "seed_release_id": {},
+              "source_ref": {},
+              "trim_ids": {}
+            }
+          }
+        },
+        "vehicle_trim_lifecycle_decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "trim_id",
+              "status",
+              "reviewer",
+              "reviewed_at"
+            ],
+            "properties": {
+              "created_at": {},
+              "notes": {},
+              "payload": {},
+              "reviewed_at": {},
+              "reviewer": {},
+              "seed_release_id": {},
+              "source_ref": {},
+              "status": {},
+              "trim_id": {}
+            }
+          }
+        },
+        "vehicle_model_operational_states": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model_id",
+              "status",
+              "reviewer",
+              "reviewed_at"
+            ],
+            "properties": {
+              "created_at": {},
+              "model_id": {},
+              "notes": {},
+              "payload": {},
+              "reviewed_at": {},
+              "reviewer": {},
+              "seed_release_id": {},
+              "source_ref": {},
+              "status": {}
+            }
+          }
+        }
+      }
+    },
+    "evidence_cache": {
+      "type": "array",
+      "items": {
+        "$ref": "../contract/source_document.schema.json"
+      }
+    }
+  }
+}

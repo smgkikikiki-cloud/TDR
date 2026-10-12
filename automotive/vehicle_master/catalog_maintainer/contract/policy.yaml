@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.1",
+  "autonomy": {
+    "operating_mode": "BACKFILL",
+    "execution_mode": "MOCK",
+    "source_scope": "EXISTING_CURRENT_TH_MODEL_ONLY",
+    "allow_bootstrap_shells": false,
+    "allow_upcoming": false,
+    "allow_historical_research": false,
+    "allow_external_http": false,
+    "allow_paid_ai": false,
+    "allow_paid_search": false,
+    "max_paid_model_calls": 0,
+    "max_paid_tokens": 0,
+    "max_paid_spend_thb": 0,
+    "enable_prod_writer": false,
+    "enable_cron": false
+  },
+  "research": {
+    "task_grain": "MODEL_DOCUMENT_BUNDLE",
+    "primary_source_first": true,
+    "negative_cache_days": 30,
+    "skip_unchanged_hash": true,
+    "maximum_retries": 1,
+    "p3_independent_searches_allowed": 0
+  },
+  "queue_policy": {
+    "cycle_size": 5,
+    "spec_enrich_slots_per_cycle": 1,
+    "audit_anti_starvation_cycle_size": 5,
+    "audit_anti_starvation_slots_per_cycle": 1,
+    "underrepresented_cohort_field": "priority_cohort"
+  },
+  "priority_policy": {
+    "audit_weights": {
+      "registration_relevance": 0.45,
+      "catalog_staleness": 0.3,
+      "lineup_recency": 0.15,
+      "document_reuse": 0.1
+    },
+    "spec_weights": {
+      "missingness_applicability": 0.5,
+      "business_relevance": 0.25,
+      "shared_document_yield": 0.2,
+      "ready_evidence": 0.05
+    },
+    "spec_missingness_weights": {
+      "P1": 0.75,
+      "P2": 0.25
+    },
+    "high_market_relevance_threshold": 0.5
+  },
+  "trim_authority": {
+    "add": "PROPOSE_ONLY_IN_INITIAL_IMPLEMENTATION",
+    "discontinue": "PROPOSE_ONLY_IN_INITIAL_IMPLEMENTATION",
+    "soft_archive_only": true,
+    "protect_owner_retail_sets": true,
+    "prohibit_model_deletion": true
+  },
+  "structural_evidence": {
+    "approval_status": "PENDING_OWNER_APPROVAL",
+    "minimum_independent_negative_interval_days": 30,
+    "minimum_interval_constraints": {
+      "minimum_days": 1,
+      "maximum_days": 365,
+      "chronology": "STRICTLY_OLDER_CAPTURE_BEFORE_CURRENT"
+    }
+  },
+  "runner": {
+    "manual_mock_steps_allowed": true,
+    "manual_pause_default": true,
+    "kill_switch_default": true,
+    "background_execution": false,
+    "external_http_enabled": false,
+    "paid_ai_enabled": false,
+    "production_database_enabled": false,
+    "max_offline_requests_per_day": 6,
+    "max_tokens_per_day": 0,
+    "max_spend_thb_per_day": 0,
+    "max_elapsed_seconds_per_day": 3600,
+    "maximum_retries_per_job": 2,
+    "lease_seconds": 900,
+    "retry_cooldown_seconds": 3600
+  }
+}

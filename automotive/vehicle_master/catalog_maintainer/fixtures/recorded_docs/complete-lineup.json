@@ -1,0 +1,66 @@
+{
+  "capture_manifest": {
+    "listed_trim_ids": [
+      "atto.extended",
+      "atto.standard"
+    ],
+    "pagination_complete": true,
+    "row_count": 2,
+    "source_page_count": 1
+  },
+  "capture_provenance": {
+    "capture_id": "capture-atto-2026-10-10-a",
+    "capture_method": "LOCAL_FIXTURE_CAPTURE",
+    "captured_at": "2026-10-10",
+    "captured_page_count": 1
+  },
+  "captured_at": "2026-10-10",
+  "completeness": "COMPLETE_LINEUP",
+  "completeness_evidence": {
+    "capture_status": "COMPLETE",
+    "captured_page_count": 1,
+    "expected_page_count": 1,
+    "locator": "line:3",
+    "publisher_declared_complete": true,
+    "quote": "lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=byd.atto_3|generation=atto_3.g1|model_year=NONE|facelift=NONE"
+  },
+  "content": "lineup|trim|atto.extended\nlineup|trim|atto.standard\nlineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model=byd.atto_3|generation=atto_3.g1|model_year=NONE|facelift=NONE\ncapture|edition=synthetic-oem-edition-2026-10|capture_id=capture-atto-2026-10-10-a|captured_at=2026-10-10|method=LOCAL_FIXTURE_CAPTURE",
+  "content_sha256": "b418a8dd8da8045a2ae7616effcefb139e558f4c574f68d633657d7a3c9d7ef2",
+  "document_id": "doc-complete-lineup",
+  "edition_id": "synthetic-oem-edition-2026-10",
+  "extraction_method": "CONTROLLED_LINE_READER_V1",
+  "generation_id": "atto_3.g1",
+  "lineage_id": "lineage-atto-release",
+  "lineup_rows": [
+    {
+      "facelift_id": null,
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "market_trim_id": "atto.extended",
+      "model_id": "byd.atto_3",
+      "model_year": null,
+      "powertrain": "BEV"
+    },
+    {
+      "facelift_id": null,
+      "generation_id": "atto_3.g1",
+      "grade": null,
+      "market_trim_id": "atto.standard",
+      "model_id": "byd.atto_3",
+      "model_year": null,
+      "powertrain": "BEV"
+    }
+  ],
+  "local_source_id": "fixture://doc-complete-lineup",
+  "market": "TH",
+  "model_id": "byd.atto_3",
+  "published_at": "2026-10-01",
+  "schema_version": "1.0",
+  "source_authority": "OFFICIAL",
+  "source_id": "synthetic-oem-th",
+  "source_kind": "RETAIL_LINEUP",
+  "trim_ids": [
+    "atto.extended",
+    "atto.standard"
+  ]
+}

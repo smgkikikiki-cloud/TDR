@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vehicle-master-shadow-report/1.0",
+  "title": "Vehicle Master Shadow Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_schema_version",
+    "snapshot",
+    "authority_mapping",
+    "coverage",
+    "gaps",
+    "research",
+    "price_ledger",
+    "identity_issues",
+    "evidence_issues",
+    "cached_evidence",
+    "duplicate_fact_rows",
+    "sample_trace",
+    "classification_trace",
+    "row_trace",
+    "activity",
+    "structural_evidence_policy"
+  ],
+  "properties": {
+    "report_schema_version": {
+      "const": "vehicle-master-shadow-report/1.0"
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "provenance_kind",
+        "production_coverage",
+        "as_of",
+        "input_sha256"
+      ],
+      "properties": {
+        "snapshot_id": {
+          "type": "string"
+        },
+        "provenance_kind": {
+          "type": "string"
+        },
+        "production_coverage": {
+          "enum": [
+            "UNKNOWN",
+            "LOCAL_EXPORT_ONLY"
+          ]
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date"
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "authority_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_reference",
+        "registry_reference",
+        "registry_sha256",
+        "canonical_ids_preserved",
+        "legacy_catalog_authority",
+        "serving_views_authority"
+      ],
+      "properties": {
+        "schema_reference": {
+          "type": "string"
+        },
+        "registry_reference": {
+          "type": "string"
+        },
+        "registry_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "canonical_ids_preserved": {
+          "const": true
+        },
+        "legacy_catalog_authority": {
+          "const": false
+        },
+        "serving_views_authority": {
+          "const": false
+        }
+      }
+    },
+    "coverage": {
+      "type": "object"
+    },
+    "gaps": {
+      "type": "object"
+    },
+    "research": {
+      "type": "object"
+    },
+    "price_ledger": {
+      "type": "object"
+    },
+    "identity_issues": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence_issues": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "cached_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "duplicate_fact_rows": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "sample_trace": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "classification_trace": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "row_trace": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "table",
+          "primary_key",
+          "input_sha256",
+          "row_sha256",
+          "fields"
+        ],
+        "properties": {
+          "table": {
+            "type": "string"
+          },
+          "primary_key": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "input_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "row_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "external_http_calls",
+        "paid_ai_calls",
+        "paid_search_calls",
+        "paid_tokens",
+        "paid_spend_thb",
+        "production_database_accesses",
+        "canonical_writes",
+        "background_workers"
+      ],
+      "properties": {
+        "external_http_calls": {
+          "const": 0
+        },
+        "paid_ai_calls": {
+          "const": 0
+        },
+        "paid_search_calls": {
+          "const": 0
+        },
+        "paid_tokens": {
+          "const": 0
+        },
+        "paid_spend_thb": {
+          "const": 0
+        },
+        "production_database_accesses": {
+          "const": 0
+        },
+        "canonical_writes": {
+          "const": 0
+        },
+        "background_workers": {
+          "const": 0
+        }
+      }
+    },
+    "structural_evidence_policy": {
+      "const": "PENDING_OWNER_APPROVAL"
+    }
+  }
+}

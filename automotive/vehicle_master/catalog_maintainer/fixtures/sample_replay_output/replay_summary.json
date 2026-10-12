@@ -1,0 +1,58 @@
+{
+  "accepted_by_reason": {
+    "EXACT_TRIM_SOURCE_MATCH": 3
+  },
+  "accepted_candidates": 3,
+  "accepted_candidates_not_resolving_priority_gaps": 3,
+  "applicable_gaps_after_replay": 2,
+  "applicable_gaps_before": 2,
+  "cache_suppressions": 0,
+  "candidates_total": 10,
+  "canonical_registry_sha256": "dff3100caec596fa6911f25b622f1cce65b3ffa6247bf5ce1e6d133acd5f419c",
+  "canonical_registry_year": 2026,
+  "documents_seen": 11,
+  "duplicate_hash_suppressions": 0,
+  "external_http_calls": 0,
+  "held_by_reason": {
+    "CONFLICTING_SOURCE_VALUES": 2,
+    "MISSING_MEASUREMENT_QUALIFIER": 1,
+    "POWERTRAIN_NOT_APPLICABLE": 1,
+    "TRIM_NOT_EXPLICITLY_ADMITTED": 1,
+    "UNIT_MISMATCH": 1
+  },
+  "held_candidates": 6,
+  "held_documents": 5,
+  "lineage_independent_source_count": 2,
+  "lineage_note": "Documents sharing lineage_id count as one source; replay does not infer source independence.",
+  "matched_candidates": 3,
+  "mismatched_candidates": 6,
+  "paid_model_calls": 0,
+  "paid_spend_thb": 0,
+  "paid_tokens": 0,
+  "priority_gap_items_after_replay": 2,
+  "priority_gap_items_before_replay": 2,
+  "priority_gap_items_proposed": 0,
+  "priority_overlay_fields": 4,
+  "production_writes": 0,
+  "proposed_canonical_writes": 0,
+  "reason_counts": {
+    "CONFLICTING_SOURCE_VALUES": 4,
+    "DUPLICATE_HASH_METADATA_CONFLICT": 3,
+    "EXACT_TRIM_SOURCE_MATCH": 3,
+    "MISSING_MEASUREMENT_QUALIFIER": 1,
+    "P3_NO_STANDALONE_RETRIEVAL": 1,
+    "POWERTRAIN_NOT_APPLICABLE": 1,
+    "PRICE_LEDGER_OWNED": 1,
+    "TRIM_MISMATCH": 1,
+    "TRIM_NOT_EXPLICITLY_ADMITTED": 1,
+    "UNIT_MISMATCH": 1,
+    "UNRESOLVED_SYNTHETIC_FIELD_ALIAS": 3
+  },
+  "rejected_by_reason": {
+    "TRIM_MISMATCH": 1
+  },
+  "rejected_candidates": 1,
+  "rejected_documents": 0,
+  "schema_version": "1.0",
+  "unique_documents": 8
+}
