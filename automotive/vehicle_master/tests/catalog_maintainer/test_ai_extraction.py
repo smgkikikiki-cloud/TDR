@@ -14,6 +14,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
 from automotive.vehicle_master.catalog_maintainer.ai_extraction import (
     MODEL_ID, ExtractionError, _request, _response_claims, run_mock_extraction,
 )
+from automotive.vehicle_master.catalog_maintainer.replay import SUPPORTED, replay
 
 ROOT = Path(__file__).parents[2] / "catalog_maintainer"
 SNAPSHOT = ROOT / "fixtures/sample_snapshot.json"
@@ -25,6 +26,35 @@ class MockAIExtractionTests(unittest.TestCase):
     def run_fixture(self, cache: Path, out: Path) -> dict:
         return run_mock_extraction(SNAPSHOT, [DOCUMENT], CASSETTE, cache, out,
                                    confirm_mock_only=True, root=REPOSITORY_ROOT)
+
+    def run_full_path_claims(self, root: Path, doc: dict, claims: list[dict], snapshot_path: Path = SNAPSHOT):
+        document_path = root / "document.json"
+        document_path.write_text(json.dumps(doc))
+        with tempfile.TemporaryDirectory() as baseline_dir:
+            replay(snapshot_path, [document_path], baseline_dir, root=REPOSITORY_ROOT)
+            dispositions = json.loads((Path(baseline_dir) / "gap_diff.json").read_text())["dispositions"]
+            existing = {(json.loads(line)["trim_id"], json.loads(line)["field_key"])
+                        for line in (Path(baseline_dir) / "field_candidates.jsonl").read_text().splitlines()}
+        pairs = sorted({(row["trim_id"], row["field_key"]) for row in dispositions
+                        if row["trim_id"] in doc["trim_ids"] and row["state"] in {
+                            "MISSING", "UNKNOWN", "NEEDS_SOURCE_TRACE", "SOURCE_EXHAUSTED", "NOT_AVAILABLE"}
+                        and row["field_key"] in SUPPORTED
+                        and (row["trim_id"], row["field_key"]) not in existing})
+        request = _request(doc, pairs)
+        response = {"schema_version": "1.0", "mode": "MOCK", "model_id": MODEL_ID,
+                    "request_key": request.request_key, "claims": [
+                        {**claim, "qualifiers": {}, "quote": doc["content"], "locator": "line:1"}
+                        for claim in claims]}
+        tape_path = root / "tape.json"
+        tape_path.write_text(json.dumps({"schema_version": "1.0", "mode": "MOCK",
+                                         "model_id": MODEL_ID,
+                                         "responses": {request.request_key: response}}))
+        output = root / "output"
+        summary = run_mock_extraction(snapshot_path, [document_path], tape_path, root / "cache", output,
+                                      confirm_mock_only=True, root=REPOSITORY_ROOT)
+        candidates = [json.loads(line) for line in (output / "field_candidates.jsonl").read_text().splitlines()]
+        gap_diff = json.loads((output / "gap_diff.json").read_text())
+        return summary, candidates, gap_diff, set(pairs)
 
     def test_recorded_response_is_scope_checked_by_canonical_replay_and_cached(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -102,6 +132,71 @@ class MockAIExtractionTests(unittest.TestCase):
         accepted, held = check("atto.premium", "vehicle.length_mm", "Premium vehicle length is 4600 mm.")
         self.assertEqual(len(accepted), 1)
         self.assertFalse(held)
+
+    def test_full_path_holds_value_assigned_to_sibling_trim_on_same_line(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            doc = json.loads(DOCUMENT.read_text())
+            content = "Standard vehicle length is 4455 mm; Extended vehicle length is 4600 mm."
+            doc.update(document_id="doc-ai-sibling-attribution", local_source_id="fixture://sibling-attribution",
+                       content=content, content_sha256=hashlib.sha256(content.encode()).hexdigest(),
+                       trim_ids=["atto.standard", "atto.extended"])
+            claim = {"trim_id": "atto.extended", "field_key": "vehicle.length_mm", "value_text": "4455 mm"}
+            summary, candidates, gap_diff, pairs = self.run_full_path_claims(root, doc, [claim])
+            self.assertIn((claim["trim_id"], claim["field_key"]), pairs)
+            self.assertEqual(summary["adapter_held"][0]["reason_code"], "SOURCE_VALUE_ATTRIBUTION_AMBIGUOUS")
+            self.assertFalse(any(row["trim_id"] == "atto.extended" and row["field_key"] == "vehicle.length_mm"
+                                 and row["candidate_status"] == "ACCEPTED_CANDIDATE" for row in candidates))
+            disposition = next(row for row in gap_diff["dispositions"]
+                               if row["trim_id"] == "atto.extended" and row["field_key"] == "vehicle.length_mm")
+            self.assertNotEqual(disposition["state"], "CANDIDATE_PROPOSED")
+
+    def test_full_path_holds_value_assigned_to_other_field_on_same_line(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snapshot = json.loads(SNAPSHOT.read_text())
+            snapshot["field_registry"].append({"key": "vehicle.width_mm", "group": "dimensions",
+                                               "tier": "P1", "applicable_powertrains": []})
+            snapshot_path = root / "snapshot.json"
+            snapshot_path.write_text(json.dumps(snapshot))
+            doc = json.loads(DOCUMENT.read_text())
+            content = "Standard vehicle length is 4455 mm; vehicle width is 1800 mm."
+            doc.update(document_id="doc-ai-field-attribution", local_source_id="fixture://field-attribution",
+                       content=content, content_sha256=hashlib.sha256(content.encode()).hexdigest(),
+                       trim_ids=["atto.standard"])
+            claim = {"trim_id": "atto.standard", "field_key": "vehicle.width_mm", "value_text": "4455 mm"}
+            summary, candidates, gap_diff, pairs = self.run_full_path_claims(root, doc, [claim], snapshot_path)
+            self.assertIn((claim["trim_id"], claim["field_key"]), pairs)
+            self.assertEqual(summary["adapter_held"][0]["reason_code"], "SOURCE_VALUE_ATTRIBUTION_AMBIGUOUS")
+            self.assertFalse(any(row["trim_id"] == "atto.standard" and row["field_key"] == "vehicle.width_mm"
+                                 and row["candidate_status"] == "ACCEPTED_CANDIDATE" for row in candidates))
+            disposition = next(row for row in gap_diff["dispositions"]
+                               if row["trim_id"] == "atto.standard" and row["field_key"] == "vehicle.width_mm")
+            self.assertNotEqual(disposition["state"], "CANDIDATE_PROPOSED")
+
+    def test_full_path_accepts_distinct_explicit_multi_trim_and_field_facts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snapshot = json.loads(SNAPSHOT.read_text())
+            snapshot["field_registry"].append({"key": "vehicle.width_mm", "group": "dimensions",
+                                               "tier": "P1", "applicable_powertrains": []})
+            snapshot_path = root / "snapshot.json"
+            snapshot_path.write_text(json.dumps(snapshot))
+            doc = json.loads(DOCUMENT.read_text())
+            content = "Standard vehicle width is 1800 mm; Extended vehicle length is 4600 mm."
+            doc.update(document_id="doc-ai-positive-multi-fact", local_source_id="fixture://positive-multi-fact",
+                       content=content, content_sha256=hashlib.sha256(content.encode()).hexdigest(),
+                       trim_ids=["atto.standard", "atto.extended"])
+            claims = [{"trim_id": "atto.standard", "field_key": "vehicle.width_mm", "value_text": "1800 mm"},
+                      {"trim_id": "atto.extended", "field_key": "vehicle.length_mm", "value_text": "4600 mm"}]
+            summary, candidates, _, pairs = self.run_full_path_claims(root, doc, claims, snapshot_path)
+            for claim in claims:
+                self.assertIn((claim["trim_id"], claim["field_key"]), pairs)
+                candidate = next(row for row in candidates if row["trim_id"] == claim["trim_id"]
+                                 and row["field_key"] == claim["field_key"])
+                self.assertEqual(candidate["candidate_status"], "ACCEPTED_CANDIDATE")
+            self.assertEqual(summary["accepted_ai_mock_candidates"], 2)
+            self.assertFalse(summary["adapter_held"])
 
     def test_rejected_cached_response_recovers_from_corrected_cassette(self):
         with tempfile.TemporaryDirectory() as tmp:

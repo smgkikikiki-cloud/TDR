@@ -101,13 +101,15 @@ _FIELD_ANCHORS = {
     "safety.aeb": ("automatic emergency braking", "aeb"),
     "safety.airbag_count": ("airbags", "airbag count"),
 }
+_MEASURE_RE = re.compile(r"(?<![a-z0-9])[+-]?\d+(?:[.,]\d+)?\s*(?:mm|cm|km|m|kg|kw|kwh|cc|l|seats?)\b", re.IGNORECASE)
 
 
 def _whole_phrase(text: str, phrase: str) -> bool:
     return re.search(r"(?<![a-z0-9])" + re.escape(phrase) + r"(?![a-z0-9])", text, re.IGNORECASE) is not None
 
 
-def _attribution_reason(doc: dict, quote: str, trim_id: str, field_key: str) -> str | None:
+def _attribution_reason(doc: dict, quote: str, trim_id: str, field_key: str,
+                        value_text: str) -> str | None:
     # A single-trim source is an audited exact-source scope. In multi-trim
     # documents, the cited line itself must name the claimed trim.
     if len(doc["trim_ids"]) != 1:
@@ -117,7 +119,41 @@ def _attribution_reason(doc: dict, quote: str, trim_id: str, field_key: str) -> 
     anchors = _FIELD_ANCHORS.get(field_key, ())
     if not anchors or not any(_whole_phrase(quote, anchor) for anchor in anchors):
         return "SOURCE_FIELD_NOT_BOUND"
-    return None
+
+    # Only semicolon-delimited clauses are treated as separate facts. Within
+    # each bounded clause, the claimed value, exactly one supported field and
+    # exactly one applicable trim must co-occur. Anything less structured is
+    # held rather than attributed by line-wide keyword/value coincidence.
+    clauses = quote.split(";")
+    if len(clauses) > 32:
+        return "SOURCE_VALUE_ATTRIBUTION_AMBIGUOUS"
+    doc_trims = doc["trim_ids"]
+    fact_matches = 0
+    for clause in clauses:
+        fields_here = {
+            key for key, field_anchors in _FIELD_ANCHORS.items()
+            if any(_whole_phrase(clause, anchor) for anchor in field_anchors)
+        }
+        trims_here = []
+        for source_trim in doc_trims:
+            label = source_trim.rsplit(".", 1)[-1].replace("_", " ").replace("-", " ")
+            if _whole_phrase(clause, label):
+                trims_here.append(source_trim)
+        if len(doc_trims) == 1 and not trims_here:
+            trims_here = [doc_trims[0]]
+        value_at = clause.find(value_text)
+        field_ends = [match.end() for anchor in _FIELD_ANCHORS[field_key]
+                      for match in re.finditer(r"(?<![a-z0-9])" + re.escape(anchor) + r"(?![a-z0-9])",
+                                               clause, re.IGNORECASE)
+                      if match.end() <= value_at]
+        connector = clause[max(field_ends):value_at] if field_ends and value_at >= 0 else None
+        measures = [value.strip().casefold() for value in _MEASURE_RE.findall(clause)]
+        value_bound = (value_at >= 0 and clause.count(value_text) == 1 and connector is not None
+                       and re.fullmatch(r"\s*(?:is|:|=)\s*", connector, re.IGNORECASE) is not None
+                       and (not measures or (len(measures) == 1 and measures[0] == value_text.strip().casefold())))
+        if value_bound and fields_here == {field_key} and trims_here == [trim_id]:
+            fact_matches += 1
+    return None if fact_matches == 1 else "SOURCE_VALUE_ATTRIBUTION_AMBIGUOUS"
 
 
 def _response_claims(response: dict, request: ExtractionRequest, doc: dict,
@@ -159,7 +195,7 @@ def _response_claims(response: dict, request: ExtractionRequest, doc: dict,
         if reason is None and (not isinstance(value_text, str) or not value_text.strip() or value_text not in quote):
             reason = "VALUE_NOT_QUOTED"
         if reason is None:
-            reason = _attribution_reason(doc, quote, row["trim_id"], row["field_key"])
+            reason = _attribution_reason(doc, quote, row["trim_id"], row["field_key"], value_text)
         qualifiers = row["qualifiers"]
         allowed_qualifiers = set(registry["fields"].get(row["field_key"], {}).get("comparison_qualifiers", []))
         if reason is None and (not set(qualifiers) <= allowed_qualifiers
