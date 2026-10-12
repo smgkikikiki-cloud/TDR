@@ -61,6 +61,11 @@ class EventReviewReason(str, Enum):
     # Per-event, from the engine.
     #: A plausible vehicle price in the changed evidence that no claim covers.
     UNCOVERED_AMOUNT = "UNCOVERED_AMOUNT"
+    #: The offer conditions changed but no validated claim carries a new,
+    #: quote-bound condition taken from the changed evidence.
+    CONDITIONS_NOT_INTERPRETED = "CONDITIONS_NOT_INTERPRETED"
+    #: A date newly written on the page is not on any validated claim.
+    DATE_NOT_INTERPRETED = "DATE_NOT_INTERPRETED"
     #: A provider call was needed but the usage state is not durable.
     STATE_NOT_DURABLE = "STATE_NOT_DURABLE"
     AI_UNAVAILABLE = "AI_UNAVAILABLE"

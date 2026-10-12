@@ -770,7 +770,7 @@ def test_c1_2_changed_only_payload_still_reemits_full_interpretation_24h_later()
     gap = "<p>" + FILLER + "</p>"
     block_a = f"<p>{ULTRA_Q}</p>"
     block_b = f"<p>{MAXP_Q}</p>"
-    note = "<p>เงื่อนไข: จองและส่งมอบภายใน 30 กันยายน 2569 เมื่อเทิร์นรถเก่า</p>"
+    note = "<p>เงื่อนไข: จองและส่งมอบภายในเดือนนี้ เมื่อเทิร์นรถเก่า</p>"
     v1 = page(block_a + gap + block_b)
     v2 = page(block_a + gap + note + block_b)
 
@@ -787,7 +787,7 @@ def test_c1_2_changed_only_payload_still_reemits_full_interpretation_24h_later()
     limit = tokens(v1, "full")
     assert tokens(v2, "changed") <= limit < tokens(v2, "full")      # the forcing case
 
-    b_with_conditions = maxp_claim(conditions=["เงื่อนไข: จองและส่งมอบภายใน 30 กันยายน 2569 เมื่อเทิร์นรถเก่า"])
+    b_with_conditions = maxp_claim(conditions=["เงื่อนไข: จองและส่งมอบภายในเดือนนี้ เมื่อเทิร์นรถเก่า"])
     provider = FakeProvider([ai_claim(), maxp_claim()], [b_with_conditions])
     state = EventState()
     eng = engine(provider, state=state, max_input_tokens=limit)
@@ -949,3 +949,119 @@ def test_c1_4_genuine_unqualified_msrp_control_still_validates() -> None:
     assert {(c.trim_raw, c.price_type) for c in outcome.ai_claims} == {
         ("MAX+", PriceType.LIST_PRICE), ("ULTRA", PriceType.FINANCE_PRICE)}
     assert outcome.review == () and outcome.status is EventStatus.AI_EXTRACTED
+
+
+# ============ final QA: a fallback trigger must be answered, not just priced ====
+
+PROMO_COND_V2 = PROMO_V1.replace(
+    "Conditions: booking",
+    "Conditions: trade-in of any old car required; booking")
+CAMPAIGN_QUOTE = "JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)"
+
+
+def campaign_claim(**over) -> dict:
+    return ai_claim(price_type="CAMPAIGN_PRICE", amount_thb=599000, trim_raw="MAX+",
+                    reference_price_thb=699000, evidence_text=CAMPAIGN_QUOTE, **over)
+
+
+def promo_setup(*replies):
+    """Rule-extracted baseline (v1), ready for a terms-only change."""
+    provider = FakeProvider(*replies)
+    state = EventState()
+    eng = engine(provider, state=state)
+    tgt = target(TargetRole.PROMOTION)
+    base = eng.process(tgt, fetched(page(PROMO_V1), tgt))
+    assert base.status is EventStatus.DETERMINISTIC and provider.calls == 0
+    return eng, provider, state, tgt, state.baseline(tgt.id)
+
+
+def assert_pending(state, tgt, baseline_before) -> None:
+    assert state.baseline(tgt.id) == baseline_before          # not advanced
+    assert state.data["cache"] == {}                          # no success-cache
+    assert state.data["interpretations"] == {}
+
+
+def test_final_qa_terms_only_change_with_empty_claims_stays_pending_then_retries() -> None:
+    new_term = "trade-in of any old car required"
+    eng, provider, state, tgt, before = promo_setup(
+        [], [campaign_claim(conditions=[new_term])])
+
+    first = eng.process(tgt, fetched(page(PROMO_COND_V2, "a"), tgt))
+
+    assert "CONDITIONS_CHANGED" in first.fallback_reasons       # rules covered every price
+    assert first.status is EventStatus.REVIEW and provider.calls == 1
+    assert reasons(first, uncovered=True) == ["CONDITIONS_NOT_INTERPRETED"]
+    assert_pending(state, tgt, before)
+
+    # The next fresh observation of the same terms retries (no success was cached).
+    second = eng.process(tgt, fetched(page(PROMO_COND_V2, "b"), tgt))
+    assert provider.calls == 2
+    assert second.status is EventStatus.AI_EXTRACTED and not second.review
+    assert second.details[0].conditions == (new_term,)           # quote-bound, new
+    assert state.baseline(tgt.id) != before
+
+
+def test_final_qa_restatement_without_new_condition_is_not_resolution() -> None:
+    new_term = "trade-in of any old car required"
+    old_term = "booking and delivery by 30 September 2026"
+    for label, reply in (
+            ("conditions null", [campaign_claim(conditions=None)]),
+            ("conditions empty", [campaign_claim(conditions=[])]),
+            ("stale term", [campaign_claim(conditions=[old_term])])):
+        eng, provider, state, tgt, before = promo_setup(reply, [campaign_claim(
+            conditions=[new_term])])
+        first = eng.process(tgt, fetched(page(PROMO_COND_V2, "a"), tgt))
+
+        assert first.status is EventStatus.REVIEW, label
+        assert reasons(first, uncovered=True) == ["CONDITIONS_NOT_INTERPRETED"], label
+        assert_pending(state, tgt, before)
+
+        retry = eng.process(tgt, fetched(page(PROMO_COND_V2, "b"), tgt))
+        assert retry.status is EventStatus.AI_EXTRACTED, label    # quote-bound new term
+        assert provider.calls == 2, label
+
+
+def test_final_qa_new_condition_must_come_from_the_claims_own_excerpt() -> None:
+    far = "<p>" + FILLER + "</p>"
+    # A brand-new term sits in a different excerpt from the claim it is attached to.
+    html = page(PROMO_V1 + far + "<p>Conditions: free home charger installation 5,000.</p>")
+    eng, provider, state, tgt, before = promo_setup(
+        [campaign_claim(conditions=["free home charger installation"])])
+    out = eng.process(tgt, fetched(html, tgt))
+    assert out.status is EventStatus.REVIEW
+    assert "CONDITIONS_NOT_INTERPRETED" in reasons(out, uncovered=True)
+    assert_pending(state, tgt, before)
+
+
+def test_final_qa_date_only_change_without_a_supported_date_stays_pending() -> None:
+    v2 = PROMO_V1.replace("30 September 2026", "31 October 2026")
+    eng, provider, state, tgt, before = promo_setup(
+        [], [campaign_claim()], [campaign_claim(effective_to="2026-10-31")])
+
+    first = eng.process(tgt, fetched(page(v2, "a"), tgt))
+    assert "DATES_UNINTERPRETED" in first.fallback_reasons
+    assert ChangeKind.CONDITIONS not in first.changes           # truly date-only
+    assert first.status is EventStatus.REVIEW
+    assert reasons(first, uncovered=True) == ["DATE_NOT_INTERPRETED"]
+    assert "2026-10-31" in first.review[0].detail
+    assert_pending(state, tgt, before)
+
+    # A claim that restates the price but carries no date does not resolve it either.
+    second = eng.process(tgt, fetched(page(v2, "b"), tgt))
+    assert second.status is EventStatus.REVIEW
+    assert reasons(second, uncovered=True) == ["DATE_NOT_INTERPRETED"]
+    assert_pending(state, tgt, before)
+
+    # A date literally written in the changed evidence resolves it.
+    third = eng.process(tgt, fetched(page(v2, "c"), tgt))
+    assert provider.calls == 3
+    assert third.status is EventStatus.AI_EXTRACTED and not third.review
+    assert any(c.effective_to == "2026-10-31" for c in third.ai_claims)
+    assert state.baseline(tgt.id) != before
+
+
+def test_final_qa_unrelated_changes_are_not_held_to_condition_or_date_proof() -> None:
+    # An amount-only change that rules fully read never reaches the model.
+    eng, provider, state, tgt, _before = promo_setup([])
+    out = eng.process(tgt, fetched(page(PROMO_V1.replace("599,000", "589,000")), tgt))
+    assert out.status is EventStatus.DETERMINISTIC and provider.calls == 0

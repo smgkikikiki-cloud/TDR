@@ -72,8 +72,20 @@ when the AI step could not run (no provider, budget, token limit, non-durable
 state, provider failure), when any proposal was rejected, or when a plausible
 vehicle price in the excerpts is still not covered by a rule claim or a
 validated AI claim (`UNCOVERED_AMOUNT`, including an empty `claims: []` reply
-for a page that visibly carries a price). Proposals that did validate are still
-returned in `ai_claims`, so a partial result is never lost.
+for a page that visibly carries a price), or when a fallback *trigger* was not
+answered. Price coverage never answers a changed term or date:
+
+* `CONDITIONS_CHANGED` needs a validated claim carrying a condition that is a
+  verbatim quote from that claim's own excerpt **and** new relative to the last
+  resolved page (null, empty, restated-old or other-excerpt conditions give
+  `CONDITIONS_NOT_INTERPRETED`);
+* `DATES_UNINTERPRETED` needs every date newly written on the page (fully
+  specified, vs. the last resolved page) to be an effective date of some
+  validated claim, else `DATE_NOT_INTERPRETED`.
+
+The baseline therefore also keeps the previous masked condition text and
+written dates. Proposals that did validate are still returned in `ai_claims`,
+so a partial result is never lost.
 
 ## 2. Rules first
 

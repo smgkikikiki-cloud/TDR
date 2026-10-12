@@ -68,7 +68,7 @@ from .price_time import thailand_business_date
 from .pricefeed import PriceClaim, content_id
 
 STATE_SCHEMA_VERSION = 1
-FINGERPRINT_VERSION = 1
+FINGERPRINT_VERSION = 2
 JAECOO_SOURCE = "official_jaecoo_th"
 
 
@@ -193,18 +193,25 @@ class Fingerprint:
     conditions_hash: str
     labels_hash: str
     segment_hashes: tuple[str, ...]
+    #: The masked condition clauses and the fully-written ISO dates themselves
+    #: (not just hashes): a later fallback must prove a *new* condition/date was
+    #: interpreted, so it needs to know what the last resolved page already said.
+    conditions_text: str = ""
+    dates: tuple[str, ...] = ()
 
     def as_dict(self) -> dict:
         return {"version": FINGERPRINT_VERSION, "price_hash": self.price_hash,
                 "amounts_hash": self.amounts_hash, "dates_hash": self.dates_hash,
                 "conditions_hash": self.conditions_hash, "labels_hash": self.labels_hash,
-                "segment_hashes": list(self.segment_hashes)}
+                "segment_hashes": list(self.segment_hashes),
+                "conditions_text": self.conditions_text, "dates": list(self.dates)}
 
     @classmethod
     def from_dict(cls, raw: Mapping) -> "Fingerprint":
         return cls(raw["price_hash"], raw["amounts_hash"], raw["dates_hash"],
                    raw["conditions_hash"], raw["labels_hash"],
-                   tuple(raw["segment_hashes"]))
+                   tuple(raw["segment_hashes"]), str(raw["conditions_text"]),
+                   tuple(raw["dates"]))
 
 
 class ChangeKind(str, Enum):
@@ -257,6 +264,12 @@ def price_segments(text: str, window: int) -> list[str]:
     return [text[lo:hi].strip() for lo, hi in spans if text[lo:hi].strip()]
 
 
+def mask_text(text: str) -> str:
+    """Casefold, mask amounts/dates, collapse whitespace (fingerprint form)."""
+    masked = DATE_TOKEN_RE.sub("@", AMOUNT_RE.sub("#", text.casefold()))
+    return " ".join(masked.split())
+
+
 def fingerprint_segments(segments: list[str]) -> Fingerprint:
     folded = [s.casefold() for s in segments]
     joined = " ".join(segments)
@@ -264,8 +277,7 @@ def fingerprint_segments(segments: list[str]) -> Fingerprint:
     labels: list[str] = []
     for segment in folded:
         for clause in _CLAUSE_SPLIT.split(segment):
-            masked = DATE_TOKEN_RE.sub("@", AMOUNT_RE.sub("#", clause))
-            masked = " ".join(masked.split())
+            masked = mask_text(clause)
             if not masked:
                 continue
             (conditions if _CONDITION_WORDS.search(masked) else labels).append(masked)
@@ -276,6 +288,8 @@ def fingerprint_segments(segments: list[str]) -> Fingerprint:
         conditions_hash=_hash(sorted(set(conditions))),
         labels_hash=_hash(sorted(set(labels))),
         segment_hashes=tuple(_hash(s) for s in folded),
+        conditions_text=" | ".join(sorted(set(conditions))),
+        dates=tuple(sorted(extract_dates(joined))),
     )
 
 
@@ -470,6 +484,55 @@ def assess_deterministic(extracted: Optional[ExtractionResult], segments: list[s
             if extract_dates(joined) - claimed:
                 reasons.append("DATES_UNINTERPRETED")
     return reasons
+
+
+def unaccounted_triggers(reasons: list[str], previous: Optional[Fingerprint],
+                         current: Fingerprint, accepted, segments: list[str],
+                         rule_claims) -> list[ReviewItem]:
+    """Review items for fallback triggers the AI result did not actually answer.
+
+    Covering the page's price amounts proves nothing about a changed offer
+    condition or date, so each trigger is held to its own kind of evidence:
+
+    * ``CONDITIONS_CHANGED`` needs a validated claim carrying a condition that is
+      a verbatim quote from that claim's own excerpt AND is new relative to the
+      last resolved page (not empty/null, not a restated old term);
+    * ``DATES_UNINTERPRETED`` needs every date newly written on the page to be an
+      effective date of some validated claim (rule or AI).
+    """
+    items: list[ReviewItem] = []
+    if previous is None:
+        return items
+    if "CONDITIONS_CHANGED" in reasons:
+        old = previous.conditions_text
+        fresh = False
+        for _claim, detail in accepted:
+            index = detail.evidence_segment
+            if index is None or not 0 <= index < len(segments):
+                continue
+            excerpt = segments[index].casefold()
+            for condition in detail.conditions or ():
+                if condition.casefold() not in excerpt:
+                    continue
+                pieces = [mask_text(p) for p in _CLAUSE_SPLIT.split(condition)]
+                if any(piece and piece not in old for piece in pieces):
+                    fresh = True
+        if not fresh:
+            items.append(ReviewItem(
+                EventReviewReason.CONDITIONS_NOT_INTERPRETED,
+                "offer conditions changed, but no validated claim carries a new "
+                "quote-bound condition from the changed evidence"))
+    if "DATES_UNINTERPRETED" in reasons:
+        claimed = {d for c in rule_claims for d in (c.effective_from, c.effective_to) if d}
+        claimed |= {d for claim, _detail in accepted
+                    for d in (claim.effective_from, claim.effective_to) if d}
+        missing = sorted((set(current.dates) - set(previous.dates)) - claimed)
+        if missing:
+            items.append(ReviewItem(
+                EventReviewReason.DATE_NOT_INTERPRETED,
+                "new date(s) written on the page are on no validated claim: "
+                + ", ".join(missing)))
+    return items
 
 
 @dataclass(frozen=True, slots=True)
@@ -731,8 +794,9 @@ class PriceEventEngine:
                 catalog=self.catalog, cache_hit=cache_hit)
         claims, details = self._finish(final, deterministic)
 
-        # Resolved = nothing was rejected AND every plausible vehicle price in
-        # the page's price excerpts is covered by a rule or validated AI claim.
+        # Resolved = nothing was rejected, every plausible vehicle price in the
+        # page's price excerpts is covered by a rule or validated AI claim, AND
+        # each fallback trigger (changed conditions / dates) was answered.
         covered = {c.amount_thb for c in (deterministic.claims if deterministic else ())}
         covered |= {c.reference_price_thb for c in (deterministic.claims if deterministic else ())
                     if c.reference_price_thb}
@@ -745,6 +809,10 @@ class PriceEventEngine:
             review.append(ReviewItem(
                 EventReviewReason.UNCOVERED_AMOUNT,
                 "no validated claim covers: " + ", ".join(f"{m:,}" for m in missing)))
+        # Amount coverage does not prove a changed condition/date was read.
+        review.extend(unaccounted_triggers(
+            reasons, previous, fingerprint, final.accepted, segments,
+            deterministic.claims if deterministic else ()))
 
         if review:
             # Fail closed: keep the old baseline (the change is retried on the
