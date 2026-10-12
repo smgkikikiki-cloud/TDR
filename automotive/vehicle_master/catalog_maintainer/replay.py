@@ -140,7 +140,9 @@ def _parse_value(raw: str, definition: dict) -> tuple[object, str | None]:
     return raw.strip(), unit
 
 
-def _claims(doc: dict, registry: dict, eligible_trim_ids: set[str], active_rows: dict[str, dict]) -> tuple[list[dict], list[dict]]:
+def _claims(doc: dict, registry: dict, eligible_trim_ids: set[str], active_rows: dict[str, dict],
+            *, extracted_claims: list[dict] | None = None,
+            extraction_method: str | None = None) -> tuple[list[dict], list[dict]]:
     rows, held = [], []
     model = active_rows.get(doc["model_id"])
     if not model:
@@ -152,90 +154,106 @@ def _claims(doc: dict, registry: dict, eligible_trim_ids: set[str], active_rows:
     if model.get("status") != "CURRENT" or model.get("upcoming") or model.get("discovered"):
         return rows, [{"document_id": doc["document_id"], "status": "REJECTED", "reason_code": "MODEL_OUT_OF_SCOPE"}]
     # The caller has validated generation/trim lineage and passes the existing ids below.
+    source_claims = []
     for index, line in enumerate(doc["content"].splitlines(), 1):
         match = LINE_RE.fullmatch(line.strip())
-        if not match:
+        if match:
+            raw_key, trim_id, raw_value, qualifier_text = match.groups()
+            source_claims.append((raw_key, trim_id, raw_value, qualifier_text, line, f"line:{index}", None))
+    for row in extracted_claims or []:
+        source_claims.append((row["field_key"], row["trim_id"], row["value_text"],
+                              ";".join(f"{k}={v}" for k, v in sorted(row["qualifiers"].items())) or None,
+                              row["quote"], row["locator"], extraction_method))
+    for raw_key, trim_id, raw_value, qualifier_text, quote, locator, claim_method in source_claims:
+        if extracted_claims is not None and (not quote or not raw_value.strip() or raw_value.strip() not in quote):
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
+                         "status": "HELD", "reason_code": "VALUE_NOT_QUOTED"})
             continue
-        raw_key, trim_id, raw_value, qualifier_text = match.groups()
         key = resolve_key(raw_key.strip(), registry)
         if key not in SUPPORTED:
-            held.append({"document_id": doc["document_id"], "locator": f"line:{index}", "status": "HELD",
+            held.append({"document_id": doc["document_id"], "locator": locator, "status": "HELD",
                          "reason_code": "FIELD_UNSUPPORTED_OR_OUT_OF_SCOPE", "source_field": raw_key.strip()})
             continue
         trim = active_rows.get("__trims__", {}).get(trim_id)
         if trim is None or trim.get("model_id") != doc["model_id"]:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "REJECTED", "reason_code": "TRIM_MISMATCH"})
             continue
         if trim.get("generation_id") != doc["generation_id"]:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "REJECTED", "reason_code": "GENERATION_MISMATCH"})
             continue
         if doc.get("trim_variant_ids", {}).get(trim_id) and doc["trim_variant_ids"][trim_id] != trim.get("variant_id"):
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "VARIANT_MISMATCH"})
             continue
         if doc.get("powertrain_by_trim", {}).get(trim_id) and doc["powertrain_by_trim"][trim_id] != trim.get("powertrain"):
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "POWERTRAIN_MISMATCH"})
             continue
         stated_year = doc.get("model_year_by_trim", {}).get(trim_id)
         generation = active_rows.get("__generations__", {}).get(trim.get("generation_id"), {})
         actual_year = trim.get("model_year") or generation.get("model_year")
         if stated_year is not None and actual_year is None:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "MODEL_YEAR_UNRESOLVED"})
             continue
         if stated_year is not None and str(stated_year) != str(actual_year):
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "MODEL_YEAR_MISMATCH"})
             continue
         if trim_id not in doc["trim_ids"] or trim_id not in eligible_trim_ids:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "TRIM_NOT_EXPLICITLY_ADMITTED"})
             continue
         definition = registry["fields"][key]
         if definition.get("applicable_powertrains") and trim.get("powertrain") not in definition["applicable_powertrains"]:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "POWERTRAIN_NOT_APPLICABLE"})
             continue
         qualifiers = {}
         if qualifier_text:
+            invalid_qualifier = False
             for pair in qualifier_text.split(";"):
                 if "=" not in pair:
                     held.append({"document_id": doc["document_id"], "trim_id": trim_id, "status": "HELD",
-                                 "locator": f"line:{index}", "reason_code": "INVALID_QUALIFIER"})
+                                 "locator": locator, "reason_code": "INVALID_QUALIFIER"})
+                    invalid_qualifier = True
                     break
                 qkey, qvalue = pair.split("=", 1)
                 qualifiers[qkey.strip()] = qvalue.strip()
+                if extracted_claims is not None and qvalue.strip() not in quote:
+                    held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
+                                 "status": "HELD", "reason_code": "QUALIFIER_NOT_QUOTED"})
+                    invalid_qualifier = True
+                    break
             else:
                 pass
-            if any("=" not in pair for pair in qualifier_text.split(";")):
+            if invalid_qualifier:
                 continue
         required_q = set(definition.get("comparison_qualifiers", []))
         missing_q = required_q - qualifiers.keys()
         if missing_q:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "MISSING_MEASUREMENT_QUALIFIER", "fields": sorted(missing_q)})
             continue
         if key == "ev.rated_range_km" and (qualifiers.get("measurement_basis") not in RANGE_BASES or qualifiers.get("range_scope") not in RANGE_SCOPES):
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "status": "HELD", "reason_code": "UNSUPPORTED_RANGE_BASIS_OR_SCOPE"})
             continue
         try:
             value, unit = _parse_value(raw_value.strip(), definition)
         except ReplayContractError as exc:
-            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": f"line:{index}",
+            held.append({"document_id": doc["document_id"], "trim_id": trim_id, "locator": locator,
                          "source_field": raw_key.strip(), "status": "HELD", "reason_code": str(exc)})
             continue
-        locator = f"line:{index}"
-        claim = SourceClaim(key, trim_id, value, unit, tuple(sorted(qualifiers.items())), line, locator)
+        claim = SourceClaim(key, trim_id, value, unit, tuple(sorted(qualifiers.items())), quote, locator)
         candidate = FieldCandidate(doc["document_id"], doc["content_sha256"], doc["source_id"],
                      doc["source_authority"], doc["market"], doc["model_id"], doc["generation_id"],
                      claim.trim_id, trim.get("powertrain", ""), claim.field_key, claim.value, claim.unit, claim.qualifiers, claim.quote,
                      claim.locator, doc.get("published_at"), doc["captured_at"], doc["completeness"],
                      doc["source_kind"], doc.get("lineage_id", doc["document_id"]),
-                     doc["extraction_method"], "PENDING")
+                     claim_method or doc["extraction_method"], "PENDING")
         row = asdict(candidate)
         row["schema_version"] = SCHEMA_VERSION
         row["qualifiers"] = dict(candidate.qualifiers)
@@ -247,7 +265,9 @@ def _claims(doc: dict, registry: dict, eligible_trim_ids: set[str], active_rows:
 
 
 def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_dir: str | Path,
-           *, root: Path | None = None) -> dict:
+           *, root: Path | None = None,
+           extracted_claims: dict[str, list[dict]] | None = None,
+           extraction_method: str | None = None) -> dict:
     snapshot_path = Path(snapshot_path)
     snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
     validate_fixture(snapshot)
@@ -314,7 +334,9 @@ def replay(snapshot_path: str | Path, document_paths: list[str | Path], output_d
         if doc.get("published_at") and (as_of - date.fromisoformat(doc["published_at"])).days > 730:
             rejects.append({"document_id": doc["document_id"], "status": "HELD", "reason_code": "SOURCE_STALE"})
             continue
-        parsed, held = _claims(doc, registry, eligible, active_rows)
+        parsed, held = _claims(doc, registry, eligible, active_rows,
+                               extracted_claims=(extracted_claims or {}).get(doc["document_id"]),
+                               extraction_method=(extraction_method if (extracted_claims or {}).get(doc["document_id"]) is not None else None))
         candidates.extend(parsed); rejects.extend(held)
     # Exact quote and line locator are checked again on candidate rows before disposition.
     contents = {d["document_id"]: d["content"] for d in documents}

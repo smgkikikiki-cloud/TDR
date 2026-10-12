@@ -12,6 +12,7 @@ from .acquisition import (ContentAddressedEvidenceStore, DeterministicFakeHTTPTr
                           OfflineSourceAcquisitionAdapter, load_source_registry)
 from .validation import validate_fixture, validate_policy
 from .shadow_snapshot import write_shadow_report
+from .ai_extraction import run_mock_extraction
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -62,6 +63,13 @@ def main(argv: list[str] | None = None) -> int:
     shadow.add_argument("--snapshot", required=True, help="local normalized export JSON; no database connection is available")
     shadow.add_argument("--policy", default=str(Path(__file__).parent / "contract" / "policy.yaml"))
     shadow.add_argument("--out", required=True)
+    ai = sub.add_parser("extract-mock", help="validate a recorded structured extraction; no AI/network client exists")
+    ai.add_argument("--fixture", required=True, help="local normalized snapshot")
+    ai.add_argument("--documents", required=True, nargs="+", help="local source documents")
+    ai.add_argument("--responses", required=True, help="recorded MOCK cassette JSON")
+    ai.add_argument("--cache", required=True, help="local content-addressed response cache")
+    ai.add_argument("--out", required=True)
+    ai.add_argument("--confirm-mock-only", action="store_true", required=True)
     args = parser.parse_args(argv)
     if args.command == "simulate":
         result = simulate(args.fixture, args.out, budget=args.budget)
@@ -149,6 +157,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"SHADOW: {report['coverage']['eligible_current_models']} eligible, "
               f"{report['coverage']['retail_audit_only_models']} audit-only, "
               f"{report['gaps']['real_or_researchable']} researchable gaps; 0 external/paid/Production/writes")
+        return 0
+    if args.command == "extract-mock":
+        result = run_mock_extraction(args.fixture, args.documents, args.responses,
+                                     args.cache, args.out, confirm_mock_only=args.confirm_mock_only)
+        print(f"AI MOCK: {result['accepted_ai_mock_candidates']} validated proposals; "
+              f"cache {result['cache_hits']} hit/{result['cache_misses']} miss; "
+              "0 HTTP, 0 paid calls/tokens/spend, 0 Production access/writes")
         return 0
     return 2
 

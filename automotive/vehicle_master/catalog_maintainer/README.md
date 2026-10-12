@@ -118,3 +118,25 @@ Generation completeness is now explicit for offline retail work. A complete line
 The deterministic report schema is `snapshot/vehicle-master-shadow-report.schema.json`. It includes classified model/trim coverage, true research gaps versus non-gap dispositions and exact duplicate facts, separate Retail Audit / Spec Enrichment jobs, P1/P2 counts, offline request-work estimates, zero authorized external/paid budgets, Price Ledger separation, input hash, and row-level hashes/keys for sampled classifications and field dispositions. `report_schema_version` is `vehicle-master-shadow-report/1.0`. `shadow-report` accepts `--snapshot`, `--policy`, and `--out`; it reads only the named local files.
 
 The checked-in `fixtures/sample_shadow/` export and report are synthetic schema exercises. Their counts do **not** describe the TDR Vehicle Master database; Production coverage is explicitly `UNKNOWN`. An `AUTHORIZED_LOCAL_EXPORT`/`ANONYMIZED_LOCAL_EXPORT` input label describes caller-supplied local provenance only and does not establish live access authorization or publisher authenticity. No such export was supplied for this chunk. Source refs are never fetched. The report is read-only and proposal-only; structural evidence policy stays `PENDING_OWNER_APPROVAL`.
+
+## Chunk 7 — recorded extraction adapter (offline-only; QA pending)
+
+`extract-mock` exercises the structured-extraction boundary with the checked-in response cassette in `fixtures/ai_mock_responses.json`. It labels the roadmap-pinned model `claude-haiku-4-5-20251001`; no model SDK/client, authentication, network transport, or billing path is implemented or loaded. Invoke it explicitly with `--confirm-mock-only`. Its request contains only the bounded source snippet, content hash, exact admitted trim IDs, and currently open supported field gaps; deterministic replay candidates suppress repeat model-shaped work.
+
+Responses are keyed by a SHA-256 request key covering source bytes, target gaps, model label, and prompt version. A response must bind back to the exact document hash, trim/field gap, quoted source line and locator; value text and qualifiers must appear in that quote. The canonical registry, independent unit/applicability/lineage/lock/conflict checks, and gap reconciliation run through the existing `replay` validator. Invalid claims are held. Cache corruption and missing cassette entries stop the run. Snippets are capped at 2,400 characters, target pairs and response claims at 24 each, and uncached fixture invocations at three per run. A successful run writes evidence/candidate/gap/usage reports only; HTTP, live model calls, paid tokens, spend, Production reads and canonical writes are all zero.
+
+Example from repository root:
+
+```bash
+python -m automotive.vehicle_master.catalog_maintainer.cli extract-mock \
+  --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
+  --documents automotive/vehicle_master/catalog_maintainer/fixtures/ai_mock_document.json \
+  --responses automotive/vehicle_master/catalog_maintainer/fixtures/ai_mock_responses.json \
+  --cache /tmp/catalog-maintainer-ai-cache --out /tmp/catalog-maintainer-ai-output \
+  --confirm-mock-only
+python -m pytest -q automotive/vehicle_master/tests/catalog_maintainer/test_ai_extraction.py
+```
+
+The synthetic known-answer example proposes `vehicle.length_mm = 4455 mm` for the explicitly covered `atto.standard` trim. This verifies quote binding and deterministic validation only; it is not a real OEM evidence audit, a real model result, a measured live cost-per-accepted-field, or owner acceptance. LIVE_LIMITED remains unavailable here and still needs the separate owner/billing approval specified in the roadmap and Vehicle DB v3 §9.
+
+The first-run deterministic output is checked in at `fixtures/sample_ai_mock_output/`; cache state itself stays outside the repository.

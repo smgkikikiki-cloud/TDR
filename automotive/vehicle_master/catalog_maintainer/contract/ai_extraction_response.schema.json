@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Recorded catalog extraction response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mode", "model_id", "request_key", "claims"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "mode": {"const": "MOCK"},
+    "model_id": {"const": "claude-haiku-4-5-20251001"},
+    "request_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "claims": {
+      "type": "array", "maxItems": 24,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["field_key", "trim_id", "value_text", "qualifiers", "quote", "locator"],
+        "properties": {
+          "field_key": {"type": "string"},
+          "trim_id": {"type": "string", "minLength": 1},
+          "value_text": {"type": "string", "minLength": 1},
+          "qualifiers": {"type": "object", "additionalProperties": {"type": "string"}},
+          "quote": {"type": "string", "minLength": 1},
+          "locator": {"type": "string", "pattern": "^line:[1-9][0-9]*$"}
+        }
+      }
+    }
+  }
+}
