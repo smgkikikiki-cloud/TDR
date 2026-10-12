@@ -81,6 +81,74 @@ owner_decisions:
     decision: "ALIAS_RELATED is AUTO-eligible. A RELATED-brand candidate may be an AUTO EQUIVALENT machine mapping if and only if it independently passes every existing AUTO gate (strong common-window series and sufficient sample, an approved lexical AUTO relation, exact supported model scope, no body / lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected conflict). A corporate or brand-family relationship alone never implies same-model identity. AUTO is an auditable, reversible machine state, not owner APPROVED / LOCKED, not a canonical-model mutation, not a PR #201 CREATE approval and not a production write."
     refs: ["PR #200 comment 6117676961 (owner policy override)", "SPEC §5.1 step 5", "SPEC I20", "policy.yaml candidates.brand_relations_auto_eligible", "taxonomy BRND-08, BRND-09", "calibration/related_auto/RELATED_AUTO_IMPACT.md"]
     note: "Supersedes the AUTO-cap portion of the INIT-01 comment. Authorises a DRAFT policy revision with offline fixtures, tests and impact evidence only: no R6/R7 live run, no PR #201 edit, no production access, no canonical write, no paid provider, no merge, deploy, adoption or engine rollout. The rev 4 outputs (relation export, owner pack, calibration outputs) are kept as the historical baseline (calibration/baselines/rev4). adoption binding stays false."
+  - id: od_thai_market_brand_filing
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-03. The canonical BRAND a vehicle is filed under follows its actual Thai-market identity and distributor, never its body type alone: MG and MAXUS are separate brands generally (MG Maxus passenger program vs the independently imported MAXUS commercial brand). Explicit case-level filings: Mifa 7 -> MG; Mifa 9 -> MG; V80 -> MG (a deliberate exception to any inference that a commercial vehicle is filed under MAXUS)."
+    refs: ["PR #200 comment 6118608273 (owner adjudication, INIT-03 filing principle)", "PR #200 comment 6118627576 (owner decision, INIT-03 model-specific filing)", "PR #200 comment 6119320447 (decision-round closure)", "owner_decision_pack/initial_owner_decisions.csv#INIT-03"]
+    note: "Brand filing ONLY. It is not a CREATE approval for V80 (OD-C11) and not a CORRECT_* verdict for R6-190 / R6-183 / R6-184: those cells stay blank and need their own evidence and decisions. No catalog, policy, crosswalk, production or canonical data was changed, and the frozen rev 4 Owner Decision Pack is not edited."
+  - id: od_catalog_model_alias_not_identity
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-04. A TDR catalog MODEL `aliases` entry is a lookup / candidate-discovery / preliminary lexical-matching aid. Its presence alone does NOT assert that an Ice group and the catalog model are the same vehicle and is not an owner-approved identity link. A model alias by itself must never trigger AUTO: AUTO needs the candidate to independently pass every other applicable gate of the current draft contract (registration-series evidence, coverage, name / vehicle context, lifecycle and body compatibility, ambiguity and protected-state rules)."
+    refs: ["PR #200 comment 6118641819 (owner adjudication, INIT-04)", "PR #200 comment 6119320447 (decision-round closure)", "SPEC §5.4", "SPEC §14.2", "SPEC I20", "owner_decision_pack/initial_owner_decisions.csv#INIT-04"]
+    note: "Policy principle only: no code, configuration, corpus, export or canonical change, and none of OD-A01..OD-A09, the child CREATE cells or the R6 pair verdicts is inferred from it. Rev 5 already enforces the principle without a change: the evaluator and adapters never read a catalog model `aliases` field (the only model-name channel is the explicit, scoped policy aliases.model pair table), and even EQUAL_VIA_MODEL_ALIAS still needs every other AUTO gate (corpus classify.name-only-model-alias-is-a-candidate and classify.auto-via-model-alias, run by tests/identity_resolution/test_ir_corpus.py). Brand alias governance (od_catalog_brand_alias_not_a_relation), brand filing (od_thai_market_brand_filing) and per-model R6 / CREATE decisions stay separate."
+  # ---- OD-A01..OD-A09: the owner's SCREENING dispositions of the nine catalog-alias collisions (catalog_alias_collisions.csv). They are not review-session completions:
+  # each session's CREATE / pair / alias-class cells must still pass validate_session individually, and the frozen rev 4 owner pack is not edited.
+  - id: od_alias_screening_od_a01
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A01 JAECOO J5 -> jaecoo.jaecoo_5_ev: SAME MODEL (accepted on the evidence reviewed). Supports R6-217 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A01"]
+    note: "Screening disposition only. The related CREATE group question stays a separate audit; the R6-217 cell in the frozen owner pack stays blank."
+  - id: od_alias_screening_od_a02
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A02 Wuling Binguo -> wuling.wuling_bingo: SAME MODEL. Supports R6-15 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A02"]
+    note: "Screening disposition only. Separate CREATE question; R6-15 cell stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a03
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A03 JAECOO J7 -> jaecoo.jaecoo_7: SAME MODEL. Supports R6-172 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A03"]
+    note: "Screening disposition only. Separate CREATE question; R6-172 cell stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a04
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A04 BYD e6 -> byd.byd_m6: NOT the same model; the alias is misleading. The target shown in R6-284 is WRONG_TARGET."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A04"]
+    note: "WRONG_TARGET is not NO_TDR_TARGET and does not decide CREATE for e6. R6-284 stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a05
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A05 VW ID.Buzz -> volkswagen.caravelle: NOT the same model; do not equate. There is no R6 pair child for this case."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A05"]
+    note: "The missing-canonical / CREATE question for ID.Buzz remains separate and undecided."
+  - id: od_alias_screening_od_a06
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A06 Audi A8L -> audi.a8: A8L belongs to the A8 family as a longer-wheelbase VARIANT. Preserve variant granularity: do not flatten A8L into an unconditional same-trim / same-model claim."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A06"]
+    note: "CONDITIONAL, not a same-model equivalence: the precise R6 / group link is chosen only when catalog granularity is verified. No target shape is recorded or inferred here."
+  - id: od_alias_screening_od_a07
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A07 Audi S3 -> audi.rs: NOT the same model; the alias is misleading. The target shown in R6-340 is WRONG_TARGET."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A07"]
+    note: "WRONG_TARGET does not imply S3 has no valid TDR identity and is not a CREATE decision. R6-340 stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a08
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A08 Isuzu CAB4 -> isuzu.dmax_cab: GRANULARITY CHECK REQUIRED (CAB4 body / cab nomenclature against catalog coverage). UNRESOLVED on the exact target and link until model granularity is verified."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "PR #200 comment 6119320447 (decision-round closure: CAB4 needs precise D-Max body / trim scope)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A08"]
+    note: "The screening disposition is that the case is NOT decided. It is neither a same-model nor a wrong-target verdict, and no cell is filled."
+  - id: od_alias_screening_od_a09
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A09 Volkswagen Multivan -> volkswagen.caravelle: GENERATION-SPECIFIC REVIEW REQUIRED; distinct model names must not be assumed equivalent. UNRESOLVED pending generation / market identity evidence."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "PR #200 comment 6119320447 (decision-round closure: Multivan / Caravelle needs generation-specific evidence)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A09"]
+    note: "The screening disposition is that the case is NOT decided. It is neither a same-model nor a wrong-target verdict, and no cell is filled."
   - id: od_ice_absent_row_unknown
     decided_on: "2026-10-11"
     status: standing
