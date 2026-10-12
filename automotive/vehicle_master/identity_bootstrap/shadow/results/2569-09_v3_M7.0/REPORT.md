@@ -45,9 +45,22 @@ Market activity (Ice absent rows UNKNOWN; complete through 2569-09): states {'UN
 | ice_ice | 26505 | 26505 | True | 439 | 0 | True |
 | ice_tdr | 12412 | 12412 | True | 391 | 0 | True |
 
-**Candidate-pool parity:** subjects 1200; shadow candidates outside the export pool: 0; pool members not read: 0; empty pools 226 (no TDR relation exists; not a CREATE authorization). The milestone-2/3 stand-in candidate set (every TDR model of the resolved brand family) differed from the export pool for 8 subjects: {'POOL_WITHOUT_RESOLVED_BRAND': 7, 'BRAND_NOT_ALLOWED_IN_POOL': 1}.
+**Candidate-pool parity:** subjects 1200; shadow candidates outside the export pool: 0; pool members not read: 0; empty pools 226 (no TDR relation exists; not a CREATE authorization). The consumer's own brand/catalog-alias candidate set (every TDR model of the locally hinted brand family; a diagnostic that never decides a pool) differed from the export pool for 8 subjects: {'POOL_WITHOUT_RESOLVED_BRAND': 7, 'BRAND_NOT_ALLOWED_IN_POOL': 1}.
 
-**Subjects:** 1192 meet every consumer-contract requirement and clear `IR_PARITY_UNRESOLVED` (the owner and governed-writer blockers are untouched); **8 remain unresolved**: {'JETOUR|ไม่ระบุ': ['BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)'], 'MERCEDES AMG|SL 43': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'MERCEDES AMG|SL 55 4MATIC': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'MERCEDESBENZ MAYBACH|S680 4 M': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'RANGE ROVER|AUTOBIOGRAPHY P400E LWB': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'RANGE ROVER|EVOQUE 2 2L SD4': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand'], 'maxus-maxus-epc1a': ['BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand']}.
+**Subjects:** 1199 meet every consumer-contract requirement and clear `IR_PARITY_UNRESOLVED` (the owner and governed-writer blockers are untouched); **1 remain unresolved**: {'JETOUR|ไม่ระบุ': ["INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints 'chery'; the hint is not adopted and no relation is invented"]}.
+
+**Relation-first brand parity (this round).** Bootstrap's brand, brand relation and brand family now come from the producer's pool and typed brand relation (`br`) only; the local brand/catalog-alias table is a diagnostic and a spelling source and can neither add a pool member nor change a relation. Against the accepted 30d2618a head 8 subject rows moved (`transitions_vs_30d2618a.csv`); Bootstrap outcomes (CREATE / REVIEW / HOLD) did not move.
+
+| Subject | Producer pool (brand × n) | Typed relation | Local hint vs producer | Before → after parity | Verifiable? | Why |
+|---|---|---|---|---|---|---|
+| JETOUR\|ไม่ระบุ | none × 0 | NOT_IN_TDR | LOCAL_HINT_WITHOUT_PRODUCER_RELATION | UNRESOLVED → UNRESOLVED | NO (INSUFFICIENT_DATA) | rev4 carries NO typed relation from this Ice brand to any TDR brand (empty pool, BRND_NOT_IN_TDR) while the local catalog alias hints a brand; the hint is not adopted and nothing is invented. A producer relation for it exists only in a later (rev5) policy and is not a versioned consumer export in this repo, so this is a version gap, not a verified fact |
+| MERCEDES AMG\|SL 43 | mercedes_benz × 19 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| MERCEDES AMG\|SL 55 4MATIC | mercedes_benz × 19 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| MERCEDESBENZ MAYBACH\|S680 4 M | mercedes_benz × 19 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| RANGE ROVER\|AUTOBIOGRAPHY P400E LWB | land_rover × 4 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC | land_rover × 4 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| RANGE ROVER\|EVOQUE 2 2L SD4 | land_rover × 4 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
+| maxus-maxus-epc1a | mg × 18 | ALIAS_RELATED | LOCAL_NO_OPINION | UNRESOLVED → RESOLVED | yes | the producer states a typed brand relation ALIAS_RELATED to mg and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow |
 
 **Reference evaluator's dry-run vs Bootstrap (mode A)** — different questions (link vs existence), reported separately: IR AUTO -> Bootstrap HOLD 69; IR INSUFFICIENT_DATA -> Bootstrap HOLD 33; IR INSUFFICIENT_DATA -> Bootstrap IDENTITY_REVIEW 20; IR NO_CANDIDATE -> Bootstrap CREATE_IDENTITY 82; IR NO_CANDIDATE -> Bootstrap HOLD 715; IR NO_CANDIDATE -> Bootstrap IDENTITY_REVIEW 86; IR PROPOSE -> Bootstrap HOLD 174; IR PROPOSE -> Bootstrap IDENTITY_REVIEW 21. Divergences to inspect (1, `dry_run_vs_bootstrap.csv`); CREATEs for which IR's dry run found a candidate: [].
 
@@ -55,10 +68,12 @@ Market activity (Ice absent rows UNKNOWN; complete through 2569-09): states {'UN
 
 | Mode | Before | After | Left | Entered |
 |---|---|---|---|---|
-| A | 9 | 17 | 0 | 8: byd-sealion-5, byd-sealion-6, ford-ford-ranger-raptor, maxus-mifa-7, maxus-mifa-9, toyota-hilux-revo, toyota-hilux-travo, toyota-land-cruiser-fj |
-| B | 48 | 48 | 0 | 0:  |
+| A | 9 | 24 | 0 | 15: MERCEDES AMG\|SL 43, MERCEDES AMG\|SL 55 4MATIC, MERCEDESBENZ MAYBACH\|S680 4 M, RANGE ROVER\|AUTOBIOGRAPHY P400E LWB, RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4, byd-sealion-5, byd-sealion-6, ford-ford-ranger-raptor, maxus-maxus-epc1a, maxus-mifa-7, maxus-mifa-9, toyota-hilux-revo, toyota-hilux-travo, toyota-land-cruiser-fj |
+| B | 48 | 55 | 0 | 7: MERCEDES AMG\|SL 43, MERCEDES AMG\|SL 55 4MATIC, MERCEDESBENZ MAYBACH\|S680 4 M, RANGE ROVER\|AUTOBIOGRAPHY P400E LWB, RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4, maxus-maxus-epc1a |
 
-### 0.5 Every changed subject (77; full table with TDR candidate ids, relation evidence and codes: `transitions_vs_b132a86.csv`)
+Of the conflicts after, mode A: 7 are BRAND-level (the producer's typed brand relation is ALIAS_RELATED, a suspicion, not a name-structure conflict); mode B: 7 are BRAND-level (the producer's typed brand relation is ALIAS_RELATED, a suspicion, not a name-structure conflict).
+
+### 0.5 Every changed subject (85; full table with TDR candidate ids, relation evidence and codes: `transitions_vs_b132a86.csv`)
 
 | Group | Name | Units (info) | A before | A after | B before | B after | TDR ids involved | Relation changes |
 |---|---|---|---|---|---|---|---|---|
@@ -119,14 +134,19 @@ Market activity (Ice absent rows UNKNOWN; complete through 2569-09): states {'UN
 | BMW\|I3S 94AH RHD | i3s 94Ah RHD | 7 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.i3 | bmw.i3: SUBJECT_FINER -> none |
 | BMW\|530I LIMOUSINE RHD | 530i Limousine RHD | 6 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.bmw_5 | bmw.bmw_5: SUBJECT_FINER -> none |
 | isuzu-isuzu-cab4 | Isuzu CAB4 | 6 | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | isuzu.dmax_cab | isuzu.dmax_cab: EQUAL -> none |
+| maxus-maxus-epc1a | Maxus EPC1A | 6 | IDENTITY_REVIEW / BRAND_NOT_IN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT | IDENTITY_REVIEW / BRAND_NOT_IN_TDR | IDENTITY_REVIEW / STRUCTURAL_CONFLICT |  | none (batch / Bootstrap effect) |
 | volkswagen-volkswagen-multivan | Volkswagen Multivan | 6 | HOLD / NOT_ACTIVATED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED | CREATE_IDENTITY / NEW_IDENTITY_CONFIRMED | volkswagen.caravelle | volkswagen.caravelle: EQUAL -> none |
 | WULING\|BINGOU SRD | Bingou SRD | 5 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | wuling.wuling_bingo | wuling.wuling_bingo: SUBJECT_FINER -> none |
 | BMW\|725LD | 725Ld | 4 | HOLD / NOT_ACTIVATED | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.7_series | bmw.7_series: EQUAL -> none |
 | bmw-420d-coupe-rhd__provisional | 420D COUPE RHD | 4 | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | bmw.4_series | bmw.4_series: SUBJECT_FINER -> none |
 | BMW\|528I LUXURY | 528i Luxury | 3 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.bmw_5 | bmw.bmw_5: SUBJECT_FINER -> none |
 | BMW\|I8 ROADSTER | I8 ROADSTER | 3 | HOLD / NOT_ACTIVATED | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.i8 | bmw.i8: EQUAL -> SUBJECT_FINER |
+| JETOUR\|ไม่ระบุ | ไม่ระบุ | 3 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME |  | none (batch / Bootstrap effect) |
 | bmw-bmw-320i | BMW 320i | 3 | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | bmw.bmw_3 | bmw.bmw_3: EQUAL -> none |
 | porsche-boxster-25-years__provisional | BOXSTER 25 YEARS | 3 | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | porsche.718 | porsche.718: SUBJECT_FINER -> none |
+| MERCEDES AMG\|SL 43 | SL 43 | 2 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME |  | none (batch / Bootstrap effect) |
+| MERCEDESBENZ MAYBACH\|S680 4 M | S680 4 M | 2 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME |  | none (batch / Bootstrap effect) |
+| RANGE ROVER\|AUTOBIOGRAPHY P400E LWB | AUTOBIOGRAPHY P400E LWB | 2 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME |  | none (batch / Bootstrap effect) |
 | bmw-430d-convertible-mild-hybrid__provisional | 430D CONVERTIBLE Mild-hybrid | 2 | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | bmw.4_series | bmw.4_series: SUBJECT_FINER -> none |
 | bmw-bmw-520i | BMW 520i | 2 | HOLD / NOT_ACTIVATED | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | IDENTITY_REVIEW / DUPLICATE_CANONICAL_SUSPECTED | IDENTITY_REVIEW / POSSIBLE_MODEL_CODE | bmw.bmw_5 | bmw.bmw_5: EQUAL -> none |
 | honda-honda-e | Honda E | 2 | IDENTITY_REVIEW / PROVIDER_COARSER_THAN_TDR | IDENTITY_REVIEW / POSSIBLE_TRUNCATED_NAME | IDENTITY_REVIEW / PROVIDER_COARSER_THAN_TDR | IDENTITY_REVIEW / POSSIBLE_TRUNCATED_NAME | honda.en1\|honda.en2 | honda.en1: SUBJECT_COARSER -> none; honda.en2: SUBJECT_COARSER -> none |
@@ -137,8 +157,6 @@ Market activity (Ice absent rows UNKNOWN; complete through 2569-09): states {'UN
 | BMW\|525D LUXURY | 525d Luxury | 1 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.bmw_5 | bmw.bmw_5: SUBJECT_FINER -> none |
 | BMW\|525D M SPORT | 525d M Sport | 1 | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | bmw.bmw_5 | bmw.bmw_5: SUBJECT_FINER -> none |
 | GEELY\|GALAXY E5 | GALAXY E5 | 1 | HOLD / NOT_ACTIVATED | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | HOLD / PROVIDER_RAW_NAME | geely.geely_ex5 | geely.geely_ex5: EQUAL -> none |
-| bmw-420d-gran-coupe-rhd__provisional | 420D GRAN COUPE RHD | 1 | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | bmw.2_series_gran_coupe\|bmw.4_series | bmw.4_series: SUBJECT_FINER -> none |
-| porsche-cayman-pdk__provisional | CAYMAN PDK | 1 | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | HOLD / PROVIDER_IDENTITY_PROVISIONAL | porsche.718 | porsche.718: SUBJECT_FINER -> none |
 
 ### 0.6 CREATEs added and removed
 
@@ -203,10 +221,10 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 82, B 82; wr
 
 | Primary reason | Groups | Units (all time) |
 |---|---|---|
-| BRAND_NOT_IN_TDR | 35 | 1,132 |
+| BRAND_NOT_IN_TDR | 34 | 1,126 |
 | PROVIDER_COARSER_THAN_TDR | 22 | 865,976 |
 | POSSIBLE_MODEL_CODE | 20 | 8,539 |
-| STRUCTURAL_CONFLICT | 16 | 633,019 |
+| STRUCTURAL_CONFLICT | 17 | 633,025 |
 | PROVIDER_FINER_THAN_TDR | 15 | 18,195 |
 | PROVIDER_LINEAGE_AMBIGUOUS | 8 | 8,228 |
 | EXISTING_IDENTITY_SUSPECTED | 4 | 37,248 |
@@ -228,8 +246,8 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 82, B 82; wr
 | Primary reason | Groups | Units (all time) |
 |---|---|---|
 | DUPLICATE_CANONICAL_SUSPECTED | 215 | 1,696,012 |
-| STRUCTURAL_CONFLICT | 46 | 1,461,240 |
-| BRAND_NOT_IN_TDR | 35 | 1,132 |
+| STRUCTURAL_CONFLICT | 47 | 1,461,246 |
+| BRAND_NOT_IN_TDR | 34 | 1,126 |
 | PROVIDER_COARSER_THAN_TDR | 22 | 865,976 |
 | POSSIBLE_MODEL_CODE | 20 | 8,539 |
 | PROVIDER_FINER_THAN_TDR | 12 | 17,530 |
@@ -250,8 +268,8 @@ CREATE sets identical in A and B: **True**. Write plans produced: A 82, B 82; wr
 
 | Outcome | Codes (count) |
 |---|---|
-| IDENTITY_REVIEW | BRAND_NOT_IN_TDR 35, PROVIDER_COARSER_THAN_TDR 26, POSSIBLE_MODEL_CODE 25, PROVIDER_FINER_THAN_TDR 18, STRUCTURAL_CONFLICT 16, EXISTING_IDENTITY_SUSPECTED 13, POSSIBLE_TRIM_NOT_MODEL 11, PROVIDER_LINEAGE_AMBIGUOUS 11, POSSIBLE_TRUNCATED_NAME 8, POSSIBLE_POWERTRAIN_DERIVATIVE 6, DUPLICATE_CANONICAL_SUSPECTED 4, POSSIBLE_BODY_VARIANT 3, POSSIBLE_GENERATION_VARIANT 1 |
-| HOLD | PROVIDER_RAW_NAME 633, NOT_ACTIVATED 243, BRAND_NOT_IN_TDR 197, POSSIBLE_POWERTRAIN_DERIVATIVE 127, POSSIBLE_MODEL_CODE 124, PROVIDER_IDENTITY_PROVISIONAL 114, POSSIBLE_BODY_VARIANT 83, POSSIBLE_TRIM_NOT_MODEL 47, NAME_UNSPECIFIED 39, PROVIDER_FINER_THAN_TDR 10, EXISTING_IDENTITY_SUSPECTED 4, LINEAGE_UNRESOLVED 2, PROVIDER_LINEAGE_AMBIGUOUS 2, STRUCTURAL_CONFLICT 1 |
+| IDENTITY_REVIEW | BRAND_NOT_IN_TDR 34, PROVIDER_COARSER_THAN_TDR 26, POSSIBLE_MODEL_CODE 25, PROVIDER_FINER_THAN_TDR 18, STRUCTURAL_CONFLICT 17, EXISTING_IDENTITY_SUSPECTED 13, POSSIBLE_TRIM_NOT_MODEL 11, PROVIDER_LINEAGE_AMBIGUOUS 11, POSSIBLE_TRUNCATED_NAME 8, POSSIBLE_POWERTRAIN_DERIVATIVE 6, DUPLICATE_CANONICAL_SUSPECTED 4, POSSIBLE_BODY_VARIANT 3, POSSIBLE_GENERATION_VARIANT 1 |
+| HOLD | PROVIDER_RAW_NAME 633, NOT_ACTIVATED 243, BRAND_NOT_IN_TDR 192, POSSIBLE_POWERTRAIN_DERIVATIVE 127, POSSIBLE_MODEL_CODE 124, PROVIDER_IDENTITY_PROVISIONAL 114, POSSIBLE_BODY_VARIANT 83, POSSIBLE_TRIM_NOT_MODEL 47, NAME_UNSPECIFIED 39, PROVIDER_FINER_THAN_TDR 10, STRUCTURAL_CONFLICT 7, EXISTING_IDENTITY_SUSPECTED 4, LINEAGE_UNRESOLVED 2, PROVIDER_LINEAGE_AMBIGUOUS 2 |
 
 ## 3. CREATE candidates (mode A; every one is a plan, none was executed)
 
@@ -387,7 +405,7 @@ Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **8 of 82** (
 
 ## 6. Structural conflicts (every group carrying `STRUCTURAL_CONFLICT`)
 
-**Mode A: 17 groups**
+**Mode A: 24 groups**
 
 | Group | Name | Outcome | Codes | Batch group | Units |
 |---|---|---|---|---|---|
@@ -407,9 +425,16 @@ Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **8 of 82** (
 | foton-tunland | Foton Tunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 140 |
 | mini-mini-jcw-convertible | MINI JCW Convertible | HOLD | LINEAGE_UNRESOLVED STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS POSSIBLE_BODY_VARIANT | mini-mini-jcw-convertible, mini-mini-jcw-rhd | 85 |
 | foton-foton-etunland | Foton Etunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 23 |
+| maxus-maxus-epc1a | Maxus EPC1A | IDENTITY_REVIEW | STRUCTURAL_CONFLICT |  | 6 |
+| MERCEDES AMG\|SL 43 | SL 43 | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT |  | 2 |
+| MERCEDESBENZ MAYBACH\|S680 4 M | S680 4 M | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_MODEL_CODE |  | 2 |
+| RANGE ROVER\|AUTOBIOGRAPHY P400E LWB | AUTOBIOGRAPHY P400E LWB | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_MODEL_CODE |  | 2 |
 | honda-honda-fit | Honda FIT | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 2 |
+| MERCEDES AMG\|SL 55 4MATIC | SL 55 4MATIC+ | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT |  | 1 |
+| RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC | EVOQUE 2.2 SD4 DYNAMIC | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_POWERTRAIN_DERIVATIVE | RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4 | 1 |
+| RANGE ROVER\|EVOQUE 2 2L SD4 | EVOQUE 2.2L SD4 | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_POWERTRAIN_DERIVATIVE | RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4 | 1 |
 
-**Mode B: 48 groups**
+**Mode B: 55 groups**
 
 | Group | Name | Outcome | Codes | Batch group | Units |
 |---|---|---|---|---|---|
@@ -459,7 +484,14 @@ Analyst judgement (`shadow/analyst_notes.yaml`, not ground truth): **8 of 82** (
 | toyota-gr-corolla | GR Corolla | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED PROVIDER_LINEAGE_AMBIGUOUS | toyota-corolla-altis, toyota-corolla-cross, toyota-gr-corolla, toyota-gr-yaris, toyota-yaris, toyota-yaris-ativ, toyota-yaris-cross | 45 |
 | audi-audi-rs-q8 | AUDI RS Q8 | IDENTITY_REVIEW | STRUCTURAL_CONFLICT PROVIDER_FINER_THAN_TDR POSSIBLE_TRIM_NOT_MODEL | audi-audi-q8, audi-audi-rs-q8 | 34 |
 | foton-foton-etunland | Foton Etunland | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | FOTON\|TUNLAND DC 4X4, FOTON\|TUNLAND SC FLAT BED, FOTON\|TUNLAND SC STANDARD, foton-foton-etunland, foton-tunland | 23 |
+| maxus-maxus-epc1a | Maxus EPC1A | IDENTITY_REVIEW | STRUCTURAL_CONFLICT |  | 6 |
+| MERCEDES AMG\|SL 43 | SL 43 | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT |  | 2 |
+| MERCEDESBENZ MAYBACH\|S680 4 M | S680 4 M | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_MODEL_CODE |  | 2 |
+| RANGE ROVER\|AUTOBIOGRAPHY P400E LWB | AUTOBIOGRAPHY P400E LWB | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_MODEL_CODE |  | 2 |
 | honda-honda-fit | Honda FIT | IDENTITY_REVIEW | STRUCTURAL_CONFLICT DUPLICATE_CANONICAL_SUSPECTED | honda-honda-fit, honda-jazz | 2 |
+| MERCEDES AMG\|SL 55 4MATIC | SL 55 4MATIC+ | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT |  | 1 |
+| RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC | EVOQUE 2.2 SD4 DYNAMIC | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_POWERTRAIN_DERIVATIVE | RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4 | 1 |
+| RANGE ROVER\|EVOQUE 2 2L SD4 | EVOQUE 2.2L SD4 | HOLD | PROVIDER_RAW_NAME STRUCTURAL_CONFLICT POSSIBLE_POWERTRAIN_DERIVATIVE | RANGE ROVER\|EVOQUE 2 2 SD4 DYNAMIC, RANGE ROVER\|EVOQUE 2 2L SD4 | 1 |
 | chery-tiggo-cross | Tiggo Cross | IDENTITY_REVIEW | STRUCTURAL_CONFLICT EXISTING_IDENTITY_SUSPECTED | chery-tiggo-8, chery-tiggo-cross | 1 |
 
 ## 7. Lineage

@@ -280,7 +280,7 @@ def test_deleted_and_out_of_pool_status_models_are_not_demanded_of_the_pool():
                       "x.m2": {"brand_id": "x", "status": "WITHDRAWN", "deleted": False}, **{f"x.m{n}": {"brand_id": "y", "status": "CURRENT", "deleted": False} for n in range(3, 9)}}
     exp.allowed_statuses = ("CURRENT", "HISTORICAL", "UNVERIFIED")
     for k, r in exp.ice_tdr.items():
-        r["br"] = "EXACT"
+        r["br"] = "EXACT" if r["b"] in ("x.m0", "x.m1", "x.m2") else "ALIAS_RELABEL"
     pool = ["x.m0"]
     assert ir_export.brand_pool_mismatches({"brand_id": "x", "relation": "EXACT"}, pool, exp, ids[0]) == []
     exp.tdr_models["x.m1"]["deleted"] = False
@@ -288,9 +288,9 @@ def test_deleted_and_out_of_pool_status_models_are_not_demanded_of_the_pool():
 
 
 @pytest.mark.skipif(not (RESULTS / "summary.json").exists(), reason="results not committed")
-def test_the_eight_unresolved_subjects_are_preserved_and_the_report_binds_the_aliases():
+def test_only_the_jetour_subject_stays_unresolved_and_the_report_binds_the_aliases():
     s = json.loads((RESULTS / "summary.json").read_text(encoding="utf-8"))["m5"]["parity"]
-    assert (s["subjects"]["resolved"], s["subjects"]["unresolved"]) == (1192, 8)
+    assert (s["subjects"]["resolved"], s["subjects"]["unresolved"]) == (1199, 1)
     assert s["tdr_universe_binding"]["alias_strings"] == 662 and s["tdr_universe_binding"]["models_with_aliases"] == 296 and s["tdr_universe_binding"]["statuses"] == {"CURRENT": 318, "HISTORICAL": 5}
 
 
@@ -479,3 +479,121 @@ def test_the_vendored_files_are_byte_identical_to_the_producer_commit_when_it_is
     for name in ("MANIFEST.json", *ir_export.DATA_FILES, *ir_export.STATIC_FILES):
         blob = subprocess.run(["git", "-C", str(repo), "show", f"{ir_export.PIN['producer_commit']}:{base}/{name}"], check=True, capture_output=True).stdout
         assert blob == (SRC / name).read_bytes(), name
+
+
+# ------------------------------------------------------------------------------------------------------------- relation-first brand: the producer leads, local aliases are diagnostics
+EIGHT = {"JETOUR|ไม่ระบุ": (None, "NOT_IN_TDR", 0), "MERCEDES AMG|SL 43": ("mercedes_benz", "ALIAS_RELATED", 19), "MERCEDES AMG|SL 55 4MATIC": ("mercedes_benz", "ALIAS_RELATED", 19),
+         "MERCEDESBENZ MAYBACH|S680 4 M": ("mercedes_benz", "ALIAS_RELATED", 19), "RANGE ROVER|AUTOBIOGRAPHY P400E LWB": ("land_rover", "ALIAS_RELATED", 4),
+         "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC": ("land_rover", "ALIAS_RELATED", 4), "RANGE ROVER|EVOQUE 2 2L SD4": ("land_rover", "ALIAS_RELATED", 4), "maxus-maxus-epc1a": ("mg", "ALIAS_RELATED", 18)}
+
+
+@pytest.fixture(scope="module")
+def real_policy():
+    from identity_bootstrap.contract import loader
+    return loader.load_policy()
+
+
+@pytest.fixture(scope="module")
+def real_catalog():
+    return tdr_catalog.load(shadow_run.DEFAULT_MODELS, shadow_run.DEFAULT_LEGACY, True)
+
+
+def _brands_by_raw(export):
+    by = {}
+    for g, e in export.subjects.items():
+        by.setdefault(e["brand"], []).append(g)
+    return by
+
+
+@pytest.mark.parametrize("gid,want", sorted(EIGHT.items()))
+def test_the_producer_view_of_each_of_the_eight_cases(export, gid, want):
+    v = ir_export.producer_brand(export, gid)
+    assert (v["brand_id"], v["relation"], v["pool_size"], v["issues"]) == (want[0], want[1], want[2], [])
+    if want[0]:
+        assert set(export.pool(gid)) == {t for t, x in export.tdr_models.items() if x["brand_id"] == want[0] and not x["deleted"] and x["status"] in export.allowed_statuses}, "the pool is the brand's complete allowed model set"
+        assert {export.ice_tdr[f"{gid}|{t}"]["br"] for t in export.pool(gid)} == {"ALIAS_RELATED"}
+
+
+def test_every_ice_brand_has_one_producer_view_and_the_correctly_resolved_ones_are_unchanged(export, real_catalog, real_policy):
+    si = stand_in.StandIn(real_catalog, real_policy, export)
+    seen = collections.Counter()
+    for raw, gids in _brands_by_raw(export).items():
+        b = si.brand_from_export(raw, gids)
+        hint = ir_export.local_hint_vs_producer(si.local_brand_hint(raw), ir_export.producer_brand(export, gids[0]))
+        seen[hint] += 1
+        assert hint in ("AGREE", "LOCAL_NO_OPINION", "LOCAL_HINT_WITHOUT_PRODUCER_RELATION"), (raw, hint)
+        if hint == "AGREE" and b["brand_id"]:
+            assert (b["brand_id"], b["relation"]) == (si.local_brand_hint(raw)["brand_id"], si.local_brand_hint(raw)["relation"])
+    assert seen["LOCAL_HINT_WITHOUT_PRODUCER_RELATION"] == 1 and seen["LOCAL_NO_OPINION"] == 4 and seen["LOCAL_DISAGREES"] == 0
+
+
+def test_misleading_local_brand_aliases_cannot_control_the_brand_the_pool_or_a_relation(export, real_catalog, real_policy, monkeypatch):
+    """A local alias table that says the opposite of the producer changes the DIAGNOSTIC only; the brand Bootstrap is given and the pool are the producer's, byte for byte."""
+    by = _brands_by_raw(export)
+    si = stand_in.StandIn(real_catalog, real_policy, export)
+    before = {raw: si.brand_from_export(raw, gids) for raw, gids in by.items()}
+    pools = {g: list(export.pool(g)) for g in export.subjects}
+    cat2 = {**real_catalog, "brands": {k: dict(v) for k, v in real_catalog["brands"].items()}}
+    cat2["brands"]["bmw"]["aliases"] = [*cat2["brands"]["bmw"].get("aliases", []), "RANGE ROVER", "MERCEDES AMG", "MAXUS", "JETOUR", "TOYOTA"]
+    monkeypatch.setitem(stand_in.CURATED_BRAND_ALIASES, "mercedesbenzmaybach", "audi")
+    si2 = stand_in.StandIn(cat2, real_policy, export)
+    assert si2.local_brand_hint("RANGE ROVER")["brand_id"] == "bmw" and si2.local_brand_hint("MERCEDESBENZ MAYBACH")["brand_id"] == "audi", "the misleading aliases really change the local reading"
+    after = {raw: si2.brand_from_export(raw, gids) for raw, gids in by.items()}
+    assert after == before
+    assert {g: list(export.pool(g)) for g in export.subjects} == pools
+    v = ir_export.local_hint_vs_producer(si2.local_brand_hint("RANGE ROVER"), ir_export.producer_brand(export, "RANGE ROVER|EVOQUE 2 2L SD4"))
+    assert v == "LOCAL_DISAGREES", "...and parity reports the disagreement instead of silently using either side"
+
+
+def test_the_brand_given_to_bootstrap_never_consults_the_local_alias_table(export, real_catalog, real_policy, monkeypatch):
+    si = stand_in.StandIn(real_catalog, real_policy, export)
+    want = {raw: si.brand_from_export(raw, gids) for raw, gids in _brands_by_raw(export).items()}
+    def boom(self, raw):
+        raise AssertionError("brand_from_export read the local brand hint")
+    monkeypatch.setattr(stand_in.StandIn, "local_brand_hint", boom)
+    fresh = stand_in.StandIn(real_catalog, real_policy, export)
+    assert {raw: fresh.brand_from_export(raw, gids) for raw, gids in _brands_by_raw(export).items()} == want
+
+
+def test_an_ice_brand_whose_subjects_have_different_producer_views_is_an_error_not_a_guess(export, real_catalog, real_policy):
+    si = stand_in.StandIn(real_catalog, real_policy, export)
+    a, b = "RANGE ROVER|EVOQUE 2 2L SD4", "ABARTH|500E"          # one with a land_rover pool, one with an empty pool
+    with pytest.raises(ExportError, match="BRAND_VIEW_SPLIT"):
+        si.brand_from_export("RANGE ROVER", [a, b])
+
+
+def test_an_untyped_omitted_or_extra_pool_member_is_never_a_clean_view(export):
+    gid = "RANGE ROVER|EVOQUE 2 2L SD4"
+    rows_ = {t: export.ice_tdr[f"{gid}|{t}"] for t in export.pool(gid)}
+    some = next(iter(rows_))
+    try:
+        rows_[some]["br"] = "RELATED"                       # not a typed brand relation of the contract
+        v = ir_export.producer_brand(export, gid)
+        assert any("BRAND_RELATION_NOT_TYPED" in x for x in v["issues"])
+        assert any("BRAND_RELATION_NOT_TYPED" in x for x in ir_export.brand_pool_mismatches({"brand_id": "land_rover", "relation": "ALIAS_RELATED"}, export.pool(gid), export, gid))
+    finally:
+        rows_[some]["br"] = "ALIAS_RELATED"
+    assert ir_export.producer_brand(export, gid)["issues"] == []
+    ok = {"brand_id": "land_rover", "relation": "ALIAS_RELATED"}
+    assert ir_export.brand_pool_mismatches(ok, list(export.pool(gid)), export, gid) == []
+    omitted = [t for t in export.pool(gid) if t != some]
+    assert any("lacks allowed model" in x for x in ir_export.brand_pool_mismatches(ok, omitted, export, gid))
+    extra = [*export.pool(gid), "bmw.x1"]                   # a candidate the producer never put in this subject's pool
+    assert any("has no producer row" in x for x in ir_export.brand_pool_mismatches(ok, extra, export, gid))
+
+
+def test_a_producer_pool_with_two_brands_tied_for_primary_or_a_non_uniform_relation_is_flagged(export):
+    gid = "RANGE ROVER|EVOQUE 2 2L SD4"
+    pool = list(export.pool(gid))
+    first = export.ice_tdr[f"{gid}|{pool[0]}"]
+    try:
+        first["br"] = "EXACT"
+        assert any("BRAND_RELATION_NOT_UNIFORM" in x for x in ir_export.producer_brand(export, gid)["issues"])
+    finally:
+        first["br"] = "ALIAS_RELATED"
+    assert ir_export.producer_brand(export, gid)["issues"] == []
+
+
+def test_a_manifest_naming_a_later_revision_is_refused_so_no_rev5_relation_can_be_assumed():
+    with pytest.raises(ExportError, match="export_id"):
+        ir_export.load(pin={**ir_export.PIN, "export_id": "ir-rev5-m7.0-relations/1"})

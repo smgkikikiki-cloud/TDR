@@ -20,7 +20,10 @@ def build(mode: str, pkg: dict, catalog: dict, policy: dict, export: ir_export.R
     ir_export.verify_universe(export, pkg["dims"], catalog)            # fail closed: same Ice groups, same TDR models, and the brand/status/aliases the routing reads
     si = stand_in.StandIn(catalog, policy, export, **stand_in_options)
     dims = pkg["dims"]
-    brand = {r["brand"]: si.brand_for(r["brand"]) for r in dims}
+    by_brand: dict[str, list[str]] = {}
+    for r in dims:
+        by_brand.setdefault(r["brand"], []).append(r["model_group_id"])
+    brand = {raw: si.brand_from_export(raw, gids) for raw, gids in by_brand.items()}       # relation-first: the producer's pool + typed brand relation, never the local alias table
     subject_rel = si.subject_relations([r["model_group_id"] for r in dims])
     cache: dict[str, list[dict]] = {}
 

@@ -6,10 +6,12 @@ relation is a direct lookup in the verified PR #200 relation export (`ir_export`
 """
 from __future__ import annotations
 
+import json
 import unicodedata
 
 from identity_bootstrap.engine.lexical import Lexicon
 
+from . import ir_export
 from .ir_export import RelationExport
 
 BRAND_CLASSES = [["changan", "deepal"]]        # Ice files Deepal models under CHANGAN (IR README section 3); one marque family for pooling
@@ -32,6 +34,7 @@ class StandIn:
         self.export = export        # the verified PR #200 relation export: the only source of a name relation
         self.naive_spellings = naive_spellings      # offer every catalog alias (sub-brands included) as a spelling, as the first shadow pass did
         self.families = families
+        self.creatable_relations = tuple(policy["brand"]["creatable_relations"])
         self.brands = catalog["brands"]
         self.identities = catalog["identities"]
         self.aliases = catalog["aliases"]
@@ -48,7 +51,9 @@ class StandIn:
         self._brand_cache: dict[str, dict] = {}
 
     # ---- brand ----
-    def brand_for(self, ice_brand: str) -> dict:
+    def local_brand_hint(self, ice_brand: str) -> dict:
+        """The consumer's OWN brand/catalog-alias reading of an Ice brand string. A DIAGNOSTIC and spelling source only: it never decides the brand Bootstrap is given, the candidate pool or a relation
+        (those come from the producer's typed brand relation `br` and pool, see `brand_from_export`). Parity compares it with the producer view and fails closed when they disagree."""
         if ice_brand in self._brand_cache:
             return self._brand_cache[ice_brand]
         key = comp(ice_brand)
@@ -60,13 +65,27 @@ class StandIn:
             out = {"raw": ice_brand, "brand_id": self.alias_keys.get(key) or CURATED_BRAND_ALIASES[key], "relation": "ALIAS_SAME"}
         else:
             out = {"raw": ice_brand, "brand_id": None, "relation": "NOT_IN_TDR"}
-        if out["brand_id"]:
-            b = self.brands[out["brand_id"]]
-            aliases = b.get("aliases", []) if self.naive_spellings else self._own_aliases(out["brand_id"], b)
-            out["spellings"] = sorted({b["name_en"], out["brand_id"].replace("_", " "), *aliases, *CURATED_SPELLINGS.get(out["brand_id"], [])})
-            if self.families and out["brand_id"] in FAMILIES:
-                out["family"] = [{"brand_id": f, "relation": rel, "spellings": sp} for f, rel, sp in FAMILIES[out["brand_id"]]]
         self._brand_cache[ice_brand] = out
+        return out
+
+    def spellings_for(self, brand_id: str) -> list[str]:
+        """How a model name of this brand may start (display / prefix stripping only; carries no relation and no pool member)."""
+        b = self.brands[brand_id]
+        aliases = b.get("aliases", []) if self.naive_spellings else self._own_aliases(brand_id, b)
+        return sorted({b["name_en"], brand_id.replace("_", " "), *aliases, *CURATED_SPELLINGS.get(brand_id, [])})
+
+    def brand_from_export(self, ice_brand: str, subject_ids: list[str]) -> dict:
+        """Relation-first brand for Bootstrap's input: the brand and relation are exactly what the producer's pool and typed brand relation (`br`) say, never the local alias table.
+        All subjects carrying one Ice brand string must have the same producer view (the snapshot carries the brand per string); a split view is an error, not a guess."""
+        views = {json.dumps(ir_export.producer_brand(self.export, g), sort_keys=True) for g in subject_ids}
+        if len(views) != 1:
+            raise ir_export.ExportError(f"BRAND_VIEW_SPLIT: the producer gives {len(views)} different brand views for the Ice brand {ice_brand!r}")
+        view = json.loads(next(iter(views)))
+        out = {"raw": ice_brand, "brand_id": view["brand_id"], "relation": view["relation"]}
+        if view["brand_id"] and view["relation"] in self.creatable_relations:
+            out["spellings"] = self.spellings_for(view["brand_id"])        # an ALIAS_RELATED marque is only ever a suspicion: its name is not offered as a spelling of the subject's brand
+        if self.families and view["family"]:
+            out["family"] = [{"brand_id": f["brand_id"], "relation": f["relation"], "spellings": [self.brands[f["brand_id"]]["name_en"]]} for f in view["family"]]
         return out
 
     @staticmethod

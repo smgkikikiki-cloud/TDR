@@ -1,9 +1,2 @@
 external_id,status,reasons
-JETOUR|ไม่ระบุ,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)
-MERCEDES AMG|SL 43,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-MERCEDES AMG|SL 55 4MATIC,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-MERCEDESBENZ MAYBACH|S680 4 M,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-RANGE ROVER|AUTOBIOGRAPHY P400E LWB,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-RANGE ROVER|EVOQUE 2 2L SD4,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
-maxus-maxus-epc1a,IR_PARITY_UNRESOLVED,BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand
+JETOUR|ไม่ระบุ,IR_PARITY_UNRESOLVED,INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints 'chery'; the hint is not adopted and no relation is invented

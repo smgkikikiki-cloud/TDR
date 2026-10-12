@@ -76,7 +76,7 @@
      ],
      [
       "BRAND_NOT_IN_TDR",
-      197
+      192
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
@@ -107,6 +107,10 @@
       10
      ],
      [
+      "STRUCTURAL_CONFLICT",
+      7
+     ],
+     [
       "EXISTING_IDENTITY_SUSPECTED",
       4
      ],
@@ -117,10 +121,6 @@
      [
       "PROVIDER_LINEAGE_AMBIGUOUS",
       2
-     ],
-     [
-      "STRUCTURAL_CONFLICT",
-      1
      ]
     ],
     "primary": [
@@ -150,7 +150,7 @@
     "any_code": [
      [
       "BRAND_NOT_IN_TDR",
-      35
+      34
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -166,7 +166,7 @@
      ],
      [
       "STRUCTURAL_CONFLICT",
-      16
+      17
      ],
      [
       "EXISTING_IDENTITY_SUSPECTED",
@@ -204,8 +204,8 @@
     "primary": [
      [
       "BRAND_NOT_IN_TDR",
-      35,
-      1132
+      34,
+      1126
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -219,8 +219,8 @@
      ],
      [
       "STRUCTURAL_CONFLICT",
-      16,
-      633019
+      17,
+      633025
      ],
      [
       "PROVIDER_FINER_THAN_TDR",
@@ -279,7 +279,7 @@
      ],
      [
       "BRAND_NOT_IN_TDR",
-      197
+      192
      ],
      [
       "POSSIBLE_POWERTRAIN_DERIVATIVE",
@@ -310,6 +310,10 @@
       10
      ],
      [
+      "STRUCTURAL_CONFLICT",
+      8
+     ],
+     [
       "DUPLICATE_CANONICAL_SUSPECTED",
       5
      ],
@@ -319,10 +323,6 @@
      ],
      [
       "LINEAGE_UNRESOLVED",
-      2
-     ],
-     [
-      "STRUCTURAL_CONFLICT",
       2
      ],
      [
@@ -356,7 +356,7 @@
      ],
      [
       "STRUCTURAL_CONFLICT",
-      46
+      47
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -364,7 +364,7 @@
      ],
      [
       "BRAND_NOT_IN_TDR",
-      35
+      34
      ],
      [
       "EXISTING_IDENTITY_SUSPECTED",
@@ -411,13 +411,13 @@
      ],
      [
       "STRUCTURAL_CONFLICT",
-      46,
-      1461240
+      47,
+      1461246
      ],
      [
       "BRAND_NOT_IN_TDR",
-      35,
-      1132
+      34,
+      1126
      ],
      [
       "PROVIDER_COARSER_THAN_TDR",
@@ -1803,8 +1803,8 @@
  ],
  "inputs": {
   "engine_seconds": {
-   "A": 0.25,
-   "B": 0.27
+   "A": 0.18,
+   "B": 0.25
   },
   "groups": 1200,
   "package_index": {
@@ -6413,7 +6413,7 @@
    "JETOUR|ไม่ระบุ": {
     "empty_pool": true,
     "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)"
+     "INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints 'chery'; the hint is not adopted and no relation is invented"
     ],
     "status": "IR_PARITY_UNRESOLVED"
    },
@@ -6729,17 +6729,13 @@
    },
    "MERCEDES AMG|SL 43": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "MERCEDES AMG|SL 55 4MATIC": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "MERCEDES BENZ|280GE": {
     "empty_pool": false,
@@ -6858,10 +6854,8 @@
    },
    "MERCEDESBENZ MAYBACH|S680 4 M": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "MERCEDES|G63 AMG BRABUS 800": {
     "empty_pool": false,
@@ -7410,24 +7404,18 @@
    },
    "RANGE ROVER|AUTOBIOGRAPHY P400E LWB": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "RANGE ROVER|EVOQUE 2 2L SD4": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "RELY|Q22 1 2L": {
     "empty_pool": true,
@@ -10016,10 +10004,8 @@
    },
    "maxus-maxus-epc1a": {
     "empty_pool": false,
-    "reasons": [
-     "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-    ],
-    "status": "IR_PARITY_UNRESOLVED"
+    "reasons": [],
+    "status": "IR_PARITY_RESOLVED"
    },
    "maxus-maxus-v80": {
     "empty_pool": false,
@@ -12025,32 +12011,11 @@
    },
    "subjects": {
     "empty_pool_subjects": 226,
-    "resolved": 1192,
-    "unresolved": 8,
+    "resolved": 1199,
+    "unresolved": 1,
     "unresolved_ids_and_reasons": {
      "JETOUR|ไม่ระบุ": [
-      "BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)"
-     ],
-     "MERCEDES AMG|SL 43": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "MERCEDES AMG|SL 55 4MATIC": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "MERCEDESBENZ MAYBACH|S680 4 M": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "RANGE ROVER|AUTOBIOGRAPHY P400E LWB": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "RANGE ROVER|EVOQUE 2 2L SD4": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
-     ],
-     "maxus-maxus-epc1a": [
-      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+      "INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints 'chery'; the hint is not adopted and no relation is invented"
      ]
     }
    },
@@ -12146,6 +12111,325 @@
    "B": {
     "IDENTITY_REVIEW -> CREATE_IDENTITY": 10
    }
+  },
+  "round_delta": {
+   "baseline": "shadow/baseline_30d2618a (the QA-accepted head 30d2618a)",
+   "brand_parity_cases": {
+    "JETOUR|ไม่ระบุ": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "after_reasons": [
+      "INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints 'chery'; the hint is not adopted and no relation is invented"
+     ],
+     "after_status": "IR_PARITY_UNRESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)"
+     ],
+     "before_shadow_brand": {
+      "brand_id": "chery",
+      "relation": "ALIAS_SAME"
+     },
+     "ice_brand": "JETOUR",
+     "local_hint_vs_producer": "LOCAL_HINT_WITHOUT_PRODUCER_RELATION",
+     "parity_verifiable": false,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": null,
+     "producer_issues": [],
+     "producer_pool_brands": [],
+     "producer_pool_size": 0,
+     "producer_source": "PRODUCER_EMPTY_POOL",
+     "producer_typed_brand_relation": "NOT_IN_TDR",
+     "why": "rev4 carries NO typed relation from this Ice brand to any TDR brand (empty pool, BRND_NOT_IN_TDR) while the local catalog alias hints a brand; the hint is not adopted and nothing is invented. A producer relation for it exists only in a later (rev5) policy and is not a versioned consumer export in this repo, so this is a version gap, not a verified fact"
+    },
+    "MERCEDES AMG|SL 43": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "mercedes_benz",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "MERCEDES AMG",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "mercedes_benz",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "mercedes_benz"
+     ],
+     "producer_pool_size": 19,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "MERCEDES AMG|SL 55 4MATIC": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "mercedes_benz",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "MERCEDES AMG",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "mercedes_benz",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "mercedes_benz"
+     ],
+     "producer_pool_size": 19,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "MERCEDESBENZ MAYBACH|S680 4 M": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "mercedes_benz",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "MERCEDESBENZ MAYBACH",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "mercedes_benz",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "mercedes_benz"
+     ],
+     "producer_pool_size": 19,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to mercedes_benz and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "RANGE ROVER|AUTOBIOGRAPHY P400E LWB": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "land_rover",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "RANGE ROVER",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "land_rover",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "land_rover"
+     ],
+     "producer_pool_size": 4,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "land_rover",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "RANGE ROVER",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "land_rover",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "land_rover"
+     ],
+     "producer_pool_size": 4,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "RANGE ROVER|EVOQUE 2 2L SD4": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "land_rover",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "RANGE ROVER",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "land_rover",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "land_rover"
+     ],
+     "producer_pool_size": 4,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to land_rover and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    },
+    "maxus-maxus-epc1a": {
+     "after_brand_given_to_bootstrap": {
+      "brand_id": "mg",
+      "relation": "ALIAS_RELATED"
+     },
+     "after_reasons": [],
+     "after_status": "IR_PARITY_RESOLVED",
+     "before_reasons": [
+      "BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand"
+     ],
+     "before_shadow_brand": {
+      "brand_id": null,
+      "relation": "NOT_IN_TDR"
+     },
+     "ice_brand": "MAXUS",
+     "local_hint_vs_producer": "LOCAL_NO_OPINION",
+     "parity_verifiable": true,
+     "pool_is_complete_for_brand": true,
+     "producer_brand_id": "mg",
+     "producer_issues": [],
+     "producer_pool_brands": [
+      "mg"
+     ],
+     "producer_pool_size": 18,
+     "producer_source": "PRODUCER_POOL",
+     "producer_typed_brand_relation": "ALIAS_RELATED",
+     "why": "the producer states a typed brand relation ALIAS_RELATED to mg and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow"
+    }
+   },
+   "moved": [
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|NAME_UNSPECIFIED|BRAND_NOT_IN_TDR",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|NAME_UNSPECIFIED",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|NAME_UNSPECIFIED|BRAND_NOT_IN_TDR",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|NAME_UNSPECIFIED",
+     "brand": "JETOUR",
+     "model_group_id": "JETOUR|ไม่ระบุ",
+     "name": "ไม่ระบุ",
+     "parity_after": "IR_PARITY_UNRESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+     "brand": "MERCEDES AMG",
+     "model_group_id": "MERCEDES AMG|SL 43",
+     "name": "SL 43",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+     "brand": "MERCEDES AMG",
+     "model_group_id": "MERCEDES AMG|SL 55 4MATIC",
+     "name": "SL 55 4MATIC+",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+     "brand": "MERCEDESBENZ MAYBACH",
+     "model_group_id": "MERCEDESBENZ MAYBACH|S680 4 M",
+     "name": "S680 4 M",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+     "brand": "RANGE ROVER",
+     "model_group_id": "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+     "name": "AUTOBIOGRAPHY P400E LWB",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "brand": "RANGE ROVER",
+     "model_group_id": "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "name": "EVOQUE 2.2 SD4 DYNAMIC",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "A_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "B_after": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "B_before": "HOLD / PROVIDER_RAW_NAME / PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+     "brand": "RANGE ROVER",
+     "model_group_id": "RANGE ROVER|EVOQUE 2 2L SD4",
+     "name": "EVOQUE 2.2L SD4",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    },
+    {
+     "A_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT / STRUCTURAL_CONFLICT",
+     "A_before": "IDENTITY_REVIEW / BRAND_NOT_IN_TDR / BRAND_NOT_IN_TDR",
+     "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT / STRUCTURAL_CONFLICT",
+     "B_before": "IDENTITY_REVIEW / BRAND_NOT_IN_TDR / BRAND_NOT_IN_TDR",
+     "brand": "MAXUS",
+     "model_group_id": "maxus-maxus-epc1a",
+     "name": "Maxus EPC1A",
+     "parity_after": "IR_PARITY_RESOLVED",
+     "parity_before": "IR_PARITY_UNRESOLVED"
+    }
+   ]
   },
   "routing": {
    "current_dispatch_ids": [
@@ -15531,7 +15815,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -15545,7 +15828,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -15858,7 +16140,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -17289,7 +17570,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -17303,7 +17583,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -17317,7 +17596,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -24071,7 +24349,6 @@
     {
      "activation_authorized": false,
      "activation_blockers": [
-      "IR_PARITY_UNRESOLVED",
       "OWNER_APPROVAL_PENDING",
       "GOVERNED_WRITER_NOT_BUILT"
      ],
@@ -28498,25 +28775,58 @@
   },
   "structural": {
    "A": {
-    "after": 17,
+    "after": 24,
     "before": 9,
     "entered": [
+     "MERCEDES AMG|SL 43",
+     "MERCEDES AMG|SL 55 4MATIC",
+     "MERCEDESBENZ MAYBACH|S680 4 M",
+     "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4",
      "byd-sealion-5",
      "byd-sealion-6",
      "ford-ford-ranger-raptor",
+     "maxus-maxus-epc1a",
      "maxus-mifa-7",
      "maxus-mifa-9",
      "toyota-hilux-revo",
      "toyota-hilux-travo",
      "toyota-land-cruiser-fj"
     ],
-    "left": []
+    "left": [],
+    "of_which_brand_level_alias_related": [
+     "MERCEDES AMG|SL 43",
+     "MERCEDES AMG|SL 55 4MATIC",
+     "MERCEDESBENZ MAYBACH|S680 4 M",
+     "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4",
+     "maxus-maxus-epc1a"
+    ]
    },
    "B": {
-    "after": 48,
+    "after": 55,
     "before": 48,
-    "entered": [],
-    "left": []
+    "entered": [
+     "MERCEDES AMG|SL 43",
+     "MERCEDES AMG|SL 55 4MATIC",
+     "MERCEDESBENZ MAYBACH|S680 4 M",
+     "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4",
+     "maxus-maxus-epc1a"
+    ],
+    "left": [],
+    "of_which_brand_level_alias_related": [
+     "MERCEDES AMG|SL 43",
+     "MERCEDES AMG|SL 55 4MATIC",
+     "MERCEDESBENZ MAYBACH|S680 4 M",
+     "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4",
+     "maxus-maxus-epc1a"
+    ]
    }
   },
   "transitions": [
@@ -28753,6 +29063,132 @@
     "name": "GALAXY E5",
     "relation_changes": "geely.geely_ex5: EQUAL -> none",
     "tdr_candidate_ids_involved": "geely.geely_ex5"
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|NAME_UNSPECIFIED|BRAND_NOT_IN_TDR",
+    "A_codes_before": "PROVIDER_RAW_NAME|NAME_UNSPECIFIED",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "JETOUR",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 0,
+    "last12_units": 0,
+    "lifetime_units": 3,
+    "model_group_id": "JETOUR|ไม่ระบุ",
+    "name": "ไม่ระบุ",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "MERCEDES AMG",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 19,
+    "last12_units": 1,
+    "lifetime_units": 2,
+    "model_group_id": "MERCEDES AMG|SL 43",
+    "name": "SL 43",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "MERCEDES AMG",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 19,
+    "last12_units": 0,
+    "lifetime_units": 1,
+    "model_group_id": "MERCEDES AMG|SL 55 4MATIC",
+    "name": "SL 55 4MATIC+",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "MERCEDESBENZ MAYBACH",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 19,
+    "last12_units": 0,
+    "lifetime_units": 2,
+    "model_group_id": "MERCEDESBENZ MAYBACH|S680 4 M",
+    "name": "S680 4 M",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_MODEL_CODE",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_MODEL_CODE",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "RANGE ROVER",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 4,
+    "last12_units": 0,
+    "lifetime_units": 2,
+    "model_group_id": "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+    "name": "AUTOBIOGRAPHY P400E LWB",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "RANGE ROVER",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 4,
+    "last12_units": 0,
+    "lifetime_units": 1,
+    "model_group_id": "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+    "name": "EVOQUE 2.2 SD4 DYNAMIC",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
+   },
+   {
+    "A_after": "HOLD / PROVIDER_RAW_NAME",
+    "A_before": "HOLD / PROVIDER_RAW_NAME",
+    "A_codes_after": "PROVIDER_RAW_NAME|STRUCTURAL_CONFLICT|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "A_codes_before": "PROVIDER_RAW_NAME|BRAND_NOT_IN_TDR|POSSIBLE_POWERTRAIN_DERIVATIVE",
+    "B_after": "HOLD / PROVIDER_RAW_NAME",
+    "B_before": "HOLD / PROVIDER_RAW_NAME",
+    "brand": "RANGE ROVER",
+    "identity_status": "unmapped_name",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 4,
+    "last12_units": 0,
+    "lifetime_units": 1,
+    "model_group_id": "RANGE ROVER|EVOQUE 2 2L SD4",
+    "name": "EVOQUE 2.2L SD4",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
    },
    {
     "A_after": "HOLD / PROVIDER_RAW_NAME",
@@ -29401,6 +29837,24 @@
     "name": "Lexus IS300H",
     "relation_changes": "lexus.lexus_is: EQUAL -> none",
     "tdr_candidate_ids_involved": "lexus.lexus_is"
+   },
+   {
+    "A_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "A_before": "IDENTITY_REVIEW / BRAND_NOT_IN_TDR",
+    "A_codes_after": "STRUCTURAL_CONFLICT",
+    "A_codes_before": "BRAND_NOT_IN_TDR",
+    "B_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
+    "B_before": "IDENTITY_REVIEW / BRAND_NOT_IN_TDR",
+    "brand": "MAXUS",
+    "identity_status": "settled",
+    "ir_dry_run_outcome": "NO_CANDIDATE",
+    "ir_pool_size": 18,
+    "last12_units": 6,
+    "lifetime_units": 6,
+    "model_group_id": "maxus-maxus-epc1a",
+    "name": "Maxus EPC1A",
+    "relation_changes": "none (batch / Bootstrap effect)",
+    "tdr_candidate_ids_involved": ""
    },
    {
     "A_after": "IDENTITY_REVIEW / STRUCTURAL_CONFLICT",
@@ -30216,6 +30670,51 @@
    },
    {
     "codes": [
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "maxus-maxus-epc1a",
+    "name": "Maxus EPC1A",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 6
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "MERCEDES AMG|SL 43",
+    "name": "SL 43",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [],
+    "id": "MERCEDESBENZ MAYBACH|S680 4 M",
+    "name": "S680 4 M",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [],
+    "id": "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+    "name": "AUTOBIOGRAPHY P400E LWB",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
@@ -30227,6 +30726,47 @@
     "name": "Honda FIT",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "MERCEDES AMG|SL 55 4MATIC",
+    "name": "SL 55 4MATIC+",
+    "outcome": "HOLD",
+    "units_total": 1
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_POWERTRAIN_DERIVATIVE"
+    ],
+    "group": [
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4"
+    ],
+    "id": "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+    "name": "EVOQUE 2.2 SD4 DYNAMIC",
+    "outcome": "HOLD",
+    "units_total": 1
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_POWERTRAIN_DERIVATIVE"
+    ],
+    "group": [
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4"
+    ],
+    "id": "RANGE ROVER|EVOQUE 2 2L SD4",
+    "name": "EVOQUE 2.2L SD4",
+    "outcome": "HOLD",
+    "units_total": 1
    }
   ],
   "B": [
@@ -30971,6 +31511,51 @@
    },
    {
     "codes": [
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "maxus-maxus-epc1a",
+    "name": "Maxus EPC1A",
+    "outcome": "IDENTITY_REVIEW",
+    "units_total": 6
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "MERCEDES AMG|SL 43",
+    "name": "SL 43",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [],
+    "id": "MERCEDESBENZ MAYBACH|S680 4 M",
+    "name": "S680 4 M",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_MODEL_CODE"
+    ],
+    "group": [],
+    "id": "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+    "name": "AUTOBIOGRAPHY P400E LWB",
+    "outcome": "HOLD",
+    "units_total": 2
+   },
+   {
+    "codes": [
      "STRUCTURAL_CONFLICT",
      "DUPLICATE_CANONICAL_SUSPECTED"
     ],
@@ -30982,6 +31567,47 @@
     "name": "Honda FIT",
     "outcome": "IDENTITY_REVIEW",
     "units_total": 2
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT"
+    ],
+    "group": [],
+    "id": "MERCEDES AMG|SL 55 4MATIC",
+    "name": "SL 55 4MATIC+",
+    "outcome": "HOLD",
+    "units_total": 1
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_POWERTRAIN_DERIVATIVE"
+    ],
+    "group": [
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4"
+    ],
+    "id": "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+    "name": "EVOQUE 2.2 SD4 DYNAMIC",
+    "outcome": "HOLD",
+    "units_total": 1
+   },
+   {
+    "codes": [
+     "PROVIDER_RAW_NAME",
+     "STRUCTURAL_CONFLICT",
+     "POSSIBLE_POWERTRAIN_DERIVATIVE"
+    ],
+    "group": [
+     "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+     "RANGE ROVER|EVOQUE 2 2L SD4"
+    ],
+    "id": "RANGE ROVER|EVOQUE 2 2L SD4",
+    "name": "EVOQUE 2.2L SD4",
+    "outcome": "HOLD",
+    "units_total": 1
    },
    {
     "codes": [

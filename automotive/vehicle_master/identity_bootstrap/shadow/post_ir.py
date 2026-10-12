@@ -12,6 +12,7 @@ from identity_bootstrap.routing import signals
 from . import activity_report, calibration, ir_export
 
 BASELINE = calibration.HERE / "baseline_b132a86"
+BASELINE_30D = calibration.HERE / "baseline_30d2618a"      # the QA-accepted head this round starts from (decisions, dispatch manifest, parity_unresolved, 82-row adjudication)
 LINKING = ("EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY")
 
 
@@ -28,6 +29,58 @@ def load_baseline() -> dict:
         lanes = {r["external_id"]: r["lane"] for r in csv.DictReader(fh)}
     rel = json.loads((BASELINE / "relations.json").read_text(encoding="utf-8"))["relations"]
     return {"decisions": dec, "creates": creates, "lanes": lanes, "relations": rel, "summary": json.loads((BASELINE / "summary.json").read_text(encoding="utf-8"))}
+
+
+def load_baseline_30d() -> dict:
+    def rows(name: str, key: str) -> dict:
+        with (BASELINE_30D / name).open(encoding="utf-8", newline="") as fh:
+            return {r[key]: r for r in csv.DictReader(l for l in fh if not l.startswith("#"))}
+    return {"decisions": rows("decisions.csv", "model_group_id"), "dispatch": rows("dispatch_manifest.csv", "external_id"), "unresolved": rows("parity_unresolved.csv", "external_id"),
+            "adjudication": rows("create_adjudication.csv", "external_id")}
+
+
+def _why(producer: dict, verifiable: bool) -> str:
+    if verifiable and producer["relation"] == "ALIAS_RELATED":
+        return (f"the producer states a typed brand relation ALIAS_RELATED to {producer['brand_id']} and the pool is that brand's complete allowed model set with one uniform relation; every pair was read from the export. "
+                "The relation is only a suspicion (Bootstrap policy: ALIAS_RELATED -> STRUCTURAL_CONFLICT), so no CREATE can follow")
+    if verifiable:
+        return "the producer states the brand relation and pool and they match what Bootstrap was given"
+    return ("rev4 carries NO typed relation from this Ice brand to any TDR brand (empty pool, BRND_NOT_IN_TDR) while the local catalog alias hints a brand; the hint is not adopted and nothing is invented. "
+            "A producer relation for it exists only in a later (rev5) policy and is not a versioned consumer export in this repo, so this is a version gap, not a verified fact")
+
+
+def round_delta(A: dict, B: dict, export: ir_export.RelationExport, pstat: dict, base30: dict) -> dict:
+    """What THIS correction round changed against the accepted 30d2618a head: every row whose Bootstrap outcome, primary reason, reason codes or parity status moved, and the
+    per-subject brand parity cases (the subjects that were unresolved at 30d2618a) with the producer pool / typed relation, the local diagnostic, and whether parity is verifiable."""
+    si = A["stand_in"]
+    dims = {r["model_group_id"]: r for r in A["package"]["dims"]}
+    subj = {s["entity_id"]: s for s in A["snapshot"]["subjects"]}
+    dA, dB = _dec(A), _dec(B)
+    moved = []
+    for g in sorted(dA):
+        b = base30["decisions"][g]
+        old = (b["A_outcome"], b["A_primary"], b["A_codes"], b["B_outcome"], b["B_primary"], b["B_codes"], "IR_PARITY_UNRESOLVED" if g in base30["unresolved"] else "IR_PARITY_RESOLVED")
+        new = (dA[g]["outcome"], dA[g]["primary_reason"], "|".join(dA[g]["reason_codes"]), dB[g]["outcome"], dB[g]["primary_reason"], "|".join(dB[g]["reason_codes"]), pstat[g]["status"])
+        if old != new:
+            moved.append({"model_group_id": g, "brand": dims[g]["brand"], "name": dims[g]["model_name"], "A_before": f"{old[0]} / {old[1]} / {old[2]}", "A_after": f"{new[0]} / {new[1]} / {new[2]}",
+                          "B_before": f"{old[3]} / {old[4]} / {old[5]}", "B_after": f"{new[3]} / {new[4]} / {new[5]}", "parity_before": old[6], "parity_after": new[6]})
+    cases = {}
+    for g in sorted(base30["unresolved"]):
+        producer = ir_export.producer_brand(export, g)
+        hint = si.local_brand_hint(dims[g]["brand"])
+        pool = export.pool(g)
+        reasons = pstat[g]["reasons"]
+        verifiable = pstat[g]["status"] == "IR_PARITY_RESOLVED"
+        cases[g] = {
+            "ice_brand": dims[g]["brand"], "producer_pool_size": len(pool), "producer_pool_brands": sorted({export.tdr_models[t]["brand_id"] for t in pool}),
+            "producer_typed_brand_relation": producer["relation"], "producer_brand_id": producer["brand_id"], "producer_source": producer["source"], "producer_issues": producer["issues"],
+            "pool_is_complete_for_brand": not any("lacks allowed model" in r for r in ir_export.brand_pool_mismatches(subj[g]["brand"], list(pool), export, g)),
+            "before_shadow_brand": {"brand_id": hint.get("brand_id"), "relation": hint.get("relation")}, "after_brand_given_to_bootstrap": {"brand_id": subj[g]["brand"].get("brand_id"), "relation": subj[g]["brand"].get("relation")},
+            "local_hint_vs_producer": ir_export.local_hint_vs_producer(hint, producer), "before_reasons": [base30["unresolved"][g]["reasons"]], "after_status": pstat[g]["status"], "after_reasons": reasons,
+            "parity_verifiable": verifiable,
+            "why": _why(producer, verifiable),
+        }
+    return {"baseline": "shadow/baseline_30d2618a (the QA-accepted head 30d2618a)", "moved": moved, "brand_parity_cases": cases}
 
 
 # ---------------------------------------------------------------------------------------------------------------- parity
@@ -73,10 +126,10 @@ def pool_parity(A: dict, export: ir_export.RelationExport, si) -> dict:
         read = {k.rsplit("|", 1)[1] for k in export.consulted_ice_tdr if k.startswith(g + "|") and k.rsplit("|", 1)[0] == g}
         if read != pool:
             pool_not_read.append(g)
-        brand = s["brand"]
-        old = set(si.brand_family_candidates(brand))
+        hint = si.local_brand_hint(s["brand"]["raw"])
+        old = set(si.brand_family_candidates(hint))
         if old != pool:
-            brand_vs_pool.append({"id": g, "stand_in_brand_id": brand.get("brand_id"), "stand_in_candidates": len(old), "export_pool": len(pool),
+            brand_vs_pool.append({"id": g, "stand_in_brand_id": hint.get("brand_id"), "stand_in_candidates": len(old), "export_pool": len(pool),
                                   "kind": ("BRAND_NOT_ALLOWED_IN_POOL" if old and not pool else "POOL_WITHOUT_RESOLVED_BRAND" if pool and not old else "DIFFERENT_MEMBERS")})
     return {"subjects": len(subj), "subjects_with_empty_pool": sum(1 for g in subj if not export.pool(g)), "shadow_candidates_outside_pool": used_not_in_pool,
             "pool_members_not_read": pool_not_read, "old_brand_family_candidates_differing_from_pool": len(brand_vs_pool),
@@ -102,6 +155,15 @@ def parity_status(A: dict, export: ir_export.RelationExport, si, dims: dict) -> 
             if any(f"{g}|{t}" not in export.consulted_ice_tdr for t in pool):
                 reasons.append("PAIR_NOT_EVALUATED: a pool member was not read")
             reasons.extend(ir_export.brand_pool_mismatches(s["brand"], list(export.pool(g)), export, g))
+            producer = ir_export.producer_brand(export, g)
+            if (s["brand"].get("brand_id"), s["brand"].get("relation")) != (producer["brand_id"], producer["relation"]):
+                reasons.append(f"BRAND_RESOLUTION_VS_POOL: the brand Bootstrap was given ({s['brand'].get('brand_id')} {s['brand'].get('relation')}) is not the producer's ({producer['brand_id']} {producer['relation']})")
+            hint = ir_export.local_hint_vs_producer(si.local_brand_hint(dims[g]["brand"]), producer)
+            if hint == "LOCAL_HINT_WITHOUT_PRODUCER_RELATION":
+                reasons.append("INSUFFICIENT_DATA: the producer pool is empty (rev4 has no typed relation from this Ice brand to any TDR brand) while a local catalog alias hints "
+                               f"{si.local_brand_hint(dims[g]['brand'])['brand_id']!r}; the hint is not adopted and no relation is invented")
+            elif hint == "LOCAL_DISAGREES":
+                reasons.append("BRAND_LOCAL_HINT_DISAGREES: the local brand/catalog-alias reading differs from the producer's typed brand relation; the producer pool is used, parity is not certified")
             peers = export.peers(g)
             if len(export.rows_by_subject_ice.get(g, [])) != len(peers) or any(f"{min(g, p)}|{max(g, p)}" not in export.consulted_ice_ice for p in peers):
                 reasons.append("PAIR_NOT_EVALUATED: an Ice x Ice peer pair was not read")
@@ -174,7 +236,8 @@ def collisions(A: dict, export: ir_export.RelationExport, creates: list[str], re
 
 def structural(run: dict, base_ids: set[str]) -> dict:
     cur = {g for g, d in _dec(run).items() if "STRUCTURAL_CONFLICT" in d["reason_codes"]}
-    return {"before": len(base_ids), "after": len(cur), "left": sorted(base_ids - cur), "entered": sorted(cur - base_ids)}
+    brand_level = {s["entity_id"] for s in run["snapshot"]["subjects"] if s["brand"].get("relation") == "ALIAS_RELATED"}     # the producer's typed brand relation is a suspicion, not a name-structure conflict
+    return {"before": len(base_ids), "after": len(cur), "left": sorted(base_ids - cur), "entered": sorted(cur - base_ids), "of_which_brand_level_alias_related": sorted(cur & brand_level)}
 
 
 def units(run: dict, ids) -> dict:
@@ -237,6 +300,7 @@ def build_m5(A: dict, B: dict, export: ir_export.RelationExport, base: dict, cre
                    "subjects": {"resolved": len(pstat) - len(unresolved), "unresolved": len(unresolved), "unresolved_ids_and_reasons": {g: v["reasons"] for g, v in sorted(unresolved.items())},
                                 "empty_pool_subjects": sum(1 for v in pstat.values() if v["empty_pool"])}},
         "ir_parity_status": pstat,
+        "round_delta": round_delta(A, B, export, pstat, load_baseline_30d()),
         "dry_run_vs_bootstrap": dry_run_vs_bootstrap(A, export),
         "collisions": collisions(A, export, creates, rt["reviews"]),
         "routing": rt,

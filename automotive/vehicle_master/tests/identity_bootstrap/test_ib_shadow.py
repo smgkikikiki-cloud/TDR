@@ -275,10 +275,9 @@ def test_full_parity_with_the_pinned_pr200_export_on_the_real_run(built):
 def test_subject_level_parity_status_clears_only_what_meets_every_requirement(built):
     _, _, summary, _ = built
     sub = summary["m5"]["parity"]["subjects"]
-    assert sub["resolved"] == 1192 and sub["unresolved"] == 8
-    assert set(sub["unresolved_ids_and_reasons"]) == {"JETOUR|ไม่ระบุ", "MERCEDES AMG|SL 43", "MERCEDES AMG|SL 55 4MATIC", "MERCEDESBENZ MAYBACH|S680 4 M", "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
-                                                    "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC", "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"}
-    assert all(r and all(x.startswith("BRAND_RESOLUTION_VS_POOL") for x in r) for r in sub["unresolved_ids_and_reasons"].values())
+    assert sub["resolved"] == 1199 and sub["unresolved"] == 1
+    assert set(sub["unresolved_ids_and_reasons"]) == {"JETOUR|ไม่ระบุ"}
+    assert all(r and all(x.startswith("INSUFFICIENT_DATA") for x in r) for r in sub["unresolved_ids_and_reasons"].values())
     assert summary["m5"]["parity"]["tdr_universe_binding"]["alias_strings"] == 662
     for g, v in summary["m5"]["ir_parity_status"].items():
         assert v["status"] == ("IR_PARITY_UNRESOLVED" if v["reasons"] else "IR_PARITY_RESOLVED")
@@ -298,7 +297,8 @@ def test_a_wrong_but_non_null_brand_in_the_real_snapshot_is_caught_by_the_subjec
     changed = {g for g in out if out[g]["status"] != base[g]["status"]}
     assert changed == {target["entity_id"]} and out[target["entity_id"]]["status"] == "IR_PARITY_UNRESOLVED"
     assert any("shadow resolved 'toyota'" in r for r in out[target["entity_id"]]["reasons"])
-    assert sum(1 for v in base.values() if v["status"] == "IR_PARITY_UNRESOLVED") == 8, "the eight unresolved subjects are preserved until parity is proven"
+    assert sum(1 for v in base.values() if v["status"] == "IR_PARITY_UNRESOLVED") == 1, "JETOUR stays unresolved: rev4 has no typed relation for it"
+    assert any("is not the producer's" in r for r in out[target["entity_id"]]["reasons"])
 
 
 @needs_package
@@ -311,10 +311,11 @@ def test_decision_transitions_against_the_b132a86_baseline_are_pinned(built):
     cs = m5["create_sets"]
     assert cs["removed"] == ["maxus-mifa-7"] and len(cs["added"]) == 10 and cs["unchanged"] == 72 and cs["in_A_not_B"] == [] and cs["in_B_not_A"] == []
     assert m5["review_hold_moves"]["A"] == {"CREATE_IDENTITY -> IDENTITY_REVIEW": 1, "HOLD -> CREATE_IDENTITY": 9, "HOLD -> IDENTITY_REVIEW": 38, "IDENTITY_REVIEW -> CREATE_IDENTITY": 1}
-    assert (m5["structural"]["A"]["before"], m5["structural"]["A"]["after"]) == (9, 17) and (m5["structural"]["B"]["before"], m5["structural"]["B"]["after"]) == (48, 48)
-    assert len(m5["transitions"]) == 77
+    assert (m5["structural"]["A"]["before"], m5["structural"]["A"]["after"]) == (9, 24) and (m5["structural"]["B"]["before"], m5["structural"]["B"]["after"]) == (48, 55)
+    assert len(m5["transitions"]) == 85, "77 relation-driven moves plus the 8 brand-code moves of the relation-first correction"
+    brand_cases = set(m5["round_delta"]["brand_parity_cases"])
     for t in m5["transitions"]:
-        assert t["relation_changes"] and t["A_codes_after"] is not None
+        assert (t["relation_changes"] or t["model_group_id"] in brand_cases) and t["A_codes_after"] is not None
     # the nine HOLD -> CREATE moves are subjects whose old EQUAL came from the TDR catalog's own aliases, which the IR export does not compare
     assert {g for g in cs["added"] if m5["added_detail"][g]["A_before"].startswith("HOLD")} == {"audi-audi-a8l", "audi-audi-s3", "byd-e6", "isuzu-isuzu-cab4", "jaecoo-jaecoo-j5", "jaecoo-jaecoo-j7", "volkswagen-volkswagen-multivan", "volkswagen-vw-idbuzz", "wuling-binguo"}
 
@@ -383,3 +384,42 @@ def test_the_live_universe_record_is_read_only_evidence_and_consistent(runs):
     creates = {d["subject"]["entity_id"] for d in a["decisions"] if d["outcome"] == "CREATE_IDENTITY"}
     assert {g for g in creates if any(row[1] == "AUTO" for row in r6.get(g, []))} == {"audi-audi-a8l", "wuling-binguo"}, "the legacy matcher itself linked these two CREATE candidates (AUTO); both are mandatory owner review"
     assert collections.Counter(row[1] for rows in r6.values() for row in rows) == {"PROPOSED": 408, "AUTO": 82}
+
+
+# ---------------------------------------------------------------------------------------------------------------- relation-first brand parity, end to end on the real snapshot
+@needs_package
+def test_the_eight_cases_end_to_end_on_the_real_run(runs):
+    a, b = runs
+    export, si = a["export"], a["stand_in"]
+    dims = {r["model_group_id"]: r for r in a["package"]["dims"]}
+    pstat = post_ir.parity_status(a, export, si, dims)
+    subj = {s["entity_id"]: s for s in a["snapshot"]["subjects"]}
+    unresolved = {g for g, v in pstat.items() if v["status"] == "IR_PARITY_UNRESOLVED"}
+    assert unresolved == {"JETOUR|ไม่ระบุ"}
+    for g in ("MERCEDES AMG|SL 43", "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"):
+        assert subj[g]["brand"]["relation"] == "ALIAS_RELATED" and subj[g]["brand"]["brand_id"] == ir_export.producer_brand(export, g)["brand_id"] and pstat[g]["reasons"] == []
+    assert subj["JETOUR|ไม่ระบุ"]["brand"] == {"raw": "JETOUR", "brand_id": None, "relation": "NOT_IN_TDR"}, "the local catalog alias (chery) is not adopted"
+    for r in (a, b):
+        by = {d["subject"]["entity_id"]: d for d in r["decisions"]}
+        for g in ("JETOUR|ไม่ระบุ", "MERCEDES AMG|SL 43", "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"):
+            assert by[g]["outcome"] in ("HOLD", "IDENTITY_REVIEW"), (g, by[g]["outcome"])
+        assert "STRUCTURAL_CONFLICT" in by["MERCEDES AMG|SL 43"]["reason_codes"] and "BRAND_NOT_IN_TDR" not in by["MERCEDES AMG|SL 43"]["reason_codes"]
+        assert "BRAND_NOT_IN_TDR" in by["JETOUR|ไม่ระบุ"]["reason_codes"]
+
+
+@needs_package
+def test_a_misleading_catalog_alias_changes_the_parity_verdict_but_never_the_bootstrap_input(runs):
+    """Local brand aliases may only trip the diagnostic: the snapshot Bootstrap sees, the pools and every decision stay the producer's."""
+    import copy
+    a, _ = runs
+    export, policy = a["export"], a["policy"]
+    cat2 = copy.deepcopy(a["catalog"])
+    cat2["brands"]["bmw"]["aliases"] = [*cat2["brands"]["bmw"].get("aliases", []), "RANGE ROVER", "TOYOTA"]
+    snap2, si2 = shadow_run.build("A", a["package"], cat2, policy, export)
+    assert snap2 == a["snapshot"], "a local alias must never change anything Bootstrap is given (brand, relations, pools)"
+    dims = {r["model_group_id"]: r for r in a["package"]["dims"]}
+    out = post_ir.parity_status({**a, "snapshot": snap2, "stand_in": si2}, export, si2, dims)
+    base = post_ir.parity_status(a, export, a["stand_in"], dims)
+    changed = {g for g in out if out[g]["status"] != base[g]["status"]}
+    assert changed and all(dims[g]["brand"] in ("RANGE ROVER", "TOYOTA") for g in changed)
+    assert all(any("BRAND_LOCAL_HINT_DISAGREES" in r for r in out[g]["reasons"]) for g in changed)

@@ -239,6 +239,47 @@ def collections_counter(it):
     return collections.Counter(it)
 
 
+def producer_brand(export: RelationExport, subject_id: str) -> dict:
+    """RELATION-FIRST brand view of one subject, read only from the producer's pool and typed brand relation (`br`) of that subject's own Ice x TDR rows.
+    No local brand or catalog alias takes part: it can neither add a pool member nor change a relation. An empty pool is the producer's `BRND_NOT_IN_TDR` (no typed relation to any TDR brand).
+    The primary brand is the one with the strongest `br` (EXACT > ALIAS_SAME > ALIAS_RELABEL > ALIAS_RELATED); any other pool brand is a family member with its own typed relation.
+    `issues` lists what makes the view not a single consistent producer statement (a brand with two different `br`, or two brands tied for primary)."""
+    pool = export.pool(subject_id)
+    if not pool:
+        return {"brand_id": None, "relation": "NOT_IN_TDR", "family": [], "source": "PRODUCER_EMPTY_POOL", "pool_size": 0, "issues": []}
+    by: dict[str, set] = {}
+    issues: list[str] = []
+    for t in pool:
+        row = export.ice_tdr.get(f"{subject_id}|{t}")
+        if row is None:
+            issues.append(f"POOL_MEMBER_WITHOUT_ROW: {t}")
+            continue
+        if row["br"] not in BRAND_RELATIONS:
+            issues.append(f"BRAND_RELATION_NOT_TYPED: pool member {t} carries br={row['br']!r}, which is not one of {list(BRAND_RELATIONS)}")
+            continue
+        by.setdefault(export.tdr_models[t]["brand_id"], set()).add(row["br"])
+    if not by:
+        return {"brand_id": None, "relation": "UNKNOWN", "family": [], "source": "PRODUCER_POOL_UNTYPED", "pool_size": len(pool), "issues": issues}
+    rank = {r: i for i, r in enumerate(BRAND_RELATIONS)}
+    issues += [f"BRAND_RELATION_NOT_UNIFORM: brand {b!r} is admitted with {sorted(r)}" for b, r in sorted(by.items()) if len(r) > 1]
+    best = {b: min(r, key=rank.__getitem__) for b, r in by.items()}
+    order = sorted(best, key=lambda b: (rank[best[b]], b))
+    if len(order) > 1 and rank[best[order[0]]] == rank[best[order[1]]]:
+        issues.append(f"BRAND_PRIMARY_AMBIGUOUS: {order[0]!r} and {order[1]!r} are both admitted as {best[order[0]]}")
+    return {"brand_id": order[0], "relation": best[order[0]], "family": [{"brand_id": b, "relation": best[b]} for b in order[1:]], "source": "PRODUCER_POOL", "pool_size": len(pool), "issues": issues}
+
+
+def local_hint_vs_producer(local: dict, producer: dict) -> str:
+    """How the consumer's own brand/catalog-alias reading compares with the producer view. Diagnostic only; the producer view always wins.
+    AGREE; LOCAL_NO_OPINION (producer has a typed relation, the local table has none); LOCAL_HINT_WITHOUT_PRODUCER_RELATION (producer pool is empty but a local alias would name a TDR brand: rev4 lacks the relation, so
+    parity is INSUFFICIENT_DATA); LOCAL_DISAGREES (a different brand or relation)."""
+    if producer["brand_id"] is None:
+        return "LOCAL_HINT_WITHOUT_PRODUCER_RELATION" if local.get("brand_id") else "AGREE"
+    if not local.get("brand_id"):
+        return "LOCAL_NO_OPINION"
+    return "AGREE" if (local["brand_id"], local["relation"]) == (producer["brand_id"], producer["relation"]) else "LOCAL_DISAGREES"
+
+
 def brand_pool_mismatches(brand: dict, pool: list[str], export: RelationExport, subject_id: str) -> list[str]:
     """Is the shadow's brand resolution consistent with the export's brand relations and pool semantics for THIS subject? Not just 'resolved?' / 'empty?':
     - brand unresolved but a pool exists, or resolved but the pool is empty;
@@ -246,7 +287,7 @@ def brand_pool_mismatches(brand: dict, pool: list[str], export: RelationExport, 
     - a pool member's brand relation (`br`) that contradicts the shadow's relation for that brand (EXACT / ALIAS_SAME for the resolved brand, the declared relation for a family brand);
     - an allowed (non-deleted, in-pool status) model of the resolved or family brand that the export pool lacks."""
     bid = brand.get("brand_id")
-    reasons: list[str] = []
+    reasons: list[str] = [f"BRAND_RESOLUTION_VS_POOL: {x}" for x in producer_brand(export, subject_id)["issues"]]
     if not bid:
         if pool:
             reasons.append("BRAND_RESOLUTION_VS_POOL: the export has a pool but the shadow does not resolve the brand")
@@ -255,8 +296,12 @@ def brand_pool_mismatches(brand: dict, pool: list[str], export: RelationExport, 
         return ["BRAND_RESOLUTION_VS_POOL: the shadow resolves the brand to a TDR brand but the export pool is empty (brand relation not allowed)"]
     declared = {bid: brand.get("relation")} | {f["brand_id"]: f["relation"] for f in brand.get("family", ())}
     for tid in pool:
+        row = export.ice_tdr.get(f"{subject_id}|{tid}")
+        if row is None or tid not in export.tdr_models:
+            reasons.append(f"BRAND_RESOLUTION_VS_POOL: pool member {tid} has no producer row / is not a TDR model of the bound snapshot")
+            continue
         c = export.tdr_models[tid]["brand_id"]
-        br = export.ice_tdr[f"{subject_id}|{tid}"]["br"]
+        br = row["br"]
         if c not in declared:
             reasons.append(f"BRAND_RESOLUTION_VS_POOL: pool member {tid} is brand {c!r}, but the shadow resolved {bid!r} (family {sorted(declared)[1:] or 'none'})")
         elif br != declared[c]:

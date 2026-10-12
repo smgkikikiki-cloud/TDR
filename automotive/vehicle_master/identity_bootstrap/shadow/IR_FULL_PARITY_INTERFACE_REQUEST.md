@@ -4,6 +4,8 @@
 >
 > **New request (open):** the export compares a provider name with each TDR model's `name_en` (plus the producer's `aliases.model` entries) only. The TDR catalog's own per-model `aliases` (e.g. `audi.a8` aliases `A8L`, `wuling.wuling_bingo` aliases `binguo`) are in the producer's TDR extract but are not compared, so nine provider names that equal a catalog alias are exported as CONTRADICTION. PR #201 does not patch this; it surfaces the nine as `POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS` mandatory owner review. Please state whether catalog aliases should be a relation source, and if so publish them in a new export id.
 
+> **Version gap noted (relation-first brand round, informational; no request to change #200):** the pinned rev4 export carries **no** typed brand relation from the Ice brand `JETOUR` to any TDR brand (empty pool, `BRND_NOT_IN_TDR`), while the consumer's local catalog alias hints `chery`. PR #201 does not adopt the hint and keeps `JETOUR|ไม่ระบุ` `IR_PARITY_UNRESOLVED` (INSUFFICIENT_DATA). A producer `chery_jetour RELATED` relation belongs to a later producer policy and is not a versioned consumer export in this repository; it would need its own separately versioned export and a fresh shadow, and it would not retroactively authorize any rev4 AUTO or CREATE.
+
 **Status:** a request for a later, separate change. PR #201 does not implement it, does not modify PR #200 and does not fork its rules.
 
 **Why.** Today PR #200's published `after_rev4.json` lists pair ids only for the three kinds that rev 4 changed (FUZZY, SIBLING, EQUAL_VIA_MODEL_ALIAS). Bootstrap's shadow stand-in still generates EQUAL, EQUAL_VIA_TOKEN_EQUIV, SUBJECT_COARSER and SUBJECT_FINER itself, and the counts disagree

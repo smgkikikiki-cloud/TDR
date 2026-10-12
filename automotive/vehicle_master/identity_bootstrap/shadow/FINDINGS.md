@@ -1,3 +1,23 @@
+# Relation-first brand parity (after `30d2618`): the producer's typed brand relation and pool lead
+
+**Rule applied (owner decision INIT-01/02):** the brand, the brand relation and the brand family Bootstrap is given now come **only** from the producer's pool and typed brand relation (`br`) of the subject's own Ice x TDR rows (`ir_export.producer_brand`). The local brand/catalog-alias table (`stand_in.local_brand_hint`) is a **diagnostic and a spelling source**: it can neither add a pool member nor change a relation, and a test fails if it does (`test_misleading_local_brand_aliases_cannot_control_...`, `test_the_brand_given_to_bootstrap_never_consults_...`, and the real-snapshot `test_a_misleading_catalog_alias_changes_the_parity_verdict_but_never_the_bootstrap_input`: the whole snapshot stays byte-equal). The producer export (rev 4, `eed76aa6`), its pin and the 38,917 relations are untouched; no rev 5 export is invented.
+
+**Result: 8 -> 1 unresolved (1,199 / 1,200 clear).** Bootstrap outcomes did not move (82 CREATE / 127 REVIEW / 991 HOLD in A, 82 / 365 / 753 in B); the 82-row adjudication set, the dispatch manifest, the nine mandatory catalog-alias reviews and `maxus-maxus-v80` are byte-identical to the accepted head. Eight rows changed (reason codes only; `transitions_vs_30d2618a.csv`):
+
+| Subject | Producer pool | Typed relation | Before (30d2618a) | After | Parity verifiable? |
+|---|---|---|---|---|---|
+| `MERCEDES AMG\|SL 43`, `...\|SL 55 4MATIC`, `MERCEDESBENZ MAYBACH\|S680 4 M` | `mercedes_benz` x 19 (all of its allowed models) | `ALIAS_RELATED` | local table had no brand -> `BRAND_NOT_IN_TDR`; parity unresolved | brand `mercedes_benz` `ALIAS_RELATED` -> `STRUCTURAL_CONFLICT`; parity resolved | yes: the producer states relation and pool, every pair read |
+| `RANGE ROVER\|AUTOBIOGRAPHY P400E LWB`, `...\|EVOQUE 2 2 SD4 DYNAMIC`, `...\|EVOQUE 2 2L SD4` | `land_rover` x 4 | `ALIAS_RELATED` | same | brand `land_rover` `ALIAS_RELATED` -> `STRUCTURAL_CONFLICT`; resolved | yes |
+| `maxus-maxus-epc1a` | `mg` x 18 | `ALIAS_RELATED` | same | brand `mg` `ALIAS_RELATED` -> `STRUCTURAL_CONFLICT`; resolved | yes |
+| `JETOUR\|ไม่ระบุ` | **empty** (`BRND_NOT_IN_TDR`) | none | local catalog alias hinted `chery` `ALIAS_SAME`, so no brand code | brand `NOT_IN_TDR` -> `BRAND_NOT_IN_TDR`; **still unresolved** | **no (INSUFFICIENT_DATA)**: rev4 has no typed relation; the hint is not adopted. A `chery_jetour RELATED` relation exists only in a later producer policy, not in a versioned consumer export here: a version gap, not a verified fact |
+
+* `ALIAS_RELATED` is only ever a suspicion (Bootstrap policy: `STRUCTURAL_CONFLICT`, never creatable), so none of the seven can become a CREATE; none is in the dispatch manifest. rev5's conditional AUTO-eligibility for RELATED does **not** retroactively authorize any rev4 AUTO or CREATE.
+* **Genuine side effect to read correctly:** the structural-conflict tally moves A 17 -> 24 and B 48 -> 55 solely because these seven now carry the engine's `STRUCTURAL_CONFLICT` code. They are **brand-level** conflicts (listed under `of_which_brand_level_alias_related`), not new name-structure conflicts; the name-structure set is unchanged.
+* New fail-closed checks: a producer pool whose brand relation is not uniform, whose primary brand is ambiguous, whose `br` is not a typed brand relation, that lacks an allowed model of its brand, or that contains a member without a producer row all make the subject `IR_PARITY_UNRESOLVED` (`BRAND_RESOLUTION_VS_POOL`); a local hint that disagrees with the producer is `BRAND_LOCAL_HINT_DISAGREES`; a local hint with an empty producer pool is `INSUFFICIENT_DATA`. The Bootstrap brand must also equal the producer's view.
+* Not changed: PR #200, the lexical rules, the rev4 export, any owner field, `activation_authorized=false` on every dispatch record (blockers `OWNER_APPROVAL_PENDING`, `GOVERNED_WRITER_NOT_BUILT`), no CREATE authorization.
+
+---
+
 # Full-parity QA correction (after `bd14ce0`): TDR snapshot binding and brand parity
 
 No outcome moved: 82 CREATE / 127 REVIEW / 991 HOLD (A), 82 / 365 / 753 (B); the 82-row provisional set, the nine mandatory catalog-alias reviews, all 38,917 exported relations and the producer pin (`eed76aa6`) are unchanged. Two verification gaps were closed.

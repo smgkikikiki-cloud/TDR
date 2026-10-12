@@ -355,6 +355,7 @@ def main(argv: list[str] | None = None) -> int:
         print(path)
     calibration.write_adjudication(rows, (args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
     write_transitions(summary["m5"]["transitions"], args.out / "transitions_vs_b132a86.csv")
+    write_transitions(summary["m5"]["round_delta"]["moved"], args.out / "transitions_vs_30d2618a.csv")
     write_market(A, summary, args.out)
     write_routing(summary, args.out)
     print((args.review_dir or Path(__file__).with_name("review")) / "create_adjudication.csv")
@@ -396,14 +397,21 @@ def _m5_md(s: dict, m: dict) -> str:
     L.append(_table(["Population", "Evaluated pairs", "Pairs read by the shadow", "All read", "Relations passed to Bootstrap", "Snapshot relations not in export / relabelled", "Counts equal manifest (all 9 kinds)"],
                     [[k, lx[k]["evaluated_pairs"], lx[k]["pairs_read_by_the_shadow"], lx[k]["all_pairs_read"], lx[k]["relations_passed_to_bootstrap"], len(lx[k]["snapshot_relations_not_in_export_or_relabelled"]), lx[k]["counts_equal_manifest_for_all_nine_kinds"]] for k in ("ice_ice", "ice_tdr")]))
     L.append(f"**Candidate-pool parity:** subjects {pp['subjects']}; shadow candidates outside the export pool: {len(pp['shadow_candidates_outside_pool'])}; pool members not read: {len(pp['pool_members_not_read'])}; empty pools {pp['subjects_with_empty_pool']} (no TDR relation exists; not a CREATE authorization). "
-             f"The milestone-2/3 stand-in candidate set (every TDR model of the resolved brand family) differed from the export pool for {pp['old_brand_family_candidates_differing_from_pool']} subjects: {pp['old_vs_pool_by_kind']}.\n")
+             f"The consumer's own brand/catalog-alias candidate set (every TDR model of the locally hinted brand family; a diagnostic that never decides a pool) differed from the export pool for {pp['old_brand_family_candidates_differing_from_pool']} subjects: {pp['old_vs_pool_by_kind']}.\n")
     L.append(f"**Subjects:** {sub['resolved']} meet every consumer-contract requirement and clear `IR_PARITY_UNRESOLVED` (the owner and governed-writer blockers are untouched); **{sub['unresolved']} remain unresolved**: {sub['unresolved_ids_and_reasons'] or 'none'}.\n")
+    rd = m["round_delta"]
+    L.append(f"**Relation-first brand parity (this round).** Bootstrap's brand, brand relation and brand family now come from the producer's pool and typed brand relation (`br`) only; the local brand/catalog-alias table is a diagnostic and a spelling source and can neither add a pool member nor change a relation. "
+             f"Against the accepted 30d2618a head {len(rd['moved'])} subject rows moved (`transitions_vs_30d2618a.csv`); Bootstrap outcomes (CREATE / REVIEW / HOLD) did not move.\n")
+    L.append(_table(["Subject", "Producer pool (brand × n)", "Typed relation", "Local hint vs producer", "Before → after parity", "Verifiable?", "Why"],
+                    [[g, f"{', '.join(c['producer_pool_brands']) or 'none'} × {c['producer_pool_size']}", c["producer_typed_brand_relation"], c["local_hint_vs_producer"], f"UNRESOLVED → {c['after_status'].replace('IR_PARITY_', '')}",
+                      "yes" if c["parity_verifiable"] else "NO (INSUFFICIENT_DATA)", c["why"]] for g, c in rd["brand_parity_cases"].items()]))
     dr = m["dry_run_vs_bootstrap"]
     L.append("**Reference evaluator's dry-run vs Bootstrap (mode A)** — different questions (link vs existence), reported separately: " + "; ".join(f"{k} {n}" for k, n in dr["cross_tab"].items()) + ". "
              f"Divergences to inspect ({len(dr['divergent'])}, `dry_run_vs_bootstrap.csv`); CREATEs for which IR's dry run found a candidate: {[x['id'] for x in dr['divergent'] if x['bootstrap'] == 'CREATE_IDENTITY']}.\n")
     L.append("### 0.4 Structural conflicts\n")
     st = m["structural"]
     L.append(_table(["Mode", "Before", "After", "Left", "Entered"], [[k, v["before"], v["after"], len(v["left"]), f"{len(v['entered'])}: {', '.join(v['entered'][:15])}"] for k, v in st.items()]))
+    L.append("Of the conflicts after, " + "; ".join(f"mode {k}: {len(v['of_which_brand_level_alias_related'])} are BRAND-level (the producer's typed brand relation is ALIAS_RELATED, a suspicion, not a name-structure conflict)" for k, v in st.items()) + ".\n")
     L.append(f"### 0.5 Every changed subject ({len(m['transitions'])}; full table with TDR candidate ids, relation evidence and codes: `transitions_vs_b132a86.csv`)\n")
     L.append(_table(["Group", "Name", "Units (info)", "A before", "A after", "B before", "B after", "TDR ids involved", "Relation changes"],
                     [[t["model_group_id"], t["name"], t["lifetime_units"], t["A_before"], t["A_after"], t["B_before"], t["B_after"], t["tdr_candidate_ids_involved"], t["relation_changes"]]

@@ -15,6 +15,9 @@ from identity_bootstrap.shadow import calibration, ir_export
 SHADOW = Path(ir_export.__file__).parent
 RESULTS = SHADOW / "results" / "2569-09_v3_M7.0"
 BASE = SHADOW / "baseline_b132a86"
+BASE30 = SHADOW / "baseline_30d2618a"      # the QA-accepted head this round starts from
+BRAND_CASES = {"JETOUR|ไม่ระบุ", "MERCEDES AMG|SL 43", "MERCEDES AMG|SL 55 4MATIC", "MERCEDESBENZ MAYBACH|S680 4 M", "RANGE ROVER|AUTOBIOGRAPHY P400E LWB", "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+               "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"}
 ADDED = {"audi-audi-a8l", "audi-audi-s3", "bmw-x2", "byd-e6", "isuzu-isuzu-cab4", "jaecoo-jaecoo-j5", "jaecoo-jaecoo-j7", "volkswagen-volkswagen-multivan", "volkswagen-vw-idbuzz", "wuling-binguo"}
 OWNER_REVIEW = {"audi-audi-a8l", "audi-audi-s3", "byd-e6", "isuzu-isuzu-cab4", "jaecoo-jaecoo-j5", "jaecoo-jaecoo-j7", "maxus-maxus-v80", "volkswagen-volkswagen-multivan", "volkswagen-vw-idbuzz", "wuling-binguo"}
 
@@ -77,20 +80,20 @@ def test_candidate_pool_parity_and_the_unresolved_subjects_are_reported_with_exa
     assert pp["shadow_candidates_outside_pool"] == [] and pp["pool_members_not_read"] == [] and pp["subjects_with_empty_pool"] == 226
     assert pp["old_vs_pool_by_kind"] == {"BRAND_NOT_ALLOWED_IN_POOL": 1, "POOL_WITHOUT_RESOLVED_BRAND": 7}
     sub = summary["m5"]["parity"]["subjects"]
-    assert (sub["resolved"], sub["unresolved"]) == (1192, 8)
+    assert (sub["resolved"], sub["unresolved"]) == (1199, 1)
     ids = set(sub["unresolved_ids_and_reasons"])
-    assert ids == {"JETOUR|ไม่ระบุ", "MERCEDES AMG|SL 43", "MERCEDES AMG|SL 55 4MATIC", "MERCEDESBENZ MAYBACH|S680 4 M", "RANGE ROVER|AUTOBIOGRAPHY P400E LWB", "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC", "RANGE ROVER|EVOQUE 2 2L SD4", "maxus-maxus-epc1a"}
-    assert all(all(x.startswith("BRAND_RESOLUTION_VS_POOL") for x in r) for r in sub["unresolved_ids_and_reasons"].values())
+    assert ids == {"JETOUR|ไม่ระบุ"}, "rev4 has no typed relation for JETOUR: it stays unresolved (INSUFFICIENT_DATA), nothing is invented"
+    assert all(all(x.startswith("INSUFFICIENT_DATA") for x in r) for r in sub["unresolved_ids_and_reasons"].values())
     listed = {r["external_id"] for r in rows(RESULTS / "parity_unresolved.csv")}
     assert listed == ids
 
 
-def test_the_tdr_universe_binding_and_the_eight_unresolved_subjects_are_in_the_report(summary):
+def test_the_tdr_universe_binding_and_the_one_remaining_unresolved_subject_are_in_the_report(summary):
     b = summary["m5"]["parity"]["tdr_universe_binding"]
     assert (b["models"], b["models_with_aliases"], b["alias_strings"], b["brands"]) == (323, 296, 662, 62) and b["statuses"] == {"CURRENT": 318, "HISTORICAL": 5}
     assert b["tdr_inputs_sha256"] == {n: ir_export.load().manifest["sources"]["tdr_inputs"][n] for n in ir_export.TDR_INPUT_FILES}
     sub = summary["m5"]["parity"]["subjects"]
-    assert (sub["resolved"], sub["unresolved"]) == (1192, 8)
+    assert (sub["resolved"], sub["unresolved"]) == (1199, 1)
 
 
 def test_the_committed_catalog_aliases_used_for_routing_equal_the_bound_snapshot(adj):
@@ -138,11 +141,11 @@ def test_the_transition_manifest_is_exactly_the_diff_of_the_two_committed_decisi
         b = base[g]
         if (b["A_outcome"], b["A_primary"], b["A_codes"], b["B_outcome"], b["B_primary"], b["B_codes"]) != (r["A_outcome"], r["A_primary"], r["A_codes"], r["B_outcome"], r["B_primary"], r["B_codes"]):
             want.add(g)
-    assert set(got) == want and len(got) == 77
+    assert set(got) == want and len(got) == 85, "77 relation-driven moves plus the 8 brand-code moves of the relation-first brand correction"
     for g, t in got.items():
         assert t["A_before"] == f"{base[g]['A_outcome']} / {base[g]['A_primary']}" and t["A_after"] == f"{dec[g]['A_outcome']} / {dec[g]['A_primary']}"
         assert t["B_before"] == f"{base[g]['B_outcome']} / {base[g]['B_primary']}" and t["B_after"] == f"{dec[g]['B_outcome']} / {dec[g]['B_primary']}"
-        assert t["relation_changes"] and t["ir_dry_run_outcome"] and t["tdr_candidate_ids_involved"] is not None
+        assert (t["relation_changes"] or g in BRAND_CASES) and t["ir_dry_run_outcome"] and t["tdr_candidate_ids_involved"] is not None
 
 
 def test_every_changed_create_has_its_relation_evidence_and_tdr_ids_in_the_manifest():
@@ -170,10 +173,13 @@ def test_the_create_delta_against_the_b132a86_baseline_is_pinned(dec, base):
 
 def test_structural_conflict_movement_is_consistent_with_the_committed_files(dec, base, summary):
     n = lambda d, k: sum(1 for r in d.values() if "STRUCTURAL_CONFLICT" in r[k].split("|"))
-    assert (n(base, "A_codes"), n(dec, "A_codes")) == (9, 17) and (n(base, "B_codes"), n(dec, "B_codes")) == (48, 48)
+    assert (n(base, "A_codes"), n(dec, "A_codes")) == (9, 24) and (n(base, "B_codes"), n(dec, "B_codes")) == (48, 55)
     s = summary["m5"]["structural"]
-    assert (s["A"]["before"], s["A"]["after"], s["B"]["before"], s["B"]["after"]) == (9, 17, 48, 48)
-    assert s["A"]["entered"] == ["byd-sealion-5", "byd-sealion-6", "ford-ford-ranger-raptor", "maxus-mifa-7", "maxus-mifa-9", "toyota-hilux-revo", "toyota-hilux-travo", "toyota-land-cruiser-fj"]
+    assert (s["A"]["before"], s["A"]["after"], s["B"]["before"], s["B"]["after"]) == (9, 24, 48, 55)
+    name_structure = ["byd-sealion-5", "byd-sealion-6", "ford-ford-ranger-raptor", "maxus-mifa-7", "maxus-mifa-9", "toyota-hilux-revo", "toyota-hilux-travo", "toyota-land-cruiser-fj"]
+    brand_level = sorted(BRAND_CASES - {"JETOUR|ไม่ระบุ"})
+    assert s["A"]["entered"] == sorted(name_structure + brand_level), "the 7 new conflicts are BRAND-level (the producer's typed ALIAS_RELATED brand relation), not name-structure conflicts"
+    assert s["A"]["of_which_brand_level_alias_related"] == s["B"]["of_which_brand_level_alias_related"] == brand_level
 
 
 def test_no_unsettled_id_is_a_create_and_released_groups_are_not_all_candidates(dec, summary):
@@ -273,3 +279,55 @@ def test_routing_counts_before_and_after_in_the_report(summary):
 
 def test_activity_age_and_volume_columns_do_not_appear_in_any_decision_file(dec):
     assert not [c for c in next(iter(dec.values())) if "lane" in c or "activity" in c]
+
+
+# ---------------------------------------------------------------------------------------------------------------- relation-first brand parity round (vs the accepted 30d2618a head)
+def test_this_round_moved_exactly_the_eight_brand_rows_and_no_outcome(dec):
+    old = {r["model_group_id"]: r for r in rows(BASE30 / "decisions.csv")}
+    moved = {g for g in dec if dec[g] != old[g]}
+    assert moved == BRAND_CASES
+    for g in moved:         # codes only: the Bootstrap outcome and primary-reason buckets of CREATE / REVIEW / HOLD did not move in either mode
+        assert (dec[g]["A_outcome"], dec[g]["B_outcome"]) == (old[g]["A_outcome"], old[g]["B_outcome"])
+    got = {r["model_group_id"]: r for r in rows(RESULTS / "transitions_vs_30d2618a.csv")}
+    assert set(got) == BRAND_CASES
+    count = lambda d, k: dict(collections.Counter(r[k] for r in d.values()))
+    assert count(dec, "A_outcome") == count(old, "A_outcome") == {"HOLD": 991, "IDENTITY_REVIEW": 127, "CREATE_IDENTITY": 82}
+    assert count(dec, "B_outcome") == count(old, "B_outcome") == {"HOLD": 753, "IDENTITY_REVIEW": 365, "CREATE_IDENTITY": 82}
+
+
+def test_the_create_set_dispatch_and_adjudication_are_byte_identical_to_the_accepted_head():
+    for name in ("dispatch_manifest.csv", "create_adjudication.csv"):
+        src = (RESULTS / name) if name == "dispatch_manifest.csv" else (SHADOW / "review" / name)
+        assert src.read_bytes() == (BASE30 / name).read_bytes(), name
+
+
+def test_the_seven_alias_related_subjects_are_non_create_and_never_dispatched(dec, summary):
+    seven = BRAND_CASES - {"JETOUR|ไม่ระบุ"}
+    assert all(dec[g]["A_outcome"] != "CREATE_IDENTITY" and dec[g]["B_outcome"] != "CREATE_IDENTITY" and "STRUCTURAL_CONFLICT" in dec[g]["A_codes"] for g in seven)
+    assert all("BRAND_NOT_IN_TDR" not in dec[g]["A_codes"] for g in seven), "the producer states a typed relation; the engine no longer sees an absent brand"
+    assert not ({r["external_id"] for r in rows(RESULTS / "dispatch_manifest.csv")} & BRAND_CASES)
+    assert all("BRAND_NOT_IN_TDR" in dec["JETOUR|ไม่ระบุ"][k] for k in ("A_codes", "B_codes"))
+
+
+def test_the_eight_cases_report_producer_pool_relation_reason_and_verifiability(summary, export):
+    cases = summary["m5"]["round_delta"]["brand_parity_cases"]
+    assert set(cases) == BRAND_CASES
+    for g, c in cases.items():
+        assert c["producer_pool_size"] == len(export.pool(g)) and c["why"] and c["before_reasons"] and c["after_reasons"] is not None
+    j = cases["JETOUR|ไม่ระบุ"]
+    assert (j["producer_pool_size"], j["producer_typed_brand_relation"], j["local_hint_vs_producer"], j["parity_verifiable"], j["after_status"]) == (0, "NOT_IN_TDR", "LOCAL_HINT_WITHOUT_PRODUCER_RELATION", False, "IR_PARITY_UNRESOLVED")
+    assert j["before_shadow_brand"] == {"brand_id": "chery", "relation": "ALIAS_SAME"} and j["after_brand_given_to_bootstrap"] == {"brand_id": None, "relation": "NOT_IN_TDR"} and "version gap" in j["why"]
+    want = {"MERCEDES AMG|SL 43": ("mercedes_benz", 19), "MERCEDES AMG|SL 55 4MATIC": ("mercedes_benz", 19), "MERCEDESBENZ MAYBACH|S680 4 M": ("mercedes_benz", 19),
+            "RANGE ROVER|AUTOBIOGRAPHY P400E LWB": ("land_rover", 4), "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC": ("land_rover", 4), "RANGE ROVER|EVOQUE 2 2L SD4": ("land_rover", 4), "maxus-maxus-epc1a": ("mg", 18)}
+    for g, (brand, n) in want.items():
+        c = cases[g]
+        assert (c["producer_brand_id"], c["producer_typed_brand_relation"], c["producer_pool_size"], c["producer_pool_brands"], c["pool_is_complete_for_brand"]) == (brand, "ALIAS_RELATED", n, [brand], True)
+        assert (c["local_hint_vs_producer"], c["parity_verifiable"], c["after_status"], c["after_reasons"]) == ("LOCAL_NO_OPINION", True, "IR_PARITY_RESOLVED", [])
+        assert c["after_brand_given_to_bootstrap"] == {"brand_id": brand, "relation": "ALIAS_RELATED"}
+
+
+def test_every_dispatch_record_stays_unauthorized_and_no_owner_field_is_populated(adj):
+    for r in rows(RESULTS / "dispatch_manifest.csv"):
+        assert r["activation_authorized"] == "NO" and "OWNER_APPROVAL_PENDING" in r["activation_blockers"] and "GOVERNED_WRITER_NOT_BUILT" in r["activation_blockers"]
+    for r in adj:
+        assert all(r[c] == "" for c in calibration.OWNER_FIELDS)
