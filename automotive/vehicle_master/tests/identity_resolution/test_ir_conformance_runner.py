@@ -76,5 +76,9 @@ def test_runner_refuses_adoption_binding(monkeypatch):
 def test_known_bad_pair_never_promotes_wrong_model():
     case = next(c for c in CASES if c["id"] == "resolve.dmax-not-mux")
     output = run_snapshot(case["input"])
-    assert all(not (d["outcome"] == "AUTO" and "isuzu.mux" in d["target_ids"])
-               for d in output["decisions"])
+    assert output["summary"]["decisions"] == 1
+    decision = output["decisions"][0]
+    assert decision["subject_id"] == "isuzu-isuzu-d-max"
+    assert decision["outcome"] == "NO_CANDIDATE"
+    assert decision["target_ids"] == []
+    assert decision["primary"] == "NO_CANDIDATE_ALL_EXCLUDED"
