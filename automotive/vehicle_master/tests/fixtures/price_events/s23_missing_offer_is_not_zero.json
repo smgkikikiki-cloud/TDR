@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "id": "s23_missing_offer_is_not_zero",
+  "title": "An offer vanishing from a page is not a price of zero or an expiry",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "PROMOTION",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 0
+      }
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [],
+        "event": "NEW",
+        "kinds": [
+          "AMOUNTS"
+        ],
+        "max_ai_calls": 0
+      },
+      "noise": "b2"
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "b3"
+    }
+  ]
+}

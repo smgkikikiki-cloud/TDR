@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "id": "s05_buyer_guide_promo_move",
+  "title": "Buyer-guide table: only one promo figure moves",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "BLOG",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<h1>JAECOO 5 EV buyer guide</h1><p>LONG RANGE DYNAMIC 629,000 (promo 589,000) LONG RANGE MAX 679,000 (promo 639,000) MAX+ 699,000 (promo 579,000) ULTRA 789,000 (special price 669,000)</p>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 629000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 589000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 679000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 639000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 0
+      }
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<h1>JAECOO 5 EV buyer guide</h1><p>LONG RANGE DYNAMIC 629,000 (promo 589,000) LONG RANGE MAX 679,000 (promo 639,000) MAX+ 699,000 (promo 569,000) ULTRA 789,000 (special price 669,000)</p>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 629000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 589000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 679000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 639000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 569000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "AMOUNTS"
+        ],
+        "max_ai_calls": 0
+      }
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<h1>JAECOO 5 EV buyer guide</h1><p>LONG RANGE DYNAMIC 629,000 (promo 589,000) LONG RANGE MAX 679,000 (promo 639,000) MAX+ 699,000 (promo 569,000) ULTRA 789,000 (special price 669,000)</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 629000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE DYNAMIC",
+            "amount": 589000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 679000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 639000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 569000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-3"
+    }
+  ],
+  "model_hint": "jaecoo.jaecoo_5_ev"
+}

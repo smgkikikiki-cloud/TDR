@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "id": "s03_promo_terms_only_change",
+  "title": "Open-ended promotion: terms change, prices identical",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "PROMOTION",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 0
+      }
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: trade-in of any old car required; booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "CONDITIONS"
+        ],
+        "max_ai_calls": 1,
+        "conditions": [
+          "trade-in of any old car required"
+        ]
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 599000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": 699000,
+              "conditions": [
+                "trade-in of any old car required"
+              ],
+              "evidence_text": "JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: trade-in of any old car required; booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-9"
+    },
+    {
+      "id": "o4",
+      "t": "2026-10-08T14:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: trade-in of any old car required; limited to the first 100 customers; booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "REVIEW",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "CONDITIONS"
+        ],
+        "max_ai_calls": 1
+      },
+      "ai_replies": [
+        {
+          "claims": []
+        }
+      ]
+    },
+    {
+      "id": "o5",
+      "t": "2026-10-09T16:00:00+07:00",
+      "body": "<h1>MORE RAIN, MORE GAIN</h1><p>JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 699,000 (from Estimated Price THB 809,000)</p><p>Conditions: trade-in of any old car required; limited to the first 100 customers; booking and delivery by 30 September 2026.</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "PENDING_RETRY",
+        "max_ai_calls": 1,
+        "conditions": [
+          "limited to the first 100 customers"
+        ]
+      },
+      "noise": "build-11",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 599000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": 699000,
+              "conditions": [
+                "limited to the first 100 customers"
+              ],
+              "evidence_text": "JAECOO 5 EV MAX+ Special Price THB 599,000 (from THB 699,000)",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "id": "s20_other_models_price_attributed",
+  "title": "Another model's price attributed to JAECOO 5 EV",
+  "provenance": {
+    "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+    "rights": "Fully synthetic text written for this test; no third-party content.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "CURRENT_MODEL_PAGE",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<p>JAECOO 5 EV ULTRA Price THB 809,000 OMODA C5 EV MAX+ Price 709,000 THB</p>",
+      "expect": {
+        "disposition": "REVIEW",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 1,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ]
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 809000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA Price THB 809,000",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 709000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "OMODA C5 EV MAX+ Price 709,000 THB",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<p>JAECOO 5 EV ULTRA Price THB 809,000 OMODA C5 EV MAX+ Price 709,000 THB</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "OMODA C5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "PENDING_RETRY",
+        "max_ai_calls": 1,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ]
+      },
+      "noise": "b2",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 809000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA Price THB 809,000",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 709000,
+              "brand_raw": "OMODA",
+              "model_raw": "OMODA C5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "OMODA C5 EV MAX+ Price 709,000 THB",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "known_finding": {
+    "id": "PEE2-F2",
+    "status": "OPEN",
+    "summary": "trim/model must appear in the quote and the amount in the quote, but not next to each other, so mis-paired claims validate and can resolve the change"
+  }
+}
