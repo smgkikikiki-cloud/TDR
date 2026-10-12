@@ -238,6 +238,12 @@ Columns: trim_id or model_id (`scope`), `type` (`PROMO_PRICE` | `DISCOUNT` | `FR
 - Failure → retry once, then `FAILED` (visible in the panel, no notification).
 - Proposal cap: max 10 new inbox cards per day; extras wait for the next day.
 
+### 9.1 Owner amendments to §9 (2026-10-12, decided by the owner in session; supersede the conflicting §9 text above)
+1. **Runner = GitHub Actions**, not a local computer or rented VPS. A scheduled workflow plus `workflow_dispatch` (the `/admin` "Refresh All" button dispatches it) runs fetch, extraction and the price/trim reconcile. No Docker image, no VPS, no one-runner lock beyond the workflow `concurrency` group. The `agent_jobs` queue and `/admin/agents` heartbeat stay for the later `spec-enrich` loop.
+2. **AI billing = Anthropic API key**, not the subscription Agent SDK credit (unattended automation on a subscription login may breach its terms, and the Catalog Maintainer roadmap warns the same). `agent_provider = api_key`. Model stays Haiku only. Spend is capped by `app_settings.agent_monthly_credit` (THB or USD, entered by the admin); **it defaults to 0, and 0 means no AI call is made** (fail closed). Daily cap = remaining monthly cap ÷ days left; any API error about credit/limits stops the run. The key lives only in GitHub Actions secrets.
+3. **Contractor authority.** Claude Code may open and merge PRs into `main` once CI is green. The first application to production of each new kind of change (a migration, the first write path use, the first scheduled run) is shown to the owner first and waits for "go". All §1 and §6 rules and the Catalog Maintainer `ADD`/`DISCOVERED` proposal-only rules still bind.
+4. **Legacy price rows.** Rows seeded in Phase 0 have `authority = NULL`. For authority ordering a NULL row counts as `OFFICIAL`, not `ADMIN`, unless it carries an explicit lock. Otherwise all 304 seeded list prices (`source = 'admin'` because they arrived through the old admin batch path) would block every automatic update.
+
 ## 10. Market analysis coupling
 - **Market data source = Ice Full Package (§14).** The repo's own registration pipeline (`registrations`, `registration_facts_v2`, `registration_observations_v2`, views `registration_*`) stops being a display source. Keep the tables read-only; `registration_model_aliases` stays as an input to crosswalk matching.
 - Market total = Ice total (e.g. 2569-08 = 62,417, all reg types). The old open blocker on the market-total definition is closed.
