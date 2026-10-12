@@ -98,12 +98,63 @@ create unique index if not exists vm_inbox_open_dedupe_idx on public.vm_inbox (d
 create index if not exists vm_inbox_status_idx on public.vm_inbox (status, kind, created_at);
 
 -- ---------------------------------------------------------------------------
+-- 3b. Runner state: source health, AI spend, settings, run summaries (v3 §3 source registry, §9.1).
+-- ---------------------------------------------------------------------------
+create table if not exists public.vm_source_state (
+  target_id text primary key,                    -- id in vehreg/data/<year>/market/pricefeed/targets.json
+  url text not null,
+  model_ids text[] not null default '{}',
+  content_hash text,                             -- hash of the last successfully read page text
+  last_attempt_at timestamptz,
+  last_success_at timestamptz,
+  fail_count integer not null default 0,         -- consecutive failed runs; > 3 days broken -> SOURCE_BROKEN card (§6.F)
+  status text not null default 'NEW' check (status in ('NEW', 'OK', 'UNCHANGED', 'FAILED', 'BLOCKED', 'BROKEN')),
+  last_error text,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.vm_settings (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz not null default now()
+);
+-- Fail closed: a cap of 0 means no AI call is ever made until the owner enters a number (§9.1 item 2).
+insert into public.vm_settings (key, value) values
+  ('agent_monthly_cap_usd', '0'::jsonb),
+  ('agent_cycle_start_day', '1'::jsonb),
+  ('agent_provider', '"api_key"'::jsonb),
+  ('agent_model', '"claude-haiku-4-5-20251001"'::jsonb),
+  ('agent_rate_usd_per_mtok', '{"input": 1.0, "output": 5.0}'::jsonb)
+on conflict (key) do nothing;
+
+create table if not exists public.vm_agent_usage (
+  id bigserial primary key,
+  run_id text not null,
+  skill text not null,
+  model text not null,
+  input_tokens integer not null default 0,
+  output_tokens integer not null default 0,
+  cost_usd numeric(12, 6) not null default 0,
+  created_at timestamptz not null default now()
+);
+create index if not exists vm_agent_usage_created_idx on public.vm_agent_usage (created_at);
+
+create table if not exists public.vm_runs (
+  run_id text primary key,
+  trigger text not null default 'manual',
+  dry_run boolean not null default true,
+  started_at timestamptz not null default now(),
+  finished_at timestamptz,
+  summary jsonb not null default '{}'::jsonb
+);
+
+-- ---------------------------------------------------------------------------
 -- 4. Row level security: service_role only.
 -- ---------------------------------------------------------------------------
 do $$
 declare relation_name text;
 begin
-  foreach relation_name in array array['vm_observations', 'vm_inbox'] loop
+  foreach relation_name in array array['vm_observations', 'vm_inbox', 'vm_source_state', 'vm_settings', 'vm_agent_usage', 'vm_runs'] loop
     execute format('alter table public.%I enable row level security', relation_name);
     execute format('revoke all on public.%I from public, anon, authenticated', relation_name);
     execute format('grant select, insert, update, delete on public.%I to service_role', relation_name);
