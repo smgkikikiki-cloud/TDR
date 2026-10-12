@@ -4,17 +4,20 @@
   "alias_rows": 9,
   "brand_cases": 11,
   "create_rows": 82,
-  "first_wave_owner_actions": 65,
+  "first_wave_atomic_verdicts": 78,
+  "first_wave_child_decisions": 13,
+  "first_wave_review_sessions": 65,
   "negative_sample": 24,
   "queue": 690,
   "r6_view_rows": 560,
+  "sessions": 659,
   "starter_rows": 48
  },
  "export_manifest_sha256": "e9d74e05ce9c09ad59bad2654d16fbb74e06969e929b7415b5e55a0fc2d2e0b8",
  "files": {
   "OWNER_DECISION_PACK.md": {
-   "bytes": 21456,
-   "sha256": "668e6c96754eecf04ae4f72e01a442f44615c7c80abff319884a670b67258ca8"
+   "bytes": 22278,
+   "sha256": "8df13230c0686d4cae80a7417e2a8249701a76829e2faccc113a029f9f5476c5"
   },
   "brand_folds.csv": {
    "bytes": 15423,
@@ -41,12 +44,12 @@
    "sha256": "0138331884aad5676922231921db1518e2fa20029493b68bb50e57a06f0e91d6"
   },
   "decision_queue.csv": {
-   "bytes": 136942,
-   "sha256": "3dc70f37012e27c9e275670571458a2a9e1d2329ebb3ab59102a10269b6aad66"
+   "bytes": 154288,
+   "sha256": "8cb12ae45cbb09bb9771e7a48e00cca217bd05a180fdcff38963490480795b1c"
   },
   "initial_owner_decisions.csv": {
-   "bytes": 1607,
-   "sha256": "2231f836b7e8204c19f90a039ff5863f1e7313495bc4a54e8e55fc80406b154c"
+   "bytes": 1842,
+   "sha256": "c424e97fd20cc6444b7fc8312f2844eb075830d14c2035db6d8a76c923242c06"
   },
   "negative_sample.csv": {
    "bytes": 9542,
@@ -63,6 +66,10 @@
   "r6_priority_view.csv": {
    "bytes": 222035,
    "sha256": "3beae93b59240cb080eb19a3de2b2a4d069f8cc4908d6dfe4e0ffe51b466df52"
+  },
+  "review_sessions.csv": {
+   "bytes": 442196,
+   "sha256": "466a2c3e52339b4926d664fa10d0825f0cdb8b70f7404a09740242a86de63daf"
   },
   "verdict_crosswalk.csv": {
    "bytes": 2939,

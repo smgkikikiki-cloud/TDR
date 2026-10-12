@@ -370,58 +370,251 @@ def test_starter_batch_definition_and_size():
     assert len(distinct) < 560 / 5
 
 
-def test_first_wave_is_small_and_names_what_it_resolves():
+def test_first_wave_is_small_and_names_what_it_informs():
     t = tables()
     st = t["istats"]
-    assert st["owner_actions"] < 100 and st["owner_actions"] == st["contract_questions"] + st["alias_verdicts"] + st["create_verdicts"] + st["r6_rows_alone"]
+    assert st["review_sessions"] < 100 and st["atomic_verdicts_total"] == st["atomic_verdicts_own"] + st["atomic_verdicts_children"]
     assert [i["item_id"] for i in t["init"]] == ["INIT-01", "INIT-02", "INIT-03", "INIT-04"], "initial_owner_decisions.csv holds only decisions that have no row of their own elsewhere"
-    resolved = {x for i in t["init"] for x in i["resolves"]}
-    assert {r["decision_id"] for r in t["brand"]} <= resolved, "every brand case is closed by a contract-level answer"
-    assert "OD-C11" in resolved
+    informs = {x for i in t["init"] for x in i["resolves"]}
+    assert {r["decision_id"] for r in t["brand"]} <= informs, "every brand case is evidence for a contract-level question"
+    assert "OD-C11" not in informs, "a CREATE verdict is never listed as settled by a filing question"
     assert all(i["owner_answer"] == "" for i in t["init"])
 
 
-# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-3: action vs evidence semantics
-def test_wave_1_has_exactly_65_distinct_decisions_and_every_other_row_names_its_resolver():
+# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-3/4: review sessions, child verdicts, atomic cells
+def sessions_by_id() -> dict:
+    return {x["session_id"]: x for x in tables()["sessions"]}
+
+
+def test_wave_1_reconciles_review_sessions_to_atomic_verdict_cells():
     t = tables()
     queue = pack_csv("decision_queue.csv")
-    assert [r["queue_role"] for r in queue] and set(r["queue_role"] for r in queue) == {"ACTION_REQUIRED", "SUPPORTING_ROW"}
+    assert set(r["queue_role"] for r in queue) == {"REVIEW_SESSION", "CHILD_DECISION", "EVIDENCE_ROW"}
     w1 = [r for r in queue if r["wave"] == "1"]
-    actions = [r for r in w1 if r["queue_role"] == "ACTION_REQUIRED"]
-    assert len(actions) == 65 == len({r["action_id"] for r in actions}) == t["istats"]["owner_actions"]
-    kinds = collections.Counter(r["item_kind"] for r in actions)
+    roles = collections.Counter(r["queue_role"] for r in w1)
+    assert roles == {"REVIEW_SESSION": 65, "CHILD_DECISION": 13, "EVIDENCE_ROW": 11} and len(w1) == 89
+    sess = [x for x in t["sessions"] if x["wave"] == 1]
+    assert len(sess) == 65 == t["istats"]["review_sessions"]
+    own = sum(x["atomic_verdicts_own"] for x in sess)
+    kids = sum(x["atomic_verdicts_children"] for x in sess)
+    assert (own, kids, own + kids) == (65, 13, 78) == (t["istats"]["atomic_verdicts_own"], t["istats"]["atomic_verdicts_children"], t["istats"]["atomic_verdicts_total"])
+    assert sum(int(r["atomic_verdict_fields"]) for r in w1) == 78, "the queue's atomic field counts add up to the same 78"
+    assert all(x["atomic_verdicts_total"] == len(x["own_cells"]) + len(x["child_cells"]) for x in t["sessions"])
+    kinds = collections.Counter(x["kind"] for x in sess)
     assert kinds == {"CONTRACT": 3, "CATALOG": 1, "ALIAS_ROW": 5, "CREATE_ROW": 9, "R6_ROW": 47}
-    assert len(w1) == 83 == len(actions) + t["istats"]["supporting_rows_wave1"] == 65 + 18
-    all_actions = {r["action_id"]: r for r in queue if r["queue_role"] == "ACTION_REQUIRED"}
-    for r in queue:
-        if r["queue_role"] == "ACTION_REQUIRED":
-            assert r["action_id"] == r["item_id"] and r["resolved_by_action_id"] == "" and r["answer_destination"], r["item_id"]
-        else:
-            assert r["action_id"] == "" and r["resolved_by_action_id"] in all_actions, f"{r['item_id']} must name exactly one ACTION_REQUIRED row"
-            assert int(all_actions[r["resolved_by_action_id"]]["wave"]) <= int(r["wave"]), "a wave-1 supporting row never hangs on a later action"
-            assert r["answer_destination"]
-    # every underlying record is kept; the headline reconciles with the starter batch and the report text
+    text = (OUT / "OWNER_DECISION_PACK.md").read_text(encoding="utf-8")
+    for must in ("**65 review sessions**", "**78 independent owner verdict cells**", "65 cells owned by the sessions themselves plus 13 child verdicts", "lists 89 first-wave rows", "**78 atomic verdict cells**"):
+        assert must in text, must
+
+
+def test_every_source_record_is_in_exactly_one_session_cell_and_nothing_is_dropped():
+    t = tables()
+    cells = collections.Counter(c for x in t["sessions"] for c in x["own_cells"] + x["child_cells"])
+    assert max(cells.values()) == 1, "no cell is solicited by two sessions"
+    by_file = collections.Counter(c.split("#", 1)[0] for c in cells)
+    assert by_file == {"initial_owner_decisions.csv": 4, "catalog_alias_collisions.csv": 9, "create_candidates.csv": 82, "r6_owner_review.csv": 560, "negative_sample.csv": 24}
+    assert len(cells) == 679 == sum(x["atomic_verdicts_total"] for x in t["sessions"])
+    assert {c.split("#", 1)[1].rsplit("@", 1)[0] for c in cells if c.startswith("r6_owner_review.csv")} == {f"review_rank={r['review_rank']}" for r in inp().r6}
+    assert {c.split("#", 1)[1].rsplit("@", 1)[0] for c in cells if c.startswith("create_candidates.csv")} == {c["decision_id"] for c in t["create"]}
     starter = {r["review_rank"] for r in t["view"] if r["starter_batch"]}
     assert len(starter) == 48
-    w1_r6 = {r["item_id"] for r in w1 if r["item_kind"] == "R6_ROW"}
-    assert w1_r6 == {f"R6-{x}" for x in starter}
-    assert len([r for r in w1 if r["item_kind"] == "R6_ROW" and r["queue_role"] == "ACTION_REQUIRED"]) == 47 and t["istats"]["r6_rows_also_decided_elsewhere"] == 1
-    assert {r["item_id"] for r in queue if r["item_kind"] == "CREATE_ROW"} == {c["decision_id"] for c in t["create"]} and len([r for r in queue if r["item_kind"] == "R6_ROW"]) == 560
-    text = (OUT / "OWNER_DECISION_PACK.md").read_text(encoding="utf-8")
-    assert "**65 owner decisions**" in text and "lists 83 first-wave rows" in text and "18 `SUPPORTING_ROW`s" in text
+    w1_cells = {c for x in t["sessions"] if x["wave"] == 1 for c in x["own_cells"] + x["child_cells"]}
+    assert {f"r6_owner_review.csv#review_rank={r}@owner_verdict" for r in starter} <= w1_cells
 
 
-def test_supporting_rows_do_not_hold_a_second_writable_decision():
+def test_session_cell_addresses_resolve_and_are_blank_in_the_committed_files():
+    files = {"initial_owner_decisions.csv": ("item_id", pack_csv("initial_owner_decisions.csv")), "catalog_alias_collisions.csv": ("decision_id", pack_csv("catalog_alias_collisions.csv")),
+             "create_candidates.csv": ("decision_id", pack_csv("create_candidates.csv")), "negative_sample.csv": ("sample_id", pack_csv("negative_sample.csv")),
+             "r6_owner_review.csv": ("review_rank", tuple(inp().r6))}
+    for x in tables()["sessions"]:
+        for cell in x["own_cells"] + x["child_cells"]:
+            file, rest = cell.split("#", 1)
+            key, field = rest.rsplit("@", 1)
+            col, rows = files[file]
+            k = key.split("=", 1)[-1]
+            hit = [r for r in rows if r[col] == k]
+            assert len(hit) == 1 and field in hit[0], cell
+            assert hit[0][field] == "", f"{cell} must be blank"
+
+
+def test_session_and_queue_references_resolve_and_roles_are_consistent():
     t = tables()
-    queue = {(r["item_kind"], r["item_id"]): r for r in pack_csv("decision_queue.csv")}
-    for b in t["brand"]:
-        assert queue[("BRAND_CASE", b["decision_id"])]["queue_role"] == "SUPPORTING_ROW"
-    for c in t["create"]:
-        row = queue[("CREATE_ROW", c["decision_id"])]
-        assert (row["queue_role"] == "SUPPORTING_ROW") == bool(c["alias_decision_id"] or c["brand_case_id"]), c["decision_id"]
-    # the alias file no longer carries a second group-verdict field: the group verdict is written once, in the CREATE row
-    assert O.OWNER_FIELDS["catalog_alias_collisions.csv"] == ["owner_alias_class", "owner_notes"]
-    assert O.OWNER_FIELDS["brand_resolution_cases.csv"] == ["owner_case_override", "owner_notes"]
+    ids = sessions_by_id()
+    queue = pack_csv("decision_queue.csv")
+    assert "action_id" not in queue[0] and "resolved_by_action_id" not in queue[0], "no row claims to be 'resolved by' another question"
+    for r in queue:
+        assert r["session_id"] in ids, r["item_id"]
+        s = ids[r["session_id"]]
+        if r["queue_role"] == "REVIEW_SESSION":
+            assert r["item_id"] == r["session_id"] and r["required_for_session_completion"] == "yes" and int(r["atomic_verdict_fields"]) == len(s["own_cells"]) >= 1
+        elif r["queue_role"] == "CHILD_DECISION":
+            assert r["item_id"] in s["child_decision_ids"] and r["required_for_session_completion"] == "yes" and r["atomic_verdict_fields"] == "1" and r["wave"] == str(s["wave"])
+            assert "does not settle it" in r["why_in_this_wave"]
+        else:
+            assert r["item_id"] in s["evidence_row_ids"] and r["required_for_session_completion"] == "no" and r["atomic_verdict_fields"] == "0" and r["item_kind"] == "BRAND_CASE"
+    assert collections.Counter(r["item_id"] for r in queue if r["queue_role"] != "EVIDENCE_ROW") == collections.Counter(c for x in t["sessions"] for c in [x["session_id"], *x["child_decision_ids"]])
+    for x in t["sessions"]:
+        assert len(x["child_decision_ids"]) == len(x["child_cells"]) and x["wave"] in (1, 2, 3)
+    assert len(queue) == 690 and len(pack_csv("review_sessions.csv")) == len(t["sessions"])
+
+
+def test_init_03_separately_collects_filing_v80_create_and_the_maxus_pair_verdicts():
+    s = sessions_by_id()["INIT-03"]
+    assert s["own_cells"] == ["initial_owner_decisions.csv#INIT-03@owner_answer"]
+    assert s["child_decision_ids"] == ["OD-C11", "R6-190", "R6-183", "R6-184"]
+    assert s["child_cells"] == ["create_candidates.csv#OD-C11@owner_verdict", "r6_owner_review.csv#review_rank=190@owner_verdict", "r6_owner_review.csv#review_rank=183@owner_verdict",
+                                "r6_owner_review.csv#review_rank=184@owner_verdict"]
+    assert s["atomic_verdicts_total"] == 5
+    byid = {r["decision_id"]: r for r in tables()["create"]}
+    assert byid["OD-C11"]["provider_group_id"] == "maxus-maxus-v80"
+    assert {r["model_group_id"] for r in inp().r6 if r["review_rank"] in ("190", "183", "184")} == {"maxus-maxus-v80", "maxus-mifa-7", "maxus-mifa-9"}
+    assert set(s["evidence_row_ids"]) == {"OD-B09", "OD-B10", "OD-B11"}
+
+
+def test_alias_sessions_separately_collect_alias_class_group_verdict_and_pair_verdicts():
+    t = tables()
+    ids = sessions_by_id()
+    create_of = {c["provider_group_id"]: c for c in t["create"]}
+    for a in t["alias"]:
+        s = ids[a["decision_id"]]
+        g = a["provider_group_id"]
+        assert s["own_cells"] == [f"catalog_alias_collisions.csv#{a['decision_id']}@owner_alias_class"]
+        want = [f"create_candidates.csv#{create_of[g]['decision_id']}@owner_verdict"] + [f"r6_owner_review.csv#review_rank={r['review_rank']}@owner_verdict" for r in inp().r6_by_group.get(g, [])]
+        assert s["child_cells"] == want, a["decision_id"]
+        assert s["atomic_verdicts_total"] == 1 + len(want) >= 2
+    assert sessions_by_id()["OD-A02"]["child_decision_ids"] == ["OD-C01", "R6-15"]
+
+
+def test_a_verdict_row_is_never_labelled_as_settled_by_another_question():
+    for name in ("decision_queue.csv", "review_sessions.csv", "initial_owner_decisions.csv"):
+        text = (OUT / name).read_text(encoding="utf-8")
+        assert "resolved_by" not in text and "SUPPORTING_ROW" not in text and "ACTION_REQUIRED" not in text and "written together with" not in text, name
+    md = (OUT / "OWNER_DECISION_PACK.md").read_text(encoding="utf-8")
+    assert "SUPPORTING_ROW" not in md and "settles" not in md.split("## 2.")[0].replace("never settled", "").replace("not settle", "").replace("none is settled", "")
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------- the completion validator (adversarial)
+def meta_():
+    return tables()["cell_meta"]
+
+
+def coherent_answers(session: dict) -> dict:
+    """The most neutral complete answer set: AMBIGUOUS / INSUFFICIENT_EVIDENCE / UNRESOLVED never contradict each other."""
+    ans = {}
+    for c in session["own_cells"] + session["child_cells"]:
+        file = c.split("#", 1)[0]
+        ans[c] = {"initial_owner_decisions.csv": "owner answer", "catalog_alias_collisions.csv": "UNRESOLVED", "create_candidates.csv": "AMBIGUOUS", "r6_owner_review.csv": "INSUFFICIENT_EVIDENCE",
+                  "negative_sample.csv": "NO"}[file]
+    return ans
+
+
+def kinds_of(problems):
+    return collections.Counter(p["kind"] for p in problems)
+
+
+def test_validator_refuses_an_empty_session_and_names_every_missing_cell():
+    s = sessions_by_id()["INIT-03"]
+    probs = O.validate_session(s, {}, meta_())
+    assert kinds_of(probs) == {"UNANSWERED_MANDATORY_CELL": 5} and {p["cell"] for p in probs} == set(s["own_cells"] + s["child_cells"])
+    assert not O.session_is_complete(s, {}, meta_())
+
+
+def test_filing_answer_alone_never_completes_init_03_and_alias_class_alone_never_completes_an_alias_session():
+    s = sessions_by_id()["INIT-03"]
+    answers = {s["own_cells"][0]: "file under MG"}
+    probs = O.validate_session(s, answers, meta_())
+    assert {p["cell"] for p in probs} == set(s["child_cells"]) and kinds_of(probs) == {"UNANSWERED_MANDATORY_CELL": 4}
+    before = dict(answers)
+    O.validate_session(s, answers, meta_())
+    assert answers == before, "the validator fills nothing in"
+    a = sessions_by_id()["OD-A02"]
+    probs = O.validate_session(a, {a["own_cells"][0]: "IDENTITY_EQUIVALENT"}, meta_())
+    assert {p["cell"] for p in probs} == set(a["child_cells"]), "an alias class does not fill the group verdict or the pair verdict"
+    for child_missing in a["child_cells"]:   # omitting any single child verdict blocks completion
+        ans = coherent_answers(a)
+        del ans[child_missing]
+        assert [p["cell"] for p in O.validate_session(a, ans, meta_())] == [child_missing]
+
+
+def test_validator_accepts_a_complete_coherent_session_and_every_wave_1_session_can_be_completed():
+    for x in tables()["sessions"]:
+        if x["wave"] == 1:
+            assert O.session_is_complete(x, coherent_answers(x), meta_()), x["session_id"]
+
+
+def test_validator_checks_values_and_conditional_fields():
+    s = sessions_by_id()["OD-A02"]
+    ans = coherent_answers(s)
+    ans["create_candidates.csv#OD-C01@owner_verdict"] = "SORT_OF"
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"VALUE_NOT_ALLOWED": 1}
+    ans["create_candidates.csv#OD-C01@owner_verdict"] = "EXISTING_IDENTITY"
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
+    ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.wuling_bingo"
+    assert O.validate_session(s, ans, meta_(), set(inp().models)) == []
+    ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.nonexistent"
+    assert kinds_of(O.validate_session(s, ans, meta_(), set(inp().models))) == {"UNKNOWN_TDR_MODEL": 1}
+    ans["create_candidates.csv#OD-C01@owner_verdict"] = "VALID_MISSING_CANONICAL"
+    ans.pop("create_candidates.csv#OD-C01@owner_canonical_model_id")
+    assert "CONDITIONAL_FIELD_MISSING" in kinds_of(O.validate_session(s, ans, meta_()))
+    ans["create_candidates.csv#OD-C01@owner_discovery_class"] = "HISTORICAL_BACKFILL"
+    assert O.validate_session(s, ans, meta_()) == []
+    r6 = "r6_owner_review.csv#review_rank=15@owner_verdict"
+    ans[r6] = "CORRECT_PART_OF"
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
+    ans["r6_owner_review.csv#review_rank=15@owner_link_type"] = "EQUIVALENT"
+    ans["r6_owner_review.csv#review_rank=15@owner_canonical_model_id"] = "wuling.wuling_bingo"
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1, "CONTRADICTORY_ANSWERS": 1}, "the link type must match the verdict"
+    ans["r6_owner_review.csv#review_rank=15@owner_link_type"] = "PART_OF"
+    assert "CONDITIONAL_FIELD_MISSING" not in kinds_of(O.validate_session(s, ans, meta_()))
+
+
+def test_validator_flags_contradictory_answers_without_resolving_them():
+    s = sessions_by_id()["OD-A02"]
+    a, c, r = s["own_cells"][0], "create_candidates.csv#OD-C01@owner_verdict", "r6_owner_review.csv#review_rank=15@owner_verdict"
+    target = next(x for x in tables()["alias"] if x["decision_id"] == "OD-A02")["existing_identity_id"]
+    cand = meta_()[r]["candidate"]
+    base = {"create_candidates.csv#OD-C01@owner_discovery_class": "HISTORICAL_BACKFILL"}
+    # alias class says the same model, group verdict says no identity exists
+    ans = {**base, a: "IDENTITY_EQUIVALENT", c: "VALID_MISSING_CANONICAL", r: "WRONG_TARGET"}
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONTRADICTORY_ANSWERS": 1}
+    # a correct EQUIVALENT pair next to a missing-identity group verdict
+    ans = {**base, a: "UNRESOLVED", c: "VALID_MISSING_CANONICAL", r: "CORRECT_EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_link_type": "EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_canonical_model_id": cand}
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    # misleading alias, but the group verdict names the alias target
+    ans = {a: "MISLEADING_ALIAS", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": target, r: "INSUFFICIENT_EVIDENCE"}
+    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONTRADICTORY_ANSWERS": 1}
+    # equivalent alias, but the group verdict names a different model
+    ans = {a: "IDENTITY_EQUIVALENT", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": "wuling.other", r: "INSUFFICIENT_EVIDENCE"}
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    # a wrong-target pair whose own model is also named as the group's existing identity
+    ans = {a: "UNRESOLVED", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": cand, r: "WRONG_TARGET"}
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    # a coherent set stays clean (the sheet's candidate for rank 15 is the alias target itself)
+    assert cand == target
+    ans = {a: "IDENTITY_EQUIVALENT", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": target, r: "CORRECT_EQUIVALENT",
+           "r6_owner_review.csv#review_rank=15@owner_link_type": "EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_canonical_model_id": target}
+    assert O.validate_session(s, ans, meta_()) == []
+
+
+def test_validator_flags_two_equivalent_targets_inside_one_session():
+    s = sessions_by_id()["INIT-03"]
+    ans = coherent_answers(s)
+    ans["init"] = "x"
+    ans[s["own_cells"][0]] = "keep under MG"
+    for rk, cand in (("183", "mg.mg_maxus_7"), ("184", "mg.mg_maxus_9")):
+        ans[f"r6_owner_review.csv#review_rank={rk}@owner_verdict"] = "CORRECT_EQUIVALENT"
+        ans[f"r6_owner_review.csv#review_rank={rk}@owner_link_type"] = "EQUIVALENT"
+        ans[f"r6_owner_review.csv#review_rank={rk}@owner_canonical_model_id"] = cand
+    assert O.validate_session(s, {k: v for k, v in ans.items() if k != "init"}, meta_()) == [], "different groups: no conflict"
+    ans.pop("init")
+
+
+def test_negative_sample_session_answers_are_checked():
+    s = sessions_by_id()["NS-001"]
+    cell = s["own_cells"][0]
+    assert kinds_of(O.validate_session(s, {cell: "MAYBE"}, meta_())) == {"VALUE_NOT_ALLOWED": 1}
+    assert kinds_of(O.validate_session(s, {cell: "YES"}, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert O.validate_session(s, {cell: "NO"}, meta_()) == []
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- two verdict vocabularies

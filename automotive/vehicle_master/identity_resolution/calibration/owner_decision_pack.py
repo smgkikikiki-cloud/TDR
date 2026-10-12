@@ -1178,9 +1178,12 @@ CALIBRATION_PROCEDURE = {
 # One queue row per underlying record. A row is either an ACTION_REQUIRED (one owner decision, counted once) or a SUPPORTING_ROW (evidence or a companion field: it is settled by exactly one action,
 # named in `resolved_by_action_id`, and does not ask for a second decision). The 65 of the first wave are the ACTION_REQUIRED rows of wave 1.
 INIT_COLUMNS = ["item_id", "wave", "kind", "question", "resolves", "units_at_stake", "why_first", "where_the_answer_goes", "owner_answer", "owner_notes"]
-QUEUE_COLUMNS = ["queue_position", "wave", "queue_role", "item_kind", "item_id", "action_id", "resolved_by_action_id", "answer_destination", "detail_file", "group_tag", "units_at_stake", "why_in_this_wave"]
+QUEUE_COLUMNS = ["queue_position", "wave", "queue_role", "item_kind", "item_id", "session_id", "required_for_session_completion", "atomic_verdict_fields", "answer_destination", "related_sessions_informational", "detail_file",
+                 "group_tag", "units_at_stake", "why_in_this_wave"]
+SESSION_COLUMNS = ["session_id", "wave", "kind", "title", "units_at_stake", "own_cells", "child_decision_ids", "child_cells", "evidence_row_ids", "atomic_verdicts_own", "atomic_verdicts_children", "atomic_verdicts_total",
+                   "conditional_fields", "completion_rule"]
 FIRST_WAVE = {"p1_min_units": 100, "p2_min_units": 1000}
-ACTION, SUPPORT = "ACTION_REQUIRED", "SUPPORTING_ROW"
+SESSION, CHILD, EVIDENCE = "REVIEW_SESSION", "CHILD_DECISION", "EVIDENCE_ROW"
 
 
 def build_initial(inp: Inputs, alias_rows, brand_rows, create_rows, view, meta) -> tuple[list[dict], dict]:
@@ -1192,14 +1195,14 @@ def build_initial(inp: Inputs, alias_rows, brand_rows, create_rows, view, meta) 
     mx = brand_ids("FILING_OF_A_SUB_BRAND_THE_CATALOG_HOLDS_UNDER_ANOTHER_BRAND")
     items = [
         ("INIT-01", "CONTRACT", "When the producer's brand relation to a TDR brand is RELATED (capped at PROPOSE), must a consumer take its candidate set from the producer instead of resolving the brand itself from catalog labels?",
-         rel, units(rel), "one rule closes seven of the eight unresolved parity cases", "adoption.yaml (candidates_pool_rules) / a PR #201 consumer note"),
+         rel, units(rel), "one rule closes seven of the eight unresolved parity cases; settles no group or pair verdict", "adoption.yaml (candidates_pool_rules) / a PR #201 consumer note"),
         ("INIT-02", "CONTRACT", "May a catalog brand `aliases` entry ever be a brand relation, and if so as which typed class (SAME / RELABEL / RELATED) and with which provenance? Decide the one label in the pack (JETOUR under Chery).",
-         jet, units(jet), "closes the one case where the consumer resolves a brand the producer does not relate", "policy.yaml aliases.brand + alias_provenance"),
+         jet, units(jet), "closes the one case where the consumer resolves a brand the producer does not relate; settles no group or pair verdict", "policy.yaml aliases.brand + alias_provenance"),
         ("INIT-03", "CATALOG", "Where are Maxus-badged models filed: under the registration brand MG (as mg.mg_maxus_7 / mg.mg_maxus_9 are today) or under a Maxus brand?",
-         mx + ["OD-C11"], units(mx), "blocks the V80 CREATE, two Mifa identity reviews and the EPC1A parity case", "catalog brand records / PR #201 identity review"),
+         mx, units(mx), "the filing question; the same sitting separately collects the V80 CREATE verdict and the pair verdicts of the three Maxus groups (child cells in review_sessions.csv), which the filing answer does not settle", "catalog brand records / PR #201 identity review"),
         ("INIT-04", "CONTRACT", "What does a TDR catalog model `aliases` entry assert: the same model, a registration-attribution label that may cover a broader family, or a lookup convenience? "
          "(The nine alias rows show all three readings occur.)", [r["decision_id"] for r in alias_rows], sum(int0(r["provider_units_lifetime"]) for r in alias_rows),
-         "the answer is the rule for all nine alias rows and for any alias the catalog gains later", "policy / VEHICLE_DB_V3 note"),
+         "a rule for reading catalog aliases; it fills no alias class, group verdict or pair verdict (each alias session collects its own)", "policy / VEHICLE_DB_V3 note"),
     ]
     out = [{"item_id": i, "wave": 1, "kind": k, "question": q, "resolves": ids, "units_at_stake": u, "why_first": w, "where_the_answer_goes": g, "owner_answer": "", "owner_notes": ""} for i, k, q, ids, u, w, g in items]
     alias_groups = {r["provider_group_id"] for r in alias_rows}
@@ -1215,81 +1218,238 @@ def brand_resolver(r: dict) -> str:
     return {"PRODUCER_ADMITS_RELATED_BRAND__CATALOG_LABEL_LOOKUP_FINDS_NONE": "INIT-01", "CATALOG_ALIAS_RESOLVES__PRODUCER_HAS_NO_BRAND_RELATION": "INIT-02"}.get(r["disagreement_kind"], "INIT-03")
 
 
-def build_queue(inp: Inputs, init: list[dict], plan: dict, alias_rows, brand_rows, create_rows, view, neg_rows) -> list[dict]:
+def cell_addr(file: str, key: str, field: str) -> str:
+    return f"{file}#{key}@{field}"
+
+
+CONDITIONAL_FIELDS = ("create_candidates.csv owner_verdict: EXISTING_IDENTITY / VARIANT_TRIM_CODE also need owner_canonical_model_id; VALID_MISSING_CANONICAL also needs owner_discovery_class; "
+                      "r6_owner_review.csv owner_verdict: CORRECT_* also need owner_link_type (matching the verdict) and owner_canonical_model_id")
+COMPLETION_RULE = ("complete only when EVERY own cell and EVERY child cell is explicitly filled with an allowed value (and its conditional fields), and no answer contradicts another; "
+                   "no cell is inferred from another answer (validate_session)")
+
+
+def build_queue(inp: Inputs, init: list[dict], plan: dict, alias_rows, brand_rows, create_rows, view, neg_rows) -> tuple[list[dict], list[dict]]:
+    """Returns (queue rows, review sessions). A REVIEW_SESSION is one sitting with the owner; it owns explicit cells (owner-field addresses) and may bundle CHILD_DECISIONs, each an independent verdict with its own
+    cell that the session's own answer does NOT settle. An EVIDENCE_ROW asks for nothing. Nothing is inferred: a child is only ever answered by filling its own cell."""
     rows: list[dict] = []
+    sessions: dict[str, dict] = {}
+    first_alias, first_create, starter = set(plan["alias"]), set(plan["create"]), set(plan["starter_ranks"])
     alias_of = {r["provider_group_id"]: r for r in alias_rows}
     brand_of = {r["provider_group_id"]: r for r in brand_rows}
     create_of = {r["provider_group_id"]: r for r in create_rows}
-    first_alias, first_create, starter = set(plan["alias"]), set(plan["create"]), set(plan["starter_ranks"])
-
-    def add(wave, role, kind, item, action, resolved_by, dest, file, tag, units, why):
-        rows.append({"queue_position": 0, "wave": wave, "queue_role": role, "item_kind": kind, "item_id": item, "action_id": action, "resolved_by_action_id": resolved_by, "answer_destination": dest,
-                     "detail_file": file, "group_tag": tag, "units_at_stake": units, "why_in_this_wave": why})
-
-    for i in init:
-        add(1, ACTION, i["kind"], i["item_id"], i["item_id"], "", "initial_owner_decisions.csv owner_answer", "initial_owner_decisions.csv", "", i["units_at_stake"], i["why_first"])
-    for r in alias_rows:
-        d = r["decision_id"]
-        c = create_of.get(r["provider_group_id"])
-        add(1 if d in first_alias else 2, ACTION, "ALIAS_ROW", d, d, "", f"catalog_alias_collisions.csv owner_alias_class; the group verdict is written once, in create_candidates.csv owner_verdict at {c['decision_id'] if c else '(no CREATE row)'}",
-            "catalog_alias_collisions.csv", "", int0(r["provider_units_lifetime"]), "decisive series evidence and real volume" if d in first_alias else "thin volume: follows from the INIT-04 rule")
-    for r in brand_rows:
-        res = brand_resolver(r)
-        add(1, SUPPORT, "BRAND_CASE", r["decision_id"], "", res, f"initial_owner_decisions.csv {res} owner_answer (owner_case_override here only if the answer should not apply to this case)", "brand_resolution_cases.csv", "", r["units_lifetime"],
-            f"closed by the contract-level answer {res}")
-
-    def parent_of_group(g: str) -> str:
-        if g in alias_of:
-            return alias_of[g]["decision_id"]
-        if g in brand_of:
-            return brand_resolver(brand_of[g])
-        return ""
-
-    create_parent = {}
-    for c in create_rows:
-        pr = parent_of_group(c["provider_group_id"])
-        create_parent[c["decision_id"]] = pr
-        spot = c["p3_spot_check_sample"] == "yes"
-        tier3 = c["risk_tier"].startswith("P3")
-        if pr:
-            add(1 if (pr in first_alias or pr.startswith("INIT")) else 2, SUPPORT, "CREATE_ROW", c["decision_id"], "", pr,
-                f"create_candidates.csv owner_verdict (written together with {pr}; no second decision)", "create_candidates.csv", "", c["units_lifetime"], f"companion verdict of {pr}")
-        else:
-            w1 = c["decision_id"] in first_create
-            add(1 if w1 else (2 if (spot or not tier3) else 3), ACTION, "CREATE_ROW", c["decision_id"], c["decision_id"], "", "create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class)",
-                "create_candidates.csv", "", c["units_lifetime"], "first wave" if w1 else (("P3 bulk, in the spot-check sample" if spot else "P3 bulk: confirm after the spot check, escalate if it finds one wrong") if tier3 else "P1/P2: needs a row review"))
+    r6_of = collections.defaultdict(list)
     for r in view:
-        g, rid = r["model_group_id"], f"R6-{r['review_rank']}"
-        pr = parent_of_group(g)
-        if not pr and g in create_of and not create_parent[create_of[g]["decision_id"]]:
-            pr = create_of[g]["decision_id"]
-        tag = ",".join(r["starter_batch"])
-        dest = f"r6_owner_review.csv owner_verdict / owner_link_type / owner_canonical_model_id at review_rank={r['review_rank']}"
-        if pr:
-            add(1 if r["review_rank"] in starter else (2 if r["in_first_176"] == "yes" else 3), SUPPORT, "R6_ROW", rid, "", pr, dest + f" (written together with {pr}; no separate review)", "r6_priority_view.csv", tag, r["ice_lifetime_units"],
-                f"pair question of a group decided by {pr}")
-        else:
-            w = 1 if r["review_rank"] in starter else (2 if r["in_first_176"] == "yes" else 3)
-            add(w, ACTION, "R6_ROW", rid, rid, "", dest, "r6_priority_view.csv", tag, r["ice_lifetime_units"], "starter batch" if w == 1 else ("first 176 rows, not in the starter batch" if w == 2 else "tiers 3-7"))
+        r6_of[r["model_group_id"]].append(r)
+
+    def session(sid, wave, kind, title, units, own_cells, dest, file, tag="", why="", related=""):
+        sessions[sid] = {"session_id": sid, "wave": wave, "kind": kind, "title": title, "units_at_stake": units, "own_cells": list(own_cells), "child_decision_ids": [], "child_cells": [], "evidence_row_ids": []}
+        rows.append({"queue_position": 0, "wave": wave, "queue_role": SESSION, "item_kind": kind, "item_id": sid, "session_id": sid, "required_for_session_completion": "yes", "atomic_verdict_fields": len(own_cells),
+                     "answer_destination": dest, "related_sessions_informational": related, "detail_file": file, "group_tag": tag, "units_at_stake": units, "why_in_this_wave": why})
+
+    def child(sid, kind, item, cell, dest, file, units, tag="", why=""):
+        s_ = sessions[sid]
+        s_["child_decision_ids"].append(item)
+        s_["child_cells"].append(cell)
+        rows.append({"queue_position": 0, "wave": s_["wave"], "queue_role": CHILD, "item_kind": kind, "item_id": item, "session_id": sid, "required_for_session_completion": "yes", "atomic_verdict_fields": 1,
+                     "answer_destination": dest, "related_sessions_informational": "", "detail_file": file, "group_tag": tag, "units_at_stake": units,
+                     "why_in_this_wave": why or f"independent verdict bundled into {sid}; {sid}'s own answer does not settle it"})
+
+    def create_child(sid, c):
+        child(sid, "CREATE_ROW", c["decision_id"], cell_addr("create_candidates.csv", c["decision_id"], "owner_verdict"),
+              "create_candidates.csv owner_verdict (+ owner_canonical_model_id / owner_discovery_class as the verdict requires)", "create_candidates.csv", c["units_lifetime"])
+
+    def r6_child(sid, r):
+        child(sid, "R6_ROW", f"R6-{r['review_rank']}", cell_addr("r6_owner_review.csv", f"review_rank={r['review_rank']}", "owner_verdict"),
+              f"r6_owner_review.csv owner_verdict (+ owner_link_type, owner_canonical_model_id as the verdict requires) at review_rank={r['review_rank']}", "r6_priority_view.csv", r["ice_lifetime_units"], ",".join(r["starter_batch"]))
+
+    bundled_create, bundled_r6 = set(), set()
+    for i in init:
+        session(i["item_id"], 1, i["kind"], i["question"], i["units_at_stake"], [cell_addr("initial_owner_decisions.csv", i["item_id"], "owner_answer")],
+                "initial_owner_decisions.csv owner_answer", "initial_owner_decisions.csv", why=i["why_first"])
+    for r in alias_rows:
+        d, g = r["decision_id"], r["provider_group_id"]
+        w = 1 if d in first_alias else 2
+        c = create_of.get(g)
+        session(d, w, "ALIAS_ROW", f"Alias class of '{r['provider_name']}' against {r['existing_identity_id']}, then its independent group verdict and pair verdicts", int0(r["provider_units_lifetime"]),
+                [cell_addr("catalog_alias_collisions.csv", d, "owner_alias_class")], "catalog_alias_collisions.csv owner_alias_class", "catalog_alias_collisions.csv",
+                why="decisive series evidence and real volume" if w == 1 else "thin volume")
+        if c:
+            create_child(d, c)
+            bundled_create.add(c["decision_id"])
+        for v in r6_of.get(g, []):
+            r6_child(d, v)
+            bundled_r6.add(v["review_rank"])
+    for r in brand_rows:
+        sid = brand_resolver(r)
+        g = r["provider_group_id"]
+        rows.append({"queue_position": 0, "wave": 1, "queue_role": EVIDENCE, "item_kind": "BRAND_CASE", "item_id": r["decision_id"], "session_id": sid, "required_for_session_completion": "no", "atomic_verdict_fields": 0,
+                     "answer_destination": f"none required (optional owner_case_override in brand_resolution_cases.csv if {sid}'s answer should not apply to this case)", "related_sessions_informational": "",
+                     "detail_file": "brand_resolution_cases.csv", "group_tag": "", "units_at_stake": r["units_lifetime"], "why_in_this_wave": f"evidence for {sid}"})
+        sessions[sid]["evidence_row_ids"].append(r["decision_id"])
+        c = create_of.get(g)
+        if c and c["decision_id"] not in bundled_create:
+            create_child(sid, c)
+            bundled_create.add(c["decision_id"])
+        for v in r6_of.get(g, []):
+            if v["review_rank"] not in bundled_r6:
+                r6_child(sid, v)
+                bundled_r6.add(v["review_rank"])
+    for c in create_rows:
+        if c["decision_id"] in bundled_create:
+            continue
+        spot, tier3 = c["p3_spot_check_sample"] == "yes", c["risk_tier"].startswith("P3")
+        w1 = c["decision_id"] in first_create
+        w = 1 if w1 else (2 if (spot or not tier3) else 3)
+        rel = ",".join(f"R6-{v['review_rank']}" for v in r6_of.get(c["provider_group_id"], []))
+        session(c["decision_id"], w, "CREATE_ROW", f"Should TDR have a canonical model for {c['provider_brand']} {c['provider_name']} ({c['proposed_canonical_id']})?", c["units_lifetime"],
+                [cell_addr("create_candidates.csv", c["decision_id"], "owner_verdict")], "create_candidates.csv owner_verdict (+ owner_canonical_model_id, owner_discovery_class as the verdict requires)", "create_candidates.csv",
+                why="first wave" if w1 else (("P3 bulk, in the spot-check sample" if spot else "P3 bulk: confirm after the spot check, escalate if it finds one wrong") if tier3 else "P1/P2: needs a row review"),
+                related=rel)
+    for v in view:
+        if v["review_rank"] in bundled_r6:
+            continue
+        rid = f"R6-{v['review_rank']}"
+        w = 1 if v["review_rank"] in starter else (2 if v["in_first_176"] == "yes" else 3)
+        c = create_of.get(v["model_group_id"])
+        session(rid, w, "R6_ROW", f"Pair verdict at review_rank {v['review_rank']}: {v['model_group_id']} -> {v['candidate_canonical_model_id'] or '(no candidate)'}", v["ice_lifetime_units"],
+                [cell_addr("r6_owner_review.csv", f"review_rank={v['review_rank']}", "owner_verdict")],
+                f"r6_owner_review.csv owner_verdict (+ owner_link_type, owner_canonical_model_id as the verdict requires) at review_rank={v['review_rank']}", "r6_priority_view.csv", ",".join(v["starter_batch"]),
+                "starter batch" if w == 1 else ("first 176 rows, not in the starter batch" if w == 2 else "tiers 3-7"), related=c["decision_id"] if c else "")
     for n in neg_rows:
-        add(3, ACTION, "NEGATIVE_SAMPLE", n["sample_id"], n["sample_id"], "", "negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)", "negative_sample.csv", "", n["units_lifetime"],
-            "recall denominator: needed after labels exist")
-    order = {ACTION: 0, SUPPORT: 1}
-    seq = {id(r): i for i, r in enumerate(rows)}
-    rows.sort(key=lambda r: (r["wave"], order[r["queue_role"]], seq[id(r)]))
-    for i, r in enumerate(rows, start=1):
+        session(n["sample_id"], 3, "NEGATIVE_SAMPLE", n["question"], n["units_lifetime"], [cell_addr("negative_sample.csv", n["sample_id"], "owner_has_tdr_counterpart")],
+                "negative_sample.csv owner_has_tdr_counterpart (+ owner_canonical_model_id, owner_link_type)", "negative_sample.csv", why="recall denominator: needed after labels exist")
+    # keep sessions first inside a wave, each session followed by its own children and evidence
+    by_wave = collections.defaultdict(list)
+    for r in rows:
+        by_wave[r["wave"]].append(r)
+    out = []
+    for w in sorted(by_wave):
+        sess = [r for r in by_wave[w] if r["queue_role"] == SESSION]
+        for sr in sess:
+            out.append(sr)
+        for sr in sess:
+            out += [r for r in by_wave[w] if r["queue_role"] != SESSION and r["session_id"] == sr["session_id"]]
+    for i, r in enumerate(out, start=1):
         r["queue_position"] = i
-    return rows
+    srows = []
+    for sid, s_ in sorted(sessions.items(), key=lambda kv: (kv[1]["wave"], [x["queue_position"] for x in out if x["item_id"] == kv[0] and x["queue_role"] == SESSION][0])):
+        s_["atomic_verdicts_own"], s_["atomic_verdicts_children"] = len(s_["own_cells"]), len(s_["child_cells"])
+        s_["atomic_verdicts_total"] = s_["atomic_verdicts_own"] + s_["atomic_verdicts_children"]
+        s_["conditional_fields"], s_["completion_rule"] = CONDITIONAL_FIELDS, COMPLETION_RULE
+        srows.append(s_)
+    return out, srows
 
 
-def wave1_stats(queue: list[dict]) -> dict:
+NEG_ANSWERS = ("YES", "NO", "UNSURE")
+CROSS_ANSWER_CONFLICTS = ("PAIR_AND_GROUP_VERDICT_CONTRADICT", "GROUP_TARGET_DIFFERS_FROM_CORRECT_PAIR", "GROUP_TARGET_IS_THE_WRONG_TARGET", "TWO_EQUIVALENT_TARGETS", "LINK_TYPE_CONTRADICTS_VERDICT",
+                          "WRONG_TARGET_NAMES_ITSELF")
+
+
+def cell_meta(alias_rows, create_rows, view) -> dict:
+    """What each cell address is about: used by the validator to group answers for the contradiction check. Not an owner field."""
+    meta = {}
+    for r in alias_rows:
+        meta[cell_addr("catalog_alias_collisions.csv", r["decision_id"], "owner_alias_class")] = {"kind": "ALIAS", "group": r["provider_group_id"], "target": r["existing_identity_id"]}
+    for c in create_rows:
+        meta[cell_addr("create_candidates.csv", c["decision_id"], "owner_verdict")] = {"kind": "CREATE", "group": c["provider_group_id"], "key": c["decision_id"]}
+    for v in view:
+        meta[cell_addr("r6_owner_review.csv", f"review_rank={v['review_rank']}", "owner_verdict")] = {"kind": "R6", "group": v["model_group_id"], "candidate": v["candidate_canonical_model_id"], "key": f"review_rank={v['review_rank']}"}
+    return meta
+
+
+def validate_session(session: dict, answers: dict, meta: dict, model_ids: set | None = None) -> list[dict]:
+    """Is this review session COMPLETE? `answers` maps a cell address (file#key@field) to what the owner explicitly wrote; nothing is inferred from any other answer. Returns problems; [] means complete.
+    Checks: every own cell and every child cell is filled (UNANSWERED_MANDATORY_CELL); each value is allowed (and its conditional fields are filled); the answers do not contradict each other."""
+    problems: list[dict] = []
+
+    def add(kind, cell, detail):
+        problems.append({"kind": kind, "cell": cell, "detail": detail})
+
+    def val(cell):
+        return str(answers.get(cell, "") or "").strip()
+
+    def sibling(cell, field):
+        file, rest = cell.split("#", 1)
+        return cell_addr(file, rest.rsplit("@", 1)[0], field)
+
+    pair_labels, create_labels, alias_answers = collections.defaultdict(list), {}, []
+    for cell in session["own_cells"] + session["child_cells"]:
+        file, rest = cell.split("#", 1)
+        field = rest.rsplit("@", 1)[1]
+        v = val(cell)
+        if not v:
+            add("UNANSWERED_MANDATORY_CELL", cell, f"{'child' if cell in session['child_cells'] else 'own'} cell of {session['session_id']} is empty")
+            continue
+        m = meta.get(cell, {})
+        if file == "initial_owner_decisions.csv":
+            continue
+        if file == "catalog_alias_collisions.csv":
+            if v not in ALIAS_CLASSES:
+                add("VALUE_NOT_ALLOWED", cell, v)
+            else:
+                alias_answers.append((v, m))
+        elif file == "create_candidates.csv":
+            if v not in CREATE_VERDICTS:
+                add("VALUE_NOT_ALLOWED", cell, v)
+                continue
+            canon = val(sibling(cell, "owner_canonical_model_id"))
+            if v in ("EXISTING_IDENTITY", "VARIANT_TRIM_CODE") and not canon:
+                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_canonical_model_id"), f"{v} needs the model")
+            if v == "VALID_MISSING_CANONICAL" and val(sibling(cell, "owner_discovery_class")) not in DISCOVERY_CLASSES:
+                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_discovery_class"), "VALID_MISSING_CANONICAL needs a discovery class")
+            if canon and model_ids is not None and canon not in model_ids:
+                add("UNKNOWN_TDR_MODEL", sibling(cell, "owner_canonical_model_id"), canon)
+            create_labels[m.get("group")] = {"verdict": v, "canonical": canon}
+        elif file == "r6_owner_review.csv":
+            if v not in R6_VERDICTS:
+                add("VALUE_NOT_ALLOWED", cell, v)
+                continue
+            link, canon = val(sibling(cell, "owner_link_type")), val(sibling(cell, "owner_canonical_model_id"))
+            if v in PAIR_LINK and (link != PAIR_LINK[v] or not canon):
+                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_link_type"), f"{v} needs owner_link_type={PAIR_LINK[v]} and owner_canonical_model_id")
+            if canon and model_ids is not None and not all(x in model_ids for x in canon.split("+")):
+                add("UNKNOWN_TDR_MODEL", sibling(cell, "owner_canonical_model_id"), canon)
+            pair_labels[m.get("group")].append({"candidate": m.get("candidate"), "verdict": v, "link_type": link, "canonical": canon})
+        elif file == "negative_sample.csv":
+            if v not in NEG_ANSWERS:
+                add("VALUE_NOT_ALLOWED", cell, v)
+            elif v == "YES" and not val(sibling(cell, "owner_canonical_model_id")):
+                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_canonical_model_id"), "YES needs the model")
+    # contradictions between the answers actually given (the checks never fill a missing answer)
+    for g in sorted(set(pair_labels) | set(create_labels), key=str):
+        for r in check_label_consistency({g: pair_labels.get(g, [])}, {g: create_labels[g]} if g in create_labels else {}, model_ids):
+            if r["severity"] == "CONFLICT" and r["kind"] in CROSS_ANSWER_CONFLICTS:   # value / missing-field / unknown-model problems are reported above, once
+                add("CONTRADICTORY_ANSWERS", str(g), f"{r['kind']}: {r['detail']}")
+    for cls, m in alias_answers:
+        cl = create_labels.get(m.get("group"))
+        if not cl:
+            continue
+        if cls == "IDENTITY_EQUIVALENT" and cl["verdict"] == "VALID_MISSING_CANONICAL":
+            add("CONTRADICTORY_ANSWERS", m["group"], "alias class IDENTITY_EQUIVALENT but the group verdict says no canonical identity exists")
+        if cls == "IDENTITY_EQUIVALENT" and cl["verdict"] == "EXISTING_IDENTITY" and cl["canonical"] and cl["canonical"] != m["target"]:
+            add("CONTRADICTORY_ANSWERS", m["group"], f"alias class IDENTITY_EQUIVALENT with {m['target']} but the group verdict names {cl['canonical']}")
+        if cls == "MISLEADING_ALIAS" and cl["verdict"] == "EXISTING_IDENTITY" and cl["canonical"] == m["target"]:
+            add("CONTRADICTORY_ANSWERS", m["group"], f"alias class MISLEADING_ALIAS but the group verdict names the alias target {m['target']}")
+    return problems
+
+
+def session_is_complete(session: dict, answers: dict, meta: dict, model_ids: set | None = None) -> bool:
+    return not validate_session(session, answers, meta, model_ids)
+
+
+def wave1_stats(queue: list[dict], sessions: list[dict]) -> dict:
     w1 = [q for q in queue if q["wave"] == 1]
-    act = [q for q in w1 if q["queue_role"] == ACTION]
-    kinds = collections.Counter(q["item_kind"] for q in act)
-    r6_all = [q for q in w1 if q["item_kind"] == "R6_ROW"]
-    return {"queue_rows_wave1": len(w1), "supporting_rows_wave1": len(w1) - len(act), "owner_actions": len(act), "contract_questions": kinds["CONTRACT"] + kinds["CATALOG"], "alias_verdicts": kinds["ALIAS_ROW"],
-            "create_verdicts": kinds["CREATE_ROW"], "r6_rows_alone": kinds["R6_ROW"], "r6_rows_distinct": len(r6_all), "r6_rows_also_decided_elsewhere": len(r6_all) - kinds["R6_ROW"],
-            "supporting_by_kind": dict(collections.Counter(q["item_kind"] for q in w1 if q["queue_role"] == SUPPORT))}
+    ss = [s_ for s_ in sessions if s_["wave"] == 1]
+    kinds = collections.Counter(s_["kind"] for s_ in ss)
+    ch = [q for q in w1 if q["queue_role"] == CHILD]
+    r6_rows = [q for q in w1 if q["item_kind"] == "R6_ROW"]
+    return {"queue_rows_wave1": len(w1), "review_sessions": len(ss), "child_decisions": len(ch), "evidence_rows": sum(1 for q in w1 if q["queue_role"] == EVIDENCE),
+            "atomic_verdicts_own": sum(s_["atomic_verdicts_own"] for s_ in ss), "atomic_verdicts_children": sum(s_["atomic_verdicts_children"] for s_ in ss), "atomic_verdicts_total": sum(s_["atomic_verdicts_total"] for s_ in ss),
+            "contract_questions": kinds["CONTRACT"] + kinds["CATALOG"], "alias_sessions": kinds["ALIAS_ROW"], "create_sessions": kinds["CREATE_ROW"], "r6_sessions": kinds["R6_ROW"],
+            "children_by_kind": dict(collections.Counter(q["item_kind"] for q in ch)), "r6_rows_wave1": len(r6_rows), "r6_standalone_sessions_wave1": kinds["R6_ROW"],
+            "evidence_by_kind": dict(collections.Counter(q["item_kind"] for q in w1 if q["queue_role"] == EVIDENCE)),
+            # kept for the report text and older callers
+            "owner_actions": len(ss), "supporting_rows_wave1": len(w1) - len(ss)}
 
 
 # ----------------------------------------------------------------------------------------------------------------------------- assembling the pack
@@ -1297,7 +1457,7 @@ FILES = {
     "catalog_alias_collisions.csv": (ALIAS_COLUMNS, "alias"), "brand_resolution_cases.csv": (BRAND_COLUMNS, "brand"), "create_candidates.csv": (CREATE_COLUMNS, "create"),
     "r6_create_reconciliation.csv": (RECON_COLUMNS, "recon"), "verdict_crosswalk.csv": (CROSSWALK_COLUMNS, "crosswalk"), "r6_priority_view.csv": (R6_VIEW_COLUMNS, "view"),
     "brand_folds.csv": (FOLD_COLUMNS, "folds"), "negative_sample.csv": (NEG_COLUMNS, "neg"), "pending_threshold_sensitivity.csv": (THRESH_COLUMNS, "thresh"),
-    "calibration_entry_requirements.csv": (ENTRY_COLUMNS, "entry"), "initial_owner_decisions.csv": (INIT_COLUMNS, "init"), "decision_queue.csv": (QUEUE_COLUMNS, "queue")}
+    "calibration_entry_requirements.csv": (ENTRY_COLUMNS, "entry"), "initial_owner_decisions.csv": (INIT_COLUMNS, "init"), "decision_queue.csv": (QUEUE_COLUMNS, "queue"), "review_sessions.csv": (SESSION_COLUMNS, "sessions")}
 OWNER_FIELDS = {"catalog_alias_collisions.csv": ["owner_alias_class", "owner_notes"],
                 "brand_resolution_cases.csv": ["owner_case_override", "owner_notes"], "create_candidates.csv": ["owner_verdict", "owner_canonical_model_id", "owner_discovery_class", "owner_notes"],
                 "negative_sample.csv": ["owner_has_tdr_counterpart", "owner_canonical_model_id", "owner_link_type", "owner_notes"], "initial_owner_decisions.csv": ["owner_answer", "owner_notes"]}
@@ -1318,13 +1478,13 @@ def build_tables(inp: Inputs) -> dict:
     starter_groups = {r["model_group_id"] for r in view if r["starter_batch"]}
     neg, neg_summary = build_negative_sample(inp, meta)
     init, plan = build_initial(inp, alias, brand, create, view, meta)
-    queue = build_queue(inp, init, plan, alias, brand, create, view, neg)
-    istats = wave1_stats(queue)
+    queue, sessions = build_queue(inp, init, plan, alias, brand, create, view, neg)
+    istats = wave1_stats(queue, sessions)
     for rows_ in (alias, brand, create, view, neg):
         for r in rows_:
             r["evidence_refs"] = REF_SEP.join(r["evidence_refs"])
     return {"alias": alias, "brand": brand, "create": create, "recon": build_reconciliation(inp, create), "crosswalk": verdict_crosswalk(), "view": view, "folds": build_folds(inp, view, meta, create, neg),
-            "neg": neg, "thresh": build_threshold_table(inp, starter_groups), "entry": build_entry_requirements(inp, view, meta, neg_summary), "init": init, "queue": queue,
+            "neg": neg, "thresh": build_threshold_table(inp, starter_groups), "entry": build_entry_requirements(inp, view, meta, neg_summary), "init": init, "queue": queue, "sessions": sessions, "cell_meta": cell_meta(alias, create, view),
             "meta": meta, "neg_summary": neg_summary, "istats": istats}
 
 
@@ -1382,28 +1542,36 @@ def render_report(inp: Inputs, T: dict) -> str:
       "A pair verdict never implies a group verdict or the reverse; `check_label_consistency()` only flags answers that cannot both be true.\n")
     w("## 1. The smallest first set\n")
     wq = [q for q in T["queue"] if q["wave"] == 1]
-    acts = [q for q in wq if q["queue_role"] == ACTION]
-    w(f"Nothing here requires all {n_r6} R6 rows to be labelled. The first wave is **{ist['owner_actions']} owner decisions**, each counted once: {ist['contract_questions']} rule/filing questions, {ist['alias_verdicts']} alias decisions, "
-      f"{ist['create_verdicts']} CREATE verdicts and {ist['r6_rows_alone']} R6 pair verdicts. `decision_queue.csv` lists {ist['queue_rows_wave1']} first-wave rows because it keeps every underlying record: "
-      f"the {ist['owner_actions']} rows with `queue_role = ACTION_REQUIRED`, plus {ist['supporting_rows_wave1']} `SUPPORTING_ROW`s ({', '.join(f'{v} {k}' for k, v in sorted(ist['supporting_by_kind'].items()))}). "
-      "A supporting row is evidence or a companion field: `resolved_by_action_id` names the one action that settles it, and it never asks for a second decision. "
-      f"The {ist['r6_rows_distinct']} starter R6 rows are all kept ({ist['r6_rows_alone']} actions, {ist['r6_rows_also_decided_elsewhere']} answered together with its group's action); all {n_create} CREATE candidates and all {n_r6} R6 rows stay in their files. "
+    sess1 = [x for x in T["sessions"] if x["wave"] == 1]
+    own_by_kind = collections.Counter()
+    child_by_kind = collections.Counter()
+    for x in sess1:
+        own_by_kind[x["kind"]] += x["atomic_verdicts_own"]
+    for q in wq:
+        if q["queue_role"] == CHILD:
+            child_by_kind[q["item_kind"]] += 1
+    kind_rows = [["rule / filing questions", ist["contract_questions"], own_by_kind["CONTRACT"] + own_by_kind["CATALOG"], 0],
+                 ["alias sessions", ist["alias_sessions"], own_by_kind["ALIAS_ROW"], 0],
+                 ["CREATE sessions", ist["create_sessions"], own_by_kind["CREATE_ROW"], 0],
+                 ["R6 pair-verdict sessions", ist["r6_sessions"], own_by_kind["R6_ROW"], 0],
+                 ["child CREATE verdicts (inside INIT-03 / alias sessions)", "-", 0, child_by_kind["CREATE_ROW"]],
+                 ["child R6 pair verdicts (inside INIT-03 / alias sessions)", "-", 0, child_by_kind["R6_ROW"]]]
+    w(f"Nothing here requires all {n_r6} R6 rows to be labelled. The first wave is **{ist['review_sessions']} review sessions** (one sitting each) that together require **{ist['atomic_verdicts_total']} independent owner verdict cells**: "
+      f"{ist['atomic_verdicts_own']} cells owned by the sessions themselves plus {ist['atomic_verdicts_children']} child verdicts that a session bundles. A child verdict is **never** settled by its session's own answer: "
+      "an alias class, a brand-filing answer or a rule decision does not fill a group verdict or a pair verdict, and a session is complete only when every own cell and every child cell is explicitly filled "
+      "(`review_sessions.csv`: `own_cells`, `child_cells`; `validate_session` refuses an incomplete or contradictory session). "
+      f"`decision_queue.csv` lists {ist['queue_rows_wave1']} first-wave rows = {ist['review_sessions']} `REVIEW_SESSION` + {ist['child_decisions']} `CHILD_DECISION` + {ist['evidence_rows']} `EVIDENCE_ROW` (the brand cases: evidence for INIT-01..03, nothing required). "
+      f"Of the {ist['r6_rows_wave1']} R6 rows in the first wave, {ist['r6_standalone_sessions_wave1']} are stand-alone sessions and {ist['children_by_kind'].get('R6_ROW', 0)} are children (one of them a starter row, the others group-linked rows that the same sittings must answer); "
+      f"all 48 starter rows are in the first wave. All {n_create} CREATE candidates and all {n_r6} R6 rows stay in their files and in the queue. "
       f"The first wave covers {round(100 * meta['s1_units'] / meta['auto_pair_units'], 1)}% of the lifetime units of all {meta['auto_pairs']} AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, "
       f"and {round(100 * wave1_units / total_units, 1)}% of the lifetime units of the {n_create} CREATE candidates ({wave1_rows} rows). It is built to find a systematic failure early, not to certify a rate (see §7).\n")
-    byk = lambda k: [q["item_id"] for q in acts if q["item_kind"] == k]
-    r6s = collections.defaultdict(list)
-    for q in acts:
-        if q["item_kind"] == "R6_ROW":
-            for t_ in q["group_tag"].split(","):
-                r6s[t_].append(q["item_id"].split("-")[1])
-    w(md_table(["action group", "count", "members", "answer goes to"], [
-        ["rule / filing questions", len(init), ", ".join(i["item_id"] for i in init), "`initial_owner_decisions.csv` owner_answer"],
-        ["alias decisions", len(byk("ALIAS_ROW")), ", ".join(byk("ALIAS_ROW")), "`catalog_alias_collisions.csv` owner_alias_class (group verdict: its CREATE row)"],
-        ["CREATE verdicts", len(byk("CREATE_ROW")), ", ".join(byk("CREATE_ROW")), "`create_candidates.csv` owner_verdict"],
-        ["R6 pair verdicts", len(byk("R6_ROW")), "; ".join(f"{k}: ranks {', '.join(sorted(v, key=int))}" for k, v in sorted(r6s.items())), "`r6_owner_review.csv`"]]))
+    w(md_table(["first-wave component", "review sessions", "atomic cells owned by sessions", "atomic child cells"], kind_rows + [["**total**", ist["review_sessions"], ist["atomic_verdicts_own"], ist["atomic_verdicts_children"]]]))
+    w(f"\nReconciliation: {ist['review_sessions']} sessions = {ist['atomic_verdicts_own']} own cells; {ist['atomic_verdicts_own']} + {ist['atomic_verdicts_children']} child cells = **{ist['atomic_verdicts_total']} atomic verdict cells**. "
+      "Each session's own and child cell addresses (`file#row@field`) are listed in `review_sessions.csv`; the conditional fields a verdict needs (model id, discovery class, link type) are in `conditional_fields`.\n")
+    w(md_table(["session", "own cell", "bundled child verdicts (each answered on its own)"], [[x["session_id"], x["own_cells"][0].split("#", 1)[1], ", ".join(x["child_decision_ids"])] for x in sess1 if x["child_decision_ids"]]))
     w("\nThe four rule / filing questions:\n")
-    w(md_table(["item", "kind", "question", "supporting rows it settles", "units"], [[i["item_id"], i["kind"], i["question"], span(i["resolves"]), i["units_at_stake"]] for i in init]))
-    w("\nThe full order, with later waves, is `decision_queue.csv` (`queue_role`, `action_id`, `resolved_by_action_id`, `answer_destination`).\n")
+    w(md_table(["item", "kind", "question", "related rows (informational; none is settled by this answer)", "units"], [[i["item_id"], i["kind"], i["question"], span(i["resolves"]), i["units_at_stake"]] for i in init]))
+    w("\nThe full order, with later waves, is `decision_queue.csv` (`queue_role`, `session_id`, `required_for_session_completion`, `atomic_verdict_fields`, `answer_destination`).\n")
     w("## 2. R6 owner sheet vs PR #201's 82 provisional CREATE candidates\n")
     w(f"- {len(in_sheet)} of the {n_create} candidates appear in `r6_owner_review.csv` ({len(rec) - c(r['in_r6_sheet'] for r in rec)['no']} sheet rows): "
       f"{c(r['relationship'] for r in rec)['LEGACY_PAIR_OPEN_AND_CREATE_OPEN']} legacy-proposed pairs, {c(r['relationship'] for r in rec)['V1_ONLY_PAIR_OPEN_AND_CREATE_OPEN']} v1-only pairs, "
@@ -1439,7 +1607,7 @@ def render_report(inp: Inputs, T: dict) -> str:
     w(f"- Of {len(legacy_auto)} legacy AUTO rows, **{len(la_not_auto)}** are not AUTO under the current contract ({c(r['v1_group_outcome'] for r in la_not_auto).most_common()}); {len(lp_auto)} legacy PROPOSED rows become AUTO. "
       "Which side is right is exactly what the labels decide, so S2 and S1 are the two ends of one question.")
     w(f"- Starter batch (`starter_batch` column): S1 {meta['s1']} v1-AUTO pairs (≥{int(STARTER_FRACTION * 100)}% of AUTO-pair units); S2 {meta['s2']} legacy-AUTO rows that v1 does not AUTO (≥{int(STARTER_FRACTION * 100)}% of their units); "
-      f"S3 {meta['s3']} known-family representatives; S4 {meta['s4']} structural rows; {ist['r6_rows_distinct']} distinct rows. Rows are assigned to {TRIAGE['folds']} brand-separated folds over {meta['families']} brand families (rows per fold {meta['fold_weights']}).\n")
+      f"S3 {meta['s3']} known-family representatives; S4 {meta['s4']} structural rows; {len({r['review_rank'] for r in view if r['starter_batch']})} distinct rows. Rows are assigned to {TRIAGE['folds']} brand-separated folds over {meta['families']} brand families (rows per fold {meta['fold_weights']}).\n")
     w("## 6. Section D: all 82 CREATE candidates, grouped by risk (`create_candidates.csv`)\n")
     w(md_table(["tier", "rows", "units", "evidence", "suggested triage (non-auth.)"],
                [[t, tier[t], sum(r["units_lifetime"] for r in create if r["risk_tier"] == t), "needs a row review" if not t.startswith("P3") else f"spot-check {SPOT_CHECK_N}, then confirm or escalate",
@@ -1488,8 +1656,8 @@ def build_files(inp: Inputs) -> dict[str, bytes]:
     manifest = {"schema": "ir-owner-decision-pack-manifest/1", "pack": PACK_ID, "binding": inp.adoption["binding"], "pr201_commit": PR201_COMMIT,
                 "export_manifest_sha256": sha256_file(E.OUT / "MANIFEST.json"), "r6_owner_review_sha256": sha256_file(A.CALIBRATION_DIR / "r6_owner_review.csv"),
                 "series_evidence_sha256": sha256_file(SERIES_JSON), "sensitivity_results_sha256": sha256_file(A.CALIBRATION_DIR / "sensitivity_results.json"), "pr201_inputs": json.loads((IN201 / "PROVENANCE.json").read_text(encoding="utf-8"))["files"],
-                "counts": {"alias_rows": len(T["alias"]), "brand_cases": len(T["brand"]), "create_rows": len(T["create"]), "r6_view_rows": len(T["view"]), "starter_rows": T["istats"]["r6_rows_distinct"],
-                           "negative_sample": len(T["neg"]), "first_wave_owner_actions": T["istats"]["owner_actions"], "queue": len(T["queue"])},
+                "counts": {"alias_rows": len(T["alias"]), "brand_cases": len(T["brand"]), "create_rows": len(T["create"]), "r6_view_rows": len(T["view"]), "starter_rows": len({r["review_rank"] for r in T["view"] if r["starter_batch"]}),
+                           "negative_sample": len(T["neg"]), "first_wave_review_sessions": T["istats"]["review_sessions"], "first_wave_child_decisions": T["istats"]["child_decisions"], "first_wave_atomic_verdicts": T["istats"]["atomic_verdicts_total"], "queue": len(T["queue"]), "sessions": len(T["sessions"])},
                 "files": {n: {"sha256": sha256_bytes(b), "bytes": len(b)} for n, b in sorted(files.items())}}
     files["MANIFEST.json"] = canonical_json(manifest)
     return files

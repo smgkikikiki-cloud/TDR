@@ -6,25 +6,39 @@ Two kinds of verdict are kept apart (`verdict_crosswalk.csv`): the R6 sheet asks
 
 ## 1. The smallest first set
 
-Nothing here requires all 560 R6 rows to be labelled. The first wave is **65 owner decisions**, each counted once: 4 rule/filing questions, 5 alias decisions, 9 CREATE verdicts and 47 R6 pair verdicts. `decision_queue.csv` lists 83 first-wave rows because it keeps every underlying record: the 65 rows with `queue_role = ACTION_REQUIRED`, plus 18 `SUPPORTING_ROW`s (11 BRAND_CASE, 6 CREATE_ROW, 1 R6_ROW). A supporting row is evidence or a companion field: `resolved_by_action_id` names the one action that settles it, and it never asks for a second decision. The 48 starter R6 rows are all kept (47 actions, 1 answered together with its group's action); all 82 CREATE candidates and all 560 R6 rows stay in their files. The first wave covers 80.7% of the lifetime units of all 69 AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, and 93.1% of the lifetime units of the 82 CREATE candidates (15 rows). It is built to find a systematic failure early, not to certify a rate (see §7).
+Nothing here requires all 560 R6 rows to be labelled. The first wave is **65 review sessions** (one sitting each) that together require **78 independent owner verdict cells**: 65 cells owned by the sessions themselves plus 13 child verdicts that a session bundles. A child verdict is **never** settled by its session's own answer: an alias class, a brand-filing answer or a rule decision does not fill a group verdict or a pair verdict, and a session is complete only when every own cell and every child cell is explicitly filled (`review_sessions.csv`: `own_cells`, `child_cells`; `validate_session` refuses an incomplete or contradictory session). `decision_queue.csv` lists 89 first-wave rows = 65 `REVIEW_SESSION` + 13 `CHILD_DECISION` + 11 `EVIDENCE_ROW` (the brand cases: evidence for INIT-01..03, nothing required). Of the 54 R6 rows in the first wave, 47 are stand-alone sessions and 7 are children (one of them a starter row, the others group-linked rows that the same sittings must answer); all 48 starter rows are in the first wave. All 82 CREATE candidates and all 560 R6 rows stay in their files and in the queue. The first wave covers 80.7% of the lifetime units of all 69 AUTO pairs, every known suspicious-case family, every PART_OF / COMPOSED_OF and several-candidate row, and 93.1% of the lifetime units of the 82 CREATE candidates (15 rows). It is built to find a systematic failure early, not to certify a rate (see §7).
 
-| action group | count | members | answer goes to |
+| first-wave component | review sessions | atomic cells owned by sessions | atomic child cells |
 |---|---|---|---|
-| rule / filing questions | 4 | INIT-01, INIT-02, INIT-03, INIT-04 | `initial_owner_decisions.csv` owner_answer |
-| alias decisions | 5 | OD-A01, OD-A02, OD-A03, OD-A04, OD-A05 | `catalog_alias_collisions.csv` owner_alias_class (group verdict: its CREATE row) |
-| CREATE verdicts | 9 | OD-C04, OD-C06, OD-C07, OD-C08, OD-C10, OD-C19, OD-C20, OD-C21, OD-C22 | `create_candidates.csv` owner_verdict |
-| R6 pair verdicts | 47 | S1_AUTO_PAIRS: ranks 1, 2, 6, 83, 86, 87, 88, 90, 92, 93, 94, 96, 99, 105, 114, 116, 126, 142; S2_LEGACY_AUTO_NOT_AUTO: ranks 3, 7, 8, 9, 10, 11, 20, 21, 23, 25, 29, 30, 46, 54, 56; S3_KNOWN_FAMILY: ranks 84, 85, 93, 95, 98, 106; S4_STRUCTURAL: ranks 508, 509, 510, 511, 512, 513, 514, 515, 516 | `r6_owner_review.csv` |
+| rule / filing questions | 4 | 4 | 0 |
+| alias sessions | 5 | 5 | 0 |
+| CREATE sessions | 9 | 9 | 0 |
+| R6 pair-verdict sessions | 47 | 47 | 0 |
+| child CREATE verdicts (inside INIT-03 / alias sessions) | - | 0 | 6 |
+| child R6 pair verdicts (inside INIT-03 / alias sessions) | - | 0 | 7 |
+| **total** | 65 | 65 | 13 |
+
+Reconciliation: 65 sessions = 65 own cells; 65 + 13 child cells = **78 atomic verdict cells**. Each session's own and child cell addresses (`file#row@field`) are listed in `review_sessions.csv`; the conditional fields a verdict needs (model id, discovery class, link type) are in `conditional_fields`.
+
+| session | own cell | bundled child verdicts (each answered on its own) |
+|---|---|---|
+| INIT-03 | INIT-03@owner_answer | OD-C11, R6-190, R6-183, R6-184 |
+| OD-A01 | OD-A01@owner_alias_class | OD-C03, R6-217 |
+| OD-A02 | OD-A02@owner_alias_class | OD-C01, R6-15 |
+| OD-A03 | OD-A03@owner_alias_class | OD-C02, R6-172 |
+| OD-A04 | OD-A04@owner_alias_class | OD-C09, R6-284 |
+| OD-A05 | OD-A05@owner_alias_class | OD-C12 |
 
 The four rule / filing questions:
 
-| item | kind | question | supporting rows it settles | units |
+| item | kind | question | related rows (informational; none is settled by this answer) | units |
 |---|---|---|---|---|
 | INIT-01 | CONTRACT | When the producer's brand relation to a TDR brand is RELATED (capped at PROPOSE), must a consumer take its candidate set from the producer instead of resolving the brand itself from catalog labels? | OD-B02 .. OD-B08 (7) | 15 |
 | INIT-02 | CONTRACT | May a catalog brand `aliases` entry ever be a brand relation, and if so as which typed class (SAME / RELABEL / RELATED) and with which provenance? Decide the one label in the pack (JETOUR under Chery). | OD-B01 | 3 |
-| INIT-03 | CATALOG | Where are Maxus-badged models filed: under the registration brand MG (as mg.mg_maxus_7 / mg.mg_maxus_9 are today) or under a Maxus brand? | OD-B09 .. OD-C11 (4) | 3032 |
+| INIT-03 | CATALOG | Where are Maxus-badged models filed: under the registration brand MG (as mg.mg_maxus_7 / mg.mg_maxus_9 are today) or under a Maxus brand? | OD-B09 OD-B10 OD-B11 | 3032 |
 | INIT-04 | CONTRACT | What does a TDR catalog model `aliases` entry assert: the same model, a registration-attribution label that may cover a broader family, or a lookup convenience? (The nine alias rows show all three readings occur.) | OD-A01 .. OD-A09 (9) | 26946 |
 
-The full order, with later waves, is `decision_queue.csv` (`queue_role`, `action_id`, `resolved_by_action_id`, `answer_destination`).
+The full order, with later waves, is `decision_queue.csv` (`queue_role`, `session_id`, `required_for_session_completion`, `atomic_verdict_fields`, `answer_destination`).
 
 ## 2. R6 owner sheet vs PR #201's 82 provisional CREATE candidates
 
