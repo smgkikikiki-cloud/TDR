@@ -44,11 +44,13 @@ import argparse
 import csv
 import io
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Callable
 
 from tools.canonical_input_worker import _request
 from vehreg import ice_crosswalk as xwalk
+from vehreg import ice_identity_guard as identity_guard
 
 RestCall = Callable[..., Any]
 
@@ -83,14 +85,29 @@ def fetch_ice_groups(rest: RestCall) -> list[dict]:
     return _fetch_all(rest, "ice_dims_model_group?select=model_group_id,model_name,brand")
 
 
-def fetch_ice_monthly_series(rest: RestCall) -> dict[str, dict[str, float]]:
-    """model_group_id -> {period: total reg_count across every province/reg_type/brand row}."""
-    rows = _fetch_all(rest, "ice_reg_trend?select=model_group_id,period,reg_count")
+def fetch_ice_monthly_series(
+    rest: RestCall, *, with_reg_types: bool = False,
+) -> dict[str, dict[str, float]] | tuple[dict[str, dict[str, float]], dict[str, set[str]]]:
+    """Read the full evidence once; optionally retain registration types per Ice group.
+
+    Aggregate series are fine for ordinary nameplate comparisons, but a mixed
+    RY1/RY3 pickup group must not map to one cab identity.
+    """
+    rows = _fetch_all(rest, "ice_reg_trend?select=model_group_id,period,reg_count,reg_type")
     series: dict[str, dict[str, float]] = {}
+    reg_types: dict[str, set[str]] = {}
     for row in rows:
         by_period = series.setdefault(row["model_group_id"], {})
         by_period[row["period"]] = by_period.get(row["period"], 0.0) + float(row["reg_count"])
-    return series
+        raw_type = row.get("reg_type")
+        if raw_type:
+            normalized = {
+                "รย.1": "RY1", "รย.2": "RY2", "รย.3": "RY3",
+                "RY1": "RY1", "RY2": "RY2", "RY3": "RY3",
+            }.get(str(raw_type).strip().upper())
+            if normalized:
+                reg_types.setdefault(row["model_group_id"], set()).add(normalized)
+    return (series, reg_types) if with_reg_types else series
 
 
 def fetch_legacy_monthly_series(rest: RestCall) -> dict[str, dict[str, float]]:
@@ -160,6 +177,7 @@ def match_one_group(
     *, group: dict, ice_series: dict[str, float], legacy_series_by_canonical: dict[str, dict[str, float]],
     vehicle_models: dict[str, dict[str, str]], vehicle_brands: dict[str, str],
     alias_map: dict[str, str], existing: dict[tuple[str, str | None], dict],
+    registration_types: set[str] | None = None,
 ) -> tuple[str, xwalk.MatchDecision] | None:
     """Evaluate every brand-matching TDR canonical model against one Ice group and
     return (canonical_model_id, decision) for the strongest candidate, or None if no
@@ -168,6 +186,13 @@ def match_one_group(
     model_group_id = group["model_group_id"]
     group_brand_key = xwalk.normalize_brand(group["brand"], alias_map)
     periods = _recent_periods(ice_series)
+    reg_types = registration_types or set()
+    # A group mixing passenger/delivery cab registrations cannot be represented
+    # accurately by the current group-only crosswalk key. Keep it out of auto-match.
+    if "RY1" in reg_types and "RY3" in reg_types:
+        return None
+    if "RY2" in reg_types and "RY3" in reg_types:
+        return None
     already_mapped = _actively_mapped_canonical_ids(existing, model_group_id)
     already_mapped_series = [legacy_series_by_canonical.get(cid, {}) for cid in already_mapped]
 
@@ -181,6 +206,33 @@ def match_one_group(
         if _canonical_actively_mapped_elsewhere(existing, canonical_id, model_group_id):
             continue
 
+        # DLT class is the cab discriminator when the Ice name lacks cab detail.
+        # Unknown cab variants stay review-only; known opposite cab types are blocked.
+        label = " ".join(model["name_en"].strip().lower().split())
+        if "RY3" in reg_types and label.endswith("double cab"):
+            continue
+        if ("RY1" in reg_types or "RY2" in reg_types) and (
+            label.endswith(" cab") and not label.endswith("double cab")
+        ):
+            continue
+
+        # Cab descriptors are body/registration qualifiers, not extra letters
+        # in the ICE nameplate. Strip only after the source's reg class fixes
+        # which side of the pickup split is allowed.
+        comparison_name = model["name_en"]
+        if ("RY1" in reg_types or "RY2" in reg_types) and label.endswith("double cab"):
+            comparison_name = comparison_name[:-len("Double Cab")].rstrip()
+        elif reg_types == {"RY3"} and label.endswith(" cab"):
+            comparison_name = comparison_name[:-len("Cab")].rstrip()
+
+        guard = identity_guard.check_pair(
+            ice_name=group["model_name"], ice_brand=group["brand"],
+            canonical_name=comparison_name, canonical_brand=candidate_brand,
+            alias_group=group_brand_key,
+        )
+        if guard.disposition == "BLOCK":
+            continue
+
         legacy_combined = xwalk.sum_monthly_series(
             already_mapped_series + [legacy_series_by_canonical.get(canonical_id, {})])
         ice_values, legacy_values = xwalk.build_paired_series(periods, ice_series, legacy_combined)
@@ -189,12 +241,17 @@ def match_one_group(
         # apply_model_name_alias is a no-op outside the one scoped alias_group it
         # knows about (§14.2 Maxus/Mifa trap) -- safe to call unconditionally.
         candidate_name = xwalk.apply_model_name_alias(
-            xwalk.normalize_model_name(model["name_en"], candidate_brand), group_brand_key)
+            xwalk.normalize_model_name(comparison_name, candidate_brand), group_brand_key)
         group_name = xwalk.apply_model_name_alias(
             xwalk.normalize_model_name(group["model_name"], group["brand"]), group_brand_key)
         name_score = xwalk.name_similarity(candidate_name, group_name)
 
         decision = xwalk.decide_match(series=series_eval, name_score=name_score)
+        if decision is not None and guard.disposition == "REVIEW" and decision.status == "AUTO":
+            decision = replace(
+                decision, status="PROPOSED",
+                reason=f"{decision.reason}; identity guard: {guard.reason}",
+            )
         if decision is None:
             continue
         # Ranked, never compared by raw score -- a SERIES correlation and a NAME
@@ -208,7 +265,7 @@ def run_match(
     rest: RestCall, *, master_version: str, review_csv_path: Path | None = None,
 ) -> dict[str, Any]:
     groups = fetch_ice_groups(rest)
-    ice_series_by_group = fetch_ice_monthly_series(rest)
+    ice_series_by_group, reg_types_by_group = fetch_ice_monthly_series(rest, with_reg_types=True)
     legacy_series_by_canonical = fetch_legacy_monthly_series(rest)
     vehicle_models = fetch_vehicle_models(rest)
     vehicle_brands = fetch_vehicle_brands(rest)
@@ -218,6 +275,7 @@ def run_match(
 
     applied, skipped_protected, skipped_unchanged_rejection, no_candidate = 0, 0, 0, 0
     review_records: list[dict[str, Any]] = []
+    mixed_reg_type_groups: list[str] = []
     discovery: list[dict[str, Any]] = []
 
     for group in groups:
@@ -226,11 +284,26 @@ def run_match(
         if flags:
             discovery.append({"model_group_id": model_group_id, "flags": flags})
 
+        reg_types = reg_types_by_group.get(model_group_id, set())
+        if "RY3" in reg_types and ("RY1" in reg_types or "RY2" in reg_types):
+            mixed_reg_type_groups.append(model_group_id)
+            no_candidate += 1
+            review_records.append({
+                "model_group_id": model_group_id, "model_name": group["model_name"],
+                "brand": group["brand"], "proposed_canonical_model_id": None,
+                "proposed_model_name": None, "series_correlation": None,
+                "total_ratio": None, "name_similarity": None,
+                "proposed_status": "REG_TYPE_SPLIT_REQUIRED",
+                "match_method": None, "master_version": master_version,
+                "reason": f"mixed {sorted(reg_types)}; group-only crosswalk cannot distinguish cabs",
+            })
+            continue
+
         result = match_one_group(
             group=group, ice_series=ice_series_by_group.get(model_group_id, {}),
             legacy_series_by_canonical=legacy_series_by_canonical,
             vehicle_models=vehicle_models, vehicle_brands=vehicle_brands,
-            alias_map=alias_map, existing=existing)
+            alias_map=alias_map, existing=existing, registration_types=reg_types)
         if result is None:
             no_candidate += 1
             continue
@@ -298,6 +371,7 @@ def run_match(
         "groups": len(groups), "applied": applied, "skipped_protected": skipped_protected,
         "skipped_unchanged_rejection": skipped_unchanged_rejection, "no_candidate": no_candidate,
         "discovery": discovery, "review_rows": len(review_records),
+        "mixed_reg_type_groups": len(mixed_reg_type_groups),
     }
 
 
