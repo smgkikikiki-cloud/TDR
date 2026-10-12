@@ -1,7 +1,9 @@
 # Price Event Engine — Chunk 1 (PEE-1): rule-first AI extraction
 
-Status: implemented behind a feature flag that is **OFF by default**. Chunks 2
-and 3 are not started.
+Status: implemented behind a feature flag that is **OFF by default**; offline QA
+accepted (validator as amended by PEE2-F1/F2, see the end of this file).
+**Operational readiness is BLOCKED** (`PEE2_OFFLINE_SHADOW_EVALUATION.md`): no live
+provider, no owner-labelled evidence, no authorization. Chunk 3 is not started.
 
 PEE-1 runs *beside* the Price Intelligence pipeline. It reuses P2 fetch evidence,
 P3 deterministic extraction, P4 matching and P5 reconciliation and replaces none
@@ -105,29 +107,34 @@ A first sighting is a baseline: only uncovered amounts can send it to AI.
 
 The model must return `{"claims": [...]}` with price type, amount, raw
 brand/model/trim, optional dates, optional reference price, verbatim
-`conditions` and a verbatim `evidence_text` (≤ 200 chars, trim **and** amount)
-citing an excerpt index. Everything is then re-checked deterministically:
+`conditions` and a verbatim `evidence_text` (≤ 200 chars, ONE price fact: model,
+trim, price wording, amount) citing an excerpt index. Everything is then
+re-checked deterministically, in this order:
 
-* quote exists in the cited excerpt, else `EVIDENCE_NOT_FOUND`;
-* amount / reference amount are in the quote; trim is a whole token in the
-  quote (`MAX` ≠ `MAX+`); brand/model wording is on the page;
+* quote exists in the cited excerpt, else `EVIDENCE_NOT_FOUND`; amount and
+  reference amount are in the quote;
+* deposits, down payments, instalments → `NOT_VEHICLE_PRICE`;
+* brand/model wording is on the page (`MODEL_UNKNOWN`); a trim is stated and is a
+  whole token in the quote (`MAX` ≠ `MAX+`; `TRIM_UNKNOWN` / `TRIM_NOT_IN_EVIDENCE`);
+* **one local price fact** (`bind_fact`, `FACT_NOT_BOUND`): the text before the trim,
+  back to the previous price, is exactly the claimed model; the trim lies between the
+  previous price and this one; only recognised price wording separates trim and amount.
+  Swapped pairs, another model's price, a model named once for several prices and a
+  reference amount claimed on its own fail closed;
+* **price type from wording, never from its absence**: a closed Thai/English vocabulary
+  is read from the fact's own label zone (trim → amount) and the wording that adjoins the
+  amount afterwards (stopping at the next price or the next repetition of the model, so a
+  neighbour's wording does not leak; wording directly before the next price labels that
+  price). Restricted-audience, eco-sticker, dealer and previous-price wording, unrecognised
+  words between trim and amount, and conditional wording (for a price with no type
+  wording) → REVIEW. Otherwise estimated / finance / campaign / introductory wording sets
+  the type, and `LIST_PRICE` requires affirmative recommended-retail / list-price / MSRP
+  wording (a bare "ราคา"/"Price" counts only on a registered `PRICE_LIST` target). A
+  mismatch with the claimed type is `PRICE_TYPE_CONFLICT` / `PRICE_TYPE_UNSUPPORTED`;
+  `UNKNOWN`, dealer and eco-sticker types are never accepted from an OEM page;
 * dates must be fully written (day, month, year; Buddhist Era handled) in the
   excerpt — a year is never filled in; `from ≤ to`;
 * each condition is a verbatim quote;
-* price type vs. the words around the amount (the excerpt on both sides of the
-  quote is read, not only the quote): trailing financing wording
-  (`… 599,000 บาท เมื่อจัดไฟแนนซ์…`) makes the price `FINANCE`, other trailing
-  conditional wording (`เมื่อ`, `เฉพาะ`, `if`, `subject to`, a validity date…)
-  makes it unprovable, so it is never accepted as `LIST_PRICE`
-  (`PRICE_TYPE_CONFLICT` / `PRICE_TYPE_UNSUPPORTED`); the trailing window ends at
-  the next number or the next repetition of the model name. Otherwise, by the
-  words directly before the amount: *special / promotion /
-  discount* → `CAMPAIGN_PRICE`; *financing* wording → `FINANCE_PRICE`;
-  *estimated* → `ESTIMATED_PRICE`; `(from 699,000)` is a reference → list;
-  otherwise `LIST_PRICE`. Mismatches are `PRICE_TYPE_CONFLICT` /
-  `PRICE_TYPE_UNSUPPORTED`; `UNKNOWN`, dealer and eco-sticker types are not
-  accepted from an OEM page;
-* deposits, down payments, instalments → `NOT_VEHICLE_PRICE`;
 * ambiguous grades: P4 `AMBIGUOUS` when a catalog is supplied, else a grade that
   is a token-prefix of another claimed grade → `TRIM_AMBIGUOUS`.
 
@@ -176,12 +183,16 @@ option id.
 
 ## Tests
 
-`tests/test_price_event_engine.py` — all offline with scripted fake providers:
-unchanged page, rule success, conditions-only change, MSRP vs campaign vs
-finance, ambiguous trims (heuristic and P4), missing/invented dates,
-hallucinated evidence, cache hit / key versioning / unchanged re-emission,
-token and call budgets, token limit, bounded retries, P4→P5 reuse, state
-persistence, and the flag-gated CLI hook.
+All offline with scripted fake providers:
+
+* `tests/test_price_event_engine.py` — engine behaviour: unchanged page, rule
+  success, conditions-only change, ambiguous trims, missing/invented dates,
+  hallucinated evidence, cache hit / key versioning / unchanged re-emission, budgets,
+  token limit, bounded retries, P4→P5 reuse, state persistence, flag-gated CLI hook,
+  and the C1-1…C1-4 / final-QA fail-closed regressions.
+* `tests/test_price_event_fact_binding.py` — table-driven validator contract (F1/F2).
+* `tests/test_price_event_shadow.py` + `tools/price_event_shadow.py` — PEE-2 replay
+  evaluation, deterministic reports and the separate readiness verdict.
 
 ## Known limitations (Chunk 1)
 
@@ -191,9 +202,14 @@ persistence, and the flag-gated CLI hook.
 * Review items are returned/printed, not yet fed into the P6 review queue.
 * Fail-closed has a cost: a page that legitimately shows a plausible non-vehicle
   amount the model does not claim stays `REVIEW` and is retried (within budget)
-  every observation until a human or a later chunk marks it ignorable; a list
-  price followed within ~70 characters by condition wording is also sent to
-  review rather than accepted.
+  every observation until a human or a later chunk marks it ignorable. Likewise a
+  price with unrecognised wording, a bare "ราคา"/"Price" off a price-list target, a
+  shared-model row, or a nearby last-updated date goes to REVIEW rather than being
+  accepted. `REVIEW` is not a confirmed price change.
+* The price-wording vocabulary is a conservative closed list and will need extending
+  from owner-reviewed real pages.
+* AI claims reach P5 as ordinary `PriceClaim`s; campaign/finance claims still need
+  campaign + option binding there. Review items are not yet fed to P6.
 * Conditions are coarse clauses; a pure wording edit inside a clause containing
   a condition word is reported as `CONDITIONS`, not `LABELS`.
 * Excerpts use fixed character windows, so unrelated text within ~140 characters
@@ -202,13 +218,9 @@ persistence, and the flag-gated CLI hook.
 ## Validator contract amended by PEE-2 (PEE2-F1 / PEE2-F2)
 
 The shadow evaluation (`PEE2_OFFLINE_SHADOW_EVALUATION.md`) found that the original type and
-identity checks accepted promo-, audience-, eco-sticker- and dealer-qualified prices as
-`LIST_PRICE` and accepted swapped or cross-model trim/amount pairs. The validator now requires
-**one local price fact**: the quote reads `<model> <trim> <price wording> <amount>`, the type comes
-from recognised wording (a closed vocabulary) in the fact's own label zone and the wording that
-adjoins the amount, and `LIST_PRICE` needs affirmative recommended-retail/list-price wording (a bare
-"ราคา"/"Price" counts only on a registered `PRICE_LIST` target). Ambiguous or unsupported wording,
-shared rows and unbound facts go to REVIEW (`FACT_NOT_BOUND`, `PRICE_TYPE_UNSUPPORTED`,
-`PRICE_TYPE_CONFLICT`). The prompt is `price-event-v2` and tells the model to quote one fact per
-price. P4 and P5 are unchanged.
+identity checks defaulted to `LIST_PRICE` when no qualifier was recognised and accepted swapped or
+cross-model trim/amount pairs. Both are fixed; the validator rules are those in sections 3–4
+above. The prompt is `price-event-v2` and tells the model to quote one fact per price. P4 and P5
+are unchanged. Original behaviour (superseded): type inferred from the words before the amount,
+defaulting to LIST; model checked anywhere on the page.
 
