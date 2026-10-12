@@ -1,0 +1,70 @@
+name: Price refresh
+
+# VEHICLE_DB_V3 section 9.1. One click ("Refresh All" in /admin, or Actions > Run workflow) reads every mapped OEM
+# page, reconciles prices against Vehicle Master, lets the AI auditor veto doubtful changes, and writes the rest
+# through vm_apply_price_changes. Manual runs are a DRY RUN unless `apply` is ticked. The schedule only writes
+# after the owner sets the repository variable PRICE_REFRESH_SCHEDULE=on (first scheduled production run is an
+# owner decision, not an assumption).
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write to production (unticked = dry run, writes nothing)"
+        type: boolean
+        default: false
+      models:
+        description: "Only these model ids, comma separated (empty = all mapped models)"
+        type: string
+        default: ""
+      require_audit:
+        description: "Hold every change the AI auditor did not confirm"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 19 * * *"        # daily 02:00 Thailand
+    - cron: "0 */6 1-5 * *"     # every 6 hours on days 1-5 of the month (price-change days)
+
+permissions:
+  contents: read
+
+concurrency:
+  group: price-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.event_name == 'workflow_dispatch' || vars.PRICE_REFRESH_SCHEDULE == 'on'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Refresh prices
+        env:
+          APPLY: ${{ github.event_name == 'schedule' || inputs.apply }}
+          MODELS: ${{ inputs.models }}
+          REQUIRE_AUDIT: ${{ inputs.require_audit }}
+          TRIGGER: ${{ github.event_name }}
+        run: |
+          args=(--trigger "$TRIGGER")
+          [ "$APPLY" = "true" ] && args+=(--apply)
+          [ -n "$MODELS" ] && args+=(--models "$MODELS")
+          [ "$REQUIRE_AUDIT" = "true" ] && args+=(--require-audit)
+          node --experimental-strip-types scripts/price-refresh.ts "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: price-refresh-report
+          path: price-refresh-report.json
+          if-no-files-found: ignore
