@@ -9,7 +9,8 @@ import json
 import pytest
 
 from tools import pricefetch_targets as cli
-from vehreg.price_fetch import FetchError, HttpResponse, OmodaJaecooThailandAdapter
+from vehreg.price_fetch import (FetchError, FetchResult, FetchState, HttpResponse,
+                               OmodaJaecooThailandAdapter)
 
 
 TARGET = "jaecoo_th_home_price_cards"
@@ -95,3 +96,31 @@ def test_timeout_bounds_fail_at_cli_parse(bad):
     with pytest.raises(SystemExit) as exc:
         cli.main(["--target", TARGET, "--fetch-timeout", bad])
     assert exc.value.code == 2
+
+
+def test_not_modified_still_succeeds_without_new_document(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(cli, "_robots_allowed", lambda *_: True)
+
+    class UnchangedAdapter:
+        def fetch(self, target, *, previous=None, timeout=45.0, refetch_not_modified=False):
+            return FetchResult(
+                target_id=target.id,
+                target_role=target.role,
+                source_id=target.source_id,
+                document=None,
+                raw_body=b"",
+                text="",
+                state=FetchState(target_id=target.id),
+                not_modified=True,
+            )
+
+    monkeypatch.setattr(cli, "adapter_for", lambda *args: UnchangedAdapter())
+    out = tmp_path / "unchanged.json"
+    code = cli.main(["--target", TARGET, "--out", str(out)])
+    summary = json.loads(capsys.readouterr().out)
+
+    assert code == 0
+    assert summary["status"] == "NOT_MODIFIED"
+    assert summary["fetched"] == 0
+    assert summary["not_modified"] == 1
+    assert _read(out)["results"][0]["not_modified"] is True
