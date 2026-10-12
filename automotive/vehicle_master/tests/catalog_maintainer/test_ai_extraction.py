@@ -12,7 +12,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from automotive.vehicle_master.catalog_maintainer.ai_extraction import (
-    MODEL_ID, ExtractionError, _request, run_mock_extraction,
+    MODEL_ID, ExtractionError, _request, _response_claims, run_mock_extraction,
 )
 
 ROOT = Path(__file__).parents[2] / "catalog_maintainer"
@@ -68,6 +68,75 @@ class MockAIExtractionTests(unittest.TestCase):
             held = result["adapter_held"][0]
             self.assertEqual(held["reason_code"], "VALUE_NOT_QUOTED")
             self.assertEqual((root / "out/field_candidates.jsonl").read_text(), "")
+
+    def test_source_line_must_bind_claimed_trim_and_field(self):
+        content = "Standard vehicle length is 4455 mm.\nPremium vehicle length is 4600 mm."
+        doc = json.loads(DOCUMENT.read_text())
+        doc.update(content=content, trim_ids=["atto.standard", "atto.premium"])
+        pairs = [("atto.standard", "vehicle.length_mm"),
+                 ("atto.premium", "vehicle.length_mm"),
+                 ("atto.standard", "vehicle.width_mm"),
+                 ("atto.premium", "vehicle.width_mm")]
+        request = _request(doc, pairs)
+        registry = {"fields": {key: {"comparison_qualifiers": []}
+                               for key in ("vehicle.length_mm", "vehicle.width_mm")}}
+
+        def check(trim_id, field_key, quote):
+            response = {"schema_version": "1.0", "mode": "MOCK", "model_id": MODEL_ID,
+                        "request_key": request.request_key,
+                        "claims": [{"trim_id": trim_id, "field_key": field_key,
+                                    "value_text": "4600 mm" if quote.startswith("Premium") else "4455 mm",
+                                    "qualifiers": {}, "quote": quote,
+                                    "locator": "line:2" if quote.startswith("Premium") else "line:1"}]}
+            return _response_claims(response, request, doc, registry)
+
+        accepted, held = check("atto.premium", "vehicle.length_mm", "Standard vehicle length is 4455 mm.")
+        self.assertFalse(accepted)
+        self.assertEqual(held[0]["reason_code"], "SOURCE_TRIM_NOT_BOUND")
+        accepted, held = check("atto.standard", "vehicle.width_mm", "Standard vehicle length is 4455 mm.")
+        self.assertFalse(accepted)
+        self.assertEqual(held[0]["reason_code"], "SOURCE_FIELD_NOT_BOUND")
+        accepted, held = check("atto.standard", "vehicle.length_mm", "Standard vehicle length is 4455 mm.")
+        self.assertEqual(len(accepted), 1)
+        self.assertFalse(held)
+        accepted, held = check("atto.premium", "vehicle.length_mm", "Premium vehicle length is 4600 mm.")
+        self.assertEqual(len(accepted), 1)
+        self.assertFalse(held)
+
+    def test_rejected_cached_response_recovers_from_corrected_cassette(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            doc = json.loads(DOCUMENT.read_text())
+            request = _request(doc, [("atto.standard", "vehicle.length_mm")])
+            forged = json.loads(CASSETTE.read_text())["responses"][request.request_key]
+            forged["claims"][0]["value_text"] = "9999 mm"
+            bad_tape = {"schema_version": "1.0", "mode": "MOCK", "model_id": MODEL_ID,
+                        "responses": {request.request_key: forged}}
+            tape_path = root / "tape.json"
+            tape_path.write_text(json.dumps(bad_tape))
+            cache = root / "cache"
+            first = run_mock_extraction(SNAPSHOT, [DOCUMENT], tape_path, cache, root / "out1",
+                                        confirm_mock_only=True, root=REPOSITORY_ROOT)
+            self.assertEqual(first["accepted_ai_mock_candidates"], 0)
+            self.assertEqual(first["adapter_held"][0]["reason_code"], "VALUE_NOT_QUOTED")
+            self.assertEqual(list(cache.glob("*.json")), [])
+
+            # A prior release may have persisted this rejected row before the
+            # validation-before-cache rule. The current run must re-evaluate it.
+            cache.mkdir(parents=True, exist_ok=True)
+            rejected_cache = {"request_key": request.request_key, "response": forged,
+                              "response_sha256": hashlib.sha256(json.dumps(
+                                  forged, ensure_ascii=False, sort_keys=True,
+                                  separators=(",", ":")).encode()).hexdigest()}
+            (cache / f"{request.request_key}.json").write_text(json.dumps(rejected_cache))
+            corrected = json.loads(CASSETTE.read_text())
+            tape_path.write_text(json.dumps(corrected))
+            second = run_mock_extraction(SNAPSHOT, [DOCUMENT], tape_path, cache, root / "out2",
+                                         confirm_mock_only=True, root=REPOSITORY_ROOT)
+            self.assertEqual(second["accepted_ai_mock_candidates"], 1)
+            self.assertEqual(second["cache_misses"], 1)
+            self.assertEqual(second["recorded_response_reads"], 1)
+            self.assertEqual(second["cache_hits"], 0)
 
     def test_invalid_provider_mode_and_missing_acknowledgement_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:

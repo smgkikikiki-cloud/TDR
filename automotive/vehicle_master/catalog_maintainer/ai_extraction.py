@@ -88,6 +88,38 @@ def _request(doc: dict, pairs: list[tuple[str, str]]) -> ExtractionRequest:
                              doc["content_sha256"], doc["market"], doc["content"], tuple(pairs))
 
 
+_FIELD_ANCHORS = {
+    "vehicle.length_mm": ("vehicle length", "overall length", "length"),
+    "vehicle.width_mm": ("vehicle width", "overall width", "width"),
+    "vehicle.height_mm": ("vehicle height", "overall height", "height"),
+    "vehicle.wheelbase_mm": ("wheelbase", "wheel base"),
+    "vehicle.seats": ("seating capacity", "number of seats", "seats"),
+    "engine.displacement_cc": ("engine displacement", "displacement"),
+    "powertrain.max_power_kw": ("maximum power", "max power", "peak power"),
+    "battery.catalog_capacity_kwh": ("battery capacity", "battery energy capacity"),
+    "ev.rated_range_km": ("rated range", "driving range"),
+    "safety.aeb": ("automatic emergency braking", "aeb"),
+    "safety.airbag_count": ("airbags", "airbag count"),
+}
+
+
+def _whole_phrase(text: str, phrase: str) -> bool:
+    return re.search(r"(?<![a-z0-9])" + re.escape(phrase) + r"(?![a-z0-9])", text, re.IGNORECASE) is not None
+
+
+def _attribution_reason(doc: dict, quote: str, trim_id: str, field_key: str) -> str | None:
+    # A single-trim source is an audited exact-source scope. In multi-trim
+    # documents, the cited line itself must name the claimed trim.
+    if len(doc["trim_ids"]) != 1:
+        trim_label = trim_id.rsplit(".", 1)[-1].replace("_", " ").replace("-", " ")
+        if not _whole_phrase(quote, trim_label):
+            return "SOURCE_TRIM_NOT_BOUND"
+    anchors = _FIELD_ANCHORS.get(field_key, ())
+    if not anchors or not any(_whole_phrase(quote, anchor) for anchor in anchors):
+        return "SOURCE_FIELD_NOT_BOUND"
+    return None
+
+
 def _response_claims(response: dict, request: ExtractionRequest, doc: dict,
                      registry: dict) -> tuple[list[dict], list[dict]]:
     if (not isinstance(response, dict) or set(response) != {"schema_version", "mode", "model_id", "request_key", "claims"}
@@ -126,6 +158,8 @@ def _response_claims(response: dict, request: ExtractionRequest, doc: dict,
         value_text = row["value_text"]
         if reason is None and (not isinstance(value_text, str) or not value_text.strip() or value_text not in quote):
             reason = "VALUE_NOT_QUOTED"
+        if reason is None:
+            reason = _attribution_reason(doc, quote, row["trim_id"], row["field_key"])
         qualifiers = row["qualifiers"]
         allowed_qualifiers = set(registry["fields"].get(row["field_key"], {}).get("comparison_qualifiers", []))
         if reason is None and (not set(qualifiers) <= allowed_qualifiers
@@ -192,8 +226,14 @@ def run_mock_extraction(snapshot_path: str | Path, document_paths: list[str | Pa
                     or hashlib.sha256(_stable(cached["response"]).encode("utf-8")).hexdigest() != cached["response_sha256"]):
                 raise ExtractionError("CACHE_INTEGRITY_FAILURE_STOP")
             response = cached["response"]
-            cache_hits += 1
+            valid, held = _response_claims(response, request, doc, registry)
+            if not held and len(valid) == len(response["claims"]):
+                cache_hits += 1
+            else:
+                response = None
         else:
+            response = None
+        if response is None:
             if provider.fixture_reads >= MAX_MOCK_REQUESTS:
                 held_rows.append({"document_id": doc["document_id"], "status": "HELD",
                                   "reason_code": "MOCK_REQUEST_CAP_REACHED_STOP"})
@@ -204,7 +244,7 @@ def run_mock_extraction(snapshot_path: str | Path, document_paths: list[str | Pa
         held_rows.extend({"document_id": doc["document_id"], **row} for row in held)
         if valid:
             extracted[doc["document_id"]] = valid
-        if not cache_path.exists():
+        if not held and len(valid) == len(response["claims"]):
             cache_row = {"request_key": request.request_key, "response": response,
                          "response_sha256": hashlib.sha256(_stable(response).encode("utf-8")).hexdigest()}
             temporary = cache_path.with_suffix(".tmp")
