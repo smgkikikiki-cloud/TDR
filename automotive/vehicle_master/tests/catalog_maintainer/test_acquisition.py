@@ -135,6 +135,16 @@ class SourceAcquisitionTests(unittest.TestCase):
                          ("BLOCKED","RETAIL_AUDIT_REQUIRES_ONE_GENERATION"))
         self.assertEqual(transport.calls, [])
 
+    def test_complete_g1_lineup_is_partial_for_generation_g2_job(self):
+        task=copy.deepcopy(self.job)
+        task["idempotency_key"]=hashlib.sha256(b"g2-only").hexdigest()
+        task["target_key"]="RETAIL_AUDIT:toyota.yaris_ativ:yaris_ativ.g5:RETAIL_LINEUP"
+        task["payload"]["generation_ids"]=["yaris_ativ.g5"]
+        result=self.acquire(self.adapter({self.url:response(self.body)}),job=task)
+        self.assertEqual((result["disposition"],result["reason"]),
+                         ("PARTIAL","EVIDENCE_GENERATION_MISMATCH"))
+        self.assertIsNone(self.store.evidence_document(self.doc["content_sha256"]))
+
     def test_license_and_robots_denial_are_audited_without_evidence(self):
         for label, robots, reason in (("DENIED", True, "CONTENT_LICENSE_NOT_PERMITTED"),
                                       ("SYNTHETIC", False, "ROBOTS_POLICY_DENIED")):
