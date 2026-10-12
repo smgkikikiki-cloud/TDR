@@ -686,9 +686,9 @@ def test_ry1_never_selects_non_double_cab_pickup_candidate():
 def test_sensitive_code_downgrades_strong_series_auto_to_proposed():
     values = {"2569-01": 20, "2569-02": 25}
     result = matcher.match_one_group(
-        group=_group("bmw-x4", "BMW X4", "BMW"), ice_series=values,
-        legacy_series_by_canonical={"bmw.x5": values},
-        vehicle_models={"bmw.x5": _model("bmw.x5", "BMW X5", "bmw")},
+        group=_group("bmw-330li", "BMW 330Li", "BMW"), ice_series=values,
+        legacy_series_by_canonical={"bmw.330ld": values},
+        vehicle_models={"bmw.330ld": _model("bmw.330ld", "BMW 330Ld", "bmw")},
         vehicle_brands={"bmw": "BMW"}, alias_map={}, existing={},
     )
     assert result is not None
