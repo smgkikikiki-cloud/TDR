@@ -32,6 +32,13 @@ python -m automotive.vehicle_master.catalog_maintainer.cli offline-step \
 python -m automotive.vehicle_master.catalog_maintainer.cli offline-report \
   --db /tmp/catalog-maintainer-offline.sqlite \
   --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_offline_run/report.json
+python -m automotive.vehicle_master.catalog_maintainer.cli offline-acquire \
+  --fixture automotive/vehicle_master/catalog_maintainer/fixtures/sample_snapshot.json \
+  --target-key RETAIL_AUDIT:toyota.yaris_ativ:yaris_ativ.g4:RETAIL_LINEUP \
+  --source-id synthetic-oem-th --url https://oem-fixture.example/th/yaris/lineup.json \
+  --responses automotive/vehicle_master/catalog_maintainer/fixtures/source_acquisition/responses.json \
+  --store /tmp/catalog-maintainer-evidence --now-epoch 1791676800 --confirm-prerecorded-only \
+  --out automotive/vehicle_master/catalog_maintainer/fixtures/sample_acquisition/fetch.json
 ```
 
 Reproduce the fixture output from the package directory's parent repository root using those exact commands. No credentials, optional packages, external services, Production database, or remote database are used. Chunk 4's journal is local SQLite only. `--budget 0` returns empty queues. A positive `--budget` caps each queue independently, so a Retail Audit backlog cannot consume the Spec Enrichment allowance. The merged queue follows a finite policy-configured service cycle. Output contains `queue.csv`, `decisions.jsonl`, and `summary.json`.
@@ -44,6 +51,7 @@ Reproduce the fixture output from the package directory's parent repository root
 - Spec gaps are grouped by model/document and field group with P1/P2 kept distinct inside mixed groups. Vehicle Master `value_state` (`KNOWN`, `UNKNOWN`, `NOT_AVAILABLE`, `NOT_APPLICABLE`, `ABSENT`, and locked null tombstones) is separate from `verification_status` (`VERIFIED`/`PROVISIONAL`). Existing facts and payload values suppress duplicate gaps; P3 never opens a task; prices are ledger-owned.
 - RY1 and RY3 are selected through each model's declared registration profile, normalized within compatible strata and periods, and never summed together or with `*` aggregate rows. Registration contributes only to Retail Audit ranking and is never evidence.
 - Job keys hash only the model's relevant identity/scope, document hashes, or field-gap bundle. An unrelated model/fact update does not regenerate every job.
+- Retail Audit acquisition work, cache coverage, and idempotency keys are generation-scoped; one generation's lineup cannot complete or suppress another generation.
 
 `contract/SPEC.md` records the proposed V3 §4 permission amendment. It is not adopted policy. The runner has no canonical writer, autonomous/background scheduler, HTTP client, or external/paid provider dependency.
 
@@ -54,6 +62,12 @@ Reproduce the fixture output from the package directory's parent repository root
 Recorded docs carry content hashes, local source IDs, capture dates, explicit trim/variant/powertrain coverage, quotes/line locators, source lineage, and extraction method. Retail-lineup completeness also requires a capture manifest whose listed rows match the document's trim IDs; a title or boolean alone cannot establish completeness. Spec sheets remain spec evidence and never change retail eligibility. Range values and other qualified fields retain their required comparison qualifiers; values with distinct or unproven qualifiers are not conflated. Dimensional numbers require a unit in the quoted claim, while seat counts remain unitless. Same-hash documents with conflicting market/authority/coverage metadata are held together instead of letting sort order choose a winner. Replay validates the normalized snapshot before indexing. `NOT_AVAILABLE` remains a catalog value state and does not imply persisted search exhaustion. Conflicting claims, stale/out-of-market sources, locked tombstones, historical or unadmitted trims are held/rejected. No price or P3 task is created.
 
 Replay writes `replay_evidence.jsonl`, `field_candidates.jsonl`, `gap_diff.json`, and `replay_summary.json`. These are proposals/dispositions only: canonical writes, HTTP, paid model calls, paid tokens, and spend are always zero. The summary distinguishes accepted source candidates from the number that actually match an open priority gap; a valid candidate can be accepted while leaving gap counts unchanged. Candidate proposals do not mutate the snapshot. Focused regression suite covers canonicalized aliases, qualifiers, numeric units, duplicate-hash scope, catalog availability versus search exhaustion, and normalized snapshot validation.
+
+## Chunk 5 — offline source acquisition
+
+`offline-acquire` accepts only an eligible planner task, an exact source ID/URL, a local response manifest, and the required `--confirm-prerecorded-only` acknowledgement. The registry (`contract/source_registry.json`) requires exact HTTPS hosts and path prefixes, GET-only use, explicit synthetic/owner-licensed fixture permissions, content-license policy, a prerecorded robots decision, rate limits, retry caps and cooldown. The only transport implementation is `DeterministicFakeHTTPTransport`; unknown URLs fail locally and there is no HTTP client or live fallback. Redirects, unlisted hosts, missing/stale body hashes, disallowed licenses, denied robots metadata, invalid source documents and scope-incomplete evidence receive explicit non-success dispositions.
+
+Structured HTML and PDF-text fixtures are parsed by the controlled line reader into the existing content-bound `SourceDocument` contract and validated by the established replay/scope validators. Response bytes and normalized evidence are stored locally by SHA-256 with SQLite request, retry, usage, rate-limit and evidence indexes. Retail Audit keys, targets, cache coverage and adapter validation are generation-scoped to prevent cross-generation completion. The sample response tape and result are in `fixtures/source_acquisition/` and `fixtures/sample_acquisition/`; these synthetic examples do not establish the authenticity, permission or terms of any real publisher. Reports count fixture transport requests separately from real external HTTP, which remains zero, as do paid services, Production access and canonical writes.
 
 ### Chunk 2 completion record — QA pending
 

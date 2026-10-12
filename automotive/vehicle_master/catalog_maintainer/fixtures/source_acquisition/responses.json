@@ -1,0 +1,42 @@
+{
+  "execution_mode": "PRERECORDED_FIXTURE_ONLY",
+  "responses": [
+    {
+      "body_file": "complete-lineup.json",
+      "elapsed_seconds": 2,
+      "fixture_license": "SYNTHETIC",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Content-SHA256": "5db647392c4bf1cc457f22fb321881299c257bbf385c59a768694e55ef286920"
+      },
+      "robots_allowed": true,
+      "status_code": 200,
+      "url": "https://oem-fixture.example/th/yaris/lineup.json"
+    },
+    {
+      "body_file": "complete-lineup.html",
+      "elapsed_seconds": 2,
+      "fixture_license": "SYNTHETIC",
+      "headers": {
+        "Content-Type": "text/html",
+        "X-Content-SHA256": "4cde1e15a4a3c5a77a38d79f67f45aa1da0cc59065ec546a4fbb2ce2ec3ffa3c"
+      },
+      "robots_allowed": true,
+      "status_code": 200,
+      "url": "https://oem-fixture.example/th/yaris/lineup.html"
+    },
+    {
+      "body_file": "spec-sheet.pdf-fixture.json",
+      "elapsed_seconds": 2,
+      "fixture_license": "SYNTHETIC",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "X-Content-SHA256": "06058e555cf5a27fd4906c3d7a4021d95998e7e744f9264881e09076e69a18f4"
+      },
+      "robots_allowed": true,
+      "status_code": 200,
+      "url": "https://oem-fixture.example/th/atto/spec.pdf"
+    }
+  ],
+  "schema_version": "1.0"
+}

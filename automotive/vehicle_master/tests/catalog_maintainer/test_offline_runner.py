@@ -447,9 +447,14 @@ class OfflineRunnerTests(unittest.TestCase):
         snapshot["trims"].append({"id":"yaris.next_gen","model_id":"toyota.yaris_ativ",
                                   "generation_id":"yaris_ativ.g5","status":"CURRENT","powertrain":"ICE"})
         initial=build_offline_plan(snapshot,self.policy,now=DAY)
-        task=next(t for t in initial["tasks"] if t["target_key"]=="RETAIL_AUDIT:toyota.yaris_ativ:RETAIL_LINEUP")
-        self.assertEqual(set(task["payload"]["generation_ids"]),{"yaris_ativ.g4","yaris_ativ.g5"})
-        key=task["idempotency_key"]
+        g1_target="RETAIL_AUDIT:toyota.yaris_ativ:yaris_ativ.g4:RETAIL_LINEUP"
+        g2_target="RETAIL_AUDIT:toyota.yaris_ativ:yaris_ativ.g5:RETAIL_LINEUP"
+        g1=next(t for t in initial["tasks"] if t["target_key"]==g1_target)
+        g2=next(t for t in initial["tasks"] if t["target_key"]==g2_target)
+        self.assertEqual(g1["payload"]["generation_ids"],["yaris_ativ.g4"])
+        self.assertEqual(g2["payload"]["generation_ids"],["yaris_ativ.g5"])
+        self.assertNotEqual(g1["idempotency_key"],g2["idempotency_key"])
+        key=g1["idempotency_key"]
 
         # The valid G1 attestation is not an existential match for the model's
         # entire two-generation RETAIL_AUDIT scope.
@@ -475,21 +480,24 @@ class OfflineRunnerTests(unittest.TestCase):
         self.assertTrue(validate_cached_source_document(snapshot,doc)["retail_lineup_validated"])
         cached={"source_document":doc,"content_sha256":digest,"document_id":doc["document_id"]}
         cache_plan=build_offline_plan(snapshot,self.policy,now=DAY,cached_documents=[cached],
-                                      known_hashes={task["target_key"]:{digest}})
-        cache_task=next(t for t in cache_plan["tasks"] if t["target_key"]==task["target_key"])
-        self.assertEqual(cache_task["payload"]["source_action"],"PLAN_RETRIEVAL")
-        self.assertNotIn("UNCHANGED_DOCUMENT_HASH",{d["reason"] for d in cache_plan["dispositions"]})
+                                      known_hashes={g1_target:{digest},g2_target:{digest}})
+        self.assertIn(g2_target,{t["target_key"] for t in cache_plan["tasks"]})
+        self.assertEqual(next(t for t in cache_plan["tasks"] if t["target_key"]==g2_target)
+                         ["payload"]["source_action"],"PLAN_RETRIEVAL")
+        self.assertIn(g1_target,{d["target_key"] for d in cache_plan["dispositions"]
+                                 if d["reason"]=="UNCHANGED_DOCUMENT_HASH"})
+        self.assertNotIn(g2_target,{d["target_key"] for d in cache_plan["dispositions"]
+                                    if d["reason"]=="UNCHANGED_DOCUMENT_HASH"})
 
-        self.store.enqueue(task,at=DAY,max_attempts=1+self.policy["runner"]["maximum_retries_per_job"])
+        self.store.enqueue(g1,at=DAY,max_attempts=1+self.policy["runner"]["maximum_retries_per_job"])
         self.store.bind_job_snapshot(key,snapshot,at=DAY)
-        provider=OfflineFakeProvider(responses={task["target_key"]:{"state":"COMPLETED",
+        provider=OfflineFakeProvider(responses={g1_target:{"state":"COMPLETED",
             "source_document":doc,"source_hash":digest}},clock=self.clock)
         runner=OfflineRunner(self.store,self.policy,self.clock,provider)
         result=self.explicit_step(runner)
-        self.assertEqual((result["status"],result["reason"]),
-                         ("RETRY_WAIT","EVIDENCE_MULTI_GENERATION_LINEUP_SCOPE_UNSUPPORTED"))
-        self.assertEqual(self.store.cached_evidence(),[])
-        self.assertNotEqual(self.store.list_jobs()[0]["status"],"COMPLETED")
+        self.assertEqual(result["status"],"COMPLETED")
+        self.assertEqual(self.store.list_jobs()[0]["payload"]["generation_ids"],["yaris_ativ.g4"])
+        self.assertEqual(len(self.store.cached_evidence()),1)
 
         # Journal restart and deterministic replan retain the same queued unit
         # of work, without adding a duplicate or trusting the G1 cache entry.
@@ -497,15 +505,18 @@ class OfflineRunnerTests(unittest.TestCase):
         self.store=SQLiteJobStore(self.db_path)
         runner=OfflineRunner(self.store,self.policy,self.clock,OfflineFakeProvider(clock=self.clock))
         replanned=runner.enqueue_plan(snapshot)
-        same=next(t for t in replanned["tasks"] if t["target_key"]==task["target_key"])
+        same=next(d for d in replanned["dispositions"] if d["target_key"]==g1_target
+                  and d["reason"]=="UNCHANGED_DOCUMENT_HASH")
         self.assertEqual(same["idempotency_key"],key)
-        self.assertGreaterEqual(replanned["deduplicated_count"],1)
         self.assertEqual(sum(j["idempotency_key"]==key for j in self.store.list_jobs()),1)
-        self.assertEqual(next(j for j in self.store.list_jobs() if j["idempotency_key"]==key)["status"],"RETRY_WAIT")
+        self.assertEqual(next(j for j in self.store.list_jobs() if j["idempotency_key"]==key)["status"],"COMPLETED")
         still_planned=build_offline_plan(snapshot,self.policy,now=self.clock.now(),
             cached_documents=self.store.cached_evidence(),known_hashes=self.store.cached_hashes())
-        self.assertIn(task["target_key"],{t["target_key"] for t in still_planned["tasks"]})
-        self.assertNotIn("UNCHANGED_DOCUMENT_HASH",{d["reason"] for d in still_planned["dispositions"]})
+        self.assertIn(g2_target,{t["target_key"] for t in still_planned["tasks"]})
+        self.assertIn(g1_target,{d["target_key"] for d in still_planned["dispositions"]
+                                 if d["reason"]=="UNCHANGED_DOCUMENT_HASH"})
+        self.assertNotIn(g2_target,{d["target_key"] for d in still_planned["dispositions"]
+                                    if d["reason"]=="UNCHANGED_DOCUMENT_HASH"})
 
     def test_policy_rejects_lease_shorter_than_safe_renewal_boundary(self):
         self.policy["runner"]["lease_seconds"]=1

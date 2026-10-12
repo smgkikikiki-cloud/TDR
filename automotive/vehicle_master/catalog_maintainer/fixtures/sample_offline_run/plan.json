@@ -27,7 +27,7 @@
   },
   "tasks": [
     {
-      "idempotency_key": "9a494a9283c8de916af9de85a3b56b706d023d409547d0cbd5354faa51dda0f6",
+      "idempotency_key": "8f84f66dd6859142a37bc54bef2aa1bd4df16632c61421086511d88c77840744",
       "payload": {
         "cached_document": null,
         "cached_evidence_checked": true,
@@ -38,14 +38,14 @@
           "yaris_ativ.g4"
         ],
         "model_id": "toyota.yaris_ativ",
-        "planner_job_key": "cab643d3e36f2b482a376d3ee33ab7c4d09a79564bd43ef82241732d45eb1029",
+        "planner_job_key": "3e3d7e06acc4746a5a4260f2ab93a6198eca096d66dd0c483de897bcd1de5969",
         "policy_revision": "b80b7022c2103b058c17771eaea8fafb1550524f6a844014ee1c520069b2867c",
         "snapshot_checked": true,
         "source_action": "PLAN_RETRIEVAL"
       },
       "priority": 0.845,
       "queue": "RETAIL_AUDIT",
-      "target_key": "RETAIL_AUDIT:toyota.yaris_ativ:RETAIL_LINEUP"
+      "target_key": "RETAIL_AUDIT:toyota.yaris_ativ:yaris_ativ.g4:RETAIL_LINEUP"
     },
     {
       "idempotency_key": "abfaac4a4bcf458eca55646ab00169f79d1f61a5838de47e10ed458dcc6f6733",

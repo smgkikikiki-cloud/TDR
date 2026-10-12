@@ -101,6 +101,25 @@ def _hash(value: Any) -> str:
     return hashlib.sha256(_json(value).encode("utf-8")).hexdigest()
 
 
+def _retail_generation_job_key(snapshot: dict, item: dict, generation_id: str) -> str:
+    """Stable identity for one model/generation lineup audit, independent of sibling generations."""
+    model=next(m for m in snapshot["models"] if m["id"]==item["model_id"])
+    trims=sorted((t for t in snapshot["trims"] if t.get("model_id")==item["model_id"]
+                  and t.get("generation_id")==generation_id and not t.get("deleted_at")),key=lambda t:t["id"])
+    owner=next((s for s in snapshot.get("current_retail_sets",[]) if s.get("model_id")==item["model_id"]),None)
+    lineup_evidence=model.get("lineup_evidence")
+    if not isinstance(lineup_evidence,dict) or lineup_evidence.get("generation_id")!=generation_id:
+        lineup_evidence=None
+    identity={"contract":"retail-generation-job-v1","model_id":model["id"],
+        "model_status":model.get("status"),"generation_id":generation_id,
+        "trims":[{key:t.get(key) for key in ("id","status","powertrain","variant_id","revision",
+                 "admin_retired","owner_retired","model_year","facelift_id")} for t in trims],
+        "owner_set":({"revision":owner.get("revision"),"trim_ids":sorted(tid for tid in owner.get("trim_ids",[])
+                       if any(t["id"]==tid for t in trims))} if owner else None),
+        "lineup_evidence":lineup_evidence}
+    return _hash(identity)
+
+
 def utc_day(epoch: float) -> str:
     return datetime.fromtimestamp(epoch, tz=timezone.utc).date().isoformat()
 
@@ -580,12 +599,29 @@ def build_offline_plan(snapshot: dict, policy: dict, *, now: int,
     for queue in QUEUES:
         for item in ranked["queues"][queue]:
             groups = item.get("field_groups") or ["RETAIL_LINEUP"]
-            for group in groups:
-                field_subset = item["field_plan"].get(group, {}) if queue == "SPEC_ENRICH" else {}
-                target_key = f"{queue}:{item['model_id']}:{group}"
+            scoped_items=[item]
+            if queue=="RETAIL_AUDIT" and not item.get("generation_ids"):
+                key=_hash({"contract":"offline-disposition-v1","model_id":item["model_id"],
+                           "reason":"RETAIL_GENERATION_SCOPE_UNRESOLVED"})
+                dispositions.append({"idempotency_key":key,"target_key":f"IDENTITY:{item['model_id']}",
+                    "queue":"RETAIL_AUDIT","status":"IDENTITY_AMBIGUOUS",
+                    "reason":"RETAIL_GENERATION_SCOPE_UNRESOLVED"})
+                continue
+            if queue=="RETAIL_AUDIT" and item.get("generation_ids"):
+                scoped_items=[]
+                for generation_id in sorted(item["generation_ids"]):
+                    scoped={**item,"generation_ids":[generation_id],
+                            "job_key":_retail_generation_job_key(snapshot,item,generation_id)}
+                    scoped_items.append(scoped)
+            for scoped_item in scoped_items:
+              for group in groups:
+                field_subset = scoped_item["field_plan"].get(group, {}) if queue == "SPEC_ENRICH" else {}
+                generations=scoped_item.get("generation_ids",[])
+                suffix=(f":{generations[0]}" if queue=="RETAIL_AUDIT" and len(generations)==1 else "")
+                target_key = f"{queue}:{scoped_item['model_id']}{suffix}:{group}"
                 negative = negative_cache.get(target_key)
                 cooldown_epoch = int(negative["expires_at"]) if negative and int(negative["expires_at"]) <= now else 0
-                key = _hash({"contract":"offline-job-v1","base_job_key":item["job_key"],
+                key = _hash({"contract":"offline-job-v1","base_job_key":scoped_item["job_key"],
                              "group":group,"cooldown_epoch":cooldown_epoch,
                              "policy_revision":policy_revision})
                 if negative and int(negative["expires_at"]) > now:
@@ -595,7 +631,7 @@ def build_offline_plan(snapshot: dict, policy: dict, *, now: int,
                     continue
                 cache = next((doc for doc in sorted(cached_documents,
                     key=lambda d:(d.get("content_sha256",""),d.get("document_id","")))
-                    if _cache_covers(snapshot,doc,item["model_id"],item.get("generation_ids",[]),group,field_subset)),None)
+                    if _cache_covers(snapshot,doc,scoped_item["model_id"],generations,group,field_subset)),None)
                 if cache and cache.get("content_sha256") in known_hashes.get(target_key,set()):
                     dispositions.append({"idempotency_key":key,"target_key":target_key,"queue":queue,
                                          "status":"COMPLETED","reason":"UNCHANGED_DOCUMENT_HASH",
@@ -604,10 +640,10 @@ def build_offline_plan(snapshot: dict, policy: dict, *, now: int,
                 source_action = "REPLAY_CACHED" if cache else "PLAN_RETRIEVAL"
                 tasks.append({
                     "idempotency_key":key,"target_key":target_key,"queue":queue,
-                    "priority":float(item["score"]),
-                    "payload":{"model_id":item["model_id"],"generation_ids":item["generation_ids"],
+                    "priority":float(scoped_item["score"]),
+                    "payload":{"model_id":scoped_item["model_id"],"generation_ids":generations,
                                "field_group":group,"field_plan":field_subset,
-                               "planner_job_key":item["job_key"],"snapshot_checked":True,
+                               "planner_job_key":scoped_item["job_key"],"snapshot_checked":True,
                                "cached_evidence_checked":True,"source_action":source_action,
                                "cached_document":cache,"document_first":True,
                                "policy_revision":policy_revision},

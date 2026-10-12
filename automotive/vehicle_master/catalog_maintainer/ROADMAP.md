@@ -85,6 +85,10 @@ C4-8 correction record (2026-10-11, QA pending): lineup completeness is generati
 - Start with prerecorded/fake HTTP transport, never live request in unapproved mode. Source status is `FETCH_OK`, `UNCHANGED`, `PARTIAL`, `SOURCE_BROKEN`, `BLOCKED`, etc.
 - Gate: stable replay fixtures, exact URL allowlist and permissions, bounded retries, no accidental access/charge.
 
+### Chunk 5 implementation record — QA pending
+
+Implemented a fixture-only source registry and acquisition adapter, prerecorded exact-URL fake transport, local SHA-256 response/evidence storage, structured HTML and PDF-text fixture parsers, and explicit FETCH_OK / UNCHANGED / PARTIAL / SOURCE_BROKEN / BLOCKED results with auditable reasons, rate limits and bounded retries. Existing `SourceDocument` replay validation and exact requested model/generation/trim/field or lineup coverage remain required before evidence is cached. Retail Audit planning now emits deterministic per-generation target and idempotency keys (including single-generation work); a missing generation is an identity disposition, and acquisition rejects multi-generation requests. The sample request uses a synthetic official-TH fixture only; this is not evidence of any real publisher's authenticity, permission or terms. Focused tests cover URL/host allowlists, malformed ports/paths, redirects, malformed/stale hashes, incomplete and wrong-scope lineup evidence, generation isolation, license/robots denial, retries, rate limits, duplicates, restart recovery, and HTML/PDF parsing. The CLI requires an explicit prerecorded-only flag. No live network client/path, paid service, Production access, canonical write, background execution, or Chunk 6 work was introduced. Structural evidence interval remains `PENDING_OWNER_APPROVAL`.
+
 ### Chunk 6: Read-only Vehicle Master Shadow Integration (approval gate)
 - **Separate owner approval required to read Production.** Before that, use exported/anonymized read-only snapshots, not live DB.
 - Map canonical master tables, `vehicle_facts`, trim payloads, price ledger/retail memberships and actual registry into normalized input. No write role, no stored credentials in code, no `current_*` writes.
@@ -144,7 +148,7 @@ C4-8 correction record (2026-10-11, QA pending): lineup completeness is generati
 ## 5. Codex execution contract
 
 - Work on **existing branch** `codex/vehicle-catalog-maintainer`, existing draft PR #203. Never merge or deploy by inference.
-- **One chunk per review**; Chunk 2 is NEXT; do not start Chunk 3+ in the same iteration.
+- **One chunk per review**; only the currently authorized chunk may be implemented; stop for QA before advancing.
 - Read `AGENTS.md`, `docs/WORK_STATE.md`, `docs/vehicle-db/VEHICLE_DB_V3.md`, and the existing #203 contract/test fixtures before editing.
 - PR changes for Chunk 2 stay under `automotive/vehicle_master/catalog_maintainer/` and its tests, except an explicitly justified read-only registry adapter; do not touch #200/#201 directories or retired paths.
 - End each chunk with: change inventory, evidence/gap examples, focused + full CI, zero-call/writes proof, scoped cost report, unresolved decisions, updated fixture outputs, and explicit stop for owner review.

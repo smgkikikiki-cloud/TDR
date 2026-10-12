@@ -7,7 +7,9 @@ from pathlib import Path
 from .simulator import simulate
 from .replay import replay
 from .retail_reconcile import reconcile_retail_lineup
-from .offline_runner import FakeClock, OfflineFakeProvider, OfflineRunner, SQLiteJobStore
+from .offline_runner import FakeClock, OfflineFakeProvider, OfflineRunner, SQLiteJobStore, build_offline_plan
+from .acquisition import (ContentAddressedEvidenceStore, DeterministicFakeHTTPTransport,
+                          OfflineSourceAcquisitionAdapter, load_source_registry)
 from .validation import validate_fixture, validate_policy
 
 
@@ -43,6 +45,18 @@ def main(argv: list[str] | None = None) -> int:
     offline_report = sub.add_parser("offline-report", help="export durable local journal state")
     offline_report.add_argument("--db", required=True)
     offline_report.add_argument("--out")
+    acquire = sub.add_parser("offline-acquire", help="replay a prerecorded source response; no live HTTP client exists")
+    acquire.add_argument("--fixture", required=True)
+    acquire.add_argument("--target-key", required=True)
+    acquire.add_argument("--source-id", required=True)
+    acquire.add_argument("--url", required=True)
+    acquire.add_argument("--responses", required=True)
+    acquire.add_argument("--store", required=True)
+    acquire.add_argument("--now-epoch", required=True, type=int)
+    acquire.add_argument("--policy", default=str(Path(__file__).parent / "contract" / "policy.yaml"))
+    acquire.add_argument("--registry", default=str(Path(__file__).parent / "contract" / "source_registry.json"))
+    acquire.add_argument("--confirm-prerecorded-only", action="store_true", required=True)
+    acquire.add_argument("--out")
     args = parser.parse_args(argv)
     if args.command == "simulate":
         result = simulate(args.fixture, args.out, budget=args.budget)
@@ -99,6 +113,30 @@ def main(argv: list[str] | None = None) -> int:
             Path(args.out).parent.mkdir(parents=True,exist_ok=True)
             Path(args.out).write_text(rendered,encoding="utf-8")
         print(rendered,end="")
+        return 0
+    if args.command == "offline-acquire":
+        snapshot=json.loads(Path(args.fixture).read_text(encoding="utf-8"))
+        policy=json.loads(Path(args.policy).read_text(encoding="utf-8"))
+        validate_fixture(snapshot); validate_policy(policy)
+        planned=build_offline_plan(snapshot,policy,now=args.now_epoch)
+        task=next((row for row in planned["tasks"] if row["target_key"]==args.target_key),None)
+        if task is None:
+            parser.error("target key is not an eligible task in this fixture snapshot")
+        clock=FakeClock(args.now_epoch)
+        store=ContentAddressedEvidenceStore(args.store)
+        try:
+            transport=DeterministicFakeHTTPTransport.from_manifest(args.responses)
+            adapter=OfflineSourceAcquisitionAdapter(load_source_registry(args.registry),transport,store,policy,clock)
+            result=adapter.acquire(task,source_id=args.source_id,url=args.url,snapshot=snapshot)
+            result["fake_transport_requests"]=len(transport.calls)
+            result["fixture_only_mode"]=True
+            rendered=json.dumps(result,ensure_ascii=False,sort_keys=True,indent=2)+"\n"
+            if args.out:
+                Path(args.out).parent.mkdir(parents=True,exist_ok=True)
+                Path(args.out).write_text(rendered,encoding="utf-8")
+            print(rendered,end="")
+        finally:
+            store.close()
         return 0
     return 2
 
