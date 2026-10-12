@@ -11,6 +11,7 @@ from .offline_runner import FakeClock, OfflineFakeProvider, OfflineRunner, SQLit
 from .acquisition import (ContentAddressedEvidenceStore, DeterministicFakeHTTPTransport,
                           OfflineSourceAcquisitionAdapter, load_source_registry)
 from .validation import validate_fixture, validate_policy
+from .shadow_snapshot import write_shadow_report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -57,6 +58,10 @@ def main(argv: list[str] | None = None) -> int:
     acquire.add_argument("--registry", default=str(Path(__file__).parent / "contract" / "source_registry.json"))
     acquire.add_argument("--confirm-prerecorded-only", action="store_true", required=True)
     acquire.add_argument("--out")
+    shadow = sub.add_parser("shadow-report", help="build a read-only report from a versioned local Vehicle Master export")
+    shadow.add_argument("--snapshot", required=True, help="local normalized export JSON; no database connection is available")
+    shadow.add_argument("--policy", default=str(Path(__file__).parent / "contract" / "policy.yaml"))
+    shadow.add_argument("--out", required=True)
     args = parser.parse_args(argv)
     if args.command == "simulate":
         result = simulate(args.fixture, args.out, budget=args.budget)
@@ -137,6 +142,13 @@ def main(argv: list[str] | None = None) -> int:
             print(rendered,end="")
         finally:
             store.close()
+        return 0
+    if args.command == "shadow-report":
+        report = write_shadow_report(Path(args.snapshot), Path(args.policy), Path(args.out),
+                                     repository_root=Path(__file__).resolve().parents[3])
+        print(f"SHADOW: {report['coverage']['eligible_current_models']} eligible, "
+              f"{report['coverage']['retail_audit_only_models']} audit-only, "
+              f"{report['gaps']['real_or_researchable']} researchable gaps; 0 external/paid/Production/writes")
         return 0
     return 2
 

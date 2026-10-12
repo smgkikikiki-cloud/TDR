@@ -1,0 +1,416 @@
+{
+  "contract_version": "vehicle-master-shadow/1.0",
+  "evidence_cache": [],
+  "field_priority_overlay": {
+    "battery.catalog_capacity_kwh": "P1",
+    "engine.displacement_cc": "P1",
+    "safety.aeb": "P2",
+    "vehicle.length_mm": "P1",
+    "vehicle.seats": "P1"
+  },
+  "provenance": {
+    "anonymized": true,
+    "exported_at": "2026-10-12T00:00:00Z",
+    "kind": "SYNTHETIC_FIXTURE",
+    "snapshot_id": "synthetic-shadow-multi-generation-v1",
+    "source_contract": "docs/vehicle-db/MASTER_TABLES.md + supabase/migration_v57_vehicle_master_tables.sql",
+    "source_schema_version": "synthetic-v57-shape"
+  },
+  "tables": {
+    "vehicle_current_retail_sets": [
+      {
+        "model_id": "m.current",
+        "reviewed_at": "2026-10-01",
+        "reviewer": "synthetic-owner",
+        "source_ref": "fixture://owner-set",
+        "trim_ids": [
+          "t.ice",
+          "t.hev",
+          "t.phev",
+          "t.bev"
+        ]
+      }
+    ],
+    "vehicle_facts": [
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.engine",
+        "field_key": "engine.displacement_cc",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": 1498,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.battery.na",
+        "field_key": "battery.catalog_capacity_kwh",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": null,
+        "value_state": "NOT_APPLICABLE",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.length.alias",
+        "field_key": "length_mm",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": 4400,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.phev.engine.a",
+        "field_key": "engine.displacement_cc",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.phev",
+        "unit": "",
+        "value": 1498,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.phev.engine.b",
+        "field_key": "engine.displacement_cc",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.phev",
+        "unit": "",
+        "value": 1598,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.bev.engine.na",
+        "field_key": "engine.displacement_cc",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.bev",
+        "unit": "",
+        "value": null,
+        "value_state": "NOT_APPLICABLE",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.bev.battery",
+        "field_key": "battery.catalog_capacity_kwh",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "",
+        "trim_id": "t.bev",
+        "unit": "",
+        "value": 60.5,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "ADMIN",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.bev.seats.lock",
+        "field_key": "vehicle.seats",
+        "locked": true,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "",
+        "trim_id": "t.bev",
+        "unit": "",
+        "value": null,
+        "value_state": "ABSENT",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.seats.duplicate",
+        "field_key": "vehicle.seats",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": 5,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.seats.duplicate-copy",
+        "field_key": "vehicle.seats",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": 5,
+        "value_state": "KNOWN",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "authority": "OFFICIAL",
+        "claim_ids": [],
+        "effective_from": null,
+        "effective_to": null,
+        "fact_id": "f.ice.aeb.provisional",
+        "field_key": "safety.aeb",
+        "locked": false,
+        "observed_at": "2026-10-01",
+        "qualifiers": {},
+        "source": "fixture",
+        "source_locator": "fixture:1",
+        "source_ref": "fixture://fact",
+        "trim_id": "t.ice",
+        "unit": "",
+        "value": true,
+        "value_state": "KNOWN",
+        "verification_status": "PROVISIONAL"
+      }
+    ],
+    "vehicle_generations": [
+      {
+        "canonical_id": "g.one",
+        "model_id": "m.current",
+        "payload": {}
+      },
+      {
+        "canonical_id": "g.two",
+        "model_id": "m.current",
+        "payload": {}
+      },
+      {
+        "canonical_id": "g.audit",
+        "model_id": "m.audit",
+        "payload": {}
+      },
+      {
+        "canonical_id": "g.history",
+        "model_id": "m.history",
+        "payload": {}
+      },
+      {
+        "canonical_id": "g.upcoming",
+        "model_id": "m.upcoming",
+        "payload": {}
+      },
+      {
+        "canonical_id": "g.deleted",
+        "model_id": "m.deleted",
+        "payload": {}
+      }
+    ],
+    "vehicle_models": [
+      {
+        "canonical_id": "m.current",
+        "deleted_at": null,
+        "generation_id": "g.one",
+        "payload": {},
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "m.audit",
+        "deleted_at": null,
+        "generation_id": "g.audit",
+        "payload": {},
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "m.history",
+        "deleted_at": null,
+        "generation_id": "g.history",
+        "payload": {},
+        "status": "HISTORICAL"
+      },
+      {
+        "canonical_id": "m.upcoming",
+        "deleted_at": null,
+        "generation_id": "g.upcoming",
+        "payload": {
+          "upcoming": true
+        },
+        "status": "UNVERIFIED"
+      },
+      {
+        "canonical_id": "m.deleted",
+        "deleted_at": "2026-01-01",
+        "generation_id": "g.deleted",
+        "payload": {},
+        "status": "CURRENT"
+      }
+    ],
+    "vehicle_price_ledger": [
+      {
+        "amount_thb": 800000,
+        "in_release": true,
+        "price_type": "LIST_PRICE",
+        "record_id": "price.1",
+        "trim_id": "t.ice"
+      }
+    ],
+    "vehicle_trims": [
+      {
+        "canonical_id": "t.ice",
+        "catalog_payload": {},
+        "generation_id": "g.one",
+        "model_id": "m.current",
+        "name": "ICE",
+        "payload": {},
+        "powertrain": "ICE",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.hev",
+        "catalog_payload": {},
+        "generation_id": "g.one",
+        "model_id": "m.current",
+        "name": "HEV",
+        "payload": {},
+        "powertrain": "HEV",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.phev",
+        "catalog_payload": {},
+        "generation_id": "g.two",
+        "model_id": "m.current",
+        "name": "PHEV",
+        "payload": {},
+        "powertrain": "PHEV",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.bev",
+        "catalog_payload": {},
+        "generation_id": "g.two",
+        "model_id": "m.current",
+        "name": "BEV",
+        "payload": {},
+        "powertrain": "BEV",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.audit",
+        "catalog_payload": {},
+        "generation_id": "g.audit",
+        "model_id": "m.audit",
+        "name": "Unknown retail",
+        "payload": {},
+        "powertrain": "HEV",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.old",
+        "catalog_payload": {},
+        "generation_id": "g.history",
+        "model_id": "m.history",
+        "name": "Old",
+        "payload": {},
+        "powertrain": "ICE",
+        "status": "HISTORICAL"
+      },
+      {
+        "canonical_id": "t.future",
+        "catalog_payload": {},
+        "generation_id": "g.upcoming",
+        "model_id": "m.upcoming",
+        "name": "Future",
+        "payload": {},
+        "powertrain": "BEV",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "t.deleted",
+        "catalog_payload": {},
+        "deleted_at": "2026-01-01",
+        "generation_id": "g.deleted",
+        "model_id": "m.deleted",
+        "name": "Deleted",
+        "payload": {},
+        "powertrain": "BEV",
+        "status": "CURRENT"
+      }
+    ]
+  },
+  "vehicle_master_state": {
+    "scope": "vehicle_master",
+    "seed_as_of": "2026-10-12",
+    "seed_canonical_revision": "synthetic",
+    "seed_release_id": "synthetic-release",
+    "seed_source_hash": "synthetic-only"
+  }
+}
