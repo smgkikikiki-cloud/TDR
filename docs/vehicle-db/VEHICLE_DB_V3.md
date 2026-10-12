@@ -300,15 +300,18 @@ Imported data lives in its own tables keyed by `panel_id` (CLAUDE.md rule 1: nev
 
 ### 14.2 Crosswalk `ice_model_crosswalk`
 Columns: `model_group_id`, `canonical_model_id` (nullable), `match_method` (`SERIES` | `NAME` | `ADMIN`), `score`, `status` (`AUTO` | `APPROVED` | `PROPOSED` | `REJECTED`), `master_version`, timestamps. Many TDR models may map to one Ice group (e.g. `hilux_travo_cab` + `hilux_travo_double_cab` → `toyota-hilux-travo`); one TDR model maps to at most one Ice group.
-Ice does **not** ship its DLT raw-name map (confirmed by Ice). Matching signals, strongest first:
-1. **Monthly series:** same brand (after brand alias); compare the last 24 monthly totals (Ice `reg_trend` vs legacy `registrations` mapped to the TDR model, summed over TDR models mapping to the same group). Correlation ≥ 0.98 and total ratio 0.9–1.1 = strong. Both sides come from the same DLT data, so the series is the fingerprint.
-2. **Brand alias table** (seed: Deepal ↔ Changan, MG Maxus 7/9 ↔ MAXUS Mifa 7/9).
-3. **Name similarity** (normalized, brand prefix removed) — never sufficient alone.
-Acceptance: strong series AND name ≥ 0.8 → `AUTO`. Everything else with a candidate → one review sheet (`PROPOSED`), approved once by admin. No candidate → leave null; market pages show the Ice name without a link.
+Ice does **not** ship its DLT raw-name map (confirmed by Ice). Keep the established series/name score as the default matcher:
+1. Normalize case, spacing, punctuation, and brand prefixes; preserve model letters, digits, and token order.
+2. Compare the last 24 monthly totals from Ice `reg_trend` and legacy `registrations`. Correlation ≥ 0.98 and total ratio 0.9–1.1 are a strong series.
+3. Strong series plus name similarity ≥ 0.8 → `AUTO`; strong series below that name threshold → `PROPOSED/SERIES`; otherwise name similarity ≥ 0.35 → `PROPOSED/NAME`; lower scores → no candidate. Rank candidates by the original signal priority (status, series method, correlation, ratio, then name similarity), never comparing a correlation directly with a name score.
+
+Apply owner identity rules as hard overrides to candidate eligibility before ranking; these rules may reject a tempting match but must not select a different candidate using fuzzy name similarity alone. Audi, BMW, Volvo, Lexus, Peugeot, Ferrari, Zeekr, Mazda, and MG treat any model designation difference as a distinct identity unless an explicit owner alias applies. A standalone `L/l` token is identity-significant across all brands. A Latin-letter Levenshtein distance greater than 3 (brand removed; digits, spaces, and punctuation ignored) is a hard separation. Apply the owner's cab/body-class decisions and explicitly recorded aliases (including Jaecoo J7/7, BMW 2 Series/2 Series Gran Coupe, Toyota Hiace/Commuter, BYD Sealion 6/Sealion 6 DM-i, Riddara RD6/RD6 Double Cab, Wuling Binguo/Bingo, and the scoped Chery C5 EV/Omoda C5 pair) narrowly to their named models.
+
+Monthly scores do not override an owner identity separation. A no-candidate result leaves the Ice group unlinked; creating a genuinely new canonical identity belongs to the separate bootstrap path, not the crosswalk matcher.
 Ongoing, on every Ice import:
 - Apply Ice's `id_changes.csv` (old_model_group_id → new_model_group_id, type): `เปลี่ยนรหัส` and `รวม` → move crosswalk rows, bookmarks and links from old to new automatically (old id retired, redirect to new); `แยก` → old id stays; propose (`STRUCTURE` card) whether the TDR model should also map to the new id. Never recompute moved units — the replace-all import already contains the new history.
 - Ice groups appearing for the first time and provisional groups (`model_group_id` containing `|` or ending `__provisional`) → `discovery`.
-Prototype (1 Oct 2026, names + 11-month totals only): 203/296 TDR nameplates auto-matched = 79% of units; 15% need review; 6% no candidate. Known traps: `bmw_3` vs `bmw-x3` (name-only false match), brand differences (Deepal/Changan, MG Maxus/MAXUS).
+Prototype (1 Oct 2026, names + 11-month totals only): 203/296 TDR nameplates auto-matched = 79% of units; 15% need review; 6% no candidate. These historical rates are not acceptance criteria. Known traps: `bmw_3` vs `bmw-x3` (designation lock), brand aliases (Deepal/Changan, MG Maxus/MAXUS).
 
 ### 14.3 Which dimension comes from where
 | Dimension | Source | Rule |

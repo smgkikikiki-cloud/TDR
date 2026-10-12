@@ -151,7 +151,7 @@ def _base_rest() -> FakeRest:
 
 
 # ---------------------------------------------------------------------------
-# Strong series + strong name -> AUTO, applied and never in the review sheet
+# Original series/name acceptance scoring.
 # ---------------------------------------------------------------------------
 
 def test_strong_match_is_applied_as_auto_and_excluded_from_review(tmp_path):
@@ -174,6 +174,25 @@ def test_strong_match_is_applied_as_auto_and_excluded_from_review(tmp_path):
     assert review_path.read_text(encoding="utf-8-sig").strip().count("\n") == 0  # header only
 
 
+def test_dry_run_evaluates_candidates_without_any_database_writes(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
+    rest.tables["vehicle_models"] = [_model("toyota-hilux-travo-cab", "Hilux Travo", "toyota")]
+    before_crosswalk = [row.copy() for row in rest.tables["ice_model_crosswalk"]]
+    before_known = [row.copy() for row in rest.tables["ice_known_model_groups"]]
+
+    summary = matcher.run_match(
+        rest, master_version="M5", review_csv_path=tmp_path / "review.csv", dry_run=True)
+
+    assert summary["dry_run"] is True
+    assert summary["auto_candidates"] == 0
+    assert summary["proposed_candidates"] == 1
+    assert summary["applied"] == 0
+    assert rest.rpc_calls == []
+    assert rest.tables["ice_model_crosswalk"] == before_crosswalk
+    assert rest.tables["ice_known_model_groups"] == before_known
+
+
 # ---------------------------------------------------------------------------
 # No candidate at all
 # ---------------------------------------------------------------------------
@@ -188,6 +207,28 @@ def test_no_matching_brand_at_all_is_counted_as_no_candidate(tmp_path):
     summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
     assert summary["no_candidate"] == 1
     assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_owner_excluded_groups_are_not_matched_or_registered_as_known(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [
+        _group("discard-this", "Unspecified", "Isuzu"),
+        _group("keep-this", "Unknown Truck", "Isuzu"),
+    ]
+
+    summary = matcher.run_match(
+        rest, master_version="M7", review_csv_path=tmp_path / "review.csv",
+        excluded_model_group_ids={"discard-this"},
+    )
+
+    assert summary["groups"] == 2
+    assert summary["processed_groups"] == 1
+    assert summary["excluded_groups"] == 1
+    assert summary["no_candidate"] == 1
+    assert rest.tables["ice_model_crosswalk"] == []
+    assert rest.tables["ice_known_model_groups"] == [
+        {"model_group_id": "keep-this", "first_seen_master_version": "M7"}
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -345,18 +386,18 @@ def test_rejected_mapping_is_reevaluated_when_only_the_name_score_evidence_chang
 
 
 # ---------------------------------------------------------------------------
-# Candidate ranking (PR #188 review round 2): never compare a SERIES
-# correlation against a NAME name_score directly.
+# Candidate ranking: exact identity rules beat fuzzy names; registration series do not
+# choose between candidate identities.
 # ---------------------------------------------------------------------------
 
-def test_a_strong_series_auto_candidate_beats_a_weak_series_name_only_candidate(tmp_path):
+def test_exact_name_beats_a_fuzzy_name_even_when_exact_series_is_weak(tmp_path):
     rest = _base_rest()
     ice_values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
     rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
     rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
     rest.tables["vehicle_models"] = [
-        _model("candidate-a", "Hilux Travo", "toyota"),   # strong series, name >= 0.8 -> AUTO-eligible
-        _model("candidate-b", "Hilux Travo", "toyota"),   # weak series, name 1.0 -> NAME-only PROPOSED
+        _model("candidate-a", "Hilux Travo", "toyota"),
+        _model("candidate-b", "Hilux Travo X", "toyota"),
     ]
     rest.tables["registrations"] = (
         _legacy_rows("candidate-a", ice_values)
@@ -369,16 +410,15 @@ def test_a_strong_series_auto_candidate_beats_a_weak_series_name_only_candidate(
     assert "candidate-b" not in rows
 
 
-def test_series_proposed_beats_name_only_proposed_despite_a_numerically_higher_name_score(tmp_path):
+def test_strong_series_candidate_beats_exact_name_with_weak_series(tmp_path):
     rest = _base_rest()
     ice_values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
     rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
     rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
     rest.tables["vehicle_models"] = [
-        # Strong series but a name that shares nothing with "Hilux Travo" -- PROPOSED/SERIES.
-        _model("candidate-a", "Zephyr Nomad Expedition", "toyota"),
-        # Weak series but an exact name match (name_score 1.0, numerically higher than
-        # candidate-a's name score) -- PROPOSED/NAME. Must still lose to candidate-a.
+        # Strong series and a close name, within the owner's hard-separation limits.
+        _model("candidate-a", "Hilux Travo S", "toyota"),
+        # Exact model name with intentionally bad monthly series.
         _model("candidate-b", "Hilux Travo", "toyota"),
     ]
     rest.tables["registrations"] = (
@@ -388,9 +428,267 @@ def test_series_proposed_beats_name_only_proposed_despite_a_numerically_higher_n
     summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
     assert summary["applied"] == 1
     rows = {r["canonical_model_id"]: r for r in rest.tables["ice_model_crosswalk"]}
-    assert rows["candidate-a"]["status"] == "PROPOSED"
+    assert rows["candidate-a"]["status"] == "AUTO"
     assert rows["candidate-a"]["match_method"] == "SERIES"
     assert "candidate-b" not in rows
+
+
+def test_exact_name_is_only_proposed_when_registration_series_is_weak(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("aion", "AION"))
+    rest.tables["ice_dims_model_group"] = [_group("aion-aion-es", "Aion ES", "AION")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("aion-aion-es", [100.0, 50.0, 200.0, 10.0])
+    rest.tables["vehicle_models"] = [_model("aion.aion_es", "Aion ES", "aion")]
+    rest.tables["registrations"] = _legacy_rows("aion.aion_es", [5.0, 90.0, 3.0, 150.0])
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    row = rest.tables["ice_model_crosswalk"][0]
+    assert row["canonical_model_id"] == "aion.aion_es"
+    assert row["status"] == "PROPOSED"
+    assert row["match_method"] == "NAME"
+    assert "series not strong" in row["reason"]
+
+
+def test_deterministic_identity_override_selects_only_materialized_owner_target():
+    result = matcher.match_one_group(
+        group=_group("bmw-bmw-m2", "BMW M2", "BMW"),
+        ice_series={},
+        legacy_series_by_canonical={},
+        vehicle_models={"bmw.m2": _model("bmw.m2", "M2", "bmw")},
+        vehicle_brands={"bmw": "BMW"},
+        alias_map={},
+        existing={},
+        deterministic_identity_overrides={"bmw-bmw-m2": "bmw.m2"},
+    )
+
+    assert result is not None
+    canonical_id, decision = result
+    assert canonical_id == "bmw.m2"
+    assert decision.status == "PROPOSED"
+    assert decision.match_method == "NAME"
+    assert decision.name_score == 1.0
+
+
+def test_deterministic_identity_override_waits_until_target_is_materialized():
+    result = matcher.match_one_group(
+        group=_group("bmw-bmw-m2", "BMW M2", "BMW"),
+        ice_series={},
+        legacy_series_by_canonical={},
+        vehicle_models={},
+        vehicle_brands={"bmw": "BMW"},
+        alias_map={},
+        existing={},
+        deterministic_identity_overrides={"bmw-bmw-m2": "bmw.m2"},
+    )
+
+    assert result is None
+
+
+def test_owner_approved_serena_stays_approved_when_series_correlation_is_0974(tmp_path, monkeypatch):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [_group("nissan-serena", "Serena", "NISSAN")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("nissan-serena", [10.0, 14.0, 22.0, 29.0])
+    rest.tables["vehicle_brands"].append(_brand("nissan", "NISSAN"))
+    rest.tables["vehicle_models"] = [_model("nissan.serena", "Serena", "nissan")]
+    rest.tables["registrations"] = _legacy_rows("nissan.serena", [11.0, 15.0, 21.0, 31.0])
+    monkeypatch.setattr(
+        matcher.xwalk, "evaluate_series",
+        lambda *_args, **_kwargs: matcher.xwalk.SeriesEvaluation(0.974, 1.0, False),
+    )
+    review_path = tmp_path / "review.csv"
+    summary = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review_path, dry_run=True,
+        deterministic_identity_overrides={"nissan-serena": "nissan.serena"},
+        owner_approved_identity_overrides={"nissan-serena": "nissan.serena"},
+    )
+
+    assert summary["owner_approved_candidates"] == 1
+    assert summary["proposed_candidates"] == 0
+    assert summary["review_rows"] == 0
+    assert rest.rpc_calls == []
+    row = next(csv.DictReader(review_path.open(encoding="utf-8-sig", newline="")))
+    assert row["proposed_status"] == "APPROVED"
+    assert row["match_method"] == "ADMIN"
+    assert "corr=0.974" in row["reason"]
+
+
+def test_duplicate_exact_names_use_original_series_score_to_choose(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [_group("aion-aion-es", "Aion ES", "AION")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("aion-aion-es", [100.0, 110.0, 120.0, 130.0])
+    rest.tables["vehicle_models"] = [
+        _model("aion.aion_es.legacy", "Aion ES", "aion"),
+        _model("aion.aion_es", "Aion ES", "aion"),
+    ]
+    rest.tables["registrations"] = (
+        _legacy_rows("aion.aion_es.legacy", [100.0, 110.0, 120.0, 130.0])
+        + _legacy_rows("aion.aion_es", [1.0, 2.0, 3.0, 4.0]))
+    rest.tables["vehicle_brands"].append(_brand("aion", "AION"))
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["review_rows"] == 0
+    row = rest.tables["ice_model_crosswalk"][0]
+    assert row["canonical_model_id"] == "aion.aion_es.legacy"
+    assert row["status"] == "AUTO"
+    assert row["match_method"] == "SERIES"
+
+
+def test_bmw_designation_lock_blocks_iX_to_iX3_even_with_perfect_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("bmw", "BMW"))
+    values = [100.0, 110.0, 120.0, 130.0]
+    rest.tables["ice_dims_model_group"] = [_group("bmw-ix", "BMW iX", "BMW")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("bmw-ix", values)
+    rest.tables["vehicle_models"] = [_model("bmw.ix3", "iX3", "bmw")]
+    rest.tables["registrations"] = _legacy_rows("bmw.ix3", values)
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 0
+    assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_mazda_designation_lock_blocks_6e_to_6_even_with_perfect_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("mazda", "Mazda"))
+    values = [100.0, 110.0, 120.0, 130.0]
+    rest.tables["ice_dims_model_group"] = [_group("mazda-6e", "Mazda6e", "Mazda")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("mazda-6e", values)
+    rest.tables["vehicle_models"] = [_model("mazda.6", "Mazda6", "mazda")]
+    rest.tables["registrations"] = _legacy_rows("mazda.6", values)
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 0
+    assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_mg_designation_lock_blocks_gs_to_zs_even_with_perfect_series(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("mg", "MG"))
+    values = [100.0, 110.0, 120.0, 130.0]
+    rest.tables["ice_dims_model_group"] = [_group("mg-gs", "MG GS", "MG")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("mg-gs", values)
+    rest.tables["vehicle_models"] = [_model("mg.zs", "MG ZS", "mg")]
+    rest.tables["registrations"] = _legacy_rows("mg.zs", values)
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 0
+    assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_standalone_l_separation_blocks_a_strong_series_match(tmp_path):
+    rest = _base_rest()
+    values = [100.0, 110.0, 120.0, 130.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-model-l", "Model L", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-model-l", values)
+    rest.tables["vehicle_models"] = [_model("toyota.model", "Model", "toyota")]
+    rest.tables["registrations"] = _legacy_rows("toyota.model", values)
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 0
+    assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_numeric_nameplate_separations_block_perfect_series_but_bmw_525d_alias_survives():
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    cases = [
+        ("byd", "BYD", "Atto 3", "byd.atto1", "Atto 1"),
+        ("byd", "BYD", "Atto 1", "byd.atto2", "Atto 2"),
+        ("gwm", "GWM", "Ora 07", "gwm.ora03", "Ora 03"),
+        ("gwm", "GWM", "Tank 500", "gwm.tank300", "Tank 300"),
+        ("lotus", "Lotus", "Emira", "lotus.emeya", "Emeya"),
+        ("honda", "Honda", "BR-V", "honda.en2", "e:N2"),
+    ]
+    for brand_id, brand_name, source_name, target_id, target_name in cases:
+        result = matcher.match_one_group(
+            group=_group(f"{brand_id}-{source_name.lower()}", source_name, brand_name),
+            ice_series={period: value for period, value in zip(PERIODS, values)},
+            legacy_series_by_canonical={
+                target_id: {period: value for period, value in zip(PERIODS, values)}},
+            vehicle_models={target_id: _model(target_id, target_name, brand_id)},
+            vehicle_brands={brand_id: brand_name}, alias_map={}, existing={})
+        assert result is None, (source_name, target_name, result)
+
+    bmw = matcher.match_one_group(
+        group=_group("BMW|525D", "BMW 525d", "BMW"),
+        ice_series={period: value for period, value in zip(PERIODS, values)},
+        legacy_series_by_canonical={
+            "bmw.5_series": {period: value for period, value in zip(PERIODS, values)}},
+        vehicle_models={"bmw.5_series": _model("bmw.5_series", "5 Series", "bmw")},
+        vehicle_brands={"bmw": "BMW"}, alias_map={}, existing={})
+    assert bmw is not None and bmw[0] == "bmw.5_series"
+    assert bmw[1].status == "AUTO"
+
+
+def test_jaecoo_j5_uses_existing_jaecoo_5_ev_alias():
+    values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
+    result = matcher.match_one_group(
+        group=_group("jaecoo-j5", "J5", "Jaecoo"),
+        ice_series={period: value for period, value in zip(PERIODS, values)},
+        legacy_series_by_canonical={
+            "jaecoo.jaecoo_5_ev": {period: value for period, value in zip(PERIODS, values)}},
+        vehicle_models={"jaecoo.jaecoo_5_ev": _model(
+            "jaecoo.jaecoo_5_ev", "Jaecoo 5 EV", "jaecoo")},
+        vehicle_brands={"jaecoo": "Jaecoo"}, alias_map={}, existing={})
+    assert result is not None
+    assert result[0] == "jaecoo.jaecoo_5_ev"
+    assert result[1].status == "AUTO"
+
+
+def test_owner_confirmed_jaecoo_alias_uses_original_acceptance_scoring(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("jaecoo", "Jaecoo"))
+    rest.tables["ice_dims_model_group"] = [_group("jaecoo-j7", "J7", "Jaecoo")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("jaecoo-j7", [100.0, 50.0, 200.0, 10.0])
+    rest.tables["vehicle_models"] = [_model("jaecoo.7", "Jaecoo 7", "jaecoo")]
+    rest.tables["registrations"] = _legacy_rows("jaecoo.7", [5.0, 90.0, 3.0, 150.0])
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["canonical_model_id"] == "jaecoo.7"
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "PROPOSED"
+
+
+def test_owner_confirmed_chery_omoda_alias_matches_across_brand_labels(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("omoda", "Omoda"))
+    rest.tables["ice_dims_model_group"] = [
+        _group("chery-c5-ev", "Chery C5 EV (Omoda E5)", "Chery")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("chery-c5-ev", [100.0, 50.0, 200.0, 10.0])
+    rest.tables["vehicle_models"] = [_model("omoda.c5", "Omoda C5", "omoda")]
+    rest.tables["registrations"] = _legacy_rows("omoda.c5", [5.0, 90.0, 3.0, 150.0])
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["canonical_model_id"] == "omoda.c5"
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "PROPOSED"
+
+
+def test_deepal_name_embedded_under_changan_maps_to_exact_deepal_identity(tmp_path):
+    rest = _base_rest()
+    rest.tables["vehicle_brands"].append(_brand("deepal", "Deepal"))
+    rest.tables["ice_dims_model_group"] = [_group("changan-deepal-s05", "Deepal S05", "CHANGAN")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("changan-deepal-s05", [100.0, 50.0, 200.0, 10.0])
+    rest.tables["vehicle_models"] = [_model("deepal.deepal_s05", "Deepal S05", "deepal")]
+    rest.tables["registrations"] = _legacy_rows("deepal.deepal_s05", [5.0, 90.0, 3.0, 150.0])
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["canonical_model_id"] == "deepal.deepal_s05"
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "PROPOSED"
+
+
+def test_more_than_three_latin_letter_difference_is_not_a_candidate_even_with_series(tmp_path):
+    rest = _base_rest()
+    values = [100.0, 110.0, 120.0, 130.0]
+    rest.tables["ice_dims_model_group"] = [_group("toyota-hilux", "Hilux", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux", values)
+    rest.tables["vehicle_models"] = [_model("toyota.corolla", "Corolla", "toyota")]
+    rest.tables["registrations"] = _legacy_rows("toyota.corolla", values)
+
+    summary = matcher.run_match(rest, master_version="M7", review_csv_path=tmp_path / "review.csv")
+    assert summary["applied"] == 0
+    assert rest.tables["ice_model_crosswalk"] == []
 
 
 # ---------------------------------------------------------------------------
@@ -429,7 +727,7 @@ def test_maxus_9_auto_matches_mifa_9_with_a_strong_series(tmp_path):
     assert rest.tables["ice_model_crosswalk"][0]["status"] == "AUTO"
 
 
-def test_maxus_7_does_not_auto_match_mifa_9_with_a_weak_series(tmp_path):
+def test_maxus_7_does_not_auto_match_mifa_9_even_with_strong_series(tmp_path):
     rest = _base_rest()
     rest.tables["ice_brand_aliases"] = [
         {"brand": "MG Maxus", "alias_group": "maxus_mifa"}, {"brand": "MAXUS", "alias_group": "maxus_mifa"}]
@@ -440,9 +738,8 @@ def test_maxus_7_does_not_auto_match_mifa_9_with_a_weak_series(tmp_path):
     rest.tables["registrations"] = _legacy_rows("maxus-mifa-9", [12.0, 3.0, 40.0, 5.0, 60.0, 8.0])
 
     summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
-    # The weak series blocks AUTO regardless of how similar "mifa 7"/"mifa 9" look as
-    # short strings -- a PROPOSED row (for human review) is an acceptable outcome, an
-    # AUTO row is not.
+    # Different digits are not covered by the explicit 7 -> Mifa 7 owner alias.
+    # Registration totals cannot override the designation mismatch.
     active_rows = [r for r in rest.tables["ice_model_crosswalk"] if r["status"] == "AUTO"]
     assert active_rows == []
     for row in rest.tables["ice_model_crosswalk"]:
@@ -522,12 +819,12 @@ def test_a_provisional_group_is_flagged_even_if_already_known(tmp_path):
 
 def test_a_proposed_decision_is_written_to_the_review_csv(tmp_path):
     rest = _base_rest()
-    # Uncorrelated series -> not strong -> falls to name-only -> PROPOSED.
+    # Fuzzy name -> PROPOSED; the registration-series mismatch is diagnostic only.
     ice_values = [100.0, 50.0, 200.0, 10.0, 80.0, 30.0]
     legacy_values = [5.0, 90.0, 3.0, 150.0, 20.0, 60.0]
     rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
     rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
-    rest.tables["vehicle_models"] = [_model("toyota-hilux-travo-cab", "Hilux Travo", "toyota")]
+    rest.tables["vehicle_models"] = [_model("toyota-hilux-travo-cab", "Hilux Travo X", "toyota")]
     rest.tables["registrations"] = _legacy_rows("toyota-hilux-travo-cab", legacy_values)
 
     review_path = tmp_path / "review.csv"

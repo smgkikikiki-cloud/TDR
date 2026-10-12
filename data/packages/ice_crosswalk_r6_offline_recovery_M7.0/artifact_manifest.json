@@ -1,0 +1,131 @@
+{
+  "branch": "codex/r6-offline-recovery-issue-228",
+  "code_sha256": {
+    "automotive/vehicle_master/tests/test_ice_crosswalk_match.py": "1bbf7611c4d17cafec92aba8347c4cd7f462c27024a2f9692e89636362c88128",
+    "automotive/vehicle_master/tests/test_ice_crosswalk_r6_offline_recovery.py": "aeaa2a7fc017af09aac7d7bb86eccd553f372994cc7b2323c069fbf7461ed042",
+    "automotive/vehicle_master/tools/ice_crosswalk_build_owner_identity_package.py": "a8aa73146efc1a1cbb9bae3253c4d0c25c5302a53f6eaba6158221dbcbbb2290",
+    "automotive/vehicle_master/tools/ice_crosswalk_match.py": "896f9678f31cd76bc93e90f925829b478866fb15715bbc7174b4471a917a721c",
+    "automotive/vehicle_master/tools/ice_crosswalk_r6_offline_recovery.py": "75f716ca056fd839a12c52cfd98e185bd431f2424fb01666991a1474a5df8f6a",
+    "automotive/vehicle_master/vehreg/ice_crosswalk.py": "67c5a42e9125bead59b811c719d273ff947b3b042fcf6030beccf8ff5aa1b376"
+  },
+  "files": [
+    {
+      "bytes": 4309,
+      "path": "README.md",
+      "sha256": "f2f7d1f8c3858e7715d351ab97df27ce9baad6c05b7af6b6d7735a115890146b"
+    },
+    {
+      "bytes": 23629,
+      "path": "exception_only_review.csv",
+      "sha256": "edae1a414ee81b1b6d213930abe212fba941a32044388f22159331fa5dce732c"
+    },
+    {
+      "bytes": 130292,
+      "path": "owner_decision_ledger_244.csv",
+      "sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8"
+    },
+    {
+      "bytes": 123421,
+      "path": "owner_identity_targets.json",
+      "sha256": "d1cd1319d737496362fecfd21176b872ec7a632519e501e8f3dca2b15383010b"
+    },
+    {
+      "bytes": 3122,
+      "path": "qa_summary.json",
+      "sha256": "4e9fbc608f00650302bfb6f701ec33ee5f1950f777275338d69fb0f389095d89"
+    },
+    {
+      "bytes": 493748,
+      "path": "shadow_crosswalk_rows.csv",
+      "sha256": "9d46cad597dba3bbe83369bd9f95cfe6d10b3f6d19e0f46b69e70f10bfab5450"
+    },
+    {
+      "bytes": 10434,
+      "path": "shadow_identity_materialization.csv",
+      "sha256": "c878c6d4ea0d6bf15a839184f833ea54aca5363af032383c7dce65a543a21005"
+    },
+    {
+      "bytes": 62773,
+      "path": "source/dry_run_baseline_original.csv",
+      "sha256": "43bb5ad08eccc5705d3a890a366faf8a40e5ef0573d8a8c52eb3a818c8b903bd"
+    },
+    {
+      "bytes": 75548,
+      "path": "source/kept_candidate_rule_audit_original.csv",
+      "sha256": "7e55d1dac624f8601c07f34a0b106fc7beff028e17b19ccff146a2f3e6ae2807"
+    },
+    {
+      "bytes": 202803,
+      "path": "source/live_review_original.csv",
+      "sha256": "524598f4b15ec0d5122ef67c3a923ee1710276b153e0e8578258c3f3cc90a024"
+    },
+    {
+      "bytes": 105063,
+      "path": "source/owner_identity_overrides_original.json",
+      "sha256": "08ca0aae40fab4cb60f3f451f0cb1df4e9dd707125226e3ca8843a8c3ceba241"
+    },
+    {
+      "bytes": 151175,
+      "path": "source/owner_overlay_original.csv",
+      "sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430"
+    },
+    {
+      "bytes": 22267,
+      "path": "source/pickup_identity_class_split_original.csv",
+      "sha256": "730210c765ca49cc512ad34baa03397794d1ab5b7da262cd9fc000e4ce9e7dd0"
+    },
+    {
+      "bytes": 4039,
+      "path": "source/recovery_decisions_original.csv",
+      "sha256": "9041dc7148514ce6a6462ffe0be2ea900a79073b6c383661b709a519c6eebc9a"
+    },
+    {
+      "bytes": 5307,
+      "path": "source/redirect_review_original.csv",
+      "sha256": "dd3714e3285af78f97a634290dede92e3b7477c391fcc97093b2b8f04494fede"
+    },
+    {
+      "bytes": 321,
+      "path": "source/rejected_candidates_original.csv",
+      "sha256": "0ba53869f71786288ee98bebb077c7d7435e05aecc4b8ca32338791817fb87ca"
+    },
+    {
+      "bytes": 188881,
+      "path": "source/work_state_original.md",
+      "sha256": "c0a9f023d76f94469fc0fa18abc82335800fb1ded93ac0f5ae039f2aab5b26f7"
+    },
+    {
+      "bytes": 3807,
+      "path": "source_manifest.json",
+      "sha256": "334b749e950780130dbf24cd386748694dbdc1338845c829cab6297dd7f22ffa"
+    },
+    {
+      "bytes": 230734,
+      "path": "unmatched_classification_sorted.csv",
+      "sha256": "2ab114e6a7f6e3311ab600a0483dcea9f1e645137fa502b65bdaf29fee480055"
+    }
+  ],
+  "m7_0_shadow_row_sha256": "3527b676a03718e420d6dff4ec443c62ce3a7a7ad1e64ece64e532201d9da8c8",
+  "qa_summary": {
+    "classified_unmatched_group_count": 675,
+    "complete_overlay_mismatches": 0,
+    "fixed_denominator_coverage_pct": 99.5309,
+    "fixed_denominator_units": 4141987,
+    "fresh_live_snapshot": "NOT_CAPTURED_SECRET_NOT_IN_PROCESS",
+    "owner_decision_count": 244,
+    "owner_decision_mismatches": 0,
+    "owner_exclusion_adjusted_coverage_pct": 99.866,
+    "shadow_covered_units": 4122556,
+    "target_met": true,
+    "unmatched_still_unresolved": 660
+  },
+  "read_only": true,
+  "schema": "tdr.ice-crosswalk-r6-recovery-artifacts.v1",
+  "source_commit": "a7007a7c2d43222d1d4d35342f891c832cbcea77",
+  "validation": {
+    "focused_crosswalk_pytest": "100 passed",
+    "git_diff_check": "passed",
+    "npm_run_check": "passed",
+    "vehicle_master_pytest": "1927 passed, 379 skipped, 4357 subtests passed"
+  }
+}

@@ -3,7 +3,7 @@
 **Owner:** กี้  
 **Execution date:** 2026-10-06, R3 completed 2026-10-07, R5 completed 2026-10-10  
 **Scope:** Ice Full Package → TDR production market engine  
-**Current gate:** `R6_PRODUCTION_CROSSWALK` (R5 is DONE; R6 has not been started and needs the owner's explicit go)
+**Current gate:** `R6_PRODUCTION_CROSSWALK` (R5 is DONE; owner gave the R6 go on 2026-10-12; existing production writes from 2026-10-10 are under provenance/review reconciliation)
 
 > This file is the fixed execution order for the Market Track.  
 > `docs/WORK_STATE.md` records the live state. This roadmap records the order and stop conditions.  
@@ -230,7 +230,7 @@ Close-out 2026-10-10 (details in `docs/WORK_STATE.md`): the package version log 
 
 ### R6 — M3 production crosswalk
 
-**Status: NEXT, not started (R5 is done; waits for the owner's explicit go -- `PRODUCTION_CROSSWALK_ALLOWED` stays false until then).**
+**Status: IN PROGRESS — existing live candidate set observed 2026-10-12; do not rerun pending C01 provenance reconciliation and review.** The owner gave an explicit R6 go on 2026-10-12. A SELECT-only readback found all crosswalk, redirect and discovery-ledger rows were created on 2026-10-10, before that go; current workflow history and prior authorization remain unverified. The 490 existing crosswalk rows are candidates only: 82 AUTO, 408 PROPOSED, 0 APPROVED. The owner go does not approve individual proposed mappings or retroactively establish the earlier run's authorization. `PRODUCTION_CROSSWALK_ALLOWED` remains false while the portfolio execution lock/C01 are unresolved.
 
 Order:
 

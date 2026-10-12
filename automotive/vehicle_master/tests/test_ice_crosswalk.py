@@ -16,16 +16,22 @@ def _constant_strong_series(n: int = 24, scale: float = 1.0) -> tuple[list[float
 
 
 # ---------------------------------------------------------------------------
-# §14.2 acceptance table
+# Original scoring remains primary; explicit owner rules constrain identity candidates.
 # ---------------------------------------------------------------------------
 
-def test_strong_series_and_high_name_similarity_is_auto():
+def test_exact_name_alone_is_proposed_when_monthly_series_is_weak():
+    series = xwalk.evaluate_series([100.0, 50.0, 200.0, 10.0], [5.0, 90.0, 3.0, 150.0])
+    decision = xwalk.decide_match(series=series, name_score=1.0)
+    assert decision is not None
+    assert decision.status == "PROPOSED"
+    assert decision.match_method == "NAME"
+
+
+def test_strong_series_and_high_name_score_are_auto():
     ice, legacy = _constant_strong_series()
     series = xwalk.evaluate_series(ice, legacy)
-    assert series.strong is True
     decision = xwalk.decide_match(series=series, name_score=0.95)
-    assert decision is not None
-    assert decision.status == "AUTO"
+    assert decision is not None and decision.status == "AUTO"
     assert decision.match_method == "SERIES"
 
 
@@ -41,13 +47,12 @@ def test_high_name_score_but_weak_series_is_proposed_never_auto():
     assert decision.match_method == "NAME"
 
 
-def test_strong_series_but_low_name_similarity_is_proposed():
+def test_strong_series_with_low_name_score_is_proposed():
     ice, legacy = _constant_strong_series()
     series = xwalk.evaluate_series(ice, legacy)
     assert series.strong is True
     decision = xwalk.decide_match(series=series, name_score=0.2)
-    assert decision is not None
-    assert decision.status == "PROPOSED"
+    assert decision is not None and decision.status == "PROPOSED"
     assert decision.match_method == "SERIES"
 
 
@@ -85,7 +90,7 @@ def test_bmw_3_does_not_auto_match_bmw_x3_from_name_alone():
     name_a = xwalk.normalize_model_name("BMW 3 Series", "BMW")
     name_b = xwalk.normalize_model_name("BMW X3", "BMW")
     score = xwalk.name_similarity(name_a, name_b)
-    assert score < xwalk.NAME_AUTO_THRESHOLD
+    assert score < 0.8
     # Even granting a generous (but not strong) series reading, this must never be AUTO.
     weak_series = xwalk.evaluate_series([10.0, 20.0, 15.0], [12.0, 18.0, 14.0])
     decision = xwalk.decide_match(series=weak_series, name_score=score)
@@ -98,6 +103,12 @@ def test_deepal_and_changan_normalize_to_the_same_alias_group():
     assert xwalk.normalize_brand("Deepal", alias_map) == "deepal_changan"
 
 
+def test_model_name_strips_owner_mapped_brand_family_prefixes():
+    alias_map = {"deepal": "deepal_changan", "changan": "deepal_changan"}
+    assert xwalk.strip_alias_brand_prefix("deepal s05", "deepal_changan", alias_map) == "s05"
+    assert xwalk.strip_alias_brand_prefix("s05", "deepal_changan", alias_map) == "s05"
+
+
 def test_mg_maxus_and_maxus_normalize_to_the_same_alias_group():
     alias_map = {"mg maxus": "maxus_mifa", "maxus": "maxus_mifa"}
     assert xwalk.normalize_brand("MG Maxus", alias_map) == xwalk.normalize_brand("MAXUS", alias_map)
@@ -106,6 +117,31 @@ def test_mg_maxus_and_maxus_normalize_to_the_same_alias_group():
 
 def test_normalize_brand_without_an_alias_entry_is_just_lowercased_and_trimmed():
     assert xwalk.normalize_brand("Toyota", {}) == "toyota"
+
+
+def test_latin_letter_distance_ignores_numbers_and_punctuation():
+    assert xwalk.latin_letter_distance("X4", "X5") == 0
+    assert xwalk.latin_letter_distance("Hilux-Travo", "Hilux Travo X") == 1
+    assert xwalk.latin_letter_distance("Hilux Travo", "Corolla") > 3
+
+
+def test_standalone_l_is_a_global_identity_marker_but_attached_l_is_not():
+    assert xwalk.standalone_l_mismatch("Model", "Model L")
+    assert not xwalk.standalone_l_mismatch("ModelL", "Model")
+    assert not xwalk.standalone_l_mismatch("Model L", "Other L")
+
+
+def test_owner_identity_locked_brands_are_explicit():
+    assert xwalk.IDENTITY_LOCK_BRANDS == {
+        "audi", "bmw", "volvo", "lexus", "peugeot", "ferrari", "zeekr", "mazda", "mg"
+    }
+
+
+def test_owner_confirmed_chery_omoda_cross_brand_alias_is_exact_and_narrow():
+    assert xwalk.is_explicit_cross_brand_alias(
+        "chery", "c5 ev omoda e5", "omoda", "c5")
+    assert not xwalk.is_explicit_cross_brand_alias(
+        "chery", "tiggo 8", "omoda", "c5")
 
 
 # ---------------------------------------------------------------------------
@@ -126,11 +162,44 @@ def test_an_already_aliased_name_passes_through_unchanged():
     assert xwalk.apply_model_name_alias("mifa 7", "maxus_mifa") == "mifa 7"
 
 
+def test_owner_confirmed_same_brand_aliases_are_explicit_and_scoped():
+    assert xwalk.apply_model_name_alias("j7", "jaecoo") == "7"
+    assert xwalk.apply_model_name_alias("7", "jaecoo") == "7"
+    assert xwalk.apply_model_name_alias("j5", "jaecoo") == "5 ev"
+    assert xwalk.apply_model_name_alias("5 ev", "jaecoo") == "5 ev"
+    assert xwalk.apply_model_name_alias("binguo", "wuling") == "bingo"
+    assert xwalk.apply_model_name_alias("bingo", "wuling") == "bingo"
+    assert xwalk.apply_model_name_alias("sealion 6", "byd") == "sealion 6 dm i"
+    assert xwalk.apply_model_name_alias("sealion 6 dm i", "byd") == "sealion 6 dm i"
+    assert xwalk.apply_model_name_alias("2 series gran coupe", "bmw") == "2 series"
+    assert xwalk.apply_model_name_alias("hiace", "toyota") == "commuter"
+    assert xwalk.apply_model_name_alias("rd6 double cab", "riddara") == "rd6"
+
+
 def test_model_name_alias_is_scoped_to_its_own_brand_group_only():
     # "7" means nothing special outside the maxus_mifa alias_group -- this must
     # never become a generic fuzzy rule that could merge unrelated models.
     assert xwalk.apply_model_name_alias("7", "toyota") == "7"
     assert xwalk.apply_model_name_alias("7", "") == "7"
+
+
+def test_exact_bmw_525d_nameplate_exception_does_not_remove_global_designation_lock():
+    assert xwalk.apply_owner_nameplate_alias("525d", "bmw") == "5 series"
+    assert xwalk.apply_owner_nameplate_alias("530i", "bmw") == "530i"
+
+
+def test_punctuation_only_mercedes_brand_spelling_is_normalized():
+    assert xwalk.normalize_brand("MERCEDES BENZ", {}) == xwalk.normalize_brand("Mercedes-Benz", {})
+
+
+def test_numeric_and_near_nameplate_separations_are_explicit():
+    assert xwalk.owner_identity_separation("byd", "atto 1", "atto 2")
+    assert xwalk.owner_identity_separation("byd", "atto 3", "atto 1")
+    assert xwalk.owner_identity_separation("gwm", "ora 07", "ora 03")
+    assert xwalk.owner_identity_separation("gwm", "tank 500", "tank 300")
+    assert xwalk.owner_identity_separation("lotus", "emira", "emeya")
+    assert xwalk.owner_identity_separation("honda", "br v", "e n2")
+    assert not xwalk.owner_identity_separation("honda", "e n2", "e n2")
 
 
 def test_maxus_7_and_mifa_7_become_name_similar_once_aliased():
@@ -153,7 +222,7 @@ def test_maxus_7_cannot_auto_match_mifa_9_even_though_the_short_strings_look_sim
 
 
 # ---------------------------------------------------------------------------
-# decision_rank (§14.2 signal priority -- PR #188 review round 2)
+# decision_rank (identity evidence only)
 # ---------------------------------------------------------------------------
 
 def test_decision_rank_auto_always_beats_proposed_regardless_of_raw_scores():
@@ -164,7 +233,7 @@ def test_decision_rank_auto_always_beats_proposed_regardless_of_raw_scores():
     assert xwalk.decision_rank(auto) > xwalk.decision_rank(proposed_name_only)
 
 
-def test_decision_rank_series_proposed_beats_name_proposed_even_with_a_lower_raw_score():
+def test_decision_rank_preserves_series_priority_over_name_only():
     series_proposed = xwalk.MatchDecision(
         status="PROPOSED", match_method="SERIES", correlation=0.99, ratio=1.0, name_score=0.1, reason="r")
     name_proposed = xwalk.MatchDecision(
@@ -172,7 +241,7 @@ def test_decision_rank_series_proposed_beats_name_proposed_even_with_a_lower_raw
     assert xwalk.decision_rank(series_proposed) > xwalk.decision_rank(name_proposed)
 
 
-def test_decision_rank_ties_within_the_same_status_and_method_break_on_correlation():
+def test_decision_rank_uses_series_correlation_for_same_method():
     stronger = xwalk.MatchDecision(
         status="PROPOSED", match_method="SERIES", correlation=0.97, ratio=1.0, name_score=0.1, reason="r")
     weaker = xwalk.MatchDecision(
@@ -180,7 +249,7 @@ def test_decision_rank_ties_within_the_same_status_and_method_break_on_correlati
     assert xwalk.decision_rank(stronger) > xwalk.decision_rank(weaker)
 
 
-def test_match_decision_primary_score_is_correlation_for_series_and_name_score_for_name():
+def test_match_decision_primary_score_tracks_deciding_signal():
     series = xwalk.MatchDecision(
         status="AUTO", match_method="SERIES", correlation=0.99, ratio=1.0, name_score=0.9, reason="r")
     name = xwalk.MatchDecision(
@@ -200,9 +269,9 @@ def test_decide_match_always_carries_the_full_evidence_tuple_not_just_the_decidi
     assert decision.ratio == weak_series.ratio
 
     strong_series = xwalk.evaluate_series([100.0 + i for i in range(24)], [100.0 + i for i in range(24)])
-    decision2 = xwalk.decide_match(series=strong_series, name_score=0.1)
+    decision2 = xwalk.decide_match(series=strong_series, name_score=0.9)
     assert decision2.match_method == "SERIES"
-    assert decision2.name_score == 0.1
+    assert decision2.name_score == 0.9
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,85 @@
+{
+  "schema": "tdr.ice-crosswalk-r6-recovery-source-manifest.v1",
+  "captured_at_utc": "2026-10-12T22:44:56.529036+00:00",
+  "repository": "smgkikikiki-cloud/TDR",
+  "source_commit": "a7007a7c2d43222d1d4d35342f891c832cbcea77",
+  "issue": "https://github.com/smgkikikiki-cloud/TDR/issues/228",
+  "issue_body_recovered_from": "GitHub HTML issue viewer; API/GitHub CLI API path was blocked in this environment",
+  "owner_decision_ledger_count": 244,
+  "source_owner_overlay": "owner_overlay_original.csv",
+  "source_override_package": "owner_identity_overrides_original.json",
+  "ice_package": {
+    "path": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+    "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+    "bytes": 9775218,
+    "group_count": 1200,
+    "registration_units": 4141987,
+    "master_version": "7.0",
+    "period": "2569-09",
+    "package_version": 3
+  },
+  "source_artifacts": [
+    {
+      "path": "source/dry_run_baseline_original.csv",
+      "sha256": "43bb5ad08eccc5705d3a890a366faf8a40e5ef0573d8a8c52eb3a818c8b903bd",
+      "bytes": 62773,
+      "original_path": "/tmp/ice-crosswalk-dry-run-7.0.csv"
+    },
+    {
+      "path": "source/kept_candidate_rule_audit_original.csv",
+      "sha256": "7e55d1dac624f8601c07f34a0b106fc7beff028e17b19ccff146a2f3e6ae2807",
+      "bytes": 75548,
+      "original_path": "/workspace/TDR/data/packages/ice_crosswalk_kept_candidate_rule_audit_M7.0.csv"
+    },
+    {
+      "path": "source/live_review_original.csv",
+      "sha256": "524598f4b15ec0d5122ef67c3a923ee1710276b153e0e8578258c3f3cc90a024",
+      "bytes": 202803,
+      "original_path": "/workspace/ice_crosswalk_review_live_M7.0_2026-10-12.csv"
+    },
+    {
+      "path": "source/owner_identity_overrides_original.json",
+      "sha256": "08ca0aae40fab4cb60f3f451f0cb1df4e9dd707125226e3ca8843a8c3ceba241",
+      "bytes": 105063,
+      "original_path": "/workspace/TDR/data/packages/ice_crosswalk_owner_identity_overrides_M7.0.json"
+    },
+    {
+      "path": "source/owner_overlay_original.csv",
+      "sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+      "bytes": 151175,
+      "original_path": "/workspace/ice-crosswalk-owner-overlay-audit-M7.0.csv"
+    },
+    {
+      "path": "source/pickup_identity_class_split_original.csv",
+      "sha256": "730210c765ca49cc512ad34baa03397794d1ab5b7da262cd9fc000e4ce9e7dd0",
+      "bytes": 22267,
+      "source_path": "/workspace/ice_pickup_identity_class_split_2026-10-12.csv",
+      "original_path": "/workspace/ice_pickup_identity_class_split_2026-10-12.csv"
+    },
+    {
+      "path": "source/recovery_decisions_original.csv",
+      "sha256": "9041dc7148514ce6a6462ffe0be2ea900a79073b6c383661b709a519c6eebc9a",
+      "bytes": 4039,
+      "original_path": "/workspace/ice-crosswalk-32-recovery-M7.0.csv"
+    },
+    {
+      "path": "source/redirect_review_original.csv",
+      "sha256": "dd3714e3285af78f97a634290dede92e3b7477c391fcc97093b2b8f04494fede",
+      "bytes": 5307,
+      "original_path": "/workspace/ice_crosswalk_redirect_review_2026-10-12.csv"
+    },
+    {
+      "path": "source/rejected_candidates_original.csv",
+      "sha256": "0ba53869f71786288ee98bebb077c7d7435e05aecc4b8ca32338791817fb87ca",
+      "bytes": 321,
+      "original_path": "/workspace/ice-crosswalk-rejected-candidates-M7.0.csv"
+    },
+    {
+      "path": "source/work_state_original.md",
+      "sha256": "c0a9f023d76f94469fc0fa18abc82335800fb1ded93ac0f5ae039f2aab5b26f7",
+      "bytes": 188881,
+      "original_path": "/workspace/TDR/docs/WORK_STATE.md"
+    }
+  ],
+  "preservation_note": "Byte-identical copies of all available original local M7.0 owner-decision, package, prior review/dry-run and work-state files. Source files are retained unchanged; later recovery outputs are separate files."
+}
