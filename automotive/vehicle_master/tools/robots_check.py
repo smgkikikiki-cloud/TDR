@@ -36,13 +36,21 @@ AI_AGENTS = ("claudebot", "gptbot", "google-extended", "ccbot", "anthropic-ai",
              "bytespider", "amazonbot")
 
 
-def fetch(url: str, timeout: float = 20.0) -> str:
+def fetch(url: str, timeout: float = 20.0) -> str | None:
+    """Return robots text, empty string only for a confirmed missing resource.
+
+    Unknown network/server failures must never be mistaken for an absent
+    robots.txt. HTTP 404/410 mean missing; HTTP 403/429/5xx and transport
+    errors mean UNKNOWN and callers must fail closed.
+    """
     request = urllib.request.Request(url, headers={"User-Agent": AGENT})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return response.read().decode("utf-8", "replace")
-    except (urllib.error.URLError, TimeoutError):
-        return ""
+    except urllib.error.HTTPError as exc:
+        return "" if exc.code in (404, 410) else None
+    except (urllib.error.URLError, TimeoutError, OSError):
+        return None
 
 
 def content_signal(text: str) -> dict[str, str]:
@@ -74,20 +82,35 @@ def blocked_agents(text: str) -> list[str]:
 
 
 def audit(base_url: str) -> dict:
+    """Check robots for the requested URL path, not just the origin home page."""
     root = f"{urllib.parse.urlsplit(base_url).scheme}://{urllib.parse.urlsplit(base_url).netloc}"
     text = fetch(root + "/robots.txt")
+    if text is None:
+        return {
+            "base_url": root,
+            "checked_url": base_url,
+            "robots_status": "UNREACHABLE",
+            "robots_txt": False,
+            "may_fetch": False,
+            "content_signal": {},
+            "ai_agents_disallowed": [],
+        }
     parser = RobotFileParser()
     parser.parse(text.splitlines())
     return {
         "base_url": root,
+        "checked_url": base_url,
+        "robots_status": "PRESENT" if text.strip() else "ABSENT",
         "robots_txt": bool(text.strip()),
-        "may_fetch": parser.can_fetch(AGENT, root + "/") if text.strip() else True,
+        "may_fetch": parser.can_fetch(AGENT, base_url) if text.strip() else True,
         "content_signal": content_signal(text),
         "ai_agents_disallowed": blocked_agents(text),
     }
 
 
 def verdict(report: dict) -> str:
+    if report.get("robots_status") == "UNREACHABLE":
+        return "unknown: robots.txt unreachable"
     if not report["may_fetch"]:
         return "refused: robots.txt disallows this agent"
     if report["ai_agents_disallowed"]:

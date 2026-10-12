@@ -177,12 +177,13 @@ def _origin(url: str) -> str:
 
 
 def _robots_allowed(url: str, cache: dict[str, str]) -> bool:
-    origin = _origin(url)
-    if origin not in cache:
-        cache[origin] = robots_check.verdict(robots_check.audit(origin))
-    verdict = cache[origin]
+    # Robots directives may forbid a path while allowing the origin homepage.
+    # A per-origin allowance is therefore not a safe cache key.
+    if url not in cache:
+        cache[url] = robots_check.verdict(robots_check.audit(url))
+    verdict = cache[url]
     if not verdict.startswith("allowed"):
-        print(f"{origin}: {verdict}", file=sys.stderr)
+        print(f"{url}: {verdict}", file=sys.stderr)
         return False
     return True
 
@@ -222,6 +223,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="run P4 canonical MarketTrim matching; requires --extract-prices")
     parser.add_argument("--max-discovered", type=int, default=20,
                         help="maximum newly discovered targets to follow in this run")
+    parser.add_argument("--fetch-timeout", type=float, default=45.0,
+                        help="per-request P2 timeout in seconds (default: 45; max: 180)")
     parser.add_argument("--event-state", type=Path, default=None,
                         help="JSON state file for the optional Price Event Engine "
                              "(only used when TDR_PRICE_EVENT_ENGINE=1)")
@@ -233,6 +236,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.match_trims and not args.extract_prices:
         parser.error("--match-trims requires --extract-prices")
+    if not 0 < args.fetch_timeout <= 180:
+        parser.error("--fetch-timeout must be between 0 and 180 seconds")
 
     registry = load_source_target_registry(args.data_dir, args.year)
     states, persisted_discovered = _load_state_bundle(args.state_in)
@@ -277,6 +282,7 @@ def main(argv: list[str] | None = None) -> int:
     queued_ids = {target.id for target in queue}
     rows: list[dict] = []
     skipped_robots = 0
+    fetch_errors: list[dict[str, str]] = []
     followed = 0
     claims_total = 0
     extraction_warnings_total = 0
@@ -288,14 +294,22 @@ def main(argv: list[str] | None = None) -> int:
             skipped_robots += 1
             continue
         adapter = adapter_for(registry, target)
-        result = adapter.fetch(
-            target,
-            previous=states.get(target.id),
-            # P5 confirmation requires a fresh sighting after 24h. A 304 proves
-            # representation stability but carries no body to re-extract, so
-            # extraction mode revalidates with one unconditional GET.
-            refetch_not_modified=args.extract_prices,
-        )
+        try:
+            result = adapter.fetch(
+                target,
+                previous=states.get(target.id),
+                timeout=args.fetch_timeout,
+                # P5 confirmation requires a fresh sighting after 24h. A 304 proves
+                # representation stability but carries no body to re-extract, so
+                # extraction mode revalidates with one unconditional GET.
+                refetch_not_modified=args.extract_prices,
+            )
+        except FetchError as exc:
+            fetch_errors.append({
+                "target_id": target.id, "url": target.url, "error": str(exc),
+            })
+            print(f"{target.id}: FETCH_ERROR: {exc}", file=sys.stderr)
+            continue
         states[target.id] = result.state
         snapshot_ref = _snapshot(result, args.snapshot_dir)
 
@@ -362,6 +376,7 @@ def main(argv: list[str] | None = None) -> int:
         "results": rows,
         "robots": robots_cache,
         "skipped_robots": skipped_robots,
+        "fetch_errors": fetch_errors,
     }
     payload["source_batch_id"] = source_batch_id(payload)
 
@@ -380,21 +395,29 @@ def main(argv: list[str] | None = None) -> int:
             ],
         }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    fetched_count = sum(1 for row in rows if row["document"] is not None)
+    unchanged_count = sum(1 for row in rows if row["not_modified"])
+    status = ("FETCH_ERROR" if fetch_errors else
+              "ROBOTS_BLOCKED" if skipped_robots else
+              "NOT_MODIFIED" if not fetched_count and unchanged_count else
+              "NO_DOCUMENT" if not fetched_count else "OK")
     print(json.dumps({
+        "status": status,
         "source_batch_id": payload["source_batch_id"],
-        "fetched": sum(1 for row in rows if row["document"] is not None),
-        "not_modified": sum(1 for row in rows if row["not_modified"]),
+        "fetched": fetched_count,
+        "not_modified": unchanged_count,
         "claims": claims_total,
         "extraction_warnings": extraction_warnings_total,
         "match_counts": match_counts if args.match_trims else None,
         "followed_discovered": followed,
         "persisted_discovered": len(persisted_discovered),
         "skipped_robots": skipped_robots,
+        "fetch_errors": fetch_errors,
         "out": str(args.out) if args.out else None,
         "state_out": str(args.state_out) if args.state_out else None,
         "snapshot_dir": str(args.snapshot_dir) if args.snapshot_dir else None,
     }, ensure_ascii=False, indent=2))
-    return 0
+    return 0 if status in ("OK", "NOT_MODIFIED") else 2
 
 
 if __name__ == "__main__":
