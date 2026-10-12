@@ -177,12 +177,13 @@ def _origin(url: str) -> str:
 
 
 def _robots_allowed(url: str, cache: dict[str, str]) -> bool:
-    origin = _origin(url)
-    if origin not in cache:
-        cache[origin] = robots_check.verdict(robots_check.audit(origin))
-    verdict = cache[origin]
+    # Robots directives may forbid a path while allowing the origin homepage.
+    # A per-origin allowance is therefore not a safe cache key.
+    if url not in cache:
+        cache[url] = robots_check.verdict(robots_check.audit(url))
+    verdict = cache[url]
     if not verdict.startswith("allowed"):
-        print(f"{origin}: {verdict}", file=sys.stderr)
+        print(f"{url}: {verdict}", file=sys.stderr)
         return False
     return True
 
