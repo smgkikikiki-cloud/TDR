@@ -216,9 +216,18 @@ def match_one_group(
         ):
             continue
 
+        # Cab descriptors are body/registration qualifiers, not extra letters
+        # in the ICE nameplate. Strip only after the source's reg class fixes
+        # which side of the pickup split is allowed.
+        comparison_name = model["name_en"]
+        if ("RY1" in reg_types or "RY2" in reg_types) and label.endswith("double cab"):
+            comparison_name = comparison_name[:-len("Double Cab")].rstrip()
+        elif reg_types == {"RY3"} and label.endswith(" cab"):
+            comparison_name = comparison_name[:-len("Cab")].rstrip()
+
         guard = identity_guard.check_pair(
             ice_name=group["model_name"], ice_brand=group["brand"],
-            canonical_name=model["name_en"], canonical_brand=candidate_brand,
+            canonical_name=comparison_name, canonical_brand=candidate_brand,
             alias_group=group_brand_key,
         )
         if guard.disposition == "BLOCK":
@@ -232,7 +241,7 @@ def match_one_group(
         # apply_model_name_alias is a no-op outside the one scoped alias_group it
         # knows about (§14.2 Maxus/Mifa trap) -- safe to call unconditionally.
         candidate_name = xwalk.apply_model_name_alias(
-            xwalk.normalize_model_name(model["name_en"], candidate_brand), group_brand_key)
+            xwalk.normalize_model_name(comparison_name, candidate_brand), group_brand_key)
         group_name = xwalk.apply_model_name_alias(
             xwalk.normalize_model_name(group["model_name"], group["brand"]), group_brand_key)
         name_score = xwalk.name_similarity(candidate_name, group_name)
