@@ -59,6 +59,10 @@ class EventReviewReason(str, Enum):
     DATE_ORDER = "DATE_ORDER"
     CONDITION_NOT_IN_EVIDENCE = "CONDITION_NOT_IN_EVIDENCE"
     # Per-event, from the engine.
+    #: A plausible vehicle price in the changed evidence that no claim covers.
+    UNCOVERED_AMOUNT = "UNCOVERED_AMOUNT"
+    #: A provider call was needed but the usage state is not durable.
+    STATE_NOT_DURABLE = "STATE_NOT_DURABLE"
     AI_UNAVAILABLE = "AI_UNAVAILABLE"
     TOKEN_LIMIT_EXCEEDED = "TOKEN_LIMIT_EXCEEDED"
     TOKEN_BUDGET_EXHAUSTED = "TOKEN_BUDGET_EXHAUSTED"
@@ -115,6 +119,9 @@ class ClaimDetail:
 class ValidationResult:
     accepted: tuple[tuple[PriceClaim, ClaimDetail], ...] = ()
     review: tuple[ReviewItem, ...] = ()
+    #: The raw proposal behind each accepted claim, index-aligned with
+    #: ``accepted``.  Only proposals that passed validation are ever stored.
+    accepted_raw: tuple[Mapping, ...] = ()
 
 
 # ---------------------------------------------------------------- text helpers
@@ -250,6 +257,32 @@ _INTRO = re.compile(r"(ราคาเปิดตัว|เปิดตัว|i
 CAMPAIGN_FAMILY = frozenset({PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE})
 
 
+#: Wording *after* an amount that makes a bare "price" conditional.  A price
+#: followed by this is not provably an unconditional MSRP.
+_TRAIL_FINANCE = re.compile(
+    r"(สินเชื่อ|ไฟแนนซ์|ผ่านการเงิน|ดอกเบี้ย|financ|loan|interest)", re.I)
+_TRAIL_CONDITIONAL = re.compile(
+    r"(เมื่อ|หาก|ถ้า|ต่อเมื่อ|เฉพาะ|เงื่อนไข|ภายใต้|เทิร์น|ภายใน|ถึงวันที่|"
+    r"trade-?in|\bif\b|\bwhen\b|subject\s+to|conditions?\s+apply|terms\s+apply|"
+    r"only\s+(?:for|with|when)|\buntil\b|\bvalid\b)", re.I)
+TRAIL_CHARS = 70
+
+
+def _trailing(text: str, end: int, stop: Sequence[str]) -> str:
+    """Words that qualify the number ending at ``end``: up to the next number,
+    the next repetition of the brand/model (a new item) or ``TRAIL_CHARS``."""
+    tail = text[end:end + 400]
+    nxt = AMOUNT_RE.search(tail)
+    if nxt:
+        tail = tail[:nxt.start()]
+    for word in stop:
+        if word:
+            hit = tail.casefold().find(word.casefold())
+            if hit >= 0:
+                tail = tail[:hit]
+    return tail[:TRAIL_CHARS]
+
+
 def _amount_spans(text: str) -> list[tuple[int, int, int]]:
     return [(m.start(1), m.end(1), int(m.group(1).replace(",", "")))
             for m in AMOUNT_RE.finditer(text)]
@@ -267,11 +300,17 @@ def _label_before(text: str, start: int) -> str:
     return window
 
 
-def price_context_class(text: str, amount: int) -> Optional[str]:
+def price_context_class(text: str, amount: int, *,
+                        stop: Sequence[str] = ()) -> Optional[str]:
     """Classify the *first* occurrence of ``amount`` in ``text``.
 
     Returns one of ``NON_PRICE | LIST | ESTIMATED | CAMPAIGN | FINANCE |
-    INTRODUCTORY`` or ``None`` if the amount is not in the text.
+    INTRODUCTORY | CONDITIONAL`` or ``None`` if the amount is not in the text.
+
+    A bare/MSRP-labelled price is only ``LIST`` when the wording *after* it is
+    free of financing or conditional language; otherwise it is ``FINANCE`` or
+    ``CONDITIONAL`` (never silently reinterpreted as an unconditional list
+    price).  ``stop`` words end the trailing window (the next item's model).
     """
     for start, end, value in _amount_spans(text):
         if value != amount:
@@ -291,6 +330,11 @@ def price_context_class(text: str, amount: int) -> Optional[str]:
             return "CAMPAIGN"
         if _INTRO.search(before):
             return "INTRODUCTORY"
+        trailing = _trailing(text, end, stop)
+        if _TRAIL_FINANCE.search(trailing):
+            return "FINANCE"
+        if _TRAIL_CONDITIONAL.search(trailing):
+            return "CONDITIONAL"
         return "LIST"
     return None
 
@@ -458,11 +502,21 @@ def validate_ai_claims(
                    f"{reference} is not in the quoted evidence", raw)
             continue
 
-        # -- price type vs. the words in front of the number ---------------
-        local = price_context_class(quote, amount)
+        # -- price type vs. the words around the number ---------------------
+        # The quote may be shorter than the wording that qualifies the price, so
+        # read a little of the excerpt on either side of it.
+        _seg, q_start, q_end = location[0], location[1], location[2]
+        context = segment_text[max(0, q_start - 70):q_end + 120]
+        local = price_context_class(context, amount, stop=(_str_field(raw.get("brand_raw")),
+                                                    _str_field(raw.get("model_raw"))))
         if local == "NON_PRICE":
             reject(EventReviewReason.NOT_VEHICLE_PRICE,
                    "amount is labelled as a deposit/down payment/instalment", raw)
+            continue
+        if local == "CONDITIONAL":
+            reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                   "conditional wording follows the amount; it cannot be proven "
+                   "to be an unconditional price", raw)
             continue
         implied = _CLASS_TO_TYPE.get(local or "")
         if implied is not price_type:
@@ -471,7 +525,7 @@ def validate_ai_claims(
                        f"evidence labels this amount {local}, not LIST_PRICE", raw)
             elif implied is PriceType.LIST_PRICE:
                 reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
-                       f"evidence has no {price_type.value} wording before the amount", raw)
+                       f"evidence has no {price_type.value} wording around the amount", raw)
             else:
                 reject(EventReviewReason.PRICE_TYPE_CONFLICT,
                        f"evidence labels this amount {local}, not {price_type.value}", raw)
@@ -566,6 +620,7 @@ def validate_ai_claims(
             survivors.append(row)
 
     accepted: list[tuple[PriceClaim, ClaimDetail]] = []
+    accepted_raw: list[Mapping] = []
     seen: set[tuple] = set()
     for row in survivors:
         key = (row["trim"], row["amount"], row["price_type"], row["from"],
@@ -609,4 +664,5 @@ def validate_ai_claims(
             evidence_segment=index, evidence_start=start, evidence_end=end,
             evidence_hash=evidence_hash, cache_hit=cache_hit,
             ignored_fields=row["ignored"], p4_state=p4_state)))
-    return ValidationResult(tuple(accepted), tuple(review))
+        accepted_raw.append(row["raw"])
+    return ValidationResult(tuple(accepted), tuple(review), tuple(accepted_raw))

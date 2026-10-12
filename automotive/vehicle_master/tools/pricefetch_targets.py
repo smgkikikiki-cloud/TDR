@@ -13,7 +13,8 @@ flag ``TDR_PRICE_EVENT_ENGINE=1`` (off by default), changed price-related page
 content that P3 cannot reliably read may be interpreted by a configured LLM
 provider. Its claims are validated against the page evidence and appended to
 the P3 claims; unresolved items are reported under each row's ``price_event``.
-``--event-state`` persists its fingerprints, cache and daily budgets.
+``--event-state`` persists its fingerprints, cache and daily budgets; without
+it the engine never calls a provider (budgets could not be enforced).
 
 Discovered promotion detail URLs are durable fetch state. Once an index exposes
 a promotion page, later polls keep watching that page even when the index itself
@@ -243,6 +244,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.extract_prices:
         event_config = PriceEventConfig.from_env()
         if event_config.enabled:
+            if args.event_state is None:
+                print("warning: TDR_PRICE_EVENT_ENGINE=1 without --event-state: "
+                      "daily budgets cannot be enforced across runs, so no AI "
+                      "provider call will be made (rules and fingerprints only)",
+                      file=sys.stderr)
             event_engine = PriceEventEngine(
                 event_config,
                 state=EventState(args.event_state,

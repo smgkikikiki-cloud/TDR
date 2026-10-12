@@ -65,10 +65,15 @@ influence the result. The fingerprint hashes the excerpts overall and by kind:
 * `LABELS` — the remaining wording (trim names etc.), numbers/dates masked.
 
 A change to conditions with an identical amount is therefore a real event.
-The baseline advances only when the change was *resolved* (rules were reliable,
-or the AI result was validated). If the AI step could not run (no provider,
-budget, token limit, provider failure) the old baseline is kept and the change
-is retried on the next observation instead of being lost.
+The baseline advances only when the change was *resolved*: rules were reliable,
+or the AI result is fully validated. A change is **unresolved** — status
+`REVIEW`, old baseline kept, nothing cached, retried on the next observation —
+when the AI step could not run (no provider, budget, token limit, non-durable
+state, provider failure), when any proposal was rejected, or when a plausible
+vehicle price in the excerpts is still not covered by a rule claim or a
+validated AI claim (`UNCOVERED_AMOUNT`, including an empty `claims: []` reply
+for a page that visibly carries a price). Proposals that did validate are still
+returned in `ai_claims`, so a partial result is never lost.
 
 ## 2. Rules first
 
@@ -97,7 +102,14 @@ citing an excerpt index. Everything is then re-checked deterministically:
 * dates must be fully written (day, month, year; Buddhist Era handled) in the
   excerpt — a year is never filled in; `from ≤ to`;
 * each condition is a verbatim quote;
-* price type vs. the words directly before the amount: *special / promotion /
+* price type vs. the words around the amount (the excerpt on both sides of the
+  quote is read, not only the quote): trailing financing wording
+  (`… 599,000 บาท เมื่อจัดไฟแนนซ์…`) makes the price `FINANCE`, other trailing
+  conditional wording (`เมื่อ`, `เฉพาะ`, `if`, `subject to`, a validity date…)
+  makes it unprovable, so it is never accepted as `LIST_PRICE`
+  (`PRICE_TYPE_CONFLICT` / `PRICE_TYPE_UNSUPPORTED`); the trailing window ends at
+  the next number or the next repetition of the model name. Otherwise, by the
+  words directly before the amount: *special / promotion /
   discount* → `CAMPAIGN_PRICE`; *financing* wording → `FINANCE_PRICE`;
   *estimated* → `ESTIMATED_PRICE`; `(from 699,000)` is a reference → list;
   otherwise `LIST_PRICE`. Mismatches are `PRICE_TYPE_CONFLICT` /
@@ -125,15 +137,26 @@ option id.
 ## 5. Cache, limits, budgets, retries
 
 * Cache key: `sha256(source|role|model_hint + excerpts)` + `extractor_version`
-  + `prompt_version`. A hit costs nothing and is re-validated against the
-  current document. On an unchanged page the cached interpretation is
-  re-emitted (zero calls) so P5 still receives a fresh sighting.
+  + `prompt_version`. Only **validated** proposals of a **resolved** change are
+  cached; a hit costs nothing and is re-validated against the current document.
+* Full-page association: a resolved change also stores the validated proposals
+  under the target's *full-page* price fingerprint. When only the changed
+  excerpts fit the input limit, the proposals already resolved for the previous
+  baseline are carried over and the whole page is re-validated, so the stored
+  interpretation always describes the whole page. On an unchanged page it is
+  re-validated against the fresh document and re-emitted (zero calls), so P5
+  still receives each new sighting 24h+ later.
 * Per-call input limit is estimated (`chars_per_token`, default 2.0 — Thai
   heavy); the full excerpt set is sent, falling back to only the changed
   excerpts, else `TOKEN_LIMIT_EXCEEDED` with no call.
-* Daily budgets (tokens and calls) are per source per Thailand business day and
-  are reserved *before* each attempt using the estimated input plus the output
-  cap; provider-reported usage is charged afterwards.
+* Daily budgets (tokens and calls) are per source per Thailand business day.
+  Each attempt is **reserved and persisted before** the provider is invoked
+  (estimated input + output cap); a successful reply settles to the reported
+  usage, but a failed attempt keeps the full reservation, so unknown usage is
+  never charged as zero.
+* Provider calls require a persisted state file (`require_durable_state`,
+  default on; CLI `--event-state`). With in-memory state the engine makes zero
+  calls and reports `STATE_NOT_DURABLE`, so a fresh process cannot reset a cap.
 * Retries: `1 + max_retries` attempts for retryable provider errors and
   malformed JSON; a non-retryable error stops at once.
 * State is one JSON file only when `--event-state` / a path is supplied; a
@@ -154,6 +177,11 @@ persistence, and the flag-gated CLI hook.
 * Token counts are a character-based estimate unless the provider reports usage.
 * Only the JAECOO source is AI-enabled by default.
 * Review items are returned/printed, not yet fed into the P6 review queue.
+* Fail-closed has a cost: a page that legitimately shows a plausible non-vehicle
+  amount the model does not claim stays `REVIEW` and is retried (within budget)
+  every observation until a human or a later chunk marks it ignorable; a list
+  price followed within ~70 characters by condition wording is also sent to
+  review rather than accepted.
 * Conditions are coarse clauses; a pure wording edit inside a clause containing
   a condition word is reported as `CONDITIONS`, not `LABELS`.
 * Excerpts use fixed character windows, so unrelated text within ~140 characters

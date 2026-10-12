@@ -112,6 +112,8 @@ def ai_claim(**over) -> dict:
 
 
 def engine(provider=None, *, state=None, catalog=None, clock=None, **cfg):
+    # In-memory state is only for tests: production requires a state file.
+    cfg.setdefault("require_durable_state", False)
     config = PriceEventConfig(enabled=cfg.pop("enabled", True), max_output_tokens=500,
                               **cfg)
     return PriceEventEngine(config, provider=provider, state=state, catalog=catalog,
@@ -124,6 +126,9 @@ MIXED_BODY = (
     "<p>JAECOO 5 EV LONG RANGE MAX ราคาเมื่อใช้สินเชื่อ 649,000 บาท</p>"
     "<p>ผ่อนเริ่มต้น 12,900 บาท/เดือน เงินดาวน์ 199,000 บาท</p>"
 )
+
+#: One price; the default ``ai_claim()`` covers it completely.
+SIMPLE_BODY = "<p>JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท</p>"
 
 PROMO_V1 = (
     "<h1>MORE RAIN, MORE GAIN</h1>"
@@ -268,8 +273,11 @@ def run_ai(replies, *, body: str = MIXED_BODY, catalog=None, **cfg):
     return eng, provider, tgt, eng.process(tgt, fetched(page(body), tgt))
 
 
-def reasons(outcome) -> list[str]:
-    return [item.reason.value for item in outcome.review]
+def reasons(outcome, *, uncovered: bool = False) -> list[str]:
+    """Review reasons; UNCOVERED_AMOUNT is hidden unless asked for, so
+    per-claim rejection tests stay about the rejection itself."""
+    return [item.reason.value for item in outcome.review
+            if uncovered or item.reason is not EventReviewReason.UNCOVERED_AMOUNT]
 
 
 def test_msrp_vs_campaign_vs_finance_classification() -> None:
@@ -409,7 +417,9 @@ def test_hallucinated_evidence_is_rejected() -> None:
         "EVIDENCE_NOT_FOUND", "AMOUNT_NOT_IN_EVIDENCE", "EVIDENCE_NOT_FOUND",
         "CONDITION_NOT_IN_EVIDENCE", "MODEL_UNKNOWN", "EVIDENCE_TOO_LONG",
         "MALFORMED_CLAIM"]
-    assert outcome.status is EventStatus.AI_EXTRACTED       # processed, sent to review
+    # Nothing validated and a price is left uncovered: NOT resolved.
+    assert outcome.status is EventStatus.REVIEW
+    assert "UNCOVERED_AMOUNT" in reasons(outcome, uncovered=True)
 
 
 # ------------------------------------------------------------------------ cache
@@ -420,10 +430,10 @@ def test_cache_hit_avoids_a_second_call_and_survives_a_baseline_reset() -> None:
     eng = engine(provider, state=state)
     tgt = target()
 
-    first = eng.process(tgt, fetched(page(MIXED_BODY, "a"), tgt))
+    first = eng.process(tgt, fetched(page(SIMPLE_BODY, "a"), tgt))
     assert provider.calls == 1 and not first.cache_hit
     state.data["fingerprints"] = {}                        # forget the baseline
-    second = eng.process(tgt, fetched(page(MIXED_BODY, "b"), tgt))
+    second = eng.process(tgt, fetched(page(SIMPLE_BODY, "b"), tgt))
 
     assert provider.calls == 1 and second.cache_hit and second.ai_calls == 0
     assert [c.trim_raw for c in second.ai_claims] == ["ULTRA"]
@@ -436,8 +446,8 @@ def test_unchanged_page_reemits_cached_ai_claims_without_a_call() -> None:
     provider = FakeProvider([ai_claim()])
     eng = engine(provider)
     tgt = target()
-    eng.process(tgt, fetched(page(MIXED_BODY, "a"), tgt))
-    again = eng.process(tgt, fetched(page(MIXED_BODY, "b"), tgt))
+    eng.process(tgt, fetched(page(SIMPLE_BODY, "a"), tgt))
+    again = eng.process(tgt, fetched(page(SIMPLE_BODY, "b"), tgt))
 
     assert again.status is EventStatus.UNCHANGED and provider.calls == 1
     assert [c.trim_raw for c in again.ai_claims] == ["ULTRA"]
@@ -446,7 +456,7 @@ def test_unchanged_page_reemits_cached_ai_claims_without_a_call() -> None:
 def test_cache_key_includes_extractor_and_prompt_version() -> None:
     state = EventState()
     tgt = target()
-    html = page(MIXED_BODY)
+    html = page(SIMPLE_BODY)
     provider = FakeProvider([ai_claim()])
     engine(provider, state=state).process(tgt, fetched(html, tgt))
     state.data["fingerprints"] = {}
@@ -465,7 +475,7 @@ def test_cache_key_includes_extractor_and_prompt_version() -> None:
 def test_token_budget_exhaustion_blocks_calls_and_keeps_the_change_pending() -> None:
     probe = engine(FakeProvider([ai_claim()]))
     tgt = target()
-    html1, html2 = page(MIXED_BODY), page(MIXED_BODY.replace("789,000", "779,000"))
+    html1, html2 = page(SIMPLE_BODY), page(SIMPLE_BODY.replace("789,000", "779,000"))
     first_request = probe._request(tgt, probe._payload(
         tgt, price_segments(visible_text(fetched(html1, tgt)), 140), "full"))
     reserve = probe.estimate_tokens(first_request.system + first_request.user) + 500
@@ -483,6 +493,9 @@ def test_token_budget_exhaustion_blocks_calls_and_keeps_the_change_pending() -> 
     # The old baseline is kept, so the change is retried, not lost.
     assert eng.process(tgt, fetched(html1, tgt)).status is EventStatus.UNCHANGED
     # Next Thailand business day the budget has reset.
+    provider.replies = [[ai_claim(
+        amount_thb=779000,
+        evidence_text="JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 779,000 บาท")]]
     tomorrow = engine(provider, state=state, daily_token_budget=reserve * 2 - 500,
                       clock=lambda: NOW + timedelta(days=1))
     assert tomorrow.process(tgt, fetched(html2, tgt)).status is EventStatus.AI_EXTRACTED
@@ -493,12 +506,12 @@ def test_budgets_are_per_source_and_call_capped() -> None:
     tgt = target()
     provider = FakeProvider([ai_claim()])
     low = engine(provider, source_token_budgets={SOURCE: 10})
-    assert reasons(low.process(tgt, fetched(page(MIXED_BODY), tgt))) == [
+    assert reasons(low.process(tgt, fetched(page(SIMPLE_BODY), tgt))) == [
         "TOKEN_BUDGET_EXHAUSTED"]
     capped = engine(provider, source_call_budgets={SOURCE: 1})
-    capped.process(tgt, fetched(page(MIXED_BODY), tgt))
+    capped.process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert reasons(capped.process(
-        tgt, fetched(page(MIXED_BODY.replace("789,000", "769,000")), tgt))) == [
+        tgt, fetched(page(SIMPLE_BODY.replace("789,000", "769,000")), tgt))) == [
         "TOKEN_BUDGET_EXHAUSTED"]
     assert provider.calls == 1
 
@@ -507,7 +520,7 @@ def test_input_token_limit_is_enforced_before_any_call() -> None:
     provider = FakeProvider([ai_claim()])
     tgt = target()
     outcome = engine(provider, max_input_tokens=50).process(
-        tgt, fetched(page(MIXED_BODY), tgt))
+        tgt, fetched(page(SIMPLE_BODY), tgt))
     assert provider.calls == 0 and outcome.status is EventStatus.REVIEW
     assert reasons(outcome) == ["TOKEN_LIMIT_EXCEEDED"]
 
@@ -515,34 +528,35 @@ def test_input_token_limit_is_enforced_before_any_call() -> None:
 def test_retries_are_bounded() -> None:
     tgt = target()
     flaky = FakeProvider(LLMProviderError("503", retryable=True))
-    out = engine(flaky, max_retries=2).process(tgt, fetched(page(MIXED_BODY), tgt))
+    out = engine(flaky, max_retries=2).process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert flaky.calls == 3 and reasons(out) == ["PROVIDER_FAILED"]
     assert out.status is EventStatus.REVIEW
 
     fatal = FakeProvider(LLMProviderError("401", retryable=False))
-    engine(fatal, max_retries=2).process(tgt, fetched(page(MIXED_BODY), tgt))
+    engine(fatal, max_retries=2).process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert fatal.calls == 1
 
     garbled = FakeProvider("sorry, no JSON here")
-    out = engine(garbled, max_retries=1).process(tgt, fetched(page(MIXED_BODY), tgt))
+    out = engine(garbled, max_retries=1).process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert garbled.calls == 2 and reasons(out) == ["MALFORMED_OUTPUT"]
 
     recovers = FakeProvider("```json\nnot json\n```", [ai_claim()])
-    out = engine(recovers, max_retries=1).process(tgt, fetched(page(MIXED_BODY), tgt))
+    out = engine(recovers, max_retries=1).process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert recovers.calls == 2 and out.status is EventStatus.AI_EXTRACTED
     assert [c.trim_raw for c in out.ai_claims] == ["ULTRA"]
 
 
 def test_no_provider_means_review_not_a_crash() -> None:
     tgt = target()
-    out = engine(None).process(tgt, fetched(page(MIXED_BODY), tgt))
+    out = engine(None).process(tgt, fetched(page(SIMPLE_BODY), tgt))
     assert out.status is EventStatus.REVIEW and reasons(out) == ["AI_UNAVAILABLE"]
     register_provider("fake-reg", lambda: FakeProvider([ai_claim()]))
     try:
         assert resolve_provider("fake-reg") is not None
         assert resolve_provider("nope") is None
-        out = PriceEventEngine(PriceEventConfig(enabled=True, provider="fake-reg"),
-                               clock=lambda: NOW).process(tgt, fetched(page(MIXED_BODY), tgt))
+        out = PriceEventEngine(PriceEventConfig(enabled=True, provider="fake-reg",
+                                                require_durable_state=False),
+                               clock=lambda: NOW).process(tgt, fetched(page(SIMPLE_BODY), tgt))
         assert out.status is EventStatus.AI_EXTRACTED
     finally:
         unregister_provider("fake-reg")
@@ -565,13 +579,13 @@ def test_state_round_trips_and_corruption_fails_closed(tmp_path) -> None:
     path = tmp_path / "event_state.json"
     provider = FakeProvider([ai_claim()])
     tgt = target()
-    engine(provider, state=EventState(path)).process(tgt, fetched(page(MIXED_BODY), tgt))
+    engine(provider, state=EventState(path)).process(tgt, fetched(page(SIMPLE_BODY), tgt))
 
     reloaded = EventState(path)
     assert reloaded.baseline(tgt.id) is not None and reloaded.data["cache"]
     assert reloaded.usage(SOURCE, "2026-10-12")[1] == 1
     again = engine(provider, state=reloaded).process(
-        tgt, fetched(page(MIXED_BODY, "other"), tgt))
+        tgt, fetched(page(SIMPLE_BODY, "other"), tgt))
     assert again.status is EventStatus.UNCHANGED and provider.calls == 1
 
     path.write_text("{not json", encoding="utf-8")
@@ -623,7 +637,8 @@ class _FakeAdapter:
         return fetched(self.html, tgt)
 
 
-def _run_cli(monkeypatch, tmp_path, html: str, env: dict, name: str) -> dict:
+def _run_cli(monkeypatch, tmp_path, html: str, env: dict, name: str, *,
+             state: str | None = "state") -> dict:
     from tools import pricefetch_targets as cli
 
     monkeypatch.setattr(cli, "adapter_for", lambda registry, tgt, **kw: _FakeAdapter(html))
@@ -633,11 +648,11 @@ def _run_cli(monkeypatch, tmp_path, html: str, env: dict, name: str) -> dict:
     for key, value in env.items():
         monkeypatch.setenv(key, value)
     out = tmp_path / f"{name}.json"
-    assert cli.main([
-        "--source", SOURCE, "--target", "jaecoo_th_home_price_cards",
-        "--extract-prices", "--out", str(out),
-        "--event-state", str(tmp_path / f"{name}-state.json"),
-    ]) == 0
+    args = ["--source", SOURCE, "--target", "jaecoo_th_home_price_cards",
+            "--extract-prices", "--out", str(out)]
+    if state:
+        args += ["--event-state", str(tmp_path / f"{state}.json")]
+    assert cli.main(args) == 0
     return json.loads(out.read_text(encoding="utf-8"))
 
 
@@ -669,5 +684,268 @@ def test_cli_hook_is_flag_gated_and_adds_validated_ai_claims(monkeypatch, tmp_pa
     assert claim["extraction_method"].startswith("ai_event:")
     assert claim["campaign_hint"] == "" and "trim_id" not in claim
     assert row["price_event"]["status"] == "AI_EXTRACTED"
-    assert (tmp_path / "on-state.json").exists()
+    assert (tmp_path / "state.json").exists()
     capsys.readouterr()
+
+
+# ====================================================== QA corrections C1-1..C1-4
+
+TWO_BODY = ("<p>JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท</p>"
+            "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท</p>")
+ULTRA_Q = "JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท"
+MAXP_Q = "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท"
+
+
+def maxp_claim(**over) -> dict:
+    return ai_claim(trim_raw="MAX+", amount_thb=699000, evidence_text=MAXP_Q, **over)
+
+
+# ---- C1-1: unresolved AI extraction must stay pending and be retried ----------
+
+def test_c1_1_empty_claims_with_an_uncovered_price_stays_pending_and_retries() -> None:
+    state = EventState()
+    provider = FakeProvider([], [ai_claim()])           # 1st reply: no claims at all
+    eng = engine(provider, state=state)
+    tgt = target()
+
+    first = eng.process(tgt, fetched(page(SIMPLE_BODY, "a"), tgt))
+
+    assert first.status is EventStatus.REVIEW and first.ai_claims == ()
+    assert reasons(first, uncovered=True) == ["UNCOVERED_AMOUNT"]
+    assert state.baseline(tgt.id) is None                # not marked processed
+    assert state.data["cache"] == {}                     # nothing cached as "success"
+    assert state.data["interpretations"] == {}
+
+    # The next fresh observation of the SAME content is retried, not skipped.
+    second = eng.process(tgt, fetched(page(SIMPLE_BODY, "b"), tgt))
+    assert provider.calls == 2
+    assert second.status is EventStatus.AI_EXTRACTED and not second.review
+    assert [c.trim_raw for c in second.ai_claims] == ["ULTRA"]
+    assert state.baseline(tgt.id) is not None and state.data["cache"]
+
+
+def test_c1_1_all_rejected_output_is_not_cached_and_recovers_next_time() -> None:
+    state = EventState()
+    hallucinated = ai_claim(evidence_text="JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 599,000 บาท")
+    provider = FakeProvider([hallucinated], [ai_claim()])
+    eng = engine(provider, state=state)
+    tgt = target()
+
+    first = eng.process(tgt, fetched(page(SIMPLE_BODY, "a"), tgt))
+    assert first.status is EventStatus.REVIEW
+    assert reasons(first) == ["EVIDENCE_NOT_FOUND"]
+    assert state.baseline(tgt.id) is None and state.data["cache"] == {}
+
+    again = eng.process(tgt, fetched(page(SIMPLE_BODY, "b"), tgt))
+    assert provider.calls == 2 and again.status is EventStatus.AI_EXTRACTED
+    assert len(again.ai_claims) == 1
+
+
+def test_c1_1_partial_rejection_keeps_good_claims_and_the_unresolved_remainder() -> None:
+    state = EventState()
+    bad_maxp = maxp_claim()
+    bad_maxp["evidence_text"] = "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 649,000 บาท"   # not on page
+    provider = FakeProvider([ai_claim(), bad_maxp], [ai_claim(), maxp_claim()])
+    eng = engine(provider, state=state)
+    tgt = target()
+
+    first = eng.process(tgt, fetched(page(TWO_BODY, "a"), tgt))
+
+    assert first.status is EventStatus.REVIEW
+    assert [c.trim_raw for c in first.ai_claims] == ["ULTRA"]       # not lost
+    assert reasons(first) == ["EVIDENCE_NOT_FOUND"]
+    assert reasons(first, uncovered=True) == ["EVIDENCE_NOT_FOUND", "UNCOVERED_AMOUNT"]
+    assert "699,000" in first.review[-1].detail
+    assert state.baseline(tgt.id) is None and state.data["cache"] == {}
+
+    second = eng.process(tgt, fetched(page(TWO_BODY, "b"), tgt))
+    assert second.status is EventStatus.AI_EXTRACTED and not second.review
+    assert {c.trim_raw for c in second.ai_claims} == {"ULTRA", "MAX+"}
+    assert provider.calls == 2
+
+
+# ---- C1-2: changed-only fallback must still re-emit on a fresh observation ----
+
+def test_c1_2_changed_only_payload_still_reemits_full_interpretation_24h_later() -> None:
+    gap = "<p>" + FILLER + "</p>"
+    block_a = f"<p>{ULTRA_Q}</p>"
+    block_b = f"<p>{MAXP_Q}</p>"
+    note = "<p>เงื่อนไข: จองและส่งมอบภายใน 30 กันยายน 2569 เมื่อเทิร์นรถเก่า</p>"
+    v1 = page(block_a + gap + block_b)
+    v2 = page(block_a + gap + note + block_b)
+
+    tgt = target()
+    probe = engine(FakeProvider([]))
+
+    def tokens(html: str, mode: str) -> int:
+        segs = price_segments(visible_text(fetched(html, tgt)), 140)
+        assert len(segs) == 2
+        payload = probe._payload(tgt, segs if mode == "full" else segs[1:], mode)
+        req = probe._request(tgt, payload)
+        return probe.estimate_tokens(req.system + req.user)
+
+    limit = tokens(v1, "full")
+    assert tokens(v2, "changed") <= limit < tokens(v2, "full")      # the forcing case
+
+    b_with_conditions = maxp_claim(conditions=["เงื่อนไข: จองและส่งมอบภายใน 30 กันยายน 2569 เมื่อเทิร์นรถเก่า"])
+    provider = FakeProvider([ai_claim(), maxp_claim()], [b_with_conditions])
+    state = EventState()
+    eng = engine(provider, state=state, max_input_tokens=limit)
+
+    assert eng.process(tgt, fetched(v1, tgt)).status is EventStatus.AI_EXTRACTED
+    second = eng.process(tgt, fetched(v2, tgt))
+    assert provider.calls == 2 and second.status is EventStatus.AI_EXTRACTED
+    assert "789,000" not in provider.requests[1].user                # changed excerpt only
+    keys = {(c.trim_raw, c.amount_thb, c.price_type) for c in second.ai_claims}
+    assert keys == {("ULTRA", 789000, PriceType.LIST_PRICE),
+                    ("MAX+", 699000, PriceType.LIST_PRICE)}          # whole page, not the delta
+
+    # T0 + 24h: a fresh document, identical price content, zero extra model calls.
+    later = engine(provider, state=state, max_input_tokens=limit,
+                   clock=lambda: NOW + timedelta(hours=24))
+    third = later.process(tgt, fetched(page(block_a + gap + note + block_b, "fresh"), tgt))
+
+    assert third.status is EventStatus.UNCHANGED and third.cache_hit
+    assert provider.calls == 2
+    assert {(c.trim_raw, c.amount_thb, c.price_type) for c in third.ai_claims} == keys
+    assert third.ai_claims[0].document_id != second.ai_claims[0].document_id
+    assert any(d.conditions for d in third.details)                  # facts kept too
+
+
+# ---- C1-3: caps must be durable and failures must cost budget -----------------
+
+def test_c1_3_ephemeral_state_never_calls_the_provider() -> None:
+    provider = FakeProvider([ai_claim()])
+    eng = PriceEventEngine(PriceEventConfig(enabled=True, max_output_tokens=500),
+                           provider=provider, clock=lambda: NOW)       # in-memory state
+    tgt = target()
+    out = eng.process(tgt, fetched(page(SIMPLE_BODY), tgt))
+    assert provider.calls == 0 and out.status is EventStatus.REVIEW
+    assert reasons(out) == ["STATE_NOT_DURABLE"]
+
+
+def test_c1_3_fresh_processes_cannot_evade_the_daily_call_cap(tmp_path) -> None:
+    path = tmp_path / "event_state.json"
+    tgt = target()
+    provider = FakeProvider([ai_claim()])
+
+    def fresh_process(html: str):
+        # A brand-new engine and a state re-read from disk, as a new CLI run.
+        return engine(provider, state=EventState(path), require_durable_state=True,
+                      source_call_budgets={SOURCE: 1}).process(tgt, fetched(html, tgt))
+
+    assert fresh_process(page(SIMPLE_BODY)).status is EventStatus.AI_EXTRACTED
+    blocked = fresh_process(page(SIMPLE_BODY.replace("789,000", "779,000")))
+    assert provider.calls == 1
+    assert blocked.status is EventStatus.REVIEW
+    assert reasons(blocked) == ["TOKEN_BUDGET_EXHAUSTED"]
+    assert EventState(path).usage(SOURCE, "2026-10-12")[1] == 1
+
+
+def test_c1_3_usage_is_persisted_before_the_call_and_failures_are_charged(tmp_path) -> None:
+    path = tmp_path / "event_state.json"
+    tgt = target()
+    seen_during_call = []
+
+    class Failing(FakeProvider):
+        def complete(self, request):
+            seen_during_call.append(EventState(path).usage(SOURCE, "2026-10-12"))
+            return super().complete(request)
+
+    provider = Failing(LLMProviderError("503", retryable=True))
+    eng = engine(provider, state=EventState(path), require_durable_state=True,
+                 max_retries=5, source_call_budgets={SOURCE: 3})
+    out = eng.process(tgt, fetched(page(SIMPLE_BODY), tgt))
+
+    probe = engine(FakeProvider([]))
+    req = probe._request(tgt, probe._payload(
+        tgt, price_segments(visible_text(fetched(page(SIMPLE_BODY), tgt)), 140), "full"))
+    reserve = probe.estimate_tokens(req.system + req.user) + 500
+
+    assert provider.calls == 3                                 # bounded by the call cap
+    assert reasons(out) == ["PROVIDER_FAILED", "TOKEN_BUDGET_EXHAUSTED"]
+    # Each attempt was already on disk when the provider was invoked.
+    assert [calls for _tokens, calls in seen_during_call] == [1, 2, 3]
+    # Unknown usage is charged at the full reservation, never as zero.
+    assert EventState(path).usage(SOURCE, "2026-10-12") == (3 * reserve, 3)
+
+
+def test_c1_3_cli_requires_event_state_and_caps_hold_across_processes(
+        monkeypatch, tmp_path, capsys) -> None:
+    def html(price: str) -> str:
+        return page(f"<p>JAECOO 5 EV LONG RANGE MAX ราคาขายปลีกแนะนำ {price} บาท</p>")
+
+    def reply(price: str):
+        return [ai_claim(trim_raw="LONG RANGE MAX", amount_thb=int(price.replace(",", "")),
+                         evidence_text=f"JAECOO 5 EV LONG RANGE MAX ราคาขายปลีกแนะนำ {price} บาท")]
+
+    provider = FakeProvider(reply("679,000"), reply("669,000"))
+    register_provider("cli-cap", lambda: provider)
+    env = {"TDR_PRICE_EVENT_ENGINE": "1", "TDR_PRICE_EVENT_PROVIDER": "cli-cap",
+           "TDR_PRICE_EVENT_DAILY_CALLS": "1"}
+    try:
+        # No --event-state: simulation only, never a provider call.
+        sim = _run_cli(monkeypatch, tmp_path, html("679,000"), env, "sim", state=None)
+        assert provider.calls == 0
+        assert sim["results"][0]["price_event"]["review"][0]["reason"] == "STATE_NOT_DURABLE"
+        assert "without --event-state" in capsys.readouterr().err
+
+        first = _run_cli(monkeypatch, tmp_path, html("679,000"), env, "p1")
+        second = _run_cli(monkeypatch, tmp_path, html("669,000"), env, "p2")
+    finally:
+        unregister_provider("cli-cap")
+
+    assert provider.calls == 1                         # second process hit the daily cap
+    assert first["results"][0]["price_event"]["status"] == "AI_EXTRACTED"
+    assert second["results"][0]["price_event"]["review"][0]["reason"] == "TOKEN_BUDGET_EXHAUSTED"
+    assert second["results"][0]["claims"] == []
+
+
+# ---- C1-4: conditional wording AFTER the amount must not become MSRP ---------
+
+THAI_FINANCE = "JAECOO 5 EV MAX+ ราคา 599,000 บาท เมื่อจัดไฟแนนซ์กับบริษัทที่กำหนด"
+
+
+def _list_claim(quote: str, amount: int = 599000, **over) -> dict:
+    return ai_claim(trim_raw="MAX+", amount_thb=amount, evidence_text=quote, **over)
+
+
+def test_c1_4_finance_conditional_price_is_never_accepted_as_msrp() -> None:
+    body = f"<p>{THAI_FINANCE}</p>"
+    short_quote = "JAECOO 5 EV MAX+ ราคา 599,000 บาท"         # quote stops before the condition
+    _e, _p, _t, outcome = run_ai([
+        _list_claim(short_quote),                              # exact QA counterexample
+        _list_claim(THAI_FINANCE),                             # even with the wording quoted
+        _list_claim(short_quote, price_type="FINANCE_PRICE"),  # what it really is
+    ], body=body)
+
+    assert [(c.trim_raw, c.price_type) for c in outcome.ai_claims] == [
+        ("MAX+", PriceType.FINANCE_PRICE)]
+    assert reasons(outcome) == ["PRICE_TYPE_CONFLICT", "PRICE_TYPE_CONFLICT"]
+    assert all("FINANCE" in item.detail for item in outcome.review)
+    assert outcome.status is EventStatus.REVIEW
+
+
+def test_c1_4_other_conditional_wording_cannot_be_proven_unconditional() -> None:
+    for tail in ("เมื่อเทิร์นรถเก่า", "เฉพาะลูกค้าที่จองภายในเดือนนี้",
+                 "when you trade in your old car", "subject to conditions"):
+        body = f"<p>JAECOO 5 EV MAX+ ราคา 599,000 บาท {tail}</p>"
+        _e, _p, _t, outcome = run_ai(
+            [_list_claim("JAECOO 5 EV MAX+ ราคา 599,000 บาท")], body=body)
+        assert outcome.ai_claims == (), tail
+        assert reasons(outcome) == ["PRICE_TYPE_UNSUPPORTED"], tail
+
+
+def test_c1_4_genuine_unqualified_msrp_control_still_validates() -> None:
+    # A neighbouring item that DOES carry finance wording must not leak back.
+    body = ("<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท</p>"
+            "<p>JAECOO 5 EV ULTRA ราคาเมื่อใช้สินเชื่อ 649,000 บาท เมื่อจัดไฟแนนซ์</p>")
+    _e, _p, _t, outcome = run_ai([
+        maxp_claim(),
+        ai_claim(price_type="FINANCE_PRICE", amount_thb=649000,
+                 evidence_text="JAECOO 5 EV ULTRA ราคาเมื่อใช้สินเชื่อ 649,000 บาท"),
+    ], body=body)
+
+    assert {(c.trim_raw, c.price_type) for c in outcome.ai_claims} == {
+        ("MAX+", PriceType.LIST_PRICE), ("ULTRA", PriceType.FINANCE_PRICE)}
+    assert outcome.review == () and outcome.status is EventStatus.AI_EXTRACTED

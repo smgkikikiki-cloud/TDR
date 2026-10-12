@@ -108,6 +108,10 @@ class PriceEventConfig:
     #: Characters of context kept either side of each price-related anchor.
     window_chars: int = 140
     cache_entries: int = 500
+    #: Provider calls are only made when usage is persisted to a file, so a
+    #: daily cap cannot be evaded by starting a fresh process.  Tests and
+    #: local simulations without a state path simply make zero calls.
+    require_durable_state: bool = True
 
     def validate(self) -> list[str]:
         problems = []
@@ -309,7 +313,8 @@ class EventState:
         self.path = Path(path) if path else None
         self.cache_entries = cache_entries
         self.data: dict = {"schema_version": STATE_SCHEMA_VERSION,
-                           "fingerprints": {}, "cache": {}, "usage": {}}
+                           "fingerprints": {}, "cache": {}, "usage": {},
+                           "interpretations": {}}
         if self.path is not None and self.path.exists():
             try:
                 loaded = json.loads(self.path.read_text(encoding="utf-8"))
@@ -317,10 +322,15 @@ class EventState:
                 raise EventStateError(f"{self.path}: unreadable event state: {exc}") from exc
             if loaded.get("schema_version") != STATE_SCHEMA_VERSION:
                 raise EventStateError(f"{self.path}: unsupported event state schema")
-            for key in ("fingerprints", "cache", "usage"):
+            loaded.setdefault("interpretations", {})
+            for key in ("fingerprints", "cache", "usage", "interpretations"):
                 if not isinstance(loaded.get(key), dict):
                     raise EventStateError(f"{self.path}: {key} must be an object")
             self.data = loaded
+
+    @property
+    def durable(self) -> bool:
+        return self.path is not None
 
     def baseline(self, target_id: str) -> Optional[Fingerprint]:
         raw = self.data["fingerprints"].get(target_id)
@@ -342,6 +352,20 @@ class EventState:
         while len(cache) > self.cache_entries:
             cache.pop(next(iter(cache)))
 
+    def interpretation(self, target_id: str, price_hash: str,
+                       versions: str) -> Optional[list]:
+        """Validated proposals for exactly this full-page price fingerprint."""
+        entry = self.data["interpretations"].get(target_id)
+        if not entry or entry.get("price_hash") != price_hash \
+                or entry.get("versions") != versions:
+            return None
+        return list(entry["claims"])
+
+    def set_interpretation(self, target_id: str, price_hash: str, versions: str,
+                           claims: list) -> None:
+        self.data["interpretations"][target_id] = {
+            "price_hash": price_hash, "versions": versions, "claims": claims}
+
     def usage(self, source_id: str, day: str) -> tuple[int, int]:
         row = self.data["usage"].get(day, {}).get(source_id, {})
         return int(row.get("tokens", 0)), int(row.get("calls", 0))
@@ -352,7 +376,7 @@ class EventState:
             if old != day:
                 usage.pop(old, None)
         row = usage.setdefault(day, {}).setdefault(source_id, {"tokens": 0, "calls": 0})
-        row["tokens"] += max(0, int(tokens))
+        row["tokens"] = max(0, row["tokens"] + int(tokens))
         row["calls"] += calls
 
     def save(self) -> None:
@@ -373,9 +397,13 @@ class EventStatus(str, Enum):
     SOURCE_NOT_ENABLED = "SOURCE_NOT_ENABLED"
     UNCHANGED = "UNCHANGED"
     DETERMINISTIC = "DETERMINISTIC"
+    #: The AI interpretation fully resolved the change: nothing was rejected and
+    #: every plausible price is covered.  Only then does the baseline advance.
     AI_EXTRACTED = "AI_EXTRACTED"
-    #: AI was needed but could not produce a result.  The baseline is *not*
-    #: advanced, so the change is retried on the next observation.
+    #: The change is NOT resolved (AI unavailable/over budget/failed, a proposal
+    #: was rejected, or a price is left uncovered).  The baseline is *not*
+    #: advanced, so the change is retried; validated claims, if any, are still
+    #: returned and every unresolved item is in ``review``.
     REVIEW = "REVIEW"
 
 
@@ -476,6 +504,9 @@ class PriceEventEngine:
     def _method(self) -> str:
         return f"ai_event:{self.config.extractor_version}:{self.config.prompt_version}"
 
+    def _versions(self) -> str:
+        return f"{self.config.extractor_version}|{self.config.prompt_version}"
+
     def _day(self) -> str:
         return thailand_business_date(self.clock()).isoformat()
 
@@ -526,7 +557,11 @@ class PriceEventEngine:
 
     # ---- AI call with cache, token limit, budget and bounded retries --------
     def _call_model(self, target: SourceTarget, payloads: list[_Payload]):
-        """Returns ``(raw_claims, payload, cache_hit, calls, tin, tout, review)``."""
+        """Returns ``(raw_claims, payload, cache_hit, calls, tin, tout, review)``.
+
+        Only *validated* proposals are ever cached, so a cache hit is always a
+        previously resolved interpretation.
+        """
         cfg = self.config
         usable: Optional[_Payload] = None
         for payload in payloads:
@@ -542,17 +577,22 @@ class PriceEventEngine:
         if self.provider is None:
             return None, usable, False, 0, 0, 0, (ReviewItem(
                 EventReviewReason.AI_UNAVAILABLE, "no LLM provider is configured"),)
+        if cfg.require_durable_state and not self.state.durable:
+            return None, usable, False, 0, 0, 0, (ReviewItem(
+                EventReviewReason.STATE_NOT_DURABLE,
+                "daily budgets need a persisted event state (--event-state); "
+                "no provider call was made"),)
 
         request = self._request(target, usable)
         estimate_in = self.estimate_tokens(request.system + request.user)
+        reserve = estimate_in + cfg.max_output_tokens
         calls = tokens_in = tokens_out = 0
         last: Optional[ReviewItem] = None
         for attempt in range(1 + cfg.max_retries):
             day = self._day()
             used_tokens, used_calls = self.state.usage(target.source_id, day)
             if (used_calls + 1 > cfg.call_budget(target.source_id)
-                    or used_tokens + estimate_in + cfg.max_output_tokens
-                    > cfg.token_budget(target.source_id)):
+                    or used_tokens + reserve > cfg.token_budget(target.source_id)):
                 exhausted = ReviewItem(
                     EventReviewReason.TOKEN_BUDGET_EXHAUSTED,
                     f"{target.source_id} daily budget reached "
@@ -561,11 +601,15 @@ class PriceEventEngine:
                         ((last,) if last else ()) + (exhausted,))
             if attempt and cfg.retry_backoff_seconds:
                 self.sleep(cfg.retry_backoff_seconds * (2 ** (attempt - 1)))
+            # Reserve (and persist) BEFORE the call.  If the request fails, the
+            # process dies, or usage is never reported, the reservation stands:
+            # unknown usage is charged conservatively, never as zero.
+            self.state.charge(target.source_id, day, reserve)
+            self.state.save()
             calls += 1
             try:
                 response = self.provider.complete(request)
             except LLMProviderError as exc:
-                self.state.charge(target.source_id, day, 0)
                 last = ReviewItem(EventReviewReason.PROVIDER_FAILED, str(exc))
                 if exc.retryable:
                     continue
@@ -574,7 +618,10 @@ class PriceEventEngine:
                 else estimate_in
             out_used = response.output_tokens if response.output_tokens is not None \
                 else self.estimate_tokens(response.text)
-            self.state.charge(target.source_id, day, in_used + out_used)
+            # Settle the reservation to the reported usage.
+            self.state.charge(target.source_id, day, in_used + out_used - reserve,
+                              calls=0)
+            self.state.save()
             tokens_in += in_used
             tokens_out += out_used
             try:
@@ -582,7 +629,6 @@ class PriceEventEngine:
             except MalformedOutputError as exc:
                 last = ReviewItem(EventReviewReason.MALFORMED_OUTPUT, str(exc))
                 continue
-            self.state.cache_put(self._cache_key(usable), raw_claims)
             return raw_claims, usable, False, calls, tokens_in, tokens_out, ()
         return None, usable, False, calls, tokens_in, tokens_out, (last,) if last else ()
 
@@ -611,15 +657,17 @@ class PriceEventEngine:
         full = self._payload(target, segments, "full")
 
         if not changes:
-            # Same price content as the baseline.  No model call is possible
-            # here, but a cached interpretation of this exact evidence is
-            # re-validated and re-emitted so P5 still gets a fresh sighting.
-            cached = self.state.cache_get(self._cache_key(full))
-            if not segments or cached is None:
+            # Same price content as the last *resolved* baseline.  No model call
+            # is made, but the validated interpretation of this exact full-page
+            # fingerprint is re-validated against the fresh document and
+            # re-emitted, so P5 still receives each new sighting.
+            kept = self.state.interpretation(
+                target.id, fingerprint.price_hash, self._versions())
+            if not segments or kept is None:
                 return EventOutcome(target.id, EventStatus.UNCHANGED, (),
                                     evidence_hash=full.evidence_hash)
             validated = validate_ai_claims(
-                cached, segments=full.segments, document_text=text,
+                kept, segments=full.segments, document_text=text,
                 document_id=document.document_id, source_id=result.source_id,
                 evidence_hash=full.evidence_hash, extraction_method=self._method(),
                 catalog=self.catalog, cache_hit=True)
@@ -663,11 +711,60 @@ class PriceEventEngine:
             document_id=document.document_id, source_id=result.source_id,
             evidence_hash=payload.evidence_hash, extraction_method=self._method(),
             catalog=self.catalog, cache_hit=cache_hit)
-        claims, details = self._finish(validated, deterministic)
+        review = list(validated.review)
+        accepted_raw = list(validated.accepted_raw)
+        final = validated
+        if payload.mode == "changed":
+            # Only the changed excerpts were sent.  Rebuild the interpretation of
+            # the WHOLE page: proposals that were already resolved for the prior
+            # baseline are carried over if they still validate, then everything
+            # is re-validated against the full excerpt set (fresh proposals first,
+            # so their facts win over a carried duplicate).
+            carried = []
+            if previous is not None:
+                carried = self.state.interpretation(
+                    target.id, previous.price_hash, self._versions()) or []
+            final = validate_ai_claims(
+                [*accepted_raw, *carried], segments=full.segments, document_text=text,
+                document_id=document.document_id, source_id=result.source_id,
+                evidence_hash=payload.evidence_hash, extraction_method=self._method(),
+                catalog=self.catalog, cache_hit=cache_hit)
+        claims, details = self._finish(final, deterministic)
+
+        # Resolved = nothing was rejected AND every plausible vehicle price in
+        # the page's price excerpts is covered by a rule or validated AI claim.
+        covered = {c.amount_thb for c in (deterministic.claims if deterministic else ())}
+        covered |= {c.reference_price_thb for c in (deterministic.claims if deterministic else ())
+                    if c.reference_price_thb}
+        for claim, _detail in final.accepted:
+            covered.add(claim.amount_thb)
+            if claim.reference_price_thb:
+                covered.add(claim.reference_price_thb)
+        missing = uncovered_amounts(" ".join(segments), covered)
+        if missing:
+            review.append(ReviewItem(
+                EventReviewReason.UNCOVERED_AMOUNT,
+                "no validated claim covers: " + ", ".join(f"{m:,}" for m in missing)))
+
+        if review:
+            # Fail closed: keep the old baseline (the change is retried on the
+            # next observation), cache nothing, but still hand over whatever
+            # did validate so it is not lost.
+            self.state.save()
+            return EventOutcome(
+                target.id, EventStatus.REVIEW, changes, claims, details, tuple(review),
+                ai_calls=calls, tokens_in=tin, tokens_out=tout, cache_hit=cache_hit,
+                fallback_reasons=tuple(reasons), evidence_hash=payload.evidence_hash)
+
+        if not cache_hit:
+            self.state.cache_put(self._cache_key(payload), accepted_raw)
+        self.state.set_interpretation(
+            target.id, fingerprint.price_hash, self._versions(),
+            list(final.accepted_raw))
         self.state.set_baseline(target.id, fingerprint)
         self.state.save()
         return EventOutcome(
-            target.id, EventStatus.AI_EXTRACTED, changes, claims, details,
-            validated.review, ai_calls=calls, tokens_in=tin, tokens_out=tout,
+            target.id, EventStatus.AI_EXTRACTED, changes, claims, details, (),
+            ai_calls=calls, tokens_in=tin, tokens_out=tout,
             cache_hit=cache_hit, fallback_reasons=tuple(reasons),
             evidence_hash=payload.evidence_hash)
