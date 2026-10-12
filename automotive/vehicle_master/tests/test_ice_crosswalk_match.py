@@ -369,16 +369,15 @@ def test_a_strong_series_auto_candidate_beats_a_weak_series_name_only_candidate(
     assert "candidate-b" not in rows
 
 
-def test_series_proposed_beats_name_only_proposed_despite_a_numerically_higher_name_score(tmp_path):
+def test_unrelated_series_candidate_is_blocked_by_owner_identity_guard(tmp_path):
     rest = _base_rest()
     ice_values = [100.0, 110.0, 120.0, 130.0, 140.0, 150.0]
     rest.tables["ice_dims_model_group"] = [_group("toyota-hilux-travo", "Hilux Travo", "Toyota")]
     rest.tables["ice_reg_trend"] = _ice_series_rows("toyota-hilux-travo", ice_values)
     rest.tables["vehicle_models"] = [
-        # Strong series but a name that shares nothing with "Hilux Travo" -- PROPOSED/SERIES.
+        # Strong series but unrelated nameplate -- now BLOCK regardless of correlation.
         _model("candidate-a", "Zephyr Nomad Expedition", "toyota"),
-        # Weak series but an exact name match (name_score 1.0, numerically higher than
-        # candidate-a's name score) -- PROPOSED/NAME. Must still lose to candidate-a.
+        # Weak series but exact name -- PROPOSED/NAME, the only eligible candidate.
         _model("candidate-b", "Hilux Travo", "toyota"),
     ]
     rest.tables["registrations"] = (
@@ -388,9 +387,9 @@ def test_series_proposed_beats_name_only_proposed_despite_a_numerically_higher_n
     summary = matcher.run_match(rest, master_version="M5", review_csv_path=tmp_path / "review.csv")
     assert summary["applied"] == 1
     rows = {r["canonical_model_id"]: r for r in rest.tables["ice_model_crosswalk"]}
-    assert rows["candidate-a"]["status"] == "PROPOSED"
-    assert rows["candidate-a"]["match_method"] == "SERIES"
-    assert "candidate-b" not in rows
+    assert "candidate-a" not in rows
+    assert rows["candidate-b"]["status"] == "PROPOSED"
+    assert rows["candidate-b"]["match_method"] == "NAME"
 
 
 # ---------------------------------------------------------------------------
@@ -631,3 +630,67 @@ def test_the_preflight_mode_cannot_be_combined_with_a_writing_mode():
     with pytest.raises(SystemExit) as caught:
         matcher.main(["--check-live-import", "--match", "--master-version", "7.0"])
     assert caught.value.code == 2
+
+
+# ---------------------------------------------------------------------------
+# New owner identity rules: no false auto-match / no mixed-cab DB writes
+# ---------------------------------------------------------------------------
+
+def test_mixed_ry1_ry3_group_is_reviewed_without_upserting(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [_group("isuzu-isuzu-d-max", "Isuzu D-Max", "Isuzu")]
+    rest.tables["vehicle_brands"] = [_brand("isuzu", "Isuzu")]
+    rest.tables["vehicle_models"] = [_model("isuzu.dmax_double_cab", "Isuzu D-Max Double Cab", "isuzu")]
+    rest.tables["ice_reg_trend"] = [
+        {"model_group_id": "isuzu-isuzu-d-max", "period": "2569-01",
+         "reg_type": "รย.1", "reg_count": 100},
+        {"model_group_id": "isuzu-isuzu-d-max", "period": "2569-01",
+         "reg_type": "รย.3", "reg_count": 100},
+    ]
+    summary = matcher.run_match(rest, master_version="7.0", review_csv_path=tmp_path / "mixed.csv")
+    assert summary["applied"] == 0
+    assert summary["mixed_reg_type_groups"] == 1
+    assert summary["review_rows"] == 1
+    assert rest.rpc_calls == []
+    with (tmp_path / "mixed.csv").open(encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert rows[0]["proposed_status"] == "REG_TYPE_SPLIT_REQUIRED"
+
+
+def test_ry3_never_selects_double_cab_candidate():
+    rest = _base_rest()
+    rest.tables["vehicle_models"] = [_model("toyota.hilux_revo_double_cab", "Hilux Revo Double Cab", "toyota")]
+    result = matcher.match_one_group(
+        group=_group("toyota-hilux-revo", "Hilux Revo", "Toyota"),
+        ice_series={"2569-01": 20, "2569-02": 25},
+        legacy_series_by_canonical={"toyota.hilux_revo_double_cab": {"2569-01": 20, "2569-02": 25}},
+        vehicle_models={x["canonical_id"]: x for x in rest.tables["vehicle_models"]},
+        vehicle_brands={"toyota": "Toyota"}, alias_map={}, existing={}, registration_types={"RY3"},
+    )
+    assert result is None
+
+
+def test_ry1_never_selects_non_double_cab_pickup_candidate():
+    rest = _base_rest()
+    rest.tables["vehicle_models"] = [_model("toyota.hilux_revo_cab", "Hilux Revo Cab", "toyota")]
+    result = matcher.match_one_group(
+        group=_group("toyota-hilux-revo", "Hilux Revo", "Toyota"),
+        ice_series={"2569-01": 20, "2569-02": 25},
+        legacy_series_by_canonical={"toyota.hilux_revo_cab": {"2569-01": 20, "2569-02": 25}},
+        vehicle_models={x["canonical_id"]: x for x in rest.tables["vehicle_models"]},
+        vehicle_brands={"toyota": "Toyota"}, alias_map={}, existing={}, registration_types={"RY1"},
+    )
+    assert result is None
+
+
+def test_sensitive_code_downgrades_strong_series_auto_to_proposed():
+    values = {"2569-01": 20, "2569-02": 25}
+    result = matcher.match_one_group(
+        group=_group("bmw-x4", "BMW X4", "BMW"), ice_series=values,
+        legacy_series_by_canonical={"bmw.x5": values},
+        vehicle_models={"bmw.x5": _model("bmw.x5", "BMW X5", "bmw")},
+        vehicle_brands={"bmw": "BMW"}, alias_map={}, existing={},
+    )
+    assert result is not None
+    assert result[1].status == "PROPOSED"
+    assert "identity guard" in result[1].reason
