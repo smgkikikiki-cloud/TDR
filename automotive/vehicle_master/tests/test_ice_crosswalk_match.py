@@ -694,3 +694,27 @@ def test_sensitive_code_downgrades_strong_series_auto_to_proposed():
     assert result is not None
     assert result[1].status == "PROPOSED"
     assert "identity guard" in result[1].reason
+
+
+def test_ry1_cab_qualifier_is_not_a_false_latin_nameplate_split():
+    values = {"2569-01": 20, "2569-02": 25}
+    result = matcher.match_one_group(
+        group=_group("toyota-hilux-revo", "Hilux Revo", "Toyota"),
+        ice_series=values, legacy_series_by_canonical={"toyota.revo_dc": values},
+        vehicle_models={"toyota.revo_dc": _model("toyota.revo_dc", "Hilux Revo Double Cab", "toyota")},
+        vehicle_brands={"toyota": "Toyota"}, alias_map={}, existing={}, registration_types={"RY1"},
+    )
+    assert result is not None
+    assert result[1].status == "AUTO"
+
+
+def test_ry3_cab_qualifier_is_not_a_false_latin_nameplate_split():
+    values = {"2569-01": 20, "2569-02": 25}
+    result = matcher.match_one_group(
+        group=_group("toyota-hilux-revo", "Hilux Revo", "Toyota"),
+        ice_series=values, legacy_series_by_canonical={"toyota.revo_cab": values},
+        vehicle_models={"toyota.revo_cab": _model("toyota.revo_cab", "Hilux Revo Cab", "toyota")},
+        vehicle_brands={"toyota": "Toyota"}, alias_map={}, existing={}, registration_types={"RY3"},
+    )
+    assert result is not None
+    assert result[1].status == "AUTO"
