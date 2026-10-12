@@ -53,8 +53,13 @@ The row-level output is `shadow_crosswalk_rows.csv`; the 675-group classificatio
 `qa_summary.json` reports 4,122,556 shadow-covered registrations out of the fixed
 4,141,987 denominator: **99.5309%**. The separately reported denominator after 58
 owner-excluded groups is 4,128,086, yielding **99.8660%**. The fixed-denominator target
-of 99.1% is met. All 244 owner decisions are present, all have the expected target or
-exclusion in the shadow rows, and there are zero mismatches or repeat-review requests.
+of 99.1% is met. This measures target availability: it includes preserved prior
+`AUTO` and `PROPOSED` crosswalk candidates, plus frozen owner targets, deterministic
+links, and resolved pickup-class targets. Existing `PROPOSED` rows are candidate
+coverage only and are not described as production-approved. Owner exclusions stay in
+the fixed denominator and leave the numerator. All 244 owner decisions are present,
+all have the expected target or exclusion in the shadow rows, and there are zero
+mismatches or repeat-review requests.
 
 The 675 source-unmatched groups classify as 15 deterministic existing links, 9 invalid
 or unspecified names, 133 genuinely ambiguous names, 516 low-volume groups, and 2

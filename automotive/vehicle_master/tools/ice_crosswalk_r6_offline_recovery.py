@@ -759,6 +759,13 @@ def build_qa(rows: list[dict[str, Any]], targets: dict[str, Any], unmatched: lis
         "owner_exclusions_outside_244_ledger": len(overlay_exclusions - ledger_exclusions),
         "owner_exclusion_adjusted_denominator_units": adjusted_denominator,
         "shadow_covered_units": covered,
+        "coverage_definition": (
+            "Registration-weighted target availability in the offline shadow: frozen owner links/creates, "
+            "preserved prior AUTO/PROPOSED crosswalk targets, deterministic exact links, and resolved pickup "
+            "class targets. PROPOSED rows count as candidate coverage only; they are not represented as "
+            "production-approved. Owner exclusions remain in the fixed denominator and are separately "
+            "removed only for the adjusted denominator."
+        ),
         "fixed_denominator_coverage_pct": round(covered * 100 / fixed_denominator, 4),
         "owner_exclusion_adjusted_coverage_pct": round(covered * 100 / adjusted_denominator, 4),
         "target_fixed_denominator_pct": 99.1,

@@ -1,5 +1,6 @@
 {
   "all_shadow_only_no_production_writes": true,
+  "coverage_definition": "Registration-weighted target availability in the offline shadow: frozen owner links/creates, preserved prior AUTO/PROPOSED crosswalk targets, deterministic exact links, and resolved pickup class targets. PROPOSED rows count as candidate coverage only; they are not represented as production-approved. Owner exclusions remain in the fixed denominator and are separately removed only for the adjusted denominator.",
   "explicit_244_owner_created_identity_count": 38,
   "fixed_denominator_coverage_pct": 99.5309,
   "fixed_denominator_units": 4141987,

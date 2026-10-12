@@ -5,14 +5,14 @@
     "automotive/vehicle_master/tests/test_ice_crosswalk_r6_offline_recovery.py": "aeaa2a7fc017af09aac7d7bb86eccd553f372994cc7b2323c069fbf7461ed042",
     "automotive/vehicle_master/tools/ice_crosswalk_build_owner_identity_package.py": "a8aa73146efc1a1cbb9bae3253c4d0c25c5302a53f6eaba6158221dbcbbb2290",
     "automotive/vehicle_master/tools/ice_crosswalk_match.py": "896f9678f31cd76bc93e90f925829b478866fb15715bbc7174b4471a917a721c",
-    "automotive/vehicle_master/tools/ice_crosswalk_r6_offline_recovery.py": "75f716ca056fd839a12c52cfd98e185bd431f2424fb01666991a1474a5df8f6a",
+    "automotive/vehicle_master/tools/ice_crosswalk_r6_offline_recovery.py": "4cc8d66c06c0b56444d2125302095080fbcf9e4aafa20987d57838b5207c9430",
     "automotive/vehicle_master/vehreg/ice_crosswalk.py": "67c5a42e9125bead59b811c719d273ff947b3b042fcf6030beccf8ff5aa1b376"
   },
   "files": [
     {
-      "bytes": 4309,
+      "bytes": 4670,
       "path": "README.md",
-      "sha256": "f2f7d1f8c3858e7715d351ab97df27ce9baad6c05b7af6b6d7735a115890146b"
+      "sha256": "0dc409841cdfa91894794d85078ef7de3fff59d4e45a6f4020e5f6e15e56109c"
     },
     {
       "bytes": 23629,
@@ -30,9 +30,9 @@
       "sha256": "d1cd1319d737496362fecfd21176b872ec7a632519e501e8f3dca2b15383010b"
     },
     {
-      "bytes": 3122,
+      "bytes": 3562,
       "path": "qa_summary.json",
-      "sha256": "4e9fbc608f00650302bfb6f701ec33ee5f1950f777275338d69fb0f389095d89"
+      "sha256": "ce8a6ed0133d06fa90d95234599c56603610ce6db62f00a341d9d1c6979bf584"
     },
     {
       "bytes": 493748,
@@ -109,6 +109,7 @@
   "qa_summary": {
     "classified_unmatched_group_count": 675,
     "complete_overlay_mismatches": 0,
+    "coverage_definition": "Registration-weighted target availability in the offline shadow: frozen owner links/creates, preserved prior AUTO/PROPOSED crosswalk targets, deterministic exact links, and resolved pickup class targets. PROPOSED rows count as candidate coverage only; they are not represented as production-approved. Owner exclusions remain in the fixed denominator and are separately removed only for the adjusted denominator.",
     "fixed_denominator_coverage_pct": 99.5309,
     "fixed_denominator_units": 4141987,
     "fresh_live_snapshot": "NOT_CAPTURED_SECRET_NOT_IN_PROCESS",
