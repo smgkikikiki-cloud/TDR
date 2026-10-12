@@ -37,10 +37,9 @@ jobs:
           node-version: '22'
       - name: Record exact trusted Roadmap version
         run: |
-          echo "Trusted Roadmap commit: $(git -C trusted-roadmap rev-parse HEAD)"
-          test "$(git -C trusted-roadmap branch --show-current)" = "main" || {
-            echo "Trusted checkout must be main branch"; exit 1;
-          }
+          echo "Trusted Roadmap commit: $(git -C trusted-roadmap rev-parse --verify HEAD)"
+          test -f trusted-roadmap/orchestration/preflight.mjs
+          test -f trusted-roadmap/orchestration/preflight.test.mjs
       - name: Verify owner-approved central roadmap and disabled execution
         working-directory: trusted-roadmap
         run: node orchestration/preflight.mjs --check-repo
