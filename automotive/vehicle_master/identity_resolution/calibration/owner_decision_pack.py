@@ -1223,9 +1223,11 @@ def cell_addr(file: str, key: str, field: str) -> str:
 
 
 CONDITIONAL_FIELDS = ("create_candidates.csv owner_verdict: EXISTING_IDENTITY / VARIANT_TRIM_CODE also need owner_canonical_model_id; VALID_MISSING_CANONICAL also needs owner_discovery_class; "
-                      "r6_owner_review.csv owner_verdict: CORRECT_* also need owner_link_type (matching the verdict) and owner_canonical_model_id")
+                      "r6_owner_review.csv owner_verdict: CORRECT_* confirm the displayed candidate and need owner_link_type matching the verdict (owner_canonical_model_id optional; if filled it must equal the displayed target set), "
+                      "WRONG_TARGET may carry a corrected owner_canonical_model_id + owner_link_type as a pair that differs from the candidate, NO_TDR_TARGET / INSUFFICIENT_EVIDENCE keep both blank; "
+                      "negative_sample.csv owner_has_tdr_counterpart: YES needs owner_canonical_model_id and owner_link_type of the matching shape (COMPOSED_OF = a set of two or more), NO / UNSURE keep both blank; every model id must be in the trusted catalog universe")
 COMPLETION_RULE = ("complete only when EVERY own cell and EVERY child cell is explicitly filled with an allowed value (and its conditional fields), and no answer contradicts another; "
-                   "no cell is inferred from another answer (validate_session)")
+                   "no cell is inferred from another answer; the check fails closed without the trusted catalog model universe (validate_session)")
 
 
 def build_queue(inp: Inputs, init: list[dict], plan: dict, alias_rows, brand_rows, create_rows, view, neg_rows) -> tuple[list[dict], list[dict]]:
@@ -1341,8 +1343,7 @@ def build_queue(inp: Inputs, init: list[dict], plan: dict, alias_rows, brand_row
 
 
 NEG_ANSWERS = ("YES", "NO", "UNSURE")
-CROSS_ANSWER_CONFLICTS = ("PAIR_AND_GROUP_VERDICT_CONTRADICT", "GROUP_TARGET_DIFFERS_FROM_CORRECT_PAIR", "GROUP_TARGET_IS_THE_WRONG_TARGET", "TWO_EQUIVALENT_TARGETS", "LINK_TYPE_CONTRADICTS_VERDICT",
-                          "WRONG_TARGET_NAMES_ITSELF")
+CROSS_ANSWER_CONFLICTS = ("PAIR_AND_GROUP_VERDICT_CONTRADICT", "GROUP_TARGET_DIFFERS_FROM_CORRECT_PAIR", "GROUP_TARGET_IS_THE_WRONG_TARGET", "TWO_EQUIVALENT_TARGETS", "LINK_TYPE_CONTRADICTS_VERDICT")
 
 
 def cell_meta(alias_rows, create_rows, view) -> dict:
@@ -1357,10 +1358,36 @@ def cell_meta(alias_rows, create_rows, view) -> dict:
     return meta
 
 
-def validate_session(session: dict, answers: dict, meta: dict, model_ids: set | None = None) -> list[dict]:
+def target_set(s: str) -> frozenset:
+    """A TDR target or target set as written in the sheet: 'a' or 'a+b' -> {a} / {a, b} (order and spaces do not matter)."""
+    return frozenset(x.strip() for x in (s or "").split("+") if x.strip())
+
+
+def shape_ok(link: str, targets: frozenset) -> bool:
+    """EQUIVALENT and PART_OF point at exactly one model; COMPOSED_OF at a set of at least two."""
+    return len(targets) >= 2 if link == "COMPOSED_OF" else len(targets) == 1
+
+
+def trusted_model_universe(inp: Inputs) -> frozenset:
+    """The pinned catalog universe the authoritative completion check requires: the 323 TDR models of the committed extract (the same universe the accepted relation export is built on)."""
+    return frozenset(inp.models)
+
+
+def validate_session(session: dict, answers: dict, meta: dict, model_ids) -> list[dict]:
     """Is this review session COMPLETE? `answers` maps a cell address (file#key@field) to what the owner explicitly wrote; nothing is inferred from any other answer. Returns problems; [] means complete.
-    Checks: every own cell and every child cell is filled (UNANSWERED_MANDATORY_CELL); each value is allowed (and its conditional fields are filled); the answers do not contradict each other."""
+
+    Fails closed: `model_ids` (the trusted catalog universe, see `trusted_model_universe`) is required; without it the session cannot be complete (MODEL_UNIVERSE_UNAVAILABLE) and no model id is accepted.
+
+    Field contract (documented in DATA_DICTIONARY.md), per R6 verdict:
+      CORRECT_EQUIVALENT / CORRECT_PART_OF / CORRECT_COMPOSED_OF confirm the DISPLAYED candidate: owner_link_type must equal the verdict's link type; owner_canonical_model_id is optional, and if filled
+        it must name exactly the displayed candidate's target (set). A different model is never a correct verdict: the owner writes WRONG_TARGET with the corrected target instead.
+      WRONG_TARGET: the displayed candidate is wrong; owner_canonical_model_id (the corrected target or set) and owner_link_type are optional but come as a pair; the corrected target must differ from the candidate.
+      NO_TDR_TARGET / INSUFFICIENT_EVIDENCE assert no target: owner_canonical_model_id and owner_link_type must be blank.
+    A target must have the shape of its link type (one model for EQUIVALENT / PART_OF, a set of at least two for COMPOSED_OF) and every model id must be in the trusted universe."""
     problems: list[dict] = []
+    universe = frozenset(model_ids) if model_ids else frozenset()
+    if not universe:
+        problems.append({"kind": "MODEL_UNIVERSE_UNAVAILABLE", "cell": session["session_id"], "detail": "no trusted catalog model universe was supplied: completion cannot be established"})
 
     def add(kind, cell, detail):
         problems.append({"kind": kind, "cell": cell, "detail": detail})
@@ -1371,6 +1398,18 @@ def validate_session(session: dict, answers: dict, meta: dict, model_ids: set | 
     def sibling(cell, field):
         file, rest = cell.split("#", 1)
         return cell_addr(file, rest.rsplit("@", 1)[0], field)
+
+    def check_target(cell, canon, link, what):
+        """Shared checks for a written target: every model known, the link type valid (reported once, here), the target's shape matching it."""
+        t = target_set(canon)
+        unknown = sorted(x for x in t if x not in universe)
+        if unknown:
+            add("UNKNOWN_TDR_MODEL", cell, f"{what}: {', '.join(unknown)} not in the trusted catalog universe")
+        if link not in LINKS:
+            add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_link_type"), f"{what} needs owner_link_type in {', '.join(LINKS)}")
+        elif not shape_ok(link, t):
+            add("TARGET_SHAPE_MISMATCH", cell, f"{what}: {link} needs {'a set of at least two models' if link == 'COMPOSED_OF' else 'exactly one model'}, got {canon!r}")
+        return t
 
     pair_labels, create_labels, alias_answers = collections.defaultdict(list), {}, []
     for cell in session["own_cells"] + session["child_cells"]:
@@ -1397,27 +1436,67 @@ def validate_session(session: dict, answers: dict, meta: dict, model_ids: set | 
                 add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_canonical_model_id"), f"{v} needs the model")
             if v == "VALID_MISSING_CANONICAL" and val(sibling(cell, "owner_discovery_class")) not in DISCOVERY_CLASSES:
                 add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_discovery_class"), "VALID_MISSING_CANONICAL needs a discovery class")
-            if canon and model_ids is not None and canon not in model_ids:
-                add("UNKNOWN_TDR_MODEL", sibling(cell, "owner_canonical_model_id"), canon)
+            if canon:
+                t = target_set(canon)
+                if len(t) != 1:
+                    add("TARGET_SHAPE_MISMATCH", sibling(cell, "owner_canonical_model_id"), f"a group verdict names exactly one model, got {canon!r}")
+                for x in sorted(t - universe):
+                    add("UNKNOWN_TDR_MODEL", sibling(cell, "owner_canonical_model_id"), x)
             create_labels[m.get("group")] = {"verdict": v, "canonical": canon}
         elif file == "r6_owner_review.csv":
             if v not in R6_VERDICTS:
                 add("VALUE_NOT_ALLOWED", cell, v)
                 continue
             link, canon = val(sibling(cell, "owner_link_type")), val(sibling(cell, "owner_canonical_model_id"))
-            if v in PAIR_LINK and (link != PAIR_LINK[v] or not canon):
-                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_link_type"), f"{v} needs owner_link_type={PAIR_LINK[v]} and owner_canonical_model_id")
-            if canon and model_ids is not None and not all(x in model_ids for x in canon.split("+")):
-                add("UNKNOWN_TDR_MODEL", sibling(cell, "owner_canonical_model_id"), canon)
-            pair_labels[m.get("group")].append({"candidate": m.get("candidate"), "verdict": v, "link_type": link, "canonical": canon})
+            ccell = sibling(cell, "owner_canonical_model_id")
+            shown = target_set(m.get("candidate", ""))
+            effective = canon
+            if v in PAIR_LINK:
+                if link != PAIR_LINK[v]:
+                    add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_link_type"), f"{v} needs owner_link_type={PAIR_LINK[v]}")
+                if not shown:
+                    add("NO_DISPLAYED_CANDIDATE", cell, f"{v} confirms the displayed candidate, but this row shows none")
+                else:
+                    if canon:
+                        t = target_set(canon)
+                        for x in sorted(t - universe):
+                            add("UNKNOWN_TDR_MODEL", ccell, x)
+                        if t != shown:
+                            add("CANDIDATE_TARGET_MISMATCH", ccell, f"{v} confirms the displayed {'+'.join(sorted(shown))}, but the owner names {'+'.join(sorted(t))}: a different target is WRONG_TARGET with the corrected target, never a correct verdict")
+                    if link == PAIR_LINK[v] and not shape_ok(link, shown):
+                        add("TARGET_SHAPE_MISMATCH", cell, f"{v} cannot confirm the displayed {m.get('candidate')!r}: {link} needs {'a set of at least two models' if link == 'COMPOSED_OF' else 'exactly one model'}")
+                    for x in sorted(shown - universe):
+                        add("UNKNOWN_TDR_MODEL", cell, f"displayed candidate {x}")
+                effective = canon or m.get("candidate", "")
+            elif v == "WRONG_TARGET":
+                if link and not canon:
+                    add("CONDITIONAL_FIELD_MISSING", ccell, "a corrected target and its link type come as a pair")
+                if canon:
+                    t = check_target(ccell, canon, link, "corrected target")
+                    if t == shown:
+                        add("CONTRADICTORY_ANSWERS", ccell, "WRONG_TARGET names the displayed candidate itself as the corrected target")
+            else:   # NO_TDR_TARGET, INSUFFICIENT_EVIDENCE
+                if canon or link:
+                    add("FIELD_NOT_ALLOWED_FOR_VERDICT", ccell, f"{v} asserts no target: owner_canonical_model_id and owner_link_type must be blank")
+            pair_labels[m.get("group")].append({"candidate": m.get("candidate"), "verdict": v, "link_type": link, "canonical": effective if v in PAIR_LINK else ""})
         elif file == "negative_sample.csv":
             if v not in NEG_ANSWERS:
                 add("VALUE_NOT_ALLOWED", cell, v)
-            elif v == "YES" and not val(sibling(cell, "owner_canonical_model_id")):
-                add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_canonical_model_id"), "YES needs the model")
+                continue
+            ccell = sibling(cell, "owner_canonical_model_id")
+            canon, link = val(ccell), val(sibling(cell, "owner_link_type"))
+            if v == "YES":
+                if not canon:
+                    add("CONDITIONAL_FIELD_MISSING", ccell, "YES needs the counterpart model (or set)")
+                    if link not in LINKS:
+                        add("CONDITIONAL_FIELD_MISSING", sibling(cell, "owner_link_type"), "YES needs the counterpart's owner_link_type")
+                else:
+                    check_target(ccell, canon, link, "counterpart")
+            elif canon or link:
+                add("FIELD_NOT_ALLOWED_FOR_VERDICT", ccell, f"{v} asserts no counterpart: owner_canonical_model_id and owner_link_type must be blank")
     # contradictions between the answers actually given (the checks never fill a missing answer)
     for g in sorted(set(pair_labels) | set(create_labels), key=str):
-        for r in check_label_consistency({g: pair_labels.get(g, [])}, {g: create_labels[g]} if g in create_labels else {}, model_ids):
+        for r in check_label_consistency({g: pair_labels.get(g, [])}, {g: create_labels[g]} if g in create_labels else {}, universe or None):
             if r["severity"] == "CONFLICT" and r["kind"] in CROSS_ANSWER_CONFLICTS:   # value / missing-field / unknown-model problems are reported above, once
                 add("CONTRADICTORY_ANSWERS", str(g), f"{r['kind']}: {r['detail']}")
     for cls, m in alias_answers:
@@ -1433,7 +1512,8 @@ def validate_session(session: dict, answers: dict, meta: dict, model_ids: set | 
     return problems
 
 
-def session_is_complete(session: dict, answers: dict, meta: dict, model_ids: set | None = None) -> bool:
+def session_is_complete(session: dict, answers: dict, meta: dict, model_ids) -> bool:
+    """The authoritative completion check: `model_ids` is required and must be the trusted catalog universe (no default; None or empty fails closed)."""
     return not validate_session(session, answers, meta, model_ids)
 
 

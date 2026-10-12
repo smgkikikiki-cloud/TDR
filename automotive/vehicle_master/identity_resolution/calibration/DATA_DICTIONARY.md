@@ -21,9 +21,16 @@ Columns of `r6_calibration_dataset.csv`, `r6_calibration_groups.csv` and `r6_own
 | column | meaning |
 |---|---|
 | `owner_verdict` | BLANK. One of CORRECT_EQUIVALENT, CORRECT_PART_OF, CORRECT_COMPOSED_OF, WRONG_TARGET, NO_TDR_TARGET, INSUFFICIENT_EVIDENCE |
-| `owner_link_type` | BLANK. The relationship the owner asserts: EQUIVALENT, PART_OF or COMPOSED_OF |
-| `owner_canonical_model_id` | BLANK. The right TDR model (`a+b` for a COMPOSED_OF set) when the row's candidate is wrong or missing |
+| `owner_link_type` | BLANK. The relationship the owner asserts: EQUIVALENT, PART_OF or COMPOSED_OF. Required on `CORRECT_*` (must match the verdict); on `WRONG_TARGET` only together with a corrected target; blank on `NO_TDR_TARGET` and `INSUFFICIENT_EVIDENCE` |
+| `owner_canonical_model_id` | BLANK. The TDR model (`a+b` for a COMPOSED_OF set). On `WRONG_TARGET` it is the corrected target (or set) the candidate should have been, and must differ from the candidate. On `CORRECT_*` it is optional: blank means "the displayed candidate", and if filled it must equal the displayed candidate (as a set). Blank on `NO_TDR_TARGET` and `INSUFFICIENT_EVIDENCE` |
 | `owner_notes` | BLANK. Free text |
+
+**Completion rules** (the Owner Decision Pack's `validate_session`, `calibration/owner_decision_pack.py`; nothing is inferred and nothing is filled in):
+
+- `CORRECT_EQUIVALENT` / `CORRECT_PART_OF` / `CORRECT_COMPOSED_OF` confirm the **displayed** candidate. A different target is never a correct verdict: the owner writes `WRONG_TARGET` with the corrected `owner_canonical_model_id` and `owner_link_type`. A `CORRECT_*` verdict on a row that shows no candidate is refused.
+- A target must have the shape of its link type: exactly one model for EQUIVALENT / PART_OF, a set of at least two models (`a+b`) for COMPOSED_OF. Sets are compared as sets (order and spaces do not matter).
+- Every model id must be in the trusted catalog universe (the 323 TDR models). The completion check is **fail-closed**: without that universe supplied it reports `MODEL_UNIVERSE_UNAVAILABLE` and no session is complete.
+- `negative_sample.csv`: `YES` needs the counterpart model (or set) and its link type, both valid and of matching shape; `NO` / `UNSURE` keep both blank.
 
 ## Ice group
 

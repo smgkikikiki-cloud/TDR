@@ -498,6 +498,10 @@ def meta_():
     return tables()["cell_meta"]
 
 
+def U():
+    return O.trusted_model_universe(inp())
+
+
 def coherent_answers(session: dict) -> dict:
     """The most neutral complete answer set: AMBIGUOUS / INSUFFICIENT_EVIDENCE / UNRESOLVED never contradict each other."""
     ans = {}
@@ -514,58 +518,58 @@ def kinds_of(problems):
 
 def test_validator_refuses_an_empty_session_and_names_every_missing_cell():
     s = sessions_by_id()["INIT-03"]
-    probs = O.validate_session(s, {}, meta_())
+    probs = O.validate_session(s, {}, meta_(), U())
     assert kinds_of(probs) == {"UNANSWERED_MANDATORY_CELL": 5} and {p["cell"] for p in probs} == set(s["own_cells"] + s["child_cells"])
-    assert not O.session_is_complete(s, {}, meta_())
+    assert not O.session_is_complete(s, {}, meta_(), U())
 
 
 def test_filing_answer_alone_never_completes_init_03_and_alias_class_alone_never_completes_an_alias_session():
     s = sessions_by_id()["INIT-03"]
     answers = {s["own_cells"][0]: "file under MG"}
-    probs = O.validate_session(s, answers, meta_())
+    probs = O.validate_session(s, answers, meta_(), U())
     assert {p["cell"] for p in probs} == set(s["child_cells"]) and kinds_of(probs) == {"UNANSWERED_MANDATORY_CELL": 4}
     before = dict(answers)
-    O.validate_session(s, answers, meta_())
+    O.validate_session(s, answers, meta_(), U())
     assert answers == before, "the validator fills nothing in"
     a = sessions_by_id()["OD-A02"]
-    probs = O.validate_session(a, {a["own_cells"][0]: "IDENTITY_EQUIVALENT"}, meta_())
+    probs = O.validate_session(a, {a["own_cells"][0]: "IDENTITY_EQUIVALENT"}, meta_(), U())
     assert {p["cell"] for p in probs} == set(a["child_cells"]), "an alias class does not fill the group verdict or the pair verdict"
     for child_missing in a["child_cells"]:   # omitting any single child verdict blocks completion
         ans = coherent_answers(a)
         del ans[child_missing]
-        assert [p["cell"] for p in O.validate_session(a, ans, meta_())] == [child_missing]
+        assert [p["cell"] for p in O.validate_session(a, ans, meta_(), U())] == [child_missing]
 
 
 def test_validator_accepts_a_complete_coherent_session_and_every_wave_1_session_can_be_completed():
     for x in tables()["sessions"]:
         if x["wave"] == 1:
-            assert O.session_is_complete(x, coherent_answers(x), meta_()), x["session_id"]
+            assert O.session_is_complete(x, coherent_answers(x), meta_(), U()), x["session_id"]
 
 
 def test_validator_checks_values_and_conditional_fields():
     s = sessions_by_id()["OD-A02"]
     ans = coherent_answers(s)
     ans["create_candidates.csv#OD-C01@owner_verdict"] = "SORT_OF"
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"VALUE_NOT_ALLOWED": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"VALUE_NOT_ALLOWED": 1}
     ans["create_candidates.csv#OD-C01@owner_verdict"] = "EXISTING_IDENTITY"
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"CONDITIONAL_FIELD_MISSING": 1}
     ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.wuling_bingo"
-    assert O.validate_session(s, ans, meta_(), set(inp().models)) == []
+    assert O.validate_session(s, ans, meta_(), U()) == []
     ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.nonexistent"
-    assert kinds_of(O.validate_session(s, ans, meta_(), set(inp().models))) == {"UNKNOWN_TDR_MODEL": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"UNKNOWN_TDR_MODEL": 1}
     ans["create_candidates.csv#OD-C01@owner_verdict"] = "VALID_MISSING_CANONICAL"
     ans.pop("create_candidates.csv#OD-C01@owner_canonical_model_id")
-    assert "CONDITIONAL_FIELD_MISSING" in kinds_of(O.validate_session(s, ans, meta_()))
+    assert "CONDITIONAL_FIELD_MISSING" in kinds_of(O.validate_session(s, ans, meta_(), U()))
     ans["create_candidates.csv#OD-C01@owner_discovery_class"] = "HISTORICAL_BACKFILL"
-    assert O.validate_session(s, ans, meta_()) == []
+    assert O.validate_session(s, ans, meta_(), U()) == []
     r6 = "r6_owner_review.csv#review_rank=15@owner_verdict"
     ans[r6] = "CORRECT_PART_OF"
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"CONDITIONAL_FIELD_MISSING": 1}
     ans["r6_owner_review.csv#review_rank=15@owner_link_type"] = "EQUIVALENT"
     ans["r6_owner_review.csv#review_rank=15@owner_canonical_model_id"] = "wuling.wuling_bingo"
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1, "CONTRADICTORY_ANSWERS": 1}, "the link type must match the verdict"
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"CONDITIONAL_FIELD_MISSING": 1, "CONTRADICTORY_ANSWERS": 1}, "the link type must match the verdict"
     ans["r6_owner_review.csv#review_rank=15@owner_link_type"] = "PART_OF"
-    assert "CONDITIONAL_FIELD_MISSING" not in kinds_of(O.validate_session(s, ans, meta_()))
+    assert "CONDITIONAL_FIELD_MISSING" not in kinds_of(O.validate_session(s, ans, meta_(), U()))
 
 
 def test_validator_flags_contradictory_answers_without_resolving_them():
@@ -576,45 +580,37 @@ def test_validator_flags_contradictory_answers_without_resolving_them():
     base = {"create_candidates.csv#OD-C01@owner_discovery_class": "HISTORICAL_BACKFILL"}
     # alias class says the same model, group verdict says no identity exists
     ans = {**base, a: "IDENTITY_EQUIVALENT", c: "VALID_MISSING_CANONICAL", r: "WRONG_TARGET"}
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONTRADICTORY_ANSWERS": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"CONTRADICTORY_ANSWERS": 1}
     # a correct EQUIVALENT pair next to a missing-identity group verdict
     ans = {**base, a: "UNRESOLVED", c: "VALID_MISSING_CANONICAL", r: "CORRECT_EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_link_type": "EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_canonical_model_id": cand}
-    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_(), U()))
     # misleading alias, but the group verdict names the alias target
     ans = {a: "MISLEADING_ALIAS", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": target, r: "INSUFFICIENT_EVIDENCE"}
-    assert kinds_of(O.validate_session(s, ans, meta_())) == {"CONTRADICTORY_ANSWERS": 1}
+    assert kinds_of(O.validate_session(s, ans, meta_(), U())) == {"CONTRADICTORY_ANSWERS": 1}
     # equivalent alias, but the group verdict names a different model
     ans = {a: "IDENTITY_EQUIVALENT", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": "wuling.other", r: "INSUFFICIENT_EVIDENCE"}
-    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_(), U()))
     # a wrong-target pair whose own model is also named as the group's existing identity
     ans = {a: "UNRESOLVED", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": cand, r: "WRONG_TARGET"}
-    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_()))
+    assert "CONTRADICTORY_ANSWERS" in kinds_of(O.validate_session(s, ans, meta_(), U()))
     # a coherent set stays clean (the sheet's candidate for rank 15 is the alias target itself)
     assert cand == target
     ans = {a: "IDENTITY_EQUIVALENT", c: "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": target, r: "CORRECT_EQUIVALENT",
            "r6_owner_review.csv#review_rank=15@owner_link_type": "EQUIVALENT", "r6_owner_review.csv#review_rank=15@owner_canonical_model_id": target}
-    assert O.validate_session(s, ans, meta_()) == []
+    assert O.validate_session(s, ans, meta_(), U()) == []
 
 
-def test_validator_flags_two_equivalent_targets_inside_one_session():
+def test_validator_accepts_different_groups_each_with_a_correct_equivalent_pair():
     s = sessions_by_id()["INIT-03"]
     ans = coherent_answers(s)
-    ans["init"] = "x"
     ans[s["own_cells"][0]] = "keep under MG"
     for rk, cand in (("183", "mg.mg_maxus_7"), ("184", "mg.mg_maxus_9")):
         ans[f"r6_owner_review.csv#review_rank={rk}@owner_verdict"] = "CORRECT_EQUIVALENT"
         ans[f"r6_owner_review.csv#review_rank={rk}@owner_link_type"] = "EQUIVALENT"
         ans[f"r6_owner_review.csv#review_rank={rk}@owner_canonical_model_id"] = cand
-    assert O.validate_session(s, {k: v for k, v in ans.items() if k != "init"}, meta_()) == [], "different groups: no conflict"
-    ans.pop("init")
-
-
-def test_negative_sample_session_answers_are_checked():
-    s = sessions_by_id()["NS-001"]
-    cell = s["own_cells"][0]
-    assert kinds_of(O.validate_session(s, {cell: "MAYBE"}, meta_())) == {"VALUE_NOT_ALLOWED": 1}
-    assert kinds_of(O.validate_session(s, {cell: "YES"}, meta_())) == {"CONDITIONAL_FIELD_MISSING": 1}
-    assert O.validate_session(s, {cell: "NO"}, meta_()) == []
+    assert O.validate_session(s, ans, meta_(), U()) == [], "different groups: no conflict"
+    ans.pop("r6_owner_review.csv#review_rank=184@owner_canonical_model_id")
+    assert O.validate_session(s, ans, meta_(), U()) == [], "a blank canonical id on a CORRECT_* verdict means the displayed candidate"
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- two verdict vocabularies
@@ -903,3 +899,163 @@ def test_procedure_text_separates_selection_from_acceptance():
     assert "pooled held-out false-AUTO upper bound is within" not in json.dumps(d)
     assert "TRAINING" in d["selection_rule"] and "never an input" in d["selection_rule"]
     assert "registered" in d["registration"] and "ONCE" in d["loop"] and "never used to retune" in d["failure_handling"] and "AFTER selection" in d["acceptance_gate"]
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------- ODP-5: completion-validator integrity
+R6V = "r6_owner_review.csv#review_rank={rk}@{f}"
+
+
+def r6_answer(rk, verdict, link="", canon=""):
+    a = {R6V.format(rk=rk, f="owner_verdict"): verdict}
+    if link:
+        a[R6V.format(rk=rk, f="owner_link_type")] = link
+    if canon:
+        a[R6V.format(rk=rk, f="owner_canonical_model_id")] = canon
+    return a
+
+
+def probs(session_id, answers, universe="trusted"):
+    return O.validate_session(sessions_by_id()[session_id], answers, meta_(), U() if universe == "trusted" else universe)
+
+
+def test_a_correct_verdict_with_a_different_but_valid_model_is_refused():
+    assert "byd.atto3" in U() and "byd.dolphin" in U()
+    assert (next(r for r in inp().r6 if r["review_rank"] == "1")["candidate_canonical_model_id"]) == "byd.dolphin"
+    bad = r6_answer("1", "CORRECT_EQUIVALENT", "EQUIVALENT", "byd.atto3")
+    assert kinds_of(probs("R6-1", bad)) == {"CANDIDATE_TARGET_MISMATCH": 1} and not O.session_is_complete(sessions_by_id()["R6-1"], bad, meta_(), U())
+    # matched, and blank-means-displayed, both complete
+    assert probs("R6-1", r6_answer("1", "CORRECT_EQUIVALENT", "EQUIVALENT", "byd.dolphin")) == []
+    assert probs("R6-1", r6_answer("1", "CORRECT_EQUIVALENT", "EQUIVALENT")) == []
+    # the same holds for PART_OF, and the changed target is never silently turned into a correct verdict
+    assert kinds_of(probs("R6-1", r6_answer("1", "CORRECT_PART_OF", "PART_OF", "byd.atto3"))) == {"CANDIDATE_TARGET_MISMATCH": 1}
+    # the right way to change the target: WRONG_TARGET with the corrected target and its link type
+    assert probs("R6-1", r6_answer("1", "WRONG_TARGET", "EQUIVALENT", "byd.atto3")) == []
+
+
+def test_composite_targets_are_compared_as_sets():
+    sid = "R6-177"
+    cand = "isuzu.dmax_cab+isuzu.dmax_double_cab"
+    assert next(r for r in inp().r6 if r["review_rank"] == "177")["candidate_canonical_model_id"] == cand
+    assert probs(sid, r6_answer("177", "CORRECT_COMPOSED_OF", "COMPOSED_OF")) == []
+    assert probs(sid, r6_answer("177", "CORRECT_COMPOSED_OF", "COMPOSED_OF", cand)) == []
+    assert probs(sid, r6_answer("177", "CORRECT_COMPOSED_OF", "COMPOSED_OF", "isuzu.dmax_double_cab + isuzu.dmax_cab")) == [], "order and spaces do not matter"
+    for other in ("isuzu.dmax_cab", "isuzu.dmax_cab+isuzu.dmax_double_cab+isuzu.dmax_single_cab", "isuzu.dmax_cab+toyota.hilux_revo_cab", "isuzu.dmax_double_cab+byd.dolphin"):
+        k = kinds_of(probs(sid, r6_answer("177", "CORRECT_COMPOSED_OF", "COMPOSED_OF", other)))
+        assert k.get("CANDIDATE_TARGET_MISMATCH") == 1, other
+    # a set cannot be confirmed as EQUIVALENT / PART_OF, and a single model cannot be confirmed as COMPOSED_OF
+    assert kinds_of(probs(sid, r6_answer("177", "CORRECT_EQUIVALENT", "EQUIVALENT"))) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert kinds_of(probs(sid, r6_answer("177", "CORRECT_PART_OF", "PART_OF"))) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "CORRECT_COMPOSED_OF", "COMPOSED_OF"))) == {"TARGET_SHAPE_MISMATCH": 1}
+    # WRONG_TARGET restating the displayed set (in another order) is not a correction
+    assert kinds_of(probs(sid, r6_answer("177", "WRONG_TARGET", "COMPOSED_OF", "isuzu.dmax_double_cab+isuzu.dmax_cab"))) == {"CONTRADICTORY_ANSWERS": 1}
+    # a genuine correction of a set
+    assert probs(sid, r6_answer("177", "WRONG_TARGET", "COMPOSED_OF", "isuzu.dmax_cab+isuzu.dmax_double_cab+isuzu.mux")) == [] or "isuzu.mux" not in U()
+    assert probs(sid, r6_answer("177", "WRONG_TARGET", "EQUIVALENT", "isuzu.dmax_cab")) == []
+
+
+def test_wrong_target_keeps_its_semantics_and_its_field_contract():
+    assert probs("R6-1", r6_answer("1", "WRONG_TARGET")) == [], "a wrong target needs no corrected target"
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "", "byd.atto3"))) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "EQUIVALENT"))) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "EQUIVALENT", "byd.dolphin"))) == {"CONTRADICTORY_ANSWERS": 1}, "naming the displayed candidate as the correction is a contradiction"
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "EQUIVALENT", "byd.atto3+byd.seal"))) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "COMPOSED_OF", "byd.atto3"))) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "SORT_OF", "byd.atto3"))) == {"CONDITIONAL_FIELD_MISSING": 1}
+    for v in ("NO_TDR_TARGET", "INSUFFICIENT_EVIDENCE"):
+        assert probs("R6-1", r6_answer("1", v)) == []
+        assert kinds_of(probs("R6-1", r6_answer("1", v, "EQUIVALENT", "byd.atto3"))) == {"FIELD_NOT_ALLOWED_FOR_VERDICT": 1}, v
+        assert kinds_of(probs("R6-1", r6_answer("1", v, "", "byd.atto3"))) == {"FIELD_NOT_ALLOWED_FOR_VERDICT": 1}, v
+    # WRONG_TARGET is never read as correct: it does not satisfy the group-level cross-checks as a confirmation
+    cells, _ = O.derive_truth(["byd.dolphin"], [{"candidate": "byd.dolphin", "verdict": "WRONG_TARGET", "link_type": "", "canonical": "byd.atto3"}], None)
+    assert cells[("byd.dolphin", "EQUIVALENT")] == "NEGATIVE"
+
+
+def test_a_correct_verdict_needs_a_displayed_candidate_and_the_matching_link_type():
+    no_cand = sessions_by_id()["R6-517"]
+    assert next(r for r in inp().r6 if r["review_rank"] == "517")["candidate_canonical_model_id"] == ""
+    assert kinds_of(probs("R6-517", r6_answer("517", "CORRECT_EQUIVALENT", "EQUIVALENT"))) == {"NO_DISPLAYED_CANDIDATE": 1}
+    assert probs("R6-517", r6_answer("517", "NO_TDR_TARGET")) == [] and probs("R6-517", r6_answer("517", "WRONG_TARGET", "EQUIVALENT", "byd.atto3")) == []
+    assert kinds_of(probs("R6-1", r6_answer("1", "CORRECT_EQUIVALENT"))) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert "CONDITIONAL_FIELD_MISSING" in kinds_of(probs("R6-1", r6_answer("1", "CORRECT_EQUIVALENT", "PART_OF")))
+    del no_cand
+
+
+def test_unknown_models_are_rejected_wherever_they_appear():
+    assert kinds_of(probs("R6-1", r6_answer("1", "WRONG_TARGET", "EQUIVALENT", "byd.nonexistent"))) == {"UNKNOWN_TDR_MODEL": 1}
+    assert kinds_of(probs("R6-1", r6_answer("1", "CORRECT_EQUIVALENT", "EQUIVALENT", "byd.nonexistent"))) == {"UNKNOWN_TDR_MODEL": 1, "CANDIDATE_TARGET_MISMATCH": 1}
+    assert kinds_of(probs("R6-177", r6_answer("177", "WRONG_TARGET", "COMPOSED_OF", "isuzu.dmax_cab+isuzu.ghost"))) == {"UNKNOWN_TDR_MODEL": 1}
+    a = sessions_by_id()["OD-A02"]
+    ans = coherent_answers(a)
+    ans["create_candidates.csv#OD-C01@owner_verdict"] = "EXISTING_IDENTITY"
+    ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.ghost"
+    assert kinds_of(O.validate_session(a, ans, meta_(), U())) == {"UNKNOWN_TDR_MODEL": 1}
+    ans["create_candidates.csv#OD-C01@owner_canonical_model_id"] = "wuling.wuling_bingo+wuling.other"
+    assert "TARGET_SHAPE_MISMATCH" in kinds_of(O.validate_session(a, ans, meta_(), U())), "a group verdict names exactly one model"
+
+
+def test_completion_fails_closed_without_the_trusted_model_universe():
+    import inspect
+    assert inspect.signature(O.validate_session).parameters["model_ids"].default is inspect.Parameter.empty, "no default: the universe cannot be forgotten"
+    assert inspect.signature(O.session_is_complete).parameters["model_ids"].default is inspect.Parameter.empty
+    s = sessions_by_id()["OD-A02"]
+    ans = coherent_answers(s)
+    assert O.session_is_complete(s, ans, meta_(), U())
+    for missing in (None, set(), frozenset(), []):
+        assert not O.session_is_complete(s, ans, meta_(), missing), repr(missing)
+        assert "MODEL_UNIVERSE_UNAVAILABLE" in kinds_of(O.validate_session(s, ans, meta_(), missing))
+    # a universe that lacks a model the answers rely on does not accept it
+    partial = U() - {"wuling.wuling_bingo"}
+    assert "UNKNOWN_TDR_MODEL" in kinds_of(O.validate_session(s, {**ans, **r6_answer("15", "CORRECT_EQUIVALENT", "EQUIVALENT")}, meta_(), partial))
+    # the trusted universe is the accepted export's TDR universe
+    exported = {r["id"] for r in E.load_rows(E.OUT / E.FILES["tdr_targets"])}
+    assert set(U()) == exported and len(U()) == 323
+
+
+def test_negative_sample_yes_requires_a_valid_typed_counterpart():
+    sid = "NS-001"
+    cell = sessions_by_id()[sid]["own_cells"][0]
+    base = "negative_sample.csv#NS-001@"
+    assert kinds_of(probs(sid, {cell: "MAYBE"})) == {"VALUE_NOT_ALLOWED": 1}
+    assert kinds_of(probs(sid, {cell: "YES"})) == {"CONDITIONAL_FIELD_MISSING": 2}, "model and link type are both missing"
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.dolphin"})) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_link_type": "EQUIVALENT"})) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.ghost", base + "owner_link_type": "EQUIVALENT"})) == {"UNKNOWN_TDR_MODEL": 1}
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.dolphin", base + "owner_link_type": "SORT_OF"})) == {"CONDITIONAL_FIELD_MISSING": 1}
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.dolphin", base + "owner_link_type": "COMPOSED_OF"})) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert kinds_of(probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.dolphin+byd.atto3", base + "owner_link_type": "EQUIVALENT"})) == {"TARGET_SHAPE_MISMATCH": 1}
+    assert probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.dolphin", base + "owner_link_type": "PART_OF"}) == []
+    assert probs(sid, {cell: "YES", base + "owner_canonical_model_id": "byd.atto3+byd.dolphin", base + "owner_link_type": "COMPOSED_OF"}) == []
+    for v in ("NO", "UNSURE"):
+        assert probs(sid, {cell: v}) == []
+        assert kinds_of(probs(sid, {cell: v, base + "owner_canonical_model_id": "byd.dolphin"})) == {"FIELD_NOT_ALLOWED_FOR_VERDICT": 1}, v
+
+
+def test_coherent_positive_sessions_still_complete():
+    """INIT-03 and OD-A02 with correct, matched, typed answers (the pack fills nothing: these are test inputs)."""
+    s = sessions_by_id()["INIT-03"]
+    ans = coherent_answers(s)
+    ans[s["own_cells"][0]] = "file under MG"
+    ans.update(r6_answer("184", "CORRECT_EQUIVALENT", "EQUIVALENT", "mg.mg_maxus_9"))
+    ans.update(r6_answer("183", "CORRECT_EQUIVALENT", "EQUIVALENT"))
+    ans["create_candidates.csv#OD-C11@owner_verdict"] = "VALID_MISSING_CANONICAL"
+    ans["create_candidates.csv#OD-C11@owner_discovery_class"] = "ACTIVE_CATALOG_GAP"
+    ans.update(r6_answer("190", "WRONG_TARGET", "EQUIVALENT", "mg.mg_maxus_7"))
+    assert O.session_is_complete(s, ans, meta_(), U()), O.validate_session(s, ans, meta_(), U())
+    a = sessions_by_id()["OD-A02"]
+    target = next(x for x in tables()["alias"] if x["decision_id"] == "OD-A02")["existing_identity_id"]
+    ans = {a["own_cells"][0]: "IDENTITY_EQUIVALENT", "create_candidates.csv#OD-C01@owner_verdict": "EXISTING_IDENTITY", "create_candidates.csv#OD-C01@owner_canonical_model_id": target,
+           **r6_answer("15", "CORRECT_EQUIVALENT", "EQUIVALENT", target)}
+    assert O.session_is_complete(a, ans, meta_(), U())
+    # a standalone R6 session and a CREATE session
+    assert O.session_is_complete(sessions_by_id()["R6-1"], r6_answer("1", "CORRECT_EQUIVALENT", "EQUIVALENT", "byd.dolphin"), meta_(), U())
+    c = sessions_by_id()["OD-C19"]
+    assert O.session_is_complete(c, {c["own_cells"][0]: "AMBIGUOUS"}, meta_(), U())
+
+
+def test_the_validator_change_leaves_counts_queue_and_owner_fields_alone():
+    t = tables()
+    assert (t["istats"]["review_sessions"], t["istats"]["atomic_verdicts_total"], t["istats"]["child_decisions"], len(t["queue"]), len(t["sessions"])) == (65, 78, 13, 690, 659)
+    text = (OUT / "review_sessions.csv").read_text(encoding="utf-8")
+    assert "trusted catalog" in text and "displayed candidate" in text
+    doc = (A.CALIBRATION_DIR / "DATA_DICTIONARY.md").read_text(encoding="utf-8")
+    assert "Completion rules" in doc and "MODEL_UNIVERSE_UNAVAILABLE" in doc and "never a correct verdict" in doc
