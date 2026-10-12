@@ -1,0 +1,17 @@
+import assert from "node:assert/strict";
+import {classifyPdiUniverse,PDI_JAPAN_MODEL_ALLOWLIST,PDI_UNIVERSE_POLICY} from "../lib/pdi-universe-policy.ts";
+const base={modelId:"deepal.deepal_e07",brandOrigin:"CN",bodyType:"CROSSOVER",currentRetail:true,marketPosition:"Mass"};
+assert.equal(classifyPdiUniverse(base).bucket,"PASSENGER_HEADLINE");
+assert.equal(classifyPdiUniverse({...base,modelId:"gwm.tank300",bodyType:"OFFROAD"}).bucket,"PASSENGER_HEADLINE");
+assert.equal(classifyPdiUniverse({...base,modelId:"gwm.poer_sahar",bodyType:"PICKUP"}).bucket,"COMMERCIAL_FUTURE");
+assert.equal(classifyPdiUniverse({...base,modelId:"toyota.hiace",brandOrigin:"JP",bodyType:"VAN"}).bucket,"COMMERCIAL_FUTURE");
+assert.equal(classifyPdiUniverse({...base,modelId:"hino.hino_truck",brandOrigin:"JP",bodyType:"TRUCK"}).bucket,"COMMERCIAL_FUTURE");
+assert.equal(classifyPdiUniverse({...base,modelId:"honda.city",brandOrigin:"JP",bodyType:"SEDAN"}).bucket,"PASSENGER_HEADLINE");
+assert.equal(classifyPdiUniverse({...base,modelId:"lexus.lbx",brandOrigin:"JP",bodyType:"CROSSOVER",marketPosition:"Luxury"}).bucket,"REVIEW_REQUIRED");
+assert.equal(classifyPdiUniverse({...base,modelId:"toyota.yaris_ativ",brandOrigin:"JP",bodyType:"SEDAN",marketPosition:"Luxury"}).bucket,"REVIEW_REQUIRED");
+assert.equal(classifyPdiUniverse({...base,bodyType:null}).bucket,"REVIEW_REQUIRED");
+assert.equal(classifyPdiUniverse({...base,brandOrigin:"KR"}).bucket,"OUTSIDE_POLICY");
+assert.equal(classifyPdiUniverse({...base,currentRetail:false}).bucket,"OUTSIDE_POLICY");
+assert.equal(new Set(PDI_JAPAN_MODEL_ALLOWLIST).size,PDI_JAPAN_MODEL_ALLOWLIST.length);
+assert.match(PDI_UNIVERSE_POLICY,/PILOT/);
+console.log("PDI universe policy classification checks: PASS");

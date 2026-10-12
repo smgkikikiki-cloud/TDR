@@ -1,0 +1,42 @@
+{
+  "contract": "PDI-OEM-OFFER-PILOT-2026-10-E07-v1",
+  "status": "ANALYST_VERIFIED_PILOT_NOT_HEADLINE",
+  "asOf": "2026-10-11",
+  "observedAt": "2026-10-11",
+  "effectiveFrom": "2026-10-01",
+  "effectiveTo": "2026-10-31",
+  "sourceUrl": "https://www.changan.co.th/th/promotion/campaign-oct-2026-th/",
+  "sourceExcerptSummary": "OEM October campaign specifies after-discount prices and official reference prices explicitly for two E07 trims. Both discounts apply under same offer to natural-person noncommercial retail customers, without a finance-only requirement; other noncash bundles excluded.",
+  "market": "TH",
+  "territory": "NATIONWIDE",
+  "sourceClass": "OFFICIAL_OEM",
+  "vehicleMaster": {
+    "seedReleaseId": "vehicle-2026-a8e647b7db765c78",
+    "seedAsOf": "2026-10-01",
+    "modelId": "deepal.deepal_e07",
+    "reviewedRetailSetAt": "2026-09-27"
+  },
+  "trims": [
+    {
+      "trimId": "deepal.deepal_e07.gen1.trim.plus_bev",
+      "powertrain": "BEV",
+      "msrpThb": 1699000,
+      "cashDiscountThb": 50000,
+      "advertisedNetPriceThb": 1649000
+    },
+    {
+      "trimId": "deepal.deepal_e07.gen1.trim.performance_awd_bev",
+      "powertrain": "BEV",
+      "msrpThb": 2099000,
+      "cashDiscountThb": 100000,
+      "advertisedNetPriceThb": 1999000
+    }
+  ],
+  "scoringNotes": [
+    "Manufacturer shows exact retail offer, not 'up to' without trim allocation",
+    "No conditional finance, trade-in, student, membership or fleet benefits included",
+    "All two current retail trims from reviewed current retail set are represented",
+    "Prior duplicate UNVERIFIED overlay trims are excluded by authoritative retail set",
+    "This is one-model PDI, NEVER national headline"
+  ]
+}
