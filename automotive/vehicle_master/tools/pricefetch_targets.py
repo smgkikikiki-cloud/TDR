@@ -396,14 +396,16 @@ def main(argv: list[str] | None = None) -> int:
         }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     fetched_count = sum(1 for row in rows if row["document"] is not None)
+    unchanged_count = sum(1 for row in rows if row["not_modified"])
     status = ("FETCH_ERROR" if fetch_errors else
               "ROBOTS_BLOCKED" if skipped_robots else
+              "NOT_MODIFIED" if not fetched_count and unchanged_count else
               "NO_DOCUMENT" if not fetched_count else "OK")
     print(json.dumps({
         "status": status,
         "source_batch_id": payload["source_batch_id"],
         "fetched": fetched_count,
-        "not_modified": sum(1 for row in rows if row["not_modified"]),
+        "not_modified": unchanged_count,
         "claims": claims_total,
         "extraction_warnings": extraction_warnings_total,
         "match_counts": match_counts if args.match_trims else None,
@@ -415,7 +417,7 @@ def main(argv: list[str] | None = None) -> int:
         "state_out": str(args.state_out) if args.state_out else None,
         "snapshot_dir": str(args.snapshot_dir) if args.snapshot_dir else None,
     }, ensure_ascii=False, indent=2))
-    return 0 if status == "OK" else 2
+    return 0 if status in ("OK", "NOT_MODIFIED") else 2
 
 
 if __name__ == "__main__":
