@@ -52,6 +52,17 @@ instructions — do not read them as license to enqueue a new batch through that
 apply "Step 4 — Write: use repository-supported edit/write format" below to a new edit; see
 `docs/CANONICAL_INPUT.md` instead.
 
+## Upcoming Cars Recovery — R0 only (2026-10-12)
+
+R0 is limited to read-only recovery/design-to-contract documentation and static offline previews
+on a fresh branch from `main`. The later-approved U1–U6 contract is the target; historical
+`feature/upcoming-cars` at `f2ed3719d4defc86f0ca1ab7450cd3bac5d3d17c` is reference-only and must
+not be merged/cherry-picked. Draft PR #217 contains the source audit. R0 must not add/run SQL,
+change routes/Admin/P5/P6, touch Vehicle Master/canonical data, access Supabase/Production, or
+implement R1–R3. Deliver the field reconciliation, P16/P17 synthetic previews, Admin contract,
+migration-number proposal, focused static checks and unresolved owner decisions; then push a
+Draft PR and stop for QA. R0 acceptance is not authorization for R1–R3.
+
 ## Market Track state (current — Ice Full Package / market engine)
 
 **Execution order:** `docs/market-track/ROADMAP.md` is now the fixed Market Track gate order.  

@@ -32,6 +32,10 @@ One shared TDR data foundation and several evidence-based analytic capabilities 
 
 **Three graph types must never be collapsed:** Ice group↔TDR identity, CN↔TH comparable-price crosswalk, and TH reference↔TH competitor substitution. **PDI eligibility is NOT a competitor-universe filter.**
 
+### Website W-lane status note — 2026-10-12
+
+Upcoming Cars is in **R0 repository recovery/design-contract review only**. Draft PR [#217](https://github.com/smgkikikiki-cloud/TDR/pull/217) records the read-only legacy/Admin audit; the R0 contract and static synthetic P16/P17 previews are in [`UPCOMING_CARS_R0_CONTRACT.md`](UPCOMING_CARS_R0_CONTRACT.md) and `design/previews/upcoming-r0/`. Textual P16/P17 specs exist, but there is no verified approved complete page mockup. R0 makes no route, Admin, schema, migration, canonical-data, Supabase, or Production change. The old `feature/upcoming-cars` branch remains reference-only. This is an execution-status observation and does not alter v1.0 product scope, sequence, or authorization gates.
+
 ## 3. Approved Layer 3 release progression
 
 1. **V1 Competitive Pressure** ships first, focused on observed rival competitive positioning, defensible substitution, verified price movement and qualified regional *registration context*. The Model Analysis interface has the existing owner-locked five sections: (1) Pressure Overview, (2) Competitive Landscape, (3) Pressure Investigation, (4) Regional Market Context, (5) Events & Outlook. Pressure scores are *not* published as arbitrary 0–100 until calibrated/approved. Model-level, not fake trim-level behavioral prediction.
