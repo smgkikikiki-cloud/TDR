@@ -192,9 +192,9 @@ codes:
   BRND_ALIAS_RELATED:
     area: BRND
     kind: decision
-    roles: [blocking]
+    roles: [blocking, info]
     effect: cap_proposed
-    summary: Brands are related (parent/child/joint venture) but not equivalent; PROPOSED at most.
+    summary: Brands are related (parent/child/joint venture) but not equivalent. Rev 5 - recorded as info while policy lists ALIAS_RELATED in candidates.brand_relations_auto_eligible (the relation neither blocks nor supports; the other AUTO gates decide); a blocking cap (PROPOSED at most) only if the policy removes ALIAS_RELATED from that list.
   BRND_MISMATCH:
     area: BRND
     kind: decision

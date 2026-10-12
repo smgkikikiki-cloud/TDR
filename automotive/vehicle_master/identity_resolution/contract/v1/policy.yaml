@@ -1,4 +1,4 @@
-# TDR Identity Resolution — Policy v1 (DRAFT, NOT FROZEN — revision 4, pending owner review)
+# TDR Identity Resolution — Policy v1 (DRAFT, NOT FROZEN — revision 5, pending owner review)
 #
 # Every threshold, alias, allow-list and precedence rule that changes a decision lives HERE, not in
 # Python (SPEC §0.4). The engine reads this file; it never carries its own copy of a number.
@@ -23,7 +23,7 @@ policy:
   id: tdr-identity-resolution
   version: "1.0.0"
   contract_version: v1
-  revision: 4                             # draft revision; the version stays 1.0.0 until the contract is frozen
+  revision: 5                             # draft revision; the version stays 1.0.0 until the contract is frozen
   status: draft_not_frozen
 
 # Quantization applies to every threshold comparison and every fingerprint payload (SPEC §6.7, §11.1).
@@ -116,7 +116,8 @@ aliases:
   brand:
     # relation: SAME    = spelling / format variants of one marque        -> AUTO-eligible
     #           RELABEL = the same marque sold under another label        -> AUTO-eligible
-    #           RELATED = parent / child / joint-venture, not equivalent  -> capped at PROPOSED
+    #           RELATED = parent / child / joint-venture, not equivalent  -> a candidate-pool relation only; AUTO-eligible from rev 5, but only behind every other
+    #                     AUTO gate (candidates.brand_relations_auto_eligible); never evidence of identity by itself
     # Matching is on COMPACT keys (case-folded, separators removed), so "Mercedes-Benz",
     # "MERCEDES BENZ" and "mercedesbenz" are one key without being listed. A key may belong to at most one
     # SAME/RELABEL class; RELATED classes are evaluated between SAME/RELABEL classes (SPEC §5.1).
@@ -146,6 +147,12 @@ aliases:
       # 934 units all MG; maxus-mifa-9: 1,961 MG + 2 MAXUS), while the TDR brand is MAXUS. Related, not equal.
       relation: RELATED
       members: ["MAXUS", "MG"]
+    - id: chery_jetour
+      # Owner decision od_related_brand_auto_eligible (2026-10-12): JETOUR is a separate vehicle brand, NOT Chery. The two share a corporate group, so the typed relation is RELATED --
+      # never SAME or RELABEL. A catalog `aliases` entry on the Chery brand record is not proof of brand identity. This class makes valid individual model pairs candidates (and, from
+      # rev 5, AUTO-eligible behind every other gate); it creates no JETOUR canonical brand and merges nothing.
+      relation: RELATED
+      members: ["Chery", "Jetour"]
   model:
     # An explicit, scoped model-name pair. Never a fuzzy rule. An entry applies when the brand relation is an
     # alias relation whose alias id is listed in `brand_alias_ids`, OR - for an entry that lists `brands` - when
@@ -204,7 +211,11 @@ subject_quality:
 # --------------------------------------------------------------------------------------------------
 candidates:
   brand_relations_allowed: [EXACT, ALIAS_SAME, ALIAS_RELABEL, ALIAS_RELATED]
-  brand_relations_auto_eligible: [EXACT, ALIAS_SAME, ALIAS_RELABEL]
+  # rev 5 (owner decision od_related_brand_auto_eligible, 2026-10-12): a RELATED brand is no longer capped at PROPOSED by the brand relation alone. ALIAS_RELATED may reach AUTO
+  # (an EQUIVALENT machine mapping) ONLY when the candidate independently passes EVERY other AUTO gate (strong common-window series, an approved lexical AUTO relation, no body /
+  # lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected conflict). A corporate or brand-family relation never implies
+  # same-model identity. Rev 4 listed [EXACT, ALIAS_SAME, ALIAS_RELABEL]; calibration/baselines/rev4/policy.yaml keeps that file as the historical baseline.
+  brand_relations_auto_eligible: [EXACT, ALIAS_SAME, ALIAS_RELABEL, ALIAS_RELATED]
   target_statuses_in_pool: [CURRENT, HISTORICAL, UNVERIFIED]
   exclude_deleted_targets: true
   bundle:
@@ -392,5 +403,6 @@ alias_provenance:
   land_range_rover: assumption
   gwm_sub_brands: assumption
   mg_maxus_registration: observed
+  chery_jetour: owner_seed
   maxus_mifa: owner_seed
   honda_model_synonyms: owner_seed

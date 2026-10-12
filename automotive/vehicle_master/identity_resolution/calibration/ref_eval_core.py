@@ -657,6 +657,8 @@ def _classify(inp):
     if b.get("relation") == "EXACT": add("BRND_EXACT", "supporting")
     elif b.get("relation") == "ALIAS_SAME": add("BRND_ALIAS_SAME", "supporting")
     elif b.get("relation") == "ALIAS_RELABEL": add("BRND_ALIAS_RELABEL", "supporting")
+    elif b.get("relation") == "ALIAS_RELATED" and b["relation"] in POL["candidates"]["brand_relations_auto_eligible"]:
+        add("BRND_ALIAS_RELATED", "info")     # rev 5: a RELATED brand is auditable on the record but neither blocks nor supports; the other gates decide
     n = ev["name"] or {}
     support = {"EQUAL": "NAME_EQUAL", "EQUAL_VIA_MODEL_ALIAS": "NAME_EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV": "NAME_EQUAL_VIA_TOKEN_EQUIV"}
     if n.get("relation") in support: add(support[n["relation"]], "supporting")

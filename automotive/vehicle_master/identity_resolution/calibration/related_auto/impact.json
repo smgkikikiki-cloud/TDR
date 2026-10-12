@@ -1,0 +1,94 @@
+{
+ "baseline_cross_check": {
+  "export_manifest_sha256": "e9d74e05ce9c09ad59bad2654d16fbb74e06969e929b7415b5e55a0fc2d2e0b8",
+  "mismatches": [],
+  "subjects_compared": 1200
+ },
+ "baseline_pins": {
+  "policy_delta": [
+   "alias_provenance",
+   "aliases.brand",
+   "candidates.brand_relations_auto_eligible",
+   "policy.revision"
+  ],
+  "policy_live_sha256": "7895a795c5546e5a3648528ea684e6daf8d97bfdf3d8af34f7b117dc09266dc6",
+  "policy_rev4_sha256": "dde8375d9d91d17b83de191ec5c236af2fa7df3ec8e71f513a0868ab16670a30",
+  "ref_eval_core_live_sha256": "bc59a6d26a3337a73b5fa461f6700fcaf5b948c9f0a33f25ddd651355ff4762e",
+  "ref_eval_core_rev4_sha256": "c546a5d10c362a1c1a38349194b6d55d218b9cd71f984259412acca7a77cd16c"
+ },
+ "changed_decisions": [
+  {
+   "brand": "JETOUR",
+   "codes_added": [
+    "BRND_PREFIX_STRIPPED",
+    "INSUFFICIENT_DATA_NO_BASIS",
+    "SER_COVERAGE_ASYMMETRIC",
+    "SER_MISSING_ROW_SEMANTICS_UNCONFIRMED",
+    "SER_NO_COMMON_WINDOW",
+    "SER_UNOBSERVED_NOT_ZERO"
+   ],
+   "codes_removed": [
+    "BRND_NOT_IN_TDR"
+   ],
+   "group": "JETOUR|ไม่ระบุ",
+   "name": "ไม่ระบุ",
+   "rev4_outcome": "NO_CANDIDATE",
+   "rev4_primary": "BRND_NOT_IN_TDR",
+   "rev4_targets": [],
+   "rev5_outcome": "INSUFFICIENT_DATA",
+   "rev5_primary": "INSUFFICIENT_DATA_NO_BASIS",
+   "rev5_targets": [],
+   "units": 3
+  }
+ ],
+ "contract": {
+  "baseline_revision": 4,
+  "binding": false,
+  "live_revision": 5
+ },
+ "false_auto_exposure": {
+  "assumption_provenance_classes_now_auto_capable": [
+   "gwm_sub_brands",
+   "land_range_rover"
+  ],
+  "auto_groups_rev4": 69,
+  "auto_groups_rev5": 69,
+  "newly_auto_eligible_pairs": [],
+  "newly_auto_groups": [],
+  "owner_labels_on_these_pairs": 0
+ },
+ "outcomes": {
+  "rev4": {
+   "AUTO": 69,
+   "INSUFFICIENT_DATA": 53,
+   "NO_CANDIDATE": 883,
+   "PROPOSE": 195
+  },
+  "rev5": {
+   "AUTO": 69,
+   "INSUFFICIENT_DATA": 54,
+   "NO_CANDIDATE": 882,
+   "PROPOSE": 195
+  }
+ },
+ "package_sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+ "related_pairs": {
+  "auto_eligible_rev5": 0,
+  "auto_eligible_units": 0,
+  "by_alias_class": {
+   "chery_jetour": 3,
+   "land_range_rover": 12,
+   "mercedes_amg_maybach": 57,
+   "mg_maxus_registration": 18
+  },
+  "count": 90,
+  "first_gate_funnel": {
+   "EXCLUDED:GEN_LIFECYCLE_DISJOINT": 2,
+   "EXCLUDED:NAME_CONTRADICTION": 87,
+   "NAME_RELATION_UNAVAILABLE": 1
+  },
+  "subjects_with_related_candidates": 8
+ },
+ "schema": "ir-related-auto-impact/1",
+ "subjects": 1200
+}

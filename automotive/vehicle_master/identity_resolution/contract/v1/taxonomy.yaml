@@ -98,7 +98,7 @@ entries:
     title: Related but not equivalent brands
     origin: design
     evidence: "Ice has MERCEDES AMG / MERCEDESBENZ MAYBACH / RANGE ROVER as brands; GWM carries Ora/Haval/Tank/Wey models. How TDR files these is unverified."
-    handling: RELATED aliases may produce candidates but never AUTO.
+    handling: RELATED aliases produce candidates. Rev 5 - they may also reach AUTO, but only behind every other AUTO gate (see BRND-08 and BRND-09); the relation itself is never identity evidence.
     codes: [BRND_ALIAS_RELATED]
   - id: BRND-04
     title: Same model name under unrelated brands
@@ -124,6 +124,18 @@ entries:
     evidence: "Ice names carry the brand ('Isuzu D-Max', 'Mercedes GLC', 'Mercedes-Benz C-Class', 'MINI Countryman') but the brand field is 'MERCEDES BENZ'; and 'MG4 EV' starts with the characters 'mg' without a brand token."
     handling: Strip only whole leading tokens that spell the brand or one of its aliases, longest first; never characters.
     codes: [BRND_PREFIX_STRIPPED]
+  - id: BRND-08
+    title: A genuinely equivalent vehicle under a related brand reaches AUTO
+    origin: design
+    evidence: "Owner decision od_related_brand_auto_eligible (2026-10-12): a RELATED brand is AUTO-eligible. The same vehicle can be filed under a related marque (Maxus vans registered under MG; AMG / Maybach under Mercedes-Benz) with an equal name and a strong common-window series."
+    handling: With every other AUTO gate passed (strong series meeting the AUTO minimums, an approved lexical AUTO relation, no veto, no competing or protected claim) the pair is AUTO as an EQUIVALENT machine mapping; the decision records the RELATED relation and its alias provenance.
+    codes: [AUTO_ALL_GATES_PASSED, BRND_ALIAS_RELATED]
+  - id: BRND-09
+    title: A related brand never makes a different model, a coincidence, an ambiguity or a protected identity AUTO
+    origin: design
+    evidence: "Brand-family affiliation says nothing about which nameplate is which (a sibling model of the same family, two registration series that coincide by chance, two equally good candidates, an APPROVED claim already held elsewhere)."
+    handling: The brand relation only widens the pool and removes the brand cap. A sibling model fails the name gate, a coincidental or weak series fails the series gate, a tie is AMBIGUOUS, a protected target holds; none of these is promoted by the brand relation (SPEC I20).
+    codes: [BRND_ALIAS_RELATED, NAME_ONLY_NOT_AUTO, SER_CORRELATION_BELOW_STRONG, AMBIGUOUS_CANDIDATES_WITHIN_MARGIN, CARD_TARGET_ACTIVE_ELSEWHERE]
 
   # ------------------------------------------------------------------------------------------- NAME
   - id: NAME-01

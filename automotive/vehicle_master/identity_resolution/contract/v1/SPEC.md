@@ -1,6 +1,6 @@
 # TDR Identity Resolution Contract — SPEC v1
 
-**Status: DRAFT, revision 4 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
+**Status: DRAFT, revision 5 — NOT FROZEN. Not in force. Nothing reads this contract in production.**
 The policy values tagged `proposal` / `assumption` are provisional and are **not adopted** (§14.6, `adoption.yaml`,
 `binding: false`). `CHANGELOG.md` lists what changed after the owner's reviews; the owner's decisions of 2026-10-11 (link types, the two cardinality rules, atomic link sets, `link_type` in persistence identity, UNKNOWN missing-row semantics, `binding: false`, no freeze, and the lexical-relation correction `od_lexical_relation_correction`) are recorded in `adoption.yaml` under `owner_decisions` (Appendix E).
 Companion files in this directory: `policy.yaml` (every tunable), `provider_capabilities.yaml` (what each source's data means),
@@ -121,6 +121,7 @@ These hold for every conforming engine, whatever the policy says.
 - **I18 — Stored overlaps are reported, never auto-repaired.** Stored active claims that break the cardinality rules (§7.0) — two active claims of one subject (C1), two subjects whose active claims overlap on a target contrary to C2, or an incomplete / mixed-state / mis-identified link set — are reported on every subject involved
   (`STRUCTURAL_STORED_CLAIMS_INCONSISTENT`, §8.2 step 0) and nothing is written for them: the engine, and any writer acting on its output, never demotes, moves, merges, splits, retypes, completes or deletes such rows. Only a human decision changes them. (Owner decision 2026-10-11.)
 - **I19 — A lexical tightening never promotes.** Making a name relation stricter (typo tolerance refused for tokens that contain a digit; `SIBLING` requiring a distinctive shared token, §5.3) can only demote a pair: AUTO needs an `EQUAL*` name relation, no tightening creates one, and a removed candidate is never replaced by a better-looking one that the looser rule did not already have. A case that was not AUTO under the looser rule is therefore not AUTO under the stricter one. The only way a name rule adds an `EQUAL*` relation is an explicit model alias (§5.4), which still has to pass every other AUTO gate. A change to §5.3 ships corpus rows for each demoted pair and for the case that survives it, and the lexical-pass measurement lists every subject whose outcome changed. (Owner decision 2026-10-11, `od_lexical_relation_correction`.)
+- **I20 — A brand relation is never identity evidence.** `ALIAS_RELATED` (and every other brand relation) only decides which targets are candidates and whether a pair is allowed to be AUTO at all (§5.1 step 5); it contributes nothing to the series, name or attribute evidence and cannot substitute for any of it. A related-brand pair that fails any other AUTO gate is exactly as non-AUTO as the same pair under an equal brand, and a sibling model, a coincidental registration series, an ambiguous candidate or a protected identity is not made AUTO by a brand relation. A change to the AUTO-eligible brand relations ships corpus rows for the pair that is newly AUTO-eligible and for the related-brand pairs that must stay non-AUTO, and a measurement of every subject whose outcome changed against the previous revision's baseline (owner decision 2026-10-12, `od_related_brand_auto_eligible`).
 
 ---
 
@@ -206,7 +207,7 @@ A refusal means "no decisions were emitted for this run": `INPUT_SOURCE_VERSION_
    (same SAME/RELABEL class) → `ALIAS_RELATED` (both map into one RELATED class) → `MISMATCH`.
 4. A subject may carry several brands (`brands_observed`). The relation is the **best** across `brand` and `brands_observed`
    (EXACT > ALIAS_SAME > ALIAS_RELABEL > ALIAS_RELATED > MISMATCH). Multi-brand subjects get `SUBJ_MULTI_BRAND`.
-5. Only `candidates.brand_relations_auto_eligible` relations may be AUTO; `ALIAS_RELATED` is capped at PROPOSED (`BRND_ALIAS_RELATED`).
+5. Only `candidates.brand_relations_auto_eligible` relations may be AUTO. **Rev 5 (owner decision `od_related_brand_auto_eligible`, 2026-10-12): `ALIAS_RELATED` is on that list.** A RELATED brand is therefore not capped by the brand relation alone: the pair may reach AUTO — as an EQUIVALENT machine mapping, never as a bundle or `PART_OF` — **if and only if** it independently passes every other AUTO gate of §8.1 (strong common-window series meeting the AUTO minimums, an approved lexical AUTO relation, no body / lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected claim). The brand relation is never identity evidence: a corporate or brand-family link does not by itself say two nameplates are one model (I20). `BRND_ALIAS_RELATED` is recorded as `info` on the decision while the policy lists the relation as eligible, and is a blocking cap (PROPOSED at most) only if a policy removes `ALIAS_RELATED` from `brand_relations_auto_eligible`. JETOUR is a separate marque related to Chery (alias class `chery_jetour`, RELATED): it is never SAME or RELABEL, and a Chery catalog alias is not proof of identity.
 6. `BRND_MISMATCH` is recorded (info) when a target of an *unrelated* brand has a candidate-grade name relation to the subject — a false friend that brand
    matching correctly refused (e.g. a Toyota "City" for Honda "City"). It never creates a candidate.
 
@@ -793,7 +794,7 @@ Generated from `policy.yaml` (`python -m identity_resolution.contract.render --w
 | `lexical.name.candidate_relations` | `["EQUAL", "EQUAL_VIA_MODEL_ALIAS", "EQUAL_VIA_TOKEN_EQUIV", "FUZZY"]` | proposal |
 | `lexical.name.veto_relations` | `["SIBLING", "CONTRADICTION"]` | proposal |
 | `lexical.series_only.allow_with_name_veto` | `false` | proposal |
-| `aliases.brand` | `(8 entries — see policy.yaml)` | observed |
+| `aliases.brand` | `(9 entries — see policy.yaml)` | observed |
 | `aliases.model` | `(2 entries — see policy.yaml)` | inherited |
 | `attributes.body.compatibility` | `(11 entries — see policy.yaml)` | observed |
 | `attributes.lifecycle.grace_months` | `6` | proposal |
@@ -804,7 +805,7 @@ Generated from `policy.yaml` (`python -m identity_resolution.contract.render --w
 | `subject_quality.discovery.catalog_gap_min_units` | `500` | proposal |
 | `subject_quality.discovery.provisional_min_units` | `30` | proposal |
 | `candidates.brand_relations_allowed` | `["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED"]` | proposal |
-| `candidates.brand_relations_auto_eligible` | `["EXACT", "ALIAS_SAME", "ALIAS_RELABEL"]` | proposal |
+| `candidates.brand_relations_auto_eligible` | `["EXACT", "ALIAS_SAME", "ALIAS_RELABEL", "ALIAS_RELATED"]` | proposal |
 | `candidates.target_statuses_in_pool` | `["CURRENT", "HISTORICAL", "UNVERIFIED"]` | proposal |
 | `candidates.exclude_deleted_targets` | `true` | proposal |
 | `candidates.bundle.enabled` | `true` | proposal |
@@ -866,7 +867,7 @@ Generated from `reason_codes.yaml`.
 | `BRND_EXACT` | decision | supporting | none | — | Brand compact keys are identical. |
 | `BRND_ALIAS_SAME` | decision | supporting | none | — | Brands are spelling variants of one marque (alias relation SAME). |
 | `BRND_ALIAS_RELABEL` | decision | supporting | none | — | Brands are one marque under two labels (alias relation RELABEL, e.g. Deepal/Changan). |
-| `BRND_ALIAS_RELATED` | decision | blocking | cap_proposed | — | Brands are related (parent/child/joint venture) but not equivalent; PROPOSED at most. |
+| `BRND_ALIAS_RELATED` | decision | blocking, info | cap_proposed | — | Brands are related (parent/child/joint venture) but not equivalent. Rev 5 - recorded as info while policy lists ALIAS_RELATED in candidates.brand_relations_auto_eligible (the relation neither blocks nor supports; the other AUTO gates decide); a blocking cap (PROPOSED at most) only if the policy removes ALIAS_RELATED from that list. |
 | `BRND_MISMATCH` | decision | info | veto_candidate | — | Brands are unrelated; the target is not a candidate. |
 | `BRND_UNKNOWN` | decision | primary, info | veto_candidate | NO_CANDIDATE | The subject has no usable brand; no candidate pool can be formed. |
 | `BRND_NOT_IN_TDR` | decision | primary, info | none | NO_CANDIDATE | The subject's brand has no counterpart in the TDR catalog. |
@@ -970,6 +971,8 @@ Generated from `taxonomy.yaml`.
 | `BRND-05` | Provider brand absent from the TDR catalog | ice_m7_data | `BRND_NOT_IN_TDR` |
 | `BRND-06` | Provider brand unusable | design | `BRND_UNKNOWN` |
 | `BRND-07` | Brand prefix inside the model name | ice_m7_data | `BRND_PREFIX_STRIPPED` |
+| `BRND-08` | A genuinely equivalent vehicle under a related brand reaches AUTO | design | `AUTO_ALL_GATES_PASSED`, `BRND_ALIAS_RELATED` |
+| `BRND-09` | A related brand never makes a different model, a coincidence, an ambiguity or a protected identity AUTO | design | `BRND_ALIAS_RELATED`, `NAME_ONLY_NOT_AUTO`, `SER_CORRELATION_BELOW_STRONG`, `AMBIGUOUS_CANDIDATES_WITHIN_MARGIN`, `CARD_TARGET_ACTIVE_ELSEWHERE` |
 | `NAME-01` | Separator and case variants | ice_m7_data | `NAME_EQUAL` |
 | `NAME-02` | Distinct nameplates of one brand | owner_report_r6 | `NAME_CONTRADICTION`, `NO_CANDIDATE_ALL_EXCLUDED` |
 | `NAME-03` | Number-versus-letter prefix trap | ice_m7_data | `NAME_CONTRADICTION` |
@@ -1101,6 +1104,9 @@ Owner decisions about the contract:
 | `od_atomic_link_sets` | 2026-10-11 | accepted | Keep bundles as real atomic link sets, not review-only evidence. |
 | `od_persistence_link_type_identity` | 2026-10-11 | accepted | Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired. |
 | `od_lexical_relation_correction` | 2026-10-11 | accepted | Correct the name-relation ladder after the M7 lexical/relation analysis: FUZZY must not fuzzy-match differing tokens containing digits; SIBLING must require a genuinely distinctive shared token, by a generic policy-driven rule and not by hardcoding V / CX / GR / RS / AMG as model exceptions; add the Honda-scoped model synonyms Jazz <-> Fit and Stepwagon <-> Step WGN. |
+| `od_relation_first_producer_pool` | 2026-10-12 | accepted | INIT-01. A consumer of the producer MUST use the producer's typed brand relation and candidate pool as the authoritative matching input and MUST NOT independently resolve brand relations from catalog brand labels or aliases. Candidate-pool membership does not mean any candidate pair is correct; R6 pair verdicts and PR #201 CREATE / group verdicts remain separate owner questions and nothing is inferred between them. |
+| `od_catalog_brand_alias_not_a_relation` | 2026-10-12 | accepted | INIT-02. A catalog brand `aliases` entry is NOT by itself an authoritative typed brand or identity relationship: brand resolution follows the versioned, provenance-backed SAME / RELABEL / RELATED policy classes. JETOUR is a separate vehicle brand, not Chery; the typed relationship between them is RELATED (policy alias class chery_jetour), never SAME or RELABEL. A distinct TDR brand record for JETOUR, if needed, is a separate catalog decision and is not created here. |
+| `od_related_brand_auto_eligible` | 2026-10-12 | accepted | ALIAS_RELATED is AUTO-eligible. A RELATED-brand candidate may be an AUTO EQUIVALENT machine mapping if and only if it independently passes every existing AUTO gate (strong common-window series and sufficient sample, an approved lexical AUTO relation, exact supported model scope, no body / lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected conflict). A corporate or brand-family relationship alone never implies same-model identity. AUTO is an auditable, reversible machine state, not owner APPROVED / LOCKED, not a canonical-model mutation, not a PR #201 CREATE approval and not a production write. |
 | `od_ice_absent_row_unknown` | 2026-10-11 | standing | Keep Ice absent-row semantics UNKNOWN until Ice explicitly confirms them. |
 | `od_tdr_absent_row_traced` | 2026-10-11 | standing | For TDR registrations do not assume: trace the actual source pipeline, and declare absent=zero only if complete month x dimension coverage is contractually guaranteed; otherwise keep UNKNOWN. |
 | `od_binding_false` | 2026-10-11 | standing | Keep adoption binding=false and every provisional threshold non-authoritative until calibration against the real R6 review data. |
@@ -1132,7 +1138,7 @@ Policy values:
 | `lexical_name_relation_roles` | design_choice | `lexical.name.auto_relations`, `lexical.name.candidate_relations`, `lexical.name.veto_relations`, `lexical.series_only` | pending | Confirm which name relations may be AUTO, may be a name-only candidate, or veto. |
 | `attributes_target_status` | design_choice | `attributes.target_status` | pending | Confirm that UNVERIFIED targets are capped at PROPOSED. |
 | `subject_never_auto_statuses` | design_choice | `subject_quality.never_auto_identity_statuses` | pending | Confirm that provisional and raw-name subjects are never AUTO. |
-| `candidates_pool_rules` | design_choice | `candidates.brand_relations_allowed`, `candidates.brand_relations_auto_eligible`, `candidates.target_statuses_in_pool`, `candidates.exclude_deleted_targets` | pending | Confirm the candidate pool and which brand relations are AUTO-eligible (RELATED is capped). |
+| `candidates_pool_rules` | design_choice | `candidates.brand_relations_allowed`, `candidates.brand_relations_auto_eligible`, `candidates.target_statuses_in_pool`, `candidates.exclude_deleted_targets` | pending | Confirm the candidate pool and which brand relations are AUTO-eligible. Rev 5: ALIAS_RELATED is AUTO-eligible behind every other gate (owner decision od_related_brand_auto_eligible, 2026-10-12); the pool allow-list, target statuses and the deleted-target rule stay pending, and so does the owner's confirmation of the whole entry. |
 | `candidates_bundle_enabled` | design_choice | `candidates.bundle.enabled` | owner_accepted | COMPOSED_OF link sets exist (the owner chose real atomic link sets over review-only bundles on 2026-10-11). |
 | `candidates_ranking` | design_choice | `candidates.ranking` | pending | Confirm the lexicographic ranking order (never a weighted sum). |
 | `candidates_bundle_members` | design_choice | `candidates.bundle.member_name_relations` | pending | Confirm which name relations may be members of a link set (the existence of link sets is decided: od_atomic_link_sets). |

@@ -3,7 +3,7 @@
 A permanent, provider-agnostic subsystem that decides how an **external vehicle identity** (provider #1: an Ice `model_group`) relates to a
 **TDR canonical entity** (`vehicle_models`), with evidence a human can audit and a machine can replay.
 
-> **Status: Contract v1 is a DRAFT, revision 4 — NOT FROZEN.** The owner accepted the architecture in principle and asked for three contract-level
+> **Status: Contract v1 is a DRAFT, revision 5 — NOT FROZEN.** The owner accepted the architecture in principle and asked for three contract-level
 > fixes (below) before adoption; they are made here, the contract is **not** frozen, and the uncalibrated `proposal` thresholds are **not adopted**
 > (`contract/v1/adoption.yaml`, `binding: false`). This directory holds the contract, the golden corpus, the architecture and the contract-level tooling.
 > There is **no resolver**, nothing reads this in production, no database state was touched, R6 was not re-run and R7 was not started.
@@ -20,6 +20,14 @@ A permanent, provider-agnostic subsystem that decides how an **external vehicle 
 ## Owner Decision & Calibration Preparation Pack (2026-10-11) — preparation only, nothing decided
 
 [`calibration/owner_decision_pack/`](calibration/owner_decision_pack/OWNER_DECISION_PACK.md) turns the open uncertainty into a short, ordered, evidence-backed list for the owner: the nine TDR catalog-alias collisions with exact catalog records and registration-series evidence, the eight unresolved brand-resolution cases plus the Maxus filing question, the R6 calibration cases (first 176 rows, a starter batch of 48 rows chosen by explicit coverage rules, brand-separated folds), all 82 PR #201 CREATE candidates grouped by risk and evidence sufficiency, and the reconciliation between the R6 sheet and PR #201's 82-row set. It keeps the **two verdict vocabularies apart** (pair correctness vs missing canonical identity; `verdict_crosswalk.csv`, `check_label_consistency()`), defines the post-label calibration procedure and its honest limits (only 69 AUTO pairs exist), and names the smallest first wave (65 review sessions requiring 78 independently answered verdict cells, not 560 labels; a session bundles child verdicts that its own answer never settles, and `validate_session` refuses an incomplete or contradictory one). **Every owner field is blank; every machine suggestion is a `*_NON_AUTHORITATIVE` column.** No rule, policy value, export, sheet, PR #201/#203 file or production state changed; four PR #201 data files are vendored as byte pins (no PR #201 code). `adoption.binding` stays `false`. `python -m identity_resolution.calibration.owner_decision_pack build` / `verify` run offline; `collect` needs the archived package once.
+
+## What revision 5 adds (a RELATED brand may reach AUTO, 2026-10-12)
+
+By the owner's decision `od_related_brand_auto_eligible` (PR #200 comments 6117608686, 6117626098, 6117676961), `ALIAS_RELATED` is AUTO-eligible: a candidate under a related brand (parent / child / joint venture) may be an AUTO EQUIVALENT machine mapping **if and only if it independently passes every other AUTO gate**; the brand relation is never identity evidence (new invariant **I20**). JETOUR is a separate marque, typed RELATED to Chery (`chery_jetour`), never SAME or RELABEL. `AUTO` stays an auditable, reversible machine state: not owner APPROVED / LOCKED, not a canonical-model change, not a PR #201 CREATE approval, not a production write. **Draft, `binding: false`, not frozen.**
+
+- The accepted rev 4 evidence is kept as a **versioned baseline**, not rewritten: `calibration/baselines/rev4/` (the exact rev 4 `policy.yaml` and `ref_eval_core.py`), `calibration/policy_baseline.py` (`rev4_baseline()` re-creates rev 4 behaviour on demand) and a test conftest that verifies the rev 4 export / calibration outputs / lexical pass / Owner Decision Pack under it.
+- Measured against that baseline on M7.0 (`calibration/related_auto/RELATED_AUTO_IMPACT.md`): 1 of 1,200 decisions changes (a name-less JETOUR group, 3 units), AUTO stays 69 groups, and none of the 90 RELATED-brand candidate pairs passes every AUTO gate -- the false-AUTO exposure on this package is zero pairs, with no owner labels on any. The two RELATED classes still marked `assumption` (`land_range_rover`, `gwm_sub_brands`) are now AUTO-capable and remain the owner's to confirm.
+- Adversarial coverage: 24 metamorphic twins (an equal brand swapped for a related one decides identically for sibling nameplates, coincident series, ambiguity, protected / rejected claims, fuzzy, short, weak and name-less evidence), a whole-corpus swap test, resolve-level controls and the conditional `BRND_ALIAS_RELATED` semantics.
 
 ## What revision 4 adds (lexical-relation correction, 2026-10-11)
 

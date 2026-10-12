@@ -1,4 +1,4 @@
-# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 4)
+# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 5)
 #
 # The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
 # production data and have not been signed off. (The first R6 run's rows were recovered read-only on 2026-10-11 into calibration/, but they
@@ -63,6 +63,24 @@ owner_decisions:
     decision: "Correct the name-relation ladder after the M7 lexical/relation analysis: FUZZY must not fuzzy-match differing tokens containing digits; SIBLING must require a genuinely distinctive shared token, by a generic policy-driven rule and not by hardcoding V / CX / GR / RS / AMG as model exceptions; add the Honda-scoped model synonyms Jazz <-> Fit and Stepwagon <-> Step WGN."
     refs: ["SPEC §5.3", "SPEC §5.4", "SPEC I19", "calibration/lexical_pass/LEXICAL_PASS_REPORT.md", "taxonomy NAME-14..NAME-17"]
     note: "The RULES are the owner's. The descriptor vocabulary, the token-length floor and the patterns that implement 'distinctive' are the pass's proposals and stay pending (lexical_distinctive_min_length, lexical_distinctive_vocabulary). Production, DB state, mappings, R6/R7, migrations, engine wiring, adoption binding and freeze state were not touched."
+  - id: od_relation_first_producer_pool
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-01. A consumer of the producer MUST use the producer's typed brand relation and candidate pool as the authoritative matching input and MUST NOT independently resolve brand relations from catalog brand labels or aliases. Candidate-pool membership does not mean any candidate pair is correct; R6 pair verdicts and PR #201 CREATE / group verdicts remain separate owner questions and nothing is inferred between them."
+    refs: ["PR #200 comment 6117608686 (owner adjudication, INIT-01)", "owner_decision_pack/initial_owner_decisions.csv#INIT-01"]
+    note: "The RELATED -> PROPOSE ceiling that comment also stated is SUPERSEDED by od_related_brand_auto_eligible. Recorded from the owner's comment; no consumer code, export or PR #201 file was changed by this decision."
+  - id: od_catalog_brand_alias_not_a_relation
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-02. A catalog brand `aliases` entry is NOT by itself an authoritative typed brand or identity relationship: brand resolution follows the versioned, provenance-backed SAME / RELABEL / RELATED policy classes. JETOUR is a separate vehicle brand, not Chery; the typed relationship between them is RELATED (policy alias class chery_jetour), never SAME or RELABEL. A distinct TDR brand record for JETOUR, if needed, is a separate catalog decision and is not created here."
+    refs: ["PR #200 comment 6117626098 (owner adjudication, INIT-02)", "policy.yaml aliases.brand chery_jetour"]
+    note: "Recorded from the owner's comment. No catalog brand was created and no Chery catalog alias was changed."
+  - id: od_related_brand_auto_eligible
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "ALIAS_RELATED is AUTO-eligible. A RELATED-brand candidate may be an AUTO EQUIVALENT machine mapping if and only if it independently passes every existing AUTO gate (strong common-window series and sufficient sample, an approved lexical AUTO relation, exact supported model scope, no body / lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected conflict). A corporate or brand-family relationship alone never implies same-model identity. AUTO is an auditable, reversible machine state, not owner APPROVED / LOCKED, not a canonical-model mutation, not a PR #201 CREATE approval and not a production write."
+    refs: ["PR #200 comment 6117676961 (owner policy override)", "SPEC §5.1 step 5", "SPEC I20", "policy.yaml candidates.brand_relations_auto_eligible", "taxonomy BRND-08, BRND-09", "calibration/related_auto/RELATED_AUTO_IMPACT.md"]
+    note: "Supersedes the AUTO-cap portion of the INIT-01 comment. Authorises a DRAFT policy revision with offline fixtures, tests and impact evidence only: no R6/R7 live run, no PR #201 edit, no production access, no canonical write, no paid provider, no merge, deploy, adoption or engine rollout. The rev 4 outputs (relation export, owner pack, calibration outputs) are kept as the historical baseline (calibration/baselines/rev4). adoption binding stays false."
   - id: od_ice_absent_row_unknown
     decided_on: "2026-10-11"
     status: standing
@@ -205,7 +223,7 @@ entries:
     class: design_choice
     keys: [candidates.brand_relations_allowed, candidates.brand_relations_auto_eligible, candidates.target_statuses_in_pool, candidates.exclude_deleted_targets]
     status: pending
-    decision: "Confirm the candidate pool and which brand relations are AUTO-eligible (RELATED is capped)."
+    decision: "Confirm the candidate pool and which brand relations are AUTO-eligible. Rev 5: ALIAS_RELATED is AUTO-eligible behind every other gate (owner decision od_related_brand_auto_eligible, 2026-10-12); the pool allow-list, target statuses and the deleted-target rule stay pending, and so does the owner's confirmation of the whole entry."
   - id: candidates_bundle_enabled
     class: design_choice
     keys: [candidates.bundle.enabled]
