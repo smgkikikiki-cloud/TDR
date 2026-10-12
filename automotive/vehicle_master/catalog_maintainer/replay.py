@@ -13,7 +13,7 @@ from .eligibility import evaluate_model
 from .gap_inventory import gaps_for_model
 from .registry_adapter import adapt_snapshot, load_registry, resolve_key
 from .replay_contracts import FieldCandidate, FieldDisposition, ReplayReport, ReplaySummary, SourceClaim, SourceDocument
-from .retail_reconcile import validate_source_completeness
+from .retail_reconcile import validate_source_completeness, validate_source_representation
 from .validation import validate_fixture
 
 SCHEMA_VERSION = "1.0"
@@ -78,6 +78,9 @@ def _valid_document(doc: dict) -> SourceDocument:
         date.fromisoformat(doc["published_at"])
     if not isinstance(doc["content"], str) or hashlib.sha256(doc["content"].encode("utf-8")).hexdigest() != doc["content_sha256"]:
         raise ReplayContractError("content hash mismatch")
+    representation=validate_source_representation(doc)
+    if not representation["valid"]:
+        raise ReplayContractError("source representation is not raw-bound: " + ",".join(representation["reason_codes"]))
     manifest = doc.get("capture_manifest")
     if doc["completeness"] in {"COMPLETE_LINEUP", "PARTIAL_TRIM_LIST"}:
         if not isinstance(manifest, dict) or not isinstance(manifest.get("listed_trim_ids"), list):

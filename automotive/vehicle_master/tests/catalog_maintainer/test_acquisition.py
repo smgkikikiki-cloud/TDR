@@ -13,6 +13,9 @@ from automotive.vehicle_master.catalog_maintainer.acquisition import (
     OfflineSourceAcquisitionAdapter, PrerecordedHTTPResponse, load_source_registry,
 )
 from automotive.vehicle_master.catalog_maintainer.offline_runner import FakeClock, build_offline_plan
+from automotive.vehicle_master.catalog_maintainer.retail_reconcile import (
+    validate_source_completeness, validate_source_representation,
+)
 
 
 ROOT = Path(__file__).parents[2] / "catalog_maintainer"
@@ -63,8 +66,9 @@ class SourceAcquisitionTests(unittest.TestCase):
         self.temp.cleanup()
 
     def adapter(self, responses, store=None, registry=None, policy_obj=None):
+        transport=responses if isinstance(responses,DeterministicFakeHTTPTransport) else DeterministicFakeHTTPTransport(responses)
         return OfflineSourceAcquisitionAdapter(registry or self.registry,
-            DeterministicFakeHTTPTransport(responses), store or self.store,
+            transport, store or self.store,
             policy_obj or self.policy, self.clock)
 
     def acquire(self, adapter=None, *, job=None, url=None):
@@ -77,7 +81,9 @@ class SourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(result["disposition"], "FETCH_OK")
         self.assertEqual(result["source_document"]["market"], "TH")
         self.assertTrue(self.store.read_blob(result["local_source_id"]) == self.body)
-        evidence_path = self.store.documents / result["source_hash"][:2] / result["source_hash"]
+        fingerprint = hashlib.sha256(json.dumps(result["source_document"],ensure_ascii=False,
+            sort_keys=True,separators=(",",":")).encode()).hexdigest()
+        evidence_path = self.store.documents / fingerprint[:2] / fingerprint
         self.assertTrue(evidence_path.is_file())
         self.assertEqual(result["external_http_calls"], 0)
         self.assertEqual(result["production_accesses"], 0)
@@ -172,6 +178,82 @@ class SourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(result["disposition"], "UNCHANGED")
         self.assertEqual(result["reason"], "IDEMPOTENT_REPLAY")
 
+    def test_same_normalized_content_with_different_metadata_is_independently_indexed(self):
+        first=self.doc.copy(); second=self.doc.copy()
+        second["document_id"]="synthetic-yaris-lineup-edition-2"
+        second["published_at"]="2026-10-02"
+        bodies=[json.dumps(d,sort_keys=True,separators=(",",":")).encode() for d in (first,second)]
+        transport=DeterministicFakeHTTPTransport({self.url:[response(bodies[0]),response(bodies[1])]})
+        adapter=self.adapter(transport)
+        task1={**self.job,"idempotency_key":hashlib.sha256(b"doc-version-1").hexdigest()}
+        task2={**self.job,"idempotency_key":hashlib.sha256(b"doc-version-2").hexdigest()}
+        one=self.acquire(adapter,job=task1); self.clock.advance(10)
+        two=self.acquire(adapter,job=task2)
+        self.assertEqual((one["disposition"],two["disposition"]),("FETCH_OK","FETCH_OK"))
+        self.assertEqual(one["source_hash"],two["source_hash"])
+        self.assertNotEqual(one["source_document"]["document_id"],two["source_document"]["document_id"])
+        self.assertIsNone(self.store.evidence_document(one["source_hash"]))
+        count=self.store.db.execute("SELECT count(*) FROM evidence_versions WHERE content_sha256=?",
+                                    (one["source_hash"],)).fetchone()[0]
+        self.assertEqual(count,2)
+
+    def test_exact_document_duplicate_with_new_request_key_remains_idempotent(self):
+        transport=DeterministicFakeHTTPTransport({self.url:[response(self.body),response(self.body)]})
+        adapter=self.adapter(transport)
+        first=self.acquire(adapter,job={**self.job,"idempotency_key":hashlib.sha256(b"same-doc-a").hexdigest()})
+        self.clock.advance(10)
+        second=self.acquire(adapter,job={**self.job,"idempotency_key":hashlib.sha256(b"same-doc-b").hexdigest()})
+        self.assertEqual(first["disposition"],"FETCH_OK")
+        self.assertEqual(second["disposition"],"UNCHANGED")
+        self.assertEqual(len(transport.calls),2)
+        self.assertEqual(self.store.db.execute("SELECT count(*) FROM evidence_versions").fetchone()[0],1)
+
+    def _assert_integrity_retry_recovers(self,corrupt):
+        transport=DeterministicFakeHTTPTransport({self.url:response(self.body)})
+        adapter=self.adapter(transport); first=self.acquire(adapter)
+        self.assertEqual(first["disposition"],"FETCH_OK")
+        corrupt(first)
+        self.store.close()
+        self.store=ContentAddressedEvidenceStore(Path(self.temp.name)/"cas")
+        self.clock.advance(1000)
+        retry_transport=DeterministicFakeHTTPTransport({self.url:response(self.body)})
+        restarted=self.adapter(retry_transport)
+        recovered=self.acquire(restarted)
+        self.assertIn(recovered["disposition"],{"FETCH_OK","UNCHANGED"})
+        self.assertEqual(recovered["reason"],"SOURCE_DOCUMENT_VALIDATED")
+        self.assertEqual(len(retry_transport.calls),1)
+        self.assertEqual(self.store.read_blob(recovered["local_source_id"]),self.body)
+        self.assertIsNotNone(self.store.evidence_version(recovered["source_document"]))
+
+    def test_deleted_raw_cas_blob_is_retried_and_recovered_after_sqlite_restart(self):
+        def remove_raw(first):
+            digest=first["local_source_id"].rsplit("/",1)[1]
+            (self.store.blobs/digest[:2]/digest).unlink()
+        self._assert_integrity_retry_recovers(remove_raw)
+
+    def test_corrupted_raw_cas_blob_is_retried_and_recovered_after_sqlite_restart(self):
+        def corrupt_raw(first):
+            digest=first["local_source_id"].rsplit("/",1)[1]
+            (self.store.blobs/digest[:2]/digest).write_bytes(b"tampered")
+        self._assert_integrity_retry_recovers(corrupt_raw)
+
+    def test_corrupt_normalized_evidence_file_is_retried_and_repaired(self):
+        def corrupt_file(first):
+            fp=hashlib.sha256(json.dumps(first["source_document"],sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+            (self.store.documents/fp[:2]/fp).write_text("{}",encoding="utf-8")
+        self._assert_integrity_retry_recovers(corrupt_file)
+
+    def test_corrupt_sqlite_evidence_index_is_retried_and_repaired(self):
+        def corrupt_index(first):
+            self.store.db.execute("UPDATE evidence_versions SET document_json='{}' WHERE content_sha256=?",
+                                  (first["source_hash"],))
+        self._assert_integrity_retry_recovers(corrupt_index)
+
+    def test_deleted_sqlite_evidence_index_is_retried_and_recovered(self):
+        def remove_index(first):
+            self.store.db.execute("DELETE FROM evidence_versions WHERE content_sha256=?",(first["source_hash"],))
+        self._assert_integrity_retry_recovers(remove_index)
+
     def test_rate_limit_and_bounded_retry_recover_after_cooldown(self):
         limited = PrerecordedHTTPResponse(429, {}, b"", "SYNTHETIC", True, retry_after_seconds=30)
         transport = DeterministicFakeHTTPTransport({self.url:[limited,response(self.body)]})
@@ -193,6 +275,12 @@ class SourceAcquisitionTests(unittest.TestCase):
             self.job, source_id="synthetic-oem-th", url=html_url, snapshot=self.snapshot)
         self.assertEqual(html_result["disposition"], "FETCH_OK")
         self.assertEqual(html_result["source_document"]["generation_id"], "yaris_ativ.g4")
+        html_doc=html_result["source_document"]
+        self.assertNotIn("quote",html_doc["completeness_evidence"])
+        self.assertEqual(html_doc["completeness_evidence"]["assertion_type"],"structured_attribute_assertion")
+        self.assertEqual(html_doc["completeness_evidence"]["raw_source_sha256"],hashlib.sha256(html_body).hexdigest())
+        self.assertTrue(validate_source_completeness(html_doc)["complete"])
+        self.assertTrue(validate_source_representation(html_doc)["valid"])
         self.clock.advance(2)
 
         spec_task = next(t for t in build_offline_plan(self.snapshot,self.policy,now=DAY)["tasks"]
@@ -205,6 +293,30 @@ class SourceAcquisitionTests(unittest.TestCase):
             spec_task, source_id="synthetic-oem-th", url=pdf_url, snapshot=self.snapshot)
         self.assertEqual(pdf_result["disposition"], "FETCH_OK")
         self.assertEqual(pdf_result["source_document"]["source_kind"], "SPEC_SHEET")
+
+    def test_html_missing_explicit_completeness_attribute_stays_partial(self):
+        html=(ROOT/"fixtures/source_acquisition/complete-lineup.html").read_bytes()
+        html=html.replace(b' data-publisher-declared-complete="true"',b'')
+        url="https://oem-fixture.example/th/yaris/incomplete-lineup.html"
+        result=self.adapter({url:response(html,content_type="text/html")}).acquire(
+            self.job,source_id="synthetic-oem-th",url=url,snapshot=self.snapshot)
+        self.assertEqual(result["disposition"],"PARTIAL")
+        self.assertEqual(result["source_document"]["completeness"],"PARTIAL_TRIM_LIST")
+        self.assertFalse(validate_source_completeness(result["source_document"])["complete"])
+        self.assertNotIn("completeness_evidence",result["source_document"])
+
+    def test_html_spec_claims_are_structured_and_must_match_raw_attributes(self):
+        from automotive.vehicle_master.catalog_maintainer.acquisition import _document_from_html, _sha
+        raw=(b'<source-document data-document-id="spec-1" data-model-id="byd.atto_3" '
+             b'data-generation-id="atto_3.g1" data-captured-at="2026-10-10" data-source-kind="SPEC_SHEET"></source-document>\n'
+             b'<claim data-field="battery_kwh" data-trim="atto.advanced" data-value="60.48 kWh" data-unit="kWh"></claim>')
+        source=self.registry["sources"][0]; local="fixture://cas/sha256/"+hashlib.sha256(raw).hexdigest()
+        doc=_document_from_html(raw,source,local)
+        self.assertEqual(doc["source_representation"]["kind"],"STRUCTURED_HTML_ATTRIBUTES")
+        self.assertTrue(validate_source_representation(doc)["valid"])
+        forged=copy.deepcopy(doc)
+        forged["source_representation"]["assertions"][1]["normalized_lines"]=["claim|battery_kwh|atto.advanced|999 kWh"]
+        self.assertFalse(validate_source_representation(forged)["valid"])
 
 
 if __name__ == "__main__":

@@ -157,6 +157,10 @@ class ContentAddressedEvidenceStore:
         CREATE TABLE IF NOT EXISTS source_rate(source_id TEXT PRIMARY KEY,next_allowed_at INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS evidence(content_sha256 TEXT PRIMARY KEY,body_sha256 TEXT NOT NULL,
           document_json TEXT NOT NULL,source_id TEXT NOT NULL,recorded_at INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS evidence_versions(document_fingerprint TEXT PRIMARY KEY,
+          content_sha256 TEXT NOT NULL,body_sha256 TEXT NOT NULL,document_json TEXT NOT NULL,
+          source_id TEXT NOT NULL,recorded_at INTEGER NOT NULL);
+        CREATE INDEX IF NOT EXISTS evidence_versions_content ON evidence_versions(content_sha256);
         """)
 
     def close(self) -> None:
@@ -167,6 +171,8 @@ class ContentAddressedEvidenceStore:
         path=self.blobs/digest[:2]/digest
         path.parent.mkdir(parents=True,exist_ok=True)
         inserted=not path.exists()
+        if path.exists() and _sha(path.read_bytes())!=digest:
+            path.unlink(); inserted=True
         if inserted:
             temp=path.with_suffix(".tmp")
             temp.write_bytes(data)
@@ -222,21 +228,56 @@ class ContentAddressedEvidenceStore:
         raw=_canonical(document)
         if _sha(document.get("content","").encode("utf-8"))!=document.get("content_sha256"):
             raise ValueError("normalized evidence document is not content bound")
-        digest=document["content_sha256"]
-        path=self.documents/digest[:2]/digest
+        fingerprint=_sha(raw.encode("utf-8"))
+        path=self.documents/fingerprint[:2]/fingerprint
         path.parent.mkdir(parents=True,exist_ok=True)
+        if path.exists():
+            try:
+                old=json.loads(path.read_text(encoding="utf-8"))
+                if _sha(_canonical(old).encode("utf-8"))!=fingerprint or old!=document:raise ValueError("corrupt evidence file")
+            except (OSError,ValueError,json.JSONDecodeError):
+                path.unlink(missing_ok=True)
         if not path.exists():
             temp=path.with_suffix(".tmp")
             temp.write_text(raw+"\n",encoding="utf-8")
             temp.replace(path)
         stored=json.loads(path.read_text(encoding="utf-8"))
-        if stored.get("content_sha256")!=digest or _sha(stored.get("content","").encode("utf-8"))!=digest:
+        if _sha(_canonical(stored).encode("utf-8"))!=fingerprint or stored!=document:
             raise ValueError("content-addressed evidence document hash mismatch")
-        cur=self.db.execute("INSERT OR IGNORE INTO evidence(content_sha256,body_sha256,document_json,source_id,recorded_at) "+
-            "VALUES(?,?,?,?,?)",(document["content_sha256"],body_sha256,raw,source_id,now))
-        return cur.rowcount==1
+        row=self.db.execute("SELECT * FROM evidence_versions WHERE document_fingerprint=?",(fingerprint,)).fetchone()
+        if row:
+            try: indexed=json.loads(row["document_json"])
+            except (TypeError,ValueError,json.JSONDecodeError): indexed=None
+            if indexed!=document or row["body_sha256"]!=body_sha256 or row["source_id"]!=source_id:
+                self.db.execute("UPDATE evidence_versions SET content_sha256=?,body_sha256=?,document_json=?,source_id=?,recorded_at=? WHERE document_fingerprint=?",
+                    (document["content_sha256"],body_sha256,raw,source_id,now,fingerprint))
+            return False
+        self.db.execute("INSERT INTO evidence_versions(document_fingerprint,content_sha256,body_sha256,document_json,source_id,recorded_at) VALUES(?,?,?,?,?,?)",
+            (fingerprint,document["content_sha256"],body_sha256,raw,source_id,now))
+        return True
+
+    def evidence_version(self,document: dict) -> dict | None:
+        fingerprint=_sha(_canonical(document).encode("utf-8"))
+        row=self.db.execute("SELECT * FROM evidence_versions WHERE document_fingerprint=?",(fingerprint,)).fetchone()
+        if not row:return None
+        value=dict(row)
+        try:
+            stored=json.loads(value["document_json"])
+            path=self.documents/fingerprint[:2]/fingerprint
+            disk=json.loads(path.read_text(encoding="utf-8"))
+        except (OSError,ValueError,json.JSONDecodeError):
+            return None
+        if (stored!=document or disk!=stored or _sha(_canonical(disk).encode("utf-8"))!=fingerprint
+                or value["content_sha256"]!=document.get("content_sha256")
+                or _sha(document.get("content","").encode("utf-8"))!=document.get("content_sha256")):
+            return None
+        value["document"]=stored
+        return value
 
     def evidence_document(self,content_sha256: str) -> dict | None:
+        rows=self.db.execute("SELECT document_json FROM evidence_versions WHERE content_sha256=? ORDER BY document_fingerprint",(content_sha256,)).fetchall()
+        if len(rows)>1:return None
+        if rows:return json.loads(rows[0]["document_json"])
         row=self.db.execute("SELECT document_json FROM evidence WHERE content_sha256=?",(content_sha256,)).fetchone()
         return json.loads(row["document_json"]) if row else None
 
@@ -249,9 +290,18 @@ class _HTMLSourceReader(HTMLParser):
         self.trims=[]
         self.completeness=None
         self.capture=None
+        self.elements=[]
+        self._occurrences={}
 
     def handle_starttag(self,tag,attrs):
+        raw={k:v for k,v in attrs}
         a={k.replace("data-",""):v for k,v in attrs}
+        if tag in {"source-document","claim","trim","complete-lineup","capture"}:
+            line,column=self.getpos()
+            ordinal=self._occurrences.get(tag,0)+1
+            self._occurrences[tag]=ordinal
+            self.elements.append({"tag":tag,"line":line,"column":column,"ordinal":ordinal,
+                "raw_start_tag":self.get_starttag_text(),"attributes":raw,"normalized_lines":[]})
         if tag=="source-document": self.metadata=a
         elif tag=="claim": self.claims.append(a)
         elif tag=="trim": self.trims.append(a)
@@ -279,37 +329,45 @@ def _document_from_html(body: bytes,source: dict,local_ref: str) -> dict:
       "completeness":completeness,"source_kind":kind,"lineage_id":m.get("lineage-id") or m.get("document-id"),
       "edition_id":m.get("edition-id") or m.get("document-id"),
       "extraction_method":"CONTROLLED_LINE_READER_V1"}
+    def bind(tag,index,line):
+        element=[x for x in parser.elements if x["tag"]==tag][index:index+1]
+        element=element[0] if element else None
+        if element is not None:element["normalized_lines"].append(line)
     if kind=="SPEC_SHEET":
-        for claim in parser.claims:
+        for index,claim in enumerate(parser.claims):
             if not all(claim.get(k) for k in ("field","trim","value")):
                 raise ValueError("HTML_CLAIM_INCOMPLETE")
             value=claim["value"]
             if claim.get("unit") and not re.search(r"\s"+re.escape(claim["unit"])+r"$",value):
                 value+=f" {claim['unit']}"
             qualifier="|"+claim["qualifiers"] if claim.get("qualifiers") else ""
-            lines.append(f"claim|{claim['field']}|{claim['trim']}|{value}{qualifier}")
+            line=f"claim|{claim['field']}|{claim['trim']}|{value}{qualifier}"
+            lines.append(line); bind("claim",index,line)
         doc["trim_ids"]=sorted({c["trim"] for c in parser.claims if c.get("trim")})
     elif kind=="RETAIL_LINEUP":
         ids=[]; rows=[]
-        for trim in parser.trims:
+        for index,trim in enumerate(parser.trims):
             tid=trim.get("id")
             if not tid:raise ValueError("HTML_LINEUP_TRIM_ID_MISSING")
-            ids.append(tid); lines.append(f"lineup|trim|{tid}")
+            ids.append(tid); line=f"lineup|trim|{tid}"; lines.append(line); bind("trim",index,line)
             rows.append({"market_trim_id":tid,"model_id":doc["model_id"],"generation_id":doc["generation_id"],
                 "grade":trim.get("grade") or None,"powertrain":trim.get("powertrain"),
                 "model_year":_int_or_none(trim.get("model-year")),"facelift_id":trim.get("facelift-id") or None})
         c=parser.completeness or {}
+        scope_matches=(c.get("model-id")==doc["model_id"] and c.get("generation-id")==doc["generation_id"])
         complete=(c.get("publisher-declared-complete")=="true" and c.get("pagination-complete")=="true"
-                  and c.get("expected-pages")==c.get("captured-pages") and bool(parser.capture))
+                  and c.get("expected-pages")==c.get("captured-pages") and bool(parser.capture) and scope_matches
+                  and c.get("expected-pages","").isdigit() and int(c.get("expected-pages","0"))>0)
         model_year=c.get("model-year","NONE"); facelift=c.get("facelift-id","NONE")
-        quote=(f"lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model={doc['model_id']}|"
+        scope_record=(f"lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model={doc['model_id']}|"
                f"generation={doc['generation_id']}|model_year={model_year}|facelift={facelift}")
-        lines.append(quote)
+        lines.append(scope_record); bind("complete-lineup",0,scope_record)
         capture=parser.capture or {}
         capture_id=capture.get("id","")
         capture_date=capture.get("captured-at",doc.get("captured_at", ""))
         edition=doc["edition_id"]
-        lines.append(f"capture|edition={edition}|capture_id={capture_id}|captured_at={capture_date}|method=LOCAL_FIXTURE_CAPTURE")
+        capture_line=f"capture|edition={edition}|capture_id={capture_id}|captured_at={capture_date}|method=LOCAL_FIXTURE_CAPTURE"
+        lines.append(capture_line); bind("capture",0,capture_line)
         doc["trim_ids"]=ids
         pages=int(c.get("captured-pages","0") or 0)
         doc["capture_manifest"]={"pagination_complete":complete,"source_page_count":pages,
@@ -319,14 +377,24 @@ def _document_from_html(body: bytes,source: dict,local_ref: str) -> dict:
         doc["lineup_rows"]=rows
         if complete:
             doc["completeness"]="COMPLETE_LINEUP"
-            doc["completeness_evidence"]={"publisher_declared_complete":True,"quote":quote,
-                "locator":f"line:{len(lines)-1}","capture_status":"COMPLETE",
+            complete_element=next((x for x in parser.elements if x["tag"]=="complete-lineup"),{})
+            doc["completeness_evidence"]={"publisher_declared_complete":True,
+                "assertion_type":"structured_attribute_assertion",
+                "normalized_scope_record":scope_record,
+                "raw_source_locator":f"html:{complete_element.get('line')}:{complete_element.get('column')}:complete-lineup#{complete_element.get('ordinal')}",
+                "raw_source_sha256":_sha(body),"capture_status":"COMPLETE",
                 "expected_page_count":pages,"captured_page_count":pages}
         else:
             doc["completeness"]="PARTIAL_TRIM_LIST"
     else:raise ValueError("HTML_SOURCE_KIND_UNSUPPORTED")
     doc["content"]="\n".join(lines)
     doc["content_sha256"]=_sha(doc["content"].encode("utf-8"))
+    raw_text=body.decode("utf-8")
+    metadata_element=next((x for x in parser.elements if x["tag"]=="source-document"),{})
+    doc["source_representation"]={"kind":"STRUCTURED_HTML_ATTRIBUTES","raw_source_ref":local_ref,
+        "raw_source_sha256":_sha(body),"raw_source_utf8":raw_text,
+        "metadata_locator":f"html:{metadata_element.get('line')}:{metadata_element.get('column')}:source-document#{metadata_element.get('ordinal')}",
+        "assertions":parser.elements}
     return doc
 
 
@@ -400,6 +468,33 @@ class OfflineSourceAcquisitionAdapter:
         if disposition not in DISPOSITIONS:raise AssertionError("invalid acquisition disposition")
         return result
 
+    def _valid_prior_success(self,result: dict,source: dict,source_id: str,url: str,
+                             snapshot: dict,job: dict) -> bool:
+        try:
+            document=result["source_document"]
+            local_ref=result["local_source_id"]
+            raw=self.store.read_blob(local_ref)
+            digest=_sha(raw)
+            if (digest!=result.get("body_sha256") or local_ref!=f"fixture://cas/sha256/{digest}"
+                    or source_id!=document.get("source_id") or result.get("request_url")!=url):return False
+            content_type=result.get("content_type")
+            if content_type not in source["allowed_content_types"]:return False
+            if content_type=="text/html":derived=_document_from_html(raw,source,local_ref)
+            elif content_type=="application/pdf":derived=_document_from_pdf_fixture(raw,source,local_ref)
+            elif content_type=="application/json":
+                derived=json.loads(raw.decode("utf-8"))
+                if not isinstance(derived,dict) or derived.get("source_id")!=source_id:return False
+                derived["local_source_id"]=local_ref
+            else:return False
+            if _canonical(derived)!=_canonical(document):return False
+            if (document.get("source_authority")!=source["authority"] or document.get("market")!=source["market"]):return False
+            _valid_document(document)
+            if _document_scope_error(snapshot,job,document,document.get("content_sha256")):return False
+            version=self.store.evidence_version(document)
+            return bool(version and version["body_sha256"]==digest and version["source_id"]==source_id)
+        except (KeyError,OSError,ValueError,TypeError,json.JSONDecodeError):
+            return False
+
     def acquire(self,job: dict,*,source_id: str,url: str,snapshot: dict) -> dict:
         validate_fixture(snapshot)
         key=job.get("idempotency_key")
@@ -423,9 +518,24 @@ class OfflineSourceAcquisitionAdapter:
             return result
         if prior:
             if prior["status"] in {"FETCH_OK","UNCHANGED"}:
-                result=dict(prior["result"]); result.update(disposition="UNCHANGED",reason="IDEMPOTENT_REPLAY",
-                    external_http_calls=0,request_id=key)
-                return result
+                cached=prior["result"]
+                if self._valid_prior_success(cached,source,source_id,url,snapshot,job):
+                    result=dict(cached); result.update(disposition="UNCHANGED",reason="IDEMPOTENT_REPLAY",
+                        external_http_calls=0,request_id=key)
+                    return result
+                max_prior_attempts=min(source["retry_policy"]["maximum_attempts"],
+                    self.policy["research"]["maximum_retries"]+1,
+                    self.policy["runner"]["maximum_retries_per_job"]+1)
+                if prior["attempts"]>=max_prior_attempts:
+                    result=self._result("SOURCE_BROKEN","CACHED_EVIDENCE_INTEGRITY_RETRY_EXHAUSTED",
+                        request_id=key,attempts=prior["attempts"],retryable=False)
+                    self.store.persist_request(key,fingerprint,source_id,url,"SOURCE_BROKEN",prior["attempts"],None,result,now)
+                    return result
+                retry_at=max(now,self.store.get_rate_limit(source_id))
+                result=self._result("BLOCKED","CACHED_EVIDENCE_INTEGRITY_RETRY_REQUIRED",request_id=key,
+                    attempts=prior["attempts"],retry_at=retry_at,retryable=True)
+                self.store.persist_request(key,fingerprint,source_id,url,"RETRY_WAIT",prior["attempts"],retry_at,result,now)
+                prior=self.store.get_request(key)
             if prior["status"] in {"BLOCKED","SOURCE_BROKEN"}:
                 return dict(prior["result"])
             if prior.get("retry_at") and now<int(prior["retry_at"]):
@@ -553,7 +663,8 @@ class OfflineSourceAcquisitionAdapter:
         disposition="FETCH_OK" if inserted else "UNCHANGED"
         result=self._result(disposition,"SOURCE_DOCUMENT_VALIDATED",request_id=key,attempts=attempts,
             body_sha256=body_digest,source_hash=document["content_sha256"],source_document=document,
-            local_source_id=local_ref,measured_usage={"requests":1,"elapsed_seconds":response.elapsed_seconds,
+            local_source_id=local_ref,content_type=content_type,request_url=url,
+            measured_usage={"requests":1,"elapsed_seconds":response.elapsed_seconds,
               "paid_tokens":0,"paid_spend_thb":0,"external_http_calls":0})
         self.store.persist_request(key,fingerprint,source_id,url,disposition,attempts,None,result,now)
         return result

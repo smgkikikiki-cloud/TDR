@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from datetime import date
 import hashlib
+from html.parser import HTMLParser
 import re
 
 
@@ -32,6 +33,17 @@ def _parse_scope_value(value: str) -> object:
 
 def _document_attestation(document: dict, lines: list[str]) -> dict | None:
     proof = document.get("completeness_evidence") or {}
+    if proof.get("assertion_type") == "structured_attribute_assertion":
+        if not validate_source_representation(document)["valid"]:
+            return None
+        record=proof.get("normalized_scope_record")
+        if not isinstance(record,str) or record not in lines or proof.get("raw_source_sha256") != (document.get("source_representation") or {}).get("raw_source_sha256"):
+            return None
+        match=ATTESTATION_RE.fullmatch(record)
+        if not match:return None
+        model_id,generation_id,model_year,facelift_id=match.groups()
+        return {"model_id":model_id,"generation_id":generation_id,
+                "model_year":_parse_scope_value(model_year),"facelift_id":_parse_scope_value(facelift_id)}
     locator, quote = proof.get("locator"), proof.get("quote")
     try:
         line_no = int(locator.split(":", 1)[1]) if isinstance(locator, str) and locator.startswith("line:") else -1
@@ -45,6 +57,80 @@ def _document_attestation(document: dict, lines: list[str]) -> dict | None:
     model_id, generation_id, model_year, facelift_id = match.groups()
     return {"model_id": model_id, "generation_id": generation_id,
             "model_year": _parse_scope_value(model_year), "facelift_id": _parse_scope_value(facelift_id)}
+
+
+class _RawHTMLIndex(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.elements=[]
+        self.occurrences={}
+    def handle_starttag(self,tag,attrs):
+        if tag not in {"source-document","claim","trim","complete-lineup","capture"}:return
+        line,column=self.getpos(); ordinal=self.occurrences.get(tag,0)+1; self.occurrences[tag]=ordinal
+        self.elements.append({"tag":tag,"line":line,"column":column,"ordinal":ordinal,
+            "raw_start_tag":self.get_starttag_text(),"attributes":{k:v for k,v in attrs}})
+
+
+def validate_source_representation(document: dict) -> dict:
+    """Validate structured HTML assertions against immutable raw bytes and exact element locators."""
+    rep=document.get("source_representation")
+    if rep is None:return {"valid":True,"reason_codes":[]}
+    reasons=[]
+    if not isinstance(rep,dict) or rep.get("kind")!="STRUCTURED_HTML_ATTRIBUTES":
+        return {"valid":False,"reason_codes":["SOURCE_REPRESENTATION_UNSUPPORTED"]}
+    raw=rep.get("raw_source_utf8")
+    proof=document.get("completeness_evidence") or {}
+    if (not isinstance(raw,str) or hashlib.sha256(raw.encode("utf-8")).hexdigest()!=rep.get("raw_source_sha256")
+            or (proof.get("assertion_type")=="structured_attribute_assertion"
+                and rep.get("raw_source_sha256")!=proof.get("raw_source_sha256"))
+            or rep.get("raw_source_ref")!=document.get("local_source_id")):
+        reasons.append("RAW_SOURCE_HASH_OR_REFERENCE_INVALID")
+    parser=_RawHTMLIndex()
+    try:parser.feed(raw if isinstance(raw,str) else "")
+    except Exception:reasons.append("RAW_HTML_PARSE_INVALID")
+    assertions=rep.get("assertions")
+    if not isinstance(assertions,list) or len(assertions)!=len(parser.elements):
+        reasons.append("RAW_SOURCE_ASSERTION_INDEX_MISMATCH")
+        assertions=[]
+    normalized=[]
+    for actual,assertion in zip(parser.elements,assertions):
+        if not isinstance(assertion,dict):
+            reasons.append("RAW_SOURCE_ASSERTION_INVALID"); continue
+        locator=f"html:{actual['line']}:{actual['column']}:{actual['tag']}#{actual['ordinal']}"
+        if (any(assertion.get(k)!=actual.get(k) for k in ("tag","line","column","ordinal","raw_start_tag","attributes"))
+                or assertion.get("normalized_lines") is None):
+            reasons.append("RAW_SOURCE_LOCATOR_OR_ATTRIBUTES_MISMATCH")
+        if actual["tag"]=="source-document":
+            a={k.removeprefix("data-"):v for k,v in actual["attributes"].items()}
+            checks={"document_id":"document-id","model_id":"model-id","generation_id":"generation-id",
+                    "captured_at":"captured-at","published_at":"published-at","source_kind":"source-kind",
+                    "lineage_id":"lineage-id","edition_id":"edition-id"}
+            if any(document.get(target)!=(a.get(attr) or (document.get(target) if target in {"lineage_id","edition_id"} else None))
+                   for target,attr in checks.items()):
+                reasons.append("RAW_SOURCE_DOCUMENT_METADATA_MISMATCH")
+            continue
+        a={k.removeprefix("data-"):v for k,v in actual["attributes"].items()}
+        expected=None
+        if actual["tag"]=="claim" and all(a.get(k) for k in ("field","trim","value")):
+            value=a["value"]
+            if a.get("unit") and not re.search(r"\s"+re.escape(a["unit"])+r"$",value):value+=f" {a['unit']}"
+            expected=f"claim|{a['field']}|{a['trim']}|{value}"+("|"+a["qualifiers"] if a.get("qualifiers") else "")
+        elif actual["tag"]=="trim" and a.get("id"):
+            expected=f"lineup|trim|{a['id']}"
+        elif actual["tag"]=="complete-lineup":
+            expected=(f"lineup_attestation|COMPLETE_CURRENT_THAI_RETAIL_LINEUP|model={document.get('model_id')}|"
+                      f"generation={document.get('generation_id')}|model_year={a.get('model-year','NONE')}|facelift={a.get('facelift-id','NONE')}")
+        elif actual["tag"]=="capture":
+            expected=(f"capture|edition={document.get('edition_id')}|capture_id={a.get('id','')}|"
+                      f"captured_at={a.get('captured-at',document.get('captured_at',''))}|method=LOCAL_FIXTURE_CAPTURE")
+        declared=assertion.get("normalized_lines")
+        if expected is None or declared!=[expected]:
+            reasons.append("NORMALIZED_ASSERTION_NOT_SUPPORTED_BY_RAW_SOURCE")
+        else:normalized.append(expected)
+    content_lines=document.get("content","").splitlines()
+    if sorted(normalized)!=sorted(content_lines):
+        reasons.append("NORMALIZED_CONTENT_NOT_BOUND_TO_RAW_ASSERTIONS")
+    return {"valid":not reasons,"reason_codes":sorted(set(reasons))}
 
 
 def validate_model_lineup_binding(snapshot: dict, model: dict) -> tuple[bool, str]:
@@ -103,6 +189,8 @@ def validate_reconciliation_output(result: dict) -> None:
 def validate_source_completeness(document: dict) -> dict:
     """Validate a normalized capture and explicit publisher completeness evidence."""
     reasons: list[str] = []
+    representation=validate_source_representation(document)
+    if not representation["valid"]:reasons.extend(representation["reason_codes"])
     content = document.get("content")
     if document.get("completeness") != "COMPLETE_LINEUP":
         reasons.append("SOURCE_NOT_DECLARED_COMPLETE_LINEUP")
@@ -153,15 +241,35 @@ def validate_source_completeness(document: dict) -> dict:
     if not isinstance(proof, dict):
         reasons.append("COMPLETENESS_EVIDENCE_MISSING")
     else:
-        quote, locator = proof.get("quote"), proof.get("locator")
         lines = content.splitlines() if isinstance(content, str) else []
-        try:
-            line_no = int(locator.split(":", 1)[1]) if isinstance(locator, str) and locator.startswith("line:") else -1
-        except ValueError:
-            line_no = -1
-        quote_bound = 1 <= line_no <= len(lines) and lines[line_no - 1] == quote
-        if proof.get("publisher_declared_complete") is not True or not quote_bound:
-            reasons.append("PUBLISHER_COMPLETENESS_NOT_EVIDENCED")
+        if proof.get("assertion_type")=="structured_attribute_assertion":
+            locator=proof.get("raw_source_locator")
+            assertions=(document.get("source_representation") or {}).get("assertions",[])
+            bound=any(isinstance(a,dict) and a.get("tag")=="complete-lineup"
+                      and locator==f"html:{a.get('line')}:{a.get('column')}:complete-lineup#{a.get('ordinal')}"
+                      for a in assertions)
+            if (proof.get("publisher_declared_complete") is not True or not bound
+                    or not isinstance(proof.get("normalized_scope_record"),str)
+                    or proof.get("normalized_scope_record") not in lines):
+                reasons.append("PUBLISHER_COMPLETENESS_NOT_EVIDENCED")
+            assertion=next((a for a in assertions if isinstance(a,dict) and a.get("tag")=="complete-lineup"
+                            and f"html:{a.get('line')}:{a.get('column')}:complete-lineup#{a.get('ordinal')}"==locator),None)
+            attrs={k.removeprefix("data-"):v for k,v in (assertion or {}).get("attributes",{}).items()}
+            if (attrs.get("publisher-declared-complete")!="true" or attrs.get("pagination-complete")!="true"
+                    or attrs.get("expected-pages")!=attrs.get("captured-pages")
+                    or not attrs.get("expected-pages","").isdigit()
+                    or attrs.get("model-id")!=document.get("model_id")
+                    or attrs.get("generation-id")!=document.get("generation_id")):
+                reasons.append("RAW_COMPLETENESS_ATTRIBUTES_INSUFFICIENT")
+        else:
+            quote, locator = proof.get("quote"), proof.get("locator")
+            try:
+                line_no = int(locator.split(":", 1)[1]) if isinstance(locator, str) and locator.startswith("line:") else -1
+            except ValueError:
+                line_no = -1
+            quote_bound = 1 <= line_no <= len(lines) and lines[line_no - 1] == quote
+            if proof.get("publisher_declared_complete") is not True or not quote_bound:
+                reasons.append("PUBLISHER_COMPLETENESS_NOT_EVIDENCED")
         if proof.get("capture_status") != "COMPLETE":
             reasons.append("CAPTURE_NOT_COMPLETE")
         if (type(proof.get("expected_page_count")) is not int or type(proof.get("captured_page_count")) is not int
