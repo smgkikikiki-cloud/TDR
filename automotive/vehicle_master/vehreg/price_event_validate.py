@@ -27,6 +27,7 @@ from typing import Iterable, Mapping, Optional, Sequence
 from .catalog import Catalog
 from .price_llm import CLAIM_FIELDS, FORBIDDEN_IDENTITY_KEYS
 from .price_match import TrimMatchState, match_trim_diagnostic
+from .price_sources import TargetRole
 from .pricefeed import (
     MAX_PLAUSIBLE_THB,
     MIN_PLAUSIBLE_THB,
@@ -58,6 +59,9 @@ class EventReviewReason(str, Enum):
     DATE_NOT_IN_EVIDENCE = "DATE_NOT_IN_EVIDENCE"
     DATE_ORDER = "DATE_ORDER"
     CONDITION_NOT_IN_EVIDENCE = "CONDITION_NOT_IN_EVIDENCE"
+    #: The claimed model/trim/amount/type do not form ONE unambiguous local
+    #: price fact in the quote (swapped pair, other model, shared row, ...).
+    FACT_NOT_BOUND = "FACT_NOT_BOUND"
     # Per-event, from the engine.
     #: A plausible vehicle price in the changed evidence that no claim covers.
     UNCOVERED_AMOUNT = "UNCOVERED_AMOUNT"
@@ -236,56 +240,23 @@ def date_tokens(text: str) -> list[str]:
 # ------------------------------------------------------------ price semantics
 
 #: Words that make a nearby number *not* a vehicle price.
-_NON_PRICE_BEFORE = re.compile(
+def _nfkc_re(pattern: str, flags: int = 0) -> "re.Pattern[str]":
+    """Compile with the same NFKC form the page text is normalised to.
+
+    NFKC rewrites Thai sara am (``ำ`` -> ``ํา``); a pattern written with the
+    precomposed letter would silently never match normalised page text.
+    """
+    return re.compile(unicodedata.normalize("NFKC", pattern), flags)
+
+
+_NON_PRICE_BEFORE = _nfkc_re(
     r"(เงินดาวน์|ดาวน์|ค่างวด|ผ่อน|งวดละ|เงินจอง|ค่าจอง|มัดจำ|"
     r"down\s*payment|deposit|instal+ment|monthly|booking\s*fee|reservation)\s*"
     r"(?:ขั้นต่ำ|เริ่มต้น|เพียง|only|from|starting|of|:)?\s*(?:THB|฿|บาท)?\s*$",
     re.I)
-_NON_PRICE_AFTER = re.compile(
+_NON_PRICE_AFTER = _nfkc_re(
     r"^\s*(?:THB|฿|บาท)?\s*(?:/|ต่อ|per\s|a\s)\s*"
     r"(เดือน|งวด|month|mo\b|ปี|year)", re.I)
-
-_REF_FROM = re.compile(
-    r"(?:จากราคา|from)\s*(?P<est>คาดการณ์|estimated\s+price|estimated)?\s*"
-    r"(?:THB|฿|บาท)?\s*$", re.I)
-_ESTIMATED = re.compile(r"(ราคาคาดการณ์|คาดการณ์|estimated|expected\s+price|approx)", re.I)
-_FINANCE = re.compile(
-    r"(สินเชื่อ|ไฟแนนซ์|ผ่านการเงิน|ใช้บริการ.*?(?:ไฟแนนซ์|สินเชื่อ)|"
-    r"with\s+financing|finance|financing|loan)", re.I)
-_CAMPAIGN = re.compile(
-    r"(ราคาพิเศษ|ราคาโปรโมชัน|ราคาโปรโมชั่น|โปรโมชัน|โปรโมชั่น|ส่วนลด|ลดเหลือ|"
-    r"special\s+price|promo(?:tion(?:al)?)?(?:\s+price)?|discount|sale\s+price|"
-    r"deal\s+price|campaign)", re.I)
-_INTRO = re.compile(r"(ราคาเปิดตัว|เปิดตัว|introductory|launch\s+price|intro\s+price)", re.I)
-
-#: Marker families that make a quote *campaign-bearing* for type checking.
-CAMPAIGN_FAMILY = frozenset({PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE})
-
-
-#: Wording *after* an amount that makes a bare "price" conditional.  A price
-#: followed by this is not provably an unconditional MSRP.
-_TRAIL_FINANCE = re.compile(
-    r"(สินเชื่อ|ไฟแนนซ์|ผ่านการเงิน|ดอกเบี้ย|financ|loan|interest)", re.I)
-_TRAIL_CONDITIONAL = re.compile(
-    r"(เมื่อ|หาก|ถ้า|ต่อเมื่อ|เฉพาะ|เงื่อนไข|ภายใต้|เทิร์น|ภายใน|ถึงวันที่|"
-    r"trade-?in|\bif\b|\bwhen\b|subject\s+to|conditions?\s+apply|terms\s+apply|"
-    r"only\s+(?:for|with|when)|\buntil\b|\bvalid\b)", re.I)
-TRAIL_CHARS = 70
-
-
-def _trailing(text: str, end: int, stop: Sequence[str]) -> str:
-    """Words that qualify the number ending at ``end``: up to the next number,
-    the next repetition of the brand/model (a new item) or ``TRAIL_CHARS``."""
-    tail = text[end:end + 400]
-    nxt = AMOUNT_RE.search(tail)
-    if nxt:
-        tail = tail[:nxt.start()]
-    for word in stop:
-        if word:
-            hit = tail.casefold().find(word.casefold())
-            if hit >= 0:
-                tail = tail[:hit]
-    return tail[:TRAIL_CHARS]
 
 
 def _amount_spans(text: str) -> list[tuple[int, int, int]]:
@@ -305,17 +276,11 @@ def _label_before(text: str, start: int) -> str:
     return window
 
 
-def price_context_class(text: str, amount: int, *,
-                        stop: Sequence[str] = ()) -> Optional[str]:
-    """Classify the *first* occurrence of ``amount`` in ``text``.
+def price_context_class(text: str, amount: int) -> Optional[str]:
+    """``"NON_PRICE"`` if the first ``amount`` in ``text`` is a deposit, down
+    payment or instalment, ``"OTHER"`` if it is anything else, ``None`` if absent.
 
-    Returns one of ``NON_PRICE | LIST | ESTIMATED | CAMPAIGN | FINANCE |
-    INTRODUCTORY | CONDITIONAL`` or ``None`` if the amount is not in the text.
-
-    A bare/MSRP-labelled price is only ``LIST`` when the wording *after* it is
-    free of financing or conditional language; otherwise it is ``FINANCE`` or
-    ``CONDITIONAL`` (never silently reinterpreted as an unconditional list
-    price).  ``stop`` words end the trailing window (the next item's model).
+    Price *type* is decided by :func:`bind_fact`, not here.
     """
     for start, end, value in _amount_spans(text):
         if value != amount:
@@ -324,24 +289,239 @@ def price_context_class(text: str, amount: int, *,
         after = text[end:end + 24]
         if _NON_PRICE_BEFORE.search(before) or _NON_PRICE_AFTER.search(after):
             return "NON_PRICE"
-        ref = _REF_FROM.search(before)
-        if ref:                                  # "(from 699,000)" / "(จากราคาคาดการณ์ 809,000)"
-            return "ESTIMATED" if ref.group("est") else "LIST"
-        if _ESTIMATED.search(before):
-            return "ESTIMATED"
-        if _FINANCE.search(before):
-            return "FINANCE"
-        if _CAMPAIGN.search(before):
-            return "CAMPAIGN"
-        if _INTRO.search(before):
-            return "INTRODUCTORY"
-        trailing = _trailing(text, end, stop)
-        if _TRAIL_FINANCE.search(trailing):
-            return "FINANCE"
-        if _TRAIL_CONDITIONAL.search(trailing):
-            return "CONDITIONAL"
-        return "LIST"
+        return "OTHER"
     return None
+
+
+# -- closed wording vocabulary -------------------------------------------------
+# A price fact may only be described with words in this table.  Unknown words
+# between the trim and the amount make the fact ambiguous (fail closed), and an
+# unconditional MSRP needs an affirmative MSRP term -- "no qualifier found" is
+# never evidence.  Order matters: the first matching category wins at a position.
+
+def _latin(pattern: str) -> str:
+    return rf"(?<![A-Za-z])(?:{pattern})(?![A-Za-z])"
+
+
+_CATEGORIES: tuple[tuple[str, str], ...] = (
+    ("MSRP", "ราคาขายปลีกแนะนำ|ราคาขายปลีก|ราคาแนะนำ|" + _latin(
+        r"manufacturer'?s\s+suggested\s+retail\s+price|recommended\s+retail\s+price|"
+        r"suggested\s+retail\s+price|retail\s+price|list\s+price|msrp|rrp")),
+    ("ESTIMATED", "ราคาคาดการณ์|คาดการณ์|" + _latin(
+        r"estimated\s+price|estimated|expected\s+price|approx(?:imate(?:ly)?)?")),
+    ("FINANCE", "เมื่อใช้บริการสินเชื่อ|เมื่อใช้สินเชื่อ|เมื่อจัดสินเชื่อ|เมื่อจัดไฟแนนซ์|"
+     "ผ่านการเงิน|สินเชื่อ|ไฟแนนซ์|ดอกเบี้ย|" + _latin(
+        r"with\s+financing|financing|finance|loan|interest")),
+    ("CAMPAIGN", "ราคาโปรโมชั่น|ราคาโปรโมชัน|ราคาพิเศษ|โปรโมชั่น|โปรโมชัน|ส่วนลด|ลดเหลือ|" + _latin(
+        r"special\s+price|promotional\s+price|promotion(?:al)?|promo|discount(?:ed)?|"
+        r"sale\s+price|sale|deal\s+price|campaign")),
+    ("INTRO", "ราคาเปิดตัว|เปิดตัว|" + _latin(
+        r"introductory(?:\s+price)?|launch\s+price|intro\s+price")),
+    ("RESTRICTED", "สำหรับลูกค้าเดิม|สำหรับนักเรียน|สำหรับนักศึกษา|สำหรับข้าราชการ|"
+     "สำหรับพนักงาน|สำหรับสมาชิก|สำหรับลูกค้า|ลูกค้าเดิม|เฉพาะลูกค้า|เฉพาะสมาชิก|เท่านั้น|" + _latin(
+        r"for\s+(?:existing\s+customers|students|teachers|employees|members|government|"
+        r"fleet|corporate)|existing\s+customers?|students?|members?\s+only|only\s+for")),
+    ("ECO", "อีโค\\s*สติ๊?กเกอร์|" + _latin(r"eco\s*-?\s*sticker")),
+    ("DEALER", "ราคาดีลเลอร์|ดีลเลอร์|ตัวแทนจำหน่าย|" + _latin(r"dealer|showroom")),
+    ("OLD", "ราคาเดิม|ราคาปกติ|" + _latin(
+        r"was|regular\s+price|normal\s+price|original\s+price|previous\s+price")),
+    ("CONDITIONAL", "ต่อเมื่อ|เมื่อ|หาก|ถ้า|เงื่อนไข|ภายใต้|เทิร์น|ภายใน|ถึงวันที่|เฉพาะ|" + _latin(
+        r"trade-?in|if|when|subject\s+to|conditions?\s+apply|terms\s+apply|until|valid")),
+    ("REFFROM", "จากราคา|เหลือ|เพียง|" + _latin(r"from|only|just|now")),
+    ("BARE", "ราคา|฿|บาท|" + _latin(r"price|thb|baht")),
+    ("FILLER", "ใหม่|" + _latin(r"new")),
+)
+_VOCAB_RE = _nfkc_re("|".join(f"(?P<{name}>{pattern})" for name, pattern in _CATEGORIES),
+                     re.I)
+_SEP_RE = re.compile(r"[\s :=,;\-–—~|/()\[\]{}.*•·\"'’“”!?]+")
+#: Categories that name the kind of price (the others only qualify or describe).
+_TYPE_MARKERS = (("ESTIMATED", "ESTIMATED"), ("FINANCE", "FINANCE"),
+                 ("CAMPAIGN", "CAMPAIGN"), ("INTRO", "INTRODUCTORY"))
+_UNIT_RE = re.compile(r"\s*(?:THB|฿|บาท|baht)(?![A-Za-z])", re.I)
+
+
+def _scan(text: str) -> list[tuple[int, int, Optional[str]]]:
+    """Tokenise with the closed vocabulary.  ``None`` category = unknown text."""
+    tokens: list[tuple[int, int, Optional[str]]] = []
+    i = 0
+    while i < len(text):
+        sep = _SEP_RE.match(text, i)
+        if sep:
+            i = sep.end()
+            continue
+        hit = _VOCAB_RE.match(text, i)
+        if hit and hit.end() > i:
+            tokens.append((i, hit.end(), hit.lastgroup))
+            i = hit.end()
+        else:
+            tokens.append((i, i + 1, None))
+            i += 1
+    return tokens
+
+
+def _blank(text: str, words: Iterable[Optional[str]]) -> str:
+    """Replace every mention of the claimed brand/model with spaces."""
+    for word in sorted({w for w in words if w}, key=len, reverse=True):
+        pattern = r"\s+".join(re.escape(part) for part in word.split())
+        text = re.sub(pattern, lambda m: " " * len(m.group(0)), text, flags=re.I)
+    return text
+
+
+def _markers(tokens: Iterable[tuple[int, int, Optional[str]]]) -> set[str]:
+    return {cat for _s, _e, cat in tokens if cat and cat not in ("FILLER",)}
+
+
+@dataclass(frozen=True, slots=True)
+class FactBinding:
+    ok: bool
+    cls: Optional[str] = None                      # LIST | ESTIMATED | CAMPAIGN | ...
+    reason: Optional[EventReviewReason] = None
+    detail: str = ""
+
+
+def _reject(reason: EventReviewReason, detail: str) -> FactBinding:
+    return FactBinding(False, None, reason, detail)
+
+
+def bind_fact(segment: str, q_start: int, q_end: int, *, amount: int,
+              reference: Optional[int], model: str, brand: Optional[str], trim: str,
+              role: Optional[TargetRole] = None) -> FactBinding:
+    """Bind model, trim, amount and price type to ONE local price fact.
+
+    The quoted evidence must read ``<model> <trim> <price wording> <amount>``:
+
+    * everything before the trim, back to the previous price, is exactly the
+      claimed model (plus filler) -- another model or stray words fail closed;
+    * the trim sits between the previous price and this one, so a trim that
+      belongs to a neighbouring price (swapped pair, shared row) is not bound;
+    * only recognised price wording separates trim and amount;
+    * the type comes from that wording and from the wording that *adjoins* the
+      amount afterwards, never from neighbouring items.
+
+    A fact whose model is written once for several prices ("shared row") has no
+    local model for the later prices and is therefore not bound.
+    """
+    quote = segment[q_start:q_end]
+    spans = [(q_start + m.start(1), q_start + m.end(1), int(m.group(1).replace(",", "")))
+             for m in AMOUNT_RE.finditer(quote)]
+    index = next((i for i, (_s, _e, v) in enumerate(spans) if v == amount), None)
+    if index is None:
+        return _reject(EventReviewReason.AMOUNT_NOT_IN_EVIDENCE, "amount not in quote")
+    a_start, a_end, _ = spans[index]
+
+    def after_unit(pos: int) -> int:
+        unit = _UNIT_RE.match(segment, pos)
+        return unit.end() if unit else pos
+
+    # -- the fact window: from the previous price (or the quote start) -----------
+    chain: Optional[tuple[int, int]] = None
+    w_start = q_start
+    if index > 0:
+        p_start, p_end, p_value = spans[index - 1]
+        if reference is not None and p_value == reference:
+            chain = (p_start, p_end)               # "MAX+ 699,000 (promo 579,000)"
+            w_start = after_unit(spans[index - 2][1]) if index > 1 else q_start
+        else:
+            w_start = after_unit(p_end)
+    window = segment[w_start:a_start]
+    chain_offset = (chain[0] - w_start, chain[1] - w_start) if chain else None
+
+    # -- the trim: its last whole-token mention inside the window ------------------
+    body = r"\s+".join(re.escape(part) for part in trim.split())
+    tail_guard = r"(?![A-Za-z0-9])" if trim.endswith("+") else r"(?![A-Za-z0-9+])"
+    hits = [m for m in re.finditer(rf"(?<![A-Za-z0-9]){body}{tail_guard}", window, re.I)
+            if not chain_offset or m.end() <= chain_offset[0]]
+    if not hits:
+        return _reject(EventReviewReason.FACT_NOT_BOUND,
+                       f"trim {trim!r} is not part of the same price fact as {amount:,} "
+                       "(it belongs to another price, or the row is shared)")
+    t_start, t_end = hits[-1].span()
+
+    # -- head: exactly the claimed model ----------------------------------------------
+    head = window[:t_start]
+    if _find(head, model) is None:
+        return _reject(EventReviewReason.FACT_NOT_BOUND,
+                       f"model {model!r} is not written in the same price fact "
+                       "(a model named once for several prices is a shared row)")
+    leftovers = [tok for tok in _scan(_blank(head, (model, brand)))
+                 if tok[2] != "FILLER"]
+    if leftovers:
+        stray = _blank(head, (model, brand)).strip()[:60]
+        return _reject(EventReviewReason.FACT_NOT_BOUND,
+                       f"other text precedes the trim in this fact ({stray!r}): "
+                       "another model/item or an ambiguous row")
+
+    # -- the wording between trim and amount -------------------------------------------
+    gap_full = _blank(window[t_end:], (model, brand))
+    if chain_offset:                                # the reference amount is a placeholder
+        lo, hi = chain_offset[0] - t_end, chain_offset[1] - t_end
+        label_zone = gap_full[hi:]
+        gap_full = gap_full[:lo] + " " * (hi - lo) + gap_full[hi:]
+    else:
+        label_zone = gap_full
+    gap_tokens = _scan(gap_full)
+    zone_tokens = _scan(label_zone)
+    zone = _markers(zone_tokens)
+    unknown = [tok for tok in gap_tokens if tok[2] is None]
+
+    # -- the wording that adjoins the amount afterwards ----------------------------------
+    start = after_unit(a_end)
+    raw_tail = segment[start:start + 240]
+    cut, cut_at_amount = len(raw_tail), False
+    next_amount = AMOUNT_RE.search(raw_tail)
+    if next_amount:
+        cut, cut_at_amount = next_amount.start(), True
+    for word in (model, brand):
+        if word:
+            hit = re.search(r"\s+".join(re.escape(p) for p in word.split()), raw_tail, re.I)
+            if hit and hit.start() < cut:
+                cut, cut_at_amount = hit.start(), False
+    tail = raw_tail[:cut][:70]
+    tail_tokens = _scan(tail)
+    if cut_at_amount and len(raw_tail[:cut]) <= 70:
+        # Vocabulary directly in front of the NEXT amount labels that amount.
+        run = len(tail_tokens)
+        while run and tail_tokens[run - 1][2] is not None:
+            run -= 1
+        keep_to = tail_tokens[run - 1][1] if run else 0
+        paren = tail.rfind(")", keep_to)
+        if paren >= 0:
+            keep_to = paren + 1
+        tail_tokens = [tok for tok in tail_tokens if tok[1] <= keep_to]
+    tail_marks = _markers(tail_tokens)
+
+    marks = zone | tail_marks
+    if "RESTRICTED" in marks:
+        return _reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                       "restricted-audience wording: not a general OEM price")
+    if "ECO" in marks:
+        return _reject(EventReviewReason.PRICE_TYPE_CONFLICT,
+                       "eco-sticker wording: not an OEM price")
+    if "DEALER" in marks:
+        return _reject(EventReviewReason.PRICE_TYPE_CONFLICT,
+                       "dealer wording: not the OEM price")
+    if "OLD" in marks:
+        return _reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                       "previous/regular-price wording: not provably the current price")
+    if unknown:
+        text = "".join(gap_full[s:e] for s, e, _c in unknown)[:40]
+        return _reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                       f"unrecognised wording between trim and amount ({text!r}); "
+                       "the price fact is ambiguous")
+    for name, cls in _TYPE_MARKERS:
+        if name in marks:
+            return FactBinding(True, cls)
+    if "CONDITIONAL" in marks:
+        return _reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                       "conditional wording around the amount: not provably unconditional")
+    if "MSRP" in zone:
+        return FactBinding(True, "LIST")
+    if role is TargetRole.PRICE_LIST and "BARE" in zone:
+        # Mirrors P3: a bare "Price" on a registered price-list card is the list price.
+        return FactBinding(True, "LIST")
+    return _reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                   "no affirmative MSRP wording (recommended retail / list price) "
+                   "for this amount")
 
 
 _CLASS_TO_TYPE = {
@@ -420,6 +600,7 @@ def validate_ai_claims(
         document_id: str, source_id: str, evidence_hash: str, extraction_method: str,
         allowed_types: frozenset[PriceType] = DEFAULT_ALLOWED_TYPES,
         catalog: Optional[Catalog] = None, cache_hit: bool = False,
+        target_role: Optional[TargetRole] = None,
 ) -> ValidationResult:
     """Validate raw model proposals against the payload that was sent.
 
@@ -507,36 +688,15 @@ def validate_ai_claims(
                    f"{reference} is not in the quoted evidence", raw)
             continue
 
-        # -- price type vs. the words around the number ---------------------
-        # The quote may be shorter than the wording that qualifies the price, so
-        # read a little of the excerpt on either side of it.
+        # -- deposits / instalments are never vehicle prices -------------------------
         _seg, q_start, q_end = location[0], location[1], location[2]
         context = segment_text[max(0, q_start - 70):q_end + 120]
-        local = price_context_class(context, amount, stop=(_str_field(raw.get("brand_raw")),
-                                                    _str_field(raw.get("model_raw"))))
-        if local == "NON_PRICE":
+        if price_context_class(context, amount) == "NON_PRICE":
             reject(EventReviewReason.NOT_VEHICLE_PRICE,
                    "amount is labelled as a deposit/down payment/instalment", raw)
             continue
-        if local == "CONDITIONAL":
-            reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
-                   "conditional wording follows the amount; it cannot be proven "
-                   "to be an unconditional price", raw)
-            continue
-        implied = _CLASS_TO_TYPE.get(local or "")
-        if implied is not price_type:
-            if price_type is PriceType.LIST_PRICE:
-                reject(EventReviewReason.PRICE_TYPE_CONFLICT,
-                       f"evidence labels this amount {local}, not LIST_PRICE", raw)
-            elif implied is PriceType.LIST_PRICE:
-                reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
-                       f"evidence has no {price_type.value} wording around the amount", raw)
-            else:
-                reject(EventReviewReason.PRICE_TYPE_CONFLICT,
-                       f"evidence labels this amount {local}, not {price_type.value}", raw)
-            continue
 
-        # -- identity wording ---------------------------------------------
+        # -- identity wording ---------------------------------------------------------
         brand = _str_field(raw.get("brand_raw"))
         model = _str_field(raw.get("model_raw"))
         if not brand or not model or _find(doc_text, brand) is None \
@@ -551,6 +711,27 @@ def validate_ai_claims(
         if not _find_grade(quote, trim):
             reject(EventReviewReason.TRIM_NOT_IN_EVIDENCE,
                    f"trim {trim!r} is not written in the quoted evidence", raw)
+            continue
+
+        # -- model, trim, amount and type must be ONE local price fact ----------------
+        binding = bind_fact(segment_text, q_start, q_end, amount=amount,
+                            reference=reference, model=model, brand=brand, trim=trim,
+                            role=target_role)
+        if not binding.ok:
+            reject(binding.reason or EventReviewReason.FACT_NOT_BOUND, binding.detail, raw)
+            continue
+        implied = _CLASS_TO_TYPE[binding.cls or "LIST"]
+        if implied is not price_type:
+            if price_type is PriceType.LIST_PRICE:
+                reject(EventReviewReason.PRICE_TYPE_CONFLICT,
+                       f"evidence labels this amount {binding.cls}, not LIST_PRICE", raw)
+            elif implied is PriceType.LIST_PRICE:
+                reject(EventReviewReason.PRICE_TYPE_UNSUPPORTED,
+                       f"evidence has no {price_type.value} wording around the amount", raw)
+            else:
+                reject(EventReviewReason.PRICE_TYPE_CONFLICT,
+                       f"evidence labels this amount {binding.cls}, not {price_type.value}",
+                       raw)
             continue
 
         # -- dates ---------------------------------------------------------

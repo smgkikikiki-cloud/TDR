@@ -86,15 +86,32 @@ PROPOSED_GATES = {
     "unused_scripted_replies": 0,
     "p5_mismatches": 0,
     "p5_forbidden_hits": 0,
+    "forbidden_stored": 0,
     "disposition_mismatches": 0,
     "ai_call_budget_violations": 0,
     "conditions_missed": 0,
     "missed_claims": 0,
 }
 
+#: Evidence an owner would have to supply before any operational use is even
+#: discussed.  Proposed numbers, NOT adopted; the point is that today's count is 0.
+PROPOSED_READINESS_MINIMUMS = {
+    "owner_labelled_scenarios": 30,
+    "recorded_snapshot_scenarios": 10,
+    "distinct_sources": 3,
+}
+
+FINDING_TEXT = {
+    "PEE2-F1": "LIST_PRICE was the default when no qualifier was recognised (promo, "
+               "restricted-audience, eco-sticker, dealer or previous-price wording)",
+    "PEE2-F2": "model, trim, amount and type were not required to form one local price "
+               "fact (swapped pairs and cross-model attribution validated)",
+}
+
 SAFETY_COUNTERS = ("false_accepts", "forbidden_hits", "unsafe_resolves",
                    "lost_pending_events", "missed_events", "false_reviews",
-                   "p5_mismatches", "p5_forbidden_hits", "disposition_mismatches",
+                   "p5_mismatches", "p5_forbidden_hits", "forbidden_stored",
+                   "disposition_mismatches",
                    "missed_claims")
 
 FILLER = ("Lorem ipsum dolor sit amet consectetur adipiscing elit sed eiusmod "
@@ -155,6 +172,8 @@ class Scenario:
     #: An OPEN defect in the engine this scenario deliberately reproduces.  Its
     #: counters are reported, but kept out of the regression gates.
     known_finding: Optional[Mapping] = None
+    #: A former finding this scenario now guards as an ordinary regression.
+    regression_for: Optional[str] = None
 
     @property
     def label_status(self) -> str:
@@ -304,7 +323,8 @@ def load_scenarios(directory: Path | str = FIXTURE_DIR) -> list[Scenario]:
             url=raw.get("url", "https://www.omodajaecoo.co.th/th"),
             config=raw.get("config", {}), ledger_seed=tuple(raw.get("ledger_seed", [])),
             p5=bool(raw.get("p5", False)), observations=tuple(observations),
-            known_finding=raw.get("known_finding")))
+            known_finding=raw.get("known_finding"),
+            regression_for=raw.get("regression_for")))
     ids = [s.id for s in scenarios]
     if len(set(ids)) != len(ids):
         raise ShadowFixtureError("duplicate scenario ids")
@@ -445,9 +465,24 @@ def run_scenario(scn: Scenario, catalog: Catalog) -> dict:
                 "p5": p5_rows,
             })
         unscripted = provider.unscripted_calls
+        # What the engine kept: the success cache and the per-target interpretation
+        # that is re-emitted on every later fetch.  Forbidden claims must be in neither.
+        stored: set[tuple] = set()
+        for store in ("cache", "interpretations"):
+            for entry in engine.state.data[store].values():
+                for raw in entry["claims"]:
+                    try:
+                        stored.add((str(raw.get("model_raw", "")).upper(),
+                                    str(raw.get("trim_raw", "")).upper(),
+                                    int(str(raw.get("amount_thb", 0)).replace(",", "")),
+                                    str(raw.get("price_type", "")).upper(),
+                                    raw.get("effective_from"), raw.get("effective_to")))
+                    except (ValueError, AttributeError):
+                        continue
     return {"id": scn.id, "title": scn.title, "role": scn.role.value,
             "evidence_kind": scn.evidence_kind, "label_status": scn.label_status,
-            "unscripted_calls": unscripted, "observations": rows}
+            "unscripted_calls": unscripted,
+            "stored_claims": sorted(map(list, stored)), "observations": rows}
 
 
 # ------------------------------------------------------------------------ metrics
@@ -563,17 +598,33 @@ def evaluate_scenario(scn: Scenario, record: dict) -> dict:
             totals["p5_checked"] += 1
             if got.get(key) != want:
                 flag("p5_mismatches", f"{key}: expected {want}, got {got.get(key)}")
+        for key in sorted(exp.get("p5_never", [])):
+            totals["p5_forbidden_checked"] += 1
+            if key in got:
+                flag("p5_forbidden_hits", f"{key}: a claim the labels reject reached P5")
         for key, bad in sorted(exp.get("p5_forbidden", {}).items()):
             totals["p5_forbidden_checked"] += 1
             if got.get(key) == bad:
                 flag("p5_forbidden_hits", f"{key}: P5 reached {bad} for a claim the labels reject")
     totals["unscripted_calls"] += record["unscripted_calls"]
+    banned, accepted_somewhere = set(), set()
+    for obs in scn.observations:
+        banned |= _spec_set(obs.expect.get("forbidden", []))
+        accepted_somewhere |= _spec_set(obs.expect.get("claims", []))
+        accepted_somewhere |= _spec_set(obs.expect.get("tolerated", []))
+    # A claim is wrong to keep only if the labels never accept it at any time.
+    banned -= accepted_somewhere
+    for key in map(tuple, record.get("stored_claims", [])):
+        if key in banned:
+            totals["forbidden_stored"] += 1
+            notes.append({"obs": "-", "issue": "forbidden_stored", "detail": list(key)})
     truth_events, engine_events = _stream_events(truth_obs), _stream_events(engine_obs)
     totals["truth_price_events"] = sum(truth_events.values())
     totals["engine_price_events"] = sum(engine_events.values())
     totals["matched_price_events"] = sum((truth_events & engine_events).values())
     return {"id": scn.id, "title": scn.title, "label_status": scn.label_status,
             "evidence_kind": scn.evidence_kind, "known_finding": scn.known_finding,
+            "regression_for": scn.regression_for,
             "totals": dict(sorted(totals.items())),
             "review_reasons": dict(sorted(reasons.items())),
             "notes": notes}
@@ -667,6 +718,45 @@ def aggregate(evaluations: list[dict], *, gated: Optional[list[dict]] = None) ->
     }
 
 
+def assess_readiness(scenarios: list[Scenario], summary: Mapping,
+                     open_findings: list[dict]) -> dict:
+    """Operational readiness is a different question from regression PASS.
+
+    It is BLOCKED unless every evidence requirement is met, and even then it is
+    only ``AWAITING_OWNER_AUTHORIZATION``: this tool can never grant READY,
+    because authorization is the owner's decision made outside it.
+    """
+    owner = [s for s in scenarios if s.label_status == "OWNER_LABELLED"]
+    recorded = [s for s in owner if s.evidence_kind == "RECORDED_SNAPSHOT"]
+    sources = {s.source_id for s in recorded}
+    need = PROPOSED_READINESS_MINIMUMS
+    requirements = [
+        ("regression_gates_pass", all(g["pass"] for g in summary["gates"].values()),
+         "every regression gate passes"),
+        ("no_open_findings", not open_findings, "no OPEN safety finding"),
+        ("owner_labelled_scenarios", len(owner) >= need["owner_labelled_scenarios"],
+         f"{len(owner)} owner-labelled scenarios; proposed minimum "
+         f"{need['owner_labelled_scenarios']}"),
+        ("recorded_snapshot_scenarios", len(recorded) >= need["recorded_snapshot_scenarios"],
+         f"{len(recorded)} owner-labelled permission-cleared recorded snapshots; proposed "
+         f"minimum {need['recorded_snapshot_scenarios']}"),
+        ("distinct_sources", len(sources) >= need["distinct_sources"],
+         f"{len(sources)} distinct recorded sources; proposed minimum "
+         f"{need['distinct_sources']}"),
+        ("owner_authorization", False,
+         "no explicit owner authorization (granted outside this tool, never inferred)"),
+    ]
+    blocking = [name for name, met, _text in requirements if not met]
+    evidence_met = all(met for name, met, _t in requirements if name != "owner_authorization")
+    return {
+        "status": "AWAITING_OWNER_AUTHORIZATION" if evidence_met else "BLOCKED",
+        "requirements": [{"name": n, "met": m, "detail": t} for n, m, t in requirements],
+        "blocking": blocking,
+        "note": "A green regression suite is not safety acceptance and not operational "
+                "readiness.",
+    }
+
+
 def estimate_cost(usage: Mapping, *, in_per_mtok: Optional[float],
                   out_per_mtok: Optional[float]) -> Optional[dict]:
     """What-if only.  No price is assumed: without both rates this is ``None``."""
@@ -704,6 +794,7 @@ def run_corpus(directory: Path | str = FIXTURE_DIR, *, catalog: Optional[Catalog
         "reproduces": any(e["totals"].get(k, 0) for k in
                           ("false_accepts", "forbidden_hits", "unsafe_resolves")),
     } for e in evaluations if e["known_finding"]]
+    summary = aggregate(evaluations, gated=regression)
     return {
         "report_version": REPORT_VERSION,
         "provenance_counts": dict(sorted(provenance.items())),
@@ -712,8 +803,15 @@ def run_corpus(directory: Path | str = FIXTURE_DIR, *, catalog: Optional[Catalog
                 len(SYSTEM_PROMPT) / chars_per_token),
             "chars_per_token_assumed": chars_per_token,
         },
-        "summary": aggregate(evaluations, gated=regression),
+        "summary": summary,
         "open_findings": open_findings,
+        "readiness": assess_readiness(scenarios, summary, open_findings),
+        "resolved_findings": {
+            fid: {"summary": FINDING_TEXT.get(fid, ""),
+                  "regression_scenarios": sorted(e["id"] for e in evaluations
+                                                 if e["regression_for"] == fid)}
+            for fid in sorted({e["regression_for"] for e in evaluations
+                               if e["regression_for"]})},
         "summary_owner_labelled": aggregate(owner) if owner else None,
         "summary_by_evidence_kind": by_kind,
         "evaluations": evaluations,
@@ -767,6 +865,16 @@ def render_report_md(result: Mapping, *, cost: Optional[Mapping] = None) -> str:
         "> describe the **seed corpus only**. None of it is evidence of precision on live",
         "> pages, and no scenario here is owner-labelled recorded evidence.",
         "",
+        "## Verdicts (two different questions)", "",
+        f"* **Regression gates:** {'PASS' if all(g['pass'] for g in result['summary']['gates'].values()) else '**FAIL**'}"
+        " — the engine still behaves as the labelled scenarios require.",
+        f"* **Operational readiness: {result['readiness']['status']}** — "
+        + result["readiness"]["note"],
+        "",
+        "| readiness requirement | met | detail |", "| --- | --- | --- |",
+        *[f"| {r['name']} | {'yes' if r['met'] else '**NO**'} | {r['detail']} |"
+          for r in result["readiness"]["requirements"]],
+        "",
         "## Fixture provenance", "",
         "| evidence kind / label status | scenarios |", "| --- | --- |",
     ]
@@ -786,12 +894,10 @@ def render_report_md(result: Mapping, *, cost: Optional[Mapping] = None) -> str:
         lines.append(f"| {name} | {gate['value']} | {gate['limit']} | "
                      f"{'PASS' if gate['pass'] else '**FAIL**'} |")
     findings = result["open_findings"]
-    lines += ["", "## OPEN FINDINGS in the accepted PEE-1 engine (not fixed here)", ""]
+    lines += ["", "## Findings in the PEE-1 engine", ""]
     if findings:
-        lines += ["These scenarios reproduce defects. They are excluded from the gates above "
-                  "(so the gates detect *new* regressions) but are included in every "
-                  "headline number below. Fixing them is a Chunk 1 change that needs a QA "
-                  "decision.", "",
+        lines += ["OPEN findings are excluded from the gates above (so the gates detect "
+                  "*new* regressions) but included in every headline number below.", "",
                   "| finding | scenario | counters | still reproduces |",
                   "| --- | --- | --- | --- |"]
         for f in findings:
@@ -799,7 +905,14 @@ def render_report_md(result: Mapping, *, cost: Optional[Mapping] = None) -> str:
             lines.append(f"| {f['finding']} — {f['summary']} | {f['scenario']} | {counters} | "
                          f"{'yes' if f['reproduces'] else '**no — update fixture**'} |")
     else:
-        lines.append("None.")
+        lines.append("None open.")
+    resolved = result.get("resolved_findings", {})
+    if resolved:
+        lines += ["", "Former findings, now enforced as ordinary regressions "
+                  "(their scenarios are inside the gates):", ""]
+        for fid, info in resolved.items():
+            lines.append(f"* **{fid}** — {info['summary']}: "
+                         + ", ".join(info["regression_scenarios"]))
     lines += [
         "", "## Event detection", "",
         f"* labelled events: {ev['labelled_events']} · detected: {ev['detected']} "
@@ -833,9 +946,11 @@ def render_report_md(result: Mapping, *, cost: Optional[Mapping] = None) -> str:
         "", "## P5 24-hour semantics (unchanged P5, real catalog/P4)", "",
         f"* labelled P5 dispositions checked {s['p5']['checked']} · mismatches "
         f"{s['p5']['mismatches']}",
-        f"* P5 outcomes the labels forbid (e.g. a wrong claim reaching "
-        f"CONFIRMED_REPLACEMENT): checked {s['p5']['forbidden_checked']} · reached "
-        f"{s['p5']['forbidden_hits']}",
+        f"* P5 outcomes the labels forbid (a rejected claim reaching P5 at all, or "
+        f"reaching CONFIRMED_REPLACEMENT): checked {s['p5']['forbidden_checked']} · "
+        f"reached {s['p5']['forbidden_hits']}",
+        f"* rejected claims found in the engine's success cache or stored interpretation "
+        f"(what is re-emitted later): {s['counts'].get('forbidden_stored', 0)}",
         "", "## Estimated usage (replay; no real model)", "",
         f"* AI calls {us['ai_calls']} ({us['ai_calls_per_100_observations']} / 100 "
         f"observations) · cache hits {us['cache_hits']}",

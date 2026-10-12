@@ -6,6 +6,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "Homepage price cards re-fetched with only page noise changing",
       "totals": {
@@ -22,7 +23,7 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3321,
+        "naive_input_tokens": 4119,
         "non_baseline_observations": 2,
         "observations": 3,
         "p5_checked": 6,
@@ -44,6 +45,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "List price cut seen twice 25h apart, then cut again",
       "totals": {
@@ -62,7 +64,7 @@
         "matched_price_events": 2,
         "missed_claims": 0,
         "naive_calls": 4,
-        "naive_input_tokens": 4428,
+        "naive_input_tokens": 5492,
         "non_baseline_observations": 3,
         "observations": 4,
         "p5_checked": 7,
@@ -84,6 +86,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "CONDITIONS_NOT_INTERPRETED": 1
       },
@@ -105,7 +108,7 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 5,
-        "naive_input_tokens": 5849,
+        "naive_input_tokens": 7184,
         "non_baseline_observations": 4,
         "observations": 5,
         "resolved_covered_claims": 16,
@@ -116,7 +119,7 @@
         "status_DETERMINISTIC": 1,
         "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 3534,
+        "tokens_in": 4335,
         "tokens_out": 382,
         "tolerated_claims": 0,
         "truth_price_events": 0,
@@ -130,6 +133,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "DATE_NOT_INTERPRETED": 1,
         "DATE_NOT_IN_EVIDENCE": 2
@@ -151,7 +155,7 @@
         "matched_price_events": 4,
         "missed_claims": 0,
         "naive_calls": 5,
-        "naive_input_tokens": 5669,
+        "naive_input_tokens": 7002,
         "non_baseline_observations": 4,
         "observations": 5,
         "resolved_covered_claims": 16,
@@ -162,7 +166,7 @@
         "status_DETERMINISTIC": 1,
         "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 3405,
+        "tokens_in": 4205,
         "tokens_out": 1056,
         "tolerated_claims": 8,
         "truth_price_events": 4,
@@ -176,6 +180,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "Buyer-guide table: only one promo figure moves",
       "totals": {
@@ -194,7 +199,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3390,
+        "naive_input_tokens": 4191,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 24,
@@ -215,6 +220,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "Multi-model homepage: other models' prices are not P3's job",
       "totals": {
@@ -233,14 +239,14 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3468,
+        "naive_input_tokens": 4266,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 12,
         "resolved_labelled_claims": 12,
         "status_AI_EXTRACTED": 2,
         "status_UNCHANGED": 1,
-        "tokens_in": 2312,
+        "tokens_in": 2844,
         "tokens_out": 606,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -254,6 +260,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "PRICE_TYPE_CONFLICT": 1,
         "UNCOVERED_AMOUNT": 1
@@ -275,7 +282,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3228,
+        "naive_input_tokens": 4026,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 2,
@@ -285,7 +292,7 @@
         "status_AI_EXTRACTED": 1,
         "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 2152,
+        "tokens_in": 2684,
         "tokens_out": 309,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -299,6 +306,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "PRICE_TYPE_CONFLICT": 1,
         "UNCOVERED_AMOUNT": 1
@@ -320,7 +328,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2150,
+        "naive_input_tokens": 2684,
         "non_baseline_observations": 1,
         "observations": 2,
         "resolved_covered_claims": 1,
@@ -329,7 +337,7 @@
         "review_observations": 1,
         "status_AI_EXTRACTED": 1,
         "status_REVIEW": 1,
-        "tokens_in": 2150,
+        "tokens_in": 2684,
         "tokens_out": 320,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -343,6 +351,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "NOT_VEHICLE_PRICE": 1
       },
@@ -363,7 +372,7 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2208,
+        "naive_input_tokens": 2740,
         "non_baseline_observations": 1,
         "observations": 2,
         "resolved_covered_claims": 1,
@@ -372,7 +381,7 @@
         "review_observations": 1,
         "status_AI_EXTRACTED": 1,
         "status_REVIEW": 1,
-        "tokens_in": 2208,
+        "tokens_in": 2740,
         "tokens_out": 461,
         "tolerated_claims": 0,
         "truth_price_events": 0,
@@ -386,6 +395,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "TRIM_AMBIGUOUS": 2,
         "UNCOVERED_AMOUNT": 2
@@ -407,13 +417,13 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2156,
+        "naive_input_tokens": 2688,
         "non_baseline_observations": 1,
         "observations": 2,
         "review_items": 4,
         "review_observations": 2,
         "status_REVIEW": 2,
-        "tokens_in": 2156,
+        "tokens_in": 2688,
         "tokens_out": 318,
         "tolerated_claims": 0,
         "truth_price_events": 0,
@@ -427,6 +437,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "EVIDENCE_NOT_FOUND": 1,
         "UNCOVERED_AMOUNT": 1
@@ -448,7 +459,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2156,
+        "naive_input_tokens": 2688,
         "non_baseline_observations": 1,
         "observations": 2,
         "resolved_covered_claims": 1,
@@ -457,7 +468,7 @@
         "review_observations": 1,
         "status_AI_EXTRACTED": 1,
         "status_REVIEW": 1,
-        "tokens_in": 2156,
+        "tokens_in": 2688,
         "tokens_out": 320,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -471,6 +482,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "Eight scrapes, noise on every page, one real price cut",
       "totals": {
@@ -489,7 +501,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 8,
-        "naive_input_tokens": 8856,
+        "naive_input_tokens": 10984,
         "non_baseline_observations": 7,
         "observations": 8,
         "resolved_covered_claims": 16,
@@ -510,6 +522,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "CONDITIONS_NOT_INTERPRETED": 1,
         "DATE_NOT_IN_EVIDENCE": 1,
@@ -533,7 +546,7 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3268,
+        "naive_input_tokens": 4068,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 2,
@@ -542,7 +555,7 @@
         "review_observations": 1,
         "status_AI_EXTRACTED": 2,
         "status_REVIEW": 1,
-        "tokens_in": 3268,
+        "tokens_in": 4068,
         "tokens_out": 528,
         "tolerated_claims": 0,
         "truth_price_events": 0,
@@ -556,6 +569,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "TOKEN_BUDGET_EXHAUSTED": 1
       },
@@ -576,7 +590,7 @@
         "matched_price_events": 2,
         "missed_claims": 0,
         "naive_calls": 4,
-        "naive_input_tokens": 4312,
+        "naive_input_tokens": 5376,
         "non_baseline_observations": 3,
         "observations": 4,
         "resolved_covered_claims": 3,
@@ -585,7 +599,7 @@
         "review_observations": 1,
         "status_AI_EXTRACTED": 3,
         "status_REVIEW": 1,
-        "tokens_in": 3234,
+        "tokens_in": 4032,
         "tokens_out": 480,
         "tolerated_claims": 0,
         "truth_price_events": 2,
@@ -599,6 +613,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {
         "PROVIDER_FAILED": 1
       },
@@ -619,7 +634,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3234,
+        "naive_input_tokens": 4032,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 2,
@@ -629,7 +644,7 @@
         "status_AI_EXTRACTED": 1,
         "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 1078,
+        "tokens_in": 1344,
         "tokens_out": 160,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -643,6 +658,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "AI-read list price replaces the ledger; P5 confirms it 25h later with no new call",
       "totals": {
@@ -661,7 +677,7 @@
         "matched_price_events": 1,
         "missed_claims": 0,
         "naive_calls": 3,
-        "naive_input_tokens": 3234,
+        "naive_input_tokens": 4032,
         "non_baseline_observations": 2,
         "observations": 3,
         "p5_checked": 3,
@@ -669,7 +685,7 @@
         "resolved_labelled_claims": 3,
         "status_AI_EXTRACTED": 2,
         "status_UNCHANGED": 1,
-        "tokens_in": 2156,
+        "tokens_in": 2688,
         "tokens_out": 320,
         "tolerated_claims": 0,
         "truth_price_events": 1,
@@ -680,654 +696,272 @@
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s17_promo_label_after_amount",
-      "known_finding": {
-        "id": "PEE2-F1",
-        "status": "OPEN",
-        "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            599000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected AI_EXTRACTED, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            599000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            599000,
-            "CAMPAIGN_PRICE",
-            null,
-            null
-          ],
-          "issue": "missed_claim",
-          "obs": "o2"
-        },
-        {
-          "detail": "JAECOO 5 EV|MAX+|LIST_PRICE|599000: P5 reached CONFIRMED_REPLACEMENT for a claim the labels reject",
-          "issue": "p5_forbidden_hits",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F1",
+      "review_reasons": {
+        "PRICE_TYPE_CONFLICT": 1,
+        "UNCOVERED_AMOUNT": 1
+      },
       "title": "Promo label written after the amount must not become MSRP",
       "totals": {
-        "ai_calls": 1,
+        "ai_calls": 2,
         "cache_hits": 1,
-        "covered_claims": 0,
-        "disposition_mismatches": 2,
+        "covered_claims": 2,
+        "detected_events": 1,
         "emitted_claims": 2,
-        "engine_price_events": 0,
-        "false_accepts": 2,
-        "false_accepts_ai": 2,
+        "engine_price_events": 1,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 2,
-        "labelled_claims": 1,
+        "forbidden_hits": 0,
+        "labelled_claims": 2,
         "labelled_events": 1,
-        "lost_pending_events": 1,
-        "matched_price_events": 0,
-        "missed_claims": 1,
-        "naive_calls": 2,
-        "naive_input_tokens": 2156,
-        "non_baseline_observations": 1,
-        "observations": 2,
-        "p5_forbidden_checked": 1,
-        "p5_forbidden_hits": 1,
-        "resolved_covered_claims": 0,
-        "resolved_labelled_claims": 1,
+        "matched_price_events": 1,
+        "missed_claims": 0,
+        "naive_calls": 3,
+        "naive_input_tokens": 4035,
+        "non_baseline_observations": 2,
+        "observations": 3,
+        "p5_forbidden_checked": 3,
+        "resolved_covered_claims": 2,
+        "resolved_labelled_claims": 2,
+        "review_items": 2,
+        "review_observations": 1,
         "status_AI_EXTRACTED": 1,
+        "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 1078,
-        "tokens_out": 154,
+        "tokens_in": 2690,
+        "tokens_out": 310,
         "tolerated_claims": 0,
         "truth_price_events": 1,
-        "unsafe_resolves": 1,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s18_restricted_audience_after_amount",
-      "known_finding": {
-        "id": "PEE2-F1",
-        "status": "OPEN",
-        "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            599000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected REVIEW, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": "UNCHANGED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            599000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        },
-        {
-          "detail": "JAECOO 5 EV|MAX+|LIST_PRICE|599000: P5 reached CONFIRMED_REPLACEMENT for a claim the labels reject",
-          "issue": "p5_forbidden_hits",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F1",
+      "review_reasons": {
+        "PRICE_TYPE_UNSUPPORTED": 2,
+        "UNCOVERED_AMOUNT": 2
+      },
       "title": "A restricted-audience price is not a general MSRP",
       "totals": {
-        "ai_calls": 1,
-        "cache_hits": 1,
+        "ai_calls": 2,
+        "cache_hits": 0,
         "covered_claims": 0,
-        "disposition_mismatches": 2,
-        "emitted_claims": 2,
+        "detected_events": 1,
+        "emitted_claims": 0,
         "engine_price_events": 0,
-        "false_accepts": 2,
-        "false_accepts_ai": 2,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 2,
+        "forbidden_hits": 0,
         "labelled_claims": 0,
         "labelled_events": 1,
-        "lost_pending_events": 1,
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2142,
+        "naive_input_tokens": 2676,
         "non_baseline_observations": 1,
         "observations": 2,
-        "p5_forbidden_checked": 1,
-        "p5_forbidden_hits": 1,
-        "resolved_covered_claims": 0,
-        "resolved_labelled_claims": 0,
-        "status_AI_EXTRACTED": 1,
-        "status_UNCHANGED": 1,
-        "tokens_in": 1071,
-        "tokens_out": 154,
+        "p5_forbidden_checked": 4,
+        "review_items": 4,
+        "review_observations": 2,
+        "status_REVIEW": 2,
+        "tokens_in": 2676,
+        "tokens_out": 310,
         "tolerated_claims": 0,
         "truth_price_events": 0,
-        "unsafe_resolves": 2,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s19_swapped_trim_amount_pairs",
-      "known_finding": {
-        "id": "PEE2-F2",
-        "status": "OPEN",
-        "summary": "trim/model must appear in the quote and the amount in the quote, but not next to each other, so mis-paired claims validate and can resolve the change"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            789000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "ULTRA",
-            699000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected AI_EXTRACTED, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            789000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "ULTRA",
-            699000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            699000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "missed_claim",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "ULTRA",
-            789000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "missed_claim",
-          "obs": "o2"
-        },
-        {
-          "detail": "JAECOO 5 EV|MAX+|LIST_PRICE|789000: P5 reached CONFIRMED_REPLACEMENT for a claim the labels reject",
-          "issue": "p5_forbidden_hits",
-          "obs": "o2"
-        },
-        {
-          "detail": "JAECOO 5 EV|ULTRA|LIST_PRICE|699000: P5 reached CONFIRMED_REPLACEMENT for a claim the labels reject",
-          "issue": "p5_forbidden_hits",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F2",
+      "review_reasons": {
+        "FACT_NOT_BOUND": 2,
+        "UNCOVERED_AMOUNT": 1
+      },
       "title": "Trims and amounts swapped inside one quoted row",
       "totals": {
-        "ai_calls": 1,
+        "ai_calls": 2,
         "cache_hits": 1,
-        "covered_claims": 0,
-        "disposition_mismatches": 2,
+        "covered_claims": 4,
+        "detected_events": 1,
         "emitted_claims": 4,
-        "engine_price_events": 0,
-        "false_accepts": 4,
-        "false_accepts_ai": 4,
+        "engine_price_events": 2,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 4,
-        "labelled_claims": 2,
+        "forbidden_hits": 0,
+        "labelled_claims": 4,
         "labelled_events": 1,
-        "lost_pending_events": 1,
-        "matched_price_events": 0,
-        "missed_claims": 2,
-        "naive_calls": 2,
-        "naive_input_tokens": 2192,
-        "non_baseline_observations": 1,
-        "observations": 2,
-        "p5_forbidden_checked": 2,
-        "p5_forbidden_hits": 2,
-        "resolved_covered_claims": 0,
-        "resolved_labelled_claims": 2,
+        "matched_price_events": 2,
+        "missed_claims": 0,
+        "naive_calls": 3,
+        "naive_input_tokens": 4104,
+        "non_baseline_observations": 2,
+        "observations": 3,
+        "p5_forbidden_checked": 6,
+        "resolved_covered_claims": 4,
+        "resolved_labelled_claims": 4,
+        "review_items": 3,
+        "review_observations": 1,
         "status_AI_EXTRACTED": 1,
+        "status_REVIEW": 1,
         "status_UNCHANGED": 1,
-        "tokens_in": 1096,
-        "tokens_out": 349,
+        "tokens_in": 2736,
+        "tokens_out": 675,
         "tolerated_claims": 0,
         "truth_price_events": 2,
-        "unsafe_resolves": 1,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s20_other_models_price_attributed",
-      "known_finding": {
-        "id": "PEE2-F2",
-        "status": "OPEN",
-        "summary": "trim/model must appear in the quote and the amount in the quote, but not next to each other, so mis-paired claims validate and can resolve the change"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            709000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected AI_EXTRACTED, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            709000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "OMODA C5 EV",
-            "MAX+",
-            709000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "missed_claim",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F2",
+      "review_reasons": {
+        "FACT_NOT_BOUND": 1,
+        "UNCOVERED_AMOUNT": 1
+      },
       "title": "Another model's price attributed to JAECOO 5 EV",
       "totals": {
-        "ai_calls": 1,
-        "cache_hits": 1,
-        "covered_claims": 2,
-        "disposition_mismatches": 2,
-        "emitted_claims": 4,
-        "engine_price_events": 0,
-        "false_accepts": 2,
-        "false_accepts_ai": 2,
+        "ai_calls": 2,
+        "cache_hits": 0,
+        "covered_claims": 3,
+        "detected_events": 1,
+        "emitted_claims": 3,
+        "engine_price_events": 1,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 2,
+        "forbidden_hits": 0,
         "labelled_claims": 3,
         "labelled_events": 1,
-        "lost_pending_events": 1,
-        "matched_price_events": 0,
-        "missed_claims": 1,
+        "matched_price_events": 1,
+        "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2178,
+        "naive_input_tokens": 2736,
         "non_baseline_observations": 1,
         "observations": 2,
+        "p5_forbidden_checked": 2,
         "resolved_covered_claims": 2,
-        "resolved_labelled_claims": 3,
+        "resolved_labelled_claims": 2,
+        "review_items": 2,
+        "review_observations": 1,
         "status_AI_EXTRACTED": 1,
-        "status_UNCHANGED": 1,
-        "tokens_in": 1089,
-        "tokens_out": 303,
+        "status_REVIEW": 1,
+        "tokens_in": 2736,
+        "tokens_out": 628,
         "tolerated_claims": 0,
         "truth_price_events": 1,
-        "unsafe_resolves": 1,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s21_eco_sticker_is_not_msrp",
-      "known_finding": {
-        "id": "PEE2-F1",
-        "status": "OPEN",
-        "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            689000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected REVIEW, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": "UNCHANGED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            689000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F1",
+      "review_reasons": {
+        "PRICE_TYPE_CONFLICT": 1,
+        "PRICE_TYPE_NOT_ALLOWED": 1,
+        "UNCOVERED_AMOUNT": 2
+      },
       "title": "ECO-sticker price must never become an OEM MSRP (roadmap P-1)",
       "totals": {
-        "ai_calls": 1,
-        "cache_hits": 1,
+        "ai_calls": 2,
+        "cache_hits": 0,
         "covered_claims": 0,
-        "disposition_mismatches": 2,
-        "emitted_claims": 2,
+        "detected_events": 1,
+        "emitted_claims": 0,
         "engine_price_events": 0,
-        "false_accepts": 2,
-        "false_accepts_ai": 2,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 2,
+        "forbidden_hits": 0,
         "labelled_claims": 0,
         "labelled_events": 1,
-        "lost_pending_events": 1,
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2160,
+        "naive_input_tokens": 2692,
         "non_baseline_observations": 1,
         "observations": 2,
-        "resolved_covered_claims": 0,
-        "resolved_labelled_claims": 0,
-        "status_AI_EXTRACTED": 1,
-        "status_UNCHANGED": 1,
-        "tokens_in": 1080,
-        "tokens_out": 162,
+        "p5_forbidden_checked": 2,
+        "review_items": 4,
+        "review_observations": 2,
+        "status_REVIEW": 2,
+        "tokens_in": 2692,
+        "tokens_out": 328,
         "tolerated_claims": 0,
         "truth_price_events": 0,
-        "unsafe_resolves": 2,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
       "evidence_kind": "SYNTHETIC_ADVERSARIAL",
       "id": "s22_dealer_price_is_not_oem_msrp",
-      "known_finding": {
-        "id": "PEE2-F1",
-        "status": "OPEN",
-        "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-      },
+      "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
-      "notes": [
-        {
-          "detail": "expected REVIEW, got AI_EXTRACTED",
-          "issue": "disposition_mismatches",
-          "obs": "o1"
-        },
-        {
-          "detail": "AI_EXTRACTED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o1"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            650000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o1"
-        },
-        {
-          "detail": "",
-          "issue": "lost_pending_events",
-          "obs": "o2"
-        },
-        {
-          "detail": "expected REVIEW, got UNCHANGED",
-          "issue": "disposition_mismatches",
-          "obs": "o2"
-        },
-        {
-          "detail": "UNCHANGED where labels require REVIEW",
-          "issue": "unsafe_resolves",
-          "obs": "o2"
-        },
-        {
-          "detail": [
-            "JAECOO 5 EV",
-            "MAX+",
-            650000,
-            "LIST_PRICE",
-            null,
-            null
-          ],
-          "issue": "false_accept_ai",
-          "obs": "o2"
-        }
-      ],
-      "review_reasons": {},
+      "notes": [],
+      "regression_for": "PEE2-F1",
+      "review_reasons": {
+        "PRICE_TYPE_CONFLICT": 1,
+        "PRICE_TYPE_NOT_ALLOWED": 1,
+        "UNCOVERED_AMOUNT": 2
+      },
       "title": "A dealer's own price must not become the OEM MSRP",
       "totals": {
-        "ai_calls": 1,
-        "cache_hits": 1,
+        "ai_calls": 2,
+        "cache_hits": 0,
         "covered_claims": 0,
-        "disposition_mismatches": 2,
-        "emitted_claims": 2,
+        "detected_events": 1,
+        "emitted_claims": 0,
         "engine_price_events": 0,
-        "false_accepts": 2,
-        "false_accepts_ai": 2,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 2,
+        "forbidden_hits": 0,
         "labelled_claims": 0,
         "labelled_events": 1,
-        "lost_pending_events": 1,
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 2,
-        "naive_input_tokens": 2150,
+        "naive_input_tokens": 2684,
         "non_baseline_observations": 1,
         "observations": 2,
-        "resolved_covered_claims": 0,
-        "resolved_labelled_claims": 0,
-        "status_AI_EXTRACTED": 1,
-        "status_UNCHANGED": 1,
-        "tokens_in": 1075,
-        "tokens_out": 158,
+        "p5_forbidden_checked": 2,
+        "review_items": 4,
+        "review_observations": 2,
+        "status_REVIEW": 2,
+        "tokens_in": 2684,
+        "tokens_out": 317,
         "tolerated_claims": 0,
         "truth_price_events": 0,
-        "unsafe_resolves": 2,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 1
+        "unused_scripted_replies": 0
       }
     },
     {
@@ -1336,6 +970,7 @@
       "known_finding": null,
       "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
       "notes": [],
+      "regression_for": null,
       "review_reasons": {},
       "title": "An offer vanishing from a page is not a price of zero or an expiry",
       "totals": {
@@ -1354,7 +989,7 @@
         "matched_price_events": 0,
         "missed_claims": 0,
         "naive_calls": 1,
-        "naive_input_tokens": 1149,
+        "naive_input_tokens": 1416,
         "non_baseline_observations": 2,
         "observations": 3,
         "resolved_covered_claims": 4,
@@ -1368,111 +1003,254 @@
         "unscripted_calls": 0,
         "unused_scripted_replies": 0
       }
+    },
+    {
+      "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+      "id": "s24_shared_model_row_fails_closed",
+      "known_finding": null,
+      "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
+      "notes": [],
+      "regression_for": null,
+      "review_reasons": {
+        "FACT_NOT_BOUND": 2,
+        "UNCOVERED_AMOUNT": 2
+      },
+      "title": "A model named once for several prices cannot be bound to the second",
+      "totals": {
+        "ai_calls": 2,
+        "cache_hits": 0,
+        "covered_claims": 2,
+        "detected_events": 1,
+        "emitted_claims": 2,
+        "engine_price_events": 0,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
+        "false_accepts_rule": 0,
+        "forbidden_hits": 0,
+        "labelled_claims": 2,
+        "labelled_events": 1,
+        "matched_price_events": 0,
+        "missed_claims": 0,
+        "naive_calls": 2,
+        "naive_input_tokens": 2724,
+        "non_baseline_observations": 1,
+        "observations": 2,
+        "review_items": 4,
+        "review_observations": 2,
+        "status_REVIEW": 2,
+        "tokens_in": 2724,
+        "tokens_out": 698,
+        "tolerated_claims": 0,
+        "truth_price_events": 0,
+        "unscripted_calls": 0,
+        "unused_scripted_replies": 0
+      }
+    },
+    {
+      "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+      "id": "s25_neighbouring_wording_does_not_leak",
+      "known_finding": null,
+      "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
+      "notes": [],
+      "regression_for": null,
+      "review_reasons": {},
+      "title": "A neighbour's promo / finance wording must not change an MSRP",
+      "totals": {
+        "ai_calls": 1,
+        "cache_hits": 1,
+        "covered_claims": 8,
+        "emitted_claims": 8,
+        "engine_price_events": 0,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
+        "false_accepts_rule": 0,
+        "forbidden_hits": 0,
+        "labelled_claims": 8,
+        "matched_price_events": 0,
+        "missed_claims": 0,
+        "naive_calls": 2,
+        "naive_input_tokens": 2818,
+        "non_baseline_observations": 1,
+        "observations": 2,
+        "resolved_covered_claims": 8,
+        "resolved_labelled_claims": 8,
+        "status_AI_EXTRACTED": 1,
+        "status_UNCHANGED": 1,
+        "tokens_in": 1409,
+        "tokens_out": 649,
+        "tolerated_claims": 0,
+        "truth_price_events": 0,
+        "unscripted_calls": 0,
+        "unused_scripted_replies": 0
+      }
+    },
+    {
+      "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+      "id": "s26_bare_price_wording_is_unproven",
+      "known_finding": null,
+      "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
+      "notes": [],
+      "regression_for": null,
+      "review_reasons": {
+        "PRICE_TYPE_UNSUPPORTED": 1,
+        "UNCOVERED_AMOUNT": 1
+      },
+      "title": "Bare 'ราคา' is not affirmative MSRP evidence (owner policy item)",
+      "totals": {
+        "ai_calls": 2,
+        "cache_hits": 0,
+        "covered_claims": 1,
+        "detected_events": 1,
+        "emitted_claims": 1,
+        "engine_price_events": 1,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
+        "false_accepts_rule": 0,
+        "forbidden_hits": 0,
+        "labelled_claims": 1,
+        "labelled_events": 1,
+        "matched_price_events": 1,
+        "missed_claims": 0,
+        "naive_calls": 2,
+        "naive_input_tokens": 2682,
+        "non_baseline_observations": 1,
+        "observations": 2,
+        "resolved_covered_claims": 1,
+        "resolved_labelled_claims": 1,
+        "review_items": 2,
+        "review_observations": 1,
+        "status_AI_EXTRACTED": 1,
+        "status_REVIEW": 1,
+        "tokens_in": 2682,
+        "tokens_out": 314,
+        "tolerated_claims": 0,
+        "truth_price_events": 1,
+        "unscripted_calls": 0,
+        "unused_scripted_replies": 0
+      }
+    },
+    {
+      "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+      "id": "s27_previous_price_is_not_current",
+      "known_finding": null,
+      "label_status": "PROPOSED_PENDING_OWNER_REVIEW",
+      "notes": [],
+      "regression_for": null,
+      "review_reasons": {
+        "FACT_NOT_BOUND": 1,
+        "PRICE_TYPE_UNSUPPORTED": 2,
+        "UNCOVERED_AMOUNT": 2
+      },
+      "title": "A struck-through previous price must not become the list price",
+      "totals": {
+        "ai_calls": 2,
+        "cache_hits": 0,
+        "covered_claims": 0,
+        "detected_events": 1,
+        "emitted_claims": 0,
+        "engine_price_events": 0,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
+        "false_accepts_rule": 0,
+        "forbidden_hits": 0,
+        "labelled_claims": 0,
+        "labelled_events": 1,
+        "matched_price_events": 0,
+        "missed_claims": 0,
+        "naive_calls": 2,
+        "naive_input_tokens": 2700,
+        "non_baseline_observations": 1,
+        "observations": 2,
+        "review_items": 5,
+        "review_observations": 2,
+        "status_REVIEW": 2,
+        "tokens_in": 2700,
+        "tokens_out": 472,
+        "tolerated_claims": 0,
+        "truth_price_events": 0,
+        "unscripted_calls": 0,
+        "unused_scripted_replies": 0
+      }
     }
   ],
-  "open_findings": [
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 2,
-        "forbidden_hits": 2,
-        "lost_pending_events": 1,
-        "missed_claims": 1,
-        "p5_forbidden_hits": 1,
-        "unsafe_resolves": 1
-      },
-      "finding": "PEE2-F1",
-      "reproduces": true,
-      "scenario": "s17_promo_label_after_amount",
-      "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-    },
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 2,
-        "forbidden_hits": 2,
-        "lost_pending_events": 1,
-        "p5_forbidden_hits": 1,
-        "unsafe_resolves": 2
-      },
-      "finding": "PEE2-F1",
-      "reproduces": true,
-      "scenario": "s18_restricted_audience_after_amount",
-      "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-    },
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 4,
-        "forbidden_hits": 4,
-        "lost_pending_events": 1,
-        "missed_claims": 2,
-        "p5_forbidden_hits": 2,
-        "unsafe_resolves": 1
-      },
-      "finding": "PEE2-F2",
-      "reproduces": true,
-      "scenario": "s19_swapped_trim_amount_pairs",
-      "summary": "trim/model must appear in the quote and the amount in the quote, but not next to each other, so mis-paired claims validate and can resolve the change"
-    },
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 2,
-        "forbidden_hits": 2,
-        "lost_pending_events": 1,
-        "missed_claims": 1,
-        "unsafe_resolves": 1
-      },
-      "finding": "PEE2-F2",
-      "reproduces": true,
-      "scenario": "s20_other_models_price_attributed",
-      "summary": "trim/model must appear in the quote and the amount in the quote, but not next to each other, so mis-paired claims validate and can resolve the change"
-    },
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 2,
-        "forbidden_hits": 2,
-        "lost_pending_events": 1,
-        "unsafe_resolves": 2
-      },
-      "finding": "PEE2-F1",
-      "reproduces": true,
-      "scenario": "s21_eco_sticker_is_not_msrp",
-      "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-    },
-    {
-      "counters": {
-        "disposition_mismatches": 2,
-        "false_accepts": 2,
-        "forbidden_hits": 2,
-        "lost_pending_events": 1,
-        "unsafe_resolves": 2
-      },
-      "finding": "PEE2-F1",
-      "reproduces": true,
-      "scenario": "s22_dealer_price_is_not_oem_msrp",
-      "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-    }
-  ],
+  "open_findings": [],
   "provenance_counts": {
     "RECONSTRUCTED_FROM_PILOT_NOTES/PROPOSED_PENDING_OWNER_REVIEW": 8,
-    "SYNTHETIC_ADVERSARIAL/PROPOSED_PENDING_OWNER_REVIEW": 15
+    "SYNTHETIC_ADVERSARIAL/PROPOSED_PENDING_OWNER_REVIEW": 19
+  },
+  "readiness": {
+    "blocking": [
+      "owner_labelled_scenarios",
+      "recorded_snapshot_scenarios",
+      "distinct_sources",
+      "owner_authorization"
+    ],
+    "note": "A green regression suite is not safety acceptance and not operational readiness.",
+    "requirements": [
+      {
+        "detail": "every regression gate passes",
+        "met": true,
+        "name": "regression_gates_pass"
+      },
+      {
+        "detail": "no OPEN safety finding",
+        "met": true,
+        "name": "no_open_findings"
+      },
+      {
+        "detail": "0 owner-labelled scenarios; proposed minimum 30",
+        "met": false,
+        "name": "owner_labelled_scenarios"
+      },
+      {
+        "detail": "0 owner-labelled permission-cleared recorded snapshots; proposed minimum 10",
+        "met": false,
+        "name": "recorded_snapshot_scenarios"
+      },
+      {
+        "detail": "0 distinct recorded sources; proposed minimum 3",
+        "met": false,
+        "name": "distinct_sources"
+      },
+      {
+        "detail": "no explicit owner authorization (granted outside this tool, never inferred)",
+        "met": false,
+        "name": "owner_authorization"
+      }
+    ],
+    "status": "BLOCKED"
   },
   "report_version": 1,
+  "resolved_findings": {
+    "PEE2-F1": {
+      "regression_scenarios": [
+        "s17_promo_label_after_amount",
+        "s18_restricted_audience_after_amount",
+        "s21_eco_sticker_is_not_msrp",
+        "s22_dealer_price_is_not_oem_msrp"
+      ],
+      "summary": "LIST_PRICE was the default when no qualifier was recognised (promo, restricted-audience, eco-sticker, dealer or previous-price wording)"
+    },
+    "PEE2-F2": {
+      "regression_scenarios": [
+        "s19_swapped_trim_amount_pairs",
+        "s20_other_models_price_attributed"
+      ],
+      "summary": "model, trim, amount and type were not required to form one local price fact (swapped pairs and cross-model attribution validated)"
+    }
+  },
   "summary": {
     "claims": {
-      "coverage": 0.9692,
-      "coverage_when_resolved": 0.9675,
-      "emitted": 148,
-      "false_accepts": 14,
-      "false_accepts_ai": 14,
+      "coverage": 1.0,
+      "coverage_when_resolved": 1.0,
+      "emitted": 152,
+      "false_accepts": 0,
+      "false_accepts_ai": 0,
       "false_accepts_rule": 0,
-      "forbidden_hits": 14,
-      "labelled": 130,
-      "missed_claims": 4,
-      "precision": 0.8514,
+      "forbidden_hits": 0,
+      "labelled": 144,
+      "missed_claims": 0,
+      "precision": 0.9474,
       "tolerated_less_specific": 8
     },
     "conditions": {
@@ -1480,63 +1258,59 @@
       "missed": 0
     },
     "counts": {
-      "ai_calls": 36,
-      "cache_hits": 12,
-      "covered_claims": 126,
-      "detected_events": 24,
-      "disposition_mismatches": 12,
-      "emitted_claims": 148,
-      "engine_price_events": 16,
-      "false_accepts": 14,
-      "false_accepts_ai": 14,
+      "ai_calls": 49,
+      "cache_hits": 9,
+      "covered_claims": 144,
+      "detected_events": 33,
+      "emitted_claims": 152,
+      "engine_price_events": 21,
+      "false_accepts": 0,
+      "false_accepts_ai": 0,
       "false_accepts_rule": 0,
-      "forbidden_hits": 14,
-      "labelled_claims": 130,
+      "forbidden_hits": 0,
+      "labelled_claims": 144,
       "labelled_conditions": 3,
-      "labelled_events": 30,
-      "lost_pending_events": 6,
-      "matched_price_events": 16,
-      "missed_claims": 4,
-      "naive_calls": 68,
-      "naive_input_tokens": 75054,
-      "non_baseline_observations": 47,
-      "observations": 70,
+      "labelled_events": 33,
+      "matched_price_events": 21,
+      "missed_claims": 0,
+      "naive_calls": 78,
+      "naive_input_tokens": 106839,
+      "non_baseline_observations": 53,
+      "observations": 80,
       "p5_checked": 16,
-      "p5_forbidden_checked": 4,
-      "p5_forbidden_hits": 4,
-      "resolved_covered_claims": 119,
-      "resolved_labelled_claims": 123,
-      "review_items": 20,
-      "review_observations": 11,
-      "status_AI_EXTRACTED": 24,
+      "p5_forbidden_checked": 19,
+      "resolved_covered_claims": 134,
+      "resolved_labelled_claims": 134,
+      "review_items": 50,
+      "review_observations": 25,
+      "status_AI_EXTRACTED": 23,
       "status_DETERMINISTIC": 12,
-      "status_REVIEW": 11,
-      "status_UNCHANGED": 23,
-      "tokens_in": 36298,
-      "tokens_out": 6540,
+      "status_REVIEW": 25,
+      "status_UNCHANGED": 20,
+      "tokens_in": 62729,
+      "tokens_out": 9961,
       "tolerated_claims": 8,
-      "truth_price_events": 20,
-      "unsafe_resolves": 9,
+      "truth_price_events": 21,
       "unscripted_calls": 0,
-      "unused_scripted_replies": 6
+      "unused_scripted_replies": 0
     },
     "dispositions": {
-      "AI_EXTRACTED": 24,
+      "AI_EXTRACTED": 23,
       "DETERMINISTIC": 12,
-      "REVIEW": 11,
-      "UNCHANGED": 23,
+      "REVIEW": 25,
+      "UNCHANGED": 20,
       "false_reviews": 0,
-      "mismatches": 12,
-      "unsafe_resolves": 9
+      "mismatches": 0,
+      "unsafe_resolves": 0
     },
     "event_detection": {
-      "detected": 24,
+      "detected": 33,
       "false_event_rate": 0.0,
       "false_events": 0,
-      "labelled_events": 30,
-      "lost_pending_events": 6,
+      "labelled_events": 33,
+      "lost_pending_events": 0,
       "missed_events": 0,
-      "recall": 0.8
+      "recall": 1.0
     },
     "gates": {
       "ai_call_budget_violations": {
@@ -1565,6 +1339,11 @@
         "value": 0
       },
       "forbidden_hits": {
+        "limit": 0,
+        "pass": true,
+        "value": 0
+      },
+      "forbidden_stored": {
         "limit": 0,
         "pass": true,
         "value": 0
@@ -1610,20 +1389,20 @@
         "value": 0
       }
     },
-    "observations": 70,
+    "observations": 80,
     "p5": {
       "checked": 16,
-      "forbidden_checked": 4,
-      "forbidden_hits": 4,
+      "forbidden_checked": 19,
+      "forbidden_hits": 0,
       "mismatches": 0
     },
     "price_events": {
-      "engine_distinct_events": 16,
-      "labelled_distinct_events": 20,
-      "matched": 16,
+      "engine_distinct_events": 21,
+      "labelled_distinct_events": 21,
+      "matched": 21,
       "precision": 1.0,
-      "recall": 0.8,
-      "scrapes": 70
+      "recall": 1.0,
+      "scrapes": 80
     },
     "review_load": {
       "by_reason": {
@@ -1631,29 +1410,32 @@
         "DATE_NOT_INTERPRETED": 1,
         "DATE_NOT_IN_EVIDENCE": 3,
         "EVIDENCE_NOT_FOUND": 1,
+        "FACT_NOT_BOUND": 6,
         "NOT_VEHICLE_PRICE": 1,
-        "PRICE_TYPE_CONFLICT": 2,
+        "PRICE_TYPE_CONFLICT": 5,
+        "PRICE_TYPE_NOT_ALLOWED": 2,
+        "PRICE_TYPE_UNSUPPORTED": 5,
         "PROVIDER_FAILED": 1,
         "TOKEN_BUDGET_EXHAUSTED": 1,
         "TRIM_AMBIGUOUS": 2,
-        "UNCOVERED_AMOUNT": 6
+        "UNCOVERED_AMOUNT": 20
       },
-      "items_per_100_observations": 28.57,
-      "review_items": 20,
-      "review_observations": 11,
-      "review_rate": 0.1571
+      "items_per_100_observations": 62.5,
+      "review_items": 50,
+      "review_observations": 25,
+      "review_rate": 0.3125
     },
-    "scenarios": 23,
+    "scenarios": 27,
     "usage": {
-      "ai_calls": 36,
-      "ai_calls_per_100_observations": 51.43,
-      "cache_hits": 12,
-      "calls_avoided_vs_naive": 32,
-      "input_token_reduction_vs_naive": 0.5164,
-      "naive_every_fetch_calls": 68,
-      "naive_every_fetch_input_tokens": 75054,
-      "tokens_in": 36298,
-      "tokens_out": 6540
+      "ai_calls": 49,
+      "ai_calls_per_100_observations": 61.25,
+      "cache_hits": 9,
+      "calls_avoided_vs_naive": 29,
+      "input_token_reduction_vs_naive": 0.4129,
+      "naive_every_fetch_calls": 78,
+      "naive_every_fetch_input_tokens": 106839,
+      "tokens_in": 62729,
+      "tokens_out": 9961
     }
   },
   "summary_by_evidence_kind": {
@@ -1692,7 +1474,7 @@
         "matched_price_events": 9,
         "missed_claims": 0,
         "naive_calls": 32,
-        "naive_input_tokens": 36130,
+        "naive_input_tokens": 44654,
         "non_baseline_observations": 26,
         "observations": 34,
         "p5_checked": 13,
@@ -1704,7 +1486,7 @@
         "status_DETERMINISTIC": 12,
         "status_REVIEW": 2,
         "status_UNCHANGED": 14,
-        "tokens_in": 9251,
+        "tokens_in": 11384,
         "tokens_out": 2044,
         "tolerated_claims": 8,
         "truth_price_events": 9,
@@ -1756,6 +1538,11 @@
           "value": 0
         },
         "forbidden_hits": {
+          "limit": 0,
+          "pass": true,
+          "value": 0
+        },
+        "forbidden_stored": {
           "limit": 0,
           "pass": true,
           "value": 0
@@ -1833,25 +1620,25 @@
         "ai_calls_per_100_observations": 23.53,
         "cache_hits": 3,
         "calls_avoided_vs_naive": 24,
-        "input_token_reduction_vs_naive": 0.744,
+        "input_token_reduction_vs_naive": 0.7451,
         "naive_every_fetch_calls": 32,
-        "naive_every_fetch_input_tokens": 36130,
-        "tokens_in": 9251,
+        "naive_every_fetch_input_tokens": 44654,
+        "tokens_in": 11384,
         "tokens_out": 2044
       }
     },
     "SYNTHETIC_ADVERSARIAL": {
       "claims": {
-        "coverage": 0.8182,
-        "coverage_when_resolved": 0.8095,
-        "emitted": 32,
-        "false_accepts": 14,
-        "false_accepts_ai": 14,
+        "coverage": 1.0,
+        "coverage_when_resolved": 1.0,
+        "emitted": 36,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 14,
-        "labelled": 22,
-        "missed_claims": 4,
-        "precision": 0.5625,
+        "forbidden_hits": 0,
+        "labelled": 36,
+        "missed_claims": 0,
+        "precision": 1.0,
         "tolerated_less_specific": 0
       },
       "conditions": {
@@ -1859,62 +1646,58 @@
         "missed": 0
       },
       "counts": {
-        "ai_calls": 28,
-        "cache_hits": 9,
-        "covered_claims": 18,
-        "detected_events": 12,
-        "disposition_mismatches": 12,
-        "emitted_claims": 32,
-        "engine_price_events": 7,
-        "false_accepts": 14,
-        "false_accepts_ai": 14,
+        "ai_calls": 41,
+        "cache_hits": 6,
+        "covered_claims": 36,
+        "detected_events": 21,
+        "emitted_claims": 36,
+        "engine_price_events": 12,
+        "false_accepts": 0,
+        "false_accepts_ai": 0,
         "false_accepts_rule": 0,
-        "forbidden_hits": 14,
-        "labelled_claims": 22,
+        "forbidden_hits": 0,
+        "labelled_claims": 36,
         "labelled_conditions": 1,
-        "labelled_events": 18,
-        "lost_pending_events": 6,
-        "matched_price_events": 7,
-        "missed_claims": 4,
-        "naive_calls": 36,
-        "naive_input_tokens": 38924,
-        "non_baseline_observations": 21,
-        "observations": 36,
+        "labelled_events": 21,
+        "matched_price_events": 12,
+        "missed_claims": 0,
+        "naive_calls": 46,
+        "naive_input_tokens": 62185,
+        "non_baseline_observations": 27,
+        "observations": 46,
         "p5_checked": 3,
-        "p5_forbidden_checked": 4,
-        "p5_forbidden_hits": 4,
-        "resolved_covered_claims": 17,
-        "resolved_labelled_claims": 21,
-        "review_items": 16,
-        "review_observations": 9,
-        "status_AI_EXTRACTED": 18,
-        "status_REVIEW": 9,
-        "status_UNCHANGED": 9,
-        "tokens_in": 27047,
-        "tokens_out": 4496,
+        "p5_forbidden_checked": 19,
+        "resolved_covered_claims": 32,
+        "resolved_labelled_claims": 32,
+        "review_items": 46,
+        "review_observations": 23,
+        "status_AI_EXTRACTED": 17,
+        "status_REVIEW": 23,
+        "status_UNCHANGED": 6,
+        "tokens_in": 51345,
+        "tokens_out": 7917,
         "tolerated_claims": 0,
-        "truth_price_events": 11,
-        "unsafe_resolves": 9,
+        "truth_price_events": 12,
         "unscripted_calls": 0,
-        "unused_scripted_replies": 6
+        "unused_scripted_replies": 0
       },
       "dispositions": {
-        "AI_EXTRACTED": 18,
+        "AI_EXTRACTED": 17,
         "DETERMINISTIC": 0,
-        "REVIEW": 9,
-        "UNCHANGED": 9,
+        "REVIEW": 23,
+        "UNCHANGED": 6,
         "false_reviews": 0,
-        "mismatches": 12,
-        "unsafe_resolves": 9
+        "mismatches": 0,
+        "unsafe_resolves": 0
       },
       "event_detection": {
-        "detected": 12,
+        "detected": 21,
         "false_event_rate": 0.0,
         "false_events": 0,
-        "labelled_events": 18,
-        "lost_pending_events": 6,
+        "labelled_events": 21,
+        "lost_pending_events": 0,
         "missed_events": 0,
-        "recall": 0.6667
+        "recall": 1.0
       },
       "gates": {
         "ai_call_budget_violations": {
@@ -1929,13 +1712,13 @@
         },
         "disposition_mismatches": {
           "limit": 0,
-          "pass": false,
-          "value": 12
+          "pass": true,
+          "value": 0
         },
         "false_accepts": {
           "limit": 0,
-          "pass": false,
-          "value": 14
+          "pass": true,
+          "value": 0
         },
         "false_events": {
           "limit": 0,
@@ -1944,18 +1727,23 @@
         },
         "forbidden_hits": {
           "limit": 0,
-          "pass": false,
-          "value": 14
+          "pass": true,
+          "value": 0
+        },
+        "forbidden_stored": {
+          "limit": 0,
+          "pass": true,
+          "value": 0
         },
         "lost_pending_events": {
           "limit": 0,
-          "pass": false,
-          "value": 6
+          "pass": true,
+          "value": 0
         },
         "missed_claims": {
           "limit": 0,
-          "pass": false,
-          "value": 4
+          "pass": true,
+          "value": 0
         },
         "missed_events": {
           "limit": 0,
@@ -1964,8 +1752,8 @@
         },
         "p5_forbidden_hits": {
           "limit": 0,
-          "pass": false,
-          "value": 4
+          "pass": true,
+          "value": 0
         },
         "p5_mismatches": {
           "limit": 0,
@@ -1974,8 +1762,8 @@
         },
         "unsafe_resolves": {
           "limit": 0,
-          "pass": false,
-          "value": 9
+          "pass": true,
+          "value": 0
         },
         "unscripted_calls": {
           "limit": 0,
@@ -1984,59 +1772,62 @@
         },
         "unused_scripted_replies": {
           "limit": 0,
-          "pass": false,
-          "value": 6
+          "pass": true,
+          "value": 0
         }
       },
-      "observations": 36,
+      "observations": 46,
       "p5": {
         "checked": 3,
-        "forbidden_checked": 4,
-        "forbidden_hits": 4,
+        "forbidden_checked": 19,
+        "forbidden_hits": 0,
         "mismatches": 0
       },
       "price_events": {
-        "engine_distinct_events": 7,
-        "labelled_distinct_events": 11,
-        "matched": 7,
+        "engine_distinct_events": 12,
+        "labelled_distinct_events": 12,
+        "matched": 12,
         "precision": 1.0,
-        "recall": 0.6364,
-        "scrapes": 36
+        "recall": 1.0,
+        "scrapes": 46
       },
       "review_load": {
         "by_reason": {
           "CONDITIONS_NOT_INTERPRETED": 1,
           "DATE_NOT_IN_EVIDENCE": 1,
           "EVIDENCE_NOT_FOUND": 1,
+          "FACT_NOT_BOUND": 6,
           "NOT_VEHICLE_PRICE": 1,
-          "PRICE_TYPE_CONFLICT": 2,
+          "PRICE_TYPE_CONFLICT": 5,
+          "PRICE_TYPE_NOT_ALLOWED": 2,
+          "PRICE_TYPE_UNSUPPORTED": 5,
           "PROVIDER_FAILED": 1,
           "TOKEN_BUDGET_EXHAUSTED": 1,
           "TRIM_AMBIGUOUS": 2,
-          "UNCOVERED_AMOUNT": 6
+          "UNCOVERED_AMOUNT": 20
         },
-        "items_per_100_observations": 44.44,
-        "review_items": 16,
-        "review_observations": 9,
-        "review_rate": 0.25
+        "items_per_100_observations": 100.0,
+        "review_items": 46,
+        "review_observations": 23,
+        "review_rate": 0.5
       },
-      "scenarios": 15,
+      "scenarios": 19,
       "usage": {
-        "ai_calls": 28,
-        "ai_calls_per_100_observations": 77.78,
-        "cache_hits": 9,
-        "calls_avoided_vs_naive": 8,
-        "input_token_reduction_vs_naive": 0.3051,
-        "naive_every_fetch_calls": 36,
-        "naive_every_fetch_input_tokens": 38924,
-        "tokens_in": 27047,
-        "tokens_out": 4496
+        "ai_calls": 41,
+        "ai_calls_per_100_observations": 89.13,
+        "cache_hits": 6,
+        "calls_avoided_vs_naive": 5,
+        "input_token_reduction_vs_naive": 0.1743,
+        "naive_every_fetch_calls": 46,
+        "naive_every_fetch_input_tokens": 62185,
+        "tokens_in": 51345,
+        "tokens_out": 7917
       }
     }
   },
   "summary_owner_labelled": null,
   "usage_notes": {
     "chars_per_token_assumed": 2.0,
-    "fixed_system_prompt_tokens_per_call": 891
+    "fixed_system_prompt_tokens_per_call": 1158
   }
 }

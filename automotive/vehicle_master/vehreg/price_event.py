@@ -733,7 +733,7 @@ class PriceEventEngine:
                 kept, segments=full.segments, document_text=text,
                 document_id=document.document_id, source_id=result.source_id,
                 evidence_hash=full.evidence_hash, extraction_method=self._method(),
-                catalog=self.catalog, cache_hit=True)
+                catalog=self.catalog, cache_hit=True, target_role=target.role)
             claims, details = self._finish(validated, deterministic)
             return EventOutcome(target.id, EventStatus.UNCHANGED, (), claims, details,
                                 validated.review, cache_hit=True,
@@ -773,7 +773,7 @@ class PriceEventEngine:
             raw_claims, segments=payload.segments, document_text=text,
             document_id=document.document_id, source_id=result.source_id,
             evidence_hash=payload.evidence_hash, extraction_method=self._method(),
-            catalog=self.catalog, cache_hit=cache_hit)
+            catalog=self.catalog, cache_hit=cache_hit, target_role=target.role)
         review = list(validated.review)
         accepted_raw = list(validated.accepted_raw)
         final = validated
@@ -791,7 +791,7 @@ class PriceEventEngine:
                 [*accepted_raw, *carried], segments=full.segments, document_text=text,
                 document_id=document.document_id, source_id=result.source_id,
                 evidence_hash=payload.evidence_hash, extraction_method=self._method(),
-                catalog=self.catalog, cache_hit=cache_hit)
+                catalog=self.catalog, cache_hit=cache_hit, target_role=target.role)
         claims, details = self._finish(final, deterministic)
 
         # Resolved = nothing was rejected, every plausible vehicle price in the

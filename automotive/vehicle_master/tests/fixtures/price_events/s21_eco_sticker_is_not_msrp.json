@@ -29,6 +29,9 @@
             "from": null,
             "to": null
           }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|689000"
         ]
       },
       "ai_replies": [
@@ -69,6 +72,9 @@
             "from": null,
             "to": null
           }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|689000"
         ]
       },
       "noise": "b2",
@@ -93,9 +99,14 @@
       ]
     }
   ],
-  "known_finding": {
-    "id": "PEE2-F1",
-    "status": "OPEN",
-    "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-  }
+  "regression_for": "PEE2-F1",
+  "p5": true,
+  "ledger_seed": [
+    {
+      "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev",
+      "amount": 699000,
+      "price_type": "LIST_PRICE",
+      "observed_at": "2026-09-01"
+    }
+  ]
 }

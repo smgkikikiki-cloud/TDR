@@ -317,7 +317,7 @@ def test_msrp_vs_campaign_vs_finance_classification() -> None:
     campaign = next(c for c in outcome.ai_claims if c.price_type is PriceType.CAMPAIGN_PRICE)
     assert (campaign.effective_from, campaign.effective_to) == ("2026-09-21", "2026-09-30")
     assert campaign.reference_price_thb == 699000
-    assert campaign.extraction_method == "ai_event:pee-1:price-event-v1"
+    assert campaign.extraction_method == "ai_event:pee-1:price-event-v2"
 
 
 def test_claims_are_evidence_only_no_invented_identity() -> None:

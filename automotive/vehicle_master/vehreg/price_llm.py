@@ -17,7 +17,7 @@ import json
 import re
 from typing import Callable, Optional, Protocol, Sequence
 
-PROMPT_VERSION = "price-event-v1"
+PROMPT_VERSION = "price-event-v2"
 
 #: Keys a model must never be able to use to smuggle identity into a claim.
 FORBIDDEN_IDENTITY_KEYS = frozenset({
@@ -101,7 +101,7 @@ nothing else:
   "effective_to": "YYYY-MM-DD or null",
   "reference_price_thb": <integer the offer is compared against, or null>,
   "conditions": ["<offer condition quoted verbatim>"] or null,
-  "evidence_text": "<verbatim quote, at most 200 characters, containing the trim AND the amount>",
+  "evidence_text": "<verbatim quote of ONE price fact, at most 200 characters: the model, the trim, the price wording and the amount, in that order>",
   "evidence_segment": <integer index N of the [SN] excerpt the quote comes from>
 }]}
 
@@ -116,6 +116,13 @@ or a year. A date is only valid when day, month and year are all written.
 promotional or discounted price is CAMPAIGN_PRICE. A price that requires \
 financing is FINANCE_PRICE. A price described as estimated/expected is \
 ESTIMATED_PRICE. If you cannot tell, use UNKNOWN.
+- One quote = one price fact. If a line lists several trims or prices, quote \
+each price separately with its own model name and trim; if the model or the \
+trim is not written next to that price, return null for the trim instead of \
+borrowing it from another line.
+- Write LIST_PRICE only when the page says recommended retail / list price \
+(MSRP). A price with a promotion, financing, audience, eco-sticker, dealer or \
+"previous price" wording is not LIST_PRICE; if unsure use UNKNOWN.
 - Do not report deposits, down payments, monthly instalments, interest rates \
 or booking fees as claims.
 - Do not output any identifier (trim id, campaign id, option id).

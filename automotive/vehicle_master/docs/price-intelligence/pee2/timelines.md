@@ -173,8 +173,9 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 599,000 LIST | – | 1 | – | MAX+ LIST 599,000: PENDING_REPLACEMENT |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 599,000 LIST | – | 0 | hit | MAX+ LIST 599,000: CONFIRMED_REPLACEMENT |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_CONFLICT,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 599,000 CAMPAIGN | – | 1 | – | MAX+ CAMPAIGN 599,000: REVIEW |
+| o3 | 2026-10-07T12:00 | UNCHANGED | – | – | MAX+ 599,000 CAMPAIGN | – | 0 | hit | MAX+ CAMPAIGN 599,000: REVIEW |
 
 ## s18_restricted_audience_after_amount — A restricted-audience price is not a general MSRP
 
@@ -182,8 +183,8 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 599,000 LIST | – | 1 | – | MAX+ LIST 599,000: PENDING_REPLACEMENT |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 599,000 LIST | – | 0 | hit | MAX+ LIST 599,000: CONFIRMED_REPLACEMENT |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_UNSUPPORTED,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_UNSUPPORTED,UNCOVERED_AMOUNT | 1 | – | – |
 
 ## s19_swapped_trim_amount_pairs — Trims and amounts swapped inside one quoted row
 
@@ -191,8 +192,9 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 789,000 LIST<br>ULTRA 699,000 LIST | – | 1 | – | MAX+ LIST 789,000: PENDING_REPLACEMENT<br>ULTRA LIST 699,000: PENDING_REPLACEMENT |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 789,000 LIST<br>ULTRA 699,000 LIST | – | 0 | hit | MAX+ LIST 789,000: CONFIRMED_REPLACEMENT<br>ULTRA LIST 699,000: CONFIRMED_REPLACEMENT |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | FACT_NOT_BOUND,FACT_NOT_BOUND,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 699,000 LIST<br>ULTRA 789,000 LIST | – | 1 | – | MAX+ LIST 699,000: NO_CHANGE<br>ULTRA LIST 789,000: NO_CHANGE |
+| o3 | 2026-10-07T12:00 | UNCHANGED | – | – | MAX+ 699,000 LIST<br>ULTRA 789,000 LIST | – | 0 | hit | MAX+ LIST 699,000: NO_CHANGE<br>ULTRA LIST 789,000: NO_CHANGE |
 
 ## s20_other_models_price_attributed — Another model's price attributed to JAECOO 5 EV
 
@@ -200,8 +202,8 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 709,000 LIST<br>ULTRA 809,000 LIST | – | 1 | – | – |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 709,000 LIST<br>ULTRA 809,000 LIST | – | 0 | hit | – |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | ULTRA 809,000 LIST | FACT_NOT_BOUND,UNCOVERED_AMOUNT | 1 | – | ULTRA LIST 809,000: NO_CHANGE |
+| o2 | 2026-10-06T11:00 | AI_EXTRACTED | FIRST_SEEN | – | ULTRA 809,000 LIST<br>MAX+ 709,000 LIST | – | 1 | – | ULTRA LIST 809,000: NO_CHANGE<br>MAX+ LIST 709,000: REVIEW |
 
 ## s21_eco_sticker_is_not_msrp — ECO-sticker price must never become an OEM MSRP (roadmap P-1)
 
@@ -209,8 +211,8 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 689,000 LIST | – | 1 | – | – |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 689,000 LIST | – | 0 | hit | – |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_CONFLICT,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_NOT_ALLOWED,UNCOVERED_AMOUNT | 1 | – | – |
 
 ## s22_dealer_price_is_not_oem_msrp — A dealer's own price must not become the OEM MSRP
 
@@ -218,8 +220,8 @@ role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSE
 
 | obs | t | status | changes | rule | AI | review | calls | cache | P5 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 650,000 LIST | – | 1 | – | – |
-| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | MAX+ 650,000 LIST | – | 0 | hit | – |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_CONFLICT,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_NOT_ALLOWED,UNCOVERED_AMOUNT | 1 | – | – |
 
 ## s23_missing_offer_is_not_zero — An offer vanishing from a page is not a price of zero or an expiry
 
@@ -230,4 +232,40 @@ role `PROMOTION` · evidence `RECONSTRUCTED_FROM_PILOT_NOTES` · labels `PROPOSE
 | o1 | 2026-10-05T10:00 | DETERMINISTIC | FIRST_SEEN | MAX+ 599,000 CAMPAIGN<br>MAX+ 699,000 LIST<br>ULTRA 699,000 CAMPAIGN<br>ULTRA 809,000 ESTIMATED | – | – | 0 | – | – |
 | o2 | 2026-10-06T11:00 | DETERMINISTIC | AMOUNTS,CONDITIONS,DATES,LABELS | – | – | – | 0 | – | – |
 | o3 | 2026-10-07T12:00 | UNCHANGED | – | – | – | – | 0 | – | – |
+
+## s24_shared_model_row_fails_closed — A model named once for several prices cannot be bound to the second
+
+role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSED_PENDING_OWNER_REVIEW`
+
+| obs | t | status | changes | rule | AI | review | calls | cache | P5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | MAX+ 699,000 LIST | FACT_NOT_BOUND,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | REVIEW | FIRST_SEEN | – | MAX+ 699,000 LIST | FACT_NOT_BOUND,UNCOVERED_AMOUNT | 1 | – | – |
+
+## s25_neighbouring_wording_does_not_leak — A neighbour's promo / finance wording must not change an MSRP
+
+role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSED_PENDING_OWNER_REVIEW`
+
+| obs | t | status | changes | rule | AI | review | calls | cache | P5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| o1 | 2026-10-05T10:00 | AI_EXTRACTED | FIRST_SEEN | – | LONG RANGE MAX 679,000 LIST<br>MAX+ 599,000 CAMPAIGN<br>MAX+ 699,000 LIST<br>ULTRA 649,000 FINANCE | – | 1 | – | – |
+| o2 | 2026-10-06T11:00 | UNCHANGED | – | – | LONG RANGE MAX 679,000 LIST<br>MAX+ 599,000 CAMPAIGN<br>MAX+ 699,000 LIST<br>ULTRA 649,000 FINANCE | – | 0 | hit | – |
+
+## s26_bare_price_wording_is_unproven — Bare 'ราคา' is not affirmative MSRP evidence (owner policy item)
+
+role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSED_PENDING_OWNER_REVIEW`
+
+| obs | t | status | changes | rule | AI | review | calls | cache | P5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_UNSUPPORTED,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | AI_EXTRACTED | FIRST_SEEN | – | MAX+ 699,000 LIST | – | 1 | – | – |
+
+## s27_previous_price_is_not_current — A struck-through previous price must not become the list price
+
+role `CURRENT_MODEL_PAGE` · evidence `SYNTHETIC_ADVERSARIAL` · labels `PROPOSED_PENDING_OWNER_REVIEW`
+
+| obs | t | status | changes | rule | AI | review | calls | cache | P5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| o1 | 2026-10-05T10:00 | REVIEW | FIRST_SEEN | – | – | FACT_NOT_BOUND,PRICE_TYPE_UNSUPPORTED,UNCOVERED_AMOUNT | 1 | – | – |
+| o2 | 2026-10-06T11:00 | REVIEW | FIRST_SEEN | – | – | PRICE_TYPE_UNSUPPORTED,UNCOVERED_AMOUNT | 1 | – | – |
 

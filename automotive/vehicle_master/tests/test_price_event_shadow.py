@@ -65,7 +65,7 @@ def _subset(tmp_path: Path, *names: str) -> Path:
 
 def test_seed_corpus_is_honest_about_its_provenance(corpus) -> None:
     scenarios = load_scenarios()
-    assert len(scenarios) >= 23
+    assert len(scenarios) >= 27
     for scn in scenarios:
         assert scn.provenance["rights"], scn.id
         assert scn.label_status == "PROPOSED_PENDING_OWNER_REVIEW", scn.id
@@ -189,7 +189,9 @@ def test_timelines_are_independent_of_hash_seed_and_working_directory(tmp_path) 
          "--out", str(STORED), "--check", "--enforce"],
         cwd=tmp_path, env=env, capture_output=True, text=True, timeout=300)
     assert done.returncode == 0, done.stdout + done.stderr
-    assert json.loads(done.stdout) == {"drift": [], "failed_gates": []}
+    # Exit 0 = the regression gates pass; the SAME run reports readiness BLOCKED.
+    assert json.loads(done.stdout) == {"drift": [], "failed_gates": [],
+                                       "readiness": "BLOCKED"}
 
 
 # --------------------------------------- what the seed corpus says about PEE-1
@@ -200,7 +202,7 @@ def test_regression_gates_pass_on_the_seed_corpus(corpus) -> None:
         k: g["value"] for k, g in gates.items() if not g["pass"]}
     # Sanity: the gates ran over real work, not an empty set.
     s = corpus["summary"]
-    assert s["observations"] >= 50 and s["event_detection"]["labelled_events"] >= 20
+    assert s["observations"] >= 75 and s["event_detection"]["labelled_events"] >= 30
     assert s["p5"]["checked"] >= 15 and s["claims"]["labelled"] >= 100
 
 
@@ -267,30 +269,134 @@ def test_cache_and_budget_behaviour_is_measured(corpus) -> None:
     assert outage[0]["ai_calls"] == 3 and outage[0]["status"] == "REVIEW"
 
 
-# --------------------------------------------------- OPEN findings (not fixed here)
+# ------------------------------- PEE2-F1 / PEE2-F2: fixed and enforced as regressions
 
-def test_open_findings_still_reproduce_and_are_excluded_only_from_the_gates(corpus) -> None:
-    findings = corpus["open_findings"]
-    assert {f["finding"] for f in findings} == {"PEE2-F1", "PEE2-F2"}
-    assert {f["scenario"][:3] for f in findings} == {
-        "s17", "s18", "s19", "s20", "s21", "s22"}
-    for f in findings:
-        # If this fails the engine was fixed: mark the fixture resolved and move
-        # the scenario into the regression set instead of deleting the evidence.
-        assert f["reproduces"], f"{f['scenario']} no longer reproduces {f['finding']}"
-    headline = corpus["summary"]["claims"]
-    assert headline["false_accepts"] >= 12 and headline["forbidden_hits"] >= 12
-    assert corpus["summary"]["gates"]["false_accepts"]["value"] == 0
-    # The consequence that matters downstream: a wrong claim reaches P5 confirmation.
-    assert corpus["summary"]["p5"]["forbidden_hits"] >= 3
+FORMER = ("s17", "s18", "s19", "s20", "s21", "s22")
 
 
-def test_wrong_pairing_is_resolved_and_then_kept_alive_by_the_cache(corpus) -> None:
-    rows = next(t for t in corpus["timelines"] if t["id"].startswith("s19"))["observations"]
-    assert rows[0]["status"] == "AI_EXTRACTED"            # PEE2-F2: should have been REVIEW
-    assert rows[1]["status"] == "UNCHANGED" and rows[1]["ai_calls"] == 0
-    assert rows[1]["ai_claims"] == rows[0]["ai_claims"]   # the wrong pair is re-emitted
-    assert all(x["disposition"] == "CONFIRMED_REPLACEMENT" for x in rows[1]["p5"])
+def _forbidden_keys(scn) -> set[tuple]:
+    keys: set[tuple] = set()
+    for obs in scn.observations:
+        keys |= shadow._spec_set(obs.expect.get("forbidden", []))
+    for obs in scn.observations:
+        keys -= shadow._spec_set(obs.expect.get("claims", []))
+    return keys
+
+
+def test_former_findings_are_ordinary_regressions_with_nothing_left_open(corpus) -> None:
+    assert corpus["open_findings"] == []
+    resolved = corpus["resolved_findings"]
+    assert {fid: sorted(i["regression_scenarios"]) for fid, i in resolved.items()} == {
+        "PEE2-F1": ["s17_promo_label_after_amount", "s18_restricted_audience_after_amount",
+                    "s21_eco_sticker_is_not_msrp", "s22_dealer_price_is_not_oem_msrp"],
+        "PEE2-F2": ["s19_swapped_trim_amount_pairs", "s20_other_models_price_attributed"]}
+    # Their scenarios are INSIDE the gates now, and every safety counter is zero.
+    gated = [e for e in corpus["evaluations"] if not e["known_finding"]]
+    assert {e["id"][:3] for e in gated} >= set(FORMER)
+    for name in ("false_accepts", "forbidden_hits", "unsafe_resolves", "forbidden_stored",
+                 "p5_forbidden_hits", "lost_pending_events", "disposition_mismatches"):
+        assert corpus["summary"]["gates"][name]["value"] == 0, name
+        assert corpus["summary"]["counts"].get(name, 0) == 0, name   # headline == gated
+
+
+def test_forbidden_claims_are_never_accepted_cached_reemitted_or_sent_to_p5(corpus) -> None:
+    scenarios = {s.id: s for s in load_scenarios()}
+    checked = 0
+    for tl in corpus["timelines"]:
+        if tl["id"][:3] not in FORMER + ("s07", "s08", "s09", "s10", "s11", "s13", "s24", "s26", "s27"):
+            continue
+        banned = _forbidden_keys(scenarios[tl["id"]])
+        if not banned:
+            continue
+        checked += 1
+        for row in tl["observations"]:
+            emitted = {tuple(c) for c in row["rule_claims"]} | {tuple(c) for c in row["ai_claims"]}
+            assert not (emitted & banned), (tl["id"], row["obs"], emitted & banned)   # accepted / re-emitted
+            for p5 in row["p5"]:                                                      # reached P5
+                assert tuple(p5["claim"]) not in banned, (tl["id"], row["obs"], p5)
+                assert p5["disposition"] != "CONFIRMED_REPLACEMENT" or \
+                    tuple(p5["claim"]) not in banned
+        assert not ({tuple(k) for k in tl["stored_claims"]} & banned), tl["id"]       # cached / stored
+    assert checked >= 9
+
+
+def test_f2_swapped_pairs_stay_in_review_then_recover_with_correct_local_facts(corpus) -> None:
+    rows = {r["obs"]: r for r in next(
+        t for t in corpus["timelines"] if t["id"].startswith("s19"))["observations"]}
+    assert rows["o1"]["status"] == "REVIEW" and rows["o1"]["ai_claims"] == []
+    assert rows["o1"]["review"].count("FACT_NOT_BOUND") == 2 and rows["o1"]["p5"] == []
+    assert rows["o2"]["status"] == "AI_EXTRACTED" and len(rows["o2"]["ai_claims"]) == 2
+    # The 24-hour re-observation path is intact: served from the stored interpretation.
+    assert rows["o3"]["status"] == "UNCHANGED" and rows["o3"]["ai_calls"] == 0
+    assert rows["o3"]["ai_claims"] == rows["o2"]["ai_claims"]
+    assert [x["disposition"] for x in rows["o3"]["p5"]] == ["NO_CHANGE", "NO_CHANGE"]
+
+
+def test_f1_promo_after_amount_is_reclassified_not_accepted_as_msrp(corpus) -> None:
+    rows = {r["obs"]: r for r in next(
+        t for t in corpus["timelines"] if t["id"].startswith("s17"))["observations"]}
+    assert rows["o1"]["status"] == "REVIEW" and rows["o1"]["review"][0] == "PRICE_TYPE_CONFLICT"
+    assert [c[3] for c in rows["o2"]["ai_claims"]] == ["CAMPAIGN_PRICE"]       # right type is accepted
+    assert rows["o3"]["ai_calls"] == 0 and rows["o3"]["ai_claims"] == rows["o2"]["ai_claims"]
+    # A campaign price is never the list price, so P5 sees no list-price stream at all.
+    assert all(x["claim"][3] != "LIST_PRICE" for o in rows.values() for x in o["p5"])
+
+
+def test_positive_scenarios_and_cross_item_wording_are_preserved(corpus) -> None:
+    by_id = {t["id"][:3]: t["observations"] for t in corpus["timelines"]}
+    rows = by_id["s25"]                                   # MSRP / promo / finance neighbours
+    assert rows[0]["status"] == "AI_EXTRACTED" and rows[0]["review"] == []
+    assert {(c[1], c[3]) for c in rows[0]["ai_claims"]} == {
+        ("MAX+", "LIST_PRICE"), ("MAX+", "CAMPAIGN_PRICE"), ("ULTRA", "FINANCE_PRICE"),
+        ("LONG RANGE MAX", "LIST_PRICE")}
+    assert by_id["s06"][0]["status"] == "AI_EXTRACTED"    # bare 'Price' on a PRICE_LIST card
+    assert by_id["s03"][1]["status"] == "AI_EXTRACTED"    # terms-only change still resolves
+    assert by_id["s16"][1]["ai_calls"] == 0 and by_id["s16"][1]["cache_hit"] is True
+
+
+def test_shared_rows_and_bare_wording_fail_closed_with_a_specific_reason(corpus) -> None:
+    shared = next(t for t in corpus["timelines"] if t["id"].startswith("s24"))["observations"]
+    assert shared[0]["status"] == "REVIEW" and "FACT_NOT_BOUND" in shared[0]["review"]
+    assert [c[1] for c in shared[0]["ai_claims"]] == ["MAX+"]        # only the locally bound fact
+    bare = next(t for t in corpus["timelines"] if t["id"].startswith("s26"))["observations"]
+    assert bare[0]["status"] == "REVIEW" and bare[0]["review"][0] == "PRICE_TYPE_UNSUPPORTED"
+    assert bare[1]["status"] == "AI_EXTRACTED"                       # explicit MSRP wording works
+
+
+# ------------------------- regression PASS is not operational readiness
+
+def test_regression_pass_is_reported_separately_from_readiness_blocked(corpus) -> None:
+    assert all(g["pass"] for g in corpus["summary"]["gates"].values())
+    ready = corpus["readiness"]
+    assert ready["status"] == "BLOCKED"
+    unmet = {r["name"] for r in ready["requirements"] if not r["met"]}
+    assert unmet == {"owner_labelled_scenarios", "recorded_snapshot_scenarios",
+                     "distinct_sources", "owner_authorization"}
+    report = shadow.render_report_md(corpus)
+    assert "**Regression gates:** PASS" in report
+    assert "**Operational readiness: BLOCKED**" in report
+    assert report.index("Verdicts") < report.index("Fixture provenance")
+
+
+def _fake_scenario(label: str, kind: str, source: str):
+    return type("S", (), {"label_status": label, "evidence_kind": kind, "source_id": source})()
+
+
+def test_readiness_can_never_be_granted_by_the_harness() -> None:
+    passing = {"gates": {"x": {"pass": True}}}
+    owner = [_fake_scenario("OWNER_LABELLED", "RECORDED_SNAPSHOT", f"src{i % 4}")
+             for i in range(40)]
+    ready = shadow.assess_readiness(owner, passing, [])
+    # Every evidence requirement is met, and it is STILL not ready: authorization is the
+    # owner's decision, made outside this tool.
+    assert ready["status"] == "AWAITING_OWNER_AUTHORIZATION" and ready["status"] != "READY"
+    assert ready["blocking"] == ["owner_authorization"]
+    assert shadow.assess_readiness(owner, passing, [{"finding": "X"}])["status"] == "BLOCKED"
+    assert shadow.assess_readiness(owner, {"gates": {"x": {"pass": False}}}, [])["status"] == "BLOCKED"
+    assert shadow.assess_readiness(owner[:5], passing, [])["status"] == "BLOCKED"
+    assert shadow.assess_readiness(
+        [_fake_scenario("PROPOSED_PENDING_OWNER_REVIEW", "RECORDED_SNAPSHOT", f"s{i}")
+         for i in range(40)], passing, [])["status"] == "BLOCKED"          # proposed != owner-labelled
 
 
 # ------------------------------------------- the harness can actually see defects
@@ -307,15 +413,17 @@ def test_mutation_unanswered_trigger_is_caught(tmp_path, catalog, monkeypatch) -
     assert failed.get("unsafe_resolves", 0) >= 1 and failed.get("lost_pending_events", 0) >= 1
 
 
-def test_mutation_conditional_wording_guard_removed_is_caught(
+def test_mutation_without_fact_binding_the_old_defects_return(
         tmp_path, catalog, monkeypatch) -> None:
-    names = ("s07_finance_conditional_not_msrp",)
+    """Re-introduce the pre-fix behaviour (default to LIST, no local binding)."""
+    names = ("s07_finance_conditional_not_msrp", "s17_promo_label_after_amount",
+             "s19_swapped_trim_amount_pairs", "s21_eco_sticker_is_not_msrp")
     assert _gate_failures(tmp_path, catalog, *names) == {}
-    never = re.compile(r"(?!x)x")
-    monkeypatch.setattr(price_event_validate, "_TRAIL_FINANCE", never)
-    monkeypatch.setattr(price_event_validate, "_TRAIL_CONDITIONAL", never)
+    monkeypatch.setattr(price_event_validate, "bind_fact",
+                        lambda *a, **k: price_event_validate.FactBinding(True, "LIST"))
     failed = _gate_failures(tmp_path, catalog, *names)
-    assert failed.get("forbidden_hits", 0) >= 1 and failed.get("false_accepts", 0) >= 1
+    assert failed.get("forbidden_hits", 0) >= 4 and failed.get("unsafe_resolves", 0) >= 3
+    assert failed.get("forbidden_stored", 0) >= 1 and failed.get("p5_forbidden_hits", 0) >= 1
 
 
 def test_mutation_noise_sensitive_fingerprint_is_caught(tmp_path, catalog, monkeypatch) -> None:

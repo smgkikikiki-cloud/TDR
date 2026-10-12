@@ -29,6 +29,9 @@
             "from": null,
             "to": null
           }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|599000"
         ]
       },
       "ai_replies": [
@@ -79,9 +82,9 @@
             "to": null
           }
         ],
-        "p5_forbidden": {
-          "JAECOO 5 EV|MAX+|LIST_PRICE|599000": "CONFIRMED_REPLACEMENT"
-        }
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|599000"
+        ]
       },
       "noise": "b2",
       "ai_replies": [
@@ -103,13 +106,43 @@
           ]
         }
       ]
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคา 599,000 บาท (โปรโมชัน)</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|599000"
+        ]
+      },
+      "noise": "b3"
     }
   ],
-  "known_finding": {
-    "id": "PEE2-F1",
-    "status": "OPEN",
-    "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-  },
+  "regression_for": "PEE2-F1",
   "p5": true,
   "ledger_seed": [
     {

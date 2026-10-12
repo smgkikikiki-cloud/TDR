@@ -198,3 +198,17 @@ persistence, and the flag-gated CLI hook.
   a condition word is reported as `CONDITIONS`, not `LABELS`.
 * Excerpts use fixed character windows, so unrelated text within ~140 characters
   of a price can register as a change (cheap false positives, never misses).
+
+## Validator contract amended by PEE-2 (PEE2-F1 / PEE2-F2)
+
+The shadow evaluation (`PEE2_OFFLINE_SHADOW_EVALUATION.md`) found that the original type and
+identity checks accepted promo-, audience-, eco-sticker- and dealer-qualified prices as
+`LIST_PRICE` and accepted swapped or cross-model trim/amount pairs. The validator now requires
+**one local price fact**: the quote reads `<model> <trim> <price wording> <amount>`, the type comes
+from recognised wording (a closed vocabulary) in the fact's own label zone and the wording that
+adjoins the amount, and `LIST_PRICE` needs affirmative recommended-retail/list-price wording (a bare
+"ราคา"/"Price" counts only on a registered `PRICE_LIST` target). Ambiguous or unsupported wording,
+shared rows and unbound facts go to REVIEW (`FACT_NOT_BOUND`, `PRICE_TYPE_UNSUPPORTED`,
+`PRICE_TYPE_CONFLICT`). The prompt is `price-event-v2` and tells the model to quote one fact per
+price. P4 and P5 are unchanged.
+

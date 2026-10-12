@@ -28,7 +28,19 @@
             "type": "LIST_PRICE",
             "from": null,
             "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
           }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|599000",
+          "JAECOO 5 EV|MAX+|CAMPAIGN_PRICE|599000"
         ]
       },
       "ai_replies": [
@@ -68,18 +80,27 @@
             "type": "LIST_PRICE",
             "from": null,
             "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
           }
         ],
-        "p5_forbidden": {
-          "JAECOO 5 EV|MAX+|LIST_PRICE|599000": "CONFIRMED_REPLACEMENT"
-        }
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|599000",
+          "JAECOO 5 EV|MAX+|CAMPAIGN_PRICE|599000"
+        ]
       },
       "noise": "b2",
       "ai_replies": [
         {
           "claims": [
             {
-              "price_type": "LIST_PRICE",
+              "price_type": "CAMPAIGN_PRICE",
               "amount_thb": 599000,
               "brand_raw": "JAECOO",
               "model_raw": "JAECOO 5 EV",
@@ -96,11 +117,7 @@
       ]
     }
   ],
-  "known_finding": {
-    "id": "PEE2-F1",
-    "status": "OPEN",
-    "summary": "LIST_PRICE is the default when no qualifier is recognised: promo, restricted-audience, eco-sticker or dealer wording around the amount is not checked, so a qualified price is accepted as MSRP (and the right type refused)"
-  },
+  "regression_for": "PEE2-F1",
   "p5": true,
   "ledger_seed": [
     {
