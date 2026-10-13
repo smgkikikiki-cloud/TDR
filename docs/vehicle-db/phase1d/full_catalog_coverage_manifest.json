@@ -1,0 +1,51 @@
+{
+  "schema": "tdr.vehicle-db.phase1d.full-catalog-coverage.v1",
+  "status": "FULL_CATALOG_ACCEPTANCE_BLOCKED",
+  "acceptance_claimed": false,
+  "snapshot": {
+    "path": "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/vehicle_master_identity_snapshot_2026-10-13.json",
+    "sha256": "cf991264ada90efb0ff69a754cdee11fb0d13cc98fbe9fc60879de4eb7a2eb62",
+    "schema": "tdr.vehicle-master-identity-snapshot.v1",
+    "source": "Supabase PostgREST SELECT only; secret never written",
+    "project_ref": "ltvwzkffmpudpjfjomrg",
+    "captured_at_utc": "2026-10-13T06:54:38.484014+00:00",
+    "read_only": true,
+    "source_role": "NOT_RECORDED_IN_SNAPSHOT",
+    "statement_select_permissions_verified": false,
+    "permitted_data_classes": "identity subset present; full export permissions not evidenced",
+    "consistent_catalog_cutoff_verified": false,
+    "current_revision_token": false,
+    "authorization_for_full_catalog_export": false
+  },
+  "available_relations": [
+    {"name":"vehicle_brands","rows":62,"sha256":"93fa32c07ffae0a0cc47c35aa321b3244ff47f960718dbd3e051e644b2544a68","coverage":"identity fields only"},
+    {"name":"vehicle_models","rows":323,"sha256":"c95c99e3f552cc384b083dac7d69b5625032ac73e6bc40d0bc9e086d8367ea64","coverage":"identity/classification/status subset; no revisions or seed/release provenance"},
+    {"name":"vehicle_generations","rows":326,"sha256":"a9ad33eb4dbbdcd02c9251fb5e619b3454db72566bb75d49a66727c41bb4b54b","coverage":"identity/generation subset"}
+  ],
+  "required_but_missing": [
+    "vehicle_variants", "vehicle_trims", "vehicle_facts", "vehicle_price_ledger", "vehicle_campaigns", "vehicle_promotions",
+    "current_vehicle_models and dependent serving views", "all relevant migration definitions and constraints from the source database",
+    "RLS policy and effective grant snapshots for deployed roles", "full row-key/fingerprint and release/lifecycle/current-retail parity baseline",
+    "fresh consistent snapshot cutoff and source role/statement privilege evidence"
+  ],
+  "catalog_acceptance": {
+    "baseline_on_full_catalog": "NOT_RUN_NO_COMPLETE_AUTHORIZED_INPUT",
+    "phase1c_apply_and_comparison": "NOT_RUN_NO_COMPLETE_AUTHORIZED_INPUT",
+    "row_and_view_parity": "NOT_PROVEN",
+    "basic_identity_public_exclusion": "PROVEN_ONLY_IN_PHASE1C_SINGLE_TOYOTA_FIXTURE",
+    "full_role_acl_parity": "NOT_PROVEN"
+  },
+  "non_catalog_invariants": {
+    "frozen_owner_decisions": 244,
+    "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "registration_class_scopes": 1407,
+    "registration_units": 4141987,
+    "effective_units": 4123704,
+    "excluded_units": 18283,
+    "validated_basic_candidates": 8,
+    "candidate_units": 47109,
+    "ford_ranger_raptor": "HOLD / 12839 registrations / alias conflict ford.ranger_double_cab",
+    "simulated_coverage_percent": 98.819047,
+    "production_approved_or_servable_additions": 0
+  }
+}

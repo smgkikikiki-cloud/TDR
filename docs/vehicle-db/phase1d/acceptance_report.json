@@ -1,0 +1,136 @@
+{
+  "schema": "tdr.vehicle-db.phase1d.acceptance.v1",
+  "phase": "1D",
+  "branch": "codex/vm-phase1d-prod-compat-20261013",
+  "base_sha": "01ff6af90d488e5b3b990a74dc89ad5a2af7bbb2",
+  "delivery": {
+    "verified_implementation_commit": "5e91dfb78c59e835c83f8c44035515494bb852b5",
+    "remote_branch_push_verified": true,
+    "intended_draft_pr_base": "codex/vm-phase1c-postgres-acceptance-20261013",
+    "draft_pr_created": false,
+    "creation_attempts": [
+      {"endpoint":"GitHub GraphQL via gh pr create","result":"HTTP 403 Forbidden"},
+      {"endpoint":"GitHub REST POST /repos/smgkikikiki-cloud/TDR/pulls via gh api","result":"HTTP 403 Forbidden"}
+    ],
+    "review_ready_pr_body": "docs/vehicle-db/phase1d/DRAFT_PR_BODY.md",
+    "hosted_pr_ci_available": false,
+    "stop_for_independent_qa": true
+  },
+  "acceptance_result": "BLOCKED",
+  "production_ready": false,
+  "gates": {
+    "FULL_CATALOG_ACCEPTANCE_BLOCKED": {
+      "status": "BLOCKED",
+      "reason": "Only a 62-brand/323-model/326-generation identity snapshot is authorized and present; no complete consistent catalog, dependent table, live view, constraint, role or ACL snapshot is available.",
+      "full_catalog_parity_claimed": false
+    },
+    "ADMIN_AUTH_ACCEPTANCE_BLOCKED": {
+      "status": "BLOCKED",
+      "reason": "Repository helper behavior is testable, but deployed Admin credentials/config, immutable principal/approval records, RPC gateway binding and live DB authorization/ACLs are not evidenced.",
+      "admin_helper_tests_are_production_authorization": false
+    },
+    "MIGRATION_GATE_BLOCKED": {
+      "status": "BLOCKED",
+      "reason": "C02 reservation collision is open; latest migration-ledger evidence is dated/supplied rather than fresh; no owner-authorized migration IDs or migration/security approval exist.",
+      "migration_number_allocated": false,
+      "migration_executed": false
+    },
+    "ENFORCER_ADMISSION_BLOCKED": {
+      "status": "BLOCKED",
+      "reason": "Issue #242 and PR #241 report exact-base Enforcer failures UNEXPECTED_BASE_BRANCH and UNMANAGED_PR_NOT_TASK_AUTHORIZED for the stack. Policy is preserved unchanged.",
+      "bypass_or_policy_change": false
+    }
+  },
+  "enforcer_admission_rehearsal": {
+    "mode": "local CLI against exact PR BASE checkout with synthetic event; not a hosted PR/CI result",
+    "synthetic_pr_number": 999999,
+    "base_ref": "codex/vm-phase1c-postgres-acceptance-20261013",
+    "base_sha": "01ff6af90d488e5b3b990a74dc89ad5a2af7bbb2",
+    "candidate_ref": "codex/vm-phase1d-prod-compat-20261013",
+    "tested_head_sha": "941deab58848fc251fe3a53616babfdb6e17d354",
+    "admission": "UNMANAGED_AUDIT_ONLY",
+    "ok": false,
+    "enforcer_authorized": false,
+    "expected_fail_closed_error": "UNEXPECTED_BASE_BRANCH",
+    "expected_fail_closed_warning": "UNMANAGED_PR_NOT_TASK_AUTHORIZED",
+    "additional_warning": "SENSITIVE_FILES_CHANGED:docs/WORK_STATE.md",
+    "candidate_exit_code": 1,
+    "policy_bypassed_or_changed": false
+  },
+  "frozen_inputs": {
+    "owner_decisions": 244,
+    "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "scopes": 1407,
+    "registration_units": 4141987,
+    "effective_units": 4123704,
+    "excluded_units": 18283,
+    "basic_candidates": 8,
+    "candidate_units": 47109,
+    "raptor_hold_units": 12839,
+    "simulated_coverage_percent": 98.819047,
+    "new_approved_or_servable_units": 0
+  },
+  "evidence": {
+    "authorized_read_only_snapshot": "partial identity snapshot only; see full_catalog_coverage_manifest.json",
+    "fresh_live_select_readback_performed": false,
+    "full_catalog_test": "BLOCKED_NO_COMPLETE_AUTHORIZED_SNAPSHOT",
+    "admin_auth_review": "repository code reviewed; production contract blocked",
+    "isolated_phase1c_postgres_baseline": {
+      "command": "npm run check:phase1c-postgres-acceptance",
+      "result": "PASS",
+      "sql_assertions": 61,
+      "database": "PostgreSQL 16.10 pinned image; Docker --network none; tmpfs-only; no published port",
+      "catalog_fixture": "single Toyota model only; not full-catalog acceptance",
+      "executed_at_utc": "2026-10-13T16:56:53.071Z",
+      "evidence_path": "docs/vehicle-db/phase1d/phase1c_replay_evidence.json",
+      "evidence_sha256": "3f91342131ec940a1ef8592e07cf16dd671d6e018214aae0ae60ebc4043ff0ed",
+      "stdout_path": "docs/vehicle-db/phase1d/phase1c_replay_stdout.log",
+      "stdout_sha256": "6b53d0f58a4888d3ce23a78955f08f34b26caaf24693bad36750e909b6c8d9f4",
+      "runner_exit_code": 0
+    },
+    "mock_only_results_substituted": false
+  },
+  "repository_migration_evidence": {
+    "provenance": "checked-in repository file hashes; not deployed state",
+    "applied_ledger_provenance": "BASIC_IDENTITY_SCHEMA_RECONCILIATION_2026-10-13.md is a dated owner-supplied snapshot, not fresh live verification",
+    "c02_reservation_collision": "Upcoming reserved v57 and Analysis reserved v58 conflict with supplied reported-applied Vehicle Master v57/v58",
+    "hashes_v57_v66": [
+      {"version":57,"file":"supabase/migration_v57_vehicle_master_tables.sql","sha256":"8e39f4c1bfff5a1387dcf95f77366777107393bc0c628aae531ce925e783d5d8","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":58,"file":"supabase/migration_v58_vehicle_serving_parity.sql","sha256":"3eaf803b6b2cc3fe830829a6c4bb2ae821a3e81f1ab0c2a8c33e33a8b9e063b3","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":59,"file":"supabase/migration_v59_vehicle_engine_rules.sql","sha256":"eac54c2928aff658c3c93ff8531dc2e458348bcc87de9579041ddf8d709033cf","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":60,"file":"supabase/migration_v60_close_legacy_vehicle_write_path.sql","sha256":"84f5e0f40eb49c4e006badb709ff90a1295060563c8b75cfb429159564217c4d","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":61,"file":"supabase/migration_v61_vehicle_master_backups_bucket.sql","sha256":"32192424a41e6cda734630bcfb3e8c1db826b67f1baf37560fe3659d01f9cf27","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":62,"file":"supabase/migration_v62_ice_market_panels.sql","sha256":"56297ba919d5d8b59c867502e587eb9ccc7065003f87d6eac45fdf4e1a4d549a","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":63,"file":"supabase/migration_v63_ice_model_crosswalk.sql","sha256":"e83d7b2870249f56ab1f5b07d78aaac4e2cc0d5cdf199079df3922fb4fa0dab9","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":64,"file":"supabase/migration_v64_ice_panel_grain_fix.sql","sha256":"073575e3296dbdd64a407ed287acb3a42fc408d5f0d400da01b92cb83965ee6a","supplied_ledger":"REPORTED_APPLIED"},
+      {"version":65,"file":"supabase/migration_v65_ice_commit_delete_where.sql","sha256":"1034278fef4c6ecacfacff158aa9bd4ee16d8689f190e4d05197fe5e5c98587e","supplied_ledger":"REPORTED_ABSENT"},
+      {"version":66,"file":"supabase/migration_v66_vehicle_master_governed_writer.sql","sha256":"96dcaf3062b045de067c3f82edaac2e3a133544807eb468d04815c320daea0f6","supplied_ledger":"REPORTED_ABSENT; PRICE WRITER, NOT STRUCTURAL BASIC IDENTITY"}
+    ],
+    "structural_revision_conflict": "supplied reconciliation reports command_id NOT NULL UNIQUE FK to retired canonical_write_commands; repository v66 only drops NOT NULL and does not remove the FK"
+  },
+  "actions_prohibited_and_not_performed": {
+    "production_or_staging_connections": 0,
+    "production_or_staging_writes": 0,
+    "migration_numbers_allocated": 0,
+    "migrations_executed": 0,
+    "enforcer_policy_changes": 0,
+    "r6_activation": false,
+    "merge_or_deployment": false
+  },
+  "tests": [
+    {"command":"npm run check:phase1d-evidence","result":"PASS","scope":"Snapshot provenance, hard-blocked gates, source hash and 244 frozen-ledger row/hash invariants"},
+    {"command":"npm run check:phase1d-admin-contract","result":"PASS_HELPER_ONLY","scope":"Real lib/admin-auth.ts helpers with ephemeral process-only credentials; production Admin/RPC authorization remains BLOCKED"},
+    {"command":"npm run check:phase1c-postgres-acceptance","result":"PASS_ISOLATED_POSTGRESQL","scope":"PostgreSQL 16.10 pinned image; network=none; disposable tmpfs database; 61 SQL cases; single Toyota catalog fixture only; not full-catalog acceptance","executed_at_utc":"2026-10-13T16:56:53.071Z","evidence_path":"docs/vehicle-db/phase1d/phase1c_replay_evidence.json"},
+    {"command":"npm run check","result":"PASS","scope":"TypeScript and full repository checks, including structural writer, design, and Phase 1D evidence/Admin helper checks"},
+    {"command":"node --test orchestration/preflight.test.mjs orchestration/pr-admission.test.mjs","result":"PASS","summary":"42 passed, 0 failed"},
+    {"command":"node orchestration/preflight.mjs --check-repo","result":"PASS","roadmap_version":"1.0","errors":[]},
+    {"command":"node orchestration/pr-admission.mjs against exact 01ff6af base and synthetic stacked-PR event","result":"EXPECTED_FAIL_CLOSED","errors":["UNEXPECTED_BASE_BRANCH"],"warnings":["UNMANAGED_PR_NOT_TASK_AUTHORIZED"],"enforcer_authorized":false,"tested_head_sha":"941deab58848fc251fe3a53616babfdb6e17d354","note":"local reproduction only; synthetic PR event, not hosted CI"},
+    {"command":"/tmp/tdr-vm-venv/bin/python -m compileall -q vehreg tools tests","working_directory":"automotive/vehicle_master","result":"PASS"},
+    {"command":"/tmp/tdr-vm-venv/bin/python -m vehreg market validate","working_directory":"automotive/vehicle_master","result":"PASS","valid":true,"problems":[]},
+    {"command":"gh pr create --draft --base codex/vm-phase1c-postgres-acceptance-20261013 --head codex/vm-phase1d-prod-compat-20261013","result":"BLOCKED_HTTP_403","draft_pr_created":false},
+    {"command":"gh api --method POST repos/smgkikikiki-cloud/TDR/pulls","result":"BLOCKED_HTTP_403","draft_pr_created":false},
+    {"command":"/tmp/tdr-vm-venv/bin/python -m pytest automotive/vehicle_master/tests","result":"FAILED_WRONG_WORKING_DIRECTORY","scope":"Initial full-suite invocation from repository root; fixture paths are relative to automotive/vehicle_master","summary":"1921 passed, 379 skipped, 2 failed, 1 warning, 501.07s","failures":["test_ecosticker_phase1_spec_file_contains_no_price_fields: FileNotFoundError for relative vehreg/data fixture","test_guard_can_read_base_ledger_from_consolidated_repo_path: expected fixture key absent due to root cwd"]},
+    {"command":"/tmp/tdr-vm-venv/bin/python -m pytest -q tests/test_jaecoo_j5_ecosticker_specs.py tests/test_pricefeed_guard_consolidated_p6.py","working_directory":"automotive/vehicle_master","result":"PASS","summary":"7 passed in 3.66s"},
+    {"command":"/tmp/tdr-vm-venv/bin/python -m pytest -q tests --tb=short --basetemp=/workspace/.tdr-phase1d-pytest","working_directory":"automotive/vehicle_master","result":"PASS","summary":"1923 passed, 379 skipped, 4357 subtests passed, 1 warning, 535.44s","temporary_dataset_copy_removed_after_run":true}
+  ]
+}
