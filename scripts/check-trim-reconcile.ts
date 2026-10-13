@@ -23,10 +23,15 @@ const obs = (name: string, amount: number | null, extra: Partial<Observation> = 
   ({ name_raw: name, amount_thb: amount, ...extra });
 const id = (s: string) => `acme.a.g1.trim.${s}`;
 
+function daily(from: string, to: string): string[] {
+  const out: string[] = [];
+  for (let t = Date.parse(from); t <= Date.parse(to); t += 86_400_000) out.push(new Date(t).toISOString().slice(0, 10));
+  return out;
+}
 function run(trims: TrimState[], observations: Observation[], extra: Partial<ReconcileInput> = {}) {
   return reconcileModel({
     model: MODEL, trims, observations, extraction_ok: true, prior_amounts: new Map(), today: TODAY,
-    model_first_observed_at: "2026-09-01", ...extra,
+    model_first_observed_at: "2026-09-01", lineup_complete: true, read_dates: daily("2026-09-01", TODAY), ...extra,
   });
 }
 const kinds = (r: ReturnType<typeof run>) => r.proposals.map((p) => p.kind);
@@ -169,6 +174,15 @@ ok("PHEV is not collapsed into HEV", normalizeTrimName("Top PHEV") !== normalize
   ok("missing 7 days: discontinue is proposed (never applied)", d && d.trim_id === id("old") && d.missing_days === 7, missingOld);
   const neverSeen = run([...LINEUP, trim("ghost", "Ghost", 700_000)], SAME, { model_first_observed_at: "2026-09-01" });
   ok("a trim never seen counts from the model's first successful read", kinds(neverSeen).includes("DISCONTINUE_TRIM"), neverSeen);
+  const partial = run([...LINEUP, trim("old", "Old", 700_000, { last_seen_at: "2026-10-01" })], SAME, { lineup_complete: false });
+  ok("source not verified as the whole lineup (Ford 8 of 13): absence never proposes discontinue", !kinds(partial).includes("DISCONTINUE_TRIM"), partial);
+  const unset = run([...LINEUP, trim("old", "Old", 700_000, { last_seen_at: "2026-10-01" })], SAME, { lineup_complete: undefined });
+  ok("lineup_complete unset behaves as false", !kinds(unset).includes("DISCONTINUE_TRIM"), unset);
+  const gap = run([...LINEUP, trim("old", "Old", 700_000, { last_seen_at: "2026-10-01" })], SAME,
+    { read_dates: daily("2026-10-01", "2026-10-03").concat(daily("2026-10-10", TODAY)) });
+  ok("a week with the fetcher broken in the middle does not count as 7 days missing", !kinds(gap).includes("DISCONTINUE_TRIM"), gap);
+  const noReads = run([...LINEUP, trim("old", "Old", 700_000, { last_seen_at: "2026-10-01" })], SAME, { read_dates: [] });
+  ok("no recorded reads in between: not verified", !kinds(noReads).includes("DISCONTINUE_TRIM"), noReads);
   const noHistory = run([...LINEUP, trim("ghost", "Ghost", 700_000)], SAME, { model_first_observed_at: null });
   ok("no history at all: unsure means no proposal", !kinds(noHistory).includes("DISCONTINUE_TRIM"), noHistory);
 
