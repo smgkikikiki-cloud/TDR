@@ -29,33 +29,48 @@ BEGIN
 END $$;
 
 CREATE OR REPLACE FUNCTION vehicle_private.vm_issue_structural_capability(
-  p_approval_ref text,p_batch_hash text,p_operations text[],p_expires_at timestamptz,p_token text)
-RETURNS void LANGUAGE plpgsql SECURITY DEFINER
+  p_approval_ref text,p_executor text,p_batch_hash text,p_operations text[],p_expires_at timestamptz,
+  p_token text,p_admin_evidence_ref text)
+RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER
 SET search_path=pg_catalog,vehicle_private AS $$
-DECLARE actor text := session_user;
+DECLARE actor text := session_user; nonce_value uuid:=gen_random_uuid(); canonical_ops text[];
 BEGIN
   IF NOT pg_has_role(session_user,'vm_structural_approval_admin','member') THEN
     RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_APPROVAL_ISSUER_FORBIDDEN';
   END IF;
-  IF p_approval_ref !~ '^[A-Za-z0-9_.:-]{1,128}$' OR p_batch_hash !~ '^[0-9a-f]{64}$'
-     OR coalesce(cardinality(p_operations),0)=0 OR p_operations && ARRAY['LINK_ICE_MODEL_GROUP_BY_REG_TYPE','PRICE','R6']
-     OR p_token IS NULL OR length(p_token)<32 OR p_expires_at<=clock_timestamp() THEN
+  IF p_executor IS NULL OR p_executor=actor
+     OR NOT pg_has_role(p_executor::name,'vm_structural_approver','member')
+     OR pg_has_role(p_executor::name,'vm_structural_approval_admin','member') THEN
+    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER';
+  END IF;
+  SELECT array_agg(DISTINCT value ORDER BY value) INTO canonical_ops FROM unnest(p_operations) x(value);
+  IF p_approval_ref IS NULL OR p_approval_ref !~ '^[A-Za-z0-9_.:-]{1,128}$'
+     OR p_batch_hash IS NULL OR p_batch_hash !~ '^[0-9a-f]{64}$'
+     OR coalesce(cardinality(p_operations),0)=0
+     OR array_position(p_operations,NULL) IS NOT NULL
+     OR canonical_ops IS DISTINCT FROM p_operations
+     OR EXISTS (SELECT 1 FROM unnest(p_operations) x(value)
+       WHERE value NOT IN ('CREATE_BRAND','CREATE_MODEL_BASIC','UPDATE_MODEL_ALIAS','REVERT'))
+     OR p_admin_evidence_ref IS NULL OR btrim(p_admin_evidence_ref)=''
+     OR p_token IS NULL OR length(p_token)<32 OR p_expires_at IS NULL OR p_expires_at<=clock_timestamp() THEN
     RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_STRUCTURAL_APPROVAL';
   END IF;
-  INSERT INTO vehicle_private.vm_structural_approvals(approval_ref,batch_hash,approved_actor,operations,expires_at,issued_at)
-  VALUES(p_approval_ref,p_batch_hash,actor,p_operations,p_expires_at,clock_timestamp());
-  INSERT INTO vehicle_private.vm_structural_capabilities(token_sha256,approval_ref,batch_hash,principal,operations,expires_at)
-  VALUES(public.digest(p_token,'sha256'),p_approval_ref,p_batch_hash,actor,p_operations,p_expires_at);
+  INSERT INTO vehicle_private.vm_structural_approvals(approval_ref,batch_hash,approved_actor,executor_actor,admin_evidence_ref,operations,nonce,expires_at,issued_at)
+  VALUES(p_approval_ref,p_batch_hash,actor,p_executor,p_admin_evidence_ref,p_operations,nonce_value,p_expires_at,clock_timestamp());
+  INSERT INTO vehicle_private.vm_structural_capabilities(token_sha256,approval_ref,batch_hash,principal,issuer_actor,nonce,operations,expires_at)
+  VALUES(public.digest(p_token,'sha256'),p_approval_ref,p_batch_hash,p_executor,actor,nonce_value,p_operations,p_expires_at);
+  RETURN nonce_value;
 END $$;
-ALTER FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text[],timestamptz,text) OWNER TO vm_structural_rpc_owner;
-REVOKE ALL ON FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text[],timestamptz,text) FROM PUBLIC,anon,authenticated,service_role;
-GRANT EXECUTE ON FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text[],timestamptz,text) TO vm_structural_approval_admin;
+ALTER FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text,text[],timestamptz,text,text) OWNER TO vm_structural_rpc_owner;
+REVOKE ALL ON FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text,text[],timestamptz,text,text) FROM PUBLIC,anon,authenticated,service_role;
+GRANT EXECUTE ON FUNCTION vehicle_private.vm_issue_structural_capability(text,text,text,text[],timestamptz,text,text) TO vm_structural_approval_admin;
 
 CREATE OR REPLACE FUNCTION vehicle_private.vm_apply_structural_changes(p_request jsonb,p_capability text)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER
 SET search_path=pg_catalog,vehicle_private,public,pg_temp AS $$
 DECLARE
   actor text := session_user; cap vehicle_private.vm_structural_capabilities%ROWTYPE;
+  approval vehicle_private.vm_structural_approvals%ROWTYPE;
   intent jsonb; op text; entity text; target_id text; brand_id text; name text; alias_set jsonb; evidence jsonb;
   expected integer; current_revision integer; current_row jsonb; next_payload jsonb; token text;
   batch_id text; batch_hash text; payload_hash text; source_hash text; expected_ops text[];
@@ -68,6 +83,9 @@ BEGIN
   END IF;
   IF NOT pg_has_role(session_user,'vm_structural_approver','member') THEN
     RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_APPROVER_FORBIDDEN';
+  END IF;
+  IF pg_has_role(session_user,'vm_structural_approval_admin','member') THEN
+    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_ISSUER_CANNOT_EXECUTE';
   END IF;
   IF jsonb_typeof(p_request) IS DISTINCT FROM 'object'
      OR (p_request - 'rpc' - 'contract_version' - 'batch_hash' - 'batch_id' - 'payload_hash' - 'expected_revisions' - 'intents' - 'raw_evidence' - 'provenance') <> '{}'::jsonb
@@ -100,21 +118,67 @@ BEGIN
        ),'UTF8'),'sha256'),'hex') <> batch_hash THEN
     RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='STRUCTURAL_BATCH_HASH_MISMATCH';
   END IF;
+  -- Validate the raw JSON contract in SQL. These checks are intentionally
+  -- independent of the TypeScript serializer and reject operation unions.
+  FOR intent IN SELECT value FROM jsonb_array_elements(p_request->'intents') LOOP
+    op:=intent->>'operation';
+    IF jsonb_typeof(intent) IS DISTINCT FROM 'object'
+       OR jsonb_typeof(intent->'operation') IS DISTINCT FROM 'string'
+       OR jsonb_typeof(intent->'canonical_id') IS DISTINCT FROM 'string'
+       OR jsonb_typeof(intent->'expected_revision') IS DISTINCT FROM 'number'
+       OR (intent->>'expected_revision') !~ '^(0|[1-9][0-9]*)$' THEN
+      RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_STRUCTURAL_INTENT_SHAPE';
+    END IF;
+    IF op='CREATE_BRAND' THEN
+      IF intent-'operation'-'canonical_id'-'name_en'-'aliases'-'expected_revision'<>'{}'::jsonb
+         OR jsonb_typeof(intent->'name_en') IS DISTINCT FROM 'string'
+         OR (intent ? 'aliases' AND jsonb_typeof(intent->'aliases') IS DISTINCT FROM 'array') THEN
+        RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_CREATE_BRAND_FIELDS';
+      END IF;
+    ELSIF op='CREATE_MODEL_BASIC' THEN
+      IF intent-'operation'-'canonical_id'-'brand_id'-'name_en'-'aliases'-'identity_evidence'-'expected_revision'<>'{}'::jsonb
+         OR jsonb_typeof(intent->'brand_id') IS DISTINCT FROM 'string'
+         OR jsonb_typeof(intent->'name_en') IS DISTINCT FROM 'string'
+         OR jsonb_typeof(intent->'identity_evidence') IS DISTINCT FROM 'object'
+         OR (intent ? 'aliases' AND jsonb_typeof(intent->'aliases') IS DISTINCT FROM 'array')
+         OR NOT vehicle_private.vm_basic_evidence_valid(jsonb_build_object('identity_evidence',intent->'identity_evidence')) THEN
+        RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_CREATE_MODEL_BASIC_FIELDS';
+      END IF;
+    ELSIF op='UPDATE_MODEL_ALIAS' THEN
+      IF intent-'operation'-'canonical_id'-'aliases'-'expected_revision'<>'{}'::jsonb
+         OR jsonb_typeof(intent->'aliases') IS DISTINCT FROM 'array' THEN
+        RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_UPDATE_MODEL_ALIAS_FIELDS';
+      END IF;
+    ELSE
+      RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='STRUCTURAL_OPERATION_NOT_ALLOWED';
+    END IF;
+  END LOOP;
+  IF EXISTS (SELECT 1 FROM jsonb_array_elements(p_request->'expected_revisions') r
+       WHERE jsonb_typeof(r) IS DISTINCT FROM 'object'
+         OR (r-'entity_type'-'entity_id'-'revision')<>'{}'::jsonb
+         OR jsonb_typeof(r->'entity_type') IS DISTINCT FROM 'string'
+         OR jsonb_typeof(r->'entity_id') IS DISTINCT FROM 'string'
+         OR jsonb_typeof(r->'revision') IS DISTINCT FROM 'number'
+         OR (r->>'revision') !~ '^(0|[1-9][0-9]*)$')
+     OR EXISTS (SELECT 1 FROM jsonb_array_elements(p_request->'expected_revisions') r
+       GROUP BY r->>'entity_type',r->>'entity_id' HAVING count(*)<>1) THEN
+    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_STRUCTURAL_REVISION_SET';
+  END IF;
   SELECT array_agg(DISTINCT value->>'operation' ORDER BY value->>'operation') INTO expected_ops
     FROM jsonb_array_elements(p_request->'intents');
-  IF EXISTS (SELECT 1 FROM jsonb_array_elements(p_request->'intents') x
-    WHERE x->>'operation' NOT IN ('CREATE_BRAND','CREATE_MODEL_BASIC','UPDATE_MODEL_ALIAS')) THEN
-    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='STRUCTURAL_OPERATION_NOT_ALLOWED';
-  END IF;
   SELECT * INTO cap FROM vehicle_private.vm_structural_capabilities
    WHERE token_sha256=public.digest(p_capability,'sha256') FOR UPDATE;
   IF NOT FOUND THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_NOT_FOUND'; END IF;
-  IF cap.principal<>actor THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_ACTOR_MISMATCH'; END IF;
+  IF cap.principal<>actor OR cap.issuer_actor=actor THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_ACTOR_MISMATCH'; END IF;
   IF cap.batch_hash<>batch_hash THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_BATCH_HASH_MISMATCH'; END IF;
   IF cap.operations<>expected_ops THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_OPERATION_SET_MISMATCH'; END IF;
   IF cap.expires_at<=clock_timestamp() THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_EXPIRED'; END IF;
-  IF EXISTS (SELECT 1 FROM vehicle_private.vm_structural_approvals a WHERE a.approval_ref=cap.approval_ref
-      AND (a.approved_actor<>actor OR a.batch_hash<>(p_request->>'batch_hash') OR a.operations<>expected_ops OR a.expires_at<=clock_timestamp())) THEN
+  SELECT * INTO approval FROM vehicle_private.vm_structural_approvals a WHERE a.approval_ref=cap.approval_ref;
+  IF NOT FOUND OR approval.approved_actor<>cap.issuer_actor OR approval.executor_actor<>actor
+      OR approval.approved_actor=actor OR approval.admin_evidence_ref IS NULL OR btrim(approval.admin_evidence_ref)=''
+      OR NOT pg_has_role(approval.approved_actor::name,'vm_structural_approval_admin','member')
+      OR cap.nonce<>approval.nonce OR approval.batch_hash<>(p_request->>'batch_hash')
+      OR approval.operations<>expected_ops OR approval.expires_at<=clock_timestamp() THEN
     RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_APPROVAL_BINDING_MISMATCH';
   END IF;
   SELECT r.result INTO receipts FROM vehicle_private.vm_structural_receipts r
@@ -250,8 +314,8 @@ BEGIN
       RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='STRUCTURAL_OPERATION_NOT_ALLOWED';
     END IF;
     after_state:=current_row;
-    INSERT INTO vehicle_private.vm_structural_revisions(batch_id,actor,entity_type,entity_id,operation,before_revision,after_revision,before_state,after_state,source_ref,reason,source_hash)
-    VALUES(batch_id,actor,entity,target_id,op,expected,current_revision,before_state,after_state,source_ref,reason,p_request#>>'{provenance,source_hash}')
+    INSERT INTO vehicle_private.vm_structural_revisions(batch_id,actor,entity_type,entity_id,operation,before_revision,after_revision,before_state,after_state,source_ref,reason,source_hash,approval_ref)
+    VALUES(batch_id,actor,entity,target_id,op,expected,current_revision,before_state,after_state,source_ref,reason,p_request#>>'{provenance,source_hash}',cap.approval_ref)
     RETURNING vm_structural_revisions.revision_id INTO revision_id;
     revision_ids:=array_append(revision_ids,revision_id);
   END LOOP;
@@ -273,14 +337,14 @@ RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER
 SET search_path=pg_catalog,vehicle_private,public,pg_temp AS $$
 DECLARE
   actor text:=session_user; original vehicle_private.vm_structural_revisions%ROWTYPE;
-  cap vehicle_private.vm_structural_capabilities%ROWTYPE; existing vehicle_private.vm_structural_revisions%ROWTYPE;
+  cap vehicle_private.vm_structural_capabilities%ROWTYPE; approval vehicle_private.vm_structural_approvals%ROWTYPE;
+  existing vehicle_private.vm_structural_revisions%ROWTYPE;
   row_state jsonb; entity text; target text; brand text; next_rev integer; revert_batch text; receipt_hash text; revert_id uuid;
   aliases_before jsonb;
 BEGIN
   IF current_setting('transaction_isolation')<>'serializable' THEN RAISE EXCEPTION USING ERRCODE='25001',MESSAGE='STRUCTURAL_RPC_REQUIRES_SERIALIZABLE'; END IF;
   IF NOT pg_has_role(session_user,'vm_structural_approver','member') THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_APPROVER_FORBIDDEN'; END IF;
-  SELECT r.* INTO existing FROM vehicle_private.vm_structural_revisions r WHERE r.reverts_revision_id=p_revision_id;
-  IF FOUND THEN RETURN jsonb_build_object('status','REVERTED','revision_id',existing.revision_id,'replay',true); END IF;
+  IF pg_has_role(session_user,'vm_structural_approval_admin','member') THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_ISSUER_CANNOT_EXECUTE'; END IF;
   SELECT r.* INTO original FROM vehicle_private.vm_structural_revisions r WHERE r.revision_id=p_revision_id FOR UPDATE;
   IF NOT FOUND OR original.operation NOT IN ('CREATE_BRAND','CREATE_MODEL_BASIC','UPDATE_MODEL_ALIAS') THEN
     RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='STRUCTURAL_REVERT_TARGET_INVALID';
@@ -289,10 +353,24 @@ BEGIN
   receipt_hash:=encode(public.digest(convert_to(vehicle_private.vm_json_canonical(jsonb_build_object(
     'operation','REVERT','revision_id',p_revision_id::text,'expected_revision',p_expected_revision)), 'UTF8'),'sha256'),'hex');
   SELECT * INTO cap FROM vehicle_private.vm_structural_capabilities c WHERE c.token_sha256=public.digest(p_capability,'sha256') FOR UPDATE;
-  IF NOT FOUND OR cap.principal<>actor OR cap.batch_hash<>receipt_hash OR cap.operations<>ARRAY['REVERT'] THEN
+  IF NOT FOUND THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_NOT_FOUND'; END IF;
+  IF cap.principal<>actor OR cap.issuer_actor=actor OR cap.batch_hash<>receipt_hash OR cap.operations<>ARRAY['REVERT'] THEN
     RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_BINDING_MISMATCH';
   END IF;
   IF cap.expires_at<=clock_timestamp() THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_EXPIRED'; END IF;
+  SELECT * INTO approval FROM vehicle_private.vm_structural_approvals a WHERE a.approval_ref=cap.approval_ref;
+  IF NOT FOUND OR approval.approved_actor<>cap.issuer_actor OR approval.executor_actor<>actor
+      OR approval.approved_actor=actor OR approval.admin_evidence_ref IS NULL OR btrim(approval.admin_evidence_ref)=''
+      OR NOT pg_has_role(approval.approved_actor::name,'vm_structural_approval_admin','member')
+      OR cap.nonce<>approval.nonce OR approval.batch_hash<>receipt_hash OR approval.operations<>ARRAY['REVERT']
+      OR approval.expires_at<=clock_timestamp() THEN
+    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_APPROVAL_BINDING_MISMATCH';
+  END IF;
+  SELECT r.* INTO existing FROM vehicle_private.vm_structural_revisions r WHERE r.reverts_revision_id=p_revision_id;
+  IF FOUND THEN
+    IF existing.approval_ref<>cap.approval_ref THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH'; END IF;
+    RETURN jsonb_build_object('status','REVERTED','revision_id',existing.revision_id,'replay',true);
+  END IF;
   IF cap.consumed_at IS NOT NULL THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='STRUCTURAL_CAPABILITY_REPLAYED'; END IF;
   entity:=original.entity_type; target:=original.entity_id;
   IF entity='vehicle_models' THEN
@@ -342,8 +420,8 @@ BEGIN
   INSERT INTO vehicle_private.vm_structural_observations(actor,actor_kind,batch_id,source_ref,observed_at,source_hash,batch_hash,raw_evidence,complete_request)
   VALUES(actor,'ADMIN',revert_batch,original.source_ref,clock_timestamp(),original.source_hash,receipt_hash,'{}'::jsonb,
     jsonb_build_object('operation','REVERT','revision_id',p_revision_id,'expected_revision',p_expected_revision));
-  INSERT INTO vehicle_private.vm_structural_revisions(batch_id,actor,entity_type,entity_id,operation,before_revision,after_revision,before_state,after_state,source_ref,reason,source_hash,reverts_revision_id)
-  VALUES(revert_batch,actor,entity,target,'REVERT',p_expected_revision,next_rev,original.after_state,row_state,original.source_ref,'COMPENSATING_REVERT',original.source_hash,p_revision_id)
+  INSERT INTO vehicle_private.vm_structural_revisions(batch_id,actor,entity_type,entity_id,operation,before_revision,after_revision,before_state,after_state,source_ref,reason,source_hash,reverts_revision_id,approval_ref)
+  VALUES(revert_batch,actor,entity,target,'REVERT',p_expected_revision,next_rev,original.after_state,row_state,original.source_ref,'COMPENSATING_REVERT',original.source_hash,p_revision_id,cap.approval_ref)
   RETURNING vm_structural_revisions.revision_id INTO revert_id;
   UPDATE vehicle_private.vm_structural_capabilities SET consumed_at=clock_timestamp() WHERE token_sha256=cap.token_sha256;
   RETURN jsonb_build_object('status','REVERTED','revision_id',revert_id,'replay',false);

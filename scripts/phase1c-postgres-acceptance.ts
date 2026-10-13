@@ -15,8 +15,17 @@ const image = "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75f
 const name = `tdr-phase1c-${process.pid}`;
 const user = "phase1c_owner";
 const rpcUser = "phase1c_rpc_actor";
+const issuerUser = "phase1c_rpc_issuer";
+const otherRpcUser = "phase1c_rpc_other_actor";
 const database = "phase1c_acceptance";
 const tmpSecret = randomBytes(32).toString("hex");
+const sqlCases: Array<{ id: string; assertion: string; observed_result: string; result: "PASS" }> = [];
+const caseOccurrences = new Map<string, number>();
+function recordCase(id: string, assertion: string, observedResult = "PostgreSQL assertion passed"): void {
+  const occurrence = (caseOccurrences.get(id) ?? 0) + 1;
+  caseOccurrences.set(id, occurrence);
+  sqlCases.push({ id: occurrence === 1 ? id : `${id}#${occurrence}`, assertion, observed_result: observedResult, result: "PASS" });
+}
 const sha = (text: string) => createHash("sha256").update(text).digest("hex");
 function run(cmd: string, args: string[], input?: string, allowFailure = false): string {
   const result = spawnSync(cmd, args, { cwd: root, input, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
@@ -30,21 +39,51 @@ function pg(sql: string): string {
 function pgAsRpcActor(sql: string): string {
   return run("docker", ["exec", "-i", name, "psql", "-X", "-U", rpcUser, "-d", database, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql);
 }
+function pgAsIssuer(sql: string): string {
+  return run("docker", ["exec", "-i", name, "psql", "-X", "-U", issuerUser, "-d", database, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql);
+}
 function expectPgFailure(sql: string, expected: string): void {
   const output = run("docker", ["exec", "-i", name, "psql", "-X", "-U", user, "-d", database, "-v", "ON_ERROR_STOP=1", "-At"], sql, true);
   assert.match(output, new RegExp(expected));
+  const observed = output.split("\n").find((line) => line.includes("ERROR:"))?.trim() ?? "psql returned an SQL error";
+  recordCase(`owner-reject:${expected}`, `SQL rejected request matching /${expected}/`, observed);
 }
 function expectLoginRoleFailure(login: string, sql: string, expected: string): void {
   const output = run("docker", ["exec", "-i", name, "psql", "-X", "-U", login, "-d", database, "-v", "ON_ERROR_STOP=1", "-At"], sql, true);
   assert.match(output, new RegExp(expected));
+  const observed = output.split("\n").find((line) => line.includes("ERROR:"))?.trim() ?? "psql returned an SQL error";
+  recordCase(`${login}-reject:${expected}`, `SQL rejected request matching /${expected}/`, observed);
 }
 const quote = (s: string) => `'${s.replaceAll("'", "''")}'`;
+function issueCapability(approvalRef: string, batchHash: string, operations: string[], token: string,
+  executor = rpcUser, validity = "5 minutes", evidenceRef = `fixture:admin-approval:${approvalRef}`): string {
+  const opArray = `ARRAY[${operations.map(quote).join(",")}]::text[]`;
+  const output = pgAsIssuer(`SELECT vehicle_private.vm_issue_structural_capability(${quote(approvalRef)},${quote(executor)},${quote(batchHash)},${opArray},now()+interval ${quote(validity)},${quote(token)},${quote(evidenceRef)});`);
+  assert.match(output, /^[0-9a-f-]{36}$/m);
+  recordCase(`approval-issued:${approvalRef}`, `issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce`, "approval and capability rows committed; UUID nonce returned (value omitted)");
+  return output.trim();
+}
+function resignRequest(request: StructuralRpcDraftRequest): StructuralRpcDraftRequest {
+  const clone: any = structuredClone(request);
+  const intentsForSourceHash = clone.intents.map(({ expected_revision: _revision, ...intent }: any) => intent);
+  clone.provenance.source_hash = structuralHash({ source_ref: clone.provenance.source_ref,
+    raw_evidence: clone.raw_evidence ?? null, intents: intentsForSourceHash });
+  clone.batch_hash = structuralHash({ batch_id: clone.batch_id, reason: clone.provenance.reason,
+    source_ref: clone.provenance.source_ref, observed_at: clone.provenance.observed_at, intents: clone.intents,
+    ...(Object.hasOwn(clone, "raw_evidence") ? { raw_evidence: clone.raw_evidence } : {}) });
+  delete clone.payload_hash;
+  clone.payload_hash = structuralHash(clone);
+  return clone;
+}
 function rpcSql(request: StructuralRpcDraftRequest, token: string): string {
   const encoded = Buffer.from(JSON.stringify(request)).toString("base64");
-  return `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(convert_from(decode('${encoded}','base64'),'UTF8')::jsonb,${quote(token)}); COMMIT;`;
+  return `BEGIN ISOLATION LEVEL SERIALIZABLE; SET LOCAL request.jwt.claim.sub=${quote(issuerUser)}; SELECT vehicle_private.vm_apply_structural_changes(convert_from(decode('${encoded}','base64'),'UTF8')::jsonb,${quote(token)}); COMMIT;`;
 }
 function rpc(request: StructuralRpcDraftRequest, token: string): string {
-  return pgAsRpcActor(rpcSql(request, token));
+  const output = pgAsRpcActor(rpcSql(request, token));
+  const result = parseRpcResult(output);
+  recordCase(`apply:${request.batch_id}`, "non-superuser executor SQL RPC returned an authenticated result", `status=${result.status}; replay=${Boolean(result.replay)}`);
+  return output;
 }
 function rpcConcurrent(request: StructuralRpcDraftRequest, token: string): Promise<{ status: number | null; output: string }> {
   return new Promise((resolve, reject) => {
@@ -57,8 +96,15 @@ function rpcConcurrent(request: StructuralRpcDraftRequest, token: string): Promi
     child.stdin.end(rpcSql(request, token));
   });
 }
+function revertRpcAs(login: string, revisionId: string, expectedRevision: number, token: string): string {
+  const sql = `BEGIN ISOLATION LEVEL SERIALIZABLE; SET LOCAL request.jwt.claim.sub=${quote(issuerUser)}; SELECT vehicle_private.vm_revert_structural_revision(${quote(revisionId)}::uuid,${expectedRevision},${quote(token)}); COMMIT;`;
+  const output = login === rpcUser ? pgAsRpcActor(sql) : run("docker", ["exec", "-i", name, "psql", "-X", "-U", login, "-d", database, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql);
+  const result = parseRpcResult(output);
+  recordCase(`revert:${login}`, "non-superuser SQL revert RPC returned an authenticated result", `status=${result.status}; replay=${Boolean(result.replay)}`);
+  return output;
+}
 function revertRpc(revisionId: string, expectedRevision: number, token: string): string {
-  return pgAsRpcActor(`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_revert_structural_revision(${quote(revisionId)}::uuid,${expectedRevision},${quote(token)}); COMMIT;`);
+  return revertRpcAs(rpcUser, revisionId, expectedRevision, token);
 }
 function parseRpcResult(output: string): any {
   const line = output.split("\n").find((value) => value.startsWith("{"));
@@ -160,13 +206,72 @@ try {
   }
   pg(`INSERT INTO public.vehicle_brands(canonical_id,slug,name_en,name_th,payload,served_as_of,revision,seed_release_id,identity_level,identity_aliases) VALUES ${brandValues};
       INSERT INTO vehicle_private.vm_identity_tokens(entity_type,brand_id,canonical_id,normalized_token,source_kind,source_snapshot_sha256) VALUES ${tokenRows.join(",\n")} ON CONFLICT DO NOTHING;
-      CREATE ROLE phase1c_rpc_actor LOGIN;
+      CREATE ROLE ${rpcUser} LOGIN;
+      CREATE ROLE ${issuerUser} LOGIN;
+      CREATE ROLE ${otherRpcUser} LOGIN;
       CREATE ROLE phase1c_unprivileged LOGIN;
-      GRANT vm_structural_approver,vm_structural_approval_admin TO phase1c_rpc_actor;`);
+      GRANT vm_structural_approver TO ${rpcUser},${otherRpcUser};
+      GRANT vm_structural_approval_admin TO ${issuerUser};`);
   expectLoginRoleFailure("phase1c_unprivileged", "SELECT vehicle_private.vm_apply_structural_changes('{}'::jsonb,'no-capability');",
     "permission denied for schema vehicle_private");
   expectLoginRoleFailure("phase1c_unprivileged", "INSERT INTO public.vehicle_models(canonical_id,brand_id,slug,name_en,payload,identity_level,identity_aliases) VALUES ('honda.unprivileged','honda','honda-unprivileged','Unprivileged','{}','BASIC','[]');",
     "permission denied|row-level security|new row violates");
+  expectLoginRoleFailure(rpcUser,
+    `SELECT vehicle_private.vm_issue_structural_capability('phase1c-self-issue','${rpcUser}','${"0".repeat(64)}',ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',repeat('a',64),'fixture:self-issue');`,
+    "permission denied for function vm_issue_structural_capability");
+  expectLoginRoleFailure(rpcUser,
+    `SET request.jwt.claim.sub=${quote(issuerUser)}; SELECT vehicle_private.vm_issue_structural_capability('phase1c-spoof-issue','${rpcUser}','${"0".repeat(64)}',ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',repeat('b',64),'fixture:spoof-issue');`,
+    "permission denied for function vm_issue_structural_capability");
+  expectLoginRoleFailure(issuerUser,
+    "BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes('{}'::jsonb,'no-capability'); COMMIT;",
+    "permission denied for function vm_apply_structural_changes");
+  expectLoginRoleFailure(issuerUser,
+    `SELECT vehicle_private.vm_issue_structural_capability('phase1c-self-executor','${issuerUser}','${"0".repeat(64)}',ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',repeat('c',64),'fixture:self-executor');`,
+    "STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER");
+  assert.equal(pg(`SELECT has_function_privilege('${rpcUser}','vehicle_private.vm_issue_structural_capability(text,text,text,text[],timestamptz,text,text)','EXECUTE')`), "f");
+  assert.equal(pg(`SELECT has_function_privilege('${issuerUser}','vehicle_private.vm_apply_structural_changes(jsonb,text)','EXECUTE')`), "f");
+  recordCase("issuer-executor-grants", "PostgreSQL ACL gives issuer only issuance and executor only apply/revert");
+  expectLoginRoleFailure(issuerUser,
+    `SELECT vehicle_private.vm_issue_structural_capability('phase1c-missing-admin-evidence','${rpcUser}','${"0".repeat(64)}',ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',repeat('d',64),'  ');`,
+    "INVALID_STRUCTURAL_APPROVAL");
+  expectLoginRoleFailure(issuerUser,
+    `SELECT vehicle_private.vm_issue_structural_capability('phase1c-price-approval','${rpcUser}','${"0".repeat(64)}',ARRAY['PRICE'],now()+interval '5 minutes',repeat('e',64),'fixture:must-not-approve-price');`,
+    "INVALID_STRUCTURAL_APPROVAL");
+  const crossPrincipalToken = randomBytes(32).toString("hex");
+  issueCapability("phase1c-cross-principal",request.batch_hash,["CREATE_MODEL_BASIC"],crossPrincipalToken);
+  expectLoginRoleFailure(otherRpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(request))}::jsonb,${quote(crossPrincipalToken)}); COMMIT;`,
+    "STRUCTURAL_CAPABILITY_ACTOR_MISMATCH");
+  const crossApproval = pg("SELECT approval_ref FROM vehicle_private.vm_structural_capabilities WHERE token_sha256=public.digest('"+crossPrincipalToken+"','sha256')");
+  assert.equal(pg(`SELECT (a.approved_actor='${issuerUser}' AND a.executor_actor='${rpcUser}' AND a.nonce=c.nonce AND a.admin_evidence_ref='fixture:admin-approval:phase1c-cross-principal')::text FROM vehicle_private.vm_structural_approvals a JOIN vehicle_private.vm_structural_capabilities c USING(approval_ref) WHERE a.approval_ref=${quote(crossApproval)}`), "true");
+  recordCase("issuer-audit-bindings", "immutable approval audit records distinct database issuer, explicit executor, admin evidence reference and matching nonce");
+  expectPgFailure(`UPDATE vehicle_private.vm_structural_approvals SET admin_evidence_ref='tampered' WHERE approval_ref=${quote(crossApproval)};`,
+    "STRUCTURAL_AUDIT_APPEND_ONLY");
+
+  const strictModelRequest: any = structuredClone(request);
+  strictModelRequest.intents[0].identity_evidence.generation_id = "unsupported-by-basic-schema";
+  const badNestedEvidence = resignRequest(strictModelRequest);
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(badNestedEvidence))}::jsonb,'no-capability'); COMMIT;`,
+    "INVALID_CREATE_MODEL_BASIC_FIELDS");
+  const badExpectedSet: any = structuredClone(request);
+  badExpectedSet.expected_revisions[0].approved_by = "not-in-contract";
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(resignRequest(badExpectedSet)))}::jsonb,'no-capability'); COMMIT;`,
+    "INVALID_STRUCTURAL_REVISION_SET");
+  const unsupportedOperation: any = structuredClone(request);
+  unsupportedOperation.intents[0].operation = "PRICE";
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(resignRequest(unsupportedOperation)))}::jsonb,'no-capability'); COMMIT;`,
+    "STRUCTURAL_OPERATION_NOT_ALLOWED");
+  const wrongBrandShape: any = structuredClone(request);
+  wrongBrandShape.intents[0].identity_evidence = { granularity: "MODEL", model_name: "invalid", references: ["fixture:invalid"] };
+  wrongBrandShape.intents[0].operation = "CREATE_BRAND";
+  wrongBrandShape.intents[0].canonical_id = "phase1c_invalid_brand";
+  wrongBrandShape.intents[0].brand_id = "honda";
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(resignRequest(wrongBrandShape)))}::jsonb,'no-capability'); COMMIT;`,
+    "INVALID_CREATE_BRAND_FIELDS");
 
   // The second insert raises after the first identity has been written inside
   // the RPC. PostgreSQL must roll back the whole identity/audit/receipt unit.
@@ -181,10 +286,12 @@ try {
   ] as Batch["intents"];
   const atomic = createRequest(atomicIntents, "phase1c-injected-rollback");
   const atomicToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-rollback',${quote(atomic.request.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(atomicToken)});`);
+  issueCapability("phase1c-rollback",atomic.request.batch_hash,["CREATE_MODEL_BASIC"],atomicToken);
   assert.equal(pgAsRpcActor("SELECT session_user"),rpcUser);
-  const atomicCapability = pg(`SELECT principal||'|'||batch_hash||'|'||array_to_string(operations,',')||'|'||(expires_at>clock_timestamp())::text||'|'||(consumed_at IS NULL)::text FROM vehicle_private.vm_structural_capabilities WHERE token_sha256=public.digest(${quote(atomicToken)},'sha256')`);
-  assert.equal(atomicCapability,`${rpcUser}|${atomic.request.batch_hash}|CREATE_MODEL_BASIC|true|true`);
+  const atomicCapability = pg(`SELECT principal||'|'||issuer_actor||'|'||batch_hash||'|'||array_to_string(operations,',')||'|'||(expires_at>clock_timestamp())::text||'|'||(consumed_at IS NULL)::text FROM vehicle_private.vm_structural_capabilities WHERE token_sha256=public.digest(${quote(atomicToken)},'sha256')`);
+  assert.equal(atomicCapability,`${rpcUser}|${issuerUser}|${atomic.request.batch_hash}|CREATE_MODEL_BASIC|true|true`);
+  assert.equal(pg(`SELECT (a.approved_actor='${issuerUser}' AND a.executor_actor='${rpcUser}' AND a.nonce=c.nonce AND a.admin_evidence_ref='fixture:admin-approval:phase1c-rollback')::text FROM vehicle_private.vm_structural_approvals a JOIN vehicle_private.vm_structural_capabilities c USING(approval_ref) WHERE c.token_sha256=public.digest(${quote(atomicToken)},'sha256')`), "true");
+  recordCase("atomic-capability-binding", "database capability binds the batch, exact operation, expiry, distinct executor/issuer and immutable approval nonce");
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(atomic.request))}::jsonb,${quote(atomicToken)}); COMMIT;`, "PHASE1C_INJECTED_FAILURE");
   pg("DROP TRIGGER phase1c_injected_failure ON public.vehicle_models; DROP FUNCTION vehicle_private.phase1c_injected_failure();");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_models WHERE canonical_id IN ('honda.phase1c_atomic_one','honda.phase1c_atomic_two')"), "0");
@@ -193,21 +300,23 @@ try {
   assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_receipts WHERE batch_id='phase1c-injected-rollback'"), "0");
 
   const token = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability(${quote("phase1c-approved-eight")},${quote(request.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(token)});`);
+  issueCapability("phase1c-approved-eight",request.batch_hash,["CREATE_MODEL_BASIC"],token);
   const applied = parseRpcResult(rpc(request, token));
   assert.equal(applied.status, "APPLIED");
   assert.equal(applied.revision_ids.length, 8);
   const replay = parseRpcResult(rpc(request, token));
   assert.equal(replay.replay, true);
+  assert.equal(pg(`SELECT count(*) FROM vehicle_private.vm_structural_observations WHERE batch_id=${quote(request.batch_id)} AND actor=${quote(rpcUser)} AND actor_kind='ADMIN'`), "1");
+  recordCase("session-user-audit", "spoofed request.jwt.claim.sub does not replace PostgreSQL session_user in append-only actor audit");
   const changedBatch: Batch = { ...batch, reason: "changed payload under the same idempotency key" };
   const changedRequest = buildStructuralRpcDraftRequest(changedBatch, planStructuralChanges(snapshot, changedBatch));
   const changedToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-changed-retry',${quote(changedRequest.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(changedToken)});`);
+  issueCapability("phase1c-changed-retry",changedRequest.batch_hash,["CREATE_MODEL_BASIC"],changedToken);
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(changedRequest))}::jsonb,${quote(changedToken)}); COMMIT;`, "STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT");
 
   const collisionBatch = createRequest([createIntents.find((i: any) => i.canonical_id === "honda.jazz") as any], "phase1c-canonical-collision");
   const collisionToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-canonical-collision',${quote(collisionBatch.request.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(collisionToken)});`);
+  issueCapability("phase1c-canonical-collision",collisionBatch.request.batch_hash,["CREATE_MODEL_BASIC"],collisionToken);
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(collisionBatch.request))}::jsonb,${quote(collisionToken)}); COMMIT;`, "STRUCTURAL_CANONICAL_OR_SLUG_COLLISION");
   const aliasCollisionIntent: any = { operation: "CREATE_MODEL_BASIC", canonical_id: "honda.phase1c_jazz_alias", brand_id: "honda", name_en: "Phase1C Jazz Alias",
     expected_revision: 0, identity_evidence: { granularity: "MODEL", model_name: "Phase1C Jazz Alias", references: ["fixture:alias-collision"] } };
@@ -222,7 +331,7 @@ try {
   aliasCollision.request.payload_hash = structuralHash(collisionEnvelope);
   pg("INSERT INTO vehicle_private.vm_approved_alias_equivalences(model_id,normalized_alias,source_ref,approved_by) VALUES ('honda.phase1c_jazz_alias',vehicle_private.vm_identity_normalize('Jazz','Honda'),'fixture:Phase1C collision assertion','phase1c-test-approver')");
   const aliasCollisionToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-alias-collision',${quote(aliasCollision.request.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(aliasCollisionToken)});`);
+  issueCapability("phase1c-alias-collision",aliasCollision.request.batch_hash,["CREATE_MODEL_BASIC"],aliasCollisionToken);
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(aliasCollision.request))}::jsonb,${quote(aliasCollisionToken)}); COMMIT;`, "STRUCTURAL_NORMALIZED_IDENTITY_COLLISION");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_models WHERE identity_level='BASIC'"), "8");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_models WHERE identity_level='BASIC' AND (status IS NOT NULL OR generation_id IS NOT NULL OR served_as_of IS NOT NULL OR seed_release_id IS NOT NULL OR segment IS NOT NULL OR body_type IS NOT NULL OR retail_price_min IS NOT NULL OR retail_price_max IS NOT NULL)"), "0");
@@ -247,12 +356,17 @@ try {
   const staleBatch: Batch = { batch_id: "phase1c-stale-alias", reason: "stale CAS check", source_ref: "fixture:stale-alias",
     observed_at: "2026-10-13T00:01:00.000Z", intents: [{ operation: "UPDATE_MODEL_ALIAS", canonical_id: "honda.jazz", aliases: ["Jazz"], expected_revision: 0 }] };
   const staleRequest = buildStructuralRpcDraftRequest(staleBatch, planStructuralChanges(staleSnapshot, staleBatch));
+  const invalidAliasFields: any = structuredClone(staleRequest);
+  invalidAliasFields.intents[0].identity_evidence = { granularity: "MODEL", model_name: "Jazz", references: ["fixture:should-not-be-accepted"] };
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(resignRequest(invalidAliasFields)))}::jsonb,'no-capability'); COMMIT;`,
+    "INVALID_UPDATE_MODEL_ALIAS_FIELDS");
   const staleToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-stale-alias',${quote(staleRequest.batch_hash)},ARRAY['UPDATE_MODEL_ALIAS'],now()+interval '5 minutes',${quote(staleToken)});`);
+  issueCapability("phase1c-stale-alias",staleRequest.batch_hash,["UPDATE_MODEL_ALIAS"],staleToken);
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(staleRequest))}::jsonb,${quote(staleToken)}); COMMIT;`, "STRUCTURAL_STALE_REVISION");
   assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_observations WHERE batch_id='phase1c-stale-alias'"), "0");
   const expiredToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-expired-alias',${quote(staleRequest.batch_hash)},ARRAY['UPDATE_MODEL_ALIAS'],now()+interval '1 second',${quote(expiredToken)});`);
+  issueCapability("phase1c-expired-alias",staleRequest.batch_hash,["UPDATE_MODEL_ALIAS"],expiredToken,rpcUser,"1 second");
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1100);
   expectLoginRoleFailure(rpcUser,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_apply_structural_changes(${quote(JSON.stringify(staleRequest))}::jsonb,${quote(expiredToken)}); COMMIT;`, "STRUCTURAL_CAPABILITY_EXPIRED");
   const currentSnapshot = structuredClone(snapshot); currentSnapshot.vehicle_models.push({ ...jazzRow, revision: 1 });
@@ -260,15 +374,25 @@ try {
     intents: [{ ...staleBatch.intents[0], expected_revision: 1 }] };
   const aliasRequest = buildStructuralRpcDraftRequest(aliasBatch, planStructuralChanges(currentSnapshot, aliasBatch));
   const aliasToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-valid-alias',${quote(aliasRequest.batch_hash)},ARRAY['UPDATE_MODEL_ALIAS'],now()+interval '5 minutes',${quote(aliasToken)});`);
+  issueCapability("phase1c-valid-alias",aliasRequest.batch_hash,["UPDATE_MODEL_ALIAS"],aliasToken);
   assert.equal(parseRpcResult(rpc(aliasRequest, aliasToken)).status, "APPLIED");
   assert.equal(pg("SELECT revision FROM public.vehicle_models WHERE canonical_id='honda.jazz'"), "2");
   const aliasRevision = pg("SELECT revision_id FROM vehicle_private.vm_structural_revisions WHERE batch_id='phase1c-valid-alias'");
   const revertHash = structuralHash({ operation: "REVERT", revision_id: aliasRevision, expected_revision: 2 });
   const revertToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-alias-revert',${quote(revertHash)},ARRAY['REVERT'],now()+interval '5 minutes',${quote(revertToken)});`);
+  issueCapability("phase1c-alias-revert",revertHash,["REVERT"],revertToken);
   assert.equal(parseRpcResult(revertRpc(aliasRevision, 2, revertToken)).status, "REVERTED");
   assert.equal(parseRpcResult(revertRpc(aliasRevision, 2, revertToken)).replay, true);
+  assert.equal(pg(`SELECT count(*) FROM vehicle_private.vm_structural_observations WHERE batch_id=${quote(`revert:${aliasRevision}`)} AND actor=${quote(rpcUser)}`), "1");
+  recordCase("revert-session-user-audit", "revert actor audit remains the authenticated login despite a spoofed claim setting");
+  expectLoginRoleFailure(rpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_revert_structural_revision(${quote(aliasRevision)}::uuid,2,''); COMMIT;`,
+    "STRUCTURAL_CAPABILITY_NOT_FOUND");
+  const foreignRevertToken = randomBytes(32).toString("hex");
+  issueCapability("phase1c-alias-revert-foreign",revertHash,["REVERT"],foreignRevertToken,otherRpcUser);
+  expectLoginRoleFailure(otherRpcUser,
+    `BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_revert_structural_revision(${quote(aliasRevision)}::uuid,2,${quote(foreignRevertToken)}); COMMIT;`,
+    "STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH");
   assert.equal(pg("SELECT revision FROM public.vehicle_models WHERE canonical_id='honda.jazz'"), "3");
   assert.equal(pg("SELECT identity_aliases::text FROM public.vehicle_models WHERE canonical_id='honda.jazz'"), "[]");
 
@@ -279,7 +403,7 @@ try {
       name_en: "Phase1C Revert Brand", expected_revision: 0 }] };
   const brandRequest = buildStructuralRpcDraftRequest(brandBatch, planStructuralChanges(snapshot, brandBatch));
   const brandToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-brand-create',${quote(brandRequest.batch_hash)},ARRAY['CREATE_BRAND'],now()+interval '5 minutes',${quote(brandToken)});`);
+  issueCapability("phase1c-brand-create",brandRequest.batch_hash,["CREATE_BRAND"],brandToken);
   assert.equal(parseRpcResult(rpc(brandRequest, brandToken)).status, "APPLIED");
   const brandRevision = pg("SELECT revision_id FROM vehicle_private.vm_structural_revisions WHERE batch_id='phase1c-revert-brand'");
   const brandRow = { canonical_id: "phase1c_revert_brand", slug: "phase1c_revert_brand", name_en: "Phase1C Revert Brand", aliases: [],
@@ -291,13 +415,13 @@ try {
       identity_evidence: { granularity: "MODEL", model_name: "Test Model", references: ["fixture:revert-child"] } }] };
   const dependentRequest = buildStructuralRpcDraftRequest(dependentBatch, planStructuralChanges(dependentSnapshot, dependentBatch));
   const dependentToken = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-child-create',${quote(dependentRequest.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(dependentToken)});`);
+  issueCapability("phase1c-child-create",dependentRequest.batch_hash,["CREATE_MODEL_BASIC"],dependentToken);
   assert.equal(parseRpcResult(rpc(dependentRequest, dependentToken)).status, "APPLIED");
   const childRevision = pg("SELECT revision_id FROM vehicle_private.vm_structural_revisions WHERE batch_id='phase1c-revert-child'");
   const makeRevertToken = (revision: string, expected: number, approval: string) => {
     const hash = structuralHash({ operation: "REVERT", revision_id: revision, expected_revision: expected });
     const secret = randomBytes(32).toString("hex");
-    pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability(${quote(approval)},${quote(hash)},ARRAY['REVERT'],now()+interval '5 minutes',${quote(secret)});`);
+    issueCapability(approval,hash,["REVERT"],secret);
     return secret;
   };
   const blockedBrandRevert = makeRevertToken(brandRevision, 1, "phase1c-brand-revert");
@@ -315,8 +439,8 @@ try {
   const raceOne = createRequest([raceIntent("honda.phase1c_race_one")], "phase1c-race-one").request;
   const raceTwo = createRequest([raceIntent("honda.phase1c_race_two")], "phase1c-race-two").request;
   const raceTokenOne = randomBytes(32).toString("hex"), raceTokenTwo = randomBytes(32).toString("hex");
-  pgAsRpcActor(`SELECT vehicle_private.vm_issue_structural_capability('phase1c-race-one-cap',${quote(raceOne.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(raceTokenOne)});
-      SELECT vehicle_private.vm_issue_structural_capability('phase1c-race-two-cap',${quote(raceTwo.batch_hash)},ARRAY['CREATE_MODEL_BASIC'],now()+interval '5 minutes',${quote(raceTokenTwo)});`);
+  issueCapability("phase1c-race-one-cap",raceOne.batch_hash,["CREATE_MODEL_BASIC"],raceTokenOne);
+  issueCapability("phase1c-race-two-cap",raceTwo.batch_hash,["CREATE_MODEL_BASIC"],raceTokenTwo);
   const raceResults = await Promise.all([rpcConcurrent(raceOne,raceTokenOne),rpcConcurrent(raceTwo,raceTokenTwo)]);
   const raceWinners = raceResults.filter(x => x.status===0);
   const raceLosers = raceResults.filter(x => x.status!==0);
@@ -354,7 +478,7 @@ try {
     docker_image: image,
     database: `PostgreSQL ${dbVersion}, Docker network=none, tmpfs-only, no published port`,
     replayed_repository_schema: "v12,v15,v22,v48,v57-v64",
-    catalog_baseline_and_post_apply: "parity, seed and engine checks passed",
+    catalog_baseline_and_post_apply: "parity, seed and engine checks passed against the single local Toyota fixture only; full-catalog parity remains unverified",
     valid_identities: validated.length, registrations: 47109, basic_models_created: 8,
     raw_ice_evidence_groups: Object.keys(rawIceEvidence).length,
     auxiliary_create_test_rows: "two models and one brand were created for revert/concurrency cases, then soft-hidden",
@@ -364,10 +488,15 @@ try {
     receipt_replay: "same receipt; changed payload under the same idempotency key rejected",
     collision_checks: "duplicate canonical ID and frozen-snapshot-normalized alias collisions rejected",
     production_or_staging_connections: 0,
-    access_controls: "structural RPC applied through non-superuser phase1c_rpc_actor login with approver role; unprivileged authenticated direct DML denied; service_role EXECUTE denied; forged actor envelope denied; READ COMMITTED denied; expired capability rejected; injected mid-batch error rolled back",
+    access_controls: "separate non-superuser issuer and executor logins; executor lacks issuance ACL; issuer lacks apply ACL; self-issuance and self-execution rejected; cross-principal tokens rejected; spoofed custom session claims ignored in favor of session_user; immutable issuer audit verified; unprivileged DML denied; service_role EXECUTE denied; READ COMMITTED denied; expired capability rejected; injected mid-batch error rolled back",
     alias_updates: "fresh alias revision 1 -> 2 succeeds; stale revision rejected; compensating revert restores aliases at revision 3 and retries idempotently",
     create_reverts: "soft-hide requires current revisions and no active model dependents; brand revert held until child identity is hidden",
     concurrent_creates: "two real PostgreSQL SERIALIZABLE sessions raced on one normalized name; exactly one committed, then was soft-hidden",
+    acceptance_result: "PASS",
+    runner_exit_code: 0,
+    sql_case_count: sqlCases.length,
+    sql_cases: sqlCases,
+    runner_stdout_case_lines: sqlCases.map((test) => `${test.result} ${test.id}: ${test.assertion} => ${test.observed_result}`),
     frozen_owner_ledger_sha256: frozenLedgerHash,
     frozen_snapshot_sha256: frozenSnapshotHash,
     migration_replay: files,

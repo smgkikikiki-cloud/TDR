@@ -159,16 +159,22 @@ CREATE TABLE vehicle_private.vm_structural_approvals (
   approval_ref text PRIMARY KEY,
   batch_hash text NOT NULL CHECK (batch_hash ~ '^[0-9a-f]{64}$'),
   approved_actor text NOT NULL,
+  executor_actor text NOT NULL,
+  admin_evidence_ref text NOT NULL CHECK (btrim(admin_evidence_ref) <> ''),
   operations text[] NOT NULL CHECK (cardinality(operations) > 0),
+  nonce uuid NOT NULL UNIQUE,
   expires_at timestamptz NOT NULL,
-  issued_at timestamptz,
-  created_at timestamptz NOT NULL DEFAULT now()
+  issued_at timestamptz NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  CHECK (approved_actor <> executor_actor)
 );
 CREATE TABLE vehicle_private.vm_structural_capabilities (
   token_sha256 bytea PRIMARY KEY,
   approval_ref text NOT NULL UNIQUE REFERENCES vehicle_private.vm_structural_approvals(approval_ref),
   batch_hash text NOT NULL CHECK (batch_hash ~ '^[0-9a-f]{64}$'),
   principal text NOT NULL,
+  issuer_actor text NOT NULL,
+  nonce uuid NOT NULL UNIQUE,
   operations text[] NOT NULL,
   expires_at timestamptz NOT NULL,
   consumed_at timestamptz,
@@ -204,6 +210,7 @@ CREATE TABLE vehicle_private.vm_structural_revisions (
   reason text NOT NULL,
   source_hash text NOT NULL CHECK (source_hash ~ '^[0-9a-f]{64}$'),
   reverts_revision_id uuid REFERENCES vehicle_private.vm_structural_revisions(revision_id),
+  approval_ref text REFERENCES vehicle_private.vm_structural_approvals(approval_ref),
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX vm_structural_revisions_target_idx
@@ -230,6 +237,8 @@ CREATE TRIGGER vm_structural_revisions_immutable BEFORE UPDATE OR DELETE
   ON vehicle_private.vm_structural_revisions FOR EACH ROW EXECUTE FUNCTION vehicle_private.vm_reject_audit_mutation();
 CREATE TRIGGER vm_structural_receipts_immutable BEFORE UPDATE OR DELETE
   ON vehicle_private.vm_structural_receipts FOR EACH ROW EXECUTE FUNCTION vehicle_private.vm_reject_audit_mutation();
+CREATE TRIGGER vm_structural_approvals_immutable BEFORE UPDATE OR DELETE
+  ON vehicle_private.vm_structural_approvals FOR EACH ROW EXECUTE FUNCTION vehicle_private.vm_reject_audit_mutation();
 
 -- Seed normalized collision rows from the actual catalog loaded into v57.
 INSERT INTO vehicle_private.vm_identity_tokens(entity_type,brand_id,canonical_id,normalized_token,source_kind)
