@@ -5,12 +5,14 @@
  *   node --experimental-strip-types scripts/price-refresh.ts [--apply] [--models a,b] [--targets x,y] [--no-ai] [--require-audit] [--trigger name]
  * Env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY (optional; without it no AI is used)
  */
-import { readFileSync, writeFileSync, appendFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, writeFileSync, appendFileSync } from "node:fs";
 import { Budget, anthropicMessages, DEFAULT_AI_SETTINGS } from "../lib/price-refresh/ai.ts";
-import { openBrowserFetcher } from "../lib/price-refresh/fetcher.ts";
+import { openBrowserFetcher, openHttpFetchers } from "../lib/price-refresh/fetcher.ts";
+import { sourcesByModel, usablePlaybooks, type Playbook } from "../lib/price-refresh/playbook.ts";
 import { refreshModel, type AiPort, type ModelJob, type ModelReport, type Ports } from "../lib/price-refresh/run.ts";
 import * as store from "../lib/price-refresh/store.ts";
 
+const PLAYBOOKS = "config/price-fetcher/playbooks";
 const FEED = "automotive/vehicle_master/vehreg/data/2026/market/pricefeed";
 const argv = process.argv.slice(2);
 const flag = (name: string) => argv.includes(`--${name}`);
@@ -22,19 +24,32 @@ const now = new Date();
 const today = new Date(now.getTime() + 7 * 3_600_000).toISOString().slice(0, 10);   // Thai calendar day
 const runId = `pr-${now.toISOString().replace(/[-:T.Z]/g, "").slice(0, 14)}-${Math.random().toString(36).slice(2, 6)}`;
 
+function loadPlaybooks(): Playbook[] {
+  if (!existsSync(PLAYBOOKS)) return [];
+  return readdirSync(PLAYBOOKS).filter((f: string) => f.endsWith(".json")).map((f: string) => JSON.parse(readFileSync(`${PLAYBOOKS}/${f}`, "utf8")) as Playbook);
+}
+
 function jobs(): ModelJob[] {
   const targets = JSON.parse(readFileSync(`${FEED}/targets.json`, "utf8"));
   const map = JSON.parse(readFileSync(`${FEED}/target_models.json`, "utf8")).targets as Record<string, string>;
   const onlyModels = list("models");
   const onlyTargets = list("targets");
+  const { usable, rejected } = usablePlaybooks(loadPlaybooks(), { apply });
+  for (const r of rejected) console.log(`  playbook "${r.brand}" not used: ${r.why.join("; ")}`);
+  const playbookSources = sourcesByModel(usable);
   const byModel = new Map<string, ModelJob>();
+  // A model with a playbook is read through its playbook only; every other mapped model keeps the registry path.
+  for (const [model, sources] of playbookSources) {
+    if (onlyModels.length && !onlyModels.includes(model)) continue;
+    byModel.set(model, { model_id: model, targets: [], sources });
+  }
   for (const t of (Array.isArray(targets) ? targets : targets.targets)) {
     const model = map[t.id];
-    if (!model || t.role !== "CURRENT_MODEL_PAGE") continue;
+    if (!model || t.role !== "CURRENT_MODEL_PAGE" || playbookSources.has(model)) continue;
     if (onlyModels.length && !onlyModels.includes(model)) continue;
     if (onlyTargets.length && !onlyTargets.includes(t.id)) continue;
     const job = byModel.get(model) ?? { model_id: model, targets: [] };
-    job.targets.push({ id: t.id, url: t.url, lineup_complete: t.lineup_complete === true });
+    job.targets.push({ id: t.id, url: t.url });
     byModel.set(model, job);
   }
   return [...byModel.values()];
@@ -51,7 +66,7 @@ async function main() {
   if (!url || !key) throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required");
   const rest = new store.Rest(url, key);
   const todo = jobs();
-  console.log(`${apply ? "APPLY" : "DRY RUN"} ${runId}: ${todo.length} models, ${todo.reduce((n, j) => n + j.targets.length, 0)} pages`);
+  console.log(`${apply ? "APPLY" : "DRY RUN"} ${runId}: ${todo.length} models, ${todo.reduce((n: number, j: ModelJob) => n + (j.sources?.length ?? j.targets.length), 0)} sources`);
 
   const settings = await soft(() => store.loadAiSettings(rest), DEFAULT_AI_SETTINGS);
   const usage = await soft(() => store.loadUsage(rest, now), []);
@@ -65,8 +80,11 @@ async function main() {
 
   if (apply) await store.startRun(rest, runId, value("trigger") ?? "manual", false);
   const browser = await openBrowserFetcher();
+  const http = openHttpFetchers();
   const ports: Ports = {
     fetch: browser.fetch,
+    fetchHtml: http.html,
+    fetchPdf: http.pdf,
     loadModel: (id) => store.loadModel(rest, id),
     loadHistory: (id, at) => soft(() => store.loadHistory(rest, id, at), { prior_amounts: new Map(), last_seen: new Map(), first_observed: null, read_dates: [] }),
     loadApprovedJumps: (id) => soft(() => store.loadApprovedJumps(rest, id), []),
@@ -86,7 +104,7 @@ async function main() {
         console.log(`${r.model_id.padEnd(32)} ${r.status.padEnd(14)} obs ${r.observations} applied ${r.applied.length} pending ${r.pending.length} held ${r.held.length} jumps ${r.jumps.length} cards ${r.proposals.length}${r.fetch_errors.length ? ` ERR ${r.fetch_errors[0]}` : ""}`);
       } catch (e) {
         // one model failing must not stop the others
-        reports.push({ model_id: job.model_id, status: "ERROR", reason: String((e as Error).message).slice(0, 300), applied: [], held: [], pending: [], jumps: [], proposals: [], skipped: [], fetch_errors: [], observations: 0 });
+        reports.push({ model_id: job.model_id, status: "ERROR", reason: String((e as Error).message).slice(0, 300), applied: [], held: [], pending: [], jumps: [], proposals: [], skipped: [], fetch_errors: [], observations: 0, sources: [], promotions: 0, conflicts: [], lineup_complete: false });
         console.log(`${job.model_id.padEnd(32)} ERROR ${String((e as Error).message).slice(0, 200)}`);
       }
       if (ai?.budget.halted) console.log(`  AI halted: ${ai.budget.halted}`);

@@ -1,5 +1,5 @@
 /** lib/price-refresh/extract.ts: anchored extraction and the literal-evidence rule, on page shapes seen on OEM sites. */
-import { extractAnchored, validateEvidence, amountsIn, type KnownTrim, type PageText } from "../lib/price-refresh/extract.ts";
+import { extractAnchored, resolveSemantics, validateEvidence, amountsIn, type KnownTrim, type PageText } from "../lib/price-refresh/extract.ts";
 
 let failed = 0;
 let passed = 0;
@@ -51,12 +51,32 @@ Sport
     && priceOf(r, "1.0L Turbo VL CVT") === 699_000 && priceOf(r, "1.0L Turbo E CVT") === 573_000, r);
 }
 
-// A price shown as a reference ("MSRP") is not the list price of the grade next to it.
+// MSRP vs a lower "FROM" price on the same grade: the page does not say which is the list price -> refuse to guess.
 {
-  const r = extractAnchored(page("TANK 300 HEV\nFROM 1,279,000.-\nMSRP : 1,799,000.-"), trims("TANK 300 HEV"), "GWM", "Tank 300");
-  ok("first plausible price after the name wins, MSRP reference ignored", priceOf(r, "TANK 300 HEV") === 1_279_000, r);
+  const text = "TANK 300 HEV\nFROM 1,279,000.-\nMSRP : 1,799,000.-";
+  const r = extractAnchored(page(text), trims("TANK 300 HEV"), "GWM", "Tank 300");
+  ok("MSRP and a lower plain price together: ambiguous by default, nothing observed", r.observations.length === 0 && r.ambiguous.length === 1, r);
+  const sem = resolveSemantics({ mixed_msrp: "MSRP_IS_LIST" });
+  const r2 = extractAnchored(page(text), trims("TANK 300 HEV"), "GWM", "Tank 300", sem);
+  ok("playbook says MSRP is the list price: MSRP is observed", priceOf(r2, "TANK 300 HEV") === 1_799_000, r2);
+  ok("...and the lower price is kept as a PROMOTION, not a list price", r2.promotions.length === 1 && r2.promotions[0].amount_thb === 1_279_000 && r2.promotions[0].kind === "PROMOTION", r2);
 }
-
+// Promotion wording: never a list price.
+{
+  const r = extractAnchored(page("Sport\nราคาเริ่มต้น 569,000 บาท\nSport\nราคาพิเศษ 539,000 บาท"), trims("Sport"), "Toyota", "Yaris");
+  ok("promotion price is excluded from list observations", r.observations.every((o) => o.amount_thb !== 539_000) && r.promotions.some((o) => o.amount_thb === 539_000), r);
+  const only = extractAnchored(page("Sport\nราคาพิเศษ 539,000 บาท"), trims("Sport"), "Toyota", "Yaris");
+  ok("a page with ONLY a promotion price yields no list observation", only.observations.length === 0 && only.promotions.length === 1, only);
+  const req = extractAnchored(page("Sport 569,000 บาท"), trims("Sport"), "Toyota", "Yaris", resolveSemantics({ require_list_marker: true }));
+  ok("require_list_marker: an unmarked number is not a price", req.observations.length === 0, req);
+  const marked = extractAnchored(page("Sport ราคา 569,000 บาท"), trims("Sport"), "Toyota", "Yaris", resolveSemantics({ require_list_marker: true }));
+  ok("require_list_marker: a marked number is", marked.observations.length === 1, marked);
+}
+// Names with no price at all (a model page that carries no prices): existence only.
+{
+  const r = extractAnchored(page("Dolphin\nStandard Range\nPremium Range\nสเปค"), trims("Standard Range", "Premium Range", "Extended"), "BYD", "Dolphin");
+  ok("no prices on the page: names_seen lists the grades present, no observation", r.names_seen.length === 2 && r.observations.length === 0, r);
+}
 // Conflicting prices for one name -> reported ambiguous, no observation.
 {
   const r = extractAnchored(page("Sport 569,000 บาท ... ภายหลัง ... Sport 599,000 บาท"), trims("Sport"), "Toyota", "Yaris");
