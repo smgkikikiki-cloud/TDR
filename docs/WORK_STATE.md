@@ -930,6 +930,13 @@ State: `DONE / APPROVED`. Owner gave explicit approval to enqueue the full v6 ba
 
 Next: REPAIR-08 is closed. Do not re-audit, rebuild, or re-enqueue unless the user explicitly reopens it. Any future resolution of the 5 held-HISTORICAL models, RIDDARA's 4WD collision, EX90's Ultra split, Wuling Darion/Porta's remaining unresolved trim, or Zeekr X's Long Range RWD is a new, separately-numbered repair batch. The remaining historical BEV+REEV audit queue beyond REPAIR-08's 16 members was explicitly not started in this operation and is separate future work.
 
+## Price Fetcher (Vehicle DB v3 Phase 1 runner) -- state 2026-10-13
+
+- **DONE (merged):** PR #225 (writer migration v66 -- NOT applied to production; runner, reconcile, extractor, capped AI, workflow), PR #233 (no discontinue proposals from unverified/partial sources).
+- **ACTIVE (Draft PR, awaiting independent QA):** PR 2 = OEM playbook architecture (`config/price-fetcher/`, `lib/price-refresh/playbook.ts`, `source.ts`). Generic only: **no real brand playbook exists and none is verified.** MSRP / promotion separated (promotions are `CAMPAIGN_PRICE` observations, never `LIST_PRICE`); `lineup_complete` default false, declared only by a signed, dated (90-day) verification in a VERIFIED playbook; legacy registry targets can never declare it.
+- **Locks unchanged:** no production write, no migration apply, no schedule (`PRICE_REFRESH_SCHEDULE` unset), no paid AI (cap 0), no gate advancement. Independent of the Ice crosswalk.
+- **NEXT:** PR 3 = 5-OEM pilot (Toyota, Isuzu, Honda, BYD, MG) from real captured pages + their snapshot regression tests; owner shows migration v66 before it is applied.
+
 ## Per-batch recording template
 
 ```yaml
