@@ -17,7 +17,8 @@
     "check:structural-identity-writer": "node --experimental-strip-types scripts/check-structural-identity-writer.ts && node --experimental-strip-types scripts/check-basic-identity-db-compat.ts && node --experimental-strip-types scripts/structural-identity-preflight.ts --check",
     "check:phase1d-evidence": "node --experimental-strip-types scripts/check-phase1d-evidence.ts",
     "check:phase1d-admin-contract": "node --experimental-strip-types --experimental-loader ./scripts/next-headers-test-loader.mjs scripts/check-phase1d-admin-contract.ts",
-    "check:phase1c-postgres-acceptance": "bash scripts/run-phase1c-postgres-acceptance.sh"
+    "check:phase1c-postgres-acceptance": "bash scripts/run-phase1c-postgres-acceptance.sh",
+    "check:phase1d-full-catalog-postgres": "node --experimental-strip-types scripts/phase1d-full-catalog-postgres-acceptance.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

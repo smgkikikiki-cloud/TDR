@@ -1,0 +1,75 @@
+{
+  "schema": "tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",
+  "executed_at_utc": "2026-10-13T19:21:32.158Z",
+  "exact_command": "TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",
+  "docker_image": "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75fd595d42e1fa316b9fb4378742297",
+  "database": "PostgreSQL 16.10; Docker network=none; tmpfs-only; no published port",
+  "private_input": {
+    "available": true,
+    "gzip_sha256": "8b7dc88cf42c27516ec08ddf170173feff85891ac655caa9a6f3eb5511d8b962",
+    "payload_sha256": "c51c20966be5f49dd0fe9a953793e666f6becf0f4d27a986158b6805e7659dad",
+    "tables": 15,
+    "rows": 28319,
+    "raw_backup_pushed": false
+  },
+  "baseline": {
+    "source_hash_manifest": "Owner Context Handoff 2026-10-14 aggregate counts and MD5",
+    "repository_v57_v64_restore": true,
+    "matching_relations": 15,
+    "total_relations_checked": 21,
+    "mismatches": [
+      {
+        "relation": "vehicle_variants",
+        "expected_rows": 370,
+        "actual_rows": 370,
+        "expected_md5": "dbcea4aa79471faf9f0a5bcab3e732de",
+        "actual_md5": "a5f81dc2dee6aeb5d5f2ed9a437e0567"
+      },
+      {
+        "relation": "vehicle_trims",
+        "expected_rows": 1569,
+        "actual_rows": 1569,
+        "expected_md5": "61e0230c93dd2cbc6b3a5cbe9ccf64c5",
+        "actual_md5": "218c3a9a5d6a77226f6e985b09181887"
+      },
+      {
+        "relation": "vehicle_facts",
+        "expected_rows": 24492,
+        "actual_rows": 24492,
+        "expected_md5": "074a7cf2c603a218fc232e24a9e015a5",
+        "actual_md5": "9e14841a24b7d5cef2469b858bd94e52"
+      },
+      {
+        "relation": "vehicle_eco_evidence",
+        "expected_rows": 3,
+        "actual_rows": 3,
+        "expected_md5": "20d33f0f5260b5f038a41d183269c9cc",
+        "actual_md5": "0ca2b75ff07b653207ed53fb9870f24f"
+      },
+      {
+        "relation": "current_market_trims",
+        "expected_rows": 1569,
+        "actual_rows": 1569,
+        "expected_md5": "5d57479684c0faf3ca87b1db373adf55",
+        "actual_md5": "849663f97427ba230d776d7360bca06a"
+      },
+      {
+        "relation": "current_spec_facts",
+        "expected_rows": 23083,
+        "actual_rows": 23083,
+        "expected_md5": "3681ad68ae64e3244bb86f6abbcea001",
+        "actual_md5": "fc7f69705ccdf786b5e4ee27a856b196"
+      }
+    ],
+    "deployed_schema_acl_manifest_available": false
+  },
+  "phase1c_applied": false,
+  "basic_models_created": 0,
+  "production_or_staging_connections": 0,
+  "production_or_staging_writes": 0,
+  "frozen_owner_decisions": 244,
+  "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+  "acceptance_result": "FULL_CATALOG_ACCEPTANCE_BLOCKED_SOURCE_FINGERPRINT_MISMATCH",
+  "blocked_reason": "Fail-closed before Phase 1C: restored pre-change catalog fingerprints do not all match the authorized source baseline. A fresh deployed schema/view/RLS/grant/ACL manifest was unavailable. No reconciliation or suppression was attempted.",
+  "raw_rows_in_report": false
+}
