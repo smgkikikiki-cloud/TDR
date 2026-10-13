@@ -513,6 +513,156 @@ def test_owner_approved_serena_stays_approved_when_series_correlation_is_0974(tm
     assert "corr=0.974" in row["reason"]
 
 
+
+def test_owner_approved_retained_auto_promotes_and_does_not_double_count_series(tmp_path, monkeypatch):
+    rest = _base_rest()
+    group_id = "toyota-camry-legacy"
+    canonical_id = "toyota.camry"
+    values = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+    rest.tables["ice_dims_model_group"] = [_group(group_id, "Camry", "Toyota")]
+    rest.tables["ice_reg_trend"] = _ice_series_rows(group_id, values)
+    rest.tables["vehicle_models"] = [_model(canonical_id, "Camry", "toyota")]
+    rest.tables["registrations"] = _legacy_rows(canonical_id, values)
+    rest.tables["ice_model_crosswalk"] = [{
+        "model_group_id": group_id, "canonical_model_id": canonical_id,
+        "status": "AUTO", "match_method": "SERIES",
+        "decision_fingerprint": "old-auto", "reason": "old series score",
+    }]
+    original_evaluator = matcher.xwalk.evaluate_series
+    def observe_series(ice, legacy):
+        assert list(legacy) == values  # not the prior AUTO series plus itself
+        return original_evaluator(ice, legacy)
+    monkeypatch.setattr(matcher.xwalk, "evaluate_series", observe_series)
+
+    review = tmp_path / "review.csv"
+    dry = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review, dry_run=True,
+        owner_approved_identity_overrides={group_id: canonical_id},
+    )
+    assert dry["owner_approved_candidates"] == 1
+    assert dry["owner_schema_blocked"] == 0
+    assert dry["no_candidate"] == 0
+    assert rest.rpc_calls == []
+    exported = list(csv.DictReader(review.open(encoding="utf-8-sig", newline="")))
+    assert len(exported) == 1
+    assert exported[0]["proposed_status"] == "APPROVED"
+    assert exported[0]["match_method"] == "ADMIN"
+
+    # FakeRest emulates the existing R6 upsert RPC; no live database is touched.
+    writable = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review,
+        owner_approved_identity_overrides={group_id: canonical_id},
+    )
+    assert writable["applied"] == 1
+    assert rest.tables["ice_model_crosswalk"][0]["status"] == "APPROVED"
+    assert rest.tables["ice_model_crosswalk"][0]["match_method"] == "ADMIN"
+
+
+def test_multiple_owner_source_groups_same_target_are_schema_blocked_before_writes(tmp_path):
+    rest = _base_rest()
+    groups = ["toyota-camry-a", "toyota-camry-b"]
+    rest.tables["ice_dims_model_group"] = [
+        _group(g, "Camry", "Toyota") for g in groups
+    ]
+    rest.tables["ice_reg_trend"] = [
+        row for g in groups for row in _ice_series_rows(g, [1, 2, 3, 4, 5, 6])
+    ]
+    rest.tables["vehicle_models"] = [_model("toyota.camry", "Camry", "toyota")]
+    owner = {g: "toyota.camry" for g in groups}
+    review = tmp_path / "review.csv"
+    dry = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review,
+        dry_run=True, owner_approved_identity_overrides=owner,
+    )
+    assert dry["owner_schema_blocked"] == 2
+    assert dry["owner_schema_blocked_total"] == 2
+    assert dry["no_candidate"] == 0
+    assert dry["owner_approved_candidates"] == 0
+    assert rest.rpc_calls == []
+    blocked = list(csv.DictReader(review.open(encoding="utf-8-sig", newline="")))
+    assert len(blocked) == 2
+    assert all(row["proposed_status"] == "BLOCKED_SCHEMA" for row in blocked)
+    assert all("not an owner review" in row["reason"] for row in blocked)
+
+    try:
+        matcher.run_match(
+            rest, master_version="7.0", review_csv_path=review,
+            owner_approved_identity_overrides=owner,
+        )
+    except RuntimeError as exc:
+        assert "Fail closed before database writes" in str(exc)
+    else:
+        assert False, "write mode must refuse unsupported many-to-one mappings"
+    assert rest.rpc_calls == []
+    assert rest.tables["ice_model_crosswalk"] == []
+
+
+def test_owner_override_reusing_existing_active_target_elsewhere_is_blocked(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [
+        _group("new-alias", "Camry", "Toyota")
+    ]
+    rest.tables["vehicle_models"] = [_model("toyota.camry", "Camry", "toyota")]
+    rest.tables["ice_model_crosswalk"] = [{
+        "model_group_id": "old-alias", "canonical_model_id": "toyota.camry",
+        "status": "AUTO", "match_method": "SERIES",
+        "decision_fingerprint": "baseline",
+    }]
+    summary = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=tmp_path / "review.csv",
+        dry_run=True, owner_approved_identity_overrides={"new-alias": "toyota.camry"},
+    )
+    assert summary["owner_schema_blocked"] == 1
+    assert summary["owner_approved_candidates"] == 0
+    assert rest.rpc_calls == []
+
+
+def test_owner_missing_live_identity_is_pending_not_unreviewed_and_write_refuses(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [
+        _group("owner-new", "New Model", "Toyota")
+    ]
+    owner = {"owner-new": "toyota.new_model"}
+    review = tmp_path / "review.csv"
+    summary = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review,
+        dry_run=True, owner_approved_identity_overrides=owner,
+    )
+    assert summary["owner_pending_materialization"] == 1
+    assert summary["no_candidate"] == 0
+    exported = next(csv.DictReader(review.open(encoding="utf-8-sig", newline="")))
+    assert exported["proposed_status"] == "PENDING_MATERIALIZATION"
+    try:
+        matcher.run_match(rest, master_version="7.0", review_csv_path=review,
+                          owner_approved_identity_overrides=owner)
+    except RuntimeError as exc:
+        assert "unmaterialized owner targets" in str(exc)
+    else:
+        assert False, "must not write a partial owner batch with missing identities"
+    assert rest.rpc_calls == []
+
+
+def test_protected_admin_conflict_with_new_owner_target_is_blocked(tmp_path):
+    rest = _base_rest()
+    rest.tables["ice_dims_model_group"] = [_group("owner-camry", "Camry", "Toyota")]
+    rest.tables["vehicle_models"] = [_model("toyota.camry", "Camry", "toyota")]
+    rest.tables["ice_model_crosswalk"] = [{
+        "model_group_id": "owner-camry", "canonical_model_id": "toyota.corolla",
+        "status": "PROPOSED", "match_method": "ADMIN",
+        "decision_fingerprint": "historical-protected",
+    }]
+    review = tmp_path / "review.csv"
+    result = matcher.run_match(
+        rest, master_version="7.0", review_csv_path=review,
+        dry_run=True,
+        owner_approved_identity_overrides={"owner-camry": "toyota.camry"},
+    )
+    assert result["owner_schema_blocked"] == 1
+    exported = next(csv.DictReader(review.open(encoding="utf-8-sig", newline="")))
+    assert "PROTECTED_ADMIN_CONFLICT" in exported["reason"]
+    assert rest.rpc_calls == []
+
+
 def test_duplicate_exact_names_use_original_series_score_to_choose(tmp_path):
     rest = _base_rest()
     rest.tables["ice_dims_model_group"] = [_group("aion-aion-es", "Aion ES", "AION")]
