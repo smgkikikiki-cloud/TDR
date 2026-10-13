@@ -1,0 +1,512 @@
+{
+  "candidates": [
+    {
+      "canonical_id": "honda.jazz",
+      "create_intent": {
+        "brand_id": "honda",
+        "canonical_id": "honda.jazz",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Jazz",
+          "references": [
+            "M7.0:dims/model_group.csv:honda-jazz",
+            "owner_identity_targets:honda-jazz"
+          ]
+        },
+        "name_en": "Jazz",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "honda.jazz",
+          "decision_ref": "owner-overlay-line:809",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "honda-jazz",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Jazz",
+      "raw_ice_evidence": {
+        "honda-jazz": {
+          "body": "Hatchback",
+          "segment": "A-segment"
+        }
+      },
+      "registrations": 13790,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:809",
+          "master_version": "7.0",
+          "model_group_id": "honda-jazz",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "ford.ranger_raptor_double_cab",
+      "create_intent": {
+        "brand_id": "ford",
+        "canonical_id": "ford.ranger_raptor_double_cab",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL_REGISTRATION_CLASS",
+          "model_name": "Ranger Raptor Double Cab",
+          "references": [
+            "M7.0:dims/model_group.csv:ford-ford-ranger-raptor",
+            "owner_identity_targets:ford-ford-ranger-raptor"
+          ]
+        },
+        "name_en": "Ranger Raptor Double Cab",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "ford.ranger_raptor_double_cab",
+          "decision_ref": "owner-overlay-line:751",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "canonical_id": "ford.ranger_raptor_double_cab",
+          "decision_ref": "owner-overlay-line:751",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.2",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Ranger Raptor Double Cab",
+      "raw_ice_evidence": {
+        "ford-ford-ranger-raptor": {
+          "body": "Pickup",
+          "segment": "กระบะ 4 ประตู"
+        }
+      },
+      "registrations": 12839,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:751",
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "decision_ref": "owner-overlay-line:751",
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "reg_type_scope": "รย.2",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "jaecoo.j6",
+      "create_intent": {
+        "brand_id": "jaecoo",
+        "canonical_id": "jaecoo.j6",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "J6",
+          "references": [
+            "M7.0:dims/model_group.csv:jaecoo-jaecoo-j6",
+            "owner_identity_targets:jaecoo-jaecoo-j6"
+          ]
+        },
+        "name_en": "J6",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "jaecoo.j6",
+          "decision_ref": "owner-overlay-line:839",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "canonical_id": "jaecoo.j6",
+          "decision_ref": "owner-overlay-line:839",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.9",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "J6",
+      "raw_ice_evidence": {
+        "jaecoo-jaecoo-j6": {
+          "body": "SUV",
+          "segment": "C-segment"
+        }
+      },
+      "registrations": 8659,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:839",
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "decision_ref": "owner-overlay-line:839",
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "reg_type_scope": "รย.9",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "toyota.vios",
+      "create_intent": {
+        "brand_id": "toyota",
+        "canonical_id": "toyota.vios",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Vios",
+          "references": [
+            "M7.0:dims/model_group.csv:toyota-vios",
+            "owner_identity_targets:toyota-vios"
+          ]
+        },
+        "name_en": "Vios",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "toyota.vios",
+          "decision_ref": "owner-overlay-line:1149",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "toyota-vios",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Vios",
+      "raw_ice_evidence": {
+        "toyota-vios": {
+          "body": "Sedan",
+          "segment": "B-segment"
+        }
+      },
+      "registrations": 6647,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1149",
+          "master_version": "7.0",
+          "model_group_id": "toyota-vios",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "gwm.ora_5",
+      "create_intent": {
+        "brand_id": "gwm",
+        "canonical_id": "gwm.ora_5",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Ora 5",
+          "references": [
+            "M7.0:dims/model_group.csv:gwm-ora-5",
+            "owner_identity_targets:gwm-ora-5"
+          ]
+        },
+        "name_en": "Ora 5",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "gwm.ora_5",
+          "decision_ref": "owner-overlay-line:773",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "gwm-ora-5",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Ora 5",
+      "raw_ice_evidence": {
+        "gwm-ora-5": {
+          "body": "Hatchback",
+          "segment": "C-segment"
+        }
+      },
+      "registrations": 4809,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:773",
+          "master_version": "7.0",
+          "model_group_id": "gwm-ora-5",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "nissan.march",
+      "create_intent": {
+        "brand_id": "nissan",
+        "canonical_id": "nissan.march",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Nissan March",
+          "references": [
+            "M7.0:dims/model_group.csv:nissan-nissan-march",
+            "owner_identity_targets:nissan-nissan-march"
+          ]
+        },
+        "name_en": "Nissan March",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "nissan.march",
+          "decision_ref": "owner-overlay-line:1021",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "nissan-nissan-march",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Nissan March",
+      "raw_ice_evidence": {
+        "nissan-nissan-march": {
+          "body": "Hatchback",
+          "segment": "A-segment"
+        }
+      },
+      "registrations": 4000,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1021",
+          "master_version": "7.0",
+          "model_group_id": "nissan-nissan-march",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "nissan.note",
+      "create_intent": {
+        "brand_id": "nissan",
+        "canonical_id": "nissan.note",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Nissan Note",
+          "references": [
+            "M7.0:dims/model_group.csv:nissan-note",
+            "owner_identity_targets:nissan-note"
+          ]
+        },
+        "name_en": "Nissan Note",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "nissan.note",
+          "decision_ref": "owner-overlay-line:1028",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "nissan-note",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Nissan Note",
+      "raw_ice_evidence": {
+        "nissan-note": {
+          "body": "Hatchback",
+          "segment": "B-segment"
+        }
+      },
+      "registrations": 3667,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1028",
+          "master_version": "7.0",
+          "model_group_id": "nissan-note",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "zeekr.7x",
+      "create_intent": {
+        "brand_id": "zeekr",
+        "canonical_id": "zeekr.7x",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "7X",
+          "references": [
+            "M7.0:dims/model_group.csv:zeekr-zeekr-7x",
+            "owner_identity_targets:zeekr-zeekr-7x"
+          ]
+        },
+        "name_en": "7X",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "zeekr.7x",
+          "decision_ref": "owner-overlay-line:1199",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "zeekr-zeekr-7x",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "7X",
+      "raw_ice_evidence": {
+        "zeekr-zeekr-7x": {
+          "body": "SUV",
+          "segment": "D-segment"
+        }
+      },
+      "registrations": 2892,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1199",
+          "master_version": "7.0",
+          "model_group_id": "zeekr-zeekr-7x",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    },
+    {
+      "canonical_id": "toyota.sienta",
+      "create_intent": {
+        "brand_id": "toyota",
+        "canonical_id": "toyota.sienta",
+        "expected_revision": 0,
+        "identity_evidence": {
+          "granularity": "MODEL",
+          "model_name": "Sienta",
+          "references": [
+            "M7.0:dims/model_group.csv:toyota-toyota-sienta",
+            "owner_identity_targets:toyota-toyota-sienta"
+          ]
+        },
+        "name_en": "Sienta",
+        "operation": "CREATE_MODEL_BASIC"
+      },
+      "link_intents": [
+        {
+          "canonical_id": "toyota.sienta",
+          "decision_ref": "owner-overlay-line:1145",
+          "expected_revision": 0,
+          "master_version": "7.0",
+          "model_group_id": "toyota-toyota-sienta",
+          "operation": "LINK_ICE_MODEL_GROUP_BY_REG_TYPE",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "name": "Sienta",
+      "raw_ice_evidence": {
+        "toyota-toyota-sienta": {
+          "body": "MPV",
+          "segment": "Mini MPV"
+        }
+      },
+      "registrations": 2645,
+      "source_proposal_status": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+      "source_safe_candidate_is_not_approval": true,
+      "source_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1145",
+          "master_version": "7.0",
+          "model_group_id": "toyota-toyota-sienta",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ]
+    }
+  ],
+  "catalog_captured_at_utc": "2026-10-13T06:54:38.484014+00:00",
+  "catalog_model_rows_sha256": "c95c99e3f552cc384b083dac7d69b5625032ac73e6bc40d0bc9e086d8367ea64",
+  "catalog_path": "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/vehicle_master_identity_snapshot_2026-10-13.json",
+  "existing_identity_candidate_registrations": 4027896,
+  "frozen_owner_decisions": {
+    "action_disposition_target_and_registration_units_verified": true,
+    "changed": 0,
+    "ledger_decisions_exercised": 244,
+    "mismatches": 0,
+    "reopened": 0,
+    "total": 244
+  },
+  "m7_package_sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+  "offline_only": true,
+  "production_approved_or_servable_additions": 0,
+  "source_commit": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "source_files_sha256": {
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/owner_decision_ledger_244.csv": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/final_scope_dispositions.csv": "8355e3378e90106769d293ed503bfc1e97cc04421332f8feee315ab92a90e80c",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/identity_manifest_qa.json": "1897709aa04fe54f69ba124141542824cd85d50aa4a385cb26e299dc90ae9460",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/new_basic_identity_proposals.csv": "3a0e08efb3618c08b9beb569c7d4fe276f9ddc8bdeed1eb0352bffe350551cd9",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/vehicle_master_identity_snapshot_2026-10-13.json": "cf991264ada90efb0ff69a754cdee11fb0d13cc98fbe9fc60879de4eb7a2eb62",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/shadow_crosswalk_rows.csv": "9d46cad597dba3bbe83369bd9f95cfe6d10b3f6d19e0f46b69e70f10bfab5450",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/source/owner_overlay_original.csv": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430"
+  },
+  "source_pr": 235,
+  "source_reconciliation": {
+    "effective_registrations": 4123704,
+    "exact_class_scope_and_units_equal_m7_zip": true,
+    "excluded_registrations": 18283,
+    "source_registrations": 4141987,
+    "source_scopes": 1407
+  }
+}
