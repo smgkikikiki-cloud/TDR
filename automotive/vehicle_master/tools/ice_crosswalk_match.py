@@ -199,13 +199,20 @@ def match_one_group(
         owner_approved = approved_target == canonical_id
         if candidate_brand_key != group_brand_key and not cross_brand_alias and not owner_approved:
             continue
-        if canonical_id in already_mapped:
+        # Owner approval of an existing AUTO must reach the APPROVED decision.
+        # The production UNIQUE active-canonical constraint is independently
+        # enforced in run_match; owner approval is not a schema bypass.
+        if not owner_approved and canonical_id in already_mapped:
             continue
-        if _canonical_actively_mapped_elsewhere(existing, canonical_id, model_group_id):
+        if not owner_approved and _canonical_actively_mapped_elsewhere(
+                existing, canonical_id, model_group_id):
             continue
 
+        # Avoid double-counting an already-active target in the series evidence.
+        additional_series = ([] if canonical_id in already_mapped else
+                             [legacy_series_by_canonical.get(canonical_id, {})])
         legacy_combined = xwalk.sum_monthly_series(
-            already_mapped_series + [legacy_series_by_canonical.get(canonical_id, {})])
+            already_mapped_series + additional_series)
         ice_values, legacy_values = xwalk.build_paired_series(periods, ice_series, legacy_combined)
         series_eval = xwalk.evaluate_series(ice_values, legacy_values)
 
