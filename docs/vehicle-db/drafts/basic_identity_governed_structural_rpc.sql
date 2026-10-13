@@ -1,0 +1,36 @@
+-- DESIGN SKETCH ONLY — NOT A MIGRATION; DO NOT EXECUTE.
+-- No migration number allocated. Requires C02 resolution, owner approval,
+-- production schema re-introspection, independent DB/security review, and an
+-- explicit future migration/application task. This file is under docs/, not
+-- supabase/, and defines no live function.
+--
+-- Required future contract (pseudocode, intentionally non-executable):
+--
+-- private_schema.vm_apply_structural_changes(request jsonb)
+--   SECURITY INVOKER by default; if elevated privileges are proven necessary,
+--   isolate in a non-exposed schema, pin search_path, revoke PUBLIC/anon/
+--   authenticated/service_role as appropriate, and grant only to a trusted
+--   server principal after a separate security review.
+--
+--   1. Verify a server-established, short-lived capability bound to actor,
+--      operation allowlist, complete request hash, expiry and nonce. Never trust
+--      actor_kind/admin/R6/approval fields from request JSON.
+--   2. Accept only CREATE_BRAND, CREATE_MODEL_BASIC and UPDATE_MODEL_ALIAS in
+--      this slice. Reject crosswalk/link and price operations.
+--   3. Lock and re-read brand/model rows and normalized alias-token namespace;
+--      enforce canonical ID, slug, FK, alias, generation/canonical-collision,
+--      expected revision and idempotency uniqueness inside this transaction.
+--   4. Enforce the separately approved BASIC discriminator. Preserve NULL for
+--      unsupported generation, lifecycle, served date/release, segment/body,
+--      price and specifications. Do not weaken CATALOG validation.
+--   5. Append immutable source observation and structural revision with truthful
+--      actor/provenance; write the receipt and master changes atomically. Any
+--      failure rolls all of them back. No fake canonical_write_commands row.
+--   6. Return committed revisions and receipt. Replays with identical key and
+--      hash return that receipt; key/hash conflicts reject. A changed revision
+--      rejects by CAS. Revert is a separate compensating operation, never DELETE.
+--
+-- Before producing executable DDL, reconcile actual v57-v64 and revision-table
+-- definitions with the dated owner SELECT-only snapshot in
+-- BASIC_IDENTITY_SCHEMA_RECONCILIATION_2026-10-13.md and resolve G0 C02.
+
