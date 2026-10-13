@@ -1,6 +1,6 @@
 # R6 Ice Scoped Crosswalk v2 — offline implementation contract (draft)
 
-**Status:** design/fixture branch only; not adopted migration, no production DDL/writes, no R7/R8 cutover. Depends on [R6 PR #229](https://github.com/smgkikikiki-cloud/TDR/pull/229) and frozen owner evidence under `data/packages/ice_crosswalk_r6_offline_recovery_M7.0/`. Repository portfolio gate `execution.enabled=false`, `PRODUCTION_CROSSWALK_ALLOWED=false`. Resolve C01 production R6 provenance and C02 migration numbering before publishing DDL.
+**Status:** design/fixture branch only; not adopted migration, no production DDL/writes, no R7/R8 cutover. Independent PR against `main`, coordinating with [R6 PR #229](https://github.com/smgkikikiki-cloud/TDR/pull/229) and relying on its frozen owner evidence under `data/packages/ice_crosswalk_r6_offline_recovery_M7.0/`. Repository portfolio gate `execution.enabled=false`, `PRODUCTION_CROSSWALK_ALLOWED=false`. Resolve C01 production R6 provenance and C02 migration numbering before publishing DDL.
 
 ## The problem to fix
 
