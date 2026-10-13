@@ -63,7 +63,7 @@ Local full CI evidence is recorded in `structural-writer/validation_evidence.jso
 
 ## Delivery status
 
-The existing Draft PR #237 is on the separate development branch and stacked on Draft PR #235. Its public PR page and review comments are readable, while GitHub API endpoints return HTTP 403 in this environment. This follow-up preserves the revised review description in `structural-writer/DRAFT_PR_BODY.md`; the remote PR body update is attempted after pushing. GitHub-hosted CI status remains unverified. PR #235 remains untouched.
+The existing Draft PR #237 is on the separate development branch and stacked on Draft PR #235. Its public PR page and review comments are readable, while GitHub API endpoints return HTTP 403 in this environment. The P0 fix commit `4b81c946c334708a43144852c01ddd165ea10e0d` is visible on the PR head. Updating the remote PR body was attempted but GitHub GraphQL returned HTTP 403; the revised description and test evidence are committed in `structural-writer/DRAFT_PR_BODY.md`. GitHub-hosted CI status remains unverified. PR #235 remains untouched.
 
 ## PR #237 independent QA correction
 
