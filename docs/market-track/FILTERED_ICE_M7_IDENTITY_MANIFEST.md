@@ -17,17 +17,21 @@ Pinned sources:
 
 ## Reconciliation
 
-The original package contains 1,200 model groups and 4,141,987 registration units. The filtered exclusions are 858 unique groups / 18,283 units, leaving 342 groups / 4,123,704 units. The exclusions overlap: 846 groups are below 40 (3,644 units), 43 are excluded marques (1,141 units), and 58 retain prior owner exclusion (13,901 units). The output records each reason per group and retains class-level counts for audit. The effective denominator is fixed at 4,123,704; excluded source facts remain available but are not part of effective analysis.
+The original package contains 1,200 model groups, 1,407 registration-class scopes and 4,141,987 units. The exclusions are 858 unique groups / 18,283 units, leaving 342 groups / 4,123,704 units. The exclusions overlap: 846 groups are below 40 (3,644 units), 43 are excluded marques (1,141 units), and 58 retain prior owner exclusion (13,901 units). All 1,407 source scopes are retained in the final disposition file; excluded groups are tagged `EXCLUDED`, while eligible units are reconciled at class scope.
 
-| Identity result | Groups | Registrations | Share of effective denominator |
+The original unresolved file is preserved byte-for-byte as 59 scopes / 8,638 registrations. Thirty-seven scopes / 7,262 registrations now have a basic identity candidate; 22 scopes / 1,376 units remain residual. The 22 residual scopes separate into four source-unidentifiable groups (9 class scopes / 380 registrations) and 13 actionable pickup or legacy-target exceptions (996 registrations). The four `ไม่ระบุ` groups remain in the denominator and never count as canonical mappings.
+
+| Eligible class-scope result | Scopes | Registrations | Share of fixed effective denominator |
 | --- | ---: | ---: | ---: |
-| `MATCH_EXISTING` | 247 | 2,719,543 | 65.9490% |
-| `NEW_BASIC_IDENTITY_NEEDED` | 58 | 87,170 | 2.1139% |
-| `UNRESOLVED_EVIDENCE` | 37 | 1,316,991 | 31.9371% |
+| `MATCH_EXISTING` candidate identity | 395 | 4,027,896 | 97.6767% |
+| `NEW_BASIC_IDENTITY_NEEDED` proposal | 111 | 94,432 | 2.2899% |
+| `UNRESOLVED_EVIDENCE` residual | 22 | 1,376 | 0.0334% |
 
-The former 114 shadow identity targets filter to 61 eligible Ice groups / 97,587 registrations. Catalog collision and equivalence checks reconcile BYD e6 and Mercedes-Benz E300 to existing aliases; BMW 530e remains unresolved because its alias on BMW 5 Series conflicts with the owner-stated BMW identity lock. The remaining 58 are grouped into 58 candidate canonical proposals. They are explicitly **not** create instructions. Duplicate target IDs are coalesced by canonical ID and conflicting target definitions become unresolved.
+This yields **99.9666% simulated identity readiness** (4,122,328 / 4,123,704) if candidate links and basic-identity proposals are later accepted and written. It is not approved or servable coverage: this offline manifest adds zero production-approved units. The separate M7.0 R6 read-only baseline remains 3,976,556 approved-plus-retained-AUTO units / 4,141,987 (96.0060%) on the full denominator; it has not been recomputed on this filtered universe.
 
-Pickup links remain scoped by the actual M7.0 registration class. For example, Ford Ranger has explicit RY1/RY2 links to the Double Cab identity and RY3 to the Cab identity. Any unresolved scope in a group with a pickup split stays unresolved; a class is never filled from another class or a group-level alias. For every existing link, the CSV records its source disposition, and `mapping_authority=OFFLINE_MANIFEST_EVIDENCE_ONLY` makes clear that the offline result is not a production approval.
+The catalog check produces 84 unique basic identity proposals, with no duplicate canonical targets. Five safe alias-repair proposals preserve the frozen BMW/Mazda identity locks: separate `BMW 218i`, `BMW 420i`, `BMW 530e`, `BMW M760e`, and `Mazda Roadster` identities from conflicting aliases. In particular, the 530e proposal removes alias `530e` from `bmw.bmw_5` and proposes `bmw.530e`; it does not mutate Vehicle Master or reopen any owner decision. Segment and body use the exact M7.0 DIMS values where supplied; powertrain remains `UNKNOWN` because the panel only reports fuel groups, which do not establish a powertrain class. Six candidate brands (ASIA CAB, DFSK, JUNEYAO, KING LONG, LEPAS, NEX) lack an unambiguous brand row in the catalog snapshot; their proposals are blocked on brand creation or reconciliation. Lifecycle and generation remain `UNKNOWN` unless already evidenced by the frozen identity target.
+
+Pickup links remain scoped by actual M7.0 registration class. Existing owner-approved RY1/RY2 and RY3 targets stay class-specific. The 996 unresolved pickup/legacy units have no evidenced class target in the catalog or frozen decisions; examples include GWM Poer RY1/RY2, Suzuki Carry RY1/RY2, TATA Xenon RY1/RY3, Toyota Hilux Champ RY1/RY2, and legacy Ford Ranger RY9 / Isuzu D-Max RY9 proposals. No neighboring-class or generic-parent fallback is applied. Every existing link remains an offline candidate, not production approval.
 
 ## Outputs and reproduction
 
@@ -36,9 +40,12 @@ Outputs are under `data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filte
 - `eligible_model_groups.csv` — one row for each of the 342 groups, including source registrations by class and one of the required identity statuses.
 - `excluded_model_groups.csv` — all excluded groups, removed registrations, overlapping reasons, class counts, and evidence references.
 - `existing_identity_links.csv` — existing Vehicle Master identity links at `(model_group_id, reg_type)` scope.
-- `new_basic_identity_proposals.csv` — 58 collision-checked, basic identity candidates; optional generation, lifecycle, segment, body and powertrain facts remain `UNKNOWN` if absent.
-- `unresolved_identity_evidence.csv` — unresolved group/class scopes and the evidence gap or conflict.
-- `identity_manifest_qa.json` — source and catalog hashes, fixed-denominator reconciliation, owner-ledger replay, category totals, scoped link coverage and output hashes.
+- `new_basic_identity_proposals.csv` — 84 collision-checked basic identity candidates; optional generation, lifecycle, segment, body and powertrain facts remain `UNKNOWN` if absent.
+- `unresolved_identity_evidence.csv` and `residual_exceptions.csv` — the 22 remaining scopes, with each blocker, next evidence/authorization and denominator treatment.
+- `final_scope_dispositions.csv` — complete 1,407-scope disposition manifest, including excluded units.
+- `identity_alias_repair_proposals.csv` — proposed alias removals and distinct identities; no catalog mutation.
+- `unresolved_identity_evidence_baseline_59.csv` — preserved starting 59-scope file used to prove the 37/22 reconciliation.
+- `identity_manifest_qa.json` — source/catalog hashes, ledger replay, class-scope reconciliation, simulation, production boundary and output hashes.
 
 Regenerate with:
 
@@ -47,7 +54,7 @@ PYTHONPATH=automotive/vehicle_master:automotive/vehicle_master/tools \
   python automotive/vehicle_master/tools/ice_filtered_identity_manifest.py
 ```
 
-Focused tests: `python -m pytest -q automotive/vehicle_master/tests/test_ice_filtered_identity_manifest.py`. The tests cover the 39/40 cutoff, many Ice groups to one canonical target, conflicting duplicate target definitions, discontinued lifecycle preservation, pickup class splits, and all 244 frozen decisions.
+Focused tests: `python -m pytest -q automotive/vehicle_master/tests/test_ice_filtered_identity_manifest.py`. The tests cover the 39/40 cutoff, many Ice groups to one canonical target, duplicate targets, discontinued lifecycle preservation, class-specific pickup splits, unidentifiable sources, BMW alias repair, full scope/unit reconciliation and all 244 frozen decisions.
 
 Historical models receive only basic identity and evidenced classification facts. This implementation does not reconstruct trims, MSRP, detailed specifications, or prices. Chevrolet is limited to basic identity/crosswalk work and is excluded from all price refresh. No Price Fetcher development is included.
 
