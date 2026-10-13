@@ -8,7 +8,7 @@ The report preserves the 244 frozen owner decisions and source totals unchanged.
 
 ### Validation
 
-`npm run check` passes. The full Vehicle Master suite passes from `automotive/vehicle_master` (1,923 passed, 379 skipped, 4,357 subtests passed; one existing warning), compileall passes, and `python -m vehreg market validate` reports valid/0 problems. Enforcer preflight passes and its two offline admission suites pass 42/42. The Phase 1C PostgreSQL suite is rerun unchanged with 61 SQL assertions in isolated PostgreSQL 16. Its one-Toyota parity fixture is not full-catalog acceptance. Exact commands, hashes and caveats are recorded in `docs/vehicle-db/phase1d/acceptance_report.json`. No live DB access or writes are used.
+`npm run check` passes. The full Vehicle Master suite passes from `automotive/vehicle_master` (1,923 passed, 379 skipped, 4,357 subtests passed; one existing warning), compileall passes, and `python -m vehreg market validate` reports valid/0 problems. Enforcer preflight passes and its offline tests pass 42/42. A local exact-base admission rehearsal returns the expected fail-closed `UNEXPECTED_BASE_BRANCH` / `UNMANAGED_PR_NOT_TASK_AUTHORIZED`; this is not hosted PR CI and policy was not bypassed. The Phase 1C PostgreSQL suite is rerun unchanged with 61 SQL assertions in isolated PostgreSQL 16. Its one-Toyota parity fixture is not full-catalog acceptance. Exact commands, hashes and caveats are recorded in `docs/vehicle-db/phase1d/acceptance_report.json`. No live DB access or writes are used.
 
 ### Required next owners
 

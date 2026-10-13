@@ -28,6 +28,22 @@
       "bypass_or_policy_change": false
     }
   },
+  "enforcer_admission_rehearsal": {
+    "mode": "local CLI against exact PR BASE checkout with synthetic event; not a hosted PR/CI result",
+    "synthetic_pr_number": 999999,
+    "base_ref": "codex/vm-phase1c-postgres-acceptance-20261013",
+    "base_sha": "01ff6af90d488e5b3b990a74dc89ad5a2af7bbb2",
+    "candidate_ref": "codex/vm-phase1d-prod-compat-20261013",
+    "tested_head_sha": "941deab58848fc251fe3a53616babfdb6e17d354",
+    "admission": "UNMANAGED_AUDIT_ONLY",
+    "ok": false,
+    "enforcer_authorized": false,
+    "expected_fail_closed_error": "UNEXPECTED_BASE_BRANCH",
+    "expected_fail_closed_warning": "UNMANAGED_PR_NOT_TASK_AUTHORIZED",
+    "additional_warning": "SENSITIVE_FILES_CHANGED:docs/WORK_STATE.md",
+    "candidate_exit_code": 1,
+    "policy_bypassed_or_changed": false
+  },
   "frozen_inputs": {
     "owner_decisions": 244,
     "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
@@ -95,6 +111,7 @@
     {"command":"npm run check","result":"PASS","scope":"TypeScript and full repository checks, including structural writer, design, and Phase 1D evidence/Admin helper checks"},
     {"command":"node --test orchestration/preflight.test.mjs orchestration/pr-admission.test.mjs","result":"PASS","summary":"42 passed, 0 failed"},
     {"command":"node orchestration/preflight.mjs --check-repo","result":"PASS","roadmap_version":"1.0","errors":[]},
+    {"command":"node orchestration/pr-admission.mjs against exact 01ff6af base and synthetic stacked-PR event","result":"EXPECTED_FAIL_CLOSED","errors":["UNEXPECTED_BASE_BRANCH"],"warnings":["UNMANAGED_PR_NOT_TASK_AUTHORIZED"],"enforcer_authorized":false,"tested_head_sha":"941deab58848fc251fe3a53616babfdb6e17d354","note":"local reproduction only; synthetic PR event, not hosted CI"},
     {"command":"/tmp/tdr-vm-venv/bin/python -m compileall -q vehreg tools tests","working_directory":"automotive/vehicle_master","result":"PASS"},
     {"command":"/tmp/tdr-vm-venv/bin/python -m vehreg market validate","working_directory":"automotive/vehicle_master","result":"PASS","valid":true,"problems":[]},
     {"command":"/tmp/tdr-vm-venv/bin/python -m pytest automotive/vehicle_master/tests","result":"FAILED_WRONG_WORKING_DIRECTORY","scope":"Initial full-suite invocation from repository root; fixture paths are relative to automotive/vehicle_master","summary":"1921 passed, 379 skipped, 2 failed, 1 warning, 501.07s","failures":["test_ecosticker_phase1_spec_file_contains_no_price_fields: FileNotFoundError for relative vehreg/data fixture","test_guard_can_read_base_ledger_from_consolidated_repo_path: expected fixture key absent due to root cwd"]},
