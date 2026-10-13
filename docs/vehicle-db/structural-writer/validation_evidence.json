@@ -1,0 +1,101 @@
+{
+  "cleanup_commit": "bf70150a",
+  "focused_python_note": "3 new preflight tests + 6 frozen manifest regressions",
+  "focused_python_tests_passed": 9,
+  "github_api_access": "HTTP_403_FORBIDDEN",
+  "github_ci_status_verified": false,
+  "implementation_file_sha256": {
+    "automotive/vehicle_master/tests/test_structural_identity_preflight.py": "ca603686cf7f92162413cbfbfbd948062f72dca9e15de8320cf3f75984357b9b",
+    "automotive/vehicle_master/tools/structural_identity_preflight.py": "829f2ed69975f2b5332c97e5a76273e88b4ed4e1582b8f58887bed902dba6447",
+    "lib/canonical-write-shadow.ts": "0ab5b56ffdffd0a94b9b6545478d11c3f1b3734bdbe8c00f425366589601d914",
+    "lib/vehicle-engine/structural-writer-server.ts": "03361c32a02853648a510ec036b284fc5ec3af79f1912a3f244e0ae26d270cf4",
+    "lib/vehicle-engine/structural-writer.ts": "9496c22df99189b6bec0471d494f97bfa92d607a00d41ee60f6b7ab990ee827e",
+    "package.json": "7c698bc541ee444ea461845adab1d8b27b7209e84acc2cc0a02e9c7334e11494",
+    "scripts/check-structural-identity-writer.ts": "428151f96549a1387e08ff282d71c244dccdfb02a7cbe7de5974224eab5c937a",
+    "scripts/structural-identity-preflight.ts": "cb0dcc0f5ec06d301acc1ae761c18ab29ff0dfab195420220d6e96471b167a4b",
+    "scripts/test-support/structural-identity-store.ts": "32c4ce035cedd3c3ed13063c5a4125785da4dda0381a2dd8320fb07efc88f51d"
+  },
+  "local_ci_commands": [
+    {
+      "command": "npm run check:structural-identity-writer",
+      "exit_code": 0,
+      "structural_tests_passed": 35,
+      "real_preflight_regeneration_matches": true
+    },
+    {
+      "command": "npm run check",
+      "exit_code": 0,
+      "structural_tests_passed": 35,
+      "real_preflight_regeneration_matches": true
+    },
+    {
+      "command": "python -m pytest -q tests/test_structural_identity_preflight.py tests/test_ice_filtered_identity_manifest.py tests/test_ice_scoped_crosswalk.py",
+      "cwd": "automotive/vehicle_master",
+      "exit_code": 0,
+      "passed": 24
+    },
+    {
+      "command": "python -m compileall -q vehreg pages tests",
+      "cwd": "automotive/vehicle_master",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest -q --basetemp=/workspace/.tdr-pytest-pr237",
+      "cwd": "automotive/vehicle_master",
+      "duration_seconds": 606.56,
+      "exit_code": 0,
+      "passed": 1923,
+      "skipped": 379,
+      "subtests_passed": 4357,
+      "warnings": 1
+    },
+    {
+      "command": "python -m vehreg market validate",
+      "cwd": "automotive/vehicle_master",
+      "exit_code": 0,
+      "valid": true,
+      "problems": []
+    },
+    {
+      "command": "node orchestration/preflight.mjs --check-repo",
+      "exit_code": 0,
+      "execution_gates_unchanged": true,
+      "roadmap_version": "1.0",
+      "roadmap_sha256": "f7cf0751da5b7ff4fa36ffac79ef998cdd777ddea5155a5ef7473f1818b3b7f3"
+    }
+  ],
+  "offline_only": true,
+  "production_approved_or_servable_additions": 0,
+  "real_database_integration_tests_executed": false,
+  "recorded_at_utc": "2026-10-13T11:31:34+00:00",
+  "schema": "tdr.structural-identity-writer.local-validation.v1",
+  "source_pr_head": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "state_changing_sql_executed": false,
+  "scoped_link_p0_followup": {
+    "reviewed_head": "74faa2c6727183089b97163c4ad423cb550971ca",
+    "focused_regressions_passed": 35,
+    "canonical_scope_key": "RY1_and_Thai_notation_share_one_key",
+    "duplicate_notation_variants": "fail_closed",
+    "approved_target_without_frozen_metadata": "immutable",
+    "same_target_exact_provenance": "receipt_only_no_row_observation_or_audit_write",
+    "mixed_batch_rejection": "zero_domain_side_effects",
+    "frozen_nine_identity_report_sha256": "e3becefe99f284d57a62bd4f8a5c269616b6df1ddf8475d75bcd76df1e2c2943",
+    "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "frozen_source_counts_unchanged": true,
+    "production_writes": 0,
+    "migrations_applied": 0,
+    "gates_advanced": 0,
+    "independent_qa": "PENDING"
+  },
+  "delivery": {
+    "pr_number": 237,
+    "pr_url": "https://github.com/smgkikikiki-cloud/TDR/pull/237",
+    "branch": "codex/vm-structural-identity-writer-20261013",
+    "code_commit": "4b81c946c334708a43144852c01ddd165ea10e0d",
+    "pr_head_verified_from_public_html": true,
+    "remote_pr_body_update": "BLOCKED_HTTP_403",
+    "github_hosted_ci_status_verified": false,
+    "independent_qa": "PENDING",
+    "code_commit_visible_on_pr_head": "4b81c946c334708a43144852c01ddd165ea10e0d"
+  }
+}

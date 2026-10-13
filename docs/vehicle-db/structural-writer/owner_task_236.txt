@@ -1,0 +1,141 @@
+# TDR — Vehicle Master Structural Identity Writer
+
+Repository: `smgkikikiki-cloud/TDR`
+Tracking Issue: #236
+Source Manifest: Draft PR #235, commit `b5a6bcff2870afb8d81d672dd284e7935e3cb4ac`
+
+**Objective:** Implement the missing Vehicle DB v3 Phase 1 Structural Identity Writer, reusing the existing infrastructure wherever possible. Audit and safely retire obsolete writer code before implementing anything new.
+
+This is an authorized bounded offline development task, NOT permission for production writes, migrations, merging, deployment, or R6 gate advancement.
+
+## Phase A — Audit the existing writer architecture FIRST
+
+Read:
+
+- `AGENTS.md`
+- `docs/portfolio/TDR_MASTER_ROADMAP_V1.md`
+- `docs/portfolio/portfolio.plan.json`
+- `docs/WORK_STATE.md`
+- `docs/vehicle-db/VEHICLE_DB_V3.md`
+- `docs/CANONICAL_INPUT.md`
+- `docs/market-track/ROADMAP.md`
+- GitHub Issue #236 and Draft PR #235
+
+Inspect all existing vehicle-writing mechanisms, including:
+
+- `canonical_input_batches` and its historical processing pipeline
+- `automotive/vehicle_master/tools/canonical_input_worker.py`
+- `automotive/vehicle_master/vehreg/canonical_write.py`
+- Existing admin/API write handlers
+- Legacy GitHub workflows
+- `canonical_write_commands`
+- `canonical_write_revisions`
+- Vehicle Master tables, constraints and triggers
+- Ice Crosswalk tables and RPCs
+- Existing price-writing mechanisms
+
+Perform repository-wide dependency and caller searches.
+
+Classify each component as:
+
+1. **ACTIVE — REUSE**
+2. **RETIRED — PRESERVE FOR HISTORY**
+3. **DEAD CODE — SAFE TO REMOVE**
+4. **UNCERTAIN — HOLD FOR REVIEW**
+
+The old file-backed write pipeline was retired by migration v60. Do not reactivate it.
+
+Supabase audit evidence also indicates that the existing Ice Crosswalk table is group-level, not registration-class scoped. Do not mistake it for a completed R6 implementation.
+
+**Important:** Do not delete any database tables, historical data, production RPCs, triggers, audit records or backups.
+
+Only remove repository code proven unused, with no remaining runtime callers, and preserve compatibility guards. Keep cleanup in an independently reviewable commit. If deletion safety cannot be demonstrated, leave the code untouched.
+
+Produce a concise legacy-writer inventory, dependency graph and reuse/deletion decision.
+
+## Phase B — Implement the Structural Identity Writer
+
+After completing the audit, implement the smallest coherent Vehicle DB v3 Phase 1 structural writer within the existing architecture.
+
+Support these operations:
+
+- `CREATE_BRAND`
+- `CREATE_MODEL_BASIC`
+- `UPDATE_MODEL_ALIAS`
+- `LINK_ICE_MODEL_GROUP_BY_REG_TYPE`, subject to the separate R6 authorization boundary
+
+Required functionality:
+
+1. Validate Brand foreign keys and canonical identity uniqueness.
+2. Reject duplicate Model IDs, incompatible aliases and uncertain model-vs-trim identities.
+3. Use TDR Vehicle Master Segment and Body Type as canonical authority. Ice classifications remain raw evidence only.
+4. Preserve UNKNOWN fields when no approved TDR evidence exists.
+5. Enforce server-side permissions: AI/agents can propose structural changes, not approve or directly apply them.
+6. Support deterministic planning, idempotency, optimistic revision checks, audit logging and compensating revert.
+7. Use existing canonical Vehicle Master tables and existing compatible audit infrastructure rather than creating another master.
+8. Keep Ice registrations separate from Vehicle Master, linked only through authorized, class-scoped Crosswalk mappings.
+
+If real database integration needs a new migration, prepare the design and tests without assigning or applying a migration number until C02 is resolved.
+
+Do not use `vm_apply_price_changes` or the retired `canonical_input_batches` path for identity creation.
+
+## Phase C — Test with the nine highest-priority identities
+
+Use the frozen PR #235 evidence to build an offline preflight and dry-run for:
+
+1. Honda Jazz
+2. Ford Ranger Raptor Double Cab
+3. JAECOO J6
+4. Toyota Vios
+5. GWM Ora 5
+6. Nissan March
+7. Nissan Note
+8. ZEEKR 7X
+9. Toyota Sienta
+
+These nine represent 59,948 registrations and are the initial proposed materialization targets.
+
+Recheck their identity granularity and canonical collisions against the current Vehicle Master snapshot. Do not interpret `SAFE_CANDIDATE` as automatic CREATE approval.
+
+Test the writer with a fake/in-memory transactional store, including:
+
+- Successful basic identity creation
+- Duplicate prevention
+- Missing Brand FK
+- Unauthorized AI apply
+- Alias collisions
+- Stale revisions
+- Idempotent retry
+- Atomic rollback on failure
+- Audit and revert
+- Registration-class isolation
+- R6 gate denial
+- UNKNOWN classification handling
+
+Preserve all 244 frozen owner decisions and the complete M7.0 registration reconciliation.
+
+## Phase D — Deliverables
+
+Create a separate development branch and Draft PR. Do not modify or merge PR #235.
+
+Deliver:
+
+1. Legacy Writer Audit — existing components, active callers, reusable modules and safe cleanup candidates.
+2. Structural Identity Writer implementation.
+3. Deterministic validation and authorization tests.
+4. Nine-identity offline preflight report.
+5. Exact database/schema/migration dependencies.
+6. Production activation checklist, including C01/C02/R6 blockers.
+7. Updated `docs/WORK_STATE.md`.
+
+Run focused tests and full applicable CI.
+
+**Restrictions:** No production writes, SQL execution that changes state, database deletion, migration application, deployment, Price Fetcher work, autonomous execution, or merge.
+
+Do not introduce a parallel writer architecture or duplicate an existing functional writer.
+
+**Stop after pushing the Draft PR for independent QA.**
+
+Report the branch, commit SHA, PR URL, files changed, tests, reused infrastructure, retired-code findings and remaining production blockers.
+
+**Priority: reuse and simplify first; implement only what is genuinely missing.**

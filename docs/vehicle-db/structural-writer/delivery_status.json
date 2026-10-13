@@ -1,0 +1,48 @@
+{
+  "source_pr": 235,
+  "source_pr_unchanged_head": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "tracking_issue": 236,
+  "development_branch": "codex/vm-structural-identity-writer-20261013",
+  "intended_pr_base": "codex/r6-m7-real-acceptance-20261013",
+  "implementation_commit": "4b81c946c334708a43144852c01ddd165ea10e0d",
+  "cleanup_commit": "bf70150ab6d0ea596ab727ca3d536e384c9fe173",
+  "branch_push_succeeded": true,
+  "draft_pr_requested": true,
+  "draft_pr_created": true,
+  "pr_url": "https://github.com/smgkikikiki-cloud/TDR/pull/237",
+  "creation_attempts": [
+    {
+      "endpoint": "GitHub GraphQL",
+      "result": "HTTP 403 Forbidden"
+    },
+    {
+      "endpoint": "GitHub REST POST /repos/smgkikikiki-cloud/TDR/pulls",
+      "result": "HTTP 403 Forbidden"
+    }
+  ],
+  "independent_qa_status": "PENDING",
+  "production_writes": 0,
+  "migrations_applied": 0,
+  "gates_advanced": 0,
+  "merge_or_deployment": false,
+  "existing_draft_pr": 237,
+  "reviewed_pre_fix_head": "74faa2c6727183089b97163c4ad423cb550971ca",
+  "pr_head_verified_from_public_html": true,
+  "remote_pr_body_update_attempted": true,
+  "remote_pr_body_update_succeeded": false,
+  "remote_pr_body_update_blocker": "GitHub GraphQL API returned HTTP 403 Forbidden",
+  "review_description_and_test_evidence_committed": "docs/vehicle-db/structural-writer/DRAFT_PR_BODY.md",
+  "github_hosted_ci_status_verified": false,
+  "pr_creation_attempts": [
+    {
+      "endpoint": "GitHub PR page",
+      "result": "Existing Draft PR #237 confirmed; pushed head visible"
+    },
+    {
+      "endpoint": "gh pr edit --body-file",
+      "result": "HTTP 403 Forbidden"
+    }
+  ],
+  "code_commit_visible_on_pr_head": "4b81c946c334708a43144852c01ddd165ea10e0d",
+  "code_commit_was_verified_after_push": true
+}

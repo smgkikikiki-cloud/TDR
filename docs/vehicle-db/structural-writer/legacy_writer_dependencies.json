@@ -1,0 +1,834 @@
+{
+  "audit_source_commit": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "read_only_repository_search": true,
+  "searched_roots": [
+    "app",
+    "lib",
+    "scripts",
+    ".github",
+    "automotive/vehicle_master (excluding data)",
+    "supabase"
+  ],
+  "terms": [
+    "canonical_input_batches",
+    "canonical_input_worker",
+    "CanonicalWritePipeline",
+    "canonical_write_commands",
+    "canonical_write_revisions",
+    "enqueueCanonicalModelShadow",
+    "canonical-write-shadow",
+    "vm_apply_price_changes",
+    "ice_crosswalk_upsert_match"
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/canonical-input.yml",
+      "sha256": "93c6b896f862b037a30061cfc6400df8ea90e28a7c3badd42fe8bbcf9143596b",
+      "references": {
+        "canonical_input_batches": [
+          20
+        ]
+      }
+    },
+    {
+      "path": ".github/workflows/enqueue-canonical-batch.yml",
+      "sha256": "0e5e6d6f63739d45463834605e5aa3cf4fdb43bbd97fbac2b60d4398ceeb667d",
+      "references": {
+        "canonical_input_batches": [
+          22
+        ]
+      }
+    },
+    {
+      "path": ".github/workflows/mark-canonical-batch-status.yml",
+      "sha256": "f1e72c5f79612b46ed3882e96860b1acf3b08af6d04f422351e6a758545ba837",
+      "references": {
+        "canonical_input_batches": [
+          3,
+          22
+        ]
+      }
+    },
+    {
+      "path": ".github/workflows/price-refresh.yml",
+      "sha256": "71ff496ae4019f4ea1caa4bff29b35082a6b48b9b4797ab1780fd5fa725a6529",
+      "references": {
+        "vm_apply_price_changes": [
+          5
+        ]
+      }
+    },
+    {
+      "path": "app/admin/(secure)/data-quality/page.tsx",
+      "sha256": "ec9d9f7045af3a5f8d60be0f57c41155d32ab24b74e8fe9d11f3b13cd358ca6e",
+      "references": {
+        "canonical_input_batches": [
+          21,
+          27
+        ]
+      }
+    },
+    {
+      "path": "app/admin/(secure)/prices/page.tsx",
+      "sha256": "3c1df662fe6e81c9bc445ae132ecdcd6c299cf294e40f7da68091f0c97957dfc",
+      "references": {
+        "canonical_input_batches": [
+          20
+        ]
+      }
+    },
+    {
+      "path": "app/admin/(secure)/vehicle-input/page.tsx",
+      "sha256": "c8017756dc08d13f449ddf09ddb08a4e6676a76e838e8aaa294fd0792d11d27b",
+      "references": {
+        "canonical_input_batches": [
+          56,
+          118
+        ]
+      }
+    },
+    {
+      "path": "app/admin/input-actions.ts",
+      "sha256": "bf48ed4dbf7d00e648b982227e86f473e0036763dd467f8a8499296f0247b242",
+      "references": {
+        "canonical_input_batches": [
+          136,
+          138
+        ]
+      }
+    },
+    {
+      "path": "app/admin/vehicle-editor-actions.ts",
+      "sha256": "0f11ad2046ea747412212c4a327ccfd94415b78acde0c1cd981734b4347f7707",
+      "references": {
+        "canonical_input_batches": [
+          15
+        ]
+      }
+    },
+    {
+      "path": "app/api/admin/canonical-batches/[batchKey]/route.ts",
+      "sha256": "cabad01ea3a3c695c1f2c6180025f3f8eb0268e27c82d36aa32279fe946ecbd0",
+      "references": {
+        "canonical_input_batches": [
+          26
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tdr_bridge/publish.py",
+      "sha256": "9eb233d9486edd93936442a6217401f79eed38c72d320cee9ab33ee59fe0d735",
+      "references": {
+        "canonical_input_worker": [
+          197
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_admin_create_vehicle.py",
+      "sha256": "dba1c99c12ef23d69f81369b16991eb6d83e9952a545680f9a96556d745a1e9b",
+      "references": {
+        "canonical_input_worker": [
+          9
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_admin_editor_sibling_preservation.py",
+      "sha256": "dec74ccec05d3ad195a09f9d49f4147e2be9496b1bdb41f3c814ec65e8256d21",
+      "references": {
+        "CanonicalWritePipeline": [
+          18,
+          42,
+          151,
+          215,
+          302
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_canonical_input_worker_env.py",
+      "sha256": "227a9e007e49bde928e117dbbdf867fdad091c192c5c56efa5f860c1a0d5b44f",
+      "references": {
+        "canonical_input_worker": [
+          4
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_canonical_price_maintenance.py",
+      "sha256": "0a531f7e32c373855a506381b4be49a4cefc90bd15879b6a33e8253569d9fe93",
+      "references": {
+        "CanonicalWritePipeline": [
+          10,
+          71,
+          88,
+          120,
+          137,
+          151,
+          180,
+          212,
+          231,
+          246
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_canonical_staged_publish_recovery.py",
+      "sha256": "8184ea30d945a394ac0311f5e114a9ed4a62a4c5416b6d90a55b7d5e8a98bd9b",
+      "references": {
+        "canonical_input_batches": [
+          2,
+          44,
+          102
+        ],
+        "canonical_input_worker": [
+          12,
+          23,
+          40,
+          124,
+          159,
+          169,
+          177,
+          186,
+          196,
+          210,
+          216,
+          230,
+          235,
+          243,
+          266,
+          278,
+          285,
+          297,
+          298,
+          324,
+          325,
+          350,
+          351,
+          375,
+          376,
+          391,
+          392,
+          406,
+          431,
+          441
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_canonical_write_phase_c.py",
+      "sha256": "db1e40175846bfdd8940a750987ef90ccb986902c3e5fe96e79bf7c089bfec13",
+      "references": {
+        "CanonicalWritePipeline": [
+          9,
+          111,
+          167,
+          184,
+          199,
+          239
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_enqueue_canonical_batch.py",
+      "sha256": "b777346b26ba14116af647a8ebd8bc3ddb8f8fd5ead755ee2500770c4636766a",
+      "references": {
+        "canonical_input_batches": [
+          3
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_ice_crosswalk_match.py",
+      "sha256": "0d2bda697a0eb44ca7571637ceaf2b52e687a72f47b447ee759101b93a4507f2",
+      "references": {
+        "ice_crosswalk_upsert_match": [
+          34
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_ice_crosswalk_migration_v63.py",
+      "sha256": "7af212c7f155e555bf68940f216ddddd64740d7c50385fd256c7c38421998b41",
+      "references": {
+        "canonical_input_batches": [
+          339
+        ],
+        "ice_crosswalk_upsert_match": [
+          17,
+          110,
+          181
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_ice_crosswalk_workflow.py",
+      "sha256": "46c07ce34a0f6c385c4e9d211f68725d43465aaa491576a2fda38e05919d0b8d",
+      "references": {
+        "canonical_input_worker": [
+          4,
+          19
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_ice_market_panels_migration_v62.py",
+      "sha256": "e1bccd3234aca76dd7386d41d1a2d05ceeb59d0b1983bcf2239ed05424ae326f",
+      "references": {
+        "canonical_input_batches": [
+          149
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_ice_market_panels_migration_v64.py",
+      "sha256": "2fccf5fb405cc1f5b8d3cdf533672e4fd01f49064b71608477fa7f86f74a18ef",
+      "references": {
+        "canonical_input_batches": [
+          202
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_mark_canonical_batch_status.py",
+      "sha256": "fd5e752d730c9940c9e6407e2b09919bed57145fc7195b91a5a4163e6ded5e0d",
+      "references": {
+        "canonical_input_batches": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_price_coverage_review.py",
+      "sha256": "f3b067b283403cb6ddc6b8feb9f77dc00f59f181da21011635304e6251dcc697",
+      "references": {
+        "CanonicalWritePipeline": [
+          8,
+          132
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_vehicle_close_old_write_path_migration_v60.py",
+      "sha256": "e6bfe2804b2c296d3bf80b9e411e1360c9bc6dafe4b5f4ecf35df4523d806d3c",
+      "references": {
+        "canonical_input_batches": [
+          16,
+          109,
+          118,
+          120,
+          141
+        ],
+        "canonical_input_worker": [
+          152
+        ],
+        "canonical_write_commands": [
+          18
+        ],
+        "canonical_write_revisions": [
+          85
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_vehicle_master_backup.py",
+      "sha256": "b8770a52b506b078f5f55d8802aa0396eb6da396c7879b281fc58b345a932261",
+      "references": {
+        "canonical_input_batches": [
+          219,
+          316
+        ],
+        "canonical_write_revisions": [
+          59,
+          63
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_vehicle_master_backups_bucket_migration_v61.py",
+      "sha256": "578fa67fa9e0da1a1bf5c751530277fa412257b423ddfd800ecdc520c112cd3e",
+      "references": {
+        "canonical_input_batches": [
+          64
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_vehicle_master_governed_writer_migration_v66.py",
+      "sha256": "f3ac7475caaf7a04a6f1f04d07ad9bd840c734d2b51403de17c598d1016121a7",
+      "references": {
+        "canonical_write_revisions": [
+          106,
+          117,
+          184,
+          213
+        ],
+        "vm_apply_price_changes": [
+          58,
+          88,
+          90
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tests/test_workflow_static_guards.py",
+      "sha256": "fd4716058a7d7e3391ae172e04b4e6b639febc71aa679a39a7864759f3149fd8",
+      "references": {
+        "canonical_input_worker": [
+          33
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/backfill_registration_v2.py",
+      "sha256": "bd83405f894689d02690891c491b0ec43f04cedfc280e519b8459619914bda4d",
+      "references": {
+        "canonical_input_worker": [
+          87
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/canonical_input_worker.py",
+      "sha256": "ea900d7436260d516f74335529c98c234d8dcee90b969e55371ba8bd2c84f286",
+      "references": {
+        "canonical_input_batches": [
+          75,
+          83,
+          90,
+          91,
+          176,
+          335,
+          351
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/canonical_write.py",
+      "sha256": "102e065413eb6f96edd6afe60d2218c1379d330cd98bdc6c11425373d7a59ce8",
+      "references": {
+        "CanonicalWritePipeline": [
+          26,
+          49
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/engine_rule_corpus.py",
+      "sha256": "db0059de12a239e4d9a140e66d904baeac015b61c041327aadea2e364761d0f9",
+      "references": {
+        "CanonicalWritePipeline": [
+          497,
+          521
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/enqueue_canonical_batch.py",
+      "sha256": "7fcf4c2acd10b2a3facf2a8dcf221e7ce285b6a15d58bd10bfb06c46f3037b35",
+      "references": {
+        "canonical_input_batches": [
+          1,
+          15,
+          214,
+          235
+        ],
+        "canonical_input_worker": [
+          11,
+          16,
+          33,
+          189
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/ice_crosswalk_match.py",
+      "sha256": "5a303e579655804cc407c8dab38244ccf57b1d58b4b91ff4c3dd552da3b3516a",
+      "references": {
+        "canonical_input_worker": [
+          50
+        ],
+        "ice_crosswalk_upsert_match": [
+          25,
+          261
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/ice_package_import.py",
+      "sha256": "90f98e6ae54a3e14aed66dfe74a2fe5fb771042e068b77fbf5396788f2cd23f2",
+      "references": {
+        "canonical_input_worker": [
+          63
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/import_source.py",
+      "sha256": "60395141b9368f6340d9f34b33028f20709e70c0fdf23bb3e75af300c877d773",
+      "references": {
+        "CanonicalWritePipeline": [
+          166
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/import_worker.py",
+      "sha256": "7e55f1838f2992457e94077bc96b1d8d144020fa6e2798fbe17d1349655baf9c",
+      "references": {
+        "canonical_input_worker": [
+          35
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/mark_canonical_batch_status.py",
+      "sha256": "839b9a3f649ba516de06ee3088d6046ca5016b4d7f2e309bda389d9448009668",
+      "references": {
+        "canonical_input_batches": [
+          1,
+          37,
+          51
+        ],
+        "canonical_input_worker": [
+          10,
+          26
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/pricefeed_write.py",
+      "sha256": "082aaf1de34a4e3c720663653721390bef3d0ba4d826fa8b1c73ae64ecf1dc52",
+      "references": {
+        "CanonicalWritePipeline": [
+          11
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/requeue_canonical_result.py",
+      "sha256": "18aa3512ff3cda4f4442e1b8e78271b88b5ab90d2e65d30cc7b03451dd65fd9e",
+      "references": {
+        "canonical_input_worker": [
+          16
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/retail_lineup_plan_store.py",
+      "sha256": "21b0c94f8f28d4d04a9ec023ea118c54db104a8cd82981aa5afdfe075effaac7",
+      "references": {
+        "canonical_input_worker": [
+          18
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/retail_lineup_workbook_export_worker.py",
+      "sha256": "9028299453a042bca925123666a95b59b020f14c0782001e5859045a2e42be10",
+      "references": {
+        "canonical_input_worker": [
+          23
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/sync_external_identity_registry.py",
+      "sha256": "b65c9f11a6fa8dd2310f29c5d70f8d151e696d03d5a9957f15014106b80524cb",
+      "references": {
+        "canonical_input_worker": [
+          81
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/tools/vehicle_master_backup.py",
+      "sha256": "0ac8fb563b15bf43f6c1c968609d7d69766ef9c81650d3a5ea2613e6e8068d1e",
+      "references": {
+        "canonical_input_worker": [
+          60
+        ],
+        "canonical_write_revisions": [
+          40
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/canonical_queue.py",
+      "sha256": "cad257300c0475974ee87839528c1a78ec7db13720ece8205338c78dcdc3551e",
+      "references": {
+        "CanonicalWritePipeline": [
+          18,
+          139
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/canonical_trim_delete.py",
+      "sha256": "be32426b10219e3d265fc2462a5dd6faf28dda00cb3c63b0a0386e4c32d15ee7",
+      "references": {
+        "CanonicalWritePipeline": [
+          41,
+          135,
+          142
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/canonical_write.py",
+      "sha256": "f813cbdd05d47705b16fad81a426feb222643481d02d4818085445c2e8f9874e",
+      "references": {
+        "CanonicalWritePipeline": [
+          385,
+          938
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/input_pipeline.py",
+      "sha256": "f854daaf97dabe14791e89fe3f7534de9d788065c24cd40110a8d0162598ab67",
+      "references": {
+        "CanonicalWritePipeline": [
+          28,
+          564
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/retail_lineup_bootstrap_apply.py",
+      "sha256": "ebfe0a1fa494b8ce8377a25e1f5a22ba6a46c0f1564ade5a8978ea1441522bb3",
+      "references": {
+        "CanonicalWritePipeline": [
+          15,
+          191
+        ]
+      }
+    },
+    {
+      "path": "automotive/vehicle_master/vehreg/source_import.py",
+      "sha256": "d07cd6ea5391cbf3b233ebd5347e59a69c4384ac8ee77df9ffca784f1e9061da",
+      "references": {
+        "canonical_input_batches": [
+          34
+        ]
+      }
+    },
+    {
+      "path": "lib/canonical-editor.ts",
+      "sha256": "67c996cd42f2a412fb5ac4b87326b206eeaa408019ce53023d9b892934399e8c",
+      "references": {
+        "canonical_input_batches": [
+          5,
+          163,
+          261,
+          379
+        ]
+      }
+    },
+    {
+      "path": "lib/canonical-input-queue.ts",
+      "sha256": "35f2d8b7b285a96af6f5eb3cf8c4f4f06e6525f05c42c361ad4a986b797f8ff2",
+      "references": {
+        "canonical_input_batches": [
+          17
+        ]
+      }
+    },
+    {
+      "path": "lib/canonical-pending-overlay.ts",
+      "sha256": "8f45187caf972a4d1a0bc2f718c190ce7ce8802407b080ab4d83e43d95ce878b",
+      "references": {
+        "canonical_input_batches": [
+          11
+        ]
+      }
+    },
+    {
+      "path": "lib/canonical-vehicle-create.ts",
+      "sha256": "aa792a92cd84d9e4a8b2e2f469da7bbae9c9993ec4fe146538715ed163c9bf84",
+      "references": {
+        "canonical_input_batches": [
+          172
+        ]
+      }
+    },
+    {
+      "path": "lib/canonical-write-shadow.ts",
+      "sha256": "9f33c3deb9f606b4e5b1f6513798516199878c37d23de2970d34421a722a78a0",
+      "references": {
+        "canonical_write_commands": [
+          82
+        ],
+        "enqueueCanonicalModelShadow": [
+          41
+        ]
+      }
+    },
+    {
+      "path": "lib/price-refresh/store.ts",
+      "sha256": "fe4ff11a02a5a83feeb4b1026f6eaca88e15318ea97caed64ddde84e48951878",
+      "references": {
+        "vm_apply_price_changes": [
+          189
+        ]
+      }
+    },
+    {
+      "path": "lib/vehicle-engine/price-writer.ts",
+      "sha256": "56f28f65b6dc9639435c680b18fec5c623eb8907f26501b5e4c30b6a29017be0",
+      "references": {
+        "vm_apply_price_changes": [
+          2
+        ]
+      }
+    },
+    {
+      "path": "scripts/check-admin-parity.ts",
+      "sha256": "85cdface839d6861769f9c0874ee44d5db0f12a8ad82655384fadc433fb04e8a",
+      "references": {
+        "canonical_input_batches": [
+          44
+        ]
+      }
+    },
+    {
+      "path": "scripts/check-retail-lifecycle-review.ts",
+      "sha256": "dd0451e56a6fc7ec21f7f71096761393c67a7e76bd83b643419369646064592c",
+      "references": {
+        "canonical_input_batches": [
+          29
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v12_canonical_write_pipeline.sql",
+      "sha256": "86748ee697295383662a31d58b7fcfac2f0db86ac2237d2685ce1771b9067f29",
+      "references": {
+        "canonical_write_commands": [
+          39,
+          60,
+          61,
+          62,
+          63,
+          68,
+          103,
+          112,
+          117,
+          127
+        ],
+        "canonical_write_revisions": [
+          65,
+          81,
+          82,
+          87,
+          104,
+          113,
+          118,
+          129
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v22_unified_vehicle_input.sql",
+      "sha256": "c6bed6f9d5a7ce6a87ef1caa1128de9d212e97d8b8909bc96566b56acb675023",
+      "references": {
+        "canonical_input_batches": [
+          4,
+          33,
+          34,
+          36,
+          37,
+          38,
+          40
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v35_admin_edit_sessions.sql",
+      "sha256": "351081facf1ab3eeaa0b5bbcbf144a14d8694332e609e11de27e7791d8b87fac",
+      "references": {
+        "canonical_input_batches": [
+          12,
+          67
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v36_admin_edit_sessions_trim_kind.sql",
+      "sha256": "5457b2c73fc9b2800d02251012a0e242573363256bab2cf4d7f3022cf5c6a0b7",
+      "references": {
+        "canonical_input_batches": [
+          69
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v38_research_articles.sql",
+      "sha256": "633ba888047638322e0c0e6fe71ae1a93ee46b89990cd5c927de7eb39847ec3a",
+      "references": {
+        "canonical_input_batches": [
+          15
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v60_close_legacy_vehicle_write_path.sql",
+      "sha256": "84f5e0f40eb49c4e006badb709ff90a1295060563c8b75cfb429159564217c4d",
+      "references": {
+        "canonical_input_batches": [
+          4,
+          61,
+          66,
+          93,
+          235
+        ],
+        "canonical_write_commands": [
+          95
+        ],
+        "canonical_write_revisions": [
+          9
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v63_ice_model_crosswalk.sql",
+      "sha256": "e83d7b2870249f56ab1f5b07d78aaac4e2cc0d5cdf199079df3922fb4fa0dab9",
+      "references": {
+        "ice_crosswalk_upsert_match": [
+          169,
+          235,
+          238
+        ]
+      }
+    },
+    {
+      "path": "supabase/migration_v66_vehicle_master_governed_writer.sql",
+      "sha256": "96dcaf3062b045de067c3f82edaac2e3a133544807eb468d04815c320daea0f6",
+      "references": {
+        "canonical_write_revisions": [
+          54,
+          56,
+          57,
+          64,
+          66,
+          67,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          400
+        ],
+        "vm_apply_price_changes": [
+          226,
+          254,
+          433,
+          434
+        ]
+      }
+    }
+  ]
+}

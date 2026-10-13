@@ -1,0 +1,364 @@
+{
+  "schema": "tdr.structural-identity-writer.preflight.v1",
+  "source_pr": 235,
+  "source_commit": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "catalog_captured_at_utc": "2026-10-13T06:54:38.484014+00:00",
+  "catalog_model_rows_sha256": "c95c99e3f552cc384b083dac7d69b5625032ac73e6bc40d0bc9e086d8367ea64",
+  "snapshot_is_read_only_and_not_a_live_revision_read": true,
+  "source_files_sha256": {
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/owner_decision_ledger_244.csv": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/final_scope_dispositions.csv": "8355e3378e90106769d293ed503bfc1e97cc04421332f8feee315ab92a90e80c",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/identity_manifest_qa.json": "1897709aa04fe54f69ba124141542824cd85d50aa4a385cb26e299dc90ae9460",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/filtered_identity_manifest/new_basic_identity_proposals.csv": "3a0e08efb3618c08b9beb569c7d4fe276f9ddc8bdeed1eb0352bffe350551cd9",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/vehicle_master_identity_snapshot_2026-10-13.json": "cf991264ada90efb0ff69a754cdee11fb0d13cc98fbe9fc60879de4eb7a2eb62",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/shadow_crosswalk_rows.csv": "9d46cad597dba3bbe83369bd9f95cfe6d10b3f6d19e0f46b69e70f10bfab5450",
+    "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/source/owner_overlay_original.csv": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430"
+  },
+  "source_reconciliation": {
+    "effective_registrations": 4123704,
+    "exact_class_scope_and_units_equal_m7_zip": true,
+    "excluded_registrations": 18283,
+    "source_registrations": 4141987,
+    "source_scopes": 1407
+  },
+  "frozen_owner_decisions": {
+    "action_disposition_target_and_registration_units_verified": true,
+    "changed": 0,
+    "ledger_decisions_exercised": 244,
+    "mismatches": 0,
+    "reopened": 0,
+    "total": 244
+  },
+  "counts": {
+    "requested_identities": 9,
+    "requested_registrations": 59948,
+    "valid_basic_identity_proposals": 8,
+    "valid_proposal_registrations": 47109,
+    "review_hold_identities": 1,
+    "review_hold_registrations": 12839
+  },
+  "candidates": [
+    {
+      "canonical_id": "honda.jazz",
+      "model_name": "Jazz",
+      "registrations": 13790,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:809",
+          "master_version": "7.0",
+          "model_group_id": "honda-jazz",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "honda-jazz": {
+          "body": "Hatchback",
+          "segment": "A-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "ford.ranger_raptor_double_cab",
+      "model_name": "Ranger Raptor Double Cab",
+      "registrations": 12839,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:751",
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "decision_ref": "owner-overlay-line:751",
+          "master_version": "7.0",
+          "model_group_id": "ford-ford-ranger-raptor",
+          "reg_type_scope": "รย.2",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "REVIEW_HOLD",
+      "holds": [
+        {
+          "index": 0,
+          "code": "VALIDATION_HOLD",
+          "detail": "REGISTRATION_CLASS_PARENT_ALIAS_CONFLICT:ford.ranger_double_cab"
+        }
+      ],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "ford-ford-ranger-raptor": {
+          "body": "Pickup",
+          "segment": "กระบะ 4 ประตู"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "jaecoo.j6",
+      "model_name": "J6",
+      "registrations": 8659,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:839",
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        },
+        {
+          "decision_ref": "owner-overlay-line:839",
+          "master_version": "7.0",
+          "model_group_id": "jaecoo-jaecoo-j6",
+          "reg_type_scope": "รย.9",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "jaecoo-jaecoo-j6": {
+          "body": "SUV",
+          "segment": "C-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "toyota.vios",
+      "model_name": "Vios",
+      "registrations": 6647,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1149",
+          "master_version": "7.0",
+          "model_group_id": "toyota-vios",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "toyota-vios": {
+          "body": "Sedan",
+          "segment": "B-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "gwm.ora_5",
+      "model_name": "Ora 5",
+      "registrations": 4809,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:773",
+          "master_version": "7.0",
+          "model_group_id": "gwm-ora-5",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "gwm-ora-5": {
+          "body": "Hatchback",
+          "segment": "C-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "nissan.march",
+      "model_name": "Nissan March",
+      "registrations": 4000,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1021",
+          "master_version": "7.0",
+          "model_group_id": "nissan-nissan-march",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "nissan-nissan-march": {
+          "body": "Hatchback",
+          "segment": "A-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "nissan.note",
+      "model_name": "Nissan Note",
+      "registrations": 3667,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1028",
+          "master_version": "7.0",
+          "model_group_id": "nissan-note",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "nissan-note": {
+          "body": "Hatchback",
+          "segment": "B-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "zeekr.7x",
+      "model_name": "7X",
+      "registrations": 2892,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1199",
+          "master_version": "7.0",
+          "model_group_id": "zeekr-zeekr-7x",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "zeekr-zeekr-7x": {
+          "body": "SUV",
+          "segment": "D-segment"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    },
+    {
+      "canonical_id": "toyota.sienta",
+      "model_name": "Sienta",
+      "registrations": 2645,
+      "class_scopes": [
+        {
+          "decision_ref": "owner-overlay-line:1145",
+          "master_version": "7.0",
+          "model_group_id": "toyota-toyota-sienta",
+          "reg_type_scope": "รย.1",
+          "source_hash": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+        }
+      ],
+      "disposition": "VALID_BASIC_IDENTITY_PROPOSAL",
+      "holds": [],
+      "canonical_segment": "UNKNOWN",
+      "canonical_body_type": "UNKNOWN",
+      "canonical_generation": "UNKNOWN",
+      "lifecycle_status": "UNKNOWN",
+      "raw_ice_classification_evidence": {
+        "toyota-toyota-sienta": {
+          "body": "MPV",
+          "segment": "Mini MPV"
+        }
+      },
+      "requires_admin_create_authorization": true,
+      "requires_separate_r6_link_authorization": true,
+      "safe_candidate_was_not_treated_as_create_approval": true
+    }
+  ],
+  "held_catalog_repair_candidates": [
+    {
+      "canonical_id": "ford.ranger_raptor_double_cab",
+      "conflicting_catalog_id": "ford.ranger_double_cab",
+      "conflicting_alias": "ranger raptor",
+      "disposition": "REPAIR_REVIEW_HOLD_NOT_CREATE_AUTHORITY",
+      "owner_target_unchanged": true,
+      "missing_evidence": "Current row revision and reviewed alias-detach/equivalence plan; frozen target is not reopened."
+    }
+  ],
+  "offline_transaction_simulation": {
+    "all_nine_batch_rejected_atomically": true,
+    "valid_subset_fake_created_rows": 8,
+    "fake_audit_revisions": 8,
+    "r6_denied_with_zero_link_changes": true,
+    "no_production_store_or_adapter_used": true
+  },
+  "weighted_readiness_simulation": {
+    "effective_denominator": 4123704,
+    "existing_identity_candidate_registrations": 4027896,
+    "valid_subset_candidate_registrations": 47109,
+    "simulated_existing_plus_valid_subset_registrations": 4075005,
+    "simulated_existing_plus_valid_subset_pct": 98.819047,
+    "target_pct": 99.1,
+    "meets_target_with_only_these_nine": false
+  },
+  "production": {
+    "newly_approved_or_servable_registrations": 0,
+    "structural_database_adapter_present": false,
+    "migration_number_assigned": false,
+    "migrations_executed": false,
+    "r6_authorized": false,
+    "blockers": [
+      "BASIC_IDENTITY_SCHEMA_CONTRACT_V57_V59",
+      "STRUCTURAL_OBSERVATION_FIELDS_V66",
+      "SERVER_AUTHENTICATED_STRUCTURAL_RPC_AND_ADAPTER",
+      "SCOPED_LINK_SCHEMA_AND_REVISION_CONTRACT",
+      "C02_MIGRATION_RECONCILIATION",
+      "C01_R6_AUTHORIZATION"
+    ]
+  }
+}
