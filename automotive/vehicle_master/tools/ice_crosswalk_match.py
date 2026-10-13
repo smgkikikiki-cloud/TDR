@@ -5,24 +5,22 @@
     python -m tools.ice_crosswalk_match --process-id-changes id_changes.csv \\
         --master-version M5
 
-No real Ice Full Package has been imported yet (docs/WORK_STATE.md, M2 state) -- the
-``ice_reg_trend``/``ice_dims_model_group`` tables this module reads are empty in
-production, so ``--match`` run for real would currently write nothing (every group
-would be "no candidate"). This module exists as package-independent infrastructure and
-is exercised in tests with synthetic fixtures (``tests/test_ice_crosswalk_match.py``);
-it must not be run against production until a real package has been imported, and even
-then only the owner's explicit go starts seeding real mappings.
+The M7.0 package is imported in production. The R6 production-crosswalk gate remains
+closed while live-write provenance is reconciled. ``--match --dry-run`` is GET-only;
+``--match`` without ``--dry-run`` performs writes and must remain behind the current
+roadmap gate. Offline shadow recovery uses
+``tools/ice_crosswalk_r6_offline_recovery.py`` and never calls this write path.
 
 ``--match``:
 1. Fetches every Ice model group (``ice_dims_model_group``), its monthly ``reg_trend``
    series, the legacy ``registrations`` monthly series for every TDR canonical model
    (joined via ``registrations.canonical_model_id``), the brand-alias table, and every
    existing crosswalk row.
-2. For each Ice group, evaluates every brand-matching TDR canonical model as a
-   candidate via ``vehreg.ice_crosswalk.decide_match``, picks the best one by
-   ``vehreg.ice_crosswalk.decision_rank`` -- never by comparing raw scores, since a
-   SERIES correlation and a NAME name_score are not the same unit -- and writes it
-   with ``ice_crosswalk_upsert_match``, passing the decision's full evidence tuple
+2. For each Ice group, applies exact owner approvals/exclusions and identity filters,
+   then evaluates guarded same-brand candidates with the established series/name scorer.
+   An owner-approved target is written as ``APPROVED/ADMIN`` regardless of score status;
+   series evidence remains available as a diagnostic. The writer passes the full
+   evidence tuple
    (correlation, ratio, name_score) into ``decision_fingerprint``. Never touches a row
    the RPC itself protects (APPROVED, or ``match_method = 'ADMIN'``), and never
    silently re-proposes a REJECTED row whose ``decision_fingerprint`` has not changed
@@ -160,12 +158,24 @@ def match_one_group(
     *, group: dict, ice_series: dict[str, float], legacy_series_by_canonical: dict[str, dict[str, float]],
     vehicle_models: dict[str, dict[str, str]], vehicle_brands: dict[str, str],
     alias_map: dict[str, str], existing: dict[tuple[str, str | None], dict],
+    deterministic_identity_overrides: dict[str, str] | None = None,
+    owner_approved_identity_overrides: dict[str, str] | None = None,
 ) -> tuple[str, xwalk.MatchDecision] | None:
     """Evaluate every brand-matching TDR canonical model against one Ice group and
     return (canonical_model_id, decision) for the strongest candidate, or None if no
     candidate clears even the PROPOSED floor. Pure given its already-fetched inputs --
     no DB access here; only the fetch_* functions above touch the network."""
     model_group_id = group["model_group_id"]
+    # Explicit targets are used only after that canonical identity is materialized.
+    # Owner-approved targets bypass score-based status changes; other deterministic
+    # recoveries remain guarded by the original series/name acceptance table.
+    approved_target = (owner_approved_identity_overrides or {}).get(model_group_id)
+    owner_target = approved_target or (deterministic_identity_overrides or {}).get(model_group_id)
+    if approved_target and deterministic_identity_overrides and model_group_id in deterministic_identity_overrides:
+        if deterministic_identity_overrides[model_group_id] != approved_target:
+            raise ValueError(f"owner-approved and deterministic targets conflict for {model_group_id}")
+    if owner_target is not None and owner_target not in vehicle_models:
+        return None
     group_brand_key = xwalk.normalize_brand(group["brand"], alias_map)
     periods = _recent_periods(ice_series)
     already_mapped = _actively_mapped_canonical_ids(existing, model_group_id)
@@ -173,32 +183,75 @@ def match_one_group(
 
     best: tuple[str, xwalk.MatchDecision] | None = None
     for canonical_id, model in vehicle_models.items():
+        if owner_target is not None and canonical_id != owner_target:
+            continue
         candidate_brand = vehicle_brands.get(model["brand_id"], "")
-        if xwalk.normalize_brand(candidate_brand, alias_map) != group_brand_key:
+        candidate_brand_key = xwalk.normalize_brand(candidate_brand, alias_map)
+        raw_candidate_name = xwalk.normalize_model_name(model["name_en"], candidate_brand)
+        raw_group_name = xwalk.normalize_model_name(group["model_name"], group["brand"])
+        if candidate_brand_key == group_brand_key:
+            raw_candidate_name = xwalk.strip_alias_brand_prefix(
+                raw_candidate_name, group_brand_key, alias_map)
+            raw_group_name = xwalk.strip_alias_brand_prefix(
+                raw_group_name, group_brand_key, alias_map)
+        cross_brand_alias = xwalk.is_explicit_cross_brand_alias(
+            group_brand_key, raw_group_name, candidate_brand_key, raw_candidate_name)
+        owner_approved = approved_target == canonical_id
+        if candidate_brand_key != group_brand_key and not cross_brand_alias and not owner_approved:
             continue
-        if canonical_id in already_mapped:
+        # Owner approval of an existing AUTO must reach the APPROVED decision.
+        # The production UNIQUE active-canonical constraint is independently
+        # enforced in run_match; owner approval is not a schema bypass.
+        if not owner_approved and canonical_id in already_mapped:
             continue
-        if _canonical_actively_mapped_elsewhere(existing, canonical_id, model_group_id):
+        if not owner_approved and _canonical_actively_mapped_elsewhere(
+                existing, canonical_id, model_group_id):
             continue
 
+        # Avoid double-counting an already-active target in the series evidence.
+        additional_series = ([] if canonical_id in already_mapped else
+                             [legacy_series_by_canonical.get(canonical_id, {})])
         legacy_combined = xwalk.sum_monthly_series(
-            already_mapped_series + [legacy_series_by_canonical.get(canonical_id, {})])
+            already_mapped_series + additional_series)
         ice_values, legacy_values = xwalk.build_paired_series(periods, ice_series, legacy_combined)
         series_eval = xwalk.evaluate_series(ice_values, legacy_values)
 
         # apply_model_name_alias is a no-op outside the one scoped alias_group it
         # knows about (§14.2 Maxus/Mifa trap) -- safe to call unconditionally.
-        candidate_name = xwalk.apply_model_name_alias(
-            xwalk.normalize_model_name(model["name_en"], candidate_brand), group_brand_key)
-        group_name = xwalk.apply_model_name_alias(
-            xwalk.normalize_model_name(group["model_name"], group["brand"]), group_brand_key)
-        name_score = xwalk.name_similarity(candidate_name, group_name)
+        candidate_name = xwalk.apply_model_name_alias(raw_candidate_name, group_brand_key)
+        group_name = xwalk.apply_model_name_alias(raw_group_name, group_brand_key)
+        candidate_name = xwalk.apply_owner_nameplate_alias(candidate_name, group_brand_key)
+        group_name = xwalk.apply_owner_nameplate_alias(group_name, group_brand_key)
+        exact_identity_name = cross_brand_alias or candidate_name == group_name
+        if (owner_target != canonical_id
+                and xwalk.owner_identity_separation(group_brand_key, group_name, candidate_name)):
+            continue
+        if not exact_identity_name and owner_target != canonical_id:
+            # Owner rules are hard identity filters applied before original scoring.
+            # They can block an invalid candidate but never select a replacement by
+            # fuzzy name alone.
+            if group_brand_key in xwalk.IDENTITY_LOCK_BRANDS or candidate_brand_key in xwalk.IDENTITY_LOCK_BRANDS:
+                continue
+            if xwalk.standalone_l_mismatch(candidate_name, group_name):
+                continue
+            if xwalk.latin_letter_distance(candidate_name, group_name) > 3:
+                continue
 
-        decision = xwalk.decide_match(series=series_eval, name_score=name_score)
+        name_score = 1.0 if cross_brand_alias else xwalk.name_similarity(candidate_name, group_name)
+        if owner_approved:
+            decision = xwalk.MatchDecision(
+                status="APPROVED", match_method="ADMIN",
+                correlation=series_eval.correlation, ratio=series_eval.ratio,
+                name_score=name_score,
+                reason=("OWNER_APPROVED exact target; monthly series retained as diagnostic only "
+                        f"(corr={series_eval.correlation}, ratio={series_eval.ratio})"),
+            )
+        else:
+            # Explicit aliases still use the established scorer; they do not make a
+            # weak or absent series signal an AUTO by themselves.
+            decision = xwalk.decide_match(series=series_eval, name_score=name_score)
         if decision is None:
             continue
-        # Ranked, never compared by raw score -- a SERIES correlation and a NAME
-        # name_score are different units (fix for PR #188 review round 2).
         if best is None or xwalk.decision_rank(decision) > xwalk.decision_rank(best[1]):
             best = (canonical_id, decision)
     return best
@@ -206,8 +259,14 @@ def match_one_group(
 
 def run_match(
     rest: RestCall, *, master_version: str, review_csv_path: Path | None = None,
+    dry_run: bool = False, deterministic_identity_overrides: dict[str, str] | None = None,
+    owner_approved_identity_overrides: dict[str, str] | None = None,
+    excluded_model_group_ids: set[str] | None = None,
 ) -> dict[str, Any]:
-    groups = fetch_ice_groups(rest)
+    all_groups = fetch_ice_groups(rest)
+    excluded_ids = excluded_model_group_ids or set()
+    excluded_groups = [g for g in all_groups if g["model_group_id"] in excluded_ids]
+    groups = [g for g in all_groups if g["model_group_id"] not in excluded_ids]
     ice_series_by_group = fetch_ice_monthly_series(rest)
     legacy_series_by_canonical = fetch_legacy_monthly_series(rest)
     vehicle_models = fetch_vehicle_models(rest)
@@ -216,8 +275,59 @@ def run_match(
     existing = fetch_existing_crosswalk(rest)
     known_ids_before = fetch_known_model_group_ids(rest)
 
+    # Live SQL has a UNIQUE active-canonical index. The frozen owner overlay
+    # legitimately assigns multiple Ice groups to one vehicle model, but this
+    # old group-level schema cannot safely APPROVE all of them. Fail closed
+    # BEFORE any write, not halfway through a batch. In dry-run, classify
+    # these as engineering blockers, never as a new owner review queue.
+    approved = owner_approved_identity_overrides or {}
+    owner_groups_by_target: dict[str, set[str]] = {}
+    for owner_group, target_id in approved.items():
+        owner_groups_by_target.setdefault(target_id, set()).add(owner_group)
+    existing_active_by_target: dict[str, set[str]] = {}
+    for (active_group, active_id), active_row in existing.items():
+        if active_id is not None and active_row["status"] in ("AUTO", "APPROVED"):
+            existing_active_by_target.setdefault(active_id, set()).add(active_group)
+    owner_schema_blockers: dict[str, str] = {}
+    for owner_group, target_id in approved.items():
+        siblings = owner_groups_by_target[target_id] - {owner_group}
+        active_elsewhere = existing_active_by_target.get(target_id, set()) - {owner_group}
+        if siblings or active_elsewhere:
+            owner_schema_blockers[owner_group] = (
+                f"OWNER_TARGET_REQUIRES_SCOPED_CROSSWALK: {target_id}; "
+                f"other owner-approved groups={len(siblings)}, "
+                f"other existing active groups={len(active_elsewhere)}; "
+                "engineering/schema blocker, not an owner review request."
+            )
+    # A conflicting protected ADMIN proposal is also an engineering blocker:
+    # selecting a new target must not pretend that protected legacy evidence
+    # has been retired or superseded.
+    for (active_group, active_id), active_row in existing.items():
+        if (active_group in approved and active_id != approved[active_group]
+                and active_row.get("match_method") == "ADMIN"):
+            owner_schema_blockers[active_group] = (
+                "PROTECTED_ADMIN_CONFLICT: old ADMIN crosswalk row points to "
+                f"{active_id}, owner target is {approved[active_group]}; "
+                "requires governed conflict reconciliation, not owner re-review."
+            )
+    pending_owner_targets = {
+        group_id: canonical_id for group_id, canonical_id in approved.items()
+        if canonical_id not in vehicle_models
+    }
+    if not dry_run and (owner_schema_blockers or pending_owner_targets):
+        raise RuntimeError(
+            "Fail closed before database writes: "
+            f"{len(owner_schema_blockers)} protected/schema conflicts and "
+            f"{len(pending_owner_targets)} unmaterialized owner targets. "
+            "Resolve governed crosswalk schema and Vehicle Master identities first."
+        )
+
     applied, skipped_protected, skipped_unchanged_rejection, no_candidate = 0, 0, 0, 0
+    owner_schema_blocked = 0
+    owner_pending_materialization = 0
+    approved_count, auto_count, proposed_count = 0, 0, 0
     review_records: list[dict[str, Any]] = []
+    candidate_records: list[dict[str, Any]] = []
     discovery: list[dict[str, Any]] = []
 
     for group in groups:
@@ -226,11 +336,38 @@ def run_match(
         if flags:
             discovery.append({"model_group_id": model_group_id, "flags": flags})
 
+        approved_id = approved.get(model_group_id)
+        if approved_id and model_group_id in owner_schema_blockers:
+            owner_schema_blocked += 1
+            candidate_records.append({
+                "model_group_id": model_group_id, "model_name": group["model_name"],
+                "brand": group["brand"], "proposed_canonical_model_id": approved_id,
+                "proposed_model_name": vehicle_models.get(approved_id, {}).get("name_en", ""),
+                "series_correlation": None, "total_ratio": None, "name_similarity": None,
+                "proposed_status": "BLOCKED_SCHEMA", "match_method": "ADMIN",
+                "master_version": master_version,
+                "reason": owner_schema_blockers[model_group_id],
+            })
+            continue
+        if approved_id and approved_id not in vehicle_models:
+            owner_pending_materialization += 1
+            candidate_records.append({
+                "model_group_id": model_group_id, "model_name": group["model_name"],
+                "brand": group["brand"], "proposed_canonical_model_id": approved_id,
+                "proposed_model_name": "",
+                "series_correlation": None, "total_ratio": None, "name_similarity": None,
+                "proposed_status": "PENDING_MATERIALIZATION", "match_method": "ADMIN",
+                "master_version": master_version,
+                "reason": "Approved target is planned in the shadow, absent from Vehicle Master.",
+            })
+            continue
         result = match_one_group(
             group=group, ice_series=ice_series_by_group.get(model_group_id, {}),
             legacy_series_by_canonical=legacy_series_by_canonical,
             vehicle_models=vehicle_models, vehicle_brands=vehicle_brands,
-            alias_map=alias_map, existing=existing)
+            alias_map=alias_map, existing=existing,
+            deterministic_identity_overrides=deterministic_identity_overrides,
+            owner_approved_identity_overrides=owner_approved_identity_overrides)
         if result is None:
             no_candidate += 1
             continue
@@ -258,20 +395,37 @@ def run_match(
             skipped_unchanged_rejection += 1
             continue
 
-        outcome = rest("POST", "rpc/ice_crosswalk_upsert_match", {
-            "p_model_group_id": model_group_id,
-            "p_canonical_model_id": canonical_id,
-            "p_match_method": decision.match_method,
-            "p_score": decision.primary_score,
-            "p_status": decision.status,
-            "p_master_version": master_version,
-            "p_decision_fingerprint": fingerprint,
-            "p_reason": decision.reason,
-        })
-        if outcome and outcome.get("applied"):
-            applied += 1
+        if decision.status == "APPROVED":
+            approved_count += 1
+        elif decision.status == "AUTO":
+            auto_count += 1
         else:
-            skipped_protected += 1
+            proposed_count += 1
+        candidate_records.append({
+            "model_group_id": group["model_group_id"], "model_name": group["model_name"],
+            "brand": group["brand"], "proposed_canonical_model_id": canonical_id,
+            "proposed_model_name": vehicle_models[canonical_id]["name_en"],
+            "series_correlation": decision.correlation, "total_ratio": decision.ratio,
+            "name_similarity": decision.name_score, "proposed_status": decision.status,
+            "match_method": decision.match_method, "master_version": master_version,
+            "reason": decision.reason,
+        })
+
+        if not dry_run:
+            outcome = rest("POST", "rpc/ice_crosswalk_upsert_match", {
+                "p_model_group_id": model_group_id,
+                "p_canonical_model_id": canonical_id,
+                "p_match_method": decision.match_method,
+                "p_score": decision.primary_score,
+                "p_status": decision.status,
+                "p_master_version": master_version,
+                "p_decision_fingerprint": fingerprint,
+                "p_reason": decision.reason,
+            })
+            if outcome and outcome.get("applied"):
+                applied += 1
+            else:
+                skipped_protected += 1
 
         if decision.status == "PROPOSED":
             review_records.append({
@@ -288,16 +442,25 @@ def run_match(
         {"model_group_id": g["model_group_id"], "first_seen_master_version": master_version}
         for g in groups if g["model_group_id"] not in known_ids_before
     ]
-    if newly_seen:
+    if newly_seen and not dry_run:
         rest("POST", "ice_known_model_groups", newly_seen, prefer="resolution=ignore-duplicates")
 
     if review_csv_path is not None:
-        write_review_csv(review_csv_path, review_records)
+        # Dry-run exports every candidate (AUTO and PROPOSED) for full comparison;
+        # a production run keeps the established proposal-only review sheet.
+        write_review_csv(review_csv_path, candidate_records if dry_run else review_records)
 
     return {
-        "groups": len(groups), "applied": applied, "skipped_protected": skipped_protected,
+        "groups": len(all_groups), "processed_groups": len(groups),
+        "excluded_groups": len(excluded_groups), "applied": applied, "skipped_protected": skipped_protected,
         "skipped_unchanged_rejection": skipped_unchanged_rejection, "no_candidate": no_candidate,
         "discovery": discovery, "review_rows": len(review_records),
+        "owner_approved_candidates": approved_count,
+        "owner_schema_blocked": owner_schema_blocked,
+        "owner_schema_blocked_total": len(owner_schema_blockers),
+        "owner_pending_materialization": owner_pending_materialization,
+        "auto_candidates": auto_count, "proposed_candidates": proposed_count,
+        "dry_run": dry_run,
     }
 
 
@@ -369,9 +532,13 @@ def main(argv: list[str] | None = None) -> int:
                        help="apply an Ice id_changes.csv (SKILL.md §3)")
     mode.add_argument("--check-live-import", action="store_true",
                        help="read-only preflight: the latest live import must be --master-version")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="with --match, read live inputs and write only the local review CSV; never POST to Supabase")
     parser.add_argument("--master-version", default="", help="Ice master_version this run is evaluated against")
     parser.add_argument("--review-csv", type=Path, default=None,
                          help="where to write the one-time review sheet (--match only; required with --match)")
+    parser.add_argument("--deterministic-identity-overrides", type=Path, default=None,
+                         help="offline target package with deterministic and owner-approved identity mappings")
     args = parser.parse_args(argv)
 
     if not args.master_version:
@@ -392,7 +559,44 @@ def main(argv: list[str] | None = None) -> int:
             print("INVALID: --review-csv is required with --match -- a real match run "
                   "must always produce the owner's review evidence, never skip it")
             return 1
-        summary = run_match(_request, master_version=args.master_version, review_csv_path=args.review_csv)
+        if args.master_version in {"7.0", "M7", "M7.0"} and not args.deterministic_identity_overrides:
+            print("INVALID: M7 requires the frozen owner decision package; "
+                  "refusing an owner-blind match run.")
+            return 1
+        identity_overrides = None
+        owner_approved_overrides: dict[str, str] = {}
+        excluded_group_ids: set[str] = set()
+        if args.deterministic_identity_overrides:
+            payload = json.loads(args.deterministic_identity_overrides.read_text(encoding="utf-8"))
+            identity_overrides = payload.get("deterministic_identity_overrides")
+            if not isinstance(identity_overrides, dict) or any(
+                not isinstance(k, str) or not isinstance(v, str) or not v
+                for k, v in identity_overrides.items()
+            ):
+                print("INVALID: override file must contain a string-to-string deterministic_identity_overrides object")
+                return 1
+            owner_approved_overrides = payload.get("owner_approved_identity_overrides", {})
+            if not isinstance(owner_approved_overrides, dict) or any(
+                not isinstance(k, str) or not isinstance(v, str) or not v
+                for k, v in owner_approved_overrides.items()
+            ):
+                print("INVALID: owner_approved_identity_overrides must be a string-to-string object")
+                return 1
+            excluded_rows = payload.get("owner_excluded_groups", [])
+            if not isinstance(excluded_rows, list) or any(
+                not isinstance(row, dict) or not isinstance(row.get("model_group_id"), str)
+                for row in excluded_rows
+            ):
+                print("INVALID: owner_excluded_groups must be a list of objects with model_group_id strings")
+                return 1
+            excluded_group_ids = {row["model_group_id"] for row in excluded_rows}
+        summary = run_match(_request, master_version=args.master_version,
+                            review_csv_path=args.review_csv, dry_run=args.dry_run,
+                            deterministic_identity_overrides=identity_overrides,
+                            owner_approved_identity_overrides=owner_approved_overrides,
+                            excluded_model_group_ids=excluded_group_ids)
+        if args.dry_run:
+            summary["discovery_count"] = len(summary.pop("discovery"))
         print(json.dumps(summary, ensure_ascii=False, indent=2))
         return 0
 

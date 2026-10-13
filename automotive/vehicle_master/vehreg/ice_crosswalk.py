@@ -26,24 +26,18 @@ from dataclasses import dataclass
 from difflib import SequenceMatcher
 from typing import Any
 
-#: §14.2 acceptance rule: correlation >= this AND ratio in [SERIES_RATIO_LOW,
-#: SERIES_RATIO_HIGH] = "strong" series fingerprint.
+#: Original automatic-match threshold. Identity owner rules may block or correct a
+#: candidate before the original series/name scoring is applied.
 SERIES_CORRELATION_THRESHOLD = 0.98
 SERIES_RATIO_LOW = 0.9
 SERIES_RATIO_HIGH = 1.1
-
-#: §14.2: "strong series AND name >= 0.8 -> AUTO". Exact threshold given by the contract.
 NAME_AUTO_THRESHOLD = 0.8
 
-#: Not given by the contract -- the smallest documented judgment call this module makes.
-#: Below this, a name-only signal is treated as "no candidate at all" rather than "a
-#: candidate too weak to auto-match"; §14.2 only says name similarity is "never sufficient
-#: alone" for AUTO, not what floor makes it worth a PROPOSED review row in the first
-#: place. 0.35 was chosen so two genuinely unrelated nameplates (e.g. different brands
-#: entirely, or "3" vs "X3" after brand-prefix removal, which scores well under this) do
-#: not generate review-sheet noise, while anything with a recognizable shared token clears
-#: it. Report this choice to the owner; it can be tightened/loosened without touching
-#: anything else in this module.
+#: Owner-confirmed makes where every model letter and digit is identity-significant.
+IDENTITY_LOCK_BRANDS = frozenset({"audi", "bmw", "volvo", "lexus", "peugeot", "ferrari", "zeekr", "mazda", "mg"})
+
+#: Fuzzy-name floor for review proposals only. It cannot produce an AUTO mapping.
+#: Exact identity rules and owner designation locks are applied before this threshold.
 NAME_CANDIDATE_FLOOR = 0.35
 
 #: Discovery (§14.2 "Ice groups appearing for the first time and provisional groups").
@@ -63,12 +57,16 @@ def normalize_brand(brand: str, alias_map: dict[str, str]) -> str:
     only decides whether two brand strings should be treated as the same brand for
     matching purposes.
     """
-    key = " ".join(brand.strip().lower().split())
-    return alias_map.get(key, key)
+    key = " ".join(re.sub(r"[^0-9a-zA-Z฀-๿]+", " ", brand.strip().lower()).split())
+    normalized_aliases = {
+        " ".join(re.sub(r"[^0-9a-zA-Z฀-๿]+", " ", alias.strip().lower()).split()): target
+        for alias, target in alias_map.items()
+    }
+    return normalized_aliases.get(key, key)
 
 
 # ---------------------------------------------------------------------------
-# Name similarity (§14.2 "3. Name similarity")
+# Name similarity (candidate generation only)
 # ---------------------------------------------------------------------------
 
 _PUNCTUATION_RE = re.compile(r"[^0-9a-zA-Z฀-๿ ]+")
@@ -86,10 +84,22 @@ def normalize_model_name(name: str, brand: str) -> str:
     return cleaned
 
 
+def strip_alias_brand_prefix(
+    normalized_name: str, brand_alias_group: str, alias_map: dict[str, str],
+) -> str:
+    """Strip an alias-family marque when Ice embeds it in the model name."""
+    for brand, alias_group in alias_map.items():
+        if alias_group != brand_alias_group:
+            continue
+        prefix = " ".join(_PUNCTUATION_RE.sub(" ", brand.strip().lower()).split())
+        if prefix and normalized_name.startswith(prefix + " "):
+            return normalized_name[len(prefix):].strip()
+    return normalized_name
+
+
 def name_similarity(a: str, b: str) -> float:
-    """Deterministic 0..1 similarity between two already-normalized names.
-    Never sufficient alone for AUTO (§14.2) -- callers must combine with the series
-    signal via decide_match."""
+    """Deterministic 0..1 similarity between two normalized names.
+    Used to rank review candidates; it does not establish model identity."""
     if not a and not b:
         return 1.0
     if not a or not b:
@@ -97,16 +107,30 @@ def name_similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
 
 
-#: §14.2's known Maxus/Mifa trap is a *model-name* mismatch the brand alias alone
-#: cannot fix: after brand normalization, "MG Maxus" and "MAXUS" compare equal, but
-#: the model names themselves do not -- Ice's side is a bare number ("7"/"9") while
-#: the TDR side, once its own brand prefix ("MAXUS") is stripped, is "mifa 7"/"mifa
-#: 9". Scoped to exactly the one brand alias_group this trap concerns, and to exactly
-#: the two model numbers §14.2 names -- never a generic fuzzy rule that could merge
-#: an unrelated pair of models sharing a brand.
+#: Explicit, owner-confirmed model-name aliases. Keys are normalized brand/alias groups;
+#: never infer alias pairs from fuzzy similarity or registration totals.
 MODEL_NAME_ALIASES: dict[str, dict[str, str]] = {
     "maxus_mifa": {"7": "mifa 7", "9": "mifa 9"},
+    "bmw": {"2 series gran coupe": "2 series"},
+    "jaecoo": {"j7": "7", "j5": "5 ev", "5 ev": "5 ev"},
+    "toyota": {"hiace": "commuter"},
+    "riddara": {"rd6 double cab": "rd6"},
+    "wuling": {"binguo": "bingo"},
+    "byd": {"sealion 6": "sealion 6 dm i"},
 }
+
+# An exact, owner-approved code-to-nameplate exception. It is deliberately narrower
+# than the BMW identity lock: 525d is a 5 Series variant, but other BMW codes do not
+# inherit a generic digit-prefix rule.
+OWNER_APPROVED_NAMEPLATE_ALIASES: dict[tuple[str, str], str] = {
+    ("bmw", "525d"): "5 series",
+}
+
+# Owner-confirmed aliases that cross brand labels. Keep these as exact pair entries;
+# do not turn related marques (for example Chery/Omoda) into a generic brand merge.
+CROSS_BRAND_MODEL_ALIASES = frozenset({
+    frozenset({("chery", "c5 ev omoda e5"), ("omoda", "c5")}),
+})
 
 
 def apply_model_name_alias(normalized_name: str, brand_alias_group: str) -> str:
@@ -117,8 +141,68 @@ def apply_model_name_alias(normalized_name: str, brand_alias_group: str) -> str:
     return MODEL_NAME_ALIASES.get(brand_alias_group, {}).get(normalized_name, normalized_name)
 
 
+def apply_owner_nameplate_alias(normalized_name: str, brand_alias_group: str) -> str:
+    """Apply an exact, explicitly approved code-to-nameplate identity exception."""
+    return OWNER_APPROVED_NAMEPLATE_ALIASES.get(
+        (brand_alias_group, normalized_name), normalized_name)
+
+
+def owner_identity_separation(brand_alias_group: str, left_name: str, right_name: str) -> bool:
+    """Protect known designation families from numeric/name-similarity merges."""
+    left = " ".join(left_name.strip().lower().split())
+    right = " ".join(right_name.strip().lower().split())
+    if brand_alias_group == "honda":
+        left_en2 = bool(re.search(r"\be\s*n\s*2\b", left))
+        right_en2 = bool(re.search(r"\be\s*n\s*2\b", right))
+        if left_en2 != right_en2:
+            return True
+    if brand_alias_group == "byd":
+        left_code = re.search(r"\batto\s*([123])\b", left)
+        right_code = re.search(r"\batto\s*([123])\b", right)
+        if left_code and right_code and left_code.group(1) != right_code.group(1):
+            return True
+    if brand_alias_group == "gwm":
+        for family in ("ora", "tank"):
+            left_code = re.search(rf"\b{family}\s*(\d+)\b", left)
+            right_code = re.search(rf"\b{family}\s*(\d+)\b", right)
+            if left_code and right_code and left_code.group(1) != right_code.group(1):
+                return True
+    return brand_alias_group == "lotus" and {left, right} == {"emira", "emeya"}
+
+
+def latin_letter_distance(a: str, b: str) -> int:
+    """Levenshtein distance over Latin letters only, per the owner's rule."""
+    left = re.sub(r"[^a-z]", "", a.lower())
+    right = re.sub(r"[^a-z]", "", b.lower())
+    previous = list(range(len(right) + 1))
+    for i, char_a in enumerate(left, 1):
+        current = [i]
+        for j, char_b in enumerate(right, 1):
+            current.append(min(
+                current[-1] + 1,
+                previous[j] + 1,
+                previous[j - 1] + (char_a != char_b),
+            ))
+        previous = current
+    return previous[-1]
+
+
+def standalone_l_mismatch(a: str, b: str) -> bool:
+    """A standalone L/l token is identity-significant across all brands."""
+    has_l_a = bool(re.search(r"(?<![a-z0-9])l(?![a-z0-9])", a.lower()))
+    has_l_b = bool(re.search(r"(?<![a-z0-9])l(?![a-z0-9])", b.lower()))
+    return has_l_a != has_l_b
+
+
+def is_explicit_cross_brand_alias(
+    brand_a: str, name_a: str, brand_b: str, name_b: str,
+) -> bool:
+    """Return true only for an owner-recorded exact cross-brand alias pair."""
+    return frozenset({(brand_a, name_a), (brand_b, name_b)}) in CROSS_BRAND_MODEL_ALIASES
+
+
 # ---------------------------------------------------------------------------
-# Monthly series comparison (§14.2 "1. Monthly series") -- the strongest signal
+# Monthly series comparison -- corroboration/data-quality diagnostics only
 # ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
@@ -195,14 +279,10 @@ def evaluate_series(ice_series: list[float], legacy_series: list[float]) -> Seri
 
 @dataclass(frozen=True)
 class MatchDecision:
-    status: str  # AUTO | PROPOSED
-    match_method: str  # SERIES | NAME
-    #: The full evidence tuple, always populated regardless of match_method -- a
-    #: NAME decision still carries whatever correlation/ratio the series comparison
-    #: produced (even though it was not strong enough to decide on), and a SERIES
-    #: decision still carries name_score. Nothing computed during evaluation is
-    #: discarded: the orchestrator needs all three for decision_fingerprint and the
-    #: review sheet, not just whichever value happened to drive the decision.
+    status: str  # APPROVED | AUTO | PROPOSED
+    match_method: str  # ADMIN | SERIES | NAME
+    #: Full evidence tuple for fingerprints and review. The original scorer uses
+    #: series strength for SERIES decisions and name similarity for NAME decisions.
     correlation: float | None
     ratio: float | None
     name_score: float
@@ -210,16 +290,14 @@ class MatchDecision:
 
     @property
     def primary_score(self) -> float | None:
-        """The single `score` value migration_v63's ice_model_crosswalk.score column
-        stores (§14.2 gives one `score` column, not three) -- correlation for a
-        SERIES decision, name_score for a NAME decision. Never used for ranking two
-        candidates against each other -- see decision_rank -- only for the one
-        number persisted to the row."""
+        """The score column holds the original deciding signal."""
         return self.correlation if self.match_method == "SERIES" else self.name_score
 
 
 def decide_match(*, series: SeriesEvaluation, name_score: float) -> MatchDecision | None:
-    """§14.2 acceptance table. Returns None for "no candidate" -- callers must not
+    """Apply the original series/name acceptance scoring after identity-rule filters.
+
+    Returns None for "no candidate" -- callers must not
     insert a crosswalk row for that case (see migration_v63's row-identity note);
     canonical_model_id simply stays absent rather than being written as an explicit
     null row, except for the one safety-net "no candidate" row shape the schema allows
@@ -246,22 +324,14 @@ def decide_match(*, series: SeriesEvaluation, name_score: float) -> MatchDecisio
     return None
 
 
-#: §14.2 signal priority, strongest first: monthly series, then brand alias (already
-#: folded into the series/name comparison upstream), then name. Two candidates for the
-#: same Ice group are never ranked by comparing decision.correlation against
-#: decision.name_score directly -- those are different units (a correlation
-#: coefficient vs. a string-similarity ratio) and a NAME-only score of 1.00 must never
-#: outrank a SERIES candidate with correlation 0.99.
-_STATUS_RANK = {"AUTO": 1, "PROPOSED": 0}
-_METHOD_RANK = {"SERIES": 1, "NAME": 0}
+#: Original signal priority. Correlation and lexical similarity are never compared as
+#: raw numbers; rank status, method, then same-signal evidence.
+_STATUS_RANK = {"APPROVED": 2, "AUTO": 1, "PROPOSED": 0}
+_METHOD_RANK = {"ADMIN": 2, "SERIES": 1, "NAME": 0}
 
 
 def decision_rank(decision: MatchDecision) -> tuple[int, int, float, float, float]:
-    """A deterministic ranking key: AUTO beats PROPOSED; within PROPOSED, SERIES
-    (strong-series) evidence beats NAME-only evidence; only once status and method
-    agree do correlation, then ratio, then name_score break the tie. Compare two
-    decisions with ``decision_rank(a) > decision_rank(b)``, never with their raw
-    ``correlation``/``name_score`` fields."""
+    """Restore original strongest-first scoring; unlike units are never compared."""
     return (
         _STATUS_RANK[decision.status],
         _METHOD_RANK[decision.match_method],
