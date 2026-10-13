@@ -1,9 +1,14 @@
 """R6 scoped Crosswalk v2 pure resolver regressions: no DB/network/writer."""
+import json
+import subprocess
+from pathlib import Path
+
 import pytest
 
 from vehreg.ice_scoped_crosswalk import (
     IceFact, LegacyLink, OwnerScope, ScopedCrosswalk, normalize_reg_type, summarize,
 )
+from vehreg.ice_scoped_reader import IceRegistrationFact, resolve_registration_rows, scoped_totals
 
 
 def owner(group, reg, action, target=None, ref="frozen-owner-audit:001"):
@@ -136,3 +141,48 @@ def test_scoped_only_pickup_cannot_inherit_all_or_legacy_parent():
     )
     assert matcher.resolve(IceFact("triton", "RY1", 50)).disposition == "OWNER_APPROVED"
     assert matcher.resolve(IceFact("triton", "RY3", 40)).disposition == "SCOPED_CLASS_UNRESOLVED"
+
+
+def _shared_reader_fixture():
+    return json.loads((Path(__file__).parent / "fixtures/ice_scoped_reader_shared.json").read_text())
+
+
+def _python_shared_reader_summary(fixture):
+    owner = [OwnerScope(row["group_id"], row["reg_type"], row["action"],
+                        row["canonical_id"], row["decision_ref"], row["master_version"])
+             for row in fixture["owner"]]
+    legacy = [LegacyLink(row["group_id"], row["canonical_id"], row["status"])
+              for row in fixture["legacy"]]
+    resolver = ScopedCrosswalk(owner, legacy, fixture["materialized"],
+                               fixture["master_version"], fixture["scoped_only"])
+    facts = [IceRegistrationFact(
+        row["period"], row["province"], row["reg_type"], row["model_group_id"],
+        row["brand"], row["model_name"], row["reg_count"],
+    ) for row in fixture["facts"]]
+    mapped = resolve_registration_rows(facts, resolver)
+    dimensions = {row["canonical_id"]: row for row in fixture["models"]}
+    return scoped_totals(mapped, dimensions)
+
+
+def test_shared_reader_fixture_conserves_period_province_and_class_grain():
+    fixture = _shared_reader_fixture()
+    result = _python_shared_reader_summary(fixture)
+    assert result["raw_registrations"] == 109
+    assert result["resolved_fact_count"] == len(fixture["facts"]) == 12
+    assert result["canonical_model_totals"] == {
+        "UNMAPPED": 45, "brand.cab": 7, "brand.shared": 46, "legacy.ok": 11,
+    }
+    assert result["segment_totals"] == {"Pickup": 7, "SUV": 46, "Sedan": 11, "ไม่ระบุ": 45}
+    assert result["body_type_totals"] == {"Other Cab": 7, "SUV": 46, "Sedan": 11, "ไม่ระบุ": 45}
+    assert sum(row["registrations"] for row in result["period_province_reg_type_totals"]) == 109
+
+
+def test_python_typescript_reader_parity_on_the_same_shared_fixture():
+    fixture_path = Path(__file__).parent / "fixtures/ice_scoped_reader_shared.json"
+    script = Path(__file__).parents[3] / "scripts/check-ice-scoped-reader.ts"
+    completed = subprocess.run(
+        ["node", "--experimental-strip-types", str(script), str(fixture_path)],
+        check=True, capture_output=True, text=True,
+    )
+    typescript_result = json.loads(completed.stdout)
+    assert typescript_result == _python_shared_reader_summary(_shared_reader_fixture())

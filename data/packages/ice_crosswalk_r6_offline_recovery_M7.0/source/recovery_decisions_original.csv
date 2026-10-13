@@ -1,0 +1,33 @@
+﻿model_group_id,brand,ice_model_name,rejected_candidate_id,rejected_candidate_name,recovery_action,target_canonical_id,recovery_basis
+HONDA|E AS,HONDA,E AS,honda.en2,e:N2,IDENTITY_DISCOVERY,,Route to missing-identity discovery; do not map to e:N2 by fuzzy name.
+HONDA|N VAN,HONDA,N VAN,honda.en2,e:N2,IDENTITY_DISCOVERY,,Route to missing-identity discovery; do not map to e:N2.
+MG|MG GS,MG,MG GS,mg.mg_zs,MG ZS,IDENTITY_DISCOVERY,,MG identity lock: GS differs from ZS; discover/create exact MG GS.
+TOYOTA|COASTER,TOYOTA,COASTER,toyota.hiace,Hiace,IDENTITY_DISCOVERY,,Coaster is distinct from Hiace; discover/create exact identity.
+byd-atto-1,BYD,Atto 1,byd.atto2,Atto 2,EXACT_EXISTING,byd.atto1,Atto 1 is distinct from Atto 2.
+byd-atto-3,BYD,Atto 3,byd.atto1,BYD ATTO 1,EXACT_EXISTING,byd.atto3,Atto 3 is distinct from Atto 1.
+byd-byd-t3,BYD,BYD T3,byd.atto1,BYD ATTO 1,EXACT_EXISTING,byd.byd_t3,BYD T3 exists as its own model.
+byd-sealion-7,BYD,Sealion 7,byd.sealion5,Sealion 5 DM-i,EXACT_EXISTING,byd.sealion7,Sealion 7 is distinct from Sealion 5 DM-i.
+gwm-ora-07,GWM,Ora 07,gwm.ora_03,Ora 03,IDENTITY_DISCOVERY,,Ora 07 is distinct from Ora 03; discover/create exact identity.
+gwm-tank-500,GWM,Tank 500,gwm.tank300,Tank 300,EXACT_EXISTING,gwm.tank500,Tank 500 exists as its own model.
+honda-br-v,HONDA,BR-V,honda.en2,e:N2,EXACT_EXISTING,honda.brv,BR-V exists as its own model.
+honda-en1,HONDA,e:N1,honda.en2,e:N2,EXACT_EXISTING,honda.en1,e:N1 exists separately from e:N2.
+honda-honda-e,HONDA,Honda E,honda.en2,e:N2,IDENTITY_DISCOVERY,,Do not map Honda e to e:N2 by fuzzy name; discover/create exact identity.
+honda-honda-fit,HONDA,Honda FIT,honda.city,City,EXACT_NAME_EQUIVALENT,honda.jazz,"Honda Fit is the Honda Jazz nameplate; map to its own identity, not City."
+honda-wr-v,HONDA,WR-V,honda.en2,e:N2,EXACT_EXISTING,honda.wrv,WR-V exists as its own model.
+hyundai-ioniq-6,HYUNDAI,Ioniq 6,hyundai.ioniq5,Ioniq 5,EXACT_EXISTING,hyundai.ioniq6,Ioniq 6 exists separately from Ioniq 5.
+kia-ev9,KIA,EV9,kia.ev6,EV6,EXACT_EXISTING,kia.ev9,EV9 exists separately from EV6.
+lotus-emira-v6__provisional,LOTUS,EMIRA V6,lotus.emeya,Emeya,REUSE_PRIOR_OWNER_DECISION,,Reuse prior owner decision to create Lotus Emira identity.
+mg-mg-hs,MG,MG HS,mg.mg_es,MG ES,EXACT_EXISTING,mg.mg_hs,MG identity lock; exact MG HS model exists.
+mg-mg-im6,MG,MG IM6,mg.mg_es,MG ES,EXACT_EXISTING,mg.mg_im6,MG identity lock; exact MG IM6 model exists.
+mg-mg-vs-hev,MG,MG VS HEV,mg.mg_zs_ev,MG ZS EV,EXACT_EXISTING,mg.mg_vs_hev,MG identity lock; exact MG VS HEV model exists.
+mg-mg-zs,MG,MG ZS,mg.mg_zs_ev,MG ZS EV,EXACT_EXISTING,mg.mg_zs,MG identity lock; exact MG ZS model exists.
+mg-mg4-ev,MG,MG4 EV,mg.mg_s5_ev,MG S5 EV,EXACT_NAME_EQUIVALENT,mg.mg4,"MG4 EV maps to MG4 Electric, not MG S5 EV."
+nissan-nissan-teana,NISSAN,Nissan Teana,nissan.serena,Serena,EXACT_EXISTING,nissan.teana,Teana exists separately from Serena.
+nissan-serena,NISSAN,Serena,nissan.serena,Serena,EXACT_EXISTING,nissan.serena,Owner reversed prior rejection; link to existing Nissan Serena identity nissan.serena.
+nissan-terra,NISSAN,Terra,nissan.serena,Serena,EXACT_EXISTING,nissan.terra,Terra exists separately from Serena.
+toyota-bz4x,TOYOTA,bZ4X,toyota.gr86,GR86,EXACT_EXISTING,toyota.bz4x,bZ4X exists separately from GR86.
+toyota-c-hr,TOYOTA,C-HR,toyota.camry,Camry,EXACT_EXISTING,toyota.c_hr,C-HR exists separately from Camry.
+toyota-gr-yaris,TOYOTA,GR Yaris,toyota.yaris,Yaris,IDENTITY_DISCOVERY,,GR Yaris is distinct from Yaris; discover/create exact identity.
+toyota-land-cruiser,TOYOTA,Land Cruiser,toyota.land_cruiser_300,Land Cruiser 300,IDENTITY_DISCOVERY,,Owner rejected forced Land Cruiser 300 mapping; discover its exact identity.
+toyota-land-cruiser-fj,TOYOTA,Land Cruiser FJ,toyota.land_cruiser_300,Land Cruiser 300,IDENTITY_DISCOVERY,,Land Cruiser FJ is distinct from Land Cruiser 300; discover/create exact identity.
+toyota-toyota-prius,TOYOTA,Toyota Prius,toyota.yaris,Yaris,EXACT_EXISTING,toyota.prius,Prius exists separately from Yaris.

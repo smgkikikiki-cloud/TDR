@@ -35,6 +35,36 @@ create table if not exists public.ice_model_crosswalk_scoped (
   )
 );
 
+-- An authorized state transition may move PENDING -> APPROVED after its exact
+-- target is materialized, but it cannot rewrite the source decision or its
+-- evidence. This is a design-time contract only; the service role below has no
+-- UPDATE privilege, and no writer or migration is authorized by this draft.
+create or replace function public.ice_scoped_crosswalk_keep_provenance()
+returns trigger
+language plpgsql
+security invoker
+set search_path = public
+as $$
+begin
+  if new.model_group_id is distinct from old.model_group_id
+     or new.reg_type_scope is distinct from old.reg_type_scope
+     or new.master_version is distinct from old.master_version
+     or new.decision_ref is distinct from old.decision_ref
+     or new.source_sha256 is distinct from old.source_sha256
+     or new.created_at is distinct from old.created_at then
+    raise exception 'scoped crosswalk decision provenance is immutable';
+  end if;
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+drop trigger if exists ice_scoped_crosswalk_provenance_immutable
+  on public.ice_model_crosswalk_scoped;
+create trigger ice_scoped_crosswalk_provenance_immutable
+  before update on public.ice_model_crosswalk_scoped
+  for each row execute function public.ice_scoped_crosswalk_keep_provenance();
+
 -- MANY Ice groups/registration scopes may intentionally target ONE canonical.
 -- The unique key is the SOURCE grain, never the target canonical ID.
 -- Do not drop/change the v63 active-canonical index under this draft.
