@@ -299,11 +299,27 @@ def run_match(
                 f"other existing active groups={len(active_elsewhere)}; "
                 "engineering/schema blocker, not an owner review request."
             )
-    if owner_schema_blockers and not dry_run:
+    # A conflicting protected ADMIN proposal is also an engineering blocker:
+    # selecting a new target must not pretend that protected legacy evidence
+    # has been retired or superseded.
+    for (active_group, active_id), active_row in existing.items():
+        if (active_group in approved and active_id != approved[active_group]
+                and active_row.get("match_method") == "ADMIN"):
+            owner_schema_blockers[active_group] = (
+                "PROTECTED_ADMIN_CONFLICT: old ADMIN crosswalk row points to "
+                f"{active_id}, owner target is {approved[active_group]}; "
+                "requires governed conflict reconciliation, not owner re-review."
+            )
+    pending_owner_targets = {
+        group_id: canonical_id for group_id, canonical_id in approved.items()
+        if canonical_id not in vehicle_models
+    }
+    if not dry_run and (owner_schema_blockers or pending_owner_targets):
         raise RuntimeError(
-            f"Fail closed before database writes: {len(owner_schema_blockers)} "
-            "owner-approved groups are incompatible with the live active-canonical "
-            "UNIQUE index. Resolve scoped crosswalk/schema and consumer migration first."
+            "Fail closed before database writes: "
+            f"{len(owner_schema_blockers)} protected/schema conflicts and "
+            f"{len(pending_owner_targets)} unmaterialized owner targets. "
+            "Resolve governed crosswalk schema and Vehicle Master identities first."
         )
 
     applied, skipped_protected, skipped_unchanged_rejection, no_candidate = 0, 0, 0, 0
