@@ -1,5 +1,9 @@
 # TDR Work State — Source of Truth
 
+## Current first-eight Vehicle Master handoff (2026-10-14)
+
+**READ FIRST for Vehicle Master / Ice structural identity continuation:** [owner context handoff, verified source baseline and entire first-eight gated roadmap](vehicle-db/phase1d/OWNER_CONTEXT_HANDOFF_2026-10-14.md). This preserves the current reviewed decision chain when a chat context ends. Latest Phase1D branch is Draft PR #243; consult its actual HEAD before editing. **No production BASIC identities have been created**; isolated Phase1C eight-model acceptance is not a live application. Owner approved SELECT-only vehicle catalog use, NOT a production role/RLS modification or privileged raw export. Fresh live counts/hashes are captured; full row-level isolated CATALOG replay remains blocked by a vehicle-scoped readonly export source. Admin trust, C02 migration-number decision and Enforcer admission remain blocked. **Do not start more models, R6 linking, Trim or Price Fetcher until the first eight are live only after explicit separate owner approval and QA.** Historic lower sections of this file may describe earlier PR/CI/ledger snapshots; read the linked 2026-10-14 handoff and live GitHub/Supabase evidence for current status.
+
 This file is the persistent execution state for long-running TDR work. Agents must read this file before continuing any multi-step TDR data repair, audit, batch, or migration task.
 
 ## Vehicle DB v3 platform state (current — read before anything vehicle-related)
