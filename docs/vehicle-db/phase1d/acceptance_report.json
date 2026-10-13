@@ -3,6 +3,19 @@
   "phase": "1D",
   "branch": "codex/vm-phase1d-prod-compat-20261013",
   "base_sha": "01ff6af90d488e5b3b990a74dc89ad5a2af7bbb2",
+  "delivery": {
+    "verified_implementation_commit": "5e91dfb78c59e835c83f8c44035515494bb852b5",
+    "remote_branch_push_verified": true,
+    "intended_draft_pr_base": "codex/vm-phase1c-postgres-acceptance-20261013",
+    "draft_pr_created": false,
+    "creation_attempts": [
+      {"endpoint":"GitHub GraphQL via gh pr create","result":"HTTP 403 Forbidden"},
+      {"endpoint":"GitHub REST POST /repos/smgkikikiki-cloud/TDR/pulls via gh api","result":"HTTP 403 Forbidden"}
+    ],
+    "review_ready_pr_body": "docs/vehicle-db/phase1d/DRAFT_PR_BODY.md",
+    "hosted_pr_ci_available": false,
+    "stop_for_independent_qa": true
+  },
   "acceptance_result": "BLOCKED",
   "production_ready": false,
   "gates": {
@@ -114,6 +127,8 @@
     {"command":"node orchestration/pr-admission.mjs against exact 01ff6af base and synthetic stacked-PR event","result":"EXPECTED_FAIL_CLOSED","errors":["UNEXPECTED_BASE_BRANCH"],"warnings":["UNMANAGED_PR_NOT_TASK_AUTHORIZED"],"enforcer_authorized":false,"tested_head_sha":"941deab58848fc251fe3a53616babfdb6e17d354","note":"local reproduction only; synthetic PR event, not hosted CI"},
     {"command":"/tmp/tdr-vm-venv/bin/python -m compileall -q vehreg tools tests","working_directory":"automotive/vehicle_master","result":"PASS"},
     {"command":"/tmp/tdr-vm-venv/bin/python -m vehreg market validate","working_directory":"automotive/vehicle_master","result":"PASS","valid":true,"problems":[]},
+    {"command":"gh pr create --draft --base codex/vm-phase1c-postgres-acceptance-20261013 --head codex/vm-phase1d-prod-compat-20261013","result":"BLOCKED_HTTP_403","draft_pr_created":false},
+    {"command":"gh api --method POST repos/smgkikikiki-cloud/TDR/pulls","result":"BLOCKED_HTTP_403","draft_pr_created":false},
     {"command":"/tmp/tdr-vm-venv/bin/python -m pytest automotive/vehicle_master/tests","result":"FAILED_WRONG_WORKING_DIRECTORY","scope":"Initial full-suite invocation from repository root; fixture paths are relative to automotive/vehicle_master","summary":"1921 passed, 379 skipped, 2 failed, 1 warning, 501.07s","failures":["test_ecosticker_phase1_spec_file_contains_no_price_fields: FileNotFoundError for relative vehreg/data fixture","test_guard_can_read_base_ledger_from_consolidated_repo_path: expected fixture key absent due to root cwd"]},
     {"command":"/tmp/tdr-vm-venv/bin/python -m pytest -q tests/test_jaecoo_j5_ecosticker_specs.py tests/test_pricefeed_guard_consolidated_p6.py","working_directory":"automotive/vehicle_master","result":"PASS","summary":"7 passed in 3.66s"},
     {"command":"/tmp/tdr-vm-venv/bin/python -m pytest -q tests --tb=short --basetemp=/workspace/.tdr-phase1d-pytest","working_directory":"automotive/vehicle_master","result":"PASS","summary":"1923 passed, 379 skipped, 4357 subtests passed, 1 warning, 535.44s","temporary_dataset_copy_removed_after_run":true}

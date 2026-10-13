@@ -32,3 +32,5 @@ npm run check
 The Phase 1D evidence check verifies source hashes, the unchanged frozen 244-decision ledger, scope totals and hard-blocked acceptance labels. The Admin contract check calls the real `lib/admin-auth.ts` helpers with disposable test-only credentials; it proves helper behavior only, not deployment configuration, database authorization, or approval-record verification. The Phase 1C command runs the existing 61 PostgreSQL SQL assertions inside its pinned, disposable, network-isolated PostgreSQL 16 container and remains the only real PostgreSQL integration suite here. Its catalog parity fixture is one Toyota model and is not a full-catalog test.
 
 The full Vehicle Master catalog acceptance, trusted production Admin boundary, fresh live ledger/ACL reconciliation, C02 decision, C01/R6 authorization and Enforcer admission for this stack are **not passed** by these commands.
+
+The branch is pushed at the recorded final SHA. GitHub denied Draft PR creation through both GraphQL and REST with HTTP 403; the review-ready body is committed as [`DRAFT_PR_BODY.md`](DRAFT_PR_BODY.md). No hosted PR CI exists until repository PR-write access is available.
