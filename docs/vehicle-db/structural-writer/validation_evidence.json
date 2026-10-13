@@ -9,18 +9,30 @@
     "automotive/vehicle_master/tools/structural_identity_preflight.py": "829f2ed69975f2b5332c97e5a76273e88b4ed4e1582b8f58887bed902dba6447",
     "lib/canonical-write-shadow.ts": "0ab5b56ffdffd0a94b9b6545478d11c3f1b3734bdbe8c00f425366589601d914",
     "lib/vehicle-engine/structural-writer-server.ts": "03361c32a02853648a510ec036b284fc5ec3af79f1912a3f244e0ae26d270cf4",
-    "lib/vehicle-engine/structural-writer.ts": "9fb2c80e7680e795f37b43b37fead57019ada38c76d172d2861e73d5ee5db480",
+    "lib/vehicle-engine/structural-writer.ts": "9496c22df99189b6bec0471d494f97bfa92d607a00d41ee60f6b7ab990ee827e",
     "package.json": "7c698bc541ee444ea461845adab1d8b27b7209e84acc2cc0a02e9c7334e11494",
-    "scripts/check-structural-identity-writer.ts": "8a6302587dd4a90fd4f807d83f6354267a6476d6e1bd5524bf0660e1669c5315",
+    "scripts/check-structural-identity-writer.ts": "428151f96549a1387e08ff282d71c244dccdfb02a7cbe7de5974224eab5c937a",
     "scripts/structural-identity-preflight.ts": "cb0dcc0f5ec06d301acc1ae761c18ab29ff0dfab195420220d6e96471b167a4b",
-    "scripts/test-support/structural-identity-store.ts": "bbc72e0c923d296bb3f5549f6d5b99fee508ed024d892059a5866f8e5dab69ed"
+    "scripts/test-support/structural-identity-store.ts": "32c4ce035cedd3c3ed13063c5a4125785da4dda0381a2dd8320fb07efc88f51d"
   },
   "local_ci_commands": [
     {
+      "command": "npm run check:structural-identity-writer",
+      "exit_code": 0,
+      "structural_tests_passed": 35,
+      "real_preflight_regeneration_matches": true
+    },
+    {
       "command": "npm run check",
       "exit_code": 0,
-      "real_preflight_regeneration_matches": true,
-      "structural_tests_passed": 27
+      "structural_tests_passed": 35,
+      "real_preflight_regeneration_matches": true
+    },
+    {
+      "command": "python -m pytest -q tests/test_structural_identity_preflight.py tests/test_ice_filtered_identity_manifest.py tests/test_ice_scoped_crosswalk.py",
+      "cwd": "automotive/vehicle_master",
+      "exit_code": 0,
+      "passed": 24
     },
     {
       "command": "python -m compileall -q vehreg pages tests",
@@ -28,9 +40,9 @@
       "exit_code": 0
     },
     {
-      "command": "python -m pytest -q --basetemp=/workspace/.tdr-pytest-structural",
+      "command": "python -m pytest -q --basetemp=/workspace/.tdr-pytest-pr237",
       "cwd": "automotive/vehicle_master",
-      "duration_seconds": 594.54,
+      "duration_seconds": 606.56,
       "exit_code": 0,
       "passed": 1923,
       "skipped": 379,
@@ -39,21 +51,40 @@
     },
     {
       "command": "python -m vehreg market validate",
+      "cwd": "automotive/vehicle_master",
       "exit_code": 0,
-      "problems": [],
-      "valid": true
+      "valid": true,
+      "problems": []
     },
     {
       "command": "node orchestration/preflight.mjs --check-repo",
+      "exit_code": 0,
       "execution_gates_unchanged": true,
-      "exit_code": 0
+      "roadmap_version": "1.0",
+      "roadmap_sha256": "f7cf0751da5b7ff4fa36ffac79ef998cdd777ddea5155a5ef7473f1818b3b7f3"
     }
   ],
   "offline_only": true,
   "production_approved_or_servable_additions": 0,
   "real_database_integration_tests_executed": false,
-  "recorded_at_utc": "2026-10-13T10:57:46.642065+00:00",
+  "recorded_at_utc": "2026-10-13T11:31:34+00:00",
   "schema": "tdr.structural-identity-writer.local-validation.v1",
   "source_pr_head": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
-  "state_changing_sql_executed": false
+  "state_changing_sql_executed": false,
+  "scoped_link_p0_followup": {
+    "reviewed_head": "74faa2c6727183089b97163c4ad423cb550971ca",
+    "focused_regressions_passed": 35,
+    "canonical_scope_key": "RY1_and_Thai_notation_share_one_key",
+    "duplicate_notation_variants": "fail_closed",
+    "approved_target_without_frozen_metadata": "immutable",
+    "same_target_exact_provenance": "receipt_only_no_row_observation_or_audit_write",
+    "mixed_batch_rejection": "zero_domain_side_effects",
+    "frozen_nine_identity_report_sha256": "e3becefe99f284d57a62bd4f8a5c269616b6df1ddf8475d75bcd76df1e2c2943",
+    "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "frozen_source_counts_unchanged": true,
+    "production_writes": 0,
+    "migrations_applied": 0,
+    "gates_advanced": 0,
+    "independent_qa": "PENDING"
+  }
 }

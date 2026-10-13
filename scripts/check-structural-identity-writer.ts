@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { StructuralIdentityWriter, planStructuralChanges, type Batch, type Intent, type Principal,
+import { StructuralIdentityWriter, canonicalScopedLinkKey, planStructuralChanges, type Batch, type Intent, type Principal,
   type Snapshot, normalizeModelIdentity, structuralHash } from "../lib/vehicle-engine/structural-writer.ts";
 import { MemoryIdentityStore } from "./test-support/structural-identity-store.ts";
 import { enqueueCanonicalModelShadow } from "../lib/canonical-write-shadow.ts";
@@ -18,6 +18,10 @@ function setup(snapshot = base()) { const store = new MemoryIdentityStore(snapsh
 const alias = (id: string, values: string[], revision: number): Intent => ({ operation: "UPDATE_MODEL_ALIAS", canonical_id: id, aliases: values, expected_revision: revision });
 const link = (group = "jazz", scope = "RY1", target = "honda.jazz", revision = 0): Intent => ({ operation: "LINK_ICE_MODEL_GROUP_BY_REG_TYPE", canonical_id: target, model_group_id: group,
   reg_type_scope: scope, master_version: "7.0", decision_ref: "frozen-ref", source_hash: "a".repeat(64), expected_revision: revision });
+const scopedRow = (scope: string, target: string, status = "PENDING", revision = 1, sourceHash = "a".repeat(64)) => ({
+  model_group_id: "jazz", reg_type_scope: scope, master_version: "7.0", canonical_model_id: target,
+  pending_target_id: null, decision_ref: "frozen-ref", source_hash: sourceHash, status, revision,
+});
 
 await test("basic creation keeps UNKNOWN, no invented generation/spec/retail state", async () => {
   const { store, writer } = setup(); const request = batch("create", [create()], { raw_evidence: { segment: "D-segment", body_type: "Sedan" } });
@@ -148,6 +152,126 @@ await test("approved fake R6 links isolate actual class; ALL and missing source 
   assert.match(planStructuralChanges(store.state, batch("bad-source", [link("missing", "RY1")])).holds[0].detail, /UNKNOWN_OR_STALE/);
   await assert.rejects(writer.revert("admin", "links", metadata("undo-links")), /R6_AUTHORIZATION_DENIED/);
 });
+await test("RY1 to Thai scope spelling updates one physical row, revises once, retries and reverts without duplicates", async () => {
+  const s = base(); s.vehicle_models = [
+    { canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null },
+    { canonical_id: "honda.other", brand_id: "honda", name_en: "Other", slug: "other", aliases: [], revision: 1, deleted_at: null },
+  ];
+  s.ice_scopes = [
+    { model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0" },
+    { model_group_id: "jazz", reg_type_scope: "RY3", master_version: "7.0" },
+  ];
+  const untouchedRy3 = scopedRow("RY3", "honda.other");
+  s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.jazz"), untouchedRy3];
+  const { store, writer } = setup(s);
+  const request = batch("normalize-ry1", [link("jazz", "รย.1", "honda.jazz", 1)]);
+  const applied = await writer.submit("admin-r6-fixture", request, "APPLY");
+  assert.equal(applied.status, "APPLIED"); assert.equal(applied.revision_ids.length, 1);
+  assert.equal(store.state.ice_model_crosswalk_scoped.length, 2);
+  const ry1 = store.state.ice_model_crosswalk_scoped.find(r => canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === canonicalScopedLinkKey("jazz", "RY1").key)!;
+  assert.equal(ry1.reg_type_scope, "รย.1"); assert.equal(ry1.revision, 2); assert.equal(ry1.status, "APPROVED");
+  assert.equal(store.state.ice_model_crosswalk_scoped.filter(r => canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === canonicalScopedLinkKey("jazz", "RY1").key).length, 1);
+  assert.deepEqual(store.state.ice_model_crosswalk_scoped.find(r => r.reg_type_scope === "RY3"), untouchedRy3);
+  assert.equal(store.state.audit.filter(r => r.batch_id === "normalize-ry1").length, 1);
+  assert.equal((await writer.submit("admin-r6-fixture", request, "APPLY")).replay, true);
+  assert.equal(store.state.audit.filter(r => r.batch_id === "normalize-ry1").length, 1);
+  await writer.revert("admin-r6-fixture", "normalize-ry1", metadata("undo-normalize-ry1"));
+  assert.equal(store.state.ice_model_crosswalk_scoped.length, 2);
+  assert.equal(store.state.ice_model_crosswalk_scoped.filter(r => canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === canonicalScopedLinkKey("jazz", "RY1").key).length, 1);
+  assert.equal(store.state.ice_model_crosswalk_scoped.find(r => canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === canonicalScopedLinkKey("jazz", "RY1").key)!.reg_type_scope, "RY1");
+  assert.equal(store.state.ice_model_crosswalk_scoped.find(r => r.reg_type_scope === "RY3")!.canonical_model_id, "honda.other");
+});
+await test("Thai to RY1 reverse spelling matches and writes the same canonical class", async () => {
+  const s = base(); s.vehicle_models = [{ canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null }];
+  s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "รย.1", master_version: "7.0" }];
+  s.ice_model_crosswalk_scoped = [scopedRow("รย.1", "honda.jazz")];
+  const { store, writer } = setup(s);
+  await writer.submit("admin-r6-fixture", batch("reverse-normalize", [link("jazz", "RY1", "honda.jazz", 1)]), "APPLY");
+  assert.equal(store.state.ice_model_crosswalk_scoped.length, 1);
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].reg_type_scope, "รย.1");
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].revision, 2);
+});
+await test("late scoped-link write failure rolls back a mixed batch with one normalized physical key", async () => {
+  const s = base(); s.vehicle_models = [{ canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null }];
+  s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0" }];
+  s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.jazz")];
+  const { store, writer } = setup(s); store.failOnWrite = 2; const before = structuralHash(store.state);
+  const newModel = create("honda.civic", "Civic");
+  const newLink = link("jazz", "รย.1", "honda.civic", 1);
+  await assert.rejects(writer.submit("admin-r6-fixture", batch("rollback-scope-update", [newModel, newLink]), "APPLY"), /INJECTED_TRANSACTION_FAILURE/);
+  assert.equal(structuralHash(store.state), before);
+  assert.equal(store.state.ice_model_crosswalk_scoped.length, 1);
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].reg_type_scope, "RY1");
+});
+await test("duplicate physical scope rows under RY1/Thai variants fail closed", async () => {
+  const s = base(); s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.jazz"), scopedRow("รย.1", "honda.other")];
+  assert.throws(() => planStructuralChanges(s, batch("duplicate-scope", [link()])), /DUPLICATE_SCOPED_LINK_KEY/);
+  const { store, writer } = setup(s); const before = structuralHash(store.state);
+  await assert.rejects(writer.submit("admin-r6-fixture", batch("duplicate-scope-apply", [link()]), "APPLY"), /DUPLICATE_SCOPED_LINK_KEY/);
+  assert.equal(structuralHash(store.state), before);
+});
+await test("approved target without frozen metadata is immutable and rejects a mixed create batch atomically", async () => {
+  const s = base(); s.vehicle_models = [
+    { canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null },
+    { canonical_id: "honda.other", brand_id: "honda", name_en: "Other", slug: "other", aliases: [], revision: 1, deleted_at: null },
+  ];
+  s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0" }];
+  s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.jazz", "APPROVED", 4)];
+  const { store, writer } = setup(s); const before = structuralHash(store.state);
+  const changed = link("jazz", "RY1", "honda.other", 4);
+  await assert.rejects(writer.submit("admin-r6-fixture", batch("approved-replace", [create("honda.civic", "Civic"), changed]), "APPLY"), /APPROVED_TARGET_IMMUTABLE/);
+  assert.equal(structuralHash(store.state), before);
+  assert.equal(store.state.vehicle_models.some(row => row.canonical_id === "honda.civic"), false);
+  assert.equal(store.state.observations.length, 0); assert.equal(store.state.audit.length, 0); assert.deepEqual(store.state.receipts, {});
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].canonical_model_id, "honda.jazz");
+});
+await test("same-target approved provenance is a no-op; provenance changes remain held", async () => {
+  const s = base(); s.vehicle_models = [{ canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null }];
+  s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0" }];
+  s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.jazz", "APPROVED", 4)];
+  const { store, writer } = setup(s);
+  const noOp = await writer.submit("admin-r6-fixture", batch("same-approved-target", [link("jazz", "RY1", "honda.jazz", 4)]), "APPLY");
+  assert.equal(noOp.status, "APPLIED"); assert.equal(noOp.plan.changes.length, 0);
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].revision, 4);
+  assert.equal(store.state.audit.length, 0); assert.equal(store.state.observations.length, 0);
+  assert.equal((await writer.submit("admin-r6-fixture", batch("same-approved-target", [link("jazz", "RY1", "honda.jazz", 4)]), "APPLY")).replay, true);
+  const changedUnderSameKey = batch("same-approved-target", [link("jazz", "RY1", "honda.other", 4)]);
+  await assert.rejects(writer.submit("admin-r6-fixture", changedUnderSameKey, "APPLY"), /IDEMPOTENCY_KEY_REUSED/);
+  await writer.submit("admin-r6-fixture", batch("same-approved-target-again", [link("jazz", "RY1", "honda.jazz", 4)]), "APPLY");
+  assert.equal(store.state.audit.length, 0); assert.equal(store.state.observations.length, 0);
+  const wrongSource = link("jazz", "RY1", "honda.jazz", 4); wrongSource.source_hash = "b".repeat(64);
+  await assert.rejects(writer.submit("admin-r6-fixture", batch("changed-approved-source", [wrongSource]), "APPLY"), /ICE_SOURCE_HASH_CONFLICT|IMMUTABLE_SCOPE_PROVENANCE_CONFLICT/);
+  assert.equal(store.state.audit.length, 0); assert.equal(store.state.observations.length, 0);
+});
+await test("legacy admin-protected target cannot be replaced", async () => {
+  const s = base(); s.vehicle_models = [
+    { canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null },
+    { canonical_id: "honda.other", brand_id: "honda", name_en: "Other", slug: "other", aliases: [], revision: 1, deleted_at: null },
+  ];
+  s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0" }];
+  s.ice_model_crosswalk_scoped = [{ ...scopedRow("RY1", "honda.jazz", "PENDING", 2), authority: "ADMIN" }];
+  const { writer } = setup(s);
+  await assert.rejects(writer.submit("admin-r6-fixture", batch("admin-protected-replace", [link("jazz", "RY1", "honda.other", 2)]), "APPLY"), /APPROVED_TARGET_IMMUTABLE/);
+});
+await test("revert cannot use historical audit to rewrite a previously approved scoped target", async () => {
+  const s = base(); s.vehicle_models = [
+    { canonical_id: "honda.jazz", brand_id: "honda", name_en: "Jazz", slug: "jazz", aliases: [], revision: 1, deleted_at: null },
+    { canonical_id: "honda.other", brand_id: "honda", name_en: "Other", slug: "other", aliases: [], revision: 1, deleted_at: null },
+  ];
+  s.ice_model_crosswalk_scoped = [scopedRow("RY1", "honda.other", "APPROVED", 2)];
+  const { store, writer } = setup(s);
+  const before = scopedRow("RY1", "honda.jazz", "APPROVED", 1);
+  const after = scopedRow("RY1", "honda.other", "APPROVED", 2);
+  const key = canonicalScopedLinkKey("jazz", "RY1").key;
+  store.state.audit.push({ entity_type: "ice_model_crosswalk_scoped", entity_id: key, field: "LINK", before, after,
+    before_revision: 1, after_revision: 2, id: "legacy-rewrite", revision_id: "legacy-rewrite", topic: "catalog",
+    actor: "old-admin", actor_kind: "ADMIN", batch_id: "legacy-rewrite-batch", before_hash: structuralHash(before),
+    after_hash: structuralHash(after), source: "fixture", reason: "legacy fixture", reverts_id: null });
+  const snapshotBefore = structuralHash(store.state);
+  await assert.rejects(writer.revert("admin-r6-fixture", "legacy-rewrite-batch", metadata("unsafe-legacy-revert")), /APPROVED_TARGET_IMMUTABLE/);
+  assert.equal(structuralHash(store.state), snapshotBefore);
+  assert.equal(store.state.ice_model_crosswalk_scoped[0].canonical_model_id, "honda.other");
+});
 await test("frozen owner scoped target/exclusion cannot be overwritten", async () => {
   const s = base(); s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0", frozen_status: "EXCLUDED", decision_ref: "frozen-ref" }];
   const { store, writer } = setup(s); await writer.submit("admin", batch("models", [create()]), "APPLY");
@@ -157,7 +281,7 @@ await test("revert cannot restore an old mapping that contradicts a frozen owner
   const s = base(); s.ice_scopes = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0", frozen_status: "APPROVED", frozen_target_id: "honda.jazz", decision_ref: "frozen-ref" }];
   const { store, writer } = setup(s);
   await writer.submit("admin", batch("two-models", [create(), create("honda.other", "Other")]), "APPLY");
-  store.state.ice_model_crosswalk_scoped = [{ model_group_id: "jazz", reg_type_scope: "รย.1", master_version: "7.0", canonical_model_id: "honda.other", status: "APPROVED", decision_ref: "frozen-ref", source_hash: "a".repeat(64), revision: 1 }];
+  store.state.ice_model_crosswalk_scoped = [{ model_group_id: "jazz", reg_type_scope: "RY1", master_version: "7.0", canonical_model_id: "honda.other", status: "PENDING", decision_ref: "frozen-ref", source_hash: "a".repeat(64), revision: 1 }];
   await writer.submit("admin-r6-fixture", batch("repair-frozen", [link("jazz", "RY1", "honda.jazz", 1)]), "APPLY");
   await assert.rejects(writer.revert("admin-r6-fixture", "repair-frozen", metadata("unsafe-undo")), /FROZEN_OWNER_REVERT_CONFLICT/);
   assert.equal(store.state.ice_model_crosswalk_scoped[0].canonical_model_id, "honda.jazz");

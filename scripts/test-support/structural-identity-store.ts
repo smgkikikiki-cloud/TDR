@@ -1,5 +1,5 @@
 /** Test double only. Never a file-backed or production Vehicle Master. */
-import { structuralHash, type Entity, type Row, type Proposal, type Revision, type Snapshot,
+import { canonicalScopedLinkKey, structuralHash, type Entity, type Row, type Proposal, type Revision, type Snapshot,
   type Transaction, type TransactionalIdentityStore, type Result } from "../../lib/vehicle-engine/structural-writer.ts";
 
 type State = Snapshot & { audit: Revision[]; observations: Row[]; inbox: Proposal[]; receipts: Record<string, { hash: string; result: Result }> };
@@ -17,8 +17,13 @@ export class MemoryIdentityStore implements TransactionalIdentityStore {
         write: (entity: Entity, id: string, row: Row) => {
           if (++writes === this.failOnWrite) throw new Error("INJECTED_TRANSACTION_FAILURE");
           const list: Row[] = next[entity];
-          const index = list.findIndex(r => entity === "ice_model_crosswalk_scoped" ?
-            structuralHash([r.model_group_id, r.reg_type_scope]) === structuralHash([row.model_group_id, row.reg_type_scope]) : r.canonical_id === id);
+          const wanted = entity === "ice_model_crosswalk_scoped" ? canonicalScopedLinkKey(row.model_group_id, row.reg_type_scope).key : null;
+          const matches = list.map((r, index) => ({ r, index })).filter(({ r }) => entity === "ice_model_crosswalk_scoped" ?
+            canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === wanted : r.canonical_id === id);
+          if (entity === "ice_model_crosswalk_scoped" && matches.length > 1) {
+            throw new Error("DUPLICATE_SCOPED_LINK_KEY:" + wanted);
+          }
+          const index = matches[0]?.index ?? -1;
           if (index < 0) list.push(structuredClone(row)); else list[index] = structuredClone(row);
         },
         appendRevision: revision => {

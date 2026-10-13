@@ -54,7 +54,7 @@ python -m pytest -q automotive/vehicle_master/tests/test_structural_identity_pre
 
 The focused TypeScript cases cover success, duplicate/natural-name/alias/slug protection, FK, uncertain trim evidence, spoofed/unauthorized AI, stale revision, idempotency/concurrent create, atomic rollback, audit/revert, dependent/stale revert, class isolation/ALL rejection, frozen owner exclusions, R6 denial, TDR-versus-Ice authority, parent alias conflict, fresh approval/replay and decided-source suppression. The Python tests replay real M7.0 reconciliation, frozen decisions, current catalog alias evidence and the documented schema blockers. `npm run check` includes these structural tests and a no-write regeneration comparison of the real preflight report; no CI service calls are added.
 
-Local full CI evidence is recorded in `structural-writer/validation_evidence.json`: 27 structural TypeScript tests; 1,923 Python tests passed, 379 skipped and 4,357 subtests; full npm check, Python compile, market validation and roadmap repository preflight pass. GitHub-hosted CI status and real database integration are not verified.
+Local full CI evidence is recorded in `structural-writer/validation_evidence.json`: 35 structural TypeScript tests; 1,923 Python tests passed, 379 skipped and 4,357 subtests; full npm check, Python compile, market validation and roadmap repository preflight pass. GitHub-hosted CI status and real database integration are not verified.
 
 ## Exact next dependency
 
@@ -63,4 +63,8 @@ Local full CI evidence is recorded in `structural-writer/validation_evidence.jso
 
 ## Delivery status
 
-The separate development branch is pushed. Draft PR creation was attempted with both GitHub GraphQL and REST endpoints; both returned HTTP 403. No new PR object/URL or GitHub-hosted CI result is claimed. The review-ready description is preserved in `structural-writer/DRAFT_PR_BODY.md`; `delivery_status.json` records the intended stacked base, source/implementation SHA and access blocker. Independent QA can review the pushed branch; API access must be restored to create the Draft PR. PR #235 remains untouched.
+The existing Draft PR #237 is on the separate development branch and stacked on Draft PR #235. Its public PR page and review comments are readable, while GitHub API endpoints return HTTP 403 in this environment. This follow-up preserves the revised review description in `structural-writer/DRAFT_PR_BODY.md`; the remote PR body update is attempted after pushing. GitHub-hosted CI status remains unverified. PR #235 remains untouched.
+
+## PR #237 independent QA correction
+
+One exported `canonicalScopedLinkKey()` now governs planner, fake-store write, duplicate detection, revision/revert lookup and fixtures. RY1 and รย.1 therefore address one physical scope row; duplicate spelling variants in an initial snapshot fail closed. Normal LINK cannot replace an existing APPROVED or admin-protected target even if `ice_scopes.frozen_status` is absent. Exact-provenance same-target retries perform no writes; provenance conflicts, unsafe historical reverts and R6-denied operations remain blocked. The pinned nine-identity preflight and its hashes are unchanged.

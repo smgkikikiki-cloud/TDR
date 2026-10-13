@@ -66,7 +66,19 @@ const clone = <T>(value: T): T => structuredClone(value);
 const segmentId = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const token = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
 const active = (row: Row): boolean => !row.deleted_at;
-const scopeKey = (group: string, scope: string): string => canonicalJson([group, normalizeIceRegType(scope)]);
+/** One canonical physical key for the (Ice model group, registration class).
+ * Callers retain the canonical class from this result rather than normalizing it
+ * separately, so planner, store, audit and revert use the same representation. */
+export function canonicalScopedLinkKey(model_group_id: string, reg_type_scope: string): {
+  key: string; model_group_id: string; reg_type_scope: string;
+} {
+  if (typeof model_group_id !== "string" || !model_group_id.trim()) reject("INVALID_SCOPED_LINK_GROUP");
+  const scope = normalizeIceRegType(reg_type_scope);
+  return { key: canonicalJson([model_group_id, scope]), model_group_id, reg_type_scope: scope };
+}
+function adminProtectedScopedLink(row: Row): boolean {
+  return row.authority === "ADMIN" || row.actor_kind === "ADMIN" || row.admin_locked === true || row.locked === true;
+}
 export function normalizeModelIdentity(name: string, brand = ""): string {
   let text = name.normalize("NFKC").trim().toLocaleLowerCase("en");
   const prefix = brand.normalize("NFKC").trim().toLocaleLowerCase("en");
@@ -123,6 +135,12 @@ function assertUniqueTouched(snapshot: Snapshot, changes: Change[]): void {
 /** Deterministic planning. Mutates only cloned snapshots; no apply authority. */
 export function planStructuralChanges(input: Snapshot, batch: Batch): Plan {
   validateBatch(batch);
+  const scopedKeys = new Set<string>();
+  for (const row of input.ice_model_crosswalk_scoped) {
+    const key = canonicalScopedLinkKey(row.model_group_id, row.reg_type_scope).key;
+    if (scopedKeys.has(key)) reject("DUPLICATE_SCOPED_LINK_KEY:" + key);
+    scopedKeys.add(key);
+  }
   const state = clone(input);
   const changes: Change[] = [], holds: Hold[] = [];
   const seen = new Set<string>();
@@ -142,12 +160,13 @@ export function planStructuralChanges(input: Snapshot, batch: Batch): Plan {
       unknownFields(i, fields[i.operation], "UNKNOWN_INTENT_FIELD");
       const entity: Entity = i.operation === "CREATE_BRAND" ? "vehicle_brands" :
         i.operation === "LINK_ICE_MODEL_GROUP_BY_REG_TYPE" ? "ice_model_crosswalk_scoped" : "vehicle_models";
-      const id = entity === "ice_model_crosswalk_scoped" ? scopeKey(i.model_group_id || "", i.reg_type_scope || "") : i.canonical_id || "";
+      const scopedTarget = entity === "ice_model_crosswalk_scoped" ? canonicalScopedLinkKey(i.model_group_id || "", i.reg_type_scope || "") : null;
+      const id = scopedTarget?.key ?? i.canonical_id ?? "";
       if (seen.has(entity + ":" + id)) reject("DUPLICATE_TARGET_IN_BATCH");
       seen.add(entity + ":" + id);
       const collection: Row[] = state[entity];
       const before = collection.find(row => entity === "ice_model_crosswalk_scoped" ?
-        scopeKey(row.model_group_id, row.reg_type_scope) === id : row.canonical_id === id) ?? null;
+        canonicalScopedLinkKey(row.model_group_id, row.reg_type_scope).key === id : row.canonical_id === id) ?? null;
       if ((before ? before.revision : 0) !== i.expected_revision) reject("STALE_REVISION_OR_DUPLICATE_ID");
       let after: Row;
       if (i.operation === "CREATE_BRAND" || i.operation === "CREATE_MODEL_BASIC") {
@@ -194,15 +213,19 @@ export function planStructuralChanges(input: Snapshot, batch: Batch): Plan {
         after = { ...clone(before), aliases: aliases(i.aliases), revision: before.revision + 1,
           payload: { ...clone(before.payload || {}), aliases: aliases(i.aliases) } };
       } else {
-        const scope = normalizeIceRegType(i.reg_type_scope || "");
+        const scope = scopedTarget!.reg_type_scope;
         if (scope === "ALL") reject("CLASS_SCOPE_REQUIRED");
-        const source = state.ice_scopes.find(s => scopeKey(s.model_group_id, s.reg_type_scope) === id && s.master_version === i.master_version);
+        const source = state.ice_scopes.find(s => canonicalScopedLinkKey(s.model_group_id, s.reg_type_scope).key === id && s.master_version === i.master_version);
         if (!source || !i.model_group_id || !i.decision_ref || !/^[a-f0-9]{64}$/.test(i.source_hash || "")) reject("UNKNOWN_OR_STALE_ICE_SOURCE_SCOPE");
         if (!state.vehicle_models.some(m => m.canonical_id === i.canonical_id && active(m))) reject("MISSING_MODEL_FK");
+        if (before && (before.status === "APPROVED" || adminProtectedScopedLink(before))
+            && before.canonical_model_id !== i.canonical_id) reject("APPROVED_TARGET_IMMUTABLE");
         if (source.source_hash && source.source_hash !== i.source_hash) reject("ICE_SOURCE_HASH_CONFLICT");
         if (source.decision_ref && source.decision_ref !== i.decision_ref) reject("FROZEN_OWNER_DECISION_REF_CONFLICT");
         if (source.frozen_status === "EXCLUDED" || (source.frozen_status === "APPROVED" && source.frozen_target_id !== i.canonical_id)) reject("FROZEN_OWNER_DECISION_CONFLICT");
         if (before && (before.master_version !== i.master_version || before.decision_ref !== i.decision_ref || before.source_hash !== i.source_hash)) reject("IMMUTABLE_SCOPE_PROVENANCE_CONFLICT");
+        if (before && before.canonical_model_id === i.canonical_id
+            && (before.status === "APPROVED" || adminProtectedScopedLink(before))) continue;
         after = { ...(before || {}), model_group_id: i.model_group_id, reg_type_scope: scope, master_version: i.master_version,
           canonical_model_id: i.canonical_id, pending_target_id: null, decision_ref: i.decision_ref, source_hash: i.source_hash,
           status: "APPROVED", revision: (before?.revision || 0) + 1 };
@@ -264,12 +287,18 @@ export class StructuralIdentityWriter {
     const sourceHash = structuralHash({ source_ref: batch.source_ref, raw_evidence: batch.raw_evidence ?? null,
       intents: batch.intents.map(({ expected_revision: _revision, ...intent }) => intent) });
     if (mode === "APPLY" && plan.holds.length) reject("ATOMIC_VALIDATION_REJECTED:" + canonicalJson(plan.holds));
+    const result: Result = { status: plan.holds.length ? "HELD" : mode === "APPLY" ? "APPLIED" : "PROPOSED",
+      batch_id: batch.batch_id, revision_ids: [], plan, replay: false };
+    if (mode === "APPLY" && !plan.holds.length && !plan.changes.length) {
+      // Record only the idempotency receipt: no master row, observation or audit
+      // revision is written for an exact same-target approved-link no-op.
+      tx.saveReceipt(batch.batch_id, hash, clone(result));
+      return result;
+    }
     tx.appendObservation({ id: structuralHash([batch.batch_id, p.actor_id, "observation"]), run_id: batch.batch_id,
       source_kind: p.actor_kind === "ADMIN" ? "ADMIN_PANEL" : p.actor_kind === "EXCEL" ? "EXCEL" : p.actor_kind === "OFFICIAL" ? "SCRAPE" : "AGENT",
       field_key: "STRUCTURAL_IDENTITY", raw: clone(batch), source_url: batch.source_ref, content_hash: sourceHash,
       observed_at: batch.observed_at, actor: p.actor_id, actor_kind: p.actor_kind });
-    const result: Result = { status: plan.holds.length ? "HELD" : mode === "APPLY" ? "APPLIED" : "PROPOSED",
-      batch_id: batch.batch_id, revision_ids: [], plan, replay: false };
     if (mode === "PROPOSE") {
       const card = tx.propose({ id: structuralHash(["STRUCTURE", batch.batch_id]), kind: "STRUCTURE", status: "OPEN",
         dedupe_key: structuralHash(["STRUCTURE", batch.intents.map(i => [i.operation, i.canonical_id, i.model_group_id, i.reg_type_scope])]),
@@ -320,8 +349,11 @@ export class StructuralIdentityWriter {
       const changes: Change[] = [];
       for (const entry of [...entries].reverse()) {
         const row = snapshot[entry.entity_type].find(r => entry.entity_type === "ice_model_crosswalk_scoped" ?
-          scopeKey(r.model_group_id, r.reg_type_scope) === entry.entity_id : r.canonical_id === entry.entity_id);
+          canonicalScopedLinkKey(r.model_group_id, r.reg_type_scope).key === entry.entity_id : r.canonical_id === entry.entity_id);
         if (!row || row.revision !== entry.after_revision || structuralHash(row) !== entry.after_hash) reject("STALE_REVERT");
+        if (entry.entity_type === "ice_model_crosswalk_scoped" && entry.before
+            && (entry.before.status === "APPROVED" || adminProtectedScopedLink(entry.before))
+            && entry.before.canonical_model_id !== entry.after.canonical_model_id) reject("APPROVED_TARGET_IMMUTABLE");
         const after = entry.before ? clone(entry.before) : entry.entity_type === "ice_model_crosswalk_scoped" ?
           { ...clone(row), status: "PENDING", canonical_model_id: null, pending_target_id: row.canonical_model_id } :
           { ...clone(row), deleted_at: batch.observed_at };
@@ -335,11 +367,11 @@ export class StructuralIdentityWriter {
       for (const change of changes) {
         if (change.entity_type === "vehicle_models" && active(change.after)
             && !snapshot.vehicle_brands.some(b => b.canonical_id === change.after.brand_id && active(b))) reject("REVERT_MISSING_ACTIVE_BRAND_FK");
-        if (change.entity_type === "ice_model_crosswalk_scoped" && change.after.status === "APPROVED") {
+        if (change.entity_type === "ice_model_crosswalk_scoped") {
           const link = change.after;
-          if (!snapshot.vehicle_models.some(m => m.canonical_id === link.canonical_model_id && active(m))) reject("REVERT_MISSING_ACTIVE_MODEL_FK");
-          const source = snapshot.ice_scopes.find(s => scopeKey(s.model_group_id, s.reg_type_scope) === change.entity_id);
+          const source = snapshot.ice_scopes.find(s => canonicalScopedLinkKey(s.model_group_id, s.reg_type_scope).key === change.entity_id);
           if (!source || source.frozen_status === "EXCLUDED" || (source.frozen_status === "APPROVED" && source.frozen_target_id !== link.canonical_model_id)) reject("FROZEN_OWNER_REVERT_CONFLICT");
+          if (link.status === "APPROVED" && !snapshot.vehicle_models.some(m => m.canonical_id === link.canonical_model_id && active(m))) reject("REVERT_MISSING_ACTIVE_MODEL_FK");
         }
         if (!active(change.after) && change.entity_type === "vehicle_models" && snapshot.ice_model_crosswalk_scoped.some(l => l.canonical_model_id === change.entity_id && l.status === "APPROVED")) reject("REVERT_HAS_ACTIVE_ICE_DEPENDENT");
         if (!active(change.after) && change.entity_type === "vehicle_brands" && snapshot.vehicle_models.some(m => m.brand_id === change.entity_id && active(m))) reject("REVERT_HAS_ACTIVE_MODEL_DEPENDENT");
