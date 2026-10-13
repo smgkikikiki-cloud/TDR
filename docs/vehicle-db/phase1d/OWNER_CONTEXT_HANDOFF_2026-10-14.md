@@ -1,5 +1,11 @@
 # TDR Vehicle Master / Ice Identity — Owner context handoff
 
+## Latest next action: Full-catalog PG rehearsal task packet (2026-10-14)
+
+**Issue #244 created / branch ready:** https://github.com/smgkikikiki-cloud/TDR/issues/244 — `codex/vm-phase1d-full-catalog-eight-20261014`, based on `47825542c3fd0b536e49bea173b0e628c9e06517` from Draft PR #243. This is the **same Phase 1D feature's next acceptance** (no new writer), not an authorization to deploy. The reviewed owner-provided backup is ready; a compact **private** ZIP containing only the latest validated GZIP (SHA256 `8b7dc88cf42c27516ec08ddf170173feff85891ac655caa9a6f3eb5511d8b962`) and sanitized manifest was produced for manual transfer to Codex's own private workspace. **Do NOT upload it to GitHub** or assume a GitHub-connected agent can see the private ChatGPT `/mnt/data` file automatically.
+
+The current ChatGPT runtime was checked and has no `docker`, `podman`, `postgres`, `initdb` or `psql`; DNS/network apt installs fail. Thus **NO full 28,319-row real PostgreSQL replay has run** in this environment. Owner's next UI action: attach the private latest-backup package to Codex session and instruct it to implement **Issue #244 only** using its local network-isolated Docker PostgreSQL. Original 61 SQL cases were tested with a Toyota fixture only and remain separate from the required new **full** catalog test. The acceptance gates ADMIN_AUTH / C02 MIGRATION / ENFORCER and actual Production write remain blocked regardless of isolated rehearsal result. Stop for independent QA of Draft PR on the new branch. No automatic Codex session has been launched.
+
 ## Latest update: owner backup uploaded and independently verified — 2026-10-14
 
 The owner **uploaded `vehicle-master.zip`**; no further operator/download request is necessary to validate its contents. Independent reviewer read all **10** contained `.json.gz` backups. All 10 have valid recomputed canonical payload SHA256, 15 allowlisted tables, matching declared vs actual row counts and **the same canonical payload**. The latest 2026-10-13 backup contains **28,319 records**; its payload SHA256 is `c51c20966be5f49dd0fe9a953793e666f6becf0f4d27a986158b6805e7659dad`. The uploaded ZIP SHA256 is `e5f6ac00b221aa43ca15f1cf85f76f65dac3df4e9750cac930705922f2c35a46`.
