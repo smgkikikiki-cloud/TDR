@@ -1,0 +1,28 @@
+{
+  "source_pr": 235,
+  "source_pr_unchanged_head": "b5a6bcff2870afb8d81d672dd284e7935e3cb4ac",
+  "tracking_issue": 236,
+  "development_branch": "codex/vm-structural-identity-writer-20261013",
+  "intended_pr_base": "codex/r6-m7-real-acceptance-20261013",
+  "implementation_commit": "f7a0db98870443d1b05c4ca25d6d50e0bd79a8ae",
+  "cleanup_commit": "bf70150ab6d0ea596ab727ca3d536e384c9fe173",
+  "branch_push_succeeded": true,
+  "draft_pr_requested": true,
+  "draft_pr_created": false,
+  "pr_url": null,
+  "creation_attempts": [
+    {
+      "endpoint": "GitHub GraphQL",
+      "result": "HTTP 403 Forbidden"
+    },
+    {
+      "endpoint": "GitHub REST POST /repos/smgkikikiki-cloud/TDR/pulls",
+      "result": "HTTP 403 Forbidden"
+    }
+  ],
+  "independent_qa_status": "PENDING",
+  "production_writes": 0,
+  "migrations_applied": 0,
+  "gates_advanced": 0,
+  "merge_or_deployment": false
+}

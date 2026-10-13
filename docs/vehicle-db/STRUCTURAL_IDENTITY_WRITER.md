@@ -59,3 +59,8 @@ Local full CI evidence is recorded in `structural-writer/validation_evidence.jso
 ## Exact next dependency
 
 [Database integration contract and activation checklist](STRUCTURAL_IDENTITY_WRITER_DB_CONTRACT.md) identifies the v57/v59 BASIC identity and provenance constraints, v66 structural observation field extension, existing audit/inbox reuse, normalized-token concurrency protection, authenticated structural RPC/adapter, and registration-class scoped schema/CAS. That design is unnumbered and unapplied. Independent QA, C02 migration reconciliation and explicit production authorization precede integration; C01/R6 remains a separate link gate. Fake-store success proves the offline behavior, not acceptance by the current database schema.
+
+
+## Delivery status
+
+The separate development branch is pushed. Draft PR creation was attempted with both GitHub GraphQL and REST endpoints; both returned HTTP 403. No new PR object/URL or GitHub-hosted CI result is claimed. The review-ready description is preserved in `structural-writer/DRAFT_PR_BODY.md`; `delivery_status.json` records the intended stacked base, source/implementation SHA and access blocker. Independent QA can review the pushed branch; API access must be restored to create the Draft PR. PR #235 remains untouched.
