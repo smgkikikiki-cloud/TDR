@@ -1,0 +1,135 @@
+{
+  "filters": {
+    "eligible_groups": 342,
+    "eligible_registrations": 4123704,
+    "excluded_brand_groups": 43,
+    "excluded_brand_registrations": 1141,
+    "excluded_brands": [
+      "ALFA ROMEO",
+      "DAIHATSU",
+      "FERRARI",
+      "LAMBORGHINI",
+      "LANCIA"
+    ],
+    "excluded_group_overlap_counts": {
+      "all_three": 0,
+      "brand_and_owner": 0,
+      "low_and_brand": 37,
+      "low_and_owner": 52
+    },
+    "low_volume_groups": 846,
+    "low_volume_registrations": 3644,
+    "minimum_registrations_inclusive": 40,
+    "preserved_owner_excluded_groups": 58,
+    "preserved_owner_excluded_registrations": 13901,
+    "registration_reconciliation": {
+      "effective": 4123704,
+      "reconciles": true,
+      "removed": 18283,
+      "source": 4141987
+    },
+    "unique_excluded_groups": 858,
+    "unique_excluded_registrations": 18283
+  },
+  "frozen_owner_decisions": {
+    "action_counts": {
+      "KEEP_EXISTING_AUTO": 63,
+      "OWNER_CREATE_IDENTITY": 38,
+      "OWNER_EXCLUDE_FROM_COUNT": 51,
+      "OWNER_LINK_EXISTING": 92
+    },
+    "action_disposition_target_and_registration_units_verified": true,
+    "decisions_changed": 0,
+    "decisions_reopened": 0,
+    "ledger_decisions_exercised": 244,
+    "mismatches": 0,
+    "original_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "total": 244
+  },
+  "governance_provenance": {
+    "ice_market_roadmap_commit": "847fef43",
+    "issue_228_recovery_pr_head": "872a1117b163feac42e0ce55314cd7a7408896b5",
+    "portfolio_roadmap": {
+      "commit": "42be6b6a803727086b404b2cb46f75593bb2c1d4",
+      "version": "approved v1.0"
+    },
+    "roadmap_base_main": "c2715cbee494ae076b2582ef99f2bbc590b5dd99",
+    "scoped_resolver_pr_head": "3050beb1cdad4530808177de7b9d66abb21364f3",
+    "vehicle_db_v3_current_commit": "a7007a7c2d43222d1d4d35342f891c832cbcea77"
+  },
+  "identity_classification": {
+    "crosswalk_coverage": {
+      "classified_identity_pct": 68.062911,
+      "classified_with_existing_or_new_identity_registrations": 2806713,
+      "effective_denominator": 4123704,
+      "existing_identity_pct": 65.949035,
+      "existing_identity_registrations": 2719543,
+      "unresolved_registrations": 1316991
+    },
+    "eligible_groups_reconciled": true,
+    "eligible_registrations_reconciled": true,
+    "existing_link_scope_rows": 395,
+    "group_counts": {
+      "MATCH_EXISTING": 247,
+      "NEW_BASIC_IDENTITY_NEEDED": 58,
+      "UNRESOLVED_EVIDENCE": 37
+    },
+    "registration_units": {
+      "MATCH_EXISTING": 2719543,
+      "NEW_BASIC_IDENTITY_NEEDED": 87170,
+      "UNRESOLVED_EVIDENCE": 1316991
+    },
+    "unresolved_scope_rows": 59
+  },
+  "identity_proposals": {
+    "candidate_proposal_count_after_catalog_collision_checks": 58,
+    "candidate_registration_units": 87170,
+    "candidate_target_conflicts_requiring_resolution": 1,
+    "duplicate_canonical_targets_after_coalescing": 0,
+    "filtered_shadow_identity_groups": 61,
+    "filtered_shadow_identity_units": 97587,
+    "proposal_authority": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+    "unresolved_candidate_targets": {
+      "bmw.530e": "OWNER_NEW_IDENTITY_CONFLICTS_WITH_EXISTING_ALIAS"
+    }
+  },
+  "no_database_write_or_writer_invocation": true,
+  "offline_only": true,
+  "output_files": [
+    "eligible_model_groups.csv",
+    "excluded_model_groups.csv",
+    "existing_identity_links.csv",
+    "new_basic_identity_proposals.csv",
+    "unresolved_identity_evidence.csv"
+  ],
+  "output_sha256": {
+    "eligible_model_groups.csv": "76a94f11bf05d0717b3c0a1f4b965717df8fe259cf3b363c4e7d13342d69139a",
+    "excluded_model_groups.csv": "bf3efe3efd5ff09f4fc7bad7db4938bce7cc998945c8ad0cd45989637e5f9a8a",
+    "existing_identity_links.csv": "68b841b898d179d5b8d86aae855ea9d3e89d903f4ed36e76a7a05dd27f2cbcbc",
+    "new_basic_identity_proposals.csv": "9e939b24e60f453f5ffc734a0d7f557f2c0b17bd87c3fc9164c15b9e5396f9b2",
+    "unresolved_identity_evidence.csv": "53c3bb45fe4cadceb2a2984ddec65533fdfb2ece81bb86b623fc2e4bb7b7f63a"
+  },
+  "schema": "tdr.ice-filtered-identity-manifest.qa.v1",
+  "source": {
+    "master_version": "7.0",
+    "model_groups": 1200,
+    "package": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+    "raw_registration_rows": 262985,
+    "registrations": 4141987,
+    "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+  },
+  "source_artifacts": {
+    "original_owner_overlay.csv": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "owner_decision_ledger_244.csv": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "owner_identity_targets.json": "d1cd1319d737496362fecfd21176b872ec7a632519e501e8f3dca2b15383010b",
+    "shadow_crosswalk_rows.csv": "9d46cad597dba3bbe83369bd9f95cfe6d10b3f6d19e0f46b69e70f10bfab5450"
+  },
+  "vehicle_master_snapshot": {
+    "brands": 62,
+    "captured_at_utc": "2026-10-13T06:54:38.484014+00:00",
+    "generations": 326,
+    "models": 323,
+    "models_sha256": "c95c99e3f552cc384b083dac7d69b5625032ac73e6bc40d0bc9e086d8367ea64",
+    "read_only_select_snapshot": true
+  }
+}
