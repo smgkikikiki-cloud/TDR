@@ -134,7 +134,7 @@ function stripNulls(row: Row): Row {
 
 // --- prior sightings (for the "same value in two runs" rule and the 7-day rule) ---------------------------------------
 
-export type History = { prior_amounts: Map<string, number>; last_seen: Map<string, string>; first_observed: string | null };
+export type History = { prior_amounts: Map<string, number>; last_seen: Map<string, string>; first_observed: string | null; read_dates: string[] };
 
 /** `minAgeHours`: a sighting counts as "the previous run" only if it is at least this old (two reads minutes apart are one sighting). */
 export async function loadHistory(rest: Rest, modelId: string, now: Date, minAgeHours = 6): Promise<History> {
@@ -144,7 +144,9 @@ export async function loadHistory(rest: Rest, modelId: string, now: Date, minAge
   const prior = new Map<string, number>();
   const lastSeen = new Map<string, string>();
   let first: string | null = null;
+  const readDates = new Set<string>();
   for (const r of rows) {
+    readDates.add(String(r.observed_at).slice(0, 10));
     if (!first || r.observed_at < first) first = r.observed_at;
     if (!r.trim_id) continue;
     if (!lastSeen.has(r.trim_id)) lastSeen.set(r.trim_id, String(r.observed_at).slice(0, 10));
@@ -152,7 +154,7 @@ export async function loadHistory(rest: Rest, modelId: string, now: Date, minAge
       prior.set(r.trim_id, Number(r.amount_thb));
     }
   }
-  return { prior_amounts: prior, last_seen: lastSeen, first_observed: first ? String(first).slice(0, 10) : null };
+  return { prior_amounts: prior, last_seen: lastSeen, first_observed: first ? String(first).slice(0, 10) : null, read_dates: [...readDates].sort() };
 }
 
 export const insertObservations = (rest: Rest, rows: Row[]) => rest.insert("vm_observations", rows);

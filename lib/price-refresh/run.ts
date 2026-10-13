@@ -26,7 +26,7 @@ export type Ports = {
 
 export type AiPort = { budget: Budget; messages: Messages; settings: AiSettings; onUsage: (skill: string, model: string, i: number, o: number, c: number) => void };
 
-export type Target = { id: string; url: string };
+export type Target = { id: string; url: string; lineup_complete?: boolean };
 export type ModelJob = { model_id: string; targets: Target[] };
 export type SourceStateMap = Map<string, Row>;
 
@@ -104,7 +104,8 @@ export async function refreshModel(job: ModelJob, ports: Ports, ai: AiPort | nul
     model: { id: job.model_id, brand_name: loaded.brand_name, model_name: loaded.model_name },
     trims: trimStates, observations: obsForReconcile, extraction_ok: extractionOk,
     headline: pages[0]?.page.text.split("\n").find((l) => l.trim())?.slice(0, 200),
-    prior_amounts: history.prior_amounts, model_first_observed_at: history.first_observed, today: opt.today,
+    prior_amounts: history.prior_amounts, model_first_observed_at: history.first_observed, read_dates: history.read_dates,
+    lineup_complete: job.targets.length > 0 && job.targets.every((t) => t.lineup_complete === true), today: opt.today,
   });
   report.status = plan.status; report.reason = plan.reason;
   const sourceHash = pages.map((p) => p.page.content_hash).sort().join("+") || null;

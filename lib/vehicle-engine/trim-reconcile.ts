@@ -56,6 +56,14 @@ export type ReconcileInput = {
   prior_amounts: ReadonlyMap<string, number>;
   /** First time this model's source was successfully read; counts missing days for trims never seen. */
   model_first_observed_at?: string | null;
+  /**
+   * True only when every source read for this model is verified to list the WHOLE lineup (target `lineup_complete`).
+   * A page that shows fewer trims than the maker sells (a model page vs the price list) must never make a trim
+   * "missing": default false = discontinue is never proposed.
+   */
+  lineup_complete?: boolean;
+  /** Dates (YYYY-MM-DD) on which this model was read successfully. A missing streak only counts across days that were really read. */
+  read_dates?: string[];
   today: string; // YYYY-MM-DD
   policy?: Partial<Policy>;
 };
@@ -209,6 +217,17 @@ const FACELIFT_MARKERS = ["facelift", "ไมเนอร์เชนจ์", "�
 const daysBetween = (from: string, to: string) =>
   Math.floor((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
 
+/** Verified missing days: since `since` the model was read at least every 2 days (today's read counts), so a broken fetcher cannot age a trim into "missing". */
+function readEveryFewDays(since: string, today: string, readDates: string[]): boolean {
+  const dates = [...new Set([...readDates, today])].filter((d) => d > since).sort();
+  let previous = since;
+  for (const d of dates) {
+    if (daysBetween(previous, d) > 2) return false;
+    previous = d;
+  }
+  return true;
+}
+
 export function reconcileModel(input: ReconcileInput): ReconcileOutput {
   const policy: Policy = { ...DEFAULT_POLICY, ...(input.policy ?? {}) };
   const { brand_name: brand, model_name: modelName } = input.model;
@@ -338,8 +357,9 @@ export function reconcileModel(input: ReconcileInput): ReconcileOutput {
     if (pairedMissing.has(j)) return;
     const since = t.last_seen_at ?? input.model_first_observed_at ?? null;
     if (!since) return;
+    if (!input.lineup_complete) return;
     const days = daysBetween(since, input.today);
-    if (days >= policy.discontinue_days) out.proposals.push({ kind: "DISCONTINUE_TRIM", trim_id: t.trim_id, missing_days: days });
+    if (days >= policy.discontinue_days && readEveryFewDays(since, input.today, input.read_dates ?? [])) out.proposals.push({ kind: "DISCONTINUE_TRIM", trim_id: t.trim_id, missing_days: days });
   });
 
   // Matched but not CURRENT: found on the official page -> confirm / reactivate (both need an admin). No price change.

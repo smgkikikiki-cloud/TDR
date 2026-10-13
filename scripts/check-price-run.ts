@@ -37,7 +37,7 @@ function harness(opts: { text?: string; fetchFail?: boolean; prior?: Record<stri
     fetch: async (url) => opts.fetchFail ? { ok: false, kind: "FAILED", error: "timeout" }
       : { ok: true, page: { url, text: opts.text ?? pageText(589_000), content_hash: "sha256:" + (opts.text ?? "base").length, fetched_at: NOW.toISOString() } },
     loadModel: async () => loaded() as any,
-    loadHistory: async (): Promise<History> => ({ prior_amounts: new Map(Object.entries(opts.prior ?? {})), last_seen: new Map(), first_observed: "2026-09-01" }),
+    loadHistory: async (): Promise<History> => ({ prior_amounts: new Map(Object.entries(opts.prior ?? {})), last_seen: new Map(), first_observed: "2026-09-01", read_dates: [] }),
     loadApprovedJumps: async () => opts.jumps ?? [],
     markJumpApplied: async (c) => { calls.marked.push(c); },
     insertObservations: async (rows) => { calls.observations.push(...rows); },

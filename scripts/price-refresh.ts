@@ -34,7 +34,7 @@ function jobs(): ModelJob[] {
     if (onlyModels.length && !onlyModels.includes(model)) continue;
     if (onlyTargets.length && !onlyTargets.includes(t.id)) continue;
     const job = byModel.get(model) ?? { model_id: model, targets: [] };
-    job.targets.push({ id: t.id, url: t.url });
+    job.targets.push({ id: t.id, url: t.url, lineup_complete: t.lineup_complete === true });
     byModel.set(model, job);
   }
   return [...byModel.values()];
@@ -68,7 +68,7 @@ async function main() {
   const ports: Ports = {
     fetch: browser.fetch,
     loadModel: (id) => store.loadModel(rest, id),
-    loadHistory: (id, at) => soft(() => store.loadHistory(rest, id, at), { prior_amounts: new Map(), last_seen: new Map(), first_observed: null }),
+    loadHistory: (id, at) => soft(() => store.loadHistory(rest, id, at), { prior_amounts: new Map(), last_seen: new Map(), first_observed: null, read_dates: [] }),
     loadApprovedJumps: (id) => soft(() => store.loadApprovedJumps(rest, id), []),
     markJumpApplied: (card) => store.markJumpApplied(rest, card),
     insertObservations: (rows) => store.insertObservations(rest, rows),
