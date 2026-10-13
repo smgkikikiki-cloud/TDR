@@ -54,9 +54,11 @@ export function compileScopedCrosswalk(
   for (const link of links) {
     if (link.master_version !== masterVersion) continue;
     if (!link.model_group_id.trim()) throw new Error("empty Ice model_group_id");
-    const group = groups.get(link.model_group_id) ??
-      { legacy: [], scoped: new Map<string, ScopedCrosswalkLink[]>() };
-    groups.set(link.model_group_id, group);
+    let group = groups.get(link.model_group_id);
+    if (!group) {
+      group = { legacy: [], scoped: new Map<string, ScopedCrosswalkLink[]>() };
+      groups.set(link.model_group_id, group);
+    }
     if (link.reg_type == null) {
       group.legacy.push(link);
     } else {
