@@ -1,5 +1,18 @@
 # TDR Vehicle Master / Ice Identity — Owner context handoff
 
+## Update: existing private backup located — 2026-10-14
+
+The owner has clarified **they themselves administer TDR/Supabase**. Do NOT instruct the owner to message a hypothetical separate operator. Prefer a single, concrete Supabase Dashboard download request if the connector cannot retrieve Storage object bytes.
+
+**New direct live SELECT-only Storage metadata verification:**
+- Source Supabase project: `ltvwzkffmpudpjfjomrg`.
+- Private Storage bucket `vehicle-master-backups` **exists**, `public=false`.
+- **Latest visible backup object:** `vehicle-master/2026-10-13/vehicle-master-20261013T005340Z.json.gz`, created `2026-10-13T00:54:05Z`, gzip size `1,745,781` bytes (~1.75 MB). Ten total backup objects were found as of inspection. No later object was listed.
+- Confirmed in repository `automotive/vehicle_master/tools/vehicle_master_backup.py` that the exporter serializes exactly **15 vehicle-master-only tables** (matching the 15 aggregate baseline tables below), with stable table names, row_counts, SHA256 payload checksum, and compressed JSON; no registration/customer tables or legacy canonical revisions are included in its declared allowlist. `tools/vehicle_master_backup_verify.py` verifies checksum, table list, declared row counts and decompressibility. This is evidence of the **exporter's code contract**, not verification of the actual private object's content.
+- The current connector exposes SQL metadata but **no authenticated private Storage download action**, and the reviewer has NOT fetched/read/decompressed or imported the backup. The owner should navigate their own Supabase Dashboard → correct project → Storage → `vehicle-master-backups` → `vehicle-master/2026-10-13/vehicle-master-20261013T005340Z.json.gz` → Download. Inspect sensitive JSON fields/sources before sharing externally; keep raw data outside GitHub. If the user chooses to attach the file to a private current chat, inspect checksum/row counts/allowlist first.
+- **Important caveats:** Backup was generated roughly 17 hours before the last live aggregate baseline at `2026-10-13T17:49:44Z`; verify drift or collect a newer private snapshot if source has changed. The repo exporter fetches tables sequentially through paged PostgREST calls, not one database MVCC transaction, so cross-table point-in-time consistency is NOT proven solely by the file name/checksum. Backup carries data only, not live SQL schema, RLS policies, grants, views or functions: pair with a separately reviewed SELECT-only metadata/schema manifest and repository v57–v64 when building a disposable test DB.
+- **Next immediate action is to retrieve and verify that existing private backup, not to create a new database role or change RLS.** If valid/compatible, conduct a narrowly scoped offline rehearsal for the eight models only. FULL_CATALOG_ACCEPTANCE_BLOCKED remains until exact legacy CATALOG/view/ACL parity against a faithful isolated database is proven. All other Admin/C02/Enforcer gates remain open.
+
 **Last reviewed:** 2026-10-14 (ICT). **Scope:** Vehicle Master Structural Identity Writer, first-eight BASIC Identity milestone and Phase 1D full-catalog readiness. **Status:** OFFLINE TESTED; PRODUCTION NOT AUTHORIZED, NO NEW BASIC MODELS LIVE.
 **Repository:** smgkikikiki-cloud/TDR.
 **Source of truth:** Supabase Vehicle Master; NOT a CSV/file-backed writer.
