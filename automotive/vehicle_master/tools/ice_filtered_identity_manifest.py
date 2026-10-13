@@ -172,6 +172,17 @@ def evidenced_classification(groups: list[str], field: str, dimensions: dict[str
     return next(iter(values)) if len(values) == 1 else "UNKNOWN"
 
 
+def raw_ice_classification(groups: list[str], dimensions: dict[str, dict[str, str]]) -> dict[str, str]:
+    """Keep Ice DIMS classifications as source evidence, never as Vehicle Master facts."""
+    def raw_value(field: str) -> str:
+        values = sorted({dimensions[group].get(field, "").strip() or "UNKNOWN" for group in groups})
+        return values[0] if len(values) == 1 else json.dumps(values, ensure_ascii=False)
+    return {
+        "ice_source_segment": raw_value("segment"),
+        "ice_source_body_type": raw_value("body"),
+    }
+
+
 def below_registration_threshold(registrations: int, minimum: int = 40) -> bool:
     """Threshold is inclusive at 40 and is applied to all classes together."""
     return registrations < minimum
@@ -296,6 +307,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
         if group_id in owner_excluded:
             reasons.append("PRESERVED_OWNER_EXCLUSION")
         excluded_rows.append({"model_group_id": group_id, "brand": value["brand"], "ice_model_name": value["model"],
+                              **raw_ice_classification([group_id], dimensions),
                               "ice_brand_values": dict(sorted(value["brands"].items())),
                               "registrations_removed": value["units"], "exclusion_reasons": reasons,
                               "registrations_by_reg_type": dict(sorted(value["classes"].items())),
@@ -306,6 +318,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
     scope_rows = [{
         "model_group_id": group_id, "reg_type": row["reg_type"], "brand": by_group[group_id]["brand"],
         "ice_model_name": by_group[group_id]["model"], "registrations": int(row["reg_count"]),
+        **raw_ice_classification([group_id], dimensions),
         "eligibility": "EXCLUDED", "disposition": "EXCLUDED", "disposition_detail": ";".join(
             reason for reason, applies in [("LOW_VOLUME_LT_40", group_id in low_volume),
                                             ("EXCLUDED_BRAND", group_id in excluded_brand),
@@ -372,8 +385,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
             resolved_target = target_id
             kind = "NO_EXACT_OR_ALIAS_COLLISION"
         groups = sorted({x["model_group_id"] for x in items})
-        segment = evidenced_classification(groups, "segment", dimensions)
-        body_type = evidenced_classification(groups, "body", dimensions)
+        ice_classification = raw_ice_classification(groups, dimensions)
         for item2 in items:
             proposal_by_group[item2["model_group_id"]] = {
                 "target_id": resolved_target, "candidate_target_id": target_id,
@@ -390,7 +402,12 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
                 "brand_record_status": "PRESENT_IN_SNAPSHOT" if len(known_brand_ids) == 1 else "BRAND_CREATE_OR_RECONCILIATION_REQUIRED",
                 "brand": item["brand"], "model": item["canonical_name_en"],
                 "generation": "UNKNOWN", "lifecycle_status": item.get("lifecycle_status") or "UNKNOWN",
-                "segment": segment, "body_type": body_type, "powertrain": "UNKNOWN",
+                # No Vehicle Master row exists for a create candidate. Ice DIMS
+                # is retained below as raw evidence and must not populate TDR facts.
+                "segment": "UNKNOWN", "body_type": "UNKNOWN", "powertrain": "UNKNOWN",
+                **ice_classification,
+                "ice_source_classification_evidence": {g: {"segment": dimensions[g]["segment"],
+                    "body": dimensions[g]["body"]} for g in groups},
                 "source_references": sorted({f"owner_identity_targets:{g}" for g in groups} |
                                              {f"owner_decision:{d['decision_id']}" for g in groups for d in ledger_by_group.get(g, [])} |
                                              {f"M7.0:dims/model_group.csv:{g}" for g in groups}),
@@ -405,7 +422,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
             }
 
     # Recover actionable unmatched groups at model/class grain. The source name
-    # supports only a basic candidate; DIMS supplies segment/body as recorded.
+    # supports only a basic candidate; DIMS remains raw evidence only.
     # Generation/lifecycle/powertrain stay unknown unless independently
     # evidenced. Pickup splits and legacy proposed scopes remain held unless an
     # exact owner-approved RY target is already present above.
@@ -460,19 +477,22 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
             proposal_records[canonical_id]["source_reg_type_scopes"] = sorted(
                 set(proposal_records[canonical_id]["source_reg_type_scopes"]) |
                 {row["reg_type"] for row in group_scopes})
-            proposal_records[canonical_id]["segment"] = evidenced_classification(combined_groups, "segment", dimensions)
-            proposal_records[canonical_id]["body_type"] = evidenced_classification(combined_groups, "body", dimensions)
+            proposal_records[canonical_id].update(raw_ice_classification(combined_groups, dimensions))
+            proposal_records[canonical_id].setdefault("ice_source_classification_evidence", {})[group_id] = {
+                "segment": dimensions[group_id]["segment"], "body": dimensions[group_id]["body"]}
             proposal_records[canonical_id]["source_references"] = sorted(
                 set(proposal_records[canonical_id]["source_references"]) |
                 {f"M7.0:dims/model_group.csv:{group}" for group in combined_groups})
         else:
-            segment = evidenced_classification([group_id], "segment", dimensions)
-            body_type = evidenced_classification([group_id], "body", dimensions)
+            ice_classification = raw_ice_classification([group_id], dimensions)
             proposal_records[canonical_id] = {
                 "canonical_id": canonical_id, "brand_id": brand_id,
                 "brand_record_status": "PRESENT_IN_SNAPSHOT" if brand_exists else "BRAND_CREATE_OR_RECONCILIATION_REQUIRED",
                 "brand": value["brand"], "model": canonical_name, "generation": "UNKNOWN",
-                "lifecycle_status": "UNKNOWN", "segment": segment, "body_type": body_type,
+                "lifecycle_status": "UNKNOWN", "segment": "UNKNOWN", "body_type": "UNKNOWN",
+                **ice_classification,
+                "ice_source_classification_evidence": {group_id: {"segment": dimensions[group_id]["segment"],
+                    "body": dimensions[group_id]["body"]}},
                 "powertrain": "UNKNOWN", "source_references": sorted(
                     {"M7.0:reg_trend:model_name", f"owner_identity_targets:{group_id}",
                      f"M7.0:dims/model_group.csv:{group_id}"} |
@@ -515,7 +535,36 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
     # Validate all proposed target IDs globally against the catalog, and retain
     # source decision refs as provenance rather than treating them as new approvals.
     proposals = list(proposal_records.values())
-    proposals.sort(key=lambda x: x["canonical_id"])
+    alias_repair_targets = {row["proposed_canonical_id"] for row in alias_repairs}
+    proposal_names: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for proposal in proposals:
+        proposal_names[(normalize_name(proposal["brand"]), normalize_name(proposal["model"]))].add(proposal["canonical_id"])
+    duplicate_names = {target_id for ids in proposal_names.values() if len(ids) > 1 for target_id in ids}
+    # A candidate is safe for later governed materialization only when the brand
+    # exists, no catalog alias must first be repaired, and the collision checks
+    # preserved a single canonical model target. These remain non-authoritative.
+    for proposal in proposals:
+        hold_reasons = []
+        if proposal["brand_record_status"] != "PRESENT_IN_SNAPSHOT":
+            hold_reasons.append("BRAND_RECORD_CREATE_OR_RECONCILIATION_REQUIRED")
+        if proposal["canonical_id"] in alias_repair_targets:
+            hold_reasons.append("CATALOG_ALIAS_REPAIR_REQUIRED_BEFORE_CREATE")
+        if proposal["canonical_id"] in duplicate_names:
+            hold_reasons.append("DUPLICATE_CANONICAL_NAME_WITHOUT_GENERATION_EVIDENCE")
+        if proposal["collision_check"] not in {"NO_EXACT_OR_ALIAS_COLLISION", "NO_EXISTING_SAME_BRAND_IDENTITY_OR_ALIAS"}:
+            hold_reasons.append("CANONICAL_COLLISION_REVIEW_REQUIRED")
+        proposal["candidate_safety"] = "REVIEW_HOLD" if hold_reasons else "SAFE_CANDIDATE"
+        proposal["review_hold_reasons"] = hold_reasons
+        proposal["canonical_granularity_check"] = (
+            "OWNER_IDENTITY_LOCK_PRESERVED_AND_NO_ALIAS_COLLAPSE"
+            if proposal["brand"].strip().upper() in IDENTITY_LOCK_BRANDS
+            else "UNIQUE_CANONICAL_TARGET_WITHIN_BRAND"
+        )
+    for proposal in proposals:
+        if proposal["candidate_safety"] == "REVIEW_HOLD":
+            proposal["priority_rank"] = ""
+            proposal["priority_registrations_cumulative"] = ""
+            proposal["priority_tier"] = "HELD_PENDING_REVIEW"
     proposal_target_ids = {row["canonical_id"] for row in proposals}
 
     link_rows = []
@@ -591,6 +640,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
                 if target_id in models:
                     link = {"model_group_id": group_id, "reg_type": row["reg_type"], "brand": value["brand"],
                             "ice_model_name": value["model"], "registrations": int(row["reg_count"]),
+                            **raw_ice_classification([group_id], dimensions),
                             "canonical_id": target_id, **fields, "match_evidence": match_kind,
                             "decision_ref": row["decision_ref"], "source_disposition": disposition,
                             "mapping_authority": "OFFLINE_MANIFEST_EVIDENCE_ONLY",
@@ -603,6 +653,7 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
             else:
                 unresolved_entry = {"model_group_id": group_id, "reg_type": row["reg_type"],
                                        "brand": value["brand"], "ice_model_name": value["model"],
+                                       **raw_ice_classification([group_id], dimensions),
                                        "registrations": int(row["reg_count"]), "evidence_status": "UNRESOLVED_EVIDENCE",
                                        "reason": reason or disposition, "shadow_disposition": disposition,
                                        "candidate_target_id": target_id,
@@ -616,9 +667,11 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
             matched_scope = next((entry for entry in link_rows if entry["model_group_id"] == group_id
                                   and entry["reg_type"] == row["reg_type"]), None)
             new_candidate = proposal_by_group.get(group_id) if scope_status == "NEW_BASIC_IDENTITY_NEEDED" else None
+            candidate_record = proposal_records.get(new_candidate["target_id"]) if new_candidate else None
             scope_rows.append({
                 "model_group_id": group_id, "reg_type": row["reg_type"], "brand": value["brand"],
                 "ice_model_name": value["model"], "registrations": int(row["reg_count"]),
+                **raw_ice_classification([group_id], dimensions),
                 "eligibility": "ELIGIBLE", "disposition": scope_status,
                 "disposition_detail": ("UNIDENTIFIABLE_SOURCE_DATA" if group_id in source_unknown_groups else
                     "EXISTING_CANONICAL_IDENTITY" if scope_status == "MATCH_EXISTING" else
@@ -626,6 +679,9 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
                     "ACTIONABLE_EVIDENCE_OR_OWNER_AUTHORIZATION_REQUIRED"),
                 "canonical_id": matched_scope["canonical_id"] if matched_scope else
                     (new_candidate["target_id"] if new_candidate else ""),
+                "materialization_review": candidate_record["candidate_safety"] if candidate_record else
+                    ("EXISTING_IDENTITY_CANDIDATE" if scope_status == "MATCH_EXISTING" else "UNRESOLVED"),
+                "priority_tier": "",
                 "approval_state": "OFFLINE_CANDIDATE_ONLY" if scope_status in {"MATCH_EXISTING", "NEW_BASIC_IDENTITY_NEEDED"} else "UNRESOLVED",
                 "reason": unresolved_rows[-1]["reason"] if scope_status == "UNRESOLVED_EVIDENCE" else
                     (matched_scope["match_evidence"] if matched_scope else "Basic identity proposal; not an approved writer instruction."),
@@ -650,12 +706,30 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
         } | {f"owner_decision:{d['decision_id']}" for d in ledger_by_group.get(group_id, [])})
         linked_ids = sorted({item[2] for item in scope_results if item[2]})
         eligible_rows.append({"model_group_id": group_id, "brand": value["brand"], "ice_model_name": value["model"],
+                              **raw_ice_classification([group_id], dimensions),
                               "ice_brand_values": dict(sorted(value["brands"].items())),
                               "registrations": value["units"], "registrations_by_reg_type": dict(sorted(value["classes"].items())),
                               "identity_status": category, "canonical_identity_ids": linked_ids,
                               "source_references": candidate_refs,
                               "frozen_owner_decision_refs": [d["decision_id"] for d in ledger_by_group.get(group_id, [])],
                               "owner_decisions_changed": False, "source_package_sha256": EXPECTED_M7_SHA})
+
+    # Re-rank against the actual class-scope result, so P0 means these safe
+    # candidates are needed to cross 99.1% weighted identity readiness.
+    denominator_for_priority = sum(by_group[group]["units"] for group in eligible_ids)
+    target_units = (denominator_for_priority * 991 + 999) // 1000
+    additional_units_for_target = max(0, target_units - scope_status_units["MATCH_EXISTING"])
+    safe_order = sorted((p for p in proposals if p["candidate_safety"] == "SAFE_CANDIDATE"),
+                        key=lambda p: (-int(p["registration_units"]), p["canonical_id"]))
+    cumulative = 0
+    for rank, proposal in enumerate(safe_order, 1):
+        proposal["priority_rank"] = rank
+        proposal["priority_registrations_cumulative"] = cumulative + int(proposal["registration_units"])
+        proposal["priority_tier"] = "P0_99_1_COVERAGE_TARGET" if cumulative < additional_units_for_target else "P1_AFTER_TARGET"
+        cumulative += int(proposal["registration_units"])
+    priority_by_id = {row["canonical_id"]: row["priority_tier"] for row in proposals}
+    for row in scope_rows:
+        row["priority_tier"] = priority_by_id.get(row["canonical_id"], "")
 
     # Groups marked NEW must point only at proposal targets, and no duplicate
     # canonical IDs may survive as two distinct proposed records.
@@ -694,20 +768,22 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
     for key, units in baseline_keys.items():
         baseline_recovery_units[final_scope_by_key[key]["disposition"]] += units
 
-    csv_write(output_dir / "eligible_model_groups.csv", ["model_group_id", "brand", "ice_brand_values", "ice_model_name", "registrations",
+    csv_write(output_dir / "eligible_model_groups.csv", ["model_group_id", "brand", "ice_brand_values", "ice_model_name", "ice_source_segment", "ice_source_body_type", "registrations",
               "registrations_by_reg_type", "identity_status", "canonical_identity_ids", "source_references",
               "frozen_owner_decision_refs", "owner_decisions_changed", "source_package_sha256"], eligible_rows)
-    csv_write(output_dir / "excluded_model_groups.csv", ["model_group_id", "brand", "ice_brand_values", "ice_model_name", "registrations_removed",
+    csv_write(output_dir / "excluded_model_groups.csv", ["model_group_id", "brand", "ice_brand_values", "ice_model_name", "ice_source_segment", "ice_source_body_type", "registrations_removed",
               "exclusion_reasons", "registrations_by_reg_type", "evidence_refs", "source_package_sha256"], excluded_rows)
-    csv_write(output_dir / "existing_identity_links.csv", ["model_group_id", "reg_type", "brand", "ice_model_name", "registrations",
+    csv_write(output_dir / "existing_identity_links.csv", ["model_group_id", "reg_type", "brand", "ice_model_name", "ice_source_segment", "ice_source_body_type", "registrations",
               "canonical_id", "catalog_brand_id", "catalog_model_name", "catalog_generation", "lifecycle_status", "segment",
               "body_type", "powertrains", "match_evidence", "decision_ref", "source_disposition", "mapping_authority",
               "source_package_sha256"], link_rows)
     csv_write(output_dir / "new_basic_identity_proposals.csv", ["canonical_id", "brand_id", "brand_record_status", "brand", "model", "generation", "lifecycle_status",
-              "segment", "body_type", "powertrain", "source_references", "ice_model_group_ids", "registration_units",
+              "segment", "body_type", "powertrain", "ice_source_segment", "ice_source_body_type",
+              "ice_source_classification_evidence", "candidate_safety", "review_hold_reasons", "canonical_granularity_check", "priority_rank",
+              "priority_registrations_cumulative", "priority_tier", "source_references", "ice_model_group_ids", "registration_units",
               "source_reg_type_scopes", "collision_check", "proposal_status", "writer_dependency", "source_package_sha256",
               "vehicle_master_snapshot_sha256"], proposals)
-    csv_write(output_dir / "unresolved_identity_evidence.csv", ["model_group_id", "reg_type", "brand", "ice_model_name", "registrations",
+    csv_write(output_dir / "unresolved_identity_evidence.csv", ["model_group_id", "reg_type", "brand", "ice_model_name", "ice_source_segment", "ice_source_body_type", "registrations",
               "evidence_status", "reason", "shadow_disposition", "candidate_target_id", "decision_ref", "source_package_sha256"],
               unresolved_rows)
     residual_rows = []
@@ -729,9 +805,9 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
               "included_in_effective_denominator", "counts_as_canonical_mapping", "decision_ref",
               "source_package_sha256"], residual_rows)
     scope_rows.sort(key=lambda row: (row["model_group_id"], row["reg_type"]))
-    csv_write(output_dir / "final_scope_dispositions.csv", ["model_group_id", "reg_type", "brand", "ice_model_name",
+    csv_write(output_dir / "final_scope_dispositions.csv", ["model_group_id", "reg_type", "brand", "ice_model_name", "ice_source_segment", "ice_source_body_type",
               "registrations", "eligibility", "disposition", "disposition_detail", "canonical_id", "approval_state",
-              "reason", "decision_ref", "source_package_sha256"], scope_rows)
+              "materialization_review", "priority_tier", "reason", "decision_ref", "source_package_sha256"], scope_rows)
     csv_write(output_dir / "identity_alias_repair_proposals.csv", ["source_model_group_id", "source_model_name",
               "existing_canonical_id", "existing_canonical_name", "alias_to_remove", "proposed_canonical_id",
               "proposed_model_name", "repair_reason", "repair_status", "registration_units", "owner_decision_changed",
@@ -817,6 +893,20 @@ def write_manifest(m7_zip: Path, package: Path, catalog_path: Path, output_dir: 
         "identity_proposals": {"filtered_shadow_identity_groups": sum(1 for x in target_rows if x["model_group_id"] in eligible_ids),
                                "filtered_shadow_identity_units": sum(by_group[x["model_group_id"]]["units"] for x in target_rows if x["model_group_id"] in eligible_ids),
                                "candidate_proposal_count_after_catalog_collision_checks": len(proposals),
+                               "safe_candidate_count": sum(row["candidate_safety"] == "SAFE_CANDIDATE" for row in proposals),
+                               "safe_candidate_registrations": sum(int(row["registration_units"]) for row in proposals if row["candidate_safety"] == "SAFE_CANDIDATE"),
+                               "review_hold_count": sum(row["candidate_safety"] == "REVIEW_HOLD" for row in proposals),
+                               "review_hold_registrations": sum(int(row["registration_units"]) for row in proposals if row["candidate_safety"] == "REVIEW_HOLD"),
+                               "duplicate_name_without_generation_review_count": len(duplicate_names),
+                               "p0_99_1_coverage_target_candidate_count": sum(row["priority_tier"] == "P0_99_1_COVERAGE_TARGET" for row in proposals),
+                               "p0_99_1_coverage_target_registrations": sum(int(row["registration_units"]) for row in proposals if row["priority_tier"] == "P0_99_1_COVERAGE_TARGET"),
+                               "weighted_coverage_target_pct": 99.1,
+                               "weighted_coverage_target_registrations": target_units,
+                               "existing_identity_candidate_registrations": scope_status_units["MATCH_EXISTING"],
+                               "simulated_existing_plus_p0_registrations": scope_status_units["MATCH_EXISTING"] + sum(int(row["registration_units"]) for row in proposals if row["priority_tier"] == "P0_99_1_COVERAGE_TARGET"),
+                               "simulated_existing_plus_p0_pct": round(100 * (scope_status_units["MATCH_EXISTING"] + sum(int(row["registration_units"]) for row in proposals if row["priority_tier"] == "P0_99_1_COVERAGE_TARGET")) / effective_units, 6),
+                               "safe_candidates_alone_can_reach_99_1": scope_status_units["MATCH_EXISTING"] + sum(int(row["registration_units"]) for row in proposals if row["candidate_safety"] == "SAFE_CANDIDATE") >= target_units,
+                               "classification_authority": {"canonical_segment_and_body_type": "Vehicle Master snapshot only; UNKNOWN for proposed identities absent from the catalog", "ice_segment_and_body_type": "raw source evidence only"},
                                "new_basic_identity_candidate_scope_registrations": scope_status_units["NEW_BASIC_IDENTITY_NEEDED"],
                                "duplicate_canonical_targets_after_coalescing": 0,
                                "candidate_target_conflicts_requiring_resolution": len(candidate_issue),

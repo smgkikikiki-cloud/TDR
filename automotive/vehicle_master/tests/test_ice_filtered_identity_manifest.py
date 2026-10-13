@@ -76,6 +76,10 @@ def test_real_m7_manifest_reconciles_frozen_ledger_and_pickup_scopes(tmp_path):
     assert qa["frozen_owner_decisions"]["decisions_changed"] == 0
     assert qa["frozen_owner_decisions"]["ledger_decisions_exercised"] == 244
     assert qa["identity_proposals"]["proposal_authority"] == "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY"
+    assert qa["identity_proposals"]["safe_candidate_count"] + qa["identity_proposals"]["review_hold_count"] == qa["identity_proposals"]["candidate_proposal_count_after_catalog_collision_checks"]
+    assert qa["identity_proposals"]["safe_candidates_alone_can_reach_99_1"]
+    assert qa["identity_proposals"]["simulated_existing_plus_p0_pct"] >= 99.1
+    assert qa["identity_proposals"]["classification_authority"]["ice_segment_and_body_type"] == "raw source evidence only"
 
     with (out / "existing_identity_links.csv").open(encoding="utf-8", newline="") as stream:
         links = list(csv.DictReader(stream))
@@ -86,6 +90,17 @@ def test_real_m7_manifest_reconciles_frozen_ledger_and_pickup_scopes(tmp_path):
     expected_scopes = {(row["reg_type"], row["target_canonical_id"]) for row in source_shadow
                        if row["model_group_id"] == "ford-ford-ranger" and row["disposition"] == "PICKUP_RY_SPLIT_SHADOW"}
     assert ranger == expected_scopes
+    catalog_models = json.loads(CATALOG.read_text(encoding="utf-8"))["relations"]["vehicle_models"]["rows"]
+    catalog_by_id = {row["canonical_id"]: row for row in catalog_models}
+    assert all(row["segment"] == (catalog_by_id[row["canonical_id"]].get("segment") or "UNKNOWN")
+               for row in links)
+    assert all(row["body_type"] == (catalog_by_id[row["canonical_id"]].get("body_type") or "UNKNOWN")
+               for row in links)
+    conflicting_source = next(row for row in links if row["model_group_id"] == "aion-aion-es")
+    assert conflicting_source["ice_source_segment"] == "C-segment"
+    assert conflicting_source["segment"] == "D"
+    assert conflicting_source["ice_source_body_type"] == "Sedan"
+    assert conflicting_source["body_type"] == "SEDAN"
     with (out / "unresolved_identity_evidence.csv").open(encoding="utf-8", newline="") as stream:
         unresolved = list(csv.DictReader(stream))
     assert any(row["model_group_id"] == "gwm-gwm-poer" and row["reg_type"] == "รย.1"
@@ -127,8 +142,14 @@ def test_real_m7_manifest_reconciles_frozen_ledger_and_pickup_scopes(tmp_path):
     assert bmw_530e["owner_decision_changed"] == "False"
     with (out / "new_basic_identity_proposals.csv").open(encoding="utf-8", newline="") as stream:
         proposals = {row["canonical_id"]: row for row in csv.DictReader(stream)}
-    assert proposals["bmw.530e"]["segment"] == "D-segment"
-    assert proposals["bmw.530e"]["body_type"] == "Sedan"
+    assert proposals["bmw.530e"]["segment"] == "UNKNOWN"
+    assert proposals["bmw.530e"]["body_type"] == "UNKNOWN"
+    assert proposals["bmw.530e"]["ice_source_segment"] == "D-segment"
+    assert proposals["bmw.530e"]["ice_source_body_type"] == "Sedan"
+    assert proposals["bmw.530e"]["candidate_safety"] == "REVIEW_HOLD"
+    assert "CATALOG_ALIAS_REPAIR_REQUIRED_BEFORE_CREATE" in proposals["bmw.530e"]["review_hold_reasons"]
+    assert proposals["honda.jazz"]["candidate_safety"] == "SAFE_CANDIDATE"
+    assert proposals["honda.jazz"]["priority_tier"] == "P0_99_1_COVERAGE_TARGET"
     assert proposals["bmw.530e"]["powertrain"] == "UNKNOWN"
     assert "M7.0:dims/model_group.csv:bmw-bmw-530e" in proposals["bmw.530e"]["source_references"]
     assert proposals["nex.nps"]["brand_record_status"] == "BRAND_CREATE_OR_RECONCILIATION_REQUIRED"

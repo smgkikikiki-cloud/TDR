@@ -126,14 +126,31 @@
   "identity_proposals": {
     "candidate_proposal_count_after_catalog_collision_checks": 84,
     "candidate_target_conflicts_requiring_resolution": 0,
+    "classification_authority": {
+      "canonical_segment_and_body_type": "Vehicle Master snapshot only; UNKNOWN for proposed identities absent from the catalog",
+      "ice_segment_and_body_type": "raw source evidence only"
+    },
     "duplicate_canonical_targets_after_coalescing": 0,
+    "duplicate_name_without_generation_review_count": 0,
+    "existing_identity_candidate_registrations": 4027896,
     "filtered_shadow_identity_groups": 61,
     "filtered_shadow_identity_units": 97587,
     "identity_alias_repair_proposals": 5,
     "new_basic_identity_candidate_scope_registrations": 94432,
+    "p0_99_1_coverage_target_candidate_count": 9,
+    "p0_99_1_coverage_target_registrations": 59948,
     "proposal_authority": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
     "proposals_with_unverified_brand_record": 6,
-    "unresolved_candidate_targets": {}
+    "review_hold_count": 11,
+    "review_hold_registrations": 6658,
+    "safe_candidate_count": 73,
+    "safe_candidate_registrations": 87774,
+    "safe_candidates_alone_can_reach_99_1": true,
+    "simulated_existing_plus_p0_pct": 99.130393,
+    "simulated_existing_plus_p0_registrations": 4087844,
+    "unresolved_candidate_targets": {},
+    "weighted_coverage_target_pct": 99.1,
+    "weighted_coverage_target_registrations": 4086591
   },
   "no_database_write_or_writer_invocation": true,
   "offline_only": true,
@@ -148,14 +165,14 @@
     "residual_exceptions.csv"
   ],
   "output_sha256": {
-    "eligible_model_groups.csv": "5897ee53c45b0bb53081481ceef43f350567ad4c0a99ef7242fc8084fa6ed4aa",
-    "excluded_model_groups.csv": "bf3efe3efd5ff09f4fc7bad7db4938bce7cc998945c8ad0cd45989637e5f9a8a",
-    "existing_identity_links.csv": "68b841b898d179d5b8d86aae855ea9d3e89d903f4ed36e76a7a05dd27f2cbcbc",
-    "final_scope_dispositions.csv": "b103a29faee8cce8f9726bed391c52c9ac857674a22956f3d16e0f6ab316fe00",
+    "eligible_model_groups.csv": "622ddbcd8a6c3d5dfc737a838af860a70c5a55641c4d325e442824c674556831",
+    "excluded_model_groups.csv": "c8743e1e8d2afe9653701ee1bd9816fe12c6bbea9f31dd2f2f8092a38fe41a7d",
+    "existing_identity_links.csv": "e146e703be0cb75337e5b09989bb0032d26466bd36148bef4c8d94dd40f27df6",
+    "final_scope_dispositions.csv": "8355e3378e90106769d293ed503bfc1e97cc04421332f8feee315ab92a90e80c",
     "identity_alias_repair_proposals.csv": "35731fde22858b30cabacfe723ed66d76f6383a911ffefe0b30e573ba88ffa4e",
-    "new_basic_identity_proposals.csv": "e4d120719d6e447e613d38d3115f77ea21b30a41b8ab2e2eda4cf2ee303a72dd",
+    "new_basic_identity_proposals.csv": "3a0e08efb3618c08b9beb569c7d4fe276f9ddc8bdeed1eb0352bffe350551cd9",
     "residual_exceptions.csv": "d9cbd13095ec3c7abfb885305b7748afe2df37e1acea7dfa98f6756092feedf5",
-    "unresolved_identity_evidence.csv": "820d6a2366e3aa59d335b430b63f0e66a15416ebb1407bae168ce054290ae942"
+    "unresolved_identity_evidence.csv": "d5e62ce52983a41a5908c77baf36cd4de2b67fc9993ed71b06ab15902e074a13"
   },
   "schema": "tdr.ice-filtered-identity-manifest.qa.v1",
   "source": {
