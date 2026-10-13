@@ -1,0 +1,11 @@
+# Phase 1C BASIC identity storage and real PostgreSQL acceptance
+
+Implements an unnumbered BASIC identity schema and transaction-owning structural RPC draft against the repository v57–v64 model. BASIC identity rows keep unknown lifecycle, generation, TDR classifications, seed/release, price and specification values NULL and stay out of the current catalog views. The RPC accepts only CREATE_BRAND, CREATE_MODEL_BASIC and UPDATE_MODEL_ALIAS, uses a separate expiring approval capability, checks current revisions and normalized ID/name/alias collisions, and commits rows with observations, revisions and idempotency receipt together. Compensating reverts soft-hide created identities or restore an alias set only after revision and dependency checks.
+
+The existing Structural Identity Writer and BASIC request serializer remain the only planner/contract; the production adapter still fails closed. A local-only PostgreSQL runner replays v57–v64 and tests the eight preflight-valid identities (47,109 registration units). Catalog parity/seed/engine checks remain green, BASIC rows stay out of `current_vehicle_models`, retry/collision/alias-CAS/capability/rollback/revert protections run against real PostgreSQL, and Ford Ranger Raptor remains `REGISTRATION_CLASS_PARENT_ALIAS_CONFLICT` on `ford.ranger_double_cab`.
+
+The frozen 244-decision ledger and Vehicle Master snapshot hashes are asserted by the runner. See `postgres_acceptance_report.json` for the pinned PostgreSQL image, replay list, exact command and result counts.
+
+Validation: `npm run check`, `npm run check:phase1c-postgres-acceptance`, and the full Vehicle Master Python suite from `automotive/vehicle_master`.
+
+This is offline acceptance only. It creates no numbered migration and performs no production/staging writes, C01/C02/R6 changes, price work, merge or deployment. Independent QA is requested before further action. Production still needs owner adoption of BASIC semantics, fresh schema/ledger reconciliation and C02 resolution, trusted production capability/session binding and RPC ACL review, a structural revision design independent of retired `canonical_write_commands`, and separate C01/R6 authorization for crosswalk materialization.

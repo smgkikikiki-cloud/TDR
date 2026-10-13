@@ -1,0 +1,486 @@
+(node:302112) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/TDR/scripts/phase1c-postgres-acceptance.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspace/TDR/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "schema": "tdr.phase1c.real-postgresql-acceptance.v1",
+  "executed_at_utc": "2026-10-13T15:46:41.234Z",
+  "exact_command": "node --experimental-strip-types scripts/phase1c-postgres-acceptance.ts",
+  "docker_image": "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75fd595d42e1fa316b9fb4378742297",
+  "database": "PostgreSQL 16.10, Docker network=none, tmpfs-only, no published port",
+  "replayed_repository_schema": "v12,v15,v22,v48,v57-v64",
+  "catalog_baseline_and_post_apply": "parity, seed and engine checks passed against the single local Toyota fixture only; full-catalog parity remains unverified",
+  "valid_identities": 8,
+  "registrations": 47109,
+  "basic_models_created": 8,
+  "raw_ice_evidence_groups": 8,
+  "auxiliary_create_test_rows": "two models and one brand were created for revert/concurrency cases, then soft-hidden",
+  "current_catalog_models": 1,
+  "basic_market_analysis_identities": 8,
+  "ford_ranger_raptor": "HOLD: REGISTRATION_CLASS_PARENT_ALIAS_CONFLICT:ford.ranger_double_cab",
+  "frozen_owner_decisions": 244,
+  "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+  "identity_snapshot_sha256": "cf991264ada90efb0ff69a754cdee11fb0d13cc98fbe9fc60879de4eb7a2eb62",
+  "receipt_replay": "same receipt; changed payload under the same idempotency key rejected",
+  "collision_checks": "duplicate canonical ID and frozen-snapshot-normalized alias collisions rejected",
+  "production_or_staging_connections": 0,
+  "access_controls": "separate non-superuser issuer and executor logins; executor lacks issuance ACL; issuer lacks apply ACL; self-issuance and self-execution rejected; cross-principal tokens rejected; spoofed custom session claims ignored in favor of session_user; immutable issuer audit verified; unprivileged DML denied; service_role EXECUTE denied; READ COMMITTED denied; expired capability rejected; injected mid-batch error rolled back",
+  "alias_updates": "fresh alias revision 1 -> 2 succeeds; stale revision rejected; compensating revert restores aliases at revision 3 and retries idempotently",
+  "create_reverts": "soft-hide requires current revisions and no active model dependents; brand revert held until child identity is hidden",
+  "concurrent_creates": "two real PostgreSQL SERIALIZABLE sessions raced on one normalized name; exactly one committed, then was soft-hidden",
+  "acceptance_result": "PASS",
+  "runner_exit_code": 0,
+  "sql_case_count": 61,
+  "sql_cases": [
+    {
+      "id": "owner-reject:permission denied|row-level security|new row violates",
+      "assertion": "SQL rejected request matching /permission denied|row-level security|new row violates/",
+      "observed_result": "ERROR:  permission denied for table vehicle_models",
+      "result": "PASS"
+    },
+    {
+      "id": "owner-reject:permission denied for (schema|function) vehicle_private|vm_apply_structural_changes",
+      "assertion": "SQL rejected request matching /permission denied for (schema|function) vehicle_private|vm_apply_structural_changes/",
+      "observed_result": "ERROR:  permission denied for schema vehicle_private",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_unprivileged-reject:permission denied for schema vehicle_private",
+      "assertion": "SQL rejected request matching /permission denied for schema vehicle_private/",
+      "observed_result": "ERROR:  permission denied for schema vehicle_private",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_unprivileged-reject:permission denied|row-level security|new row violates",
+      "assertion": "SQL rejected request matching /permission denied|row-level security|new row violates/",
+      "observed_result": "ERROR:  permission denied for table vehicle_models",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:permission denied for function vm_issue_structural_capability",
+      "assertion": "SQL rejected request matching /permission denied for function vm_issue_structural_capability/",
+      "observed_result": "ERROR:  permission denied for function vm_issue_structural_capability",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:permission denied for function vm_issue_structural_capability#2",
+      "assertion": "SQL rejected request matching /permission denied for function vm_issue_structural_capability/",
+      "observed_result": "ERROR:  permission denied for function vm_issue_structural_capability",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_issuer-reject:permission denied for function vm_apply_structural_changes",
+      "assertion": "SQL rejected request matching /permission denied for function vm_apply_structural_changes/",
+      "observed_result": "ERROR:  permission denied for function vm_apply_structural_changes",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_issuer-reject:STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER",
+      "assertion": "SQL rejected request matching /STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER/",
+      "observed_result": "ERROR:  STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER",
+      "result": "PASS"
+    },
+    {
+      "id": "issuer-executor-grants",
+      "assertion": "PostgreSQL ACL gives issuer only issuance and executor only apply/revert",
+      "observed_result": "PostgreSQL assertion passed",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_issuer-reject:INVALID_STRUCTURAL_APPROVAL",
+      "assertion": "SQL rejected request matching /INVALID_STRUCTURAL_APPROVAL/",
+      "observed_result": "ERROR:  INVALID_STRUCTURAL_APPROVAL",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_issuer-reject:INVALID_STRUCTURAL_APPROVAL#2",
+      "assertion": "SQL rejected request matching /INVALID_STRUCTURAL_APPROVAL/",
+      "observed_result": "ERROR:  INVALID_STRUCTURAL_APPROVAL",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-cross-principal",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_other_actor-reject:STRUCTURAL_CAPABILITY_ACTOR_MISMATCH",
+      "assertion": "SQL rejected request matching /STRUCTURAL_CAPABILITY_ACTOR_MISMATCH/",
+      "observed_result": "ERROR:  STRUCTURAL_CAPABILITY_ACTOR_MISMATCH",
+      "result": "PASS"
+    },
+    {
+      "id": "issuer-audit-bindings",
+      "assertion": "immutable approval audit records distinct database issuer, explicit executor, admin evidence reference and matching nonce",
+      "observed_result": "PostgreSQL assertion passed",
+      "result": "PASS"
+    },
+    {
+      "id": "owner-reject:STRUCTURAL_AUDIT_APPEND_ONLY",
+      "assertion": "SQL rejected request matching /STRUCTURAL_AUDIT_APPEND_ONLY/",
+      "observed_result": "ERROR:  STRUCTURAL_AUDIT_APPEND_ONLY",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:INVALID_CREATE_MODEL_BASIC_FIELDS",
+      "assertion": "SQL rejected request matching /INVALID_CREATE_MODEL_BASIC_FIELDS/",
+      "observed_result": "ERROR:  INVALID_CREATE_MODEL_BASIC_FIELDS",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:INVALID_STRUCTURAL_REVISION_SET",
+      "assertion": "SQL rejected request matching /INVALID_STRUCTURAL_REVISION_SET/",
+      "observed_result": "ERROR:  INVALID_STRUCTURAL_REVISION_SET",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_OPERATION_NOT_ALLOWED",
+      "assertion": "SQL rejected request matching /STRUCTURAL_OPERATION_NOT_ALLOWED/",
+      "observed_result": "ERROR:  STRUCTURAL_OPERATION_NOT_ALLOWED",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:INVALID_CREATE_BRAND_FIELDS",
+      "assertion": "SQL rejected request matching /INVALID_CREATE_BRAND_FIELDS/",
+      "observed_result": "ERROR:  INVALID_CREATE_BRAND_FIELDS",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-rollback",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "atomic-capability-binding",
+      "assertion": "database capability binds the batch, exact operation, expiry, distinct executor/issuer and immutable approval nonce",
+      "observed_result": "PostgreSQL assertion passed",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:PHASE1C_INJECTED_FAILURE",
+      "assertion": "SQL rejected request matching /PHASE1C_INJECTED_FAILURE/",
+      "observed_result": "ERROR:  PHASE1C_INJECTED_FAILURE",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-approved-eight",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "apply:phase1c-eight-valid-identities",
+      "assertion": "non-superuser executor SQL RPC returned an authenticated result",
+      "observed_result": "status=APPLIED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "apply:phase1c-eight-valid-identities#2",
+      "assertion": "non-superuser executor SQL RPC returned an authenticated result",
+      "observed_result": "status=APPLIED; replay=true",
+      "result": "PASS"
+    },
+    {
+      "id": "session-user-audit",
+      "assertion": "spoofed request.jwt.claim.sub does not replace PostgreSQL session_user in append-only actor audit",
+      "observed_result": "PostgreSQL assertion passed",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-changed-retry",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT",
+      "assertion": "SQL rejected request matching /STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT/",
+      "observed_result": "ERROR:  STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-canonical-collision",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_CANONICAL_OR_SLUG_COLLISION",
+      "assertion": "SQL rejected request matching /STRUCTURAL_CANONICAL_OR_SLUG_COLLISION/",
+      "observed_result": "ERROR:  STRUCTURAL_CANONICAL_OR_SLUG_COLLISION",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-alias-collision",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_NORMALIZED_IDENTITY_COLLISION",
+      "assertion": "SQL rejected request matching /STRUCTURAL_NORMALIZED_IDENTITY_COLLISION/",
+      "observed_result": "ERROR:  STRUCTURAL_NORMALIZED_IDENTITY_COLLISION",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:INVALID_UPDATE_MODEL_ALIAS_FIELDS",
+      "assertion": "SQL rejected request matching /INVALID_UPDATE_MODEL_ALIAS_FIELDS/",
+      "observed_result": "ERROR:  INVALID_UPDATE_MODEL_ALIAS_FIELDS",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-stale-alias",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_STALE_REVISION",
+      "assertion": "SQL rejected request matching /STRUCTURAL_STALE_REVISION/",
+      "observed_result": "ERROR:  STRUCTURAL_STALE_REVISION",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-expired-alias",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_CAPABILITY_EXPIRED",
+      "assertion": "SQL rejected request matching /STRUCTURAL_CAPABILITY_EXPIRED/",
+      "observed_result": "ERROR:  STRUCTURAL_CAPABILITY_EXPIRED",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-valid-alias",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "apply:phase1c-valid-alias",
+      "assertion": "non-superuser executor SQL RPC returned an authenticated result",
+      "observed_result": "status=APPLIED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-alias-revert",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "revert:phase1c_rpc_actor",
+      "assertion": "non-superuser SQL revert RPC returned an authenticated result",
+      "observed_result": "status=REVERTED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "revert:phase1c_rpc_actor#2",
+      "assertion": "non-superuser SQL revert RPC returned an authenticated result",
+      "observed_result": "status=REVERTED; replay=true",
+      "result": "PASS"
+    },
+    {
+      "id": "revert-session-user-audit",
+      "assertion": "revert actor audit remains the authenticated login despite a spoofed claim setting",
+      "observed_result": "PostgreSQL assertion passed",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_CAPABILITY_NOT_FOUND",
+      "assertion": "SQL rejected request matching /STRUCTURAL_CAPABILITY_NOT_FOUND/",
+      "observed_result": "ERROR:  STRUCTURAL_CAPABILITY_NOT_FOUND",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-alias-revert-foreign",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_other_actor-reject:STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH",
+      "assertion": "SQL rejected request matching /STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH/",
+      "observed_result": "ERROR:  STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-brand-create",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "apply:phase1c-revert-brand",
+      "assertion": "non-superuser executor SQL RPC returned an authenticated result",
+      "observed_result": "status=APPLIED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-child-create",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "apply:phase1c-revert-child",
+      "assertion": "non-superuser executor SQL RPC returned an authenticated result",
+      "observed_result": "status=APPLIED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-brand-revert",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT",
+      "assertion": "SQL rejected request matching /STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT/",
+      "observed_result": "ERROR:  STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-child-revert",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "revert:phase1c_rpc_actor#3",
+      "assertion": "non-superuser SQL revert RPC returned an authenticated result",
+      "observed_result": "status=REVERTED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "revert:phase1c_rpc_actor#4",
+      "assertion": "non-superuser SQL revert RPC returned an authenticated result",
+      "observed_result": "status=REVERTED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-race-one-cap",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-race-two-cap",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "approval-issued:phase1c-race-revert",
+      "assertion": "issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce",
+      "observed_result": "approval and capability rows committed; UUID nonce returned (value omitted)",
+      "result": "PASS"
+    },
+    {
+      "id": "revert:phase1c_rpc_actor#5",
+      "assertion": "non-superuser SQL revert RPC returned an authenticated result",
+      "observed_result": "status=REVERTED; replay=false",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:INVALID_STRUCTURAL_RPC_ENVELOPE",
+      "assertion": "SQL rejected request matching /INVALID_STRUCTURAL_RPC_ENVELOPE/",
+      "observed_result": "ERROR:  INVALID_STRUCTURAL_RPC_ENVELOPE",
+      "result": "PASS"
+    },
+    {
+      "id": "phase1c_rpc_actor-reject:STRUCTURAL_RPC_REQUIRES_SERIALIZABLE",
+      "assertion": "SQL rejected request matching /STRUCTURAL_RPC_REQUIRES_SERIALIZABLE/",
+      "observed_result": "ERROR:  STRUCTURAL_RPC_REQUIRES_SERIALIZABLE",
+      "result": "PASS"
+    }
+  ],
+  "runner_stdout_case_lines": [
+    "PASS owner-reject:permission denied|row-level security|new row violates: SQL rejected request matching /permission denied|row-level security|new row violates/ => ERROR:  permission denied for table vehicle_models",
+    "PASS owner-reject:permission denied for (schema|function) vehicle_private|vm_apply_structural_changes: SQL rejected request matching /permission denied for (schema|function) vehicle_private|vm_apply_structural_changes/ => ERROR:  permission denied for schema vehicle_private",
+    "PASS phase1c_unprivileged-reject:permission denied for schema vehicle_private: SQL rejected request matching /permission denied for schema vehicle_private/ => ERROR:  permission denied for schema vehicle_private",
+    "PASS phase1c_unprivileged-reject:permission denied|row-level security|new row violates: SQL rejected request matching /permission denied|row-level security|new row violates/ => ERROR:  permission denied for table vehicle_models",
+    "PASS phase1c_rpc_actor-reject:permission denied for function vm_issue_structural_capability: SQL rejected request matching /permission denied for function vm_issue_structural_capability/ => ERROR:  permission denied for function vm_issue_structural_capability",
+    "PASS phase1c_rpc_actor-reject:permission denied for function vm_issue_structural_capability#2: SQL rejected request matching /permission denied for function vm_issue_structural_capability/ => ERROR:  permission denied for function vm_issue_structural_capability",
+    "PASS phase1c_rpc_issuer-reject:permission denied for function vm_apply_structural_changes: SQL rejected request matching /permission denied for function vm_apply_structural_changes/ => ERROR:  permission denied for function vm_apply_structural_changes",
+    "PASS phase1c_rpc_issuer-reject:STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER: SQL rejected request matching /STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER/ => ERROR:  STRUCTURAL_EXECUTOR_MUST_BE_DISTINCT_APPROVER",
+    "PASS issuer-executor-grants: PostgreSQL ACL gives issuer only issuance and executor only apply/revert => PostgreSQL assertion passed",
+    "PASS phase1c_rpc_issuer-reject:INVALID_STRUCTURAL_APPROVAL: SQL rejected request matching /INVALID_STRUCTURAL_APPROVAL/ => ERROR:  INVALID_STRUCTURAL_APPROVAL",
+    "PASS phase1c_rpc_issuer-reject:INVALID_STRUCTURAL_APPROVAL#2: SQL rejected request matching /INVALID_STRUCTURAL_APPROVAL/ => ERROR:  INVALID_STRUCTURAL_APPROVAL",
+    "PASS approval-issued:phase1c-cross-principal: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_other_actor-reject:STRUCTURAL_CAPABILITY_ACTOR_MISMATCH: SQL rejected request matching /STRUCTURAL_CAPABILITY_ACTOR_MISMATCH/ => ERROR:  STRUCTURAL_CAPABILITY_ACTOR_MISMATCH",
+    "PASS issuer-audit-bindings: immutable approval audit records distinct database issuer, explicit executor, admin evidence reference and matching nonce => PostgreSQL assertion passed",
+    "PASS owner-reject:STRUCTURAL_AUDIT_APPEND_ONLY: SQL rejected request matching /STRUCTURAL_AUDIT_APPEND_ONLY/ => ERROR:  STRUCTURAL_AUDIT_APPEND_ONLY",
+    "PASS phase1c_rpc_actor-reject:INVALID_CREATE_MODEL_BASIC_FIELDS: SQL rejected request matching /INVALID_CREATE_MODEL_BASIC_FIELDS/ => ERROR:  INVALID_CREATE_MODEL_BASIC_FIELDS",
+    "PASS phase1c_rpc_actor-reject:INVALID_STRUCTURAL_REVISION_SET: SQL rejected request matching /INVALID_STRUCTURAL_REVISION_SET/ => ERROR:  INVALID_STRUCTURAL_REVISION_SET",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_OPERATION_NOT_ALLOWED: SQL rejected request matching /STRUCTURAL_OPERATION_NOT_ALLOWED/ => ERROR:  STRUCTURAL_OPERATION_NOT_ALLOWED",
+    "PASS phase1c_rpc_actor-reject:INVALID_CREATE_BRAND_FIELDS: SQL rejected request matching /INVALID_CREATE_BRAND_FIELDS/ => ERROR:  INVALID_CREATE_BRAND_FIELDS",
+    "PASS approval-issued:phase1c-rollback: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS atomic-capability-binding: database capability binds the batch, exact operation, expiry, distinct executor/issuer and immutable approval nonce => PostgreSQL assertion passed",
+    "PASS phase1c_rpc_actor-reject:PHASE1C_INJECTED_FAILURE: SQL rejected request matching /PHASE1C_INJECTED_FAILURE/ => ERROR:  PHASE1C_INJECTED_FAILURE",
+    "PASS approval-issued:phase1c-approved-eight: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS apply:phase1c-eight-valid-identities: non-superuser executor SQL RPC returned an authenticated result => status=APPLIED; replay=false",
+    "PASS apply:phase1c-eight-valid-identities#2: non-superuser executor SQL RPC returned an authenticated result => status=APPLIED; replay=true",
+    "PASS session-user-audit: spoofed request.jwt.claim.sub does not replace PostgreSQL session_user in append-only actor audit => PostgreSQL assertion passed",
+    "PASS approval-issued:phase1c-changed-retry: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT: SQL rejected request matching /STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT/ => ERROR:  STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT",
+    "PASS approval-issued:phase1c-canonical-collision: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_CANONICAL_OR_SLUG_COLLISION: SQL rejected request matching /STRUCTURAL_CANONICAL_OR_SLUG_COLLISION/ => ERROR:  STRUCTURAL_CANONICAL_OR_SLUG_COLLISION",
+    "PASS approval-issued:phase1c-alias-collision: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_NORMALIZED_IDENTITY_COLLISION: SQL rejected request matching /STRUCTURAL_NORMALIZED_IDENTITY_COLLISION/ => ERROR:  STRUCTURAL_NORMALIZED_IDENTITY_COLLISION",
+    "PASS phase1c_rpc_actor-reject:INVALID_UPDATE_MODEL_ALIAS_FIELDS: SQL rejected request matching /INVALID_UPDATE_MODEL_ALIAS_FIELDS/ => ERROR:  INVALID_UPDATE_MODEL_ALIAS_FIELDS",
+    "PASS approval-issued:phase1c-stale-alias: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_STALE_REVISION: SQL rejected request matching /STRUCTURAL_STALE_REVISION/ => ERROR:  STRUCTURAL_STALE_REVISION",
+    "PASS approval-issued:phase1c-expired-alias: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_CAPABILITY_EXPIRED: SQL rejected request matching /STRUCTURAL_CAPABILITY_EXPIRED/ => ERROR:  STRUCTURAL_CAPABILITY_EXPIRED",
+    "PASS approval-issued:phase1c-valid-alias: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS apply:phase1c-valid-alias: non-superuser executor SQL RPC returned an authenticated result => status=APPLIED; replay=false",
+    "PASS approval-issued:phase1c-alias-revert: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS revert:phase1c_rpc_actor: non-superuser SQL revert RPC returned an authenticated result => status=REVERTED; replay=false",
+    "PASS revert:phase1c_rpc_actor#2: non-superuser SQL revert RPC returned an authenticated result => status=REVERTED; replay=true",
+    "PASS revert-session-user-audit: revert actor audit remains the authenticated login despite a spoofed claim setting => PostgreSQL assertion passed",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_CAPABILITY_NOT_FOUND: SQL rejected request matching /STRUCTURAL_CAPABILITY_NOT_FOUND/ => ERROR:  STRUCTURAL_CAPABILITY_NOT_FOUND",
+    "PASS approval-issued:phase1c-alias-revert-foreign: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_other_actor-reject:STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH: SQL rejected request matching /STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH/ => ERROR:  STRUCTURAL_REVERT_REPLAY_AUTHORIZATION_MISMATCH",
+    "PASS approval-issued:phase1c-brand-create: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS apply:phase1c-revert-brand: non-superuser executor SQL RPC returned an authenticated result => status=APPLIED; replay=false",
+    "PASS approval-issued:phase1c-child-create: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS apply:phase1c-revert-child: non-superuser executor SQL RPC returned an authenticated result => status=APPLIED; replay=false",
+    "PASS approval-issued:phase1c-brand-revert: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT: SQL rejected request matching /STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT/ => ERROR:  STRUCTURAL_REVERT_ACTIVE_MODEL_DEPENDENT",
+    "PASS approval-issued:phase1c-child-revert: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS revert:phase1c_rpc_actor#3: non-superuser SQL revert RPC returned an authenticated result => status=REVERTED; replay=false",
+    "PASS revert:phase1c_rpc_actor#4: non-superuser SQL revert RPC returned an authenticated result => status=REVERTED; replay=false",
+    "PASS approval-issued:phase1c-race-one-cap: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS approval-issued:phase1c-race-two-cap: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS approval-issued:phase1c-race-revert: issuer role bound approval, executor, batch hash, operations, expiry, evidence reference and database nonce => approval and capability rows committed; UUID nonce returned (value omitted)",
+    "PASS revert:phase1c_rpc_actor#5: non-superuser SQL revert RPC returned an authenticated result => status=REVERTED; replay=false",
+    "PASS phase1c_rpc_actor-reject:INVALID_STRUCTURAL_RPC_ENVELOPE: SQL rejected request matching /INVALID_STRUCTURAL_RPC_ENVELOPE/ => ERROR:  INVALID_STRUCTURAL_RPC_ENVELOPE",
+    "PASS phase1c_rpc_actor-reject:STRUCTURAL_RPC_REQUIRES_SERIALIZABLE: SQL rejected request matching /STRUCTURAL_RPC_REQUIRES_SERIALIZABLE/ => ERROR:  STRUCTURAL_RPC_REQUIRES_SERIALIZABLE"
+  ],
+  "frozen_owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+  "frozen_snapshot_sha256": "cf991264ada90efb0ff69a754cdee11fb0d13cc98fbe9fc60879de4eb7a2eb62",
+  "migration_replay": [
+    "docs/vehicle-db/drafts/phase1c/bootstrap_supabase_test_support.sql",
+    "supabase/migration_v12_canonical_write_pipeline.sql",
+    "supabase/migration_v15_canonical_vehicle_release.sql",
+    "supabase/migration_v22_unified_vehicle_input.sql",
+    "supabase/migration_v48_staged_vehicle_release.sql",
+    "supabase/migration_v57_vehicle_master_tables.sql",
+    "docs/vehicle-db/drafts/phase1c/seed_catalog_parity.sql",
+    "supabase/migration_v58_vehicle_serving_parity.sql",
+    "supabase/migration_v59_vehicle_engine_rules.sql",
+    "supabase/migration_v60_close_legacy_vehicle_write_path.sql",
+    "supabase/migration_v61_vehicle_master_backups_bucket.sql",
+    "supabase/migration_v62_ice_market_panels.sql",
+    "supabase/migration_v63_ice_model_crosswalk.sql",
+    "supabase/migration_v64_ice_panel_grain_fix.sql",
+    "docs/vehicle-db/drafts/phase1c/basic_identity_schema.sql",
+    "docs/vehicle-db/drafts/phase1c/governed_structural_rpc.sql"
+  ]
+}
+runner_exit_code=0
