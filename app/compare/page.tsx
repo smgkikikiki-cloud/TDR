@@ -254,17 +254,30 @@ export default function ComparePage() {
 
   return <div className="designPage comparePage compareDesignPage">
     <section className="compareHero">
-      <div>
-        <div className="sfEyebrow">เปรียบเทียบสเปก</div>
-        <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
+      <div className="compareHeroCopy">
+        <div className="tdr-eyebrow" lang="en">VEHICLE DATABASE / COMPARE SPECS</div>
+        <h1>เทียบรถให้เห็น<span className="compareHeroAccent">ทุกความต่าง</span></h1>
+        <p>เลือกรุ่นย่อยแล้วอ่านสเปกเคียงข้างกันสูงสุด 4 คัน ผลที่เด่นกว่าจะแสดงเฉพาะหัวข้อที่ข้อมูลเปรียบเทียบกันได้จริง</p>
+        <Link className="compareCatalogLink" href="/models">ค้นหารถจากแคตตาล็อก <span aria-hidden="true">↗</span></Link>
       </div>
-      <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
+      <div className="compareHeroAside" aria-label="ขั้นตอนการเปรียบเทียบ">
+        <span>HOW TO COMPARE</span>
+        <ol>
+          <li><b>01</b> เลือกรุ่นรถและรุ่นย่อยอย่างน้อย 2 คัน</li>
+          <li><b>02</b> กดเทียบรถเพื่อดูข้อมูลจริงจาก TDR</li>
+          <li><b>03</b> ดูความแตกต่าง แล้วแชร์ลิงก์รายการที่เลือก</li>
+        </ol>
+      </div>
     </section>
+    <div className="compareSectionHeader">
+      <div><span className="tdr-eyebrow">STEP 01 / เลือกรถ</span><h2>เลือกรุ่นย่อยที่ต้องการเทียบ</h2></div>
+      <p>เลือกให้ตรงรุ่นย่อย ไม่ยืมสเปกจากรถคันอื่น</p>
+    </div>
 
     <form className="compareSlotForm" onSubmit={runCompare}>
       <div className="compareSlotsHead">
-        <b>รถที่ต้องการเปรียบเทียบ</b>
-        <span>เลือกได้สูงสุด 4 รุ่นย่อย · ต้องมีอย่างน้อย 2 คัน</span>
+        <b>รายการที่เลือก <span className="compareSelectedNumber">{selectedCount}/4</span></b>
+        <span>สูงสุด 4 รุ่นย่อย · ขั้นต่ำ 2 คัน</span>
       </div>
 
       <div className="compareSlots" aria-label="รถที่เลือกไว้">
@@ -276,7 +289,8 @@ export default function ComparePage() {
                 <span className="compareSlotNo">รถคันที่ {index + 1}</span>
                 <strong>{[trim.brand_name, trim.model_name].filter(Boolean).join(" ")}</strong>
                 <span>{trim.name || "รุ่นย่อย"}</span>
-                <small>{trim.powertrain || ""}</small>
+                <small>{trim.powertrain || "ระบบขับเคลื่อนไม่ระบุ"}</small>
+                {trim.price_baht != null ? <span className="compareSlotPrice">฿{Math.round(trim.price_baht).toLocaleString("th-TH")}</span> : <span className="compareSlotPrice compareSlotPriceMissing">ยังไม่มีราคาที่ตรวจสอบได้</span>}
                 <div className="compareSlotActions">
                   <button type="button" onClick={() => openPicker(index)}>เปลี่ยนรถ</button>
                   <button type="button" onClick={() => removeSlot(index)} aria-label={`เอารถคันที่ ${index + 1} ออก`}>ลบ</button>
@@ -294,7 +308,7 @@ export default function ComparePage() {
       </div>
 
       {activeSlot !== null ? (
-        <div className="compareSlotPicker">
+        <div className="compareSlotPicker" role="region" aria-label="ตัวเลือกรุ่นรถและรุ่นย่อย">
           <div className="compareSlotPickerHead">
             <b>{slots[activeSlot] ? `เปลี่ยนรถคันที่ ${activeSlot + 1}` : `เพิ่มรถคันที่ ${activeSlot + 1}`}</b>
             <button type="button" onClick={closePicker} aria-label="ปิดตัวเลือกรถ">×</button>
@@ -348,7 +362,7 @@ export default function ComparePage() {
 
       <div className="compareRunBar">
         <label className="compareDiffToggle">
-          <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
+          <input type="checkbox" checked={diffOnly} onChange={(event) => { setDiffOnly(event.target.checked); setResult(null); }} />
           <span>แสดงเฉพาะจุดที่ต่างกัน</span>
         </label>
         <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
