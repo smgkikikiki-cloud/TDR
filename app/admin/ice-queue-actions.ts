@@ -16,6 +16,21 @@ import { adminDb } from "@/lib/supabase";
 
 const CANONICAL_ID = /^[a-z0-9_]+\.[a-z0-9_]+$/;
 
+/** People type "Mazda.MX-5"; stored ids are lower case with underscores ("mazda.mx_5"). */
+function normalizeId(value: string) {
+  return value.trim().toLowerCase().replace(/[\s-]+/g, "_");
+}
+
+/** A mistake in the form must show a readable message on the page, never the generic production server error. */
+async function safely(fn: () => Promise<void>) {
+  try {
+    await fn();
+  } catch (error: any) {
+    if (typeof error?.digest === "string" && error.digest.startsWith("NEXT_REDIRECT")) throw error;
+    redirect(`/admin/ice-queue?error=${encodeURIComponent(error instanceof Error ? error.message : "เกิดข้อผิดพลาด")}`);
+  }
+}
+
 async function context(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const db = adminDb();
@@ -52,27 +67,30 @@ async function decide(ctx: Awaited<ReturnType<typeof context>>, status: "APPROVE
 }
 
 /** Link the group to a model that already exists. */
-export async function iceQueueLink(formData: FormData) {
+export async function iceQueueLink(formData: FormData) { await safely(() => linkImpl(formData)); }
+async function linkImpl(formData: FormData) {
   const ctx = await context(formData);
-  const target = field(formData, "canonical_model_id").toLowerCase();
-  if (!CANONICAL_ID.test(target)) throw new Error("รหัสรถต้องอยู่ในรูป แบรนด์.รุ่น เช่น toyota.camry");
+  const target = normalizeId(field(formData, "canonical_model_id"));
+  if (!CANONICAL_ID.test(target)) throw new Error(`รหัสรถ "${target}" ไม่ถูกรูปแบบ ต้องเป็น แบรนด์.รุ่น เช่น mazda.mx_5 (ตัวอักษร ตัวเลข และขีดล่างเท่านั้น)`);
   const { data: model, error } = await ctx.db.from("vehicle_models").select("canonical_id").eq("canonical_id", target).is("deleted_at", null).maybeSingle();
   if (error) throw new Error(`ตรวจรถไม่ได้: ${error.message}`);
-  if (!model) throw new Error(`ไม่พบรถ ${target} ในฐานข้อมูล`);
+  if (!model) throw new Error(`ไม่พบรถรหัส ${target} ในฐานข้อมูล — ตรวจรหัสอีกครั้ง (ใช้ขีดล่าง เช่น mazda.mx_5)`);
   await decide(ctx, "APPROVED", target, "link", `owner linked in admin queue to ${target}`);
 }
 
 /** The group is not a car TDR counts (trailer, unidentifiable, etc.). */
-export async function iceQueueExclude(formData: FormData) {
+export async function iceQueueExclude(formData: FormData) { await safely(() => excludeImpl(formData)); }
+async function excludeImpl(formData: FormData) {
   const ctx = await context(formData);
   const why = field(formData, "reason") || "excluded by owner in admin queue";
   await decide(ctx, "EXCLUDED", null, "exclude", why);
 }
 
 /** Create a brand-new model through the governed writer (v68), then link the group to it. */
-export async function iceQueueCreate(formData: FormData) {
+export async function iceQueueCreate(formData: FormData) { await safely(() => createImpl(formData)); }
+async function createImpl(formData: FormData) {
   const ctx = await context(formData);
-  const canonicalId = field(formData, "canonical_id").toLowerCase();
+  const canonicalId = normalizeId(field(formData, "canonical_id"));
   const nameEn = field(formData, "name_en");
   const brandName = field(formData, "brand_name_en");
   const status = field(formData, "status") || "UNVERIFIED";

@@ -11,6 +11,7 @@ const title = (v: string) => (v === v.toUpperCase() ? v.toLowerCase().replace(/\
 export default async function IceQueuePage({ searchParams }: { searchParams: Promise<Search> }) {
   const sp = await searchParams;
   const done = typeof sp.done === "string" ? sp.done : "";
+  const failed = typeof sp.error === "string" ? sp.error : "";
   const db = adminDb();
   if (!db) return <div className="adminEditor"><div className="adminNotice">ฐานข้อมูลแอดมินยังไม่ได้ตั้งค่า</div></div>;
 
@@ -34,6 +35,7 @@ export default async function IceQueuePage({ searchParams }: { searchParams: Pro
       </p>
     </div></div>
 
+    {failed ? <div className="adminNotice"><b>ทำรายการไม่สำเร็จ:</b> {failed}</div> : null}
     {done ? <div className="adminSaved">บันทึกคำตัดสินของ {done} แล้ว</div> : null}
     {missing ? <div className="adminNotice">
       ยังอ่านคิวไม่ได้ ({queue.error?.message}) — ต้องรัน migration v69 ใน Supabase ก่อน แล้วรัน <code>select ice_monthly_refresh_queue();</code>
