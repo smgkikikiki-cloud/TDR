@@ -255,21 +255,57 @@ export async function GET(request: NextRequest) {
     }
 
     // Ice source (Preview, or Production once the owner sets TDR_ICE_MEMBER_CUTOVER=approved). The plan/window/comparison
-    // checks above and the quota below are the same ones the old source uses; only where the rows come from differs.
-    if (iceMemberMarketEnabled()) {
+    // checks above and the single quota call below are the same ones the old source uses; only where the rows come from differs.
+    const useIce = iceMemberMarketEnabled();
+    const { registrationTypes, ...otherFilters } = filters;
+    if (useIce) {
       if (!isIceMemberDimension(dimensionValue)) {
         return NextResponse.json({ error: "มุมมองนี้ยังไม่มีข้อมูล Ice" }, { status: 400 });
       }
-      const { registrationTypes, ...otherFilters } = filters;
       if (priceBand || Object.values(otherFilters).some((v) => Array.isArray(v) && v.length)) {
         return NextResponse.json({ error: "ตัวกรองนี้ยังไม่รองรับกับข้อมูล Ice (รองรับเฉพาะประเภททะเบียน)" }, { status: 400 });
       }
+    }
+
+    const available = useIce ? [] : await getRegistrationAvailablePeriods(ctx);
+    const currentWindow = resolveMarketWindow(period, windowValue);
+    const missingCurrent = missingReportPeriods(currentWindow, available);
+    if (!useIce && missingCurrent.length) {
+      return NextResponse.json({
+        error: "registration market window is incomplete",
+        window: currentWindow,
+        missing_periods: missingCurrent,
+      }, { status: 409 });
+    }
+
+    const db = adminDb();
+    const priceState = db && !useIce ? await getActiveMarketPriceState(db) : null;
+    const currentPriceCoverage = await priceCoverage(priceState, currentWindow.to);
+    if (priceBand && currentPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
+      return NextResponse.json({
+        error: "verified canonical LIST_PRICE coverage is too low for a paid price cohort",
+        price_band: priceBand,
+        price_coverage: currentPriceCoverage,
+      }, { status: 409 });
+    }
+
+    // The ONE quota-consuming call for this entire request -- everything
+    // below (current window, comparison window, trend months) reuses this
+    // same ctx and pays nothing further, regardless of how many internal
+    // slices that takes. The fingerprint must cover every output-changing
+    // request parameter, not just the filters/window/dimension: `limit` and
+    // `trend_months` both change what the response actually contains, so
+    // two requests that differ only in those must not be treated as the
+    // same request and coalesce.
+    const quota = await consumeMarketReportQuota(ctx, [
+      useIce ? "ice" : "", dimensionValue, windowValue, currentWindow.from, currentWindow.to,
+      comparisonMode ?? "", priceBand ?? "", includeUnmapped,
+      limit, trendMonths,
+      canonicalFilterFingerprint(filters),
+    ]);
+
+    if (useIce && isIceMemberDimension(dimensionValue)) {
       try {
-        const iceWindow = resolveMarketWindow(period, windowValue);
-        const quota = await consumeMarketReportQuota(ctx, [
-          "ice", dimensionValue, windowValue, iceWindow.from, iceWindow.to,
-          comparisonMode ?? "", limit, trendMonths, canonicalFilterFingerprint(filters),
-        ]);
         const ice = await buildIceMemberMarket({
           dimension: dimensionValue, period, window: windowValue, comparison: comparisonMode,
           registrationTypes: registrationTypes ?? [], limit, trendMonths,
@@ -300,43 +336,6 @@ export async function GET(request: NextRequest) {
         throw error;
       }
     }
-
-    const available = await getRegistrationAvailablePeriods(ctx);
-    const currentWindow = resolveMarketWindow(period, windowValue);
-    const missingCurrent = missingReportPeriods(currentWindow, available);
-    if (missingCurrent.length) {
-      return NextResponse.json({
-        error: "registration market window is incomplete",
-        window: currentWindow,
-        missing_periods: missingCurrent,
-      }, { status: 409 });
-    }
-
-    const db = adminDb();
-    const priceState = db ? await getActiveMarketPriceState(db) : null;
-    const currentPriceCoverage = await priceCoverage(priceState, currentWindow.to);
-    if (priceBand && currentPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
-      return NextResponse.json({
-        error: "verified canonical LIST_PRICE coverage is too low for a paid price cohort",
-        price_band: priceBand,
-        price_coverage: currentPriceCoverage,
-      }, { status: 409 });
-    }
-
-    // The ONE quota-consuming call for this entire request -- everything
-    // below (current window, comparison window, trend months) reuses this
-    // same ctx and pays nothing further, regardless of how many internal
-    // slices that takes. The fingerprint must cover every output-changing
-    // request parameter, not just the filters/window/dimension: `limit` and
-    // `trend_months` both change what the response actually contains, so
-    // two requests that differ only in those must not be treated as the
-    // same request and coalesce.
-    const quota = await consumeMarketReportQuota(ctx, [
-      dimensionValue, windowValue, currentWindow.from, currentWindow.to,
-      comparisonMode ?? "", priceBand ?? "", includeUnmapped,
-      limit, trendMonths,
-      canonicalFilterFingerprint(filters),
-    ]);
 
     // Every window this request could need, resolved up front -- before any
     // registration-fact fetch -- so the underlying facts (paginated fact

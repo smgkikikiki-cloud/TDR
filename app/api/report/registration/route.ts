@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Same access check as above has already passed; with the Ice flag on, the month picker lists Ice months instead.
-    if (dimensionValue === "coverage" && iceMemberMarketEnabled()) rows = (await iceCoverageRows()) as typeof rows;
+    if (dimensionValue === "coverage" && iceMemberMarketEnabled()) rows = (await iceCoverageRows()) as unknown as typeof rows;
 
     if (dimensionValue !== "coverage") {
       const db = adminDb();
