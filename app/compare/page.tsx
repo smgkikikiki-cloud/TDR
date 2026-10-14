@@ -369,9 +369,19 @@ export default function ComparePage() {
           {status === "loading" ? "กำลังเทียบ…" : `เทียบรถ${selectedCount ? ` (${selectedCount})` : ""}`}
         </button>
       </div>
-      {token === null && result?.anonymous
-        ? <p className="compareAnonHint">เทียบได้อีก {result.anonymous.remaining} ครั้งโดยไม่ต้องสมัคร · สมัครฟรีแล้วเทียบได้ไม่จำกัด</p>
+      {result?.anonymous
+        ? <p className="compareAnonHint" role="status">วันนี้ยังเทียบได้อีก <b>{result.anonymous.remaining}/{result.anonymous.limit}</b> ครั้งโดยไม่ต้องสมัคร · <Link href="/member/login">สมัครฟรีเพื่อเทียบได้ไม่จำกัด</Link></p>
         : null}
+      {selectedCount >= 2 ? (
+        <div className="compareShareBar" aria-label="ลิงก์สำหรับแชร์รายการรถที่เลือก">
+          <span>แชร์รายการรถที่เลือกไว้</span>
+          <div>
+            <Link href={shareHref}>เปิดลิงก์รายการที่เลือก ↗</Link>
+            <button type="button" onClick={() => void copyShareLink()}>คัดลอกลิงก์</button>
+          </div>
+          {shareStatus ? <p role="status">{shareStatus}</p> : null}
+        </div>
+      ) : null}
     </form>
 
     {status === "signup" ? (
@@ -388,9 +398,30 @@ export default function ComparePage() {
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
     {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ในฐานข้อมูลแล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
 
+    {status === "loading" && !result ? (
+      <section className="compareLoadingState" aria-live="polite">
+        <span className="tdr-eyebrow">STEP 02 / ผลการเปรียบเทียบ</span>
+        <h2>กำลังตรวจสอบสเปกที่เลือก</h2>
+        <div className="compareLoadingBars" aria-hidden="true"><i /><i /><i /></div>
+      </section>
+    ) : null}
+    {!result && status === "idle" ? (
+      <section className="compareAwaitingResult">
+        <span className="tdr-eyebrow">STEP 02 / ผลการเปรียบเทียบ</span>
+        <h2>ตารางสเปกจะปรากฏตรงนี้</h2>
+        <p>เลือกอย่างน้อยสองรุ่นย่อยแล้วกด “เทียบรถ” เพื่อดูความแตกต่าง ข้อมูลที่ยังไม่ยืนยันจะแสดงเป็น “—” ไม่ประมาณค่าแทน</p>
+      </section>
+    ) : null}
     {result && result.selected.length >= 2 ? (
-      <section className="compareTableWrap" aria-label="ตารางเปรียบเทียบรถ">
-        {result.quota.limit !== null ? <p className="compareQuota">เทียบรถวันนี้: {result.quota.used}/{result.quota.limit}</p> : null}
+      <section className="compareResultSection" aria-label="ผลการเปรียบเทียบรถ">
+        <div className="compareResultIntro">
+          <div><span className="tdr-eyebrow">STEP 02 / ผลการเปรียบเทียบ</span>
+            <h2>สเปกเคียงข้างกัน <span className="compareResultCount">{result.selected.length} คัน</span></h2>
+            <p>เครื่องหมาย ✓ แสดงเฉพาะค่าที่ดีที่สุดตามเกณฑ์เปรียบเทียบและข้อมูลที่ใช้วัดได้จริง อาจมีผลเสมอกัน</p>
+          </div>
+          {result.quota.limit !== null ? <p className="compareQuota">ใช้สิทธิ์เทียบรถวันนี้ {result.quota.used}/{result.quota.limit}</p> : null}
+        </div>
+        <div className="compareTableWrap" role="region" tabIndex={0} aria-label="ตารางเปรียบเทียบ เลื่อนแนวนอนเพื่อดูรถคันอื่น">
         <table className="compareTable">
           <thead>
             <tr>
@@ -437,13 +468,18 @@ export default function ComparePage() {
                       displayValue ? null : "compareMissing",
                       isWinner ? "compareWinnerCell" : null,
                     ].filter(Boolean).join(" ") || undefined;
-                    return <td key={`${row.key}:${index}`} className={cellClass}>{displayValue || "—"}</td>;
+                    return <td key={`${row.key}:${index}`} className={cellClass}>
+                      <span>{displayValue || "—"}</span>
+                      {isWinner ? <span className="compareWinnerMark" aria-label="ค่าที่ดีที่สุดตามเกณฑ์เปรียบเทียบ">✓ เด่น</span> : null}
+                    </td>;
                   })}
                 </tr>
               )),
             ])}
           </tbody>
         </table>
+        </div>
+        <p className="compareResultSource">ที่มา: ฐานข้อมูลรถยนต์ TDR · การเปรียบเทียบอิงข้อมูลรุ่นย่อยและเงื่อนไขสเปกเดียวกัน · “—” หมายถึงไม่มีข้อมูลที่ยืนยันได้</p>
       </section>
     ) : null}
   </div>;
