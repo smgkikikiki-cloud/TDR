@@ -76,3 +76,9 @@ Executed a **second independent SELECT-only, REPEATABLE READ** test on productio
 | Unmatched Ice raw facts to 1,407 frozen scoped keys | | **0** | |
 
 Disposition-linked raw fact counts: **4,988 source fact rows excluded** (not deleted); **4,027,896** units matched to existing-ID *offline candidates*, **94,432** units to new-BASIC *offline proposals*, **1,376** unresolved, and **18,283** units excluded (as established by the original scope manifest). These labels are **NOT** Production APPROVED, nor a test of v2 deployed schema/reader. Exact scoped static JOIN is a proof that the input grain can conserve 100% of the imported raw facts/units. Production v2 table does not exist, so v2 actual deployment remains blocked.
+
+## 7. REAL Vercel preview HTTP end-to-end proof
+
+**Date:** 2026-10-14. Vercel deployment `dpl_3jYbhXsGNqx9qdpDKmebmYZyUZ7E` returned READY; independently fetched `https://tdr-53vxd75sp-kiki-ed8b.vercel.app/market` using Vercel's authenticated URL-fetch and received **HTTP 200** actual HTML with `งวดล่าสุด 2569-09`, `60,417 คัน` and brand donut aria-label that lists TOYOTA 33.6%, HONDA 11.0%, ISUZU 8.1%, JAECOO 5.6%, MG 5.5%. Read-only Supabase reference SQL against imported M7.0: September `ice_reg_trend` and `ice_reg_province` independently report **60,417**; monthly TOYOTA 20,291, HONDA 6,633, ISUZU 4,867. This is genuine **source→Vercel preview→HTML** proof of **public brand grain only**, not production, not model-level R6, not member API R8, and not approved crosswalk.
+
+Preview uses `VERCEL_ENV=preview`; production remains unmodified and guarded behind the explicit `TDR_ICE_R8_LIVE_CUTOVER=approved` environment variable. PR remains Draft, not merged. Do not interpret test fixture metadata or a public preview page as license to activate missing scoped relations or approve owner decisions.
