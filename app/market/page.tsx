@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getPublicMarket, PUBLIC_BRAND_LIMIT } from "@/lib/public-market";
+import { getPublicMarketIce } from "@/lib/ice-public-market";
 import { MarketCharts } from "./MarketCharts";
 import { groupedNumber } from "@/components/charts/format";
 
@@ -14,7 +15,11 @@ export const dynamic = "force-dynamic";
  * live in /member/market, where the member policy is enforced server-side.
  */
 export default async function MarketPage() {
-  const market = await getPublicMarket("brand");
+  // R8 controlled cutover only. Default remains the existing public market.
+  // This switch is NOT enabled by merging a Draft R6 PR. R6/R7 acceptance,
+  // explicit owner R8 approval and production env configuration come first.
+  const iceLive = process.env.TDR_ICE_R8_LIVE_CUTOVER === "approved";
+  const market = iceLive ? await getPublicMarketIce("brand") : await getPublicMarket("brand");
   const dimensionLabel = "แบรนด์";
 
   return <div className="marketPage">
@@ -70,7 +75,9 @@ export default async function MarketPage() {
 
         <p className="marketNote">
           ตัวเลขคือยอดจดทะเบียนรถใหม่จากกรมการขนส่งทางบก ไม่ใช่ยอดขายของผู้ผลิต
-          แบรนด์ที่จับคู่กับแคตตาล็อกไม่ได้จะไม่ถูกนับในส่วนแบ่ง
+          {iceLive
+            ? "ข้อมูล Ice นับทุกแบรนด์ตามทะเบียนจริง แม้ยังจับคู่กับแคตตาล็อก TDR ไม่ได้"
+            : "แบรนด์ที่จับคู่กับแคตตาล็อกไม่ได้จะไม่ถูกนับในส่วนแบ่ง"}
         </p>
       </>
     ) : (
