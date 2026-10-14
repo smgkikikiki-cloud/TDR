@@ -1,0 +1,10 @@
+# Owner review for locked completion targets and their enforcement.
+# Requires enabling CODEOWNERS review in GitHub Rulesets/Branch Protection; file alone is not a required approval.
+/docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md @smgkikikiki-cloud
+/docs/portfolio/data-infra.requirements.json @smgkikikiki-cloud
+/docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json @smgkikikiki-cloud
+/AGENTS.md @smgkikikiki-cloud
+/CLAUDE.md @smgkikikiki-cloud
+/scripts/check-data-infra-contract.mjs @smgkikikiki-cloud
+/.github/workflows/data-infra-contract.yml @smgkikikiki-cloud
+/.github/CODEOWNERS @smgkikikiki-cloud
