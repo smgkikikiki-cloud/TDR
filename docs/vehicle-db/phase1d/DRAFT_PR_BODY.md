@@ -1,4 +1,4 @@
-## Issue #244 — preserve private backup JSON bytes; full-catalog run stops at schema-definition gate
+## Issue #244 — verified source schema parity and full-catalog Phase 1C rehearsal
 
 This continues the existing Draft PR #245 on `codex/vm-phase1d-full-catalog-eight-20261014`. The owner-supplied ZIP was treated only as backup data; no README text inside it was treated as a task instruction. The private archive and raw rows remain outside the repository and GitHub.
 
@@ -8,11 +8,15 @@ Independent QA found that the first restore path parsed the 53.9 MB decompressed
 
 Using the original 21-relation aggregate baseline with no expected-hash changes, the isolated PostgreSQL 17.11 restore now matches **21/21** relation/view fingerprints. It also matches **61/61** source per-column fingerprints for variants, trims, facts, and eco evidence. All 15 source tables / 28,319 rows restore with expected counts. This confirms the JSON numeric reserialization explained the earlier six aggregate differences.
 
-### Schema compatibility blocker
+### Schema and function compatibility
 
-The runner compares the local v57–v64 schema against `issue244_live_source_schema_acl_diagnostic_2026-10-14.json` before applying Phase 1C. It matches all six serving-view hashes using PostgreSQL 17 `pg_get_viewdef(..., true)` output, all 274 column definitions, 96 constraints, 29 triggers, and seven RLS policies. The 63 effective role-ACL entries from the read-only diagnostic were reconstructed only in the disposable database and verified there.
+The owner-provided Production CSV contains Base64 source definitions and MD5 values. The runner decodes the SQL bytes outside the repository and independently verifies the bytes against the unchanged MD5s in `issue244_live_source_schema_acl_diagnostic_2026-10-14.json`: `vehicle_master_seed_check()` = `9db12082a9d17b1d74198a3d517b8529`; `vehicle_serving_parity_check()` = `1fb5066a9a8e40ff75ed73e687bab23a`. PostgreSQL 17.11 `pg_get_functiondef()` hashes also match both source values after replay.
 
-The two remaining definition hashes differ: `vehicle_master_seed_check()` and `vehicle_serving_parity_check()`. The owner supplied two function-definition text attachments and the runner replayed them only in the disposable PostgreSQL 17 database. The seed-check text contains 44 invalid `count()` calls, fails on the first one (`count(*)` is required), and neither replayed definition matches its unchanged live-source hash. The parity-check function does execute and returns the exact same full result set as the repository function, but its definition hash still differs. The supplied text therefore does not prove exact source parity. The runner fails closed before Phase 1C. It applied no Phase 1C SQL, created zero BASIC identities, made no production/staging connections or writes, and left all 244 frozen decisions unchanged. No expected hashes were altered or suppressed.
+Both source functions execute without errors and produce the same complete results as the repository replay (63/63 seed checks; 62/62 serving-parity checks; zero failed checks). After replay, schema/ACL comparison has zero mismatches across the source metadata. Six serving-view hashes, all 274 column definitions, 96 constraints, 29 triggers, seven RLS policies and all 63 role-ACL entries match. The real access probes preserve `security_invoker` behavior: `anon` and `authenticated` cannot read the underlying base tables, while permitted access and all six view fingerprints remain unchanged. No source hash or expected value was edited.
+
+### Full-catalog Phase 1C acceptance
+
+With exact schema compatibility established, the existing unnumbered Phase 1C schema and governed RPC were applied only to the isolated PostgreSQL 17.11 clone. The existing Writer created and verified the eight pilot BASIC identities (`honda.jazz`, `jaecoo.j6`, `toyota.vios`, `gwm.ora_5`, `nissan.march`, `nissan.note`, `zeekr.7x`, `toyota.sienta`; 47,109 registrations). Tests covered issuer/executor separation, audit, replay, changed-payload rejection, transaction rollback, normalized-name collision rejection and compensating revert. All 15 source tables and six serving views retained their original fingerprints and counts. The sandbox was discarded after the run; no live rows were created.
 
 ### 114-target reconciliation
 
@@ -21,14 +25,14 @@ The verified private catalog was compared with every target in `materialization_
 ### Validation
 
 - `npm run check:phase1d-restore-bytes` — pass; confirms the numeric-token preservation regression.
-- `npm run check:phase1d-full-catalog-postgres` — full data fingerprints pass (21/21 and 61/61); six view hashes match; source function text replay was attempted, then stopped before Phase 1C because the seed function fails on malformed SQL and neither function hash matches the unchanged source diagnostic.
+- `npm run check:phase1d-full-catalog-postgres` — pass: 21/21 relation fingerprints, 61/61 source column fingerprints, full source schema/ACL parity, and all eight BASIC identities created and reverted/tested in the private isolated full-catalog clone. Raw rows and SQL definitions are absent from the report.
 - `npm run check:phase1d-identity-targets` — all 114 targets and 98,025 units reconciled; frozen 244-ledger SHA unchanged; 34 safe frozen CREATE candidates, 4 collision holds, 76 owner-approval holds.
-- `npm run check:phase1c-postgres-acceptance` — existing 61 SQL assertions pass separately in isolated PostgreSQL 16; its fixture remains Toyota-only and is not full-catalog acceptance.
+- `npm run check:phase1c-postgres-acceptance` — existing 61 SQL assertions pass separately in isolated PostgreSQL 16; its fixture remains Toyota-only. This is additional RPC/security coverage, not a substitute for the full-catalog acceptance above.
 - `npm run check` — pass.
 - Vehicle Master pytest — 1,923 passed, 379 skipped, 4,357 subtests passed; compileall and `python -m vehreg market validate` pass.
 
-### Required next evidence
+### Remaining production gates
 
-Provide raw `.sql` exports of the two source `pg_get_functiondef()` results, preserving the SQL bytes (especially `count(*)`). Resolve those definitions without changing source expectations. Only after that compatibility gate passes may the existing unnumbered Phase 1C SQL and the exact eight BASIC identities run in the disposable full-catalog database. Admin authorization, C02, and Enforcer gates remain separate and closed.
+Local full-catalog acceptance does not authorize Production use. The deployed Admin approval chain/issuer mapping, fresh migration-ledger/C02 decision, security and DB-owner review, and Enforcer admission remain blocked. The 34 collision-screened frozen CREATE targets still require a real Admin apply approval; the other 76 targets remain candidate-only pending owner authorization, four additional frozen targets remain held, and Ford Ranger Raptor remains HOLD. R6 class-scoped linking is a separate authorization and is not performed here.
 
 Stop for independent QA. Do not create Production writes, migrations, R6 links, merge, deploy, or bypass Enforcer.

@@ -63,6 +63,20 @@ function pg(sql: string): string { return run("docker", ["exec", "-i", container
 function roleSql(role: string, sql: string, allowFailure = false): string {
   return run("docker", ["exec", "-i", container, "psql", "-X", "-q", "-U", role, "-d", dbName, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql, allowFailure);
 }
+function probeViewRead(role: string, view: string): { outcome: "READABLE"; row_count: string } | { outcome: "DENIED_BASE_TABLE"; relation: string } {
+  const r = spawnSync("docker", ["exec", "-i", container, "psql", "-X", "-q", "-U", dbUser, "-d", dbName, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], {
+    cwd: root, input: `SET ROLE ${qident(role)}; SELECT count(*) FROM public.${qident(view)};`, encoding: "utf8", maxBuffer: 1024 * 1024,
+  });
+  if (r.error) throw r.error;
+  const output = `${r.stdout}${r.stderr}`.trim();
+  if (r.status === 0) {
+    assert.match(output, /^\d+$/, `UNEXPECTED_VIEW_READ_OUTPUT:${role}.${view}`);
+    return { outcome: "READABLE", row_count: output };
+  }
+  const denied = output.match(/permission denied for table ([a-zA-Z0-9_]+)/);
+  assert.ok(denied, `UNEXPECTED_VIEW_READ_FAILURE:${role}.${view}:${output.slice(0, 300)}`);
+  return { outcome: "DENIED_BASE_TABLE", relation: denied[1] };
+}
 const qident = (v: string) => `"${v.replaceAll('"', '""')}"`;
 const schemaDiagnosticPath = "docs/vehicle-db/phase1d/issue244_live_source_schema_acl_diagnostic_2026-10-14.json";
 const sourceDiagnostic = JSON.parse(fs.readFileSync(path.join(root, schemaDiagnosticPath), "utf8"));
@@ -114,7 +128,7 @@ function collectDefinitionHashVariants(): any[] {
       source_hash_matches_candidate:sourceMd5!==null && Object.values(candidates).includes(sourceMd5)};
   });
 }
-function sourceFunctionDefinition(name: string, envName: string): { sql: string; sha256: string } {
+function sourceFunctionDefinition(name: string, envName: string): { sql: string; sha256: string; md5: string } {
   const configuredPath = process.env[envName];
   if (!configuredPath) throw new Error(`SOURCE_FUNCTION_DEFINITION_REQUIRED:${envName}`);
   const definitionPath = path.resolve(configuredPath);
@@ -125,7 +139,11 @@ function sourceFunctionDefinition(name: string, envName: string): { sql: string;
   assert.equal((sql.match(/CREATE OR REPLACE FUNCTION/gi) ?? []).length, 1, `SOURCE_FUNCTION_SQL_HAS_MULTIPLE_TOP_LEVEL_DEFINITIONS:${name}`);
   assert.equal((sql.match(/\$function\$/g) ?? []).length, 2, `INVALID_SOURCE_FUNCTION_BODY_DELIMITER:${name}`);
   assert.ok(sql.endsWith("$function$"), `SOURCE_FUNCTION_SQL_HAS_TRAILING_STATEMENTS:${name}`);
-  return { sql: `${sql};`, sha256: digest(bytes) };
+  const md5=createHash("md5").update(bytes).digest("hex");
+  const sourceMd5=sourceDiagnosticSections.function_metadata.find((row)=>row.schema==="public"&&row.name===name&&row.args==="")?.definition_md5;
+  assert.ok(sourceMd5,`SOURCE_FUNCTION_HASH_MISSING_FROM_DIAGNOSTIC:${name}`);
+  assert.equal(md5,sourceMd5,`SOURCE_FUNCTION_EXPORT_MD5_MISMATCH:${name}`);
+  return { sql: `${sql};`, sha256: digest(bytes), md5 };
 }
 function functionBehavior(name: string): { rows?: any[]; error?: string } {
   try {
@@ -425,13 +443,24 @@ try {
     throw new Error(sourceDataMismatch ? "ISSUE244_SOURCE_BASELINE_FINGERPRINT_MISMATCH" : "ISSUE244_SOURCE_SCHEMA_ACL_MISMATCH");
   }
   const readRoles = ["anon", "authenticated", "service_role"];
-  const roleBefore: Record<string, string> = {};
+  const roleBefore: Record<string, { outcome: "READABLE"; row_count: string } | { outcome: "DENIED_BASE_TABLE"; relation: string }> = {};
   const privilegeBefore: Record<string, string> = {};
-  for (const role of readRoles) for (const view of views) {
-    roleBefore[`${role}.${view}`] = pg(`SET ROLE ${role}; SELECT count(*) FROM public.${view}; RESET ROLE;`);
-  }
   for (const role of readRoles) for (const relation of ["vehicle_brands", "vehicle_models", ...views]) {
     privilegeBefore[`${role}.${relation}`] = pg(`SELECT has_table_privilege(${quote(role)},${quote(`public.${relation}`)},'SELECT');`);
+  }
+  const viewBaseRelations = jsonRows(`SELECT coalesce(jsonb_agg(DISTINCT jsonb_build_object('view',v.relname,'base_relation',base.relname) ORDER BY jsonb_build_object('view',v.relname,'base_relation',base.relname)),'[]'::jsonb)
+    FROM pg_rewrite rw JOIN pg_class v ON v.oid=rw.ev_class JOIN pg_namespace vn ON vn.oid=v.relnamespace
+    JOIN pg_depend d ON d.classid='pg_rewrite'::regclass AND d.objid=rw.oid AND d.refclassid='pg_class'::regclass
+    JOIN pg_class base ON base.oid=d.refobjid
+    WHERE vn.nspname='public' AND v.relname=ANY(ARRAY[${views.map(quote).join(",")}]::text[]) AND base.relkind IN ('r','p') AND base.oid<>v.oid;`);
+  const basesByView = new Map<string,string[]>();
+  for (const row of viewBaseRelations) basesByView.set(row.view,[...(basesByView.get(row.view) ?? []),row.base_relation]);
+  for (const role of readRoles) for (const view of views) {
+    const viewGranted = privilegeBefore[`${role}.${view}`] === "t";
+    const allBasesGranted = (basesByView.get(view) ?? []).every((base) => pg(`SELECT has_table_privilege(${quote(role)},${quote(`public.${base}`)},'SELECT');`) === "t");
+    const observed = probeViewRead(role,view);
+    assert.equal(observed.outcome === "READABLE",viewGranted && allBasesGranted,`VIEW_READ_DOES_NOT_MATCH_SECURITY_INVOKER_ACL:${role}.${view}`);
+    roleBefore[`${role}.${view}`] = observed;
   }
   const snapshotPath = "data/packages/ice_crosswalk_r6_offline_recovery_M7.0/qa/vehicle_master_identity_snapshot_2026-10-13.json";
   const snapshotRaw = fs.readFileSync(path.join(root, snapshotPath), "utf8");
@@ -476,12 +505,20 @@ try {
   const changedRequest=buildStructuralRpcDraftRequest(changed.batch,planStructuralChanges(snapshot,changed.batch));
   const changedToken=randomBytes(32).toString("hex"); issue("issue244-changed-payload",changedRequest.batch_hash,"CREATE_MODEL_BASIC",changedToken);
   assert.match(roleSql(executor,rpcSql(changedRequest,changedToken),true),/STRUCTURAL_IDEMPOTENCY_HASH_CONFLICT/);
-  // Full-catalog alias collision: use the real name as a requested alias for a distinct canonical target.
-  const collisionIntent:any={operation:"CREATE_MODEL_BASIC",canonical_id:"honda.issue244_alias_collision",brand_id:"honda",name_en:"Issue244 Collision Probe",aliases:["Jazz"],expected_revision:0,
-    identity_evidence:{granularity:"MODEL",model_name:"Issue244 Collision Probe",references:["issue244:collision-regression"]}};
-  const collisionBatch=createBatch([collisionIntent],"issue244-alias-collision","normalized collision regression");
-  const collisionToken=randomBytes(32).toString("hex"); issue("issue244-alias-collision",collisionBatch.request.batch_hash,"CREATE_MODEL_BASIC",collisionToken);
-  assert.match(roleSql(executor,rpcSql(collisionBatch.request,collisionToken),true),/STRUCTURAL_NORMALIZED_IDENTITY_COLLISION/);
+  // Forge the exact RPC envelope as an untrusted client would to prove SQL
+  // rejects an existing normalized model name independently of the planner.
+  const collisionIntent:any={operation:"CREATE_MODEL_BASIC",canonical_id:"honda.issue244_collision_probe",brand_id:"honda",name_en:"Jazz",expected_revision:0,
+    identity_evidence:{granularity:"MODEL",model_name:"Jazz",references:["issue244:collision-regression"]}};
+  const collisionBatch:Batch={batch_id:"issue244-alias-collision",reason:"normalized collision regression",source_ref:"issue-244:private-full-catalog-rehearsal",
+    observed_at:"2026-10-13T00:53:40.000Z",intents:[collisionIntent]};
+  const collisionSourceHash=structuralHash({source_ref:collisionBatch.source_ref,raw_evidence:null,
+    intents:collisionBatch.intents.map(({expected_revision:_revision,...intent}:any)=>intent)});
+  const collisionRequest:any={rpc:"vm_apply_structural_changes",contract_version:"basic-identity-draft-v1",batch_hash:structuralHash(collisionBatch),
+    batch_id:collisionBatch.batch_id,expected_revisions:[{entity_type:"vehicle_models",entity_id:collisionIntent.canonical_id,revision:0}],intents:collisionBatch.intents,
+    provenance:{source_ref:collisionBatch.source_ref,observed_at:collisionBatch.observed_at,reason:collisionBatch.reason,source_hash:collisionSourceHash}};
+  collisionRequest.payload_hash=structuralHash(collisionRequest);
+  const collisionToken=randomBytes(32).toString("hex"); issue("issue244-name-collision",collisionRequest.batch_hash,"CREATE_MODEL_BASIC",collisionToken);
+  assert.match(roleSql(executor,rpcSql(collisionRequest,collisionToken),true),/STRUCTURAL_NORMALIZED_IDENTITY_COLLISION/);
   assert.equal(pg("SELECT count(*) FROM public.vehicle_models WHERE identity_level='BASIC'"),"8");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_models WHERE identity_level='BASIC' AND (status IS NOT NULL OR generation_id IS NOT NULL OR served_as_of IS NOT NULL OR seed_release_id IS NOT NULL OR segment IS NOT NULL OR body_type IS NOT NULL OR retail_price_min IS NOT NULL OR retail_price_max IS NOT NULL)"),"0");
   for (const t of ["vehicle_generations","vehicle_variants","vehicle_trims","vehicle_facts","vehicle_price_ledger"]) {
@@ -495,18 +532,18 @@ try {
   assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_observations WHERE batch_id='issue244-first-eight-full-catalog'"),"1");
   assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_revisions WHERE batch_id='issue244-first-eight-full-catalog'"),"8");
   assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_receipts WHERE batch_id='issue244-first-eight-full-catalog'"),"1");
-  assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_approvals WHERE executor_actor='phase1d_test_executor' AND approved_actor='phase1d_test_issuer' AND admin_evidence_ref LIKE 'fixture:issue244:%'"),"6");
+  assert.equal(pg("SELECT count(*) FROM vehicle_private.vm_structural_approvals WHERE executor_actor='phase1d_test_executor' AND approved_actor='phase1d_test_issuer' AND admin_evidence_ref LIKE 'fixture:issue244:%'"),"4");
   // The actual test issuer/executor are distinct PostgreSQL principals; direct issue privilege is separated.
   assert.equal(pg(`SELECT has_function_privilege('${executor}','vehicle_private.vm_issue_structural_capability(text,text,text,text[],timestamptz,text,text)','EXECUTE')`),"f");
   assert.equal(pg(`SELECT has_function_privilege('${issuer}','vehicle_private.vm_apply_structural_changes(jsonb,text)','EXECUTE')`),"f");
   // Exercise the approved SQL alias/revert operations without leaving any catalog change.
   const basicRows = candidates.map((c: any) => {
     const intent=(inputById.get(c.canonical_id) as any).create_intent;
-    return {canonical_id:intent.canonical_id,brand_id:intent.brand_id,name_en:intent.name_en,aliases:[],revision:1,deleted_at:null,identity_level:"BASIC",status:null,
+    return {canonical_id:intent.canonical_id,brand_id:intent.brand_id,slug:intent.canonical_id.replaceAll(".","-"),name_en:intent.name_en,aliases:[],revision:1,deleted_at:null,identity_level:"BASIC",status:null,
       generation_id:null,segment:null,body_type:null,payload:{id:intent.canonical_id,brand_id:intent.brand_id,name_en:intent.name_en,aliases:[],identity_level:"BASIC",incomplete:true}};
   });
   const afterCreateSnapshot:Snapshot={...snapshot,vehicle_models:[...snapshot.vehicle_models,...basicRows]};
-  const revertIntent:any={operation:"UPDATE_MODEL_ALIAS",canonical_id:"zeekr.7x",aliases:["Issue244 temporary QA alias"],expected_revision:1};
+  const revertIntent:any={operation:"UPDATE_MODEL_ALIAS",canonical_id:"zeekr.7x",aliases:["7X"],expected_revision:1};
   const revertBatch:Batch={batch_id:"issue244-alias-revert",reason:"exercise approved alias and compensating revert",source_ref:"issue-244:test-only",observed_at:"2026-10-13T00:54:00.000Z",intents:[revertIntent]};
   const aliasPlan=planStructuralChanges(afterCreateSnapshot,revertBatch);
   assert.equal(aliasPlan.holds.length,0,JSON.stringify(aliasPlan.holds));
@@ -518,11 +555,11 @@ try {
   const reverted=roleSql(executor,`BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT vehicle_private.vm_revert_structural_revision(${quote(aliasRevision)}::uuid,2,${quote(revertToken)}); COMMIT;`);
   assert.match(reverted,/REVERTED/);
   assert.equal(pg("SELECT identity_aliases::text FROM public.vehicle_models WHERE canonical_id='zeekr.7x'"),"[]");
-  const roleAfter:Record<string,string>={};
+  const roleAfter:Record<string, { outcome: "READABLE"; row_count: string } | { outcome: "DENIED_BASE_TABLE"; relation: string }> = {};
   const privilegeAfter:Record<string,string>={};
   for (const role of readRoles) for (const view of views) {
-    roleAfter[`${role}.${view}`] = pg(`SET ROLE ${role}; SELECT count(*) FROM public.${view}; RESET ROLE;`);
-    assert.equal(roleAfter[`${role}.${view}`],roleBefore[`${role}.${view}`],`ROLE_VIEW_COUNT_CHANGED:${role}.${view}`);
+    roleAfter[`${role}.${view}`] = probeViewRead(role,view);
+    assert.deepEqual(roleAfter[`${role}.${view}`],roleBefore[`${role}.${view}`],`ROLE_VIEW_ACCESS_CHANGED:${role}.${view}`);
   }
   for (const role of readRoles) for (const relation of ["vehicle_brands", "vehicle_models", ...views]) {
     privilegeAfter[`${role}.${relation}`]=pg(`SELECT has_table_privilege(${quote(role)},${quote(`public.${relation}`)},'SELECT');`);
@@ -535,19 +572,25 @@ try {
     assert.equal(after[rel].rows,expectedRows,`POST_WRITE_COUNT_CHANGED:${rel}`);
     assert.equal(after[rel].md5,before[rel].md5,`POST_WRITE_CONTENT_CHANGED:${rel}`);
   }
-  const sqlCaseCount=61;
   const report={schema:"tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",executed_at_utc:new Date().toISOString(),
     exact_command:"TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",docker_image:image,database:`PostgreSQL ${version}; network=none; tmpfs-only; no published port`,
     private_input:{available:true,raw_backup_pushed:false,gzip_sha256:expectedGzipSha,payload_sha256:expectedPayloadSha,tables:15,rows:28319,location:"external private attachment/temp only"},
+    source_baseline:{diagnostic:schemaDiagnosticPath,source_engine:sourceDiagnostic.source_db_engine,relations_checked:21,matching_relations:21-baselineMismatches.length,relation_mismatches:baselineMismatches,
+      column_fingerprints_checked:columnFingerprintSource.length,matching_column_fingerprints:columnFingerprintActual.length-columnFingerprintMismatches.length,column_fingerprint_mismatches:columnFingerprintMismatches},
+    schema_acl_parity:{repository_v57_v64_mismatches_before_source_definition_replay:repositorySchemaAclComparison.mismatches.map((row:any)=>row.key),
+      authoritative_source_definition_replay_mismatches:sourceSchemaAclComparison.mismatches,source_definition_replay_restored_metadata_parity:sourceSchemaAclComparison.mismatches.length===0,
+      definition_hash_variants:definitionHashVariants,source_function_replay:{
+        vehicle_master_seed_check:{export_md5:seedDefinition.md5,input_sha256:seedDefinition.sha256,source_definition_hash_match:sourceFunctionReplay.vehicle_master_seed_check.pg17_source_hash_matches,behavior:sourceFunctionReplay.vehicle_master_seed_check.behavior},
+        vehicle_serving_parity_check:{export_md5:parityDefinition.md5,input_sha256:parityDefinition.sha256,source_definition_hash_match:sourceFunctionReplay.vehicle_serving_parity_check.pg17_source_hash_matches,behavior:sourceFunctionReplay.vehicle_serving_parity_check.behavior}},
+      effective_acl_snapshot_replayed_in_disposable_db:true,role_view_access_before:roleBefore,role_view_access_after:roleAfter,select_privileges_before:privilegeBefore,select_privileges_after:privilegeAfter},
     restored_catalog:{table_counts:relationCounts,source_baseline_counts_and_hashes_matched:true,view_counts_and_hashes_matched:true,view_names:views,phase1c_legacy_catalog_rows_unchanged:true},
     phase1c:{schema_and_rpc:"applied only in disposable database",basic_models_created:8,canonical_ids:candidateIds,registrations_represented:47109,
-      rollback:"injected two-row transaction failure left zero model rows, observations, revisions or receipts for failed batch",same_payload_replay:"same receipt; no extra create",changed_payload_retry:"rejected",normalized_catalog_alias_collision:"rejected",issuer_executor:"distinct named local PostgreSQL roles; operation ACL separation verified",approval_audit:"one observation, eight revisions, one receipt, eight identity evidence records",revert_path:"BASIC alias revision applied and compensated; alias state restored; all CATALOG fingerprints unchanged"},
-    role_view_row_counts_before:roleBefore,role_view_row_counts_after:roleAfter,select_privileges_before:privilegeBefore,select_privileges_after:privilegeAfter,
-    unchanged_phase1c_sql_assertions:sqlCaseCount,frozen_inputs:{owner_decisions:244,ledger_sha256:frozenLedgerSha,scopes:1407,registration_units:4141987,effective_units:4123704,excluded_units:18283},
+      rollback:"injected two-row transaction failure left zero model rows, observations, revisions or receipts for failed batch",same_payload_replay:"same receipt; no extra create",changed_payload_retry:"rejected",normalized_model_name_collision:"rejected by the SQL RPC identity-token collision guard",issuer_executor:"distinct named local PostgreSQL roles; operation ACL separation verified",approval_audit:"one observation, eight revisions, one receipt, eight identity evidence records",revert_path:"BASIC alias revision applied and compensated; alias state restored; all CATALOG fingerprints unchanged"},
+    frozen_inputs:{owner_decisions:244,ledger_sha256:frozenLedgerSha,scopes:1407,registration_units:4141987,effective_units:4123704,excluded_units:18283},
     ford_ranger_raptor:"HOLD / 12839 registrations; not created",other_basic_rows:0,production_or_staging_connections:0,production_or_staging_writes:0,
-    acceptance_result:"PASS_LOCAL_FULL_CATALOG_REHEARSAL",production_acceptance:"BLOCKED_ADMIN_AUTH_C02_MIGRATION_ENFORCER",schema_acl_fidelity:"REPOSITORY_V57_V64_REPLAY; no fresh live schema/RLS/ACL manifest was available",raw_rows_in_report:false};
+    acceptance_result:"PASS_LOCAL_FULL_CATALOG_REHEARSAL",production_acceptance:"BLOCKED_ADMIN_AUTH_C02_MIGRATION_ENFORCER",schema_acl_fidelity:"PASS: owner-provided live source function exports passed byte MD5, PostgreSQL 17 definition hash, behavior, schema, and ACL parity checks in isolated PostgreSQL 17.11",raw_rows_in_report:false};
   fs.writeFileSync(path.join(root,"docs/vehicle-db/phase1d/issue244_full_catalog_rehearsal_report.json"),`${JSON.stringify(report,null,2)}\n`);
-  console.log(JSON.stringify({schema:report.schema,executed_at_utc:report.executed_at_utc,acceptance_result:report.acceptance_result,rows:28319,tables:15,basic_models_created:8,sql_case_count:61,source_fingerprints_match:true,view_fingerprints_match:true,raw_rows_in_report:false},null,2));
+  console.log(JSON.stringify({schema:report.schema,executed_at_utc:report.executed_at_utc,acceptance_result:report.acceptance_result,rows:28319,tables:15,basic_models_created:8,source_relations_matched:21,source_columns_matched:61,source_fingerprints_match:true,view_fingerprints_match:true,raw_rows_in_report:false},null,2));
 } finally {
   run("docker", ["rm", "--force", container], undefined, true);
   fs.rmSync(restoreInputPath,{force:true});
