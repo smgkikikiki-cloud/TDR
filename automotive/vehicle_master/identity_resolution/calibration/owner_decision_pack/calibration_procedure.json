@@ -1,0 +1,46 @@
+{
+ "design": {
+  "acceptance_gate": "AFTER selection: the pooled held-out false-AUTO upper bound (rule of three when zero, Wilson otherwise), precision and recall are reported against the tolerance the owner sets (acceptance_gate). They are acceptance / failure evidence only",
+  "failure_handling": "a failed gate freezes the result as 'not calibrated' and is reported. Any further attempt is a separately versioned experiment with a new registration; the held-out outcomes of this experiment are never used to retune it",
+  "folds": "brand_folds.csv: five folds of brand families; every row of a family sits in one fold",
+  "loop": "pass 1: for each fold k, select one value from the grid using the OTHER four folds only (select_threshold is handed no held-out row and no tolerance) and freeze it; pass 2: evaluate each frozen value ONCE on its own held-out fold (calibrate_by_fold)",
+  "no_leakage": "no threshold, class or alias list is tuned on a row of the held-out fold's brand family; the owner's seed brand classes are inputs, not tuned values",
+  "registration": "before any label is read, the candidate grid per pending entry (ordered loosest to strictest, from the swept values in sensitivity_results.json), the tie-break and the selection rule are registered (this file + the sha256 of sensitivity_results.json in MANIFEST.json)",
+  "selection_rule": "among grid values with zero TRAINING false-AUTO, the one with the most TRAINING true-AUTO pairs; a tie goes to the stricter value; if no value has zero training false-AUTO the strictest is chosen and flagged. Held-out results, pooled or per fold, are never an input"
+ },
+ "false_auto_analysis": [
+  "every false-AUTO is listed with its supporting codes, series state, name relation, brand relation and lineage roles",
+  "classify the root cause: series coincidence of different models, granularity (finer or coarser model), lineage (rename / replacement), brand relation, label noise in the owner's verdict",
+  "a root cause that the contract can express as a gate is a proposal for a rule change in a later round, never applied in the same pass as the measurement",
+  "report false-AUTO by brand family and by fold: a single family accounting for the errors means a missing rule, not a miscalibrated threshold"
+ ],
+ "labels_used": {
+  "consistency": "check_label_consistency() runs first; a CONFLICT is resolved by the owner before any metric is computed",
+  "disagreement": "a pair-derived and a group-derived value for the same (candidate, link type) cell that disagree make the cell a CONFLICT: unusable until the owner resolves it (derive_truth, check_label_consistency)",
+  "group": "create_candidates.csv verdicts speak about EQUIVALENT identity only. VALID_MISSING_CANONICAL: EQUIVALENT NEGATIVE for every pooled candidate; PART_OF / COMPOSED_OF are NOT inferred (a group with no model of its own can still be part of, or composed of, existing models: that combination is a REVIEW prompt, and the structural pair label stays a positive for its own link type). EXISTING_IDENTITY: the named model is EQUIVALENT POSITIVE and every other pooled candidate EQUIVALENT NEGATIVE (cardinality C1). VARIANT_TRIM_CODE: no pair truth is inferred - a variant is not an EQUIVALENT pair until the owner gives an explicit, correct link label. AMBIGUOUS: excluded and counted",
+  "negative_sample": "negative_sample.csv: owner_has_tdr_counterpart (+ owner_link_type), weighted by sampling_weight; a counterpart under another link type is not a negative for EQUIVALENT-only metrics by default",
+  "pair": "r6_owner_review.csv verdicts, per link type. POSITIVE for the link type named: CORRECT_EQUIVALENT (EQUIVALENT), CORRECT_PART_OF (PART_OF), CORRECT_COMPOSED_OF (COMPOSED_OF). NEGATIVE for the link type the sheet row proposed: WRONG_TARGET, NO_TDR_TARGET; nothing is said about the other link types. INSUFFICIENT_EVIDENCE excludes the candidate (counted, not scored)",
+  "scoring": "each link type is scored on its own: only POSITIVE and NEGATIVE cells of that link type enter its metrics (metric_rows); UNKNOWN, EXCLUDED and CONFLICT cells are counted and not scored"
+ },
+ "metrics": {
+  "auto_precision": "labelled-correct AUTO pairs / labelled AUTO pairs, Wilson 95% interval; with zero errors the rule-of-three upper bound on false-AUTO is reported instead",
+  "auto_recall": "labelled-correct pairs the contract writes at AUTO / labelled-correct pairs (EQUIVALENT only)",
+  "per_link_type": "every metric above is computed separately for EQUIVALENT, PART_OF and COMPOSED_OF on that link type's scored cells",
+  "propose_or_better_recall": "labelled-correct pairs the contract proposes or writes / labelled-correct pairs, with the weighted negative sample adding the correct pairs the contract missed (NO_CANDIDATE)",
+  "propose_precision": "labelled-correct among PROPOSE pairs",
+  "unit_weighted": "each of the above is also reported weighted by lifetime units, because a wrong high-volume pair costs more registrations than a wrong tail pair"
+ },
+ "pending_threshold_sensitivity": [
+  "each pending calibration entry (pending_threshold_sensitivity.csv) is evaluated at every registered grid value on the labelled rows; selection per fold uses training folds only",
+  "report the change in held-out AUTO precision, AUTO recall and false-AUTO count per value as evidence; a value with a TRAINING false-AUTO is not eligible",
+  "an entry that moves no labelled row stays pending and is reported as not constrained by the labels"
+ ],
+ "schema": "ir-owner-pack-calibration-procedure/2",
+ "status": "NON_AUTHORITATIVE preparation; nothing here is calibrated and no value is chosen",
+ "stop_rules": [
+  "fewer labelled AUTO pairs than ER-T tolerance requires: report the bound that the labels do support and keep the threshold pending",
+  "any CONFLICT from check_label_consistency / derive_truth: stop and return the conflicts to the owner",
+  "any false-AUTO in a held-out fold: stop, analyse (false_auto_analysis), do not tune around it",
+  "nothing is bound until the owner accepts a calibrated value in adoption.yaml; adoption.binding stays false"
+ ]
+}

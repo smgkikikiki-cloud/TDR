@@ -1,0 +1,61 @@
+# R6 calibration data (2026-10-11)
+
+The calibration-data milestone of Identity Resolution Contract v1: the real first-run R6 rows, a dataset that puts what the legacy matcher saw next to what Contract v1 says
+on the same pairs, the sheet the owner labels, and a report. **It calibrates nothing.** `adoption.yaml` keeps `binding: false`, no threshold is adopted, the contract is not
+frozen, and the owner columns of the sheet are blank.
+
+Read first: [`CALIBRATION_REPORT.md`](CALIBRATION_REPORT.md) (the numbers), then [`r6_owner_review.csv`](r6_owner_review.csv) (what to label).
+
+## What is here
+
+| File | What it is |
+|---|---|
+| `inputs/` | Read-only extracts of production (`SELECT` only) and their provenance: the 490 `ice_model_crosswalk` rows of the 2026-10-10 run, the 50 redirects, the matcher's inputs (`registrations` summed by canonical model and month, `vehicle_models` / `_brands` / `_generations`). `MANIFEST.json` has the sha256 of every file, `EXTRACT_QUERY.sql` the query. |
+| `r6_calibration_dataset.csv` | One row per (Ice group, candidate TDR target) pair worth a look: **legacy** evidence (what the first run saw and stored), **Contract v1** evidence (recomputed on the common observation window), volumes, lineage, link type, reason codes by role. |
+| `r6_calibration_groups.csv` | One row per Ice group (1,200): legacy and v1 outcome, volumes, lineage. Groups with no retained pair are only here. |
+| `r6_owner_review.csv` | **The owner's sheet.** Prioritised; machine evidence prefilled; `owner_verdict`, `owner_link_type`, `owner_canonical_model_id`, `owner_notes` are blank. |
+| `CALIBRATION_REPORT.md`, `calibration_summary.json` | The report and the numbers behind it. |
+| `sensitivity_results.json` | For each provisional value: how many real decisions change when that one value moves (and two hypotheses about absent-row semantics, labelled as hypotheses). |
+| `adapters.py`, `legacy.py`, `pairs.py`, `review.py`, `report.py`, `render_report.py`, `sensitivity.py`, `build.py` | The tooling. Offline, stdlib + PyYAML, no network, no database. |
+| `lexical_pass.py`, `lexical_pass/` | The M7 lexical-relation measurement of the rev 4 correction pass: `before_rev3.json` (the rev 3 rules re-derived live), `after_rev4.json`, `comparison.json` and `LEXICAL_PASS_REPORT.md` (FUZZY / SIBLING counts, structural conflicts, decisions, newly exposed CREATE risk). Regenerate with `python -m identity_resolution.calibration.lexical_pass measure …` / `report`. |
+| `relation_export.py`, `relation_export/` | The **complete pair-level relation export** (all nine kinds, both populations, candidate pools, tokens, outcomes) for consumers such as PR #201, with its manifest, schema and `CONSUMER_CONTRACT.md`. `python -m identity_resolution.calibration.relation_export build` (needs the package) / `verify` (offline). |
+| `owner_decision_pack.py`, `owner_decision_pack/` | The **Owner Decision & Calibration Preparation Pack**: ordered, evidence-backed owner questions (catalog-alias collisions, brand-resolution cases, R6 starter batch, the 82 CREATE candidates), the R6 ↔ CREATE reconciliation, brand folds, a weighted negative sample and the post-label calibration procedure. Owner fields blank; suggestions `*_NON_AUTHORITATIVE`. `python -m identity_resolution.calibration.owner_decision_pack build` / `verify` (offline), `collect` (needs the package once). |
+| `policy_baseline.py`, `baselines/rev4/` | **Versioned baselines.** The exact rev 4 `policy.yaml` and `ref_eval_core.py` (the hashes the relation export pins) and `rev4_baseline()`, a context manager that makes the evaluator behave as it did for rev 4. The rev 4 artifacts in this directory (relation export, calibration outputs, owner sheet, lexical pass, Owner Decision Pack) are the accepted baseline and are verified under it. |
+| `related_auto.py`, `related_auto/` | **Rev 5 impact measurement:** the same M7.0 snapshot resolved under the rev 4 baseline and the live rev 5 policy (a RELATED brand may reach AUTO): changed decisions, every RELATED-brand pair with the first gate that stops it, the false-AUTO exposure. `python -m identity_resolution.calibration.related_auto collect` (needs the package) / `verify` (offline). |
+| `ref_eval_core.py`, `ref_eval_resolve.py` | The **reference evaluator**: a transcription of SPEC sections 5-9 that says what Contract v1 would conclude. **It is not the engine** (see below). |
+
+## How to rebuild
+
+```bash
+cd automotive/vehicle_master
+python -m identity_resolution.calibration.build            # rewrite the outputs from inputs/ and the archived Ice package
+python -m identity_resolution.calibration.build --check    # fail if a committed output is stale
+python -m identity_resolution.calibration.sensitivity run  # ~10 minutes; rewrites sensitivity_results.json
+```
+
+## Three kinds of evidence, kept apart
+
+* `legacy_*` — the first run, replayed offline with the legacy module's own functions. The replay reproduces **489 of 489** stored matcher rows exactly (candidate, status, method, reason text, full fingerprint), so these are the run's numbers, not a re-interpretation. The `legacy_*` window columns say exactly which months were compared: the group's newest 24 months *with an Ice row*, every month the TDR side lacked turned into 0.
+* `v1_*` — Contract v1, rev 4, as a **dry run** (`binding: false`, invariant I16): common observation window, `null` is never 0, brand/name relation, link type, reason codes. Ice and TDR absent-row semantics stay **UNKNOWN**; an unresolved gap caps AUTO exactly as the SPEC says.
+* `owner_*` — blank. The legacy status is in `legacy_r6_status`; it is never copied into an owner column and never used as a label.
+
+## Filling in the sheet
+
+One row = one candidate pair; the verdict is about **that row's candidate**.
+
+| `owner_verdict` | Meaning |
+|---|---|
+| `CORRECT_EQUIVALENT` | the Ice group and the TDR model are the same vehicle |
+| `CORRECT_PART_OF` | the Ice group is a narrower part of the TDR model (several Ice groups may share it) |
+| `CORRECT_COMPOSED_OF` | the Ice group is made up of several TDR models (put them all in `owner_canonical_model_id`, `a+b`) |
+| `WRONG_TARGET` | the TDR model shown is not right; put the right one in `owner_canonical_model_id` (and say so in `owner_link_type`) |
+| `NO_TDR_TARGET` | TDR has no model for this Ice group |
+| `INSUFFICIENT_EVIDENCE` | cannot tell |
+
+`other_candidates` lists the best other pairs of the same group to help you name the right target. Rows are ordered by your seven priorities (`review_tier`); `cumulative_unique_group_units_share` says how much of the market the rows above already cover, so you can stop when the rest is not worth it.
+
+## What this is not
+
+* Not the engine. `ref_eval_*.py` is stdlib, has no persistence, no adapter registry, no CLI and no production wiring; nothing outside `identity_resolution/` imports it (a test enforces that) and the engine gate in `../README.md` section 5 is unchanged. It shares an author with the SPEC; its agreement with the 508 golden cases (`tests/identity_resolution/test_ir_reference_evaluator.py`) is consistency, not correctness.
+* Not a write to anything. No production row, flag or gate was changed, no mapping was approved or rejected, R6 was not re-run, R7 was not started, no migration was made.
+* Not the Ice answer. `Q-ICE-ABSENT-ROW` is still open and nothing here waits for it; the report sizes what an answer would unlock as a clearly labelled hypothesis.

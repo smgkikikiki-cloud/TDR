@@ -1,0 +1,111 @@
+{
+ "binding": false,
+ "counts": {
+  "alias_rows": 9,
+  "brand_cases": 11,
+  "create_rows": 82,
+  "first_wave_atomic_verdicts": 78,
+  "first_wave_child_decisions": 13,
+  "first_wave_review_sessions": 65,
+  "negative_sample": 24,
+  "queue": 690,
+  "r6_view_rows": 560,
+  "sessions": 659,
+  "starter_rows": 48
+ },
+ "export_manifest_sha256": "e9d74e05ce9c09ad59bad2654d16fbb74e06969e929b7415b5e55a0fc2d2e0b8",
+ "files": {
+  "OWNER_DECISION_PACK.md": {
+   "bytes": 22278,
+   "sha256": "8df13230c0686d4cae80a7417e2a8249701a76829e2faccc113a029f9f5476c5"
+  },
+  "brand_folds.csv": {
+   "bytes": 15423,
+   "sha256": "b00bd12a6499f1a757810a6e3ebd2c992a277fe616b5e0a054e85c60ba3bdbaa"
+  },
+  "brand_resolution_cases.csv": {
+   "bytes": 18476,
+   "sha256": "11b5a16261eb72810d0c66129a545d2bedb9064963dc52be306c111fc4669212"
+  },
+  "calibration_entry_requirements.csv": {
+   "bytes": 2096,
+   "sha256": "e7bcdf3941f0408e9fe1141ec00a689ec698a48589f34340c2f09163d3433acd"
+  },
+  "calibration_procedure.json": {
+   "bytes": 6117,
+   "sha256": "633d02bb3157050c821295979521a04c446f0968d98d1c4bdf6239b5bc17a3f6"
+  },
+  "catalog_alias_collisions.csv": {
+   "bytes": 11031,
+   "sha256": "86f5f5f9236967c087d21cfe10f07134200f3d4ab6dd827605228cd0850e057f"
+  },
+  "create_candidates.csv": {
+   "bytes": 60157,
+   "sha256": "0138331884aad5676922231921db1518e2fa20029493b68bb50e57a06f0e91d6"
+  },
+  "decision_queue.csv": {
+   "bytes": 154288,
+   "sha256": "8cb12ae45cbb09bb9771e7a48e00cca217bd05a180fdcff38963490480795b1c"
+  },
+  "initial_owner_decisions.csv": {
+   "bytes": 1842,
+   "sha256": "c424e97fd20cc6444b7fc8312f2844eb075830d14c2035db6d8a76c923242c06"
+  },
+  "negative_sample.csv": {
+   "bytes": 9542,
+   "sha256": "5700c4ccb2ae4d9102bd41709ad949b43ddf63d8fb1a0b5837f9974871af0676"
+  },
+  "pending_threshold_sensitivity.csv": {
+   "bytes": 6533,
+   "sha256": "8036f2e77915e15309305ecd2a7b37a1656210f8796219695699f40338f62613"
+  },
+  "r6_create_reconciliation.csv": {
+   "bytes": 30042,
+   "sha256": "1c6c917619cbcf6d0e0c62bfe9b7f97ee77d619d69a37ea364a7145a335c074c"
+  },
+  "r6_priority_view.csv": {
+   "bytes": 222035,
+   "sha256": "3beae93b59240cb080eb19a3de2b2a4d069f8cc4908d6dfe4e0ffe51b466df52"
+  },
+  "review_sessions.csv": {
+   "bytes": 823098,
+   "sha256": "7b22ea96e72794bb25f5306147f8d97fb7df003d5ab9648c66c911395a5062b1"
+  },
+  "verdict_crosswalk.csv": {
+   "bytes": 2939,
+   "sha256": "48507dbd8dcff93da7ade0bec13f506e09c92ce0674565a4519b0afbeda61811"
+  }
+ },
+ "pack": "ir-owner-decision-pack/1",
+ "pr201_commit": "30d2618a48b830b4afdbcf1299475f368bd9d214",
+ "pr201_inputs": {
+  "create_adjudication.csv": {
+   "bytes": 67965,
+   "git_blob": "a07c2c116b818f52bb47f71614c8f3b6d8abcf69",
+   "sha256": "85a3605bc8c154bd7f22291f44e31309b2901ad57c41e205ba44b0b41a9acacd",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/review/create_adjudication.csv"
+  },
+  "cross_brand_review.csv": {
+   "bytes": 5614,
+   "git_blob": "c3b5055ef1a715c3d5cb9e2f7c354feb0ead1ca9",
+   "sha256": "b02a2398b6f757658b21eccbfb49b94a90b7244d75d9fcac31c2865fd4c30b5b",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/cross_brand_review.csv"
+  },
+  "decisions.csv": {
+   "bytes": 251496,
+   "git_blob": "e9500a7be4e16e924aa44abfc68c4d3c65c36e87",
+   "sha256": "f9a8f788f49db037e3d903924e7a63f143281de90373a32cf702deeb77a46c24",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/decisions.csv"
+  },
+  "parity_unresolved.csv": {
+   "bytes": 1184,
+   "git_blob": "1a5a5b659289e1d5e62683569321c6cd824cb868",
+   "sha256": "0192ef7cd7cf568b125412e0388d1126acec5d95dae5433b1bc280833f1b14dd",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/parity_unresolved.csv"
+  }
+ },
+ "r6_owner_review_sha256": "d18dda651f90cb12dd4a86f708a929da19d85b9e3054b237e20fb108757121a5",
+ "schema": "ir-owner-decision-pack-manifest/1",
+ "sensitivity_results_sha256": "51c10e7108a3d63253621052d9da35a700ba303a119208eb77376dbe0a84ef44",
+ "series_evidence_sha256": "27dcdced722af2dd3af26d42d5485882f6390eab4b63b80412bf02f674cfecc7"
+}

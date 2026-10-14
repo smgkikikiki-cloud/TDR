@@ -1,0 +1,335 @@
+# TDR Identity Resolution — adoption gate v1 (DRAFT, NOT FROZEN — revision 5)
+#
+# The numbers and switches in policy.yaml tagged `proposal` or `assumption` have NOT been calibrated against
+# production data and have not been signed off. (The first R6 run's rows were recovered read-only on 2026-10-11 into calibration/, but they
+# carry no owner labels, so nothing can be calibrated yet.)
+# They are PROVISIONAL. This file is the gate that keeps them from being adopted by accident:
+#
+#   * `binding: false` means a run under this policy is a DRY RUN (SPEC invariant I16): the engine may emit
+#     records, but their `writes` are advisory, no AUTO is persisted, and nothing may be APPROVED on their
+#     strength. policy_ref.binding carries the flag in every record.
+#   * Every `proposal` / `assumption` leaf of policy.yaml belongs to EXACTLY ONE entry below (a test enforces it),
+#     with its class, status and what would settle it.
+#   * `binding` may become true only when every entry is `calibrated` or `owner_accepted` (a test enforces it).
+#     Flipping it is a contract change: a policy MAJOR/MINOR bump, a CHANGELOG line and an owner decision.
+#
+# Classes
+#   calibration   a numeric tunable: settle it against labelled data (below), never by taste.
+#   representation  a definition (rounding places, calendar sanity bounds, token boundary characters): no data can
+#                 calibrate it; the owner signs it off.
+#   design_choice a switch, list, order or route: an owner decision, recorded.
+#
+# Labelled data a calibration entry needs ("the label set"): the owner's decisions on the first R6 run's candidate rows
+# (accepted / rejected / changed, with the final TDR model), plus the owner's APPROVED crosswalk rows, joined to the M7.0
+# package and to TDR registrations. Selection protocol: choose on a training part, confirm on a held-out part (split by
+# brand, not by row), and report precision and recall separately for AUTO and for PROPOSE. A value is `calibrated` only
+# when that report exists and the owner has read it; "no AUTO row the owner labels wrong" is the bar for any AUTO gate.
+#
+# Status values: pending | calibrated | owner_accepted.
+#
+# `owner_decisions` records what the owner has decided about the CONTRACT (as opposed to the numbers). They are not thresholds and need no
+# calibration. `accepted` = adopted into the draft contract; `standing` = a condition that stays in force until the owner lifts it
+# (status `lifted`, with a dated note). A test refuses `binding: true` unless the standing decisions about it were lifted.
+
+version: v1
+binding: false
+status: provisional_not_frozen
+
+owner_decisions:
+  - id: od_link_types
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept the three link types: EQUIVALENT, PART_OF, COMPOSED_OF."
+    refs: ["SPEC §7.0"]
+  - id: od_cardinality_rules
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept the two cardinality rules as v1: C1 (one active claim per subject) and C2 (a target claimed whole is claimed once; PART_OF claims may share a target)."
+    refs: ["SPEC §7.0", "SPEC I12"]
+  - id: od_atomic_link_sets
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Keep bundles as real atomic link sets, not review-only evidence."
+    refs: ["SPEC §7.3", "SPEC §10.5", "SPEC I17"]
+  - id: od_persistence_link_type_identity
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Accept extending persistence identity with link_type (claim key (provider, subject_id, target_id, link_type); set_id / set_size for link sets). Legacy overlapping claims must be reported and never auto-repaired."
+    refs: ["SPEC §10.6", "SPEC §8.2 step 0", "SPEC I18"]
+    note: "Logical contract only. No DDL, migration or write path is authorised by this decision."
+  - id: od_lexical_relation_correction
+    decided_on: "2026-10-11"
+    status: accepted
+    decision: "Correct the name-relation ladder after the M7 lexical/relation analysis: FUZZY must not fuzzy-match differing tokens containing digits; SIBLING must require a genuinely distinctive shared token, by a generic policy-driven rule and not by hardcoding V / CX / GR / RS / AMG as model exceptions; add the Honda-scoped model synonyms Jazz <-> Fit and Stepwagon <-> Step WGN."
+    refs: ["SPEC §5.3", "SPEC §5.4", "SPEC I19", "calibration/lexical_pass/LEXICAL_PASS_REPORT.md", "taxonomy NAME-14..NAME-17"]
+    note: "The RULES are the owner's. The descriptor vocabulary, the token-length floor and the patterns that implement 'distinctive' are the pass's proposals and stay pending (lexical_distinctive_min_length, lexical_distinctive_vocabulary). Production, DB state, mappings, R6/R7, migrations, engine wiring, adoption binding and freeze state were not touched."
+  - id: od_relation_first_producer_pool
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-01. A consumer of the producer MUST use the producer's typed brand relation and candidate pool as the authoritative matching input and MUST NOT independently resolve brand relations from catalog brand labels or aliases. Candidate-pool membership does not mean any candidate pair is correct; R6 pair verdicts and PR #201 CREATE / group verdicts remain separate owner questions and nothing is inferred between them."
+    refs: ["PR #200 comment 6117608686 (owner adjudication, INIT-01)", "owner_decision_pack/initial_owner_decisions.csv#INIT-01"]
+    note: "The RELATED -> PROPOSE ceiling that comment also stated is SUPERSEDED by od_related_brand_auto_eligible. Recorded from the owner's comment; no consumer code, export or PR #201 file was changed by this decision."
+  - id: od_catalog_brand_alias_not_a_relation
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-02. A catalog brand `aliases` entry is NOT by itself an authoritative typed brand or identity relationship: brand resolution follows the versioned, provenance-backed SAME / RELABEL / RELATED policy classes. JETOUR is a separate vehicle brand, not Chery; the typed relationship between them is RELATED (policy alias class chery_jetour), never SAME or RELABEL. A distinct TDR brand record for JETOUR, if needed, is a separate catalog decision and is not created here."
+    refs: ["PR #200 comment 6117626098 (owner adjudication, INIT-02)", "policy.yaml aliases.brand chery_jetour"]
+    note: "Recorded from the owner's comment. No catalog brand was created and no Chery catalog alias was changed."
+  - id: od_related_brand_auto_eligible
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "ALIAS_RELATED is AUTO-eligible. A RELATED-brand candidate may be an AUTO EQUIVALENT machine mapping if and only if it independently passes every existing AUTO gate (strong common-window series and sufficient sample, an approved lexical AUTO relation, exact supported model scope, no body / lifecycle / gap / provenance / lineage veto, margin and cardinality protection, no competing, protected or rejected conflict). A corporate or brand-family relationship alone never implies same-model identity. AUTO is an auditable, reversible machine state, not owner APPROVED / LOCKED, not a canonical-model mutation, not a PR #201 CREATE approval and not a production write."
+    refs: ["PR #200 comment 6117676961 (owner policy override)", "SPEC §5.1 step 5", "SPEC I20", "policy.yaml candidates.brand_relations_auto_eligible", "taxonomy BRND-08, BRND-09", "calibration/related_auto/RELATED_AUTO_IMPACT.md"]
+    note: "Supersedes the AUTO-cap portion of the INIT-01 comment. Authorises a DRAFT policy revision with offline fixtures, tests and impact evidence only: no R6/R7 live run, no PR #201 edit, no production access, no canonical write, no paid provider, no merge, deploy, adoption or engine rollout. The rev 4 outputs (relation export, owner pack, calibration outputs) are kept as the historical baseline (calibration/baselines/rev4). adoption binding stays false."
+  - id: od_thai_market_brand_filing
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-03. The canonical BRAND a vehicle is filed under follows its actual Thai-market identity and distributor, never its body type alone: MG and MAXUS are separate brands generally (MG Maxus passenger program vs the independently imported MAXUS commercial brand). Explicit case-level filings: Mifa 7 -> MG; Mifa 9 -> MG; V80 -> MG (a deliberate exception to any inference that a commercial vehicle is filed under MAXUS)."
+    refs: ["PR #200 comment 6118608273 (owner adjudication, INIT-03 filing principle)", "PR #200 comment 6118627576 (owner decision, INIT-03 model-specific filing)", "PR #200 comment 6119320447 (decision-round closure)", "owner_decision_pack/initial_owner_decisions.csv#INIT-03"]
+    note: "Brand filing ONLY. It is not a CREATE approval for V80 (OD-C11) and not a CORRECT_* verdict for R6-190 / R6-183 / R6-184: those cells stay blank and need their own evidence and decisions. No catalog, policy, crosswalk, production or canonical data was changed, and the frozen rev 4 Owner Decision Pack is not edited."
+  - id: od_catalog_model_alias_not_identity
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "INIT-04. A TDR catalog MODEL `aliases` entry is a lookup / candidate-discovery / preliminary lexical-matching aid. Its presence alone does NOT assert that an Ice group and the catalog model are the same vehicle and is not an owner-approved identity link. A model alias by itself must never trigger AUTO: AUTO needs the candidate to independently pass every other applicable gate of the current draft contract (registration-series evidence, coverage, name / vehicle context, lifecycle and body compatibility, ambiguity and protected-state rules)."
+    refs: ["PR #200 comment 6118641819 (owner adjudication, INIT-04)", "PR #200 comment 6119320447 (decision-round closure)", "SPEC §5.4", "SPEC §14.2", "SPEC I20", "owner_decision_pack/initial_owner_decisions.csv#INIT-04"]
+    note: "Policy principle only: no code, configuration, corpus, export or canonical change, and none of OD-A01..OD-A09, the child CREATE cells or the R6 pair verdicts is inferred from it. Rev 5 already enforces the principle without a change: the evaluator and adapters never read a catalog model `aliases` field (the only model-name channel is the explicit, scoped policy aliases.model pair table), and even EQUAL_VIA_MODEL_ALIAS still needs every other AUTO gate (corpus classify.name-only-model-alias-is-a-candidate and classify.auto-via-model-alias, run by tests/identity_resolution/test_ir_corpus.py). Brand alias governance (od_catalog_brand_alias_not_a_relation), brand filing (od_thai_market_brand_filing) and per-model R6 / CREATE decisions stay separate."
+  # ---- OD-A01..OD-A09: the owner's SCREENING dispositions of the nine catalog-alias collisions (catalog_alias_collisions.csv). They are not review-session completions:
+  # each session's CREATE / pair / alias-class cells must still pass validate_session individually, and the frozen rev 4 owner pack is not edited.
+  - id: od_alias_screening_od_a01
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A01 JAECOO J5 -> jaecoo.jaecoo_5_ev: SAME MODEL (accepted on the evidence reviewed). Supports R6-217 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A01"]
+    note: "Screening disposition only. The related CREATE group question stays a separate audit; the R6-217 cell in the frozen owner pack stays blank."
+  - id: od_alias_screening_od_a02
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A02 Wuling Binguo -> wuling.wuling_bingo: SAME MODEL. Supports R6-15 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A02"]
+    note: "Screening disposition only. Separate CREATE question; R6-15 cell stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a03
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A03 JAECOO J7 -> jaecoo.jaecoo_7: SAME MODEL. Supports R6-172 CORRECT_EQUIVALENT / EQUIVALENT."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A03"]
+    note: "Screening disposition only. Separate CREATE question; R6-172 cell stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a04
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A04 BYD e6 -> byd.byd_m6: NOT the same model; the alias is misleading. The target shown in R6-284 is WRONG_TARGET."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A04"]
+    note: "WRONG_TARGET is not NO_TDR_TARGET and does not decide CREATE for e6. R6-284 stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a05
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A05 VW ID.Buzz -> volkswagen.caravelle: NOT the same model; do not equate. There is no R6 pair child for this case."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A05"]
+    note: "The missing-canonical / CREATE question for ID.Buzz remains separate and undecided."
+  - id: od_alias_screening_od_a06
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A06 Audi A8L -> audi.a8: A8L belongs to the A8 family as a longer-wheelbase VARIANT. Preserve variant granularity: do not flatten A8L into an unconditional same-trim / same-model claim."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A06"]
+    note: "CONDITIONAL, not a same-model equivalence: the precise R6 / group link is chosen only when catalog granularity is verified. No target shape is recorded or inferred here."
+  - id: od_alias_screening_od_a07
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A07 Audi S3 -> audi.rs: NOT the same model; the alias is misleading. The target shown in R6-340 is WRONG_TARGET."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A07"]
+    note: "WRONG_TARGET does not imply S3 has no valid TDR identity and is not a CREATE decision. R6-340 stays blank in the frozen owner pack."
+  - id: od_alias_screening_od_a08
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A08 Isuzu CAB4 -> isuzu.dmax_cab: GRANULARITY CHECK REQUIRED (CAB4 body / cab nomenclature against catalog coverage). UNRESOLVED on the exact target and link until model granularity is verified."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "PR #200 comment 6119320447 (decision-round closure: CAB4 needs precise D-Max body / trim scope)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A08"]
+    note: "The screening disposition is that the case is NOT decided. It is neither a same-model nor a wrong-target verdict, and no cell is filled."
+  - id: od_alias_screening_od_a09
+    decided_on: "2026-10-12"
+    status: accepted
+    decision: "OD-A09 Volkswagen Multivan -> volkswagen.caravelle: GENERATION-SPECIFIC REVIEW REQUIRED; distinct model names must not be assumed equivalent. UNRESOLVED pending generation / market identity evidence."
+    refs: ["PR #200 comment 6118773624 (owner confirmation of OD-A01..OD-A09)", "PR #200 comment 6119320447 (decision-round closure: Multivan / Caravelle needs generation-specific evidence)", "owner_decision_pack/catalog_alias_collisions.csv#OD-A09"]
+    note: "The screening disposition is that the case is NOT decided. It is neither a same-model nor a wrong-target verdict, and no cell is filled."
+  - id: od_ice_absent_row_unknown
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Keep Ice absent-row semantics UNKNOWN until Ice explicitly confirms them."
+    refs: ["provider_capabilities.yaml sources.ice", "SPEC I4a", "SPEC §3.2"]
+  - id: od_tdr_absent_row_traced
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "For TDR registrations do not assume: trace the actual source pipeline, and declare absent=zero only if complete month x dimension coverage is contractually guaranteed; otherwise keep UNKNOWN."
+    refs: ["provider_capabilities.yaml sources.tdr_registrations.trace", "SPEC §3.2"]
+    result: "Traced 2026-10-11 (repository read only): no stage guarantees complete month x dimension coverage. Stays UNKNOWN; trace.upgrade_requires lists what would have to become contractual."
+  - id: od_binding_false
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Keep adoption binding=false and every provisional threshold non-authoritative until calibration against the real R6 review data."
+    refs: ["SPEC §14.6", "SPEC I16"]
+  - id: od_not_frozen
+    decided_on: "2026-10-11"
+    status: standing
+    decision: "Do not freeze Contract v1. Wait for CI, incorporate the decisions above, then stop for threshold and data-semantics calibration."
+    refs: ["SPEC §16", "CHANGELOG.md"]
+
+entries:
+  # ----------------------------------------------------------------------------------- representation
+  - id: representation_constants
+    class: representation
+    keys: [quantization, time.valid_year_range, lexical.token_boundary_characters]
+    status: pending
+    decision: "Confirm: 6-place half-even quantization, 1900-2200 calendar sanity range, and the token boundary character set."
+  # ----------------------------------------------------------------------------------- calibration (numeric)
+  - id: series_minimums
+    class: calibration
+    keys: [series.minimums]
+    status: pending
+    settles_with: "Label set: distribution of common months / joint non-zero months / units for owner-accepted vs owner-rejected rows; choose the lowest AUTO minimum with no wrong AUTO on the held-out brands."
+  - id: series_monthly_fit
+    class: calibration
+    keys: [series.monthly_fit]
+    status: pending
+    settles_with: "Label set: monthly-fit share of accepted vs rejected strong-looking pairs (the outlier-driven correlation cases)."
+  - id: series_absent_row_gap
+    class: calibration
+    keys: [series.absent_row]
+    status: pending
+    settles_with: "Ice's explicit answer to Q-ICE-ABSENT-ROW and, for TDR, the contractual guarantees listed in provider_capabilities.yaml (trace.upgrade_requires) first; then, on the label set, how many unconfirmed-gap months an accepted AUTO-grade pair tolerates. 0 is the safe default until then."
+  - id: lexical_fuzzy_min_length
+    class: calibration
+    keys: [lexical.fuzzy_token.min_token_length]
+    status: pending
+    settles_with: "Label set: one-edit name pairs the owner accepted vs rejected, by token length."
+  - id: attributes_lifecycle
+    class: calibration
+    keys: [attributes.lifecycle]
+    status: pending
+    settles_with: "TDR generation dates vs owner-labelled generation mismatches (grace months, within/disjoint shares)."
+  - id: subject_discovery_thresholds
+    class: calibration
+    keys: [subject_quality.discovery]
+    status: pending
+    settles_with: "Size of the discovery queue the owner can actually review; units of subjects the owner later added to the catalog."
+  - id: candidates_bundle_bounds
+    class: calibration
+    keys: [candidates.bundle.max_members, candidates.bundle.max_pool_for_enumeration]
+    status: pending
+    settles_with: "Largest COMPOSED_OF set the owner accepted in the label set; enumeration cost is bounded by these two numbers."
+  - id: candidates_margin
+    class: calibration
+    keys: [candidates.margin]
+    status: pending
+    settles_with: "Label set: pairs of rival candidates the owner judged tied vs separable, by correlation and |ln ratio| gap."
+  - id: granularity_part_of_ratio
+    class: calibration
+    keys: [granularity.part_of.min_ratio_above]
+    status: pending
+    settles_with: "Label set: subjects the owner accepted as PART_OF a larger TDR model, by target/subject ratio."
+  - id: data_sufficiency_wrong_series
+    class: calibration
+    keys: [data_sufficiency.series_decisively_wrong]
+    status: pending
+    settles_with: "Label set: pairs the owner called plainly different, by correlation and ratio; defines when absence of a candidate is affirmative."
+  - id: fingerprint_bands
+    class: calibration
+    keys: [fingerprint.bands]
+    status: pending
+    settles_with: "How often a REJECTED pair's band label changes between consecutive packages for pairs the owner still considers wrong; choose edges that reopen only on a real change."
+  # ----------------------------------------------------------------------------------- design choices (owner decisions)
+  - id: series_window_switches
+    class: design_choice
+    keys: [series.window.trim_inactive_edges, series.window.exclude_partial_periods]
+    status: pending
+    decision: "Confirm trimming of both-zero edge months and exclusion of partial periods."
+  - id: lexical_token_equivalences
+    class: design_choice
+    keys: [lexical.token_equivalences]
+    status: pending
+    decision: "Confirm each equivalence (ev=electric, hatch=hatchback, hev=hybrid); each is an assumption about TDR naming."
+  - id: lexical_fuzzy_switch
+    class: design_choice
+    keys: [lexical.fuzzy_token.enabled]
+    status: pending
+    decision: "Decide whether one-edit typo tolerance exists at all (PROPOSED at most)."
+  - id: lexical_fuzzy_digits
+    class: design_choice
+    keys: [lexical.fuzzy_token.allow_tokens_with_digits]
+    status: owner_accepted
+    owner_decision: od_lexical_relation_correction
+    decision: "A token that contains a digit is never paired as a typo (KDH222R / KDH223R, Mazda2 / Mazda3, Mazda6 / Mazda6e are different versions)."
+  - id: lexical_distinctive_rule
+    class: design_choice
+    keys: [lexical.distinctive_token.required_for_relations]
+    status: owner_accepted
+    owner_decision: od_lexical_relation_correction
+    decision: "SIBLING needs at least one genuinely distinctive shared token; otherwise the pair has no lexical relation (CONTRADICTION). A policy-driven rule, not a model-specific exception list."
+  - id: lexical_distinctive_min_length
+    class: calibration
+    keys: [lexical.distinctive_token.min_length]
+    status: pending
+    settles_with: "Label set: shared-token lengths of name pairs the owner called the same nameplate vs different nameplates (3 keeps NSX / Han / Model, drops V / CX / GR / RS / HR)."
+  - id: lexical_distinctive_vocabulary
+    class: design_choice
+    keys: [lexical.distinctive_token.exclude_numeric, lexical.distinctive_token.non_distinctive, lexical.distinctive_token.non_distinctive_patterns]
+    status: pending
+    decision: "Confirm what 'distinctive' excludes: purely numeric tokens, the generic descriptor vocabulary by class (body, powertrain, trim, generation, market) and the descriptor patterns (4x2, V10, 25hev, Gen2, Mk4). Data about descriptors, never a list of models; 'amg' is the one performance-trim label of three letters that needs a vocabulary entry."
+  - id: lexical_name_relation_roles
+    class: design_choice
+    keys: [lexical.name.auto_relations, lexical.name.candidate_relations, lexical.name.veto_relations, lexical.series_only]
+    status: pending
+    decision: "Confirm which name relations may be AUTO, may be a name-only candidate, or veto."
+  - id: attributes_target_status
+    class: design_choice
+    keys: [attributes.target_status]
+    status: pending
+    decision: "Confirm that UNVERIFIED targets are capped at PROPOSED."
+  - id: subject_never_auto_statuses
+    class: design_choice
+    keys: [subject_quality.never_auto_identity_statuses]
+    status: pending
+    decision: "Confirm that provisional and raw-name subjects are never AUTO."
+  - id: candidates_pool_rules
+    class: design_choice
+    keys: [candidates.brand_relations_allowed, candidates.brand_relations_auto_eligible, candidates.target_statuses_in_pool, candidates.exclude_deleted_targets]
+    status: pending
+    decision: "Confirm the candidate pool and which brand relations are AUTO-eligible. Rev 5: ALIAS_RELATED is AUTO-eligible behind every other gate (owner decision od_related_brand_auto_eligible, 2026-10-12); the pool allow-list, target statuses and the deleted-target rule stay pending, and so does the owner's confirmation of the whole entry."
+  - id: candidates_bundle_enabled
+    class: design_choice
+    keys: [candidates.bundle.enabled]
+    status: owner_accepted
+    owner_decision: od_atomic_link_sets
+    decision: "COMPOSED_OF link sets exist (the owner chose real atomic link sets over review-only bundles on 2026-10-11)."
+  - id: candidates_ranking
+    class: design_choice
+    keys: [candidates.ranking]
+    status: pending
+    decision: "Confirm the lexicographic ranking order (never a weighted sum)."
+  - id: candidates_bundle_members
+    class: design_choice
+    keys: [candidates.bundle.member_name_relations]
+    status: pending
+    decision: "Confirm which name relations may be members of a link set (the existence of link sets is decided: od_atomic_link_sets)."
+  - id: granularity_part_of_rules
+    class: design_choice
+    keys: [granularity.part_of.subject_name_relations, granularity.part_of.arbitration_sum_check]
+    status: pending
+    decision: "Confirm that a narrower provider name plus a clearly larger target means PART_OF, and that several subjects whose sum fits one target are all parts."
+  - id: lineage_rules
+    class: design_choice
+    keys: [lineage]
+    status: pending
+    decision: "Confirm quarantine scope, the STRUCTURE card instead of copied rows, and how identity changes treat APPROVED / LOCKED rows."
+  - id: state_write_matrix
+    class: design_choice
+    keys: [state.write_matrix]
+    status: pending
+    decision: "Confirm the action for each (existing state x engine decision) cell."
+  - id: review_routing
+    class: design_choice
+    keys: [review]
+    status: pending
+    decision: "Confirm review queues, discovery flags and which codes are high priority."
+  - id: alias_assumptions
+    class: design_choice
+    keys: [alias_provenance.land_range_rover, alias_provenance.gwm_sub_brands]
+    status: pending
+    decision: "Confirm the two RELATED brand classes marked assumption in alias_provenance (Land Rover/Range Rover; GWM sub-brands)."

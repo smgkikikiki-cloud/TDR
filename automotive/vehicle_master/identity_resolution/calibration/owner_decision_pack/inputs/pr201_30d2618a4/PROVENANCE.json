@@ -1,0 +1,31 @@
+{
+ "commit": "30d2618a48b830b4afdbcf1299475f368bd9d214",
+ "files": {
+  "create_adjudication.csv": {
+   "bytes": 67965,
+   "git_blob": "a07c2c116b818f52bb47f71614c8f3b6d8abcf69",
+   "sha256": "85a3605bc8c154bd7f22291f44e31309b2901ad57c41e205ba44b0b41a9acacd",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/review/create_adjudication.csv"
+  },
+  "cross_brand_review.csv": {
+   "bytes": 5614,
+   "git_blob": "c3b5055ef1a715c3d5cb9e2f7c354feb0ead1ca9",
+   "sha256": "b02a2398b6f757658b21eccbfb49b94a90b7244d75d9fcac31c2865fd4c30b5b",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/cross_brand_review.csv"
+  },
+  "decisions.csv": {
+   "bytes": 251496,
+   "git_blob": "e9500a7be4e16e924aa44abfc68c4d3c65c36e87",
+   "sha256": "f9a8f788f49db037e3d903924e7a63f143281de90373a32cf702deeb77a46c24",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/decisions.csv"
+  },
+  "parity_unresolved.csv": {
+   "bytes": 1184,
+   "git_blob": "1a5a5b659289e1d5e62683569321c6cd824cb868",
+   "sha256": "0192ef7cd7cf568b125412e0388d1126acec5d95dae5433b1bc280833f1b14dd",
+   "source_path": "automotive/vehicle_master/identity_bootstrap/shadow/results/2569-09_v3_M7.0/parity_unresolved.csv"
+  }
+ },
+ "pr": 201,
+ "what": "byte-pinned copies of accepted PR #201 artifacts; data only, no PR #201 code"
+}

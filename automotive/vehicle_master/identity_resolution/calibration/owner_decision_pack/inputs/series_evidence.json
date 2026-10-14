@@ -1,0 +1,6417 @@
+{
+ "claimant_sums": {
+  "audi-audi-a8l|audi.a8": {
+   "claimants": []
+  },
+  "audi-audi-s3|audi.rs": {
+   "claimants": []
+  },
+  "byd-e6|byd.byd_m6": {
+   "alone": {
+    "common_months": 23,
+    "correlation": 0.999234,
+    "ratio": 1.005274,
+    "state": "STRONG",
+    "subject_units": 3792.0,
+    "target_units": 3812.0
+   },
+   "claimants": [
+    "byd-m6"
+   ],
+   "with_provider": {
+    "common_months": 14,
+    "correlation": 0.992072,
+    "ratio": 0.9709,
+    "state": "STRONG",
+    "subject_units": 2921.0,
+    "target_units": 2836.0
+   }
+  },
+  "isuzu-isuzu-cab4|isuzu.dmax_cab": {
+   "claimants": []
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_5_ev": {
+   "claimants": []
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_7": {
+   "claimants": []
+  },
+  "volkswagen-volkswagen-multivan|volkswagen.caravelle": {
+   "alone": {
+    "common_months": 22,
+    "correlation": 0.958747,
+    "ratio": 1.227723,
+    "state": "WEAK",
+    "subject_units": 101.0,
+    "target_units": 124.0
+   },
+   "claimants": [
+    "volkswagen-volkswagen-caravelle"
+   ],
+   "with_provider": {
+    "common_months": 2,
+    "correlation": null,
+    "ratio": null,
+    "state": "UNAVAILABLE",
+    "subject_units": 20.0,
+    "target_units": 22.0
+   }
+  },
+  "volkswagen-vw-idbuzz|volkswagen.caravelle": {
+   "alone": {
+    "common_months": 22,
+    "correlation": 0.958747,
+    "ratio": 1.227723,
+    "state": "WEAK",
+    "subject_units": 101.0,
+    "target_units": 124.0
+   },
+   "claimants": [
+    "volkswagen-volkswagen-caravelle"
+   ],
+   "with_provider": {
+    "common_months": 15,
+    "correlation": 0.998387,
+    "ratio": 1.012987,
+    "state": "STRONG",
+    "subject_units": 154.0,
+    "target_units": 156.0
+   }
+  },
+  "wuling-binguo|wuling.wuling_bingo": {
+   "claimants": []
+  }
+ },
+ "evaluator": "calibration.ref_eval_resolve.resolve()['pools'] and calibration.ref_eval_core.series_evidence (unchanged)",
+ "export_manifest_sha256": "e9d74e05ce9c09ad59bad2654d16fbb74e06969e929b7415b5e55a0fc2d2e0b8",
+ "package_sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+ "pairs": {
+  "MERCEDES AMG|SL 43|mercedes_benz.a_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 91.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.cla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.cle": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.cls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 81.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.eqb": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 16.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.eqe": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.g_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 15.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.glb": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.gle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 61.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.gls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.mb_c_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 320.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.mb_e_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 149.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.mb_eqs": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.mb_gla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 135.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.mb_glc": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 158.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.s_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 41.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.sprinter": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.v_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 6.0
+  },
+  "MERCEDES AMG|SL 43|mercedes_benz.vito": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 29.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.a_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 48.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.cla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.cle": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.cls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 75.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.eqb": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 25.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.eqe": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.g_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 14.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.glb": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.gle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 43.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.gls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.mb_c_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 218.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.mb_e_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 95.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.mb_eqs": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 8.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.mb_gla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 69.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.mb_glc": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 132.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.s_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 24.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.sprinter": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.v_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 7.0
+  },
+  "MERCEDES AMG|SL 55 4MATIC|mercedes_benz.vito": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 14.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.a_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 61.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.cla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.cle": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.cls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 68.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.eqb": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.eqe": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.g_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 9.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.glb": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 5.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.gle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 41.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.gls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 9.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.mb_c_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 202.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.mb_e_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 130.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.mb_eqs": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.mb_gla": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 90.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.mb_glc": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 119.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.s_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 42.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.sprinter": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.v_class": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "MERCEDESBENZ MAYBACH|S680 4 M|mercedes_benz.vito": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "RANGE ROVER|AUTOBIOGRAPHY P400E LWB|land_rover.defender": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 3.0
+  },
+  "RANGE ROVER|AUTOBIOGRAPHY P400E LWB|land_rover.range_rover": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4.0
+  },
+  "RANGE ROVER|AUTOBIOGRAPHY P400E LWB|land_rover.range_rover_sport": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 13.0
+  },
+  "RANGE ROVER|AUTOBIOGRAPHY P400E LWB|land_rover.range_rover_velar": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC|land_rover.defender": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 9.0
+  },
+  "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC|land_rover.range_rover": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 9.0
+  },
+  "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC|land_rover.range_rover_sport": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 8.0
+  },
+  "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC|land_rover.range_rover_velar": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "RANGE ROVER|EVOQUE 2 2L SD4|land_rover.defender": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "RANGE ROVER|EVOQUE 2 2L SD4|land_rover.range_rover": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 8.0
+  },
+  "RANGE ROVER|EVOQUE 2 2L SD4|land_rover.range_rover_sport": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "RANGE ROVER|EVOQUE 2 2L SD4|land_rover.range_rover_velar": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "audi-audi-a8l|audi.a1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "audi-audi-a8l|audi.a4": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 14.0
+  },
+  "audi-audi-a8l|audi.a5": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 165.0
+  },
+  "audi-audi-a8l|audi.a6": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 11.0
+  },
+  "audi-audi-a8l|audi.a6_etron": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "audi-audi-a8l|audi.a7": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 7.0
+  },
+  "audi-audi-a8l|audi.a8": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 9.0
+  },
+  "audi-audi-a8l|audi.audi_q3": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 62.0
+  },
+  "audi-audi-a8l|audi.audi_q5": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 42.0
+  },
+  "audi-audi-a8l|audi.etron": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 7.0
+  },
+  "audi-audi-a8l|audi.etron_gt": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 6.0
+  },
+  "audi-audi-a8l|audi.q6_etron": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "audi-audi-a8l|audi.q7": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 11.0
+  },
+  "audi-audi-a8l|audi.q8": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 30.0
+  },
+  "audi-audi-a8l|audi.q8_etron": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 32.0
+  },
+  "audi-audi-a8l|audi.rs": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 34.0
+  },
+  "audi-audi-a8l|audi.tt": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 77.0
+  },
+  "audi-audi-s3|audi.a1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "audi-audi-s3|audi.a4": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 8.0,
+   "target_units": 13.0
+  },
+  "audi-audi-s3|audi.a5": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 192.0
+  },
+  "audi-audi-s3|audi.a6": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 10.0
+  },
+  "audi-audi-s3|audi.a6_etron": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "audi-audi-s3|audi.a7": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 10.0
+  },
+  "audi-audi-s3|audi.a8": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 5.0
+  },
+  "audi-audi-s3|audi.audi_q3": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 55.0
+  },
+  "audi-audi-s3|audi.audi_q5": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 55.0
+  },
+  "audi-audi-s3|audi.etron": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 4.0
+  },
+  "audi-audi-s3|audi.etron_gt": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 4.0
+  },
+  "audi-audi-s3|audi.q6_etron": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "audi-audi-s3|audi.q7": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 21.0
+  },
+  "audi-audi-s3|audi.q8": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 38.0
+  },
+  "audi-audi-s3|audi.q8_etron": {
+   "common_months": 10,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 12.0,
+   "target_units": 38.0
+  },
+  "audi-audi-s3|audi.rs": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 54.0
+  },
+  "audi-audi-s3|audi.tt": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 101.0
+  },
+  "bentley-bentley-continental|bentley.bentayga": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 19.0,
+   "target_units": 33.0
+  },
+  "bentley-bentley-continental|bentley.flying_spur": {
+   "common_months": 15,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 20.0,
+   "target_units": 44.0
+  },
+  "bmw-bmw-m2|bmw.2_series_gran_coupe": {
+   "common_months": 24,
+   "correlation": -0.198557,
+   "ratio": 8.767742,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 1359.0
+  },
+  "bmw-bmw-m2|bmw.4_series": {
+   "common_months": 24,
+   "correlation": 0.146716,
+   "ratio": 2.625806,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 407.0
+  },
+  "bmw-bmw-m2|bmw.7_series": {
+   "common_months": 24,
+   "correlation": 0.268504,
+   "ratio": 1.780645,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 276.0
+  },
+  "bmw-bmw-m2|bmw.bmw_3": {
+   "common_months": 24,
+   "correlation": 0.154734,
+   "ratio": 32.870968,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 5095.0
+  },
+  "bmw-bmw-m2|bmw.bmw_5": {
+   "common_months": 24,
+   "correlation": 0.084497,
+   "ratio": 18.8,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 2914.0
+  },
+  "bmw-bmw-m2|bmw.bmw_i4": {
+   "common_months": 24,
+   "correlation": 0.511328,
+   "ratio": 1.167742,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 181.0
+  },
+  "bmw-bmw-m2|bmw.bmw_ix3": {
+   "common_months": 24,
+   "correlation": 0.259694,
+   "ratio": 4.754839,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 737.0
+  },
+  "bmw-bmw-m2|bmw.bmw_x1": {
+   "common_months": 24,
+   "correlation": 0.015009,
+   "ratio": 22.103226,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 3426.0
+  },
+  "bmw-bmw-m2|bmw.bmw_x3": {
+   "common_months": 24,
+   "correlation": -0.067208,
+   "ratio": 10.541935,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 1634.0
+  },
+  "bmw-bmw-m2|bmw.i3": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 19.0,
+   "target_units": 6.0
+  },
+  "bmw-bmw-m2|bmw.i5": {
+   "common_months": 24,
+   "correlation": 0.200825,
+   "ratio": 3.367742,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 522.0
+  },
+  "bmw-bmw-m2|bmw.i7": {
+   "common_months": 24,
+   "correlation": 0.116606,
+   "ratio": 1.348387,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 209.0
+  },
+  "bmw-bmw-m2|bmw.i8": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 34.0,
+   "target_units": 5.0
+  },
+  "bmw-bmw-m2|bmw.ix": {
+   "common_months": 23,
+   "correlation": 0.541253,
+   "ratio": 2.177632,
+   "state": "WEAK",
+   "subject_units": 152.0,
+   "target_units": 331.0
+  },
+  "bmw-bmw-m2|bmw.ix1": {
+   "common_months": 12,
+   "correlation": -0.439854,
+   "ratio": 8.277778,
+   "state": "WEAK",
+   "subject_units": 72.0,
+   "target_units": 596.0
+  },
+  "bmw-bmw-m2|bmw.ix2": {
+   "common_months": 21,
+   "correlation": 0.038095,
+   "ratio": 0.571429,
+   "state": "WEAK",
+   "subject_units": 140.0,
+   "target_units": 80.0
+  },
+  "bmw-bmw-m2|bmw.x4": {
+   "common_months": 24,
+   "correlation": 0.13187,
+   "ratio": 3.806452,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 590.0
+  },
+  "bmw-bmw-m2|bmw.x5": {
+   "common_months": 24,
+   "correlation": -0.126969,
+   "ratio": 5.832258,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 904.0
+  },
+  "bmw-bmw-m2|bmw.x6": {
+   "common_months": 24,
+   "correlation": -0.19007,
+   "ratio": 1.967742,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 305.0
+  },
+  "bmw-bmw-m2|bmw.x7": {
+   "common_months": 24,
+   "correlation": -0.016969,
+   "ratio": 1.870968,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 290.0
+  },
+  "bmw-bmw-m2|bmw.xm": {
+   "common_months": 24,
+   "correlation": -0.002645,
+   "ratio": 0.935484,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 145.0
+  },
+  "bmw-bmw-m2|bmw.z4": {
+   "common_months": 24,
+   "correlation": -0.02979,
+   "ratio": 0.780645,
+   "state": "WEAK",
+   "subject_units": 155.0,
+   "target_units": 121.0
+  },
+  "bmw-bmw-m3|bmw.2_series_gran_coupe": {
+   "common_months": 24,
+   "correlation": 0.425906,
+   "ratio": 6.066964,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 1359.0
+  },
+  "bmw-bmw-m3|bmw.4_series": {
+   "common_months": 24,
+   "correlation": 0.261943,
+   "ratio": 1.816964,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 407.0
+  },
+  "bmw-bmw-m3|bmw.7_series": {
+   "common_months": 24,
+   "correlation": 0.103754,
+   "ratio": 1.232143,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 276.0
+  },
+  "bmw-bmw-m3|bmw.bmw_3": {
+   "common_months": 24,
+   "correlation": 0.211051,
+   "ratio": 22.745536,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 5095.0
+  },
+  "bmw-bmw-m3|bmw.bmw_5": {
+   "common_months": 24,
+   "correlation": 0.232455,
+   "ratio": 13.008929,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 2914.0
+  },
+  "bmw-bmw-m3|bmw.bmw_i4": {
+   "common_months": 24,
+   "correlation": 0.07384,
+   "ratio": 0.808036,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 181.0
+  },
+  "bmw-bmw-m3|bmw.bmw_ix3": {
+   "common_months": 24,
+   "correlation": -0.037465,
+   "ratio": 3.290179,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 737.0
+  },
+  "bmw-bmw-m3|bmw.bmw_x1": {
+   "common_months": 24,
+   "correlation": 0.354694,
+   "ratio": 15.294643,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 3426.0
+  },
+  "bmw-bmw-m3|bmw.bmw_x3": {
+   "common_months": 24,
+   "correlation": -0.102661,
+   "ratio": 7.294643,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 1634.0
+  },
+  "bmw-bmw-m3|bmw.i3": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 73.0,
+   "target_units": 6.0
+  },
+  "bmw-bmw-m3|bmw.i5": {
+   "common_months": 24,
+   "correlation": -0.130946,
+   "ratio": 2.330357,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 522.0
+  },
+  "bmw-bmw-m3|bmw.i7": {
+   "common_months": 24,
+   "correlation": -0.177024,
+   "ratio": 0.933036,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 209.0
+  },
+  "bmw-bmw-m3|bmw.i8": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 55.0,
+   "target_units": 5.0
+  },
+  "bmw-bmw-m3|bmw.ix": {
+   "common_months": 23,
+   "correlation": -0.350316,
+   "ratio": 1.599034,
+   "state": "WEAK",
+   "subject_units": 207.0,
+   "target_units": 331.0
+  },
+  "bmw-bmw-m3|bmw.ix1": {
+   "common_months": 12,
+   "correlation": 0.17077,
+   "ratio": 5.518519,
+   "state": "WEAK",
+   "subject_units": 108.0,
+   "target_units": 596.0
+  },
+  "bmw-bmw-m3|bmw.ix2": {
+   "common_months": 21,
+   "correlation": 0.222456,
+   "ratio": 0.406091,
+   "state": "WEAK",
+   "subject_units": 197.0,
+   "target_units": 80.0
+  },
+  "bmw-bmw-m3|bmw.x4": {
+   "common_months": 24,
+   "correlation": 0.109567,
+   "ratio": 2.633929,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 590.0
+  },
+  "bmw-bmw-m3|bmw.x5": {
+   "common_months": 24,
+   "correlation": -0.041638,
+   "ratio": 4.035714,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 904.0
+  },
+  "bmw-bmw-m3|bmw.x6": {
+   "common_months": 24,
+   "correlation": 0.10408,
+   "ratio": 1.361607,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 305.0
+  },
+  "bmw-bmw-m3|bmw.x7": {
+   "common_months": 24,
+   "correlation": -0.054939,
+   "ratio": 1.294643,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 290.0
+  },
+  "bmw-bmw-m3|bmw.xm": {
+   "common_months": 24,
+   "correlation": 0.311367,
+   "ratio": 0.647321,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 145.0
+  },
+  "bmw-bmw-m3|bmw.z4": {
+   "common_months": 24,
+   "correlation": 0.025238,
+   "ratio": 0.540179,
+   "state": "WEAK",
+   "subject_units": 224.0,
+   "target_units": 121.0
+  },
+  "bmw-bmw-m4|bmw.2_series_gran_coupe": {
+   "common_months": 22,
+   "correlation": -0.097529,
+   "ratio": 24.673077,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 1283.0
+  },
+  "bmw-bmw-m4|bmw.4_series": {
+   "common_months": 22,
+   "correlation": 0.149595,
+   "ratio": 7.480769,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 389.0
+  },
+  "bmw-bmw-m4|bmw.7_series": {
+   "common_months": 22,
+   "correlation": -0.356542,
+   "ratio": 4.846154,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 252.0
+  },
+  "bmw-bmw-m4|bmw.bmw_3": {
+   "common_months": 22,
+   "correlation": -0.312418,
+   "ratio": 92.153846,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 4792.0
+  },
+  "bmw-bmw-m4|bmw.bmw_5": {
+   "common_months": 22,
+   "correlation": -0.022403,
+   "ratio": 52.442308,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 2727.0
+  },
+  "bmw-bmw-m4|bmw.bmw_i4": {
+   "common_months": 22,
+   "correlation": -0.093842,
+   "ratio": 3.307692,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 172.0
+  },
+  "bmw-bmw-m4|bmw.bmw_ix3": {
+   "common_months": 22,
+   "correlation": -0.35633,
+   "ratio": 12.730769,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 662.0
+  },
+  "bmw-bmw-m4|bmw.bmw_x1": {
+   "common_months": 22,
+   "correlation": -0.062928,
+   "ratio": 61.692308,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 3208.0
+  },
+  "bmw-bmw-m4|bmw.bmw_x3": {
+   "common_months": 22,
+   "correlation": 0.383183,
+   "ratio": 29.403846,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 1529.0
+  },
+  "bmw-bmw-m4|bmw.i3": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 5.0
+  },
+  "bmw-bmw-m4|bmw.i5": {
+   "common_months": 22,
+   "correlation": 0.391716,
+   "ratio": 9.5,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 494.0
+  },
+  "bmw-bmw-m4|bmw.i7": {
+   "common_months": 22,
+   "correlation": 0.12122,
+   "ratio": 3.826923,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 199.0
+  },
+  "bmw-bmw-m4|bmw.i8": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 4.0
+  },
+  "bmw-bmw-m4|bmw.ix": {
+   "common_months": 21,
+   "correlation": -0.107797,
+   "ratio": 6.306122,
+   "state": "WEAK",
+   "subject_units": 49.0,
+   "target_units": 309.0
+  },
+  "bmw-bmw-m4|bmw.ix1": {
+   "common_months": 11,
+   "correlation": 0.656887,
+   "ratio": 18.516129,
+   "state": "WEAK",
+   "subject_units": 31.0,
+   "target_units": 574.0
+  },
+  "bmw-bmw-m4|bmw.ix2": {
+   "common_months": 19,
+   "correlation": -0.319549,
+   "ratio": 1.522727,
+   "state": "WEAK",
+   "subject_units": 44.0,
+   "target_units": 67.0
+  },
+  "bmw-bmw-m4|bmw.x4": {
+   "common_months": 22,
+   "correlation": -0.351605,
+   "ratio": 10.653846,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 554.0
+  },
+  "bmw-bmw-m4|bmw.x5": {
+   "common_months": 22,
+   "correlation": -0.007312,
+   "ratio": 16.192308,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 842.0
+  },
+  "bmw-bmw-m4|bmw.x6": {
+   "common_months": 22,
+   "correlation": -0.210166,
+   "ratio": 5.326923,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 277.0
+  },
+  "bmw-bmw-m4|bmw.x7": {
+   "common_months": 22,
+   "correlation": -0.333105,
+   "ratio": 5.038462,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 262.0
+  },
+  "bmw-bmw-m4|bmw.xm": {
+   "common_months": 22,
+   "correlation": -0.194266,
+   "ratio": 2.634615,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 137.0
+  },
+  "bmw-bmw-m4|bmw.z4": {
+   "common_months": 22,
+   "correlation": 0.012407,
+   "ratio": 2.173077,
+   "state": "WEAK",
+   "subject_units": 52.0,
+   "target_units": 113.0
+  },
+  "bmw-bmw-m5|bmw.2_series_gran_coupe": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 647.0
+  },
+  "bmw-bmw-m5|bmw.4_series": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 111.0
+  },
+  "bmw-bmw-m5|bmw.7_series": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 89.0
+  },
+  "bmw-bmw-m5|bmw.bmw_3": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 1806.0
+  },
+  "bmw-bmw-m5|bmw.bmw_5": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 987.0
+  },
+  "bmw-bmw-m5|bmw.bmw_i4": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 8.0
+  },
+  "bmw-bmw-m5|bmw.bmw_ix3": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 191.0
+  },
+  "bmw-bmw-m5|bmw.bmw_x1": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 1155.0
+  },
+  "bmw-bmw-m5|bmw.bmw_x3": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 597.0
+  },
+  "bmw-bmw-m5|bmw.i3": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 8.0,
+   "target_units": 4.0
+  },
+  "bmw-bmw-m5|bmw.i5": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "bmw-bmw-m5|bmw.i7": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 17.0
+  },
+  "bmw-bmw-m5|bmw.i8": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 3.0
+  },
+  "bmw-bmw-m5|bmw.ix": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 90.0
+  },
+  "bmw-bmw-m5|bmw.ix1": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "bmw-bmw-m5|bmw.ix2": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "bmw-bmw-m5|bmw.x4": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 207.0
+  },
+  "bmw-bmw-m5|bmw.x5": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 422.0
+  },
+  "bmw-bmw-m5|bmw.x6": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 105.0
+  },
+  "bmw-bmw-m5|bmw.x7": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 163.0
+  },
+  "bmw-bmw-m5|bmw.xm": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "bmw-bmw-m5|bmw.z4": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 64.0
+  },
+  "bmw-x2|bmw.2_series_gran_coupe": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 787.0
+  },
+  "bmw-x2|bmw.4_series": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 173.0
+  },
+  "bmw-x2|bmw.7_series": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 104.0
+  },
+  "bmw-x2|bmw.bmw_3": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 2347.0
+  },
+  "bmw-x2|bmw.bmw_5": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 1297.0
+  },
+  "bmw-x2|bmw.bmw_i4": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 44.0
+  },
+  "bmw-x2|bmw.bmw_ix3": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 430.0
+  },
+  "bmw-x2|bmw.bmw_x1": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 1619.0
+  },
+  "bmw-x2|bmw.bmw_x3": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 645.0
+  },
+  "bmw-x2|bmw.i3": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 4.0
+  },
+  "bmw-x2|bmw.i5": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 20.0
+  },
+  "bmw-x2|bmw.i7": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 44.0
+  },
+  "bmw-x2|bmw.i8": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "bmw-x2|bmw.ix": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 242.0
+  },
+  "bmw-x2|bmw.ix1": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "bmw-x2|bmw.ix2": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 8.0
+  },
+  "bmw-x2|bmw.x4": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 298.0
+  },
+  "bmw-x2|bmw.x5": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 590.0
+  },
+  "bmw-x2|bmw.x6": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 166.0
+  },
+  "bmw-x2|bmw.x7": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 249.0
+  },
+  "bmw-x2|bmw.xm": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 15.0
+  },
+  "bmw-x2|bmw.z4": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 93.0
+  },
+  "byd-e6|byd.atto1": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "byd-e6|byd.atto2": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 770.0
+  },
+  "byd-e6|byd.atto3": {
+   "common_months": 15,
+   "correlation": 0.891883,
+   "ratio": 120.364407,
+   "state": "WEAK",
+   "subject_units": 118.0,
+   "target_units": 14203.0
+  },
+  "byd-e6|byd.byd_m6": {
+   "common_months": 15,
+   "correlation": 0.364631,
+   "ratio": 24.084746,
+   "state": "WEAK",
+   "subject_units": 118.0,
+   "target_units": 2842.0
+  },
+  "byd-e6|byd.byd_t3": {
+   "common_months": 14,
+   "correlation": -0.006257,
+   "ratio": 2.811966,
+   "state": "WEAK",
+   "subject_units": 117.0,
+   "target_units": 329.0
+  },
+  "byd-e6|byd.dolphin": {
+   "common_months": 15,
+   "correlation": 0.950742,
+   "ratio": 173.847458,
+   "state": "WEAK",
+   "subject_units": 118.0,
+   "target_units": 20514.0
+  },
+  "byd-e6|byd.seagull": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 608.0
+  },
+  "byd-e6|byd.seal": {
+   "common_months": 15,
+   "correlation": 0.85325,
+   "ratio": 19.745763,
+   "state": "WEAK",
+   "subject_units": 118.0,
+   "target_units": 2330.0
+  },
+  "byd-e6|byd.seal_5_dmi": {
+   "common_months": 6,
+   "correlation": -0.09009,
+   "ratio": 11.914894,
+   "state": "WEAK",
+   "subject_units": 94.0,
+   "target_units": 1120.0
+  },
+  "byd-e6|byd.sealion5": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 457.0
+  },
+  "byd-e6|byd.sealion6": {
+   "common_months": 10,
+   "correlation": -0.072301,
+   "ratio": 66.980392,
+   "state": "WEAK",
+   "subject_units": 102.0,
+   "target_units": 6832.0
+  },
+  "byd-e6|byd.sealion7": {
+   "common_months": 11,
+   "correlation": 0.374774,
+   "ratio": 69.036697,
+   "state": "WEAK",
+   "subject_units": 109.0,
+   "target_units": 7525.0
+  },
+  "byd-e6|byd.shark6": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "chevrolet-chevrolet-corvette|chevrolet.captiva": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 5.0
+  },
+  "chevrolet-chevrolet-corvette|chevrolet.colorado_c_cab": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 26.0,
+   "target_units": 21.0
+  },
+  "chevrolet-chevrolet-corvette|chevrolet.colorado_x_cab": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 12.0,
+   "target_units": 7.0
+  },
+  "chevrolet-trailblazer|chevrolet.captiva": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 16.0,
+   "target_units": 23.0
+  },
+  "chevrolet-trailblazer|chevrolet.colorado_c_cab": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 10.0
+  },
+  "chevrolet-trailblazer|chevrolet.colorado_x_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 3.0
+  },
+  "daihatsu-daihatsu-copen|daihatsu.hijet": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 45.0
+  },
+  "daihatsu-daihatsu-move|daihatsu.hijet": {
+   "common_months": 13,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 16.0,
+   "target_units": 68.0
+  },
+  "ferrari-ferrari-488|ferrari.12cilindri": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "ferrari-ferrari-488|ferrari.296": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 7.0
+  },
+  "ferrari-ferrari-488|ferrari.f8": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 3.0
+  },
+  "ferrari-ferrari-488|ferrari.roma": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "ferrari-ferrari-488|ferrari.sf90": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 8.0,
+   "target_units": 6.0
+  },
+  "ferrari-ferrari-portofino|ferrari.12cilindri": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "ferrari-ferrari-portofino|ferrari.296": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 7.0
+  },
+  "ferrari-ferrari-portofino|ferrari.f8": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "ferrari-ferrari-portofino|ferrari.roma": {
+   "common_months": 10,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 12.0,
+   "target_units": 17.0
+  },
+  "ferrari-ferrari-portofino|ferrari.sf90": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 10.0
+  },
+  "ferrari-ferrari-purosangue|ferrari.12cilindri": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "ferrari-ferrari-purosangue|ferrari.296": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 19.0,
+   "target_units": 38.0
+  },
+  "ferrari-ferrari-purosangue|ferrari.f8": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 4.0
+  },
+  "ferrari-ferrari-purosangue|ferrari.roma": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 4.0
+  },
+  "ferrari-ferrari-purosangue|ferrari.sf90": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1.0
+  },
+  "ford-ford-focus|ford.everest": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 3301.0
+  },
+  "ford-ford-focus|ford.mustang": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 13.0
+  },
+  "ford-ford-focus|ford.ranger_cab": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 540.0
+  },
+  "ford-ford-focus|ford.ranger_double_cab": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 4822.0
+  },
+  "foton-bj1041|foton.foton_truck": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 118.0
+  },
+  "foton-bj1041|foton.miler_iblue_65": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "foton-eview|foton.foton_truck": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 31.0,
+   "target_units": 201.0
+  },
+  "foton-eview|foton.miler_iblue_65": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-brio|honda.accord": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 280.0
+  },
+  "honda-brio|honda.brv": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 242.0
+  },
+  "honda-brio|honda.city": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1817.0
+  },
+  "honda-brio|honda.city_hatchback": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1877.0
+  },
+  "honda-brio|honda.civic": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1198.0
+  },
+  "honda-brio|honda.crv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1003.0
+  },
+  "honda-brio|honda.en1": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 144.0
+  },
+  "honda-brio|honda.en2": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 8.0
+  },
+  "honda-brio|honda.hrv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2398.0
+  },
+  "honda-brio|honda.mobilio": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 3.0
+  },
+  "honda-brio|honda.odyssey": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "honda-brio|honda.step_wgn": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 102.0
+  },
+  "honda-brio|honda.wrv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 64.0
+  },
+  "honda-honda-acty|honda.accord": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 695.0
+  },
+  "honda-honda-acty|honda.brv": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 27.0
+  },
+  "honda-honda-acty|honda.city": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 5007.0
+  },
+  "honda-honda-acty|honda.city_hatchback": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 7377.0
+  },
+  "honda-honda-acty|honda.civic": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 4493.0
+  },
+  "honda-honda-acty|honda.crv": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 2843.0
+  },
+  "honda-honda-acty|honda.en1": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 80.0
+  },
+  "honda-honda-acty|honda.en2": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "honda-honda-acty|honda.hrv": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 8919.0
+  },
+  "honda-honda-acty|honda.mobilio": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "honda-honda-acty|honda.odyssey": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 7.0
+  },
+  "honda-honda-acty|honda.step_wgn": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 113.0
+  },
+  "honda-honda-acty|honda.wrv": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 189.0
+  },
+  "honda-honda-amaze|honda.accord": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 139.0
+  },
+  "honda-honda-amaze|honda.brv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "honda-honda-amaze|honda.city": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1118.0
+  },
+  "honda-honda-amaze|honda.city_hatchback": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1811.0
+  },
+  "honda-honda-amaze|honda.civic": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1027.0
+  },
+  "honda-honda-amaze|honda.crv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 788.0
+  },
+  "honda-honda-amaze|honda.en1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 19.0
+  },
+  "honda-honda-amaze|honda.en2": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "honda-honda-amaze|honda.hrv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2284.0
+  },
+  "honda-honda-amaze|honda.mobilio": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-honda-amaze|honda.odyssey": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "honda-honda-amaze|honda.step_wgn": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 41.0
+  },
+  "honda-honda-amaze|honda.wrv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "honda-honda-freed|honda.accord": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 198.0
+  },
+  "honda-honda-freed|honda.brv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 109.0
+  },
+  "honda-honda-freed|honda.city": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 930.0
+  },
+  "honda-honda-freed|honda.city_hatchback": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1702.0
+  },
+  "honda-honda-freed|honda.civic": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1262.0
+  },
+  "honda-honda-freed|honda.crv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 637.0
+  },
+  "honda-honda-freed|honda.en1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 37.0
+  },
+  "honda-honda-freed|honda.en2": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 17.0
+  },
+  "honda-honda-freed|honda.hrv": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2305.0
+  },
+  "honda-honda-freed|honda.mobilio": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 6.0
+  },
+  "honda-honda-freed|honda.odyssey": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "honda-honda-freed|honda.step_wgn": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 56.0
+  },
+  "honda-honda-freed|honda.wrv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 438.0
+  },
+  "honda-honda-n-box|honda.accord": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 1306.0
+  },
+  "honda-honda-n-box|honda.brv": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 86.0
+  },
+  "honda-honda-n-box|honda.city": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 8699.0
+  },
+  "honda-honda-n-box|honda.city_hatchback": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 10980.0
+  },
+  "honda-honda-n-box|honda.civic": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 7871.0
+  },
+  "honda-honda-n-box|honda.crv": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 5417.0
+  },
+  "honda-honda-n-box|honda.en1": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 193.0
+  },
+  "honda-honda-n-box|honda.en2": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 32.0
+  },
+  "honda-honda-n-box|honda.hrv": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 16219.0
+  },
+  "honda-honda-n-box|honda.mobilio": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "honda-honda-n-box|honda.odyssey": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 7.0
+  },
+  "honda-honda-n-box|honda.step_wgn": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 373.0
+  },
+  "honda-honda-n-box|honda.wrv": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 221.0
+  },
+  "honda-prelude|honda.accord": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 773.0
+  },
+  "honda-prelude|honda.brv": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 2.0
+  },
+  "honda-prelude|honda.city": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 4707.0
+  },
+  "honda-prelude|honda.city_hatchback": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 6837.0
+  },
+  "honda-prelude|honda.civic": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 4591.0
+  },
+  "honda-prelude|honda.crv": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 3421.0
+  },
+  "honda-prelude|honda.en1": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 120.0
+  },
+  "honda-prelude|honda.en2": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 35.0
+  },
+  "honda-prelude|honda.hrv": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 10574.0
+  },
+  "honda-prelude|honda.mobilio": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "honda-prelude|honda.odyssey": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 7.0
+  },
+  "honda-prelude|honda.step_wgn": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 264.0
+  },
+  "honda-prelude|honda.wrv": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 5.0
+  },
+  "honda-super-one|honda.accord": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.brv": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.city": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.city_hatchback": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.civic": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.crv": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.en1": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.en2": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.hrv": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.mobilio": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.odyssey": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.step_wgn": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "honda-super-one|honda.wrv": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-genesis-g80|hyundai.creta": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 29.0
+  },
+  "hyundai-genesis-g80|hyundai.grand_starex": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-genesis-g80|hyundai.h_1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 33.0
+  },
+  "hyundai-genesis-g80|hyundai.ioniq5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 7.0
+  },
+  "hyundai-genesis-g80|hyundai.ioniq6": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "hyundai-genesis-g80|hyundai.palisade": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 34.0
+  },
+  "hyundai-genesis-g80|hyundai.santa_fe": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 9.0
+  },
+  "hyundai-genesis-g80|hyundai.stargazer": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 58.0
+  },
+  "hyundai-genesis-g80|hyundai.staria": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 116.0
+  },
+  "hyundai-kona|hyundai.creta": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 134.0
+  },
+  "hyundai-kona|hyundai.grand_starex": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 7.0
+  },
+  "hyundai-kona|hyundai.h_1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "hyundai-kona|hyundai.ioniq5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "hyundai-kona|hyundai.ioniq6": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-kona|hyundai.palisade": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 26.0
+  },
+  "hyundai-kona|hyundai.santa_fe": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 27.0
+  },
+  "hyundai-kona|hyundai.stargazer": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 38.0
+  },
+  "hyundai-kona|hyundai.staria": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 45.0
+  },
+  "hyundai-tucson|hyundai.creta": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 20.0
+  },
+  "hyundai-tucson|hyundai.grand_starex": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "hyundai-tucson|hyundai.h_1": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 63.0
+  },
+  "hyundai-tucson|hyundai.ioniq5": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-tucson|hyundai.ioniq6": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-tucson|hyundai.palisade": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-tucson|hyundai.santa_fe": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-tucson|hyundai.stargazer": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "hyundai-tucson|hyundai.staria": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 197.0
+  },
+  "isuzu-isuzu-cab4|isuzu.dmax_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 3641.0
+  },
+  "isuzu-isuzu-cab4|isuzu.dmax_double_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4818.0
+  },
+  "isuzu-isuzu-cab4|isuzu.isuzu_elf": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 213.0
+  },
+  "isuzu-isuzu-cab4|isuzu.isuzu_f_series": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 60.0
+  },
+  "isuzu-isuzu-cab4|isuzu.mux": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2199.0
+  },
+  "jac-t8|jac.jac_truck": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 24.0,
+   "target_units": 6.0
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_5_ev": {
+   "common_months": 12,
+   "correlation": 0.999999,
+   "ratio": 0.998341,
+   "state": "STRONG",
+   "subject_units": 21706.0,
+   "target_units": 21670.0
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_6_ev": {
+   "common_months": 12,
+   "correlation": 0.837994,
+   "ratio": 0.253524,
+   "state": "WEAK",
+   "subject_units": 21706.0,
+   "target_units": 5503.0
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_6t_ev": {
+   "common_months": 8,
+   "correlation": 0.426811,
+   "ratio": 0.036754,
+   "state": "WEAK",
+   "subject_units": 16080.0,
+   "target_units": 591.0
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_6t_reev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2656.0,
+   "target_units": 31.0
+  },
+  "jaecoo-jaecoo-j5|jaecoo.jaecoo_7": {
+   "common_months": 12,
+   "correlation": 0.532323,
+   "ratio": 0.048236,
+   "state": "WEAK",
+   "subject_units": 21706.0,
+   "target_units": 1047.0
+  },
+  "jaecoo-jaecoo-j6|jaecoo.jaecoo_5_ev": {
+   "common_months": 12,
+   "correlation": 0.810365,
+   "ratio": 3.537959,
+   "state": "WEAK",
+   "subject_units": 6125.0,
+   "target_units": 21670.0
+  },
+  "jaecoo-jaecoo-j6|jaecoo.jaecoo_6_ev": {
+   "common_months": 21,
+   "correlation": 0.993846,
+   "ratio": 0.918322,
+   "state": "STRONG",
+   "subject_units": 7652.0,
+   "target_units": 7027.0
+  },
+  "jaecoo-jaecoo-j6|jaecoo.jaecoo_6t_ev": {
+   "common_months": 8,
+   "correlation": 0.81963,
+   "ratio": 0.131684,
+   "state": "WEAK",
+   "subject_units": 4488.0,
+   "target_units": 591.0
+  },
+  "jaecoo-jaecoo-j6|jaecoo.jaecoo_6t_reev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 782.0,
+   "target_units": 31.0
+  },
+  "jaecoo-jaecoo-j6|jaecoo.jaecoo_7": {
+   "common_months": 14,
+   "correlation": 0.491502,
+   "ratio": 0.164855,
+   "state": "WEAK",
+   "subject_units": 6533.0,
+   "target_units": 1077.0
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_5_ev": {
+   "common_months": 12,
+   "correlation": 0.531934,
+   "ratio": 20.69723,
+   "state": "WEAK",
+   "subject_units": 1047.0,
+   "target_units": 21670.0
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_6_ev": {
+   "common_months": 14,
+   "correlation": 0.509466,
+   "ratio": 5.488394,
+   "state": "WEAK",
+   "subject_units": 1077.0,
+   "target_units": 5911.0
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_6t_ev": {
+   "common_months": 8,
+   "correlation": 0.096691,
+   "ratio": 0.815172,
+   "state": "WEAK",
+   "subject_units": 725.0,
+   "target_units": 591.0
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_6t_reev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 27.0,
+   "target_units": 31.0
+  },
+  "jaecoo-jaecoo-j7|jaecoo.jaecoo_7": {
+   "common_months": 14,
+   "correlation": 1.0,
+   "ratio": 1.0,
+   "state": "STRONG",
+   "subject_units": 1077.0,
+   "target_units": 1077.0
+  },
+  "jeep-jeep-gladiator|jeep.wrangler": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 42.0
+  },
+  "kia-k2500|kia.carnival": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 24.0,
+   "target_units": 1363.0
+  },
+  "kia-k2500|kia.ev5": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "kia-k2500|kia.ev6": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1.0
+  },
+  "kia-k2500|kia.ev9": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "kia-k2500|kia.kia_pv5": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "kia-k2500|kia.sorento": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "lamborghini-lamborghini-temerario|lamborghini.huracan": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 5.0
+  },
+  "lamborghini-lamborghini-temerario|lamborghini.revuelto": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 1.0
+  },
+  "lamborghini-lamborghini-temerario|lamborghini.urus": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 2.0
+  },
+  "land-rover-land-rover-discovery|land_rover.defender": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "land-rover-land-rover-discovery|land_rover.range_rover": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "land-rover-land-rover-discovery|land_rover.range_rover_sport": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 14.0
+  },
+  "land-rover-land-rover-discovery|land_rover.range_rover_velar": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "lexus-lexus-rc|lexus.lbx": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "lexus-lexus-rc|lexus.lc": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "lexus-lexus-rc|lexus.lexus_es": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 5.0
+  },
+  "lexus-lexus-rc|lexus.lexus_is": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 4.0
+  },
+  "lexus-lexus-rc|lexus.lexus_lm": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 26.0
+  },
+  "lexus-lexus-rc|lexus.lexus_ls": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "lexus-lexus-rc|lexus.lexus_nx": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 12.0
+  },
+  "lexus-lexus-rc|lexus.lexus_rx": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 10.0
+  },
+  "lexus-lexus-rc|lexus.lx": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "lexus-lexus-rc|lexus.rz": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 8.0
+  },
+  "lexus-lexus-rc|lexus.ux": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "lotus-emira|lotus.eletre": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "lotus-emira|lotus.emeya": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maserati-maserati-ghibli|maserati.granturismo": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 4.0
+  },
+  "maserati-maserati-ghibli|maserati.grecale": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 20.0
+  },
+  "maserati-maserati-ghibli|maserati.levante": {
+   "common_months": 10,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 14.0
+  },
+  "maserati-maserati-mc20|maserati.granturismo": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "maserati-maserati-mc20|maserati.grecale": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4.0
+  },
+  "maserati-maserati-mc20|maserati.levante": {
+   "common_months": 10,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 11.0,
+   "target_units": 19.0
+  },
+  "maserati-maserati-quattroporte|maserati.granturismo": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maserati-maserati-quattroporte|maserati.grecale": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "maserati-maserati-quattroporte|maserati.levante": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 9.0
+  },
+  "maxus-maxus-epc1a|mg.mg3": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 118.0
+  },
+  "maxus-maxus-epc1a|mg.mg4": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 930.0
+  },
+  "maxus-maxus-epc1a|mg.mg5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 115.0
+  },
+  "maxus-maxus-epc1a|mg.mg_cyberster": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 6.0
+  },
+  "maxus-maxus-epc1a|mg.mg_ep": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 2.0
+  },
+  "maxus-maxus-epc1a|mg.mg_es": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-epc1a|mg.mg_extender_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-epc1a|mg.mg_extender_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-epc1a|mg.mg_hs": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 25.0
+  },
+  "maxus-maxus-epc1a|mg.mg_im5": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-epc1a|mg.mg_im6": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 23.0
+  },
+  "maxus-maxus-epc1a|mg.mg_maxus_7": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 21.0
+  },
+  "maxus-maxus-epc1a|mg.mg_maxus_9": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 22.0
+  },
+  "maxus-maxus-epc1a|mg.mg_s5_ev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 298.0
+  },
+  "maxus-maxus-epc1a|mg.mg_urban": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-epc1a|mg.mg_vs_hev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 18.0
+  },
+  "maxus-maxus-epc1a|mg.mg_zs": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 39.0
+  },
+  "maxus-maxus-epc1a|mg.mg_zs_ev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 2.0
+  },
+  "maxus-maxus-v80|mg.mg3": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 302.0
+  },
+  "maxus-maxus-v80|mg.mg4": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 2318.0
+  },
+  "maxus-maxus-v80|mg.mg5": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 528.0
+  },
+  "maxus-maxus-v80|mg.mg_cyberster": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 29.0
+  },
+  "maxus-maxus-v80|mg.mg_ep": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 2235.0
+  },
+  "maxus-maxus-v80|mg.mg_es": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-v80|mg.mg_extender_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-v80|mg.mg_extender_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-maxus-v80|mg.mg_hs": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 196.0
+  },
+  "maxus-maxus-v80|mg.mg_im5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 187.0
+  },
+  "maxus-maxus-v80|mg.mg_im6": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 127.0
+  },
+  "maxus-maxus-v80|mg.mg_maxus_7": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 117.0
+  },
+  "maxus-maxus-v80|mg.mg_maxus_9": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 133.0
+  },
+  "maxus-maxus-v80|mg.mg_s5_ev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1295.0
+  },
+  "maxus-maxus-v80|mg.mg_urban": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "maxus-maxus-v80|mg.mg_vs_hev": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 161.0
+  },
+  "maxus-maxus-v80|mg.mg_zs": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 226.0
+  },
+  "maxus-maxus-v80|mg.mg_zs_ev": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 1065.0
+  },
+  "maxus-mifa-7|mg.mg3": {
+   "common_months": 22,
+   "correlation": -0.264338,
+   "ratio": 3.161916,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 2773.0
+  },
+  "maxus-mifa-7|mg.mg4": {
+   "common_months": 22,
+   "correlation": 0.377275,
+   "ratio": 21.503991,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 18859.0
+  },
+  "maxus-mifa-7|mg.mg5": {
+   "common_months": 22,
+   "correlation": -0.505458,
+   "ratio": 3.355758,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 2943.0
+  },
+  "maxus-mifa-7|mg.mg_cyberster": {
+   "common_months": 22,
+   "correlation": -0.384895,
+   "ratio": 0.312429,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 274.0
+  },
+  "maxus-mifa-7|mg.mg_ep": {
+   "common_months": 20,
+   "correlation": 0.12011,
+   "ratio": 1.295918,
+   "state": "WEAK",
+   "subject_units": 686.0,
+   "target_units": 889.0
+  },
+  "maxus-mifa-7|mg.mg_es": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-7|mg.mg_extender_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-7|mg.mg_extender_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-7|mg.mg_hs": {
+   "common_months": 22,
+   "correlation": -0.43109,
+   "ratio": 1.093501,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 959.0
+  },
+  "maxus-mifa-7|mg.mg_im5": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 363.0,
+   "target_units": 640.0
+  },
+  "maxus-mifa-7|mg.mg_im6": {
+   "common_months": 15,
+   "correlation": 0.396195,
+   "ratio": 3.517581,
+   "state": "WEAK",
+   "subject_units": 711.0,
+   "target_units": 2501.0
+  },
+  "maxus-mifa-7|mg.mg_maxus_7": {
+   "common_months": 22,
+   "correlation": 0.982594,
+   "ratio": 0.961231,
+   "state": "STRONG",
+   "subject_units": 877.0,
+   "target_units": 843.0
+  },
+  "maxus-mifa-7|mg.mg_maxus_9": {
+   "common_months": 22,
+   "correlation": 0.393709,
+   "ratio": 0.608894,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 534.0
+  },
+  "maxus-mifa-7|mg.mg_s5_ev": {
+   "common_months": 15,
+   "correlation": 0.893498,
+   "ratio": 16.092827,
+   "state": "WEAK",
+   "subject_units": 711.0,
+   "target_units": 11442.0
+  },
+  "maxus-mifa-7|mg.mg_urban": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 151.0,
+   "target_units": 1193.0
+  },
+  "maxus-mifa-7|mg.mg_vs_hev": {
+   "common_months": 22,
+   "correlation": -0.362267,
+   "ratio": 0.925884,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 812.0
+  },
+  "maxus-mifa-7|mg.mg_zs": {
+   "common_months": 22,
+   "correlation": -0.294381,
+   "ratio": 1.246294,
+   "state": "WEAK",
+   "subject_units": 877.0,
+   "target_units": 1093.0
+  },
+  "maxus-mifa-7|mg.mg_zs_ev": {
+   "common_months": 18,
+   "correlation": 0.430761,
+   "ratio": 1.375,
+   "state": "WEAK",
+   "subject_units": 536.0,
+   "target_units": 737.0
+  },
+  "maxus-mifa-9|mg.mg3": {
+   "common_months": 23,
+   "correlation": -0.040824,
+   "ratio": 4.896853,
+   "state": "WEAK",
+   "subject_units": 572.0,
+   "target_units": 2801.0
+  },
+  "maxus-mifa-9|mg.mg4": {
+   "common_months": 24,
+   "correlation": 0.394146,
+   "ratio": 32.334992,
+   "state": "WEAK",
+   "subject_units": 603.0,
+   "target_units": 19498.0
+  },
+  "maxus-mifa-9|mg.mg5": {
+   "common_months": 24,
+   "correlation": -0.052205,
+   "ratio": 5.635158,
+   "state": "WEAK",
+   "subject_units": 603.0,
+   "target_units": 3398.0
+  },
+  "maxus-mifa-9|mg.mg_cyberster": {
+   "common_months": 22,
+   "correlation": -0.111444,
+   "ratio": 0.511194,
+   "state": "WEAK",
+   "subject_units": 536.0,
+   "target_units": 274.0
+  },
+  "maxus-mifa-9|mg.mg_ep": {
+   "common_months": 22,
+   "correlation": 0.648757,
+   "ratio": 1.925714,
+   "state": "WEAK",
+   "subject_units": 525.0,
+   "target_units": 1011.0
+  },
+  "maxus-mifa-9|mg.mg_es": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-9|mg.mg_extender_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-9|mg.mg_extender_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "maxus-mifa-9|mg.mg_hs": {
+   "common_months": 24,
+   "correlation": -0.130015,
+   "ratio": 1.766169,
+   "state": "WEAK",
+   "subject_units": 603.0,
+   "target_units": 1065.0
+  },
+  "maxus-mifa-9|mg.mg_im5": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 112.0,
+   "target_units": 640.0
+  },
+  "maxus-mifa-9|mg.mg_im6": {
+   "common_months": 15,
+   "correlation": 0.201514,
+   "ratio": 6.429306,
+   "state": "WEAK",
+   "subject_units": 389.0,
+   "target_units": 2501.0
+  },
+  "maxus-mifa-9|mg.mg_maxus_7": {
+   "common_months": 22,
+   "correlation": 0.455504,
+   "ratio": 1.572761,
+   "state": "WEAK",
+   "subject_units": 536.0,
+   "target_units": 843.0
+  },
+  "maxus-mifa-9|mg.mg_maxus_9": {
+   "common_months": 24,
+   "correlation": 0.99966,
+   "ratio": 0.996683,
+   "state": "STRONG",
+   "subject_units": 603.0,
+   "target_units": 601.0
+  },
+  "maxus-mifa-9|mg.mg_s5_ev": {
+   "common_months": 15,
+   "correlation": 0.449272,
+   "ratio": 29.413882,
+   "state": "WEAK",
+   "subject_units": 389.0,
+   "target_units": 11442.0
+  },
+  "maxus-mifa-9|mg.mg_urban": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 92.0,
+   "target_units": 1193.0
+  },
+  "maxus-mifa-9|mg.mg_vs_hev": {
+   "common_months": 24,
+   "correlation": 0.258784,
+   "ratio": 1.613599,
+   "state": "WEAK",
+   "subject_units": 603.0,
+   "target_units": 973.0
+  },
+  "maxus-mifa-9|mg.mg_zs": {
+   "common_months": 24,
+   "correlation": 0.023946,
+   "ratio": 2.13267,
+   "state": "WEAK",
+   "subject_units": 603.0,
+   "target_units": 1286.0
+  },
+  "maxus-mifa-9|mg.mg_zs_ev": {
+   "common_months": 20,
+   "correlation": 0.55842,
+   "ratio": 1.855731,
+   "state": "WEAK",
+   "subject_units": 506.0,
+   "target_units": 939.0
+  },
+  "mazda-mazda-mx-30|mazda.bt50_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda-mx-30|mazda.bt50_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda-mx-30|mazda.cx3": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 52.0
+  },
+  "mazda-mazda-mx-30|mazda.cx30": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 91.0
+  },
+  "mazda-mazda-mx-30|mazda.cx5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 27.0
+  },
+  "mazda-mazda-mx-30|mazda.cx8": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 26.0
+  },
+  "mazda-mazda-mx-30|mazda.mazda2": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 218.0
+  },
+  "mazda-mazda-mx-30|mazda.mazda2_hatchback": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda-mx-30|mazda.mazda3": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 27.0
+  },
+  "mazda-mazda-mx-30|mazda.mazda3_hatchback": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda-mx-30|mazda.mazda6": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda-mx-30|mazda.mx_5": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "mazda-mazda6e|mazda.bt50_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda6e|mazda.bt50_double_cab": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda6e|mazda.cx3": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 112.0
+  },
+  "mazda-mazda6e|mazda.cx30": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 213.0
+  },
+  "mazda-mazda6e|mazda.cx5": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 95.0
+  },
+  "mazda-mazda6e|mazda.cx8": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 25.0
+  },
+  "mazda-mazda6e|mazda.mazda2": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 787.0
+  },
+  "mazda-mazda6e|mazda.mazda2_hatchback": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda6e|mazda.mazda3": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 26.0
+  },
+  "mazda-mazda6e|mazda.mazda3_hatchback": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "mazda-mazda6e|mazda.mazda6": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 287.0
+  },
+  "mazda-mazda6e|mazda.mx_5": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 287.0,
+   "target_units": 9.0
+  },
+  "mclaren-mclaren-artura|mclaren.gts": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "nissan-leaf|nissan.almera": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 1412.0
+  },
+  "nissan-leaf|nissan.gtr": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 13.0
+  },
+  "nissan-leaf|nissan.kicks": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 1085.0
+  },
+  "nissan-leaf|nissan.navara_cab": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 482.0
+  },
+  "nissan-leaf|nissan.navara_double_cab": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 498.0
+  },
+  "nissan-leaf|nissan.serena": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 1067.0
+  },
+  "nissan-leaf|nissan.sylphy": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 12.0,
+   "target_units": 6.0
+  },
+  "nissan-leaf|nissan.teana": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "nissan-leaf|nissan.terra": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 191.0
+  },
+  "nissan-leaf|nissan.x_trail": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 94.0
+  },
+  "nissan-nissan-be-1|nissan.almera": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 197.0
+  },
+  "nissan-nissan-be-1|nissan.gtr": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "nissan-nissan-be-1|nissan.kicks": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 249.0
+  },
+  "nissan-nissan-be-1|nissan.navara_cab": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 47.0
+  },
+  "nissan-nissan-be-1|nissan.navara_double_cab": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 84.0
+  },
+  "nissan-nissan-be-1|nissan.serena": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 268.0
+  },
+  "nissan-nissan-be-1|nissan.sylphy": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "nissan-nissan-be-1|nissan.teana": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1.0
+  },
+  "nissan-nissan-be-1|nissan.terra": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 5.0
+  },
+  "nissan-nissan-be-1|nissan.x_trail": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 25.0
+  },
+  "nissan-nissan-fairlady|nissan.almera": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 2431.0
+  },
+  "nissan-nissan-fairlady|nissan.gtr": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 36.0
+  },
+  "nissan-nissan-fairlady|nissan.kicks": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 2183.0
+  },
+  "nissan-nissan-fairlady|nissan.navara_cab": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 757.0
+  },
+  "nissan-nissan-fairlady|nissan.navara_double_cab": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 1049.0
+  },
+  "nissan-nissan-fairlady|nissan.serena": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 2214.0
+  },
+  "nissan-nissan-fairlady|nissan.sylphy": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 12.0
+  },
+  "nissan-nissan-fairlady|nissan.teana": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "nissan-nissan-fairlady|nissan.terra": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 358.0
+  },
+  "nissan-nissan-fairlady|nissan.x_trail": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 161.0
+  },
+  "nissan-nissan-march|nissan.almera": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 835.0
+  },
+  "nissan-nissan-march|nissan.gtr": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 12.0
+  },
+  "nissan-nissan-march|nissan.kicks": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 790.0
+  },
+  "nissan-nissan-march|nissan.navara_cab": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 186.0
+  },
+  "nissan-nissan-march|nissan.navara_double_cab": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 208.0
+  },
+  "nissan-nissan-march|nissan.serena": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 444.0
+  },
+  "nissan-nissan-march|nissan.sylphy": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 5.0
+  },
+  "nissan-nissan-march|nissan.teana": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "nissan-nissan-march|nissan.terra": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 104.0
+  },
+  "nissan-nissan-march|nissan.x_trail": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 63.0
+  },
+  "nissan-note|nissan.almera": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 536.0
+  },
+  "nissan-note|nissan.gtr": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 11.0
+  },
+  "nissan-note|nissan.kicks": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 500.0
+  },
+  "nissan-note|nissan.navara_cab": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 352.0
+  },
+  "nissan-note|nissan.navara_double_cab": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 423.0
+  },
+  "nissan-note|nissan.serena": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 351.0
+  },
+  "nissan-note|nissan.sylphy": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 7.0
+  },
+  "nissan-note|nissan.teana": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 2.0
+  },
+  "nissan-note|nissan.terra": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 5.0,
+   "target_units": 200.0
+  },
+  "nissan-note|nissan.x_trail": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 32.0
+  },
+  "nissan-urvan|nissan.almera": {
+   "common_months": 22,
+   "correlation": 0.301195,
+   "ratio": 47.158249,
+   "state": "WEAK",
+   "subject_units": 297.0,
+   "target_units": 14006.0
+  },
+  "nissan-urvan|nissan.gtr": {
+   "common_months": 19,
+   "correlation": 0.271232,
+   "ratio": 0.170213,
+   "state": "WEAK",
+   "subject_units": 282.0,
+   "target_units": 48.0
+  },
+  "nissan-urvan|nissan.kicks": {
+   "common_months": 22,
+   "correlation": 0.41388,
+   "ratio": 32.478114,
+   "state": "WEAK",
+   "subject_units": 297.0,
+   "target_units": 9646.0
+  },
+  "nissan-urvan|nissan.navara_cab": {
+   "common_months": 22,
+   "correlation": 0.256048,
+   "ratio": 16.006734,
+   "state": "WEAK",
+   "subject_units": 297.0,
+   "target_units": 4754.0
+  },
+  "nissan-urvan|nissan.navara_double_cab": {
+   "common_months": 22,
+   "correlation": 0.439732,
+   "ratio": 9.427609,
+   "state": "WEAK",
+   "subject_units": 297.0,
+   "target_units": 2800.0
+  },
+  "nissan-urvan|nissan.serena": {
+   "common_months": 10,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 152.0,
+   "target_units": 16.0
+  },
+  "nissan-urvan|nissan.sylphy": {
+   "common_months": 15,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 217.0,
+   "target_units": 28.0
+  },
+  "nissan-urvan|nissan.teana": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 136.0,
+   "target_units": 17.0
+  },
+  "nissan-urvan|nissan.terra": {
+   "common_months": 22,
+   "correlation": 0.45396,
+   "ratio": 7.498316,
+   "state": "WEAK",
+   "subject_units": 297.0,
+   "target_units": 2227.0
+  },
+  "nissan-urvan|nissan.x_trail": {
+   "common_months": 17,
+   "correlation": -0.007279,
+   "ratio": 0.128114,
+   "state": "WEAK",
+   "subject_units": 281.0,
+   "target_units": 36.0
+  },
+  "peugeot-peugeot-408|peugeot.peugeot_2008": {
+   "common_months": 13,
+   "correlation": 0.121148,
+   "ratio": 0.671233,
+   "state": "WEAK",
+   "subject_units": 73.0,
+   "target_units": 49.0
+  },
+  "peugeot-peugeot-408|peugeot.peugeot_3008": {
+   "common_months": 13,
+   "correlation": 0.482494,
+   "ratio": 0.726027,
+   "state": "WEAK",
+   "subject_units": 73.0,
+   "target_units": 53.0
+  },
+  "peugeot-peugeot-5008|peugeot.peugeot_2008": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 17.0,
+   "target_units": 53.0
+  },
+  "peugeot-peugeot-5008|peugeot.peugeot_3008": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 49.0
+  },
+  "rolls-royce-rolls-royce-cullinan|rolls_royce.ghost": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 11.0
+  },
+  "rolls-royce-rolls-royce-phantom|rolls_royce.ghost": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4.0
+  },
+  "rolls-royce-rolls-royce-spectre|rolls_royce.ghost": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 13.0
+  },
+  "seres-seres-ec31|seres.seres_3": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 2.0
+  },
+  "sokon-crc50|sokon.sokon_ec35": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1.0
+  },
+  "subaru-subaru-wrx|subaru.brz": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 17.0,
+   "target_units": 22.0
+  },
+  "subaru-subaru-wrx|subaru.crosstrek": {
+   "common_months": 15,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 23.0,
+   "target_units": 208.0
+  },
+  "subaru-subaru-wrx|subaru.forester": {
+   "common_months": 16,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 24.0,
+   "target_units": 443.0
+  },
+  "subaru-subaru-wrx|subaru.outback": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 10.0
+  },
+  "suzuki-apv|suzuki.celerio": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 307.0
+  },
+  "suzuki-apv|suzuki.ciaz": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 259.0
+  },
+  "suzuki-apv|suzuki.ertiga": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 62.0
+  },
+  "suzuki-apv|suzuki.fronx": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "suzuki-apv|suzuki.jimny": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 53.0
+  },
+  "suzuki-apv|suzuki.suzuki_carry": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 251.0
+  },
+  "suzuki-apv|suzuki.swift": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 695.0
+  },
+  "suzuki-apv|suzuki.xl7": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 99.0
+  },
+  "suzuki-grand-vitara|suzuki.celerio": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 10.0
+  },
+  "suzuki-grand-vitara|suzuki.ciaz": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "suzuki-grand-vitara|suzuki.ertiga": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "suzuki-grand-vitara|suzuki.fronx": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 80.0
+  },
+  "suzuki-grand-vitara|suzuki.jimny": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 13.0
+  },
+  "suzuki-grand-vitara|suzuki.suzuki_carry": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 35.0
+  },
+  "suzuki-grand-vitara|suzuki.swift": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 174.0
+  },
+  "suzuki-grand-vitara|suzuki.xl7": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 13.0
+  },
+  "suzuki-suzuki-spacia|suzuki.celerio": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 1398.0
+  },
+  "suzuki-suzuki-spacia|suzuki.ciaz": {
+   "common_months": 11,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 74.0
+  },
+  "suzuki-suzuki-spacia|suzuki.ertiga": {
+   "common_months": 12,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 16.0,
+   "target_units": 270.0
+  },
+  "suzuki-suzuki-spacia|suzuki.fronx": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 334.0
+  },
+  "suzuki-suzuki-spacia|suzuki.jimny": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 259.0
+  },
+  "suzuki-suzuki-spacia|suzuki.suzuki_carry": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 787.0
+  },
+  "suzuki-suzuki-spacia|suzuki.swift": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 2735.0
+  },
+  "suzuki-suzuki-spacia|suzuki.xl7": {
+   "common_months": 14,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 18.0,
+   "target_units": 332.0
+  },
+  "tata-tata-xenon|tata.tata_super_ace": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 32.0
+  },
+  "toyota-toyota-roomy|toyota.alphard": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 599.0
+  },
+  "toyota-toyota-roomy|toyota.avanza": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "toyota-toyota-roomy|toyota.bz4x": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 48.0
+  },
+  "toyota-toyota-roomy|toyota.c_hr": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 9.0
+  },
+  "toyota-toyota-roomy|toyota.camry": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 879.0
+  },
+  "toyota-toyota-roomy|toyota.commuter": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1397.0
+  },
+  "toyota-toyota-roomy|toyota.corolla_altis": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 479.0
+  },
+  "toyota-toyota-roomy|toyota.corolla_cross": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2864.0
+  },
+  "toyota-toyota-roomy|toyota.crown": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 5.0
+  },
+  "toyota-toyota-roomy|toyota.fortuner": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2598.0
+  },
+  "toyota-toyota-roomy|toyota.gr86": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 19.0
+  },
+  "toyota-toyota-roomy|toyota.gr_supra": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 5.0
+  },
+  "toyota-toyota-roomy|toyota.harrier": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4.0
+  },
+  "toyota-toyota-roomy|toyota.hiace": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 152.0
+  },
+  "toyota-toyota-roomy|toyota.hiace_majesty": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 285.0
+  },
+  "toyota-toyota-roomy|toyota.hilux_champ": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1287.0
+  },
+  "toyota-toyota-roomy|toyota.hilux_revo_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 4993.0
+  },
+  "toyota-toyota-roomy|toyota.hilux_revo_double_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2175.0
+  },
+  "toyota-toyota-roomy|toyota.hilux_travo_cab": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 1153.0
+  },
+  "toyota-toyota-roomy|toyota.hilux_travo_double_cab": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2906.0
+  },
+  "toyota-toyota-roomy|toyota.innova_zenix": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 227.0
+  },
+  "toyota-toyota-roomy|toyota.land_cruiser_300": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 28.0
+  },
+  "toyota-toyota-roomy|toyota.noah": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 3.0
+  },
+  "toyota-toyota-roomy|toyota.prius": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "toyota-toyota-roomy|toyota.vellfire": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 287.0
+  },
+  "toyota-toyota-roomy|toyota.veloz": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 760.0
+  },
+  "toyota-toyota-roomy|toyota.voxy": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 10.0
+  },
+  "toyota-toyota-roomy|toyota.yaris": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 816.0
+  },
+  "toyota-toyota-roomy|toyota.yaris_ativ": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 11281.0
+  },
+  "toyota-toyota-roomy|toyota.yaris_cross": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 6225.0
+  },
+  "toyota-toyota-sienta|toyota.alphard": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 2683.0
+  },
+  "toyota-toyota-sienta|toyota.avanza": {
+   "common_months": 19,
+   "correlation": 0.304334,
+   "ratio": 0.102865,
+   "state": "WEAK",
+   "subject_units": 1536.0,
+   "target_units": 158.0
+  },
+  "toyota-toyota-sienta|toyota.bz4x": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 8.0,
+   "target_units": 344.0
+  },
+  "toyota-toyota-sienta|toyota.c_hr": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 10.0,
+   "target_units": 24.0
+  },
+  "toyota-toyota-sienta|toyota.camry": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 4371.0
+  },
+  "toyota-toyota-sienta|toyota.commuter": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 5148.0
+  },
+  "toyota-toyota-sienta|toyota.corolla_altis": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 1623.0
+  },
+  "toyota-toyota-sienta|toyota.corolla_cross": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 10260.0
+  },
+  "toyota-toyota-sienta|toyota.crown": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 30.0
+  },
+  "toyota-toyota-sienta|toyota.fortuner": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 9629.0
+  },
+  "toyota-toyota-sienta|toyota.gr86": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 69.0
+  },
+  "toyota-toyota-sienta|toyota.gr_supra": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 14.0
+  },
+  "toyota-toyota-sienta|toyota.harrier": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 26.0
+  },
+  "toyota-toyota-sienta|toyota.hiace": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 441.0
+  },
+  "toyota-toyota-sienta|toyota.hiace_majesty": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 1372.0
+  },
+  "toyota-toyota-sienta|toyota.hilux_champ": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 5376.0
+  },
+  "toyota-toyota-sienta|toyota.hilux_revo_cab": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 26461.0
+  },
+  "toyota-toyota-sienta|toyota.hilux_revo_double_cab": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 14.0,
+   "target_units": 15470.0
+  },
+  "toyota-toyota-sienta|toyota.hilux_travo_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 2386.0
+  },
+  "toyota-toyota-sienta|toyota.hilux_travo_double_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 4.0,
+   "target_units": 3842.0
+  },
+  "toyota-toyota-sienta|toyota.innova_zenix": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 922.0
+  },
+  "toyota-toyota-sienta|toyota.land_cruiser_300": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 601.0
+  },
+  "toyota-toyota-sienta|toyota.noah": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 28.0
+  },
+  "toyota-toyota-sienta|toyota.prius": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "toyota-toyota-sienta|toyota.vellfire": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 1109.0
+  },
+  "toyota-toyota-sienta|toyota.veloz": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 2570.0
+  },
+  "toyota-toyota-sienta|toyota.voxy": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 74.0
+  },
+  "toyota-toyota-sienta|toyota.yaris": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 3357.0
+  },
+  "toyota-toyota-sienta|toyota.yaris_ativ": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 39914.0
+  },
+  "toyota-toyota-sienta|toyota.yaris_cross": {
+   "common_months": 8,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 23835.0
+  },
+  "toyota-toyota-tr|toyota.alphard": {
+   "common_months": 20,
+   "correlation": -0.114688,
+   "ratio": 106.9375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 6844.0
+  },
+  "toyota-toyota-tr|toyota.avanza": {
+   "common_months": 18,
+   "correlation": -0.190674,
+   "ratio": 1.772727,
+   "state": "WEAK",
+   "subject_units": 88.0,
+   "target_units": 156.0
+  },
+  "toyota-toyota-tr|toyota.bz4x": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 7.0,
+   "target_units": 161.0
+  },
+  "toyota-toyota-tr|toyota.c_hr": {
+   "common_months": 13,
+   "correlation": -0.328451,
+   "ratio": 1.325581,
+   "state": "WEAK",
+   "subject_units": 43.0,
+   "target_units": 57.0
+  },
+  "toyota-toyota-tr|toyota.camry": {
+   "common_months": 20,
+   "correlation": -0.329009,
+   "ratio": 137.25,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 8784.0
+  },
+  "toyota-toyota-tr|toyota.commuter": {
+   "common_months": 20,
+   "correlation": -0.473497,
+   "ratio": 202.265625,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 12945.0
+  },
+  "toyota-toyota-tr|toyota.corolla_altis": {
+   "common_months": 20,
+   "correlation": -0.093263,
+   "ratio": 78.6875,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 5036.0
+  },
+  "toyota-toyota-tr|toyota.corolla_cross": {
+   "common_months": 20,
+   "correlation": -0.24242,
+   "ratio": 399.0,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 25536.0
+  },
+  "toyota-toyota-tr|toyota.crown": {
+   "common_months": 20,
+   "correlation": -0.117389,
+   "ratio": 1.359375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 87.0
+  },
+  "toyota-toyota-tr|toyota.fortuner": {
+   "common_months": 20,
+   "correlation": -0.425209,
+   "ratio": 369.546875,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 23651.0
+  },
+  "toyota-toyota-tr|toyota.gr86": {
+   "common_months": 20,
+   "correlation": -0.296636,
+   "ratio": 2.03125,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 130.0
+  },
+  "toyota-toyota-tr|toyota.gr_supra": {
+   "common_months": 17,
+   "correlation": 0.484322,
+   "ratio": 0.6875,
+   "state": "WEAK",
+   "subject_units": 48.0,
+   "target_units": 33.0
+  },
+  "toyota-toyota-tr|toyota.harrier": {
+   "common_months": 20,
+   "correlation": -0.146873,
+   "ratio": 1.015625,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 65.0
+  },
+  "toyota-toyota-tr|toyota.hiace": {
+   "common_months": 20,
+   "correlation": 0.11144,
+   "ratio": 21.546875,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 1379.0
+  },
+  "toyota-toyota-tr|toyota.hiace_majesty": {
+   "common_months": 20,
+   "correlation": -0.225098,
+   "ratio": 52.328125,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 3349.0
+  },
+  "toyota-toyota-tr|toyota.hilux_champ": {
+   "common_months": 20,
+   "correlation": 0.16041,
+   "ratio": 242.515625,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 15521.0
+  },
+  "toyota-toyota-tr|toyota.hilux_revo_cab": {
+   "common_months": 20,
+   "correlation": 0.034869,
+   "ratio": 952.359375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 60951.0
+  },
+  "toyota-toyota-tr|toyota.hilux_revo_double_cab": {
+   "common_months": 20,
+   "correlation": 0.129812,
+   "ratio": 572.609375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 36647.0
+  },
+  "toyota-toyota-tr|toyota.hilux_travo_cab": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 3151.0
+  },
+  "toyota-toyota-tr|toyota.hilux_travo_double_cab": {
+   "common_months": 4,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 6.0,
+   "target_units": 7196.0
+  },
+  "toyota-toyota-tr|toyota.innova_zenix": {
+   "common_months": 20,
+   "correlation": 0.105657,
+   "ratio": 48.328125,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 3093.0
+  },
+  "toyota-toyota-tr|toyota.land_cruiser_300": {
+   "common_months": 20,
+   "correlation": -0.50136,
+   "ratio": 4.84375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 310.0
+  },
+  "toyota-toyota-tr|toyota.noah": {
+   "common_months": 19,
+   "correlation": 0.178983,
+   "ratio": 1.758065,
+   "state": "WEAK",
+   "subject_units": 62.0,
+   "target_units": 109.0
+  },
+  "toyota-toyota-tr|toyota.prius": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 13.0,
+   "target_units": 3.0
+  },
+  "toyota-toyota-tr|toyota.vellfire": {
+   "common_months": 20,
+   "correlation": -0.505837,
+   "ratio": 32.453125,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 2077.0
+  },
+  "toyota-toyota-tr|toyota.veloz": {
+   "common_months": 20,
+   "correlation": -0.24522,
+   "ratio": 106.90625,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 6842.0
+  },
+  "toyota-toyota-tr|toyota.voxy": {
+   "common_months": 20,
+   "correlation": 0.331616,
+   "ratio": 4.90625,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 314.0
+  },
+  "toyota-toyota-tr|toyota.yaris": {
+   "common_months": 20,
+   "correlation": 0.085265,
+   "ratio": 160.359375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 10263.0
+  },
+  "toyota-toyota-tr|toyota.yaris_ativ": {
+   "common_months": 20,
+   "correlation": -0.570717,
+   "ratio": 1352.859375,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 86583.0
+  },
+  "toyota-toyota-tr|toyota.yaris_cross": {
+   "common_months": 20,
+   "correlation": -0.349498,
+   "ratio": 912.921875,
+   "state": "WEAK",
+   "subject_units": 64.0,
+   "target_units": 58427.0
+  },
+  "toyota-vios|toyota.alphard": {
+   "common_months": 10,
+   "correlation": -0.243672,
+   "ratio": 91.921053,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 3493.0
+  },
+  "toyota-vios|toyota.avanza": {
+   "common_months": 19,
+   "correlation": 0.507781,
+   "ratio": 0.032537,
+   "state": "WEAK",
+   "subject_units": 4856.0,
+   "target_units": 158.0
+  },
+  "toyota-vios|toyota.bz4x": {
+   "common_months": 3,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 9.0,
+   "target_units": 216.0
+  },
+  "toyota-vios|toyota.c_hr": {
+   "common_months": 7,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 33.0,
+   "target_units": 23.0
+  },
+  "toyota-vios|toyota.camry": {
+   "common_months": 10,
+   "correlation": 0.288143,
+   "ratio": 109.578947,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 4164.0
+  },
+  "toyota-vios|toyota.commuter": {
+   "common_months": 10,
+   "correlation": 0.547641,
+   "ratio": 163.868421,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 6227.0
+  },
+  "toyota-vios|toyota.corolla_altis": {
+   "common_months": 10,
+   "correlation": -0.037852,
+   "ratio": 58.157895,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 2210.0
+  },
+  "toyota-vios|toyota.corolla_cross": {
+   "common_months": 10,
+   "correlation": -0.422043,
+   "ratio": 337.263158,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 12816.0
+  },
+  "toyota-vios|toyota.crown": {
+   "common_months": 10,
+   "correlation": -0.274095,
+   "ratio": 1.0,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 38.0
+  },
+  "toyota-vios|toyota.fortuner": {
+   "common_months": 10,
+   "correlation": 0.099132,
+   "ratio": 301.763158,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 11467.0
+  },
+  "toyota-vios|toyota.gr86": {
+   "common_months": 10,
+   "correlation": 0.680574,
+   "ratio": 1.789474,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 68.0
+  },
+  "toyota-vios|toyota.gr_supra": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 36.0,
+   "target_units": 16.0
+  },
+  "toyota-vios|toyota.harrier": {
+   "common_months": 9,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 37.0,
+   "target_units": 21.0
+  },
+  "toyota-vios|toyota.hiace": {
+   "common_months": 10,
+   "correlation": -0.526202,
+   "ratio": 18.105263,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 688.0
+  },
+  "toyota-vios|toyota.hiace_majesty": {
+   "common_months": 10,
+   "correlation": 0.006237,
+   "ratio": 44.605263,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 1695.0
+  },
+  "toyota-vios|toyota.hilux_champ": {
+   "common_months": 10,
+   "correlation": -0.231189,
+   "ratio": 198.315789,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 7536.0
+  },
+  "toyota-vios|toyota.hilux_revo_cab": {
+   "common_months": 10,
+   "correlation": -0.004007,
+   "ratio": 801.078947,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 30441.0
+  },
+  "toyota-vios|toyota.hilux_revo_double_cab": {
+   "common_months": 10,
+   "correlation": 0.126952,
+   "ratio": 472.394737,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 17951.0
+  },
+  "toyota-vios|toyota.hilux_travo_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1329.0
+  },
+  "toyota-vios|toyota.hilux_travo_double_cab": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 1975.0
+  },
+  "toyota-vios|toyota.innova_zenix": {
+   "common_months": 10,
+   "correlation": -0.563873,
+   "ratio": 37.710526,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 1433.0
+  },
+  "toyota-vios|toyota.land_cruiser_300": {
+   "common_months": 10,
+   "correlation": -0.174569,
+   "ratio": 4.631579,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 176.0
+  },
+  "toyota-vios|toyota.noah": {
+   "common_months": 9,
+   "correlation": -0.390455,
+   "ratio": 1.486486,
+   "state": "WEAK",
+   "subject_units": 37.0,
+   "target_units": 55.0
+  },
+  "toyota-vios|toyota.prius": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 2.0
+  },
+  "toyota-vios|toyota.vellfire": {
+   "common_months": 10,
+   "correlation": -0.150211,
+   "ratio": 27.657895,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 1051.0
+  },
+  "toyota-vios|toyota.veloz": {
+   "common_months": 10,
+   "correlation": -0.48373,
+   "ratio": 89.078947,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 3385.0
+  },
+  "toyota-vios|toyota.voxy": {
+   "common_months": 10,
+   "correlation": -0.508466,
+   "ratio": 3.631579,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 138.0
+  },
+  "toyota-vios|toyota.yaris": {
+   "common_months": 10,
+   "correlation": -0.223831,
+   "ratio": 126.684211,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 4814.0
+  },
+  "toyota-vios|toyota.yaris_ativ": {
+   "common_months": 10,
+   "correlation": 0.022416,
+   "ratio": 1164.657895,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 44257.0
+  },
+  "toyota-vios|toyota.yaris_cross": {
+   "common_months": 10,
+   "correlation": -0.116999,
+   "ratio": 757.5,
+   "state": "WEAK",
+   "subject_units": 38.0,
+   "target_units": 28785.0
+  },
+  "volkswagen-volkswagen-caddy|volkswagen.caravelle": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 3.0,
+   "target_units": 4.0
+  },
+  "volkswagen-volkswagen-golf|volkswagen.caravelle": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 10.0
+  },
+  "volkswagen-volkswagen-multivan|volkswagen.caravelle": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 22.0
+  },
+  "volkswagen-volkswagen-t-roc|volkswagen.caravelle": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 7.0
+  },
+  "volkswagen-volkswagen-touareg|volkswagen.caravelle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "volkswagen-vw-idbuzz|volkswagen.caravelle": {
+   "common_months": 13,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 28.0,
+   "target_units": 105.0
+  },
+  "volkswagen-vw-t-cross|volkswagen.caravelle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 1.0,
+   "target_units": 2.0
+  },
+  "volkswagen-vw-tiguan|volkswagen.caravelle": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 2.0,
+   "target_units": 12.0
+  },
+  "volt-volt-volt|volt.volt_for_four": {
+   "common_months": 19,
+   "correlation": 1.0,
+   "ratio": 1.0,
+   "state": "STRONG",
+   "subject_units": 38.0,
+   "target_units": 38.0
+  },
+  "volt-volt-volt|volt.volt_for_two": {
+   "common_months": 9,
+   "correlation": 0.893289,
+   "ratio": 0.184834,
+   "state": "WEAK",
+   "subject_units": 422.0,
+   "target_units": 78.0
+  },
+  "volvo-volvo-es90|volvo.ec40": {
+   "common_months": 6,
+   "correlation": 0.487014,
+   "ratio": 1.34375,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 172.0
+  },
+  "volvo-volvo-es90|volvo.ex30": {
+   "common_months": 6,
+   "correlation": -0.364004,
+   "ratio": 1.09375,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 140.0
+  },
+  "volvo-volvo-es90|volvo.ex40": {
+   "common_months": 6,
+   "correlation": 0.269062,
+   "ratio": 2.0,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 256.0
+  },
+  "volvo-volvo-es90|volvo.ex90": {
+   "common_months": 6,
+   "correlation": 0.298394,
+   "ratio": 0.265625,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 34.0
+  },
+  "volvo-volvo-es90|volvo.s60": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 101.0,
+   "target_units": 10.0
+  },
+  "volvo-volvo-es90|volvo.s90": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 102.0,
+   "target_units": 13.0
+  },
+  "volvo-volvo-es90|volvo.v60": {
+   "common_months": 5,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 106.0,
+   "target_units": 10.0
+  },
+  "volvo-volvo-es90|volvo.xc40": {
+   "common_months": 6,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 128.0,
+   "target_units": 17.0
+  },
+  "volvo-volvo-es90|volvo.xc60": {
+   "common_months": 6,
+   "correlation": -0.803194,
+   "ratio": 0.710938,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 91.0
+  },
+  "volvo-volvo-es90|volvo.xc90": {
+   "common_months": 6,
+   "correlation": -0.322643,
+   "ratio": 0.273438,
+   "state": "WEAK",
+   "subject_units": 128.0,
+   "target_units": 35.0
+  },
+  "wuling-binguo|wuling.wuling_air_ev": {
+   "common_months": 24,
+   "correlation": 0.562459,
+   "ratio": 0.179969,
+   "state": "WEAK",
+   "subject_units": 1278.0,
+   "target_units": 230.0
+  },
+  "wuling-binguo|wuling.wuling_bingo": {
+   "common_months": 24,
+   "correlation": 1.0,
+   "ratio": 1.0,
+   "state": "STRONG",
+   "subject_units": 1278.0,
+   "target_units": 1278.0
+  },
+  "wuling-binguo|wuling.wuling_darion": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 1054.0
+  },
+  "wuling-binguo|wuling.wuling_porta": {
+   "common_months": 2,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 15.0,
+   "target_units": 79.0
+  },
+  "wuling-e10|wuling.wuling_air_ev": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 50.0,
+   "target_units": 21.0
+  },
+  "wuling-e10|wuling.wuling_bingo": {
+   "common_months": 1,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 50.0,
+   "target_units": 38.0
+  },
+  "wuling-e10|wuling.wuling_darion": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "wuling-e10|wuling.wuling_porta": {
+   "common_months": 0,
+   "correlation": null,
+   "ratio": null,
+   "state": "UNAVAILABLE",
+   "subject_units": 0,
+   "target_units": 0
+  },
+  "zeekr-zeekr-7x|zeekr.zeekr_009": {
+   "common_months": 12,
+   "correlation": 0.85194,
+   "ratio": 0.909194,
+   "state": "WEAK",
+   "subject_units": 2643.0,
+   "target_units": 2403.0
+  },
+  "zeekr-zeekr-7x|zeekr.zeekr_x": {
+   "common_months": 12,
+   "correlation": 0.176694,
+   "ratio": 0.277336,
+   "state": "WEAK",
+   "subject_units": 2643.0,
+   "target_units": 733.0
+  }
+ },
+ "schema": "ir-owner-pack-series-evidence/1",
+ "subjects": [
+  "JETOUR|ไม่ระบุ",
+  "MERCEDES AMG|SL 43",
+  "MERCEDES AMG|SL 55 4MATIC",
+  "MERCEDESBENZ MAYBACH|S680 4 M",
+  "RANGE ROVER|AUTOBIOGRAPHY P400E LWB",
+  "RANGE ROVER|EVOQUE 2 2 SD4 DYNAMIC",
+  "RANGE ROVER|EVOQUE 2 2L SD4",
+  "audi-audi-a8l",
+  "audi-audi-s3",
+  "bentley-bentley-continental",
+  "bmw-bmw-m2",
+  "bmw-bmw-m3",
+  "bmw-bmw-m4",
+  "bmw-bmw-m5",
+  "bmw-x2",
+  "byd-e6",
+  "chevrolet-chevrolet-corvette",
+  "chevrolet-trailblazer",
+  "daihatsu-daihatsu-copen",
+  "daihatsu-daihatsu-move",
+  "ferrari-ferrari-488",
+  "ferrari-ferrari-portofino",
+  "ferrari-ferrari-purosangue",
+  "ford-ford-focus",
+  "foton-bj1041",
+  "foton-eview",
+  "honda-brio",
+  "honda-honda-acty",
+  "honda-honda-amaze",
+  "honda-honda-freed",
+  "honda-honda-n-box",
+  "honda-prelude",
+  "honda-super-one",
+  "hyundai-genesis-g80",
+  "hyundai-kona",
+  "hyundai-tucson",
+  "isuzu-isuzu-cab4",
+  "jac-t8",
+  "jaecoo-jaecoo-j5",
+  "jaecoo-jaecoo-j6",
+  "jaecoo-jaecoo-j7",
+  "jeep-jeep-gladiator",
+  "kia-k2500",
+  "lamborghini-lamborghini-temerario",
+  "land-rover-land-rover-discovery",
+  "lexus-lexus-rc",
+  "lotus-emira",
+  "maserati-maserati-ghibli",
+  "maserati-maserati-mc20",
+  "maserati-maserati-quattroporte",
+  "maxus-maxus-epc1a",
+  "maxus-maxus-v80",
+  "maxus-mifa-7",
+  "maxus-mifa-9",
+  "mazda-mazda-mx-30",
+  "mazda-mazda6e",
+  "mclaren-mclaren-artura",
+  "nissan-leaf",
+  "nissan-nissan-be-1",
+  "nissan-nissan-fairlady",
+  "nissan-nissan-march",
+  "nissan-note",
+  "nissan-urvan",
+  "peugeot-peugeot-408",
+  "peugeot-peugeot-5008",
+  "rolls-royce-rolls-royce-cullinan",
+  "rolls-royce-rolls-royce-phantom",
+  "rolls-royce-rolls-royce-spectre",
+  "seres-seres-ec31",
+  "sokon-crc50",
+  "subaru-subaru-wrx",
+  "suzuki-apv",
+  "suzuki-grand-vitara",
+  "suzuki-suzuki-spacia",
+  "tata-tata-xenon",
+  "toyota-toyota-roomy",
+  "toyota-toyota-sienta",
+  "toyota-toyota-tr",
+  "toyota-vios",
+  "volkswagen-volkswagen-caddy",
+  "volkswagen-volkswagen-golf",
+  "volkswagen-volkswagen-multivan",
+  "volkswagen-volkswagen-t-roc",
+  "volkswagen-volkswagen-touareg",
+  "volkswagen-vw-idbuzz",
+  "volkswagen-vw-t-cross",
+  "volkswagen-vw-tiguan",
+  "volt-volt-volt",
+  "volvo-volvo-es90",
+  "wuling-binguo",
+  "wuling-e10",
+  "zeekr-zeekr-7x"
+ ]
+}
