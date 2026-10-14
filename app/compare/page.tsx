@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { browserDb } from "@/lib/supabase-browser";
 import { bodyLabel, cabLabel, retailStatusLabel } from "@/lib/body-labels";
 import "./compare-slots.css";
+import "./compare-design.css";
 
 type TrimOption = {
   id: string; model_id: string | null; brand_name: string | null; model_name: string | null;
@@ -83,6 +84,7 @@ export default function ComparePage() {
   const [result, setResult] = useState<CompareResult | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "quota" | "signup" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [shareStatus, setShareStatus] = useState("");
   // Models handed over by the /models CompareTray (?models=<model id>). A model is not a trim, so nothing is chosen
   // for the reader: each queued model opens the picker on its own trim list and waits for an explicit choice.
   const [queuedModels, setQueuedModels] = useState<string[]>([]);
@@ -131,6 +133,21 @@ export default function ComparePage() {
   const openTrims = modelId ? (trimsByModel[modelId] ?? seedTrimsByModel[modelId]) : undefined;
   const chosen = useMemo(() => slots.filter((id): id is string => Boolean(id)), [slots]);
   const selectedCount = chosen.length;
+  const shareHref = useMemo(() => {
+    const params = new URLSearchParams();
+    chosen.forEach((id) => params.append("trims", id));
+    return "/compare?" + params.toString();
+  }, [chosen]);
+
+  async function copyShareLink() {
+    if (selectedCount < 2) return;
+    try {
+      await navigator.clipboard.writeText(new URL(shareHref, window.location.origin).toString());
+      setShareStatus("คัดลอกลิงก์แล้ว");
+    } catch {
+      setShareStatus("คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดลิงก์แล้วคัดลอก URL จากแถบที่อยู่");
+    }
+  }
 
   async function loadModelTrims(nextModelId: string) {
     if (!nextModelId || trimsByModel[nextModelId]) return;
@@ -199,6 +216,7 @@ export default function ComparePage() {
     const nextSlots = slots.map((value, index) => index === activeSlot ? pendingTrimId : value);
     setSlots(nextSlots);
     setResult(null);
+    setShareStatus("");
     const rest = queuedModels.slice(1);
     closePicker();
     if (rest.length) { setQueuedModels(rest); openNextQueued(rest, nextSlots); }
@@ -207,6 +225,7 @@ export default function ComparePage() {
   function removeSlot(index: number) {
     setSlots((current) => current.map((value, slotIndex) => slotIndex === index ? null : value));
     setResult(null);
+    setShareStatus("");
     if (activeSlot === index) closePicker();
   }
 
@@ -233,7 +252,7 @@ export default function ComparePage() {
     }
   }
 
-  return <div className="comparePage">
+  return <div className="designPage comparePage compareDesignPage">
     <section className="compareHero">
       <div>
         <div className="sfEyebrow">เปรียบเทียบสเปก</div>
