@@ -64,3 +64,15 @@ Continue the already existing **PR #229/PR #232/PR #235** assets, not another ma
 **STOP / not authorized:** Production/staging DDL/DML, crosswalk promotions, merge, migration number allocation, Enforcer bypass, Ice R7/R8 cutover, Price Fetcher, Trim Checker, Spec Enrichment or any re-review of the frozen 244. The first 8 Vehicle Master IDs remain a subordinate controlled test, not a replacement for working Crosswalk.
 
 This report is intentionally sanitized (aggregate counts / already documented source references). It does not contain new private Production row dumps or credential material.
+
+## 6. Production Ice reg_trend LEFT JOIN conservation test (2026-10-14)
+
+Executed a **second independent SELECT-only, REPEATABLE READ** test on production: feed all 1,407 `final_scope_dispositions.csv` keys as SQL CTE VALUES, LEFT JOIN the actual `public.ice_reg_trend` on **both** `model_group_id` and `reg_type` (unique scoped keys checked client-side), without writing or changing any Production mapping. Count the actual row-grain facts before and after JOIN.
+
+| Check | Before | After | Difference |
+|---|---:|---:|---:|
+| `ice_reg_trend` fact rows | **262,985** | **262,985** | **0** |
+| Registration units (all periods) | **4,141,987** | **4,141,987** | **0** |
+| Unmatched Ice raw facts to 1,407 frozen scoped keys | | **0** | |
+
+Disposition-linked raw fact counts: **4,988 source fact rows excluded** (not deleted); **4,027,896** units matched to existing-ID *offline candidates*, **94,432** units to new-BASIC *offline proposals*, **1,376** unresolved, and **18,283** units excluded (as established by the original scope manifest). These labels are **NOT** Production APPROVED, nor a test of v2 deployed schema/reader. Exact scoped static JOIN is a proof that the input grain can conserve 100% of the imported raw facts/units. Production v2 table does not exist, so v2 actual deployment remains blocked.
