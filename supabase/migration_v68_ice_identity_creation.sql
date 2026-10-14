@@ -4,10 +4,24 @@
 -- New models carry only a name and a lifecycle: payload.incomplete = true, body_type OTHER (the validator allows that only when incomplete),
 -- so nothing is invented about body, price or specs. They are real catalogue models; their pages must cope with "no trims yet".
 -- Numbering: production ledger ends at v64 (+ v67 scoped crosswalk). v65/v66 exist in the repo but are NOT applied; this file does not need them
--- (it writes canonical_write_revisions using only its original 13 columns).
+-- (it logs through canonical_write_commands + canonical_write_revisions, as production requires).
 -- Nothing runs from this file except creating functions. Rollback: supabase/rollback_v68_ice_identity_creation.sql
 
 begin;
+
+-- Production keeps an audit pair: canonical_write_commands (one row per command) and canonical_write_revisions (FK to it, topic limited to catalog/price/spec).
+-- Identity creation is logged as topic 'catalog'; the command row uses operation UPSERT_MODEL_BUNDLE (create) or WITHDRAW_MODEL (revert).
+create or replace function public._vm_log_identity(p_entity_type text, p_entity_id text, p_before jsonb, p_after jsonb, p_actor text, p_reason text, p_op text)
+returns void language plpgsql security definer set search_path = public, pg_temp
+as $$
+declare cmd uuid := gen_random_uuid(); rev text := 'vmid-' || replace(gen_random_uuid()::text, '-', '');
+begin
+  insert into canonical_write_commands (id, command_key, canonical_entity_type, canonical_id, operation, payload, actor, reason, status, revision_id, applied_at)
+    values (cmd, 'identity:' || p_reason || ':' || p_entity_type || ':' || p_entity_id || ':' || cmd::text, p_entity_type, p_entity_id, p_op, coalesce(p_after, '{}'::jsonb), p_actor, p_reason, 'applied', rev, now());
+  insert into canonical_write_revisions (revision_id, command_id, topic, entity_type, entity_id, before_hash, after_hash, before_payload, after_payload, actor, reason)
+    values (rev, cmd, 'catalog', p_entity_type, p_entity_id, md5(coalesce(p_before::text, '')), md5(coalesce(p_after::text, '')), p_before, coalesce(p_after, '{}'::jsonb), p_actor, p_reason);
+end $$;
+revoke all on function public._vm_log_identity(text, text, jsonb, jsonb, text, text, text) from public, anon, authenticated;
 
 create or replace function public.vm_create_identities(p_batch_id text, p_items jsonb, p_actor text default 'owner')
 returns jsonb
@@ -42,8 +56,7 @@ begin
       bpayload := jsonb_build_object('id', b, 'slug', brand_slug, 'name_en', brand_nm, 'name_th', null);
       insert into vehicle_brands (canonical_id, slug, name_en, payload, served_as_of, revision, seed_release_id)
         values (b, brand_slug, brand_nm, bpayload, current_date, 1, seed);
-      insert into canonical_write_revisions (revision_id, command_id, topic, entity_type, entity_id, before_hash, after_hash, before_payload, after_payload, actor, reason)
-        values ('vmid-' || replace(gen_random_uuid()::text, '-', ''), gen_random_uuid(), 'identity', 'brand', b, md5(''), md5(bpayload::text), null, bpayload, p_actor, v_reason);
+      perform _vm_log_identity('brand', b, null, bpayload, p_actor, v_reason, 'UPSERT_MODEL_BUNDLE');
       brands_created := brands_created || to_jsonb(b);
     end if;
 
@@ -68,8 +81,7 @@ begin
       values (cid, b, mslug, nm, gen_id, st, null, 'OTHER', mpayload, current_date, 1, seed);
     insert into vehicle_generations (canonical_id, model_id, code, segment, launched, ended, payload, revision, seed_release_id)
       values (gen_id, cid, 'gen1', null, null, null, gpayload, 1, seed);
-    insert into canonical_write_revisions (revision_id, command_id, topic, entity_type, entity_id, before_hash, after_hash, before_payload, after_payload, actor, reason)
-      values ('vmid-' || replace(gen_random_uuid()::text, '-', ''), gen_random_uuid(), 'identity', 'model', cid, md5(''), md5(mpayload::text), null, mpayload, p_actor, v_reason);
+    perform _vm_log_identity('model', cid, null, mpayload, p_actor, v_reason, 'UPSERT_MODEL_BUNDLE');
     created := created || jsonb_build_object('canonical_id', cid, 'slug', mslug);
   end loop;
   return jsonb_build_object('batch_id', p_batch_id, 'created', created, 'created_count', jsonb_array_length(created),
@@ -84,19 +96,18 @@ language plpgsql security definer set search_path = public, pg_temp
 as $$
 declare r record; v_reason text := 'ice-identity:' || p_batch_id; n_models int := 0; n_brands int := 0;
 begin
-  for r in select entity_id from canonical_write_revisions where topic = 'identity' and entity_type = 'model' and reason = v_reason loop
+  for r in select entity_id from canonical_write_revisions where topic = 'catalog' and entity_type = 'model' and reason = v_reason loop
     if exists (select 1 from ice_model_crosswalk_scoped where canonical_model_id = r.entity_id) then
       raise exception 'cannot revert %: Ice crosswalk still points at it', r.entity_id;
     end if;
   end loop;
-  for r in select entity_id, after_payload from canonical_write_revisions where topic = 'identity' and entity_type = 'model' and reason = v_reason loop
+  for r in select entity_id, after_payload from canonical_write_revisions where topic = 'catalog' and entity_type = 'model' and reason = v_reason loop
     delete from vehicle_generations where model_id = r.entity_id;
     delete from vehicle_models where canonical_id = r.entity_id;
-    insert into canonical_write_revisions (revision_id, command_id, topic, entity_type, entity_id, before_hash, after_hash, before_payload, after_payload, actor, reason)
-      values ('vmid-' || replace(gen_random_uuid()::text, '-', ''), gen_random_uuid(), 'identity_revert', 'model', r.entity_id, md5(r.after_payload::text), md5(''), r.after_payload, '{}'::jsonb, p_actor, 'revert of ' || v_reason);
+    perform _vm_log_identity('model', r.entity_id, r.after_payload, '{}'::jsonb, p_actor, 'revert of ' || v_reason, 'WITHDRAW_MODEL');
     n_models := n_models + 1;
   end loop;
-  for r in select entity_id, after_payload from canonical_write_revisions where topic = 'identity' and entity_type = 'brand' and reason = v_reason loop
+  for r in select entity_id, after_payload from canonical_write_revisions where topic = 'catalog' and entity_type = 'brand' and reason = v_reason loop
     if not exists (select 1 from vehicle_models where brand_id = r.entity_id) then
       delete from vehicle_brands where canonical_id = r.entity_id; n_brands := n_brands + 1;
     end if;
