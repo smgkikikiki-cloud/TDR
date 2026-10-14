@@ -1,5 +1,15 @@
 # TDR Vehicle Master / Ice Identity — Owner context handoff
 
+## PRIORITY OVERRIDE 2026-10-14: return to Ice R6 crosswalk, preserve 244 approvals
+
+**Owner re-prioritized after discovering previous responses had called crosswalk work “fixed” when live mapping still isn't approved/usable.** THE IMMEDIATE CRITICAL PATH IS **Issue #228 Ice R6 Crosswalk**, NOT finishing eight-model Phase 1D demos first and NOT new Trim/Price/Spec work. Full ordered source: [Issue #228 priority decision](https://github.com/smgkikikiki-cloud/TDR/issues/228).
+
+**First unfinished task:** frozen 244/244 decisions + read-only actual v63 `ice_model_crosswalk` (490 rows, 82 AUTO, 408 PROPOSED, 0 APPROVED) and redirects + full real Ice M7.0 reg_type scopes; reconcile C01 observed/authorized state; execute offline v2 scoped resolver from PR #232 and produce per-scope incompatibility/read-model matrix. Identify how many already-approved links can work without any new BASIC vehicle rows, which fail on old unique-active-canonical index (117 owner groups share 35 targets), which need scoped pickup `(model_group_id,reg_type)`, and which genuinely lack canonical identities. Never require the owner to re-review 244 decisions or allow proposed/shadow to count as approved.
+
+**Next only AFTER this real-data reconciliation and contract QA:** approve scoped v2 storage+reader shape and C02 migration allocation, build governed migration/R6 plan, handle missing identities in batches (first eight remain useful pilot, not R6 completion), R6 reviewed write with explicit owner go, R7 true registration aggregates acceptance, R8 website read/UI cutover and final product QA. Same owner freeze, no R6 gate flips, live SQL, merges, deployment, bypass or bulk owner re-adjudication authorized by this note.
+
+**Historical sections below saying “current active focus remains first eight” are SUPERSEDED for overall project priority.** Their isolated Phase1D QA context remains useful as a subordinate dependency, not the main work. The user asked to stop getting distracted by unrelated Layer2 work and deliver the ORIGINAL Ice mapping fix. No new Codex session is started by this document.
+
 ## Owner-corrected decision: Layer 2 is ONE working end-to-end user product (2026-10-14)
 
 **Explicit owner correction to an earlier wrong boundary:** Do NOT define Layer 2 as finished just because Vehicle Catalog identity/trim/price/spec is populated. **Ice registration crosswalk, accurate market registration comparisons and the actual website experience MUST work too.** A split between data-engineering streams cannot be used to split away product acceptance. The previous note claiming Ice R6/registration matching is outside Layer 2's completion criterion was **WRONG and superseded** by this section.
