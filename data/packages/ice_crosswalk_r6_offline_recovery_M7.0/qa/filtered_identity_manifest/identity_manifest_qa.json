@@ -1,0 +1,201 @@
+{
+  "filters": {
+    "eligible_groups": 342,
+    "eligible_registrations": 4123704,
+    "excluded_brand_groups": 43,
+    "excluded_brand_registrations": 1141,
+    "excluded_brands": [
+      "ALFA ROMEO",
+      "DAIHATSU",
+      "FERRARI",
+      "LAMBORGHINI",
+      "LANCIA"
+    ],
+    "excluded_group_overlap_counts": {
+      "all_three": 0,
+      "brand_and_owner": 0,
+      "low_and_brand": 37,
+      "low_and_owner": 52
+    },
+    "low_volume_groups": 846,
+    "low_volume_registrations": 3644,
+    "minimum_registrations_inclusive": 40,
+    "preserved_owner_excluded_groups": 58,
+    "preserved_owner_excluded_registrations": 13901,
+    "registration_reconciliation": {
+      "effective": 4123704,
+      "reconciles": true,
+      "removed": 18283,
+      "source": 4141987
+    },
+    "unique_excluded_groups": 858,
+    "unique_excluded_registrations": 18283
+  },
+  "frozen_owner_decisions": {
+    "action_counts": {
+      "KEEP_EXISTING_AUTO": 63,
+      "OWNER_CREATE_IDENTITY": 38,
+      "OWNER_EXCLUDE_FROM_COUNT": 51,
+      "OWNER_LINK_EXISTING": 92
+    },
+    "action_disposition_target_and_registration_units_verified": true,
+    "decisions_changed": 0,
+    "decisions_reopened": 0,
+    "ledger_decisions_exercised": 244,
+    "mismatches": 0,
+    "original_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "total": 244
+  },
+  "governance_provenance": {
+    "ice_market_roadmap_commit": "847fef43",
+    "issue_228_recovery_pr_head": "872a1117b163feac42e0ce55314cd7a7408896b5",
+    "portfolio_roadmap": {
+      "commit": "42be6b6a803727086b404b2cb46f75593bb2c1d4",
+      "version": "approved v1.0"
+    },
+    "roadmap_base_main": "c2715cbee494ae076b2582ef99f2bbc590b5dd99",
+    "scoped_resolver_pr_head": "3050beb1cdad4530808177de7b9d66abb21364f3",
+    "vehicle_db_v3_current_commit": "a7007a7c2d43222d1d4d35342f891c832cbcea77"
+  },
+  "identity_classification": {
+    "actionable_unresolved_registrations": 996,
+    "crosswalk_coverage": {
+      "classified_identity_pct": 99.966632,
+      "classified_with_existing_or_new_identity_registrations": 4122328,
+      "effective_denominator": 4123704,
+      "existing_identity_pct": 97.676652,
+      "existing_identity_registrations": 4027896,
+      "unresolved_registrations": 1376
+    },
+    "eligible_group_count_reconciled": true,
+    "eligible_scope_registration_units_reconciled": true,
+    "existing_link_scope_rows": 395,
+    "group_rollup_counts": {
+      "MATCH_EXISTING": 247,
+      "NEW_BASIC_IDENTITY_NEEDED": 84,
+      "PARTIALLY_MAPPED": 6,
+      "UNRESOLVED_EVIDENCE": 5
+    },
+    "production_approved_servable": {
+      "coverage_claim": "No offline candidate is counted as production approved or servable; see the frozen R6 acceptance baseline separately.",
+      "gate": "BLOCKED_R6_PRODUCTION_CROSSWALK_ALLOWED_FALSE",
+      "newly_approved_or_servable_registrations_from_this_manifest": 0,
+      "prior_full_m7_read_only_baseline": {
+        "approved_plus_retained_auto_registrations": 3976556,
+        "coverage_pct": 96.006,
+        "fixed_full_m7_denominator": 4141987,
+        "source": "qa/acceptance_report.md; not recalculated on the filtered denominator"
+      }
+    },
+    "registration_weighted_readiness_simulation": {
+      "effective_denominator": 4123704,
+      "existing_identity_candidate_registrations": 4027896,
+      "new_basic_identity_candidate_registrations": 94432,
+      "simulated_candidate_ready_pct": 99.966632,
+      "simulated_candidate_ready_registrations": 4122328,
+      "unresolved_including_unidentifiable_registrations": 1376
+    },
+    "scope_counts": {
+      "MATCH_EXISTING": 395,
+      "NEW_BASIC_IDENTITY_NEEDED": 111,
+      "UNRESOLVED_EVIDENCE": 22
+    },
+    "scope_registration_units": {
+      "MATCH_EXISTING": 4027896,
+      "NEW_BASIC_IDENTITY_NEEDED": 94432,
+      "UNRESOLVED_EVIDENCE": 1376
+    },
+    "source_unidentifiable_registrations": 380,
+    "source_unidentifiable_scope_count": 9,
+    "starting_unresolved_59_scope_recovery": {
+      "final_registration_units_by_disposition": {
+        "NEW_BASIC_IDENTITY_NEEDED": 7262,
+        "UNRESOLVED_EVIDENCE": 1376
+      },
+      "final_scope_dispositions": {
+        "NEW_BASIC_IDENTITY_NEEDED": 37,
+        "UNRESOLVED_EVIDENCE": 22
+      },
+      "registration_units": 8638,
+      "resolved_registration_units": 7262,
+      "resolved_scope_count": 37,
+      "scope_count": 59
+    },
+    "unresolved_scope_rows": 22
+  },
+  "identity_proposals": {
+    "candidate_proposal_count_after_catalog_collision_checks": 84,
+    "candidate_target_conflicts_requiring_resolution": 0,
+    "classification_authority": {
+      "canonical_segment_and_body_type": "Vehicle Master snapshot only; UNKNOWN for proposed identities absent from the catalog",
+      "ice_segment_and_body_type": "raw source evidence only"
+    },
+    "duplicate_canonical_targets_after_coalescing": 0,
+    "duplicate_name_without_generation_review_count": 0,
+    "existing_identity_candidate_registrations": 4027896,
+    "filtered_shadow_identity_groups": 61,
+    "filtered_shadow_identity_units": 97587,
+    "identity_alias_repair_proposals": 5,
+    "new_basic_identity_candidate_scope_registrations": 94432,
+    "p0_99_1_coverage_target_candidate_count": 9,
+    "p0_99_1_coverage_target_registrations": 59948,
+    "proposal_authority": "CANDIDATE_ONLY_NOT_CREATE_AUTHORITY",
+    "proposals_with_unverified_brand_record": 6,
+    "review_hold_count": 11,
+    "review_hold_registrations": 6658,
+    "safe_candidate_count": 73,
+    "safe_candidate_registrations": 87774,
+    "safe_candidates_alone_can_reach_99_1": true,
+    "simulated_existing_plus_p0_pct": 99.130393,
+    "simulated_existing_plus_p0_registrations": 4087844,
+    "unresolved_candidate_targets": {},
+    "weighted_coverage_target_pct": 99.1,
+    "weighted_coverage_target_registrations": 4086591
+  },
+  "no_database_write_or_writer_invocation": true,
+  "offline_only": true,
+  "output_files": [
+    "eligible_model_groups.csv",
+    "excluded_model_groups.csv",
+    "existing_identity_links.csv",
+    "new_basic_identity_proposals.csv",
+    "unresolved_identity_evidence.csv",
+    "final_scope_dispositions.csv",
+    "identity_alias_repair_proposals.csv",
+    "residual_exceptions.csv"
+  ],
+  "output_sha256": {
+    "eligible_model_groups.csv": "622ddbcd8a6c3d5dfc737a838af860a70c5a55641c4d325e442824c674556831",
+    "excluded_model_groups.csv": "c8743e1e8d2afe9653701ee1bd9816fe12c6bbea9f31dd2f2f8092a38fe41a7d",
+    "existing_identity_links.csv": "e146e703be0cb75337e5b09989bb0032d26466bd36148bef4c8d94dd40f27df6",
+    "final_scope_dispositions.csv": "8355e3378e90106769d293ed503bfc1e97cc04421332f8feee315ab92a90e80c",
+    "identity_alias_repair_proposals.csv": "35731fde22858b30cabacfe723ed66d76f6383a911ffefe0b30e573ba88ffa4e",
+    "new_basic_identity_proposals.csv": "3a0e08efb3618c08b9beb569c7d4fe276f9ddc8bdeed1eb0352bffe350551cd9",
+    "residual_exceptions.csv": "d9cbd13095ec3c7abfb885305b7748afe2df37e1acea7dfa98f6756092feedf5",
+    "unresolved_identity_evidence.csv": "d5e62ce52983a41a5908c77baf36cd4de2b67fc9993ed71b06ab15902e074a13"
+  },
+  "schema": "tdr.ice-filtered-identity-manifest.qa.v1",
+  "source": {
+    "master_version": "7.0",
+    "model_groups": 1200,
+    "package": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+    "raw_registration_rows": 262985,
+    "registrations": 4141987,
+    "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
+  },
+  "source_artifacts": {
+    "original_owner_overlay.csv": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "owner_decision_ledger_244.csv": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "owner_identity_targets.json": "d1cd1319d737496362fecfd21176b872ec7a632519e501e8f3dca2b15383010b",
+    "shadow_crosswalk_rows.csv": "9d46cad597dba3bbe83369bd9f95cfe6d10b3f6d19e0f46b69e70f10bfab5450",
+    "unresolved_identity_evidence_baseline_59.csv": "53c3bb45fe4cadceb2a2984ddec65533fdfb2ece81bb86b623fc2e4bb7b7f63a"
+  },
+  "vehicle_master_snapshot": {
+    "brands": 62,
+    "captured_at_utc": "2026-10-13T06:54:38.484014+00:00",
+    "generations": 326,
+    "models": 323,
+    "models_sha256": "c95c99e3f552cc384b083dac7d69b5625032ac73e6bc40d0bc9e086d8367ea64",
+    "read_only_select_snapshot": true
+  }
+}

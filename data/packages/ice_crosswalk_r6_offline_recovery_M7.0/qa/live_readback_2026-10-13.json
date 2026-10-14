@@ -1,0 +1,51 @@
+{
+  "schema": "tdr.ice-r6-readonly-production-snapshot.v1",
+  "captured_at_utc": "2026-10-13T05:33:37+00:00",
+  "project_ref": "ltvwzkffmpudpjfjomrg",
+  "read_only": true,
+  "ice_reg_trend": {
+    "rows": 262985,
+    "content_range_total": 262985,
+    "registration_units": 4141987,
+    "canonical_rows_sha256": "1c58780ce6d620b4da7b485d6a2a27093172dca13fa06797c3ada5a1d6663b66",
+    "offline_m7_rows": 262985,
+    "offline_m7_registration_units": 4141987,
+    "offline_m7_canonical_rows_sha256": "1c58780ce6d620b4da7b485d6a2a27093172dca13fa06797c3ada5a1d6663b66",
+    "live_equals_exact_frozen_m7_rows": true
+  },
+  "current_import": {
+    "rows": 1,
+    "content_range": "0-0/1",
+    "latest": {
+      "period": "2569-09",
+      "package_version": 3,
+      "master_version": "7.0",
+      "status": "พร้อมส่ง",
+      "imported_at": "2026-10-10T13:53:42.470832+00:00"
+    }
+  },
+  "crosswalk": {
+    "rows": 490,
+    "content_range": "0-489/490",
+    "status_method_counts": {
+      "ADMIN/PROPOSED": 1,
+      "NAME/PROPOSED": 395,
+      "SERIES/AUTO": 82,
+      "SERIES/PROPOSED": 12
+    },
+    "rows_sha256": "7ee3ce0bcf3933853949d887685e02d765e6265451c1faef1b1ef24fb309e44f"
+  },
+  "redirects": {
+    "rows": 50,
+    "content_range": "0-49/50",
+    "change_type_counts": {
+      "รวม": 31,
+      "เปลี่ยนรหัส": 19
+    }
+  },
+  "known_model_groups": {
+    "observed_rows": 1000,
+    "content_range": "0-999/1200",
+    "total_rows": 1200
+  }
+}

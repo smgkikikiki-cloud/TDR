@@ -519,8 +519,13 @@ for (const [name, source] of [["ice-market-engine.ts", engineSource], ["ice-mark
 }
 check("ice-market-data.ts runs on the service-role credential, never the browser's",
   dataSource.includes("adminDb()") && !dataSource.includes("publicDb()"));
-check("M4 does not switch the live /market page to the Ice adapter yet",
-  !fs.readFileSync("app/market/page.tsx", "utf8").includes("ice-public-market"));
+const publicMarketPage = fs.readFileSync("app/market/page.tsx", "utf8");
+check("R8 public Ice adapter is wired for preview, never silently replaces the production default",
+  publicMarketPage.includes('getPublicMarketIce("brand")')
+    && publicMarketPage.includes('getPublicMarket("brand")')
+    && publicMarketPage.includes('process.env.VERCEL_ENV === "preview"')
+    && publicMarketPage.includes('process.env.TDR_ICE_R8_LIVE_CUTOVER === "approved"'));
+
 check("M4 does not switch the live /member/market API route to the Ice engine yet",
   !fs.readFileSync("app/api/report/market/route.ts", "utf8").includes("ice-market-data"));
 check("lib/registration-market.ts is untouched by M4 (reused, not modified)",

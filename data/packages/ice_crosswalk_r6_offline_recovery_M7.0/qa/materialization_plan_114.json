@@ -1,0 +1,5422 @@
+[
+  {
+    "canonical_target_id": "audi.r8_spyder_v10",
+    "source_group_id": "AUDI|R8 SPYDER V10",
+    "source_ice_groups": [
+      "AUDI|R8 SPYDER V10"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "adb3def47c5d6170"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.r8_spyder_v10",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "R8 Spyder V10",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": [
+        "audi.q8_etron"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "changan.star_truck",
+    "source_group_id": "CHANGAN|STAR TRUCK 1 0 5MT",
+    "source_ice_groups": [
+      "CHANGAN|STAR TRUCK 1 0 5MT"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "5aa4b0d8b487cc8a"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "changan.star_truck",
+      "brand_id": null,
+      "brand_name": "CHANGAN",
+      "slug": null,
+      "name_en": "Changan Star Truck",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "chevrolet.optra",
+    "source_group_id": "CHEVROLET|OPTRA",
+    "source_ice_groups": [
+      "CHEVROLET|OPTRA"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "bdd401ca0b1a5065"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "chevrolet.optra",
+      "brand_id": null,
+      "brand_name": "CHEVROLET",
+      "slug": null,
+      "name_en": "Chevrolet Optra",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.812",
+    "source_group_id": "FERRARI|812 COMPETIZIONE",
+    "source_ice_groups": [
+      "FERRARI|812 COMPETIZIONE"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "dddf5981f82198d6"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.812",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "Ferrari 812",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": [
+        "ferrari.12cilindri"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.california",
+    "source_group_id": "FERRARI|CALIFORNIA T",
+    "source_ice_groups": [
+      "FERRARI|CALIFORNIA T"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "0541dd6b156939d3"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.california",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "Ferrari California",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.f12_tdf",
+    "source_group_id": "FERRARI|F12 TDF",
+    "source_ice_groups": [
+      "FERRARI|F12 TDF"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "c707f375e8c424af"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.f12_tdf",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "Ferrari F12 TDF",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.f360",
+    "source_group_id": "FERRARI|F360",
+    "source_ice_groups": [
+      "FERRARI|F360"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "29f77d8e21505f4d"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.f360",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "Ferrari F360",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ford.ecosport",
+    "source_group_id": "FORD|ECOSPORT",
+    "source_ice_groups": [
+      "FORD|ECOSPORT"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "0ee753f8c64adca0"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ford.ecosport",
+      "brand_id": null,
+      "brand_name": "FORD",
+      "slug": null,
+      "name_en": "Ford EcoSport",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ford.fiesta",
+    "source_group_id": "FORD|FIESTA",
+    "source_ice_groups": [
+      "FORD|FIESTA"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "4ef7bf29b09bb2b6"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ford.fiesta",
+      "brand_id": null,
+      "brand_name": "FORD",
+      "slug": null,
+      "name_en": "Ford Fiesta",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ford.territory",
+    "source_group_id": "FORD|TERRITORY",
+    "source_ice_groups": [
+      "FORD|TERRITORY"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "c8af6e029d9f78a6"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ford.territory",
+      "brand_id": null,
+      "brand_name": "FORD",
+      "slug": null,
+      "name_en": "Ford Territory",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.n_van",
+    "source_group_id": "HONDA|N VAN",
+    "source_ice_groups": [
+      "HONDA|N VAN"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:164"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.n_van",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Honda N-VAN",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "honda.en2"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.nsx_type_s",
+    "source_group_id": "HONDA|NSX TYPE S",
+    "source_ice_groups": [
+      "HONDA|NSX TYPE S"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "934f4a1929d70e6c"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.nsx_type_s",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Honda NSX Type S",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hyundai.county",
+    "source_group_id": "HYUNDAI|COUNTY",
+    "source_ice_groups": [
+      "HYUNDAI|COUNTY"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "b46d6088d3761fde"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hyundai.county",
+      "brand_id": null,
+      "brand_name": "HYUNDAI",
+      "slug": null,
+      "name_en": "Hyundai County",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "hyundai.creta"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hyundai.sonata",
+    "source_group_id": "HYUNDAI|SONATA2 4GLSEXECUTIV",
+    "source_ice_groups": [
+      "HYUNDAI|SONATA2 4GLSEXECUTIV"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "ec89df59eefd9a4a"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hyundai.sonata",
+      "brand_id": null,
+      "brand_name": "HYUNDAI",
+      "slug": null,
+      "name_en": "Hyundai Sonata",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hyundai.veloster",
+    "source_group_id": "HYUNDAI|VELOSTER",
+    "source_ice_groups": [
+      "HYUNDAI|VELOSTER"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "007e3b92c2d87e00"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hyundai.veloster",
+      "brand_id": null,
+      "brand_name": "HYUNDAI",
+      "slug": null,
+      "name_en": "Hyundai Veloster",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "kia.soul",
+    "source_group_id": "KIA|SOUL",
+    "source_ice_groups": [
+      "KIA|SOUL"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "954a170bba32fa52"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "kia.soul",
+      "brand_id": null,
+      "brand_name": "KIA",
+      "slug": null,
+      "name_en": "Kia Soul",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": [
+        "kia.sorento"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "kia.soul_ev",
+    "source_group_id": "KIA|SOUL EV",
+    "source_ice_groups": [
+      "KIA|SOUL EV"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "df6beeee8b10711d"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "kia.soul_ev",
+      "brand_id": null,
+      "brand_name": "KIA",
+      "slug": null,
+      "name_en": "Kia Soul EV",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": [
+        "kia.ev5"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mg.gs",
+    "source_group_id": "MG|MG GS",
+    "source_ice_groups": [
+      "MG|MG GS"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:288"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mg.gs",
+      "brand_id": null,
+      "brand_name": "MG",
+      "slug": null,
+      "name_en": "MG GS",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "mg.mg_zs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mg.mg6",
+    "source_group_id": "MG|MG6",
+    "source_ice_groups": [
+      "MG|MG6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "c122bc6d00754321"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mg.mg6",
+      "brand_id": null,
+      "brand_name": "MG",
+      "slug": null,
+      "name_en": "MG6",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": [
+        "mg.mg_im6"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "sokon.ec31",
+    "source_group_id": "SOKON|EC31",
+    "source_ice_groups": [
+      "SOKON|EC31"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "ec156868f11e3f1a"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "sokon.ec31",
+      "brand_id": null,
+      "brand_name": "SOKON",
+      "slug": null,
+      "name_en": "Sokon EC31",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.coaster",
+    "source_group_id": "TOYOTA|COASTER",
+    "source_ice_groups": [
+      "TOYOTA|COASTER"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:477"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.coaster",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Coaster",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "toyota.hiace"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.hilux_vigo",
+    "source_group_id": "TOYOTA|KUN15R CRMSHT A3",
+    "source_ice_groups": [
+      "TOYOTA|KUN15R CRMSHT A3"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "42a67a816c726a6e"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.hilux_vigo",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Hilux Vigo",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.mirai",
+    "source_group_id": "TOYOTA|MIRAI",
+    "source_ice_groups": [
+      "TOYOTA|MIRAI"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "cb5ace255bbbc3e2"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.mirai",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Mirai",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "volvo.v90",
+    "source_group_id": "VOLVO|V90",
+    "source_ice_groups": [
+      "VOLVO|V90"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "c2659838d910ca36"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "volvo.v90",
+      "brand_id": null,
+      "brand_name": "VOLVO",
+      "slug": null,
+      "name_en": "Volvo V90",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "asia_cab.as4",
+    "source_group_id": "asia-cab-as4",
+    "source_ice_groups": [
+      "asia-cab-as4"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:598"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "asia_cab.as4",
+      "brand_id": null,
+      "brand_name": "ASIA CAB",
+      "slug": null,
+      "name_en": "Asia Cab AS4",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.a3",
+    "source_group_id": "audi-a3-saloon-35-tfsi__provisional",
+    "source_ice_groups": [
+      "audi-a3-saloon-35-tfsi__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "9f8ae7e8a2b0bcbf"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.a3",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi A3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.a4",
+        "audi.a5"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.a8l",
+    "source_group_id": "audi-audi-a8l",
+    "source_ice_groups": [
+      "audi-audi-a8l"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:612"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [
+      "audi.a8"
+    ],
+    "collision_check_status": "OWNER_DISTINCT_ALIAS_COLLISION",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.a8l",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "A8L",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_WRITER_AND_ALIAS_COLLISION_GUARD",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.q6",
+    "source_group_id": "audi-audi-q6",
+    "source_ice_groups": [
+      "audi-audi-q6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "bdccbdecad7cd55a"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.q6",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi Q6",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.q6_etron"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_3",
+    "source_group_id": "audi-audi-rs-3",
+    "source_ice_groups": [
+      "audi-audi-rs-3"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "35e5416826b727de"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_3",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS 3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_4",
+    "source_group_id": "audi-audi-rs-4",
+    "source_ice_groups": [
+      "audi-audi-rs-4"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "31db27fa51c287f8"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_4",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS 4",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_5",
+    "source_group_id": "audi-audi-rs-5",
+    "source_ice_groups": [
+      "audi-audi-rs-5"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "4314b2408d93afa4"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_5",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS 5",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_6",
+    "source_group_id": "audi-audi-rs-6",
+    "source_ice_groups": [
+      "audi-audi-rs-6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "f51ec28f34641456"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_6",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS 6",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_7",
+    "source_group_id": "audi-audi-rs-7",
+    "source_ice_groups": [
+      "audi-audi-rs-7"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "8f04a87b22ff06ea"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_7",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS 7",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_q3",
+    "source_group_id": "audi-audi-rs-q3",
+    "source_ice_groups": [
+      "audi-audi-rs-q3"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "0c4c6e48dd4fbe3e"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_q3",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS Q3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.rs_q7",
+    "source_group_id": "audi-audi-rs-q8",
+    "source_ice_groups": [
+      "audi-audi-rs-q8"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "a6f0ebb257154abc"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.rs_q7",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi RS Q7",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "audi.rs"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.s3",
+    "source_group_id": "audi-audi-s3",
+    "source_ice_groups": [
+      "audi-audi-s3"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:626"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [
+      "audi.rs"
+    ],
+    "collision_check_status": "OWNER_DISTINCT_ALIAS_COLLISION",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.s3",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "S3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_WRITER_AND_ALIAS_COLLISION_GUARD",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "audi.r8",
+    "source_group_id": "audi-r8-coupe-v10-performance__provisional",
+    "source_ice_groups": [
+      "audi-r8-coupe-v10-performance__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "d63f424e20065d85"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "audi.r8",
+      "brand_id": null,
+      "brand_name": "AUDI",
+      "slug": null,
+      "name_en": "Audi R8",
+      "status": "HISTORICAL",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": "DISCONTINUED",
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bentley.continental",
+    "source_group_id": "bentley-bentley-continental",
+    "source_ice_groups": [
+      "bentley-bentley-continental"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:641"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bentley.continental",
+      "brand_id": null,
+      "brand_name": "BENTLEY",
+      "slug": null,
+      "name_en": "Continental",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.8_series",
+    "source_group_id": "bmw-840d-xdrive-coupe__provisional",
+    "source_ice_groups": [
+      "bmw-840d-xdrive-coupe__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "b2d7961ea909bbed"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.8_series",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW 8 Series",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.430i",
+    "source_group_id": "bmw-bmw-430i",
+    "source_ice_groups": [
+      "bmw-bmw-430i"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:662"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.430i",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW 430i",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.530e",
+    "source_group_id": "bmw-bmw-530e",
+    "source_ice_groups": [
+      "bmw-bmw-530e"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:665"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [
+      "bmw.bmw_5"
+    ],
+    "collision_check_status": "OWNER_DISTINCT_ALIAS_COLLISION",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.530e",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "530e",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_WRITER_AND_ALIAS_COLLISION_GUARD",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.630i",
+    "source_group_id": "bmw-bmw-630i",
+    "source_ice_groups": [
+      "bmw-bmw-630i"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:666"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.630i",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW 630I",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.m2",
+    "source_group_id": "bmw-bmw-m2",
+    "source_ice_groups": [
+      "bmw-bmw-m2"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:674"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.m2",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "M2",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.m3",
+    "source_group_id": "bmw-bmw-m3",
+    "source_ice_groups": [
+      "bmw-bmw-m3"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:675"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.m3",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW M3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.m4",
+    "source_group_id": "bmw-bmw-m4",
+    "source_ice_groups": [
+      "bmw-bmw-m4"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:676"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.m4",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW M4",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.m5",
+    "source_group_id": "bmw-bmw-m5",
+    "source_ice_groups": [
+      "bmw-bmw-m5"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:677"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.m5",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "BMW M5",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "bmw.x2",
+    "source_group_id": "bmw-x2",
+    "source_ice_groups": [
+      "bmw-x2"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:693"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "bmw.x2",
+      "brand_id": null,
+      "brand_name": "BMW",
+      "slug": null,
+      "name_en": "X2",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "byd.e6",
+    "source_group_id": "byd-e6",
+    "source_ice_groups": [
+      "byd-e6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:700"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [
+      "byd.byd_m6"
+    ],
+    "collision_check_status": "OWNER_DISTINCT_ALIAS_COLLISION",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "byd.e6",
+      "brand_id": null,
+      "brand_name": "BYD",
+      "slug": null,
+      "name_en": "e6",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_WRITER_AND_ALIAS_COLLISION_GUARD",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "chery.q",
+    "source_group_id": "chery-chery-q",
+    "source_ice_groups": [
+      "chery-chery-q"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:715"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "chery.q",
+      "brand_id": null,
+      "brand_name": "CHERY",
+      "slug": null,
+      "name_en": "Chery Q",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.488",
+    "source_group_id": "ferrari-ferrari-488",
+    "source_ice_groups": [
+      "ferrari-ferrari-488"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:740"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.488",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "488",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ferrari.purosangue",
+    "source_group_id": "ferrari-ferrari-purosangue",
+    "source_ice_groups": [
+      "ferrari-ferrari-purosangue"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:743"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ferrari.purosangue",
+      "brand_id": null,
+      "brand_name": "FERRARI",
+      "slug": null,
+      "name_en": "Ferrari Purosangue",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "ford.ranger_raptor_double_cab",
+    "source_group_id": "ford-ford-ranger-raptor",
+    "source_ice_groups": [
+      "ford-ford-ranger-raptor"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:751"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "ford.ranger_raptor_double_cab",
+      "brand_id": null,
+      "brand_name": "FORD",
+      "slug": null,
+      "name_en": "Ranger Raptor Double Cab",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "foton.eview",
+    "source_group_id": "foton-eview",
+    "source_ice_groups": [
+      "foton-eview"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:756"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "foton.eview",
+      "brand_id": null,
+      "brand_name": "FOTON",
+      "slug": null,
+      "name_en": "Foton eView",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "foton.cp_foton_tm_i_blue_45",
+    "source_group_id": "foton-foton-bj1031evja3",
+    "source_ice_groups": [
+      "foton-foton-bj1031evja3"
+    ],
+    "source_reg_type_scope": "RY3",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:757"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "foton.cp_foton_tm_i_blue_45",
+      "brand_id": null,
+      "brand_name": "FOTON",
+      "slug": null,
+      "name_en": "CP Foton TM i-Blue 45",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "foton.tunland",
+    "source_group_id": "foton-tunland",
+    "source_ice_groups": [
+      "foton-tunland"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:764"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "foton.tunland",
+      "brand_id": null,
+      "brand_name": "FOTON",
+      "slug": null,
+      "name_en": "Foton Tunland",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "gwm.ora_07",
+    "source_group_id": "gwm-ora-07",
+    "source_ice_groups": [
+      "gwm-ora-07"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:772"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "gwm.ora_07",
+      "brand_id": null,
+      "brand_name": "GWM",
+      "slug": null,
+      "name_en": "GWM Ora 07",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "gwm.ora_03"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "gwm.ora_5",
+    "source_group_id": "gwm-ora-5",
+    "source_ice_groups": [
+      "gwm-ora-5"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:773"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "gwm.ora_5",
+      "brand_id": null,
+      "brand_name": "GWM",
+      "slug": null,
+      "name_en": "Ora 5",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hino.xzu600r_wkmlst3",
+    "source_group_id": "hino-hino-xzu600r-wkmlst3",
+    "source_ice_groups": [
+      "hino-hino-xzu600r-wkmlst3"
+    ],
+    "source_reg_type_scope": "RY3",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:786"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hino.xzu600r_wkmlst3",
+      "brand_id": null,
+      "brand_name": "HINO",
+      "slug": null,
+      "name_en": "HINO XZU600R-WKMLST3",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.brio",
+    "source_group_id": "honda-brio",
+    "source_ice_groups": [
+      "honda-brio"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:791"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.brio",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Brio",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.acty",
+    "source_group_id": "honda-honda-acty",
+    "source_ice_groups": [
+      "honda-honda-acty"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:798"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.acty",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Acty",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.e",
+    "source_group_id": "honda-honda-e",
+    "source_ice_groups": [
+      "honda-honda-e"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:800"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.e",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Honda e",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "honda.en2"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.freed",
+    "source_group_id": "honda-honda-freed",
+    "source_ice_groups": [
+      "honda-honda-freed"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:802"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.freed",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Freed",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.jazz",
+    "source_group_id": "honda-jazz",
+    "source_ice_groups": [
+      "honda-jazz"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:809"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.jazz",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Jazz",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "honda.super_one",
+    "source_group_id": "honda-super-one",
+    "source_ice_groups": [
+      "honda-super-one"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:815"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "honda.super_one",
+      "brand_id": null,
+      "brand_name": "HONDA",
+      "slug": null,
+      "name_en": "Honda Super-ONE",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hyundai.elantra_n",
+    "source_group_id": "hyundai-elantra-n__provisional",
+    "source_ice_groups": [
+      "hyundai-elantra-n__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "a4557f9d2143388c"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hyundai.elantra_n",
+      "brand_id": null,
+      "brand_name": "HYUNDAI",
+      "slug": null,
+      "name_en": "Hyundai Elantra N",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "hyundai.kona",
+    "source_group_id": "hyundai-kona",
+    "source_ice_groups": [
+      "hyundai-kona"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:825"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "hyundai.kona",
+      "brand_id": null,
+      "brand_name": "HYUNDAI",
+      "slug": null,
+      "name_en": "Kona",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "jaecoo.j6",
+    "source_group_id": "jaecoo-jaecoo-j6",
+    "source_ice_groups": [
+      "jaecoo-jaecoo-j6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:839"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "jaecoo.j6",
+      "brand_id": null,
+      "brand_name": "JAECOO",
+      "slug": null,
+      "name_en": "J6",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "jeep.gladiator",
+    "source_group_id": "jeep-jeep-gladiator",
+    "source_ice_groups": [
+      "jeep-jeep-gladiator"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:857"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "jeep.gladiator",
+      "brand_id": null,
+      "brand_name": "JEEP",
+      "slug": null,
+      "name_en": "Gladiator",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "land_rover.discovery",
+    "source_group_id": "land-rover-land-rover-discovery",
+    "source_ice_groups": [
+      "land-rover-land-rover-discovery"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:880"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "land_rover.discovery",
+      "brand_id": null,
+      "brand_name": "LAND ROVER",
+      "slug": null,
+      "name_en": "Land Rover Discovery",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "lepas.l6",
+    "source_group_id": "lepas-l6",
+    "source_ice_groups": [
+      "lepas-l6"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:884"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "lepas.l6",
+      "brand_id": null,
+      "brand_name": "LEPAS",
+      "slug": null,
+      "name_en": "Lepas L6",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "lexus.rc",
+    "source_group_id": "lexus-lexus-rc",
+    "source_ice_groups": [
+      "lexus-lexus-rc"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:895"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "lexus.rc",
+      "brand_id": null,
+      "brand_name": "LEXUS",
+      "slug": null,
+      "name_en": "RC",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "lotus.elise",
+    "source_group_id": "lotus-elise-sport-220__provisional",
+    "source_ice_groups": [
+      "lotus-elise-sport-220__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "6c77cf04a461f95c"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "lotus.elise",
+      "brand_id": null,
+      "brand_name": "LOTUS",
+      "slug": null,
+      "name_en": "Lotus Elise",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "lotus.emira",
+    "source_group_id": "lotus-emira",
+    "source_ice_groups": [
+      "lotus-emira"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:903"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "lotus.emira",
+      "brand_id": null,
+      "brand_name": "LOTUS",
+      "slug": null,
+      "name_en": "Emira",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mg.maxus_v80",
+    "source_group_id": "maxus-maxus-v80",
+    "source_ice_groups": [
+      "maxus-maxus-v80"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:917"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mg.maxus_v80",
+      "brand_id": null,
+      "brand_name": "MG",
+      "slug": null,
+      "name_en": "Maxus V80",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mazda.mx_30",
+    "source_group_id": "mazda-mazda-mx-30",
+    "source_ice_groups": [
+      "mazda-mazda-mx-30"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:925"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mazda.mx_30",
+      "brand_id": null,
+      "brand_name": "MAZDA",
+      "slug": null,
+      "name_en": "MX-30",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mazda.mazda6e",
+    "source_group_id": "mazda-mazda6e",
+    "source_ice_groups": [
+      "mazda-mazda6e"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:931"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mazda.mazda6e",
+      "brand_id": null,
+      "brand_name": "MAZDA",
+      "slug": null,
+      "name_en": "Mazda6e",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_amg_c",
+    "source_group_id": "mercedes-benz-mercedes-benz-amg-c",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-amg-c"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:938"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_amg_c",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz AMG C",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_amg_g63",
+    "source_group_id": "mercedes-benz-mercedes-benz-amg-g63",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-amg-g63"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:939"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_amg_g63",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz AMG G63",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.c350",
+    "source_group_id": "mercedes-benz-mercedes-benz-c350",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-c350"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:943"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.c350",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "C350",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_cla_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-cla-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-cla-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:944"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_cla_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz CLA-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_cle_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-cle-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-cle-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:945"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_cle_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz CLE-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.e300",
+    "source_group_id": "mercedes-benz-mercedes-benz-e300",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-e300"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:948"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [
+      "mercedes_benz.mb_e_class"
+    ],
+    "collision_check_status": "OWNER_DISTINCT_ALIAS_COLLISION",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.e300",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "E300",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_WRITER_AND_ALIAS_COLLISION_GUARD",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_eqb_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-eqb-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-eqb-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:949"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_eqb_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz EQB-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_eqe_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-eqe-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-eqe-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:950"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_eqe_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz EQE-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_eqs_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-eqs-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-eqs-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:951"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_eqs_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz EQS-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_glb_class",
+    "source_group_id": "mercedes-benz-mercedes-benz-glb-class",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-glb-class"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:953"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_glb_class",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz GLB-Class",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mercedes_benz.mercedes_benz_s350d",
+    "source_group_id": "mercedes-benz-mercedes-benz-s350d",
+    "source_ice_groups": [
+      "mercedes-benz-mercedes-benz-s350d"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:956"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mercedes_benz.mercedes_benz_s350d",
+      "brand_id": null,
+      "brand_name": "MERCEDES BENZ",
+      "slug": null,
+      "name_en": "Mercedes-Benz S350D",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mg.urban_ev",
+    "source_group_id": "mg-mg-urban-ev",
+    "source_ice_groups": [
+      "mg-mg-urban-ev"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:976"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mg.urban_ev",
+      "brand_id": null,
+      "brand_name": "MG",
+      "slug": null,
+      "name_en": "Urban EV",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "mitsubishi.pajero",
+    "source_group_id": "mitsubishi-pajero",
+    "source_ice_groups": [
+      "mitsubishi-pajero"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "690b8d9fbc18980f"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "mitsubishi.pajero",
+      "brand_id": null,
+      "brand_name": "MITSUBISHI",
+      "slug": null,
+      "name_en": "Mitsubishi Pajero",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "mitsubishi.pajero_sport"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.leaf",
+    "source_group_id": "nissan-leaf",
+    "source_ice_groups": [
+      "nissan-leaf"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1014"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.leaf",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Leaf",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.fairlady",
+    "source_group_id": "nissan-nissan-fairlady",
+    "source_ice_groups": [
+      "nissan-nissan-fairlady"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1019"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.fairlady",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Nissan Fairlady",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.march",
+    "source_group_id": "nissan-nissan-march",
+    "source_ice_groups": [
+      "nissan-nissan-march"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1021"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.march",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Nissan March",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.urvan_e26",
+    "source_group_id": "nissan-nissan-urvan-e26",
+    "source_ice_groups": [
+      "nissan-nissan-urvan-e26"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1026"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.urvan_e26",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Nissan Urvan E26",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.note",
+    "source_group_id": "nissan-note",
+    "source_ice_groups": [
+      "nissan-note"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1028"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.note",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Nissan Note",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "nissan.urvan",
+    "source_group_id": "nissan-urvan",
+    "source_ice_groups": [
+      "nissan-urvan"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1033"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "nissan.urvan",
+      "brand_id": null,
+      "brand_name": "NISSAN",
+      "slug": null,
+      "name_en": "Nissan Urvan",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "peugeot.408",
+    "source_group_id": "peugeot-peugeot-408",
+    "source_ice_groups": [
+      "peugeot-peugeot-408"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1037"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "peugeot.408",
+      "brand_id": null,
+      "brand_name": "PEUGEOT",
+      "slug": null,
+      "name_en": "408",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "peugeot.5008",
+    "source_group_id": "peugeot-peugeot-5008",
+    "source_ice_groups": [
+      "peugeot-peugeot-5008"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1038"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "peugeot.5008",
+      "brand_id": null,
+      "brand_name": "PEUGEOT",
+      "slug": null,
+      "name_en": "5008",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "seres.ec31",
+    "source_group_id": "seres-seres-ec31",
+    "source_ice_groups": [
+      "seres-seres-ec31"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1058"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "seres.ec31",
+      "brand_id": null,
+      "brand_name": "SERES",
+      "slug": null,
+      "name_en": "EC31",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "sokon.crc50",
+    "source_group_id": "sokon-crc50",
+    "source_ice_groups": [
+      "sokon-crc50"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1060"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "sokon.crc50",
+      "brand_id": null,
+      "brand_name": "SOKON",
+      "slug": null,
+      "name_en": "CRC50",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "subaru.levorge",
+    "source_group_id": "subaru-levorg-sti-sport-r__provisional",
+    "source_ice_groups": [
+      "subaru-levorg-sti-sport-r__provisional"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "fa7d4ad29e3d3907"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "subaru.levorge",
+      "brand_id": null,
+      "brand_name": "SUBARU",
+      "slug": null,
+      "name_en": "Subaru levorge",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "suzuki.spacia",
+    "source_group_id": "suzuki-suzuki-spacia",
+    "source_ice_groups": [
+      "suzuki-suzuki-spacia"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1081"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "suzuki.spacia",
+      "brand_id": null,
+      "brand_name": "SUZUKI",
+      "slug": null,
+      "name_en": "Suzuki Spacia",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.gr_corolla",
+    "source_group_id": "toyota-gr-corolla",
+    "source_ice_groups": [
+      "toyota-gr-corolla"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "f7a3c07aad0a2eac"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.gr_corolla",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota GR Corolla",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.gr_yaris",
+    "source_group_id": "toyota-gr-yaris",
+    "source_ice_groups": [
+      "toyota-gr-yaris"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1123"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.gr_yaris",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota GR Yaris",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "toyota.yaris"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.land_cruiser",
+    "source_group_id": "toyota-land-cruiser",
+    "source_ice_groups": [
+      "toyota-land-cruiser"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1133"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.land_cruiser",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Land Cruiser",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "toyota.land_cruiser_300"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.land_cruiser_fj",
+    "source_group_id": "toyota-land-cruiser-fj",
+    "source_ice_groups": [
+      "toyota-land-cruiser-fj"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1134"
+    ],
+    "owner_verdict": "OWNER_APPROVED_BY_EXISTING_RULE",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.land_cruiser_fj",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Land Cruiser FJ",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "toyota.land_cruiser_300",
+        "toyota.land_cruiser"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.roomy",
+    "source_group_id": "toyota-toyota-roomy",
+    "source_ice_groups": [
+      "toyota-toyota-roomy"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1144"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.roomy",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota Roomy",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.sienta",
+    "source_group_id": "toyota-toyota-sienta",
+    "source_ice_groups": [
+      "toyota-toyota-sienta"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1145"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.sienta",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Sienta",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.tr",
+    "source_group_id": "toyota-toyota-tr",
+    "source_ice_groups": [
+      "toyota-toyota-tr"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1146"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.tr",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Toyota TR",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "toyota.vios",
+    "source_group_id": "toyota-vios",
+    "source_ice_groups": [
+      "toyota-vios"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1149"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "toyota.vios",
+      "brand_id": null,
+      "brand_name": "TOYOTA",
+      "slug": null,
+      "name_en": "Vios",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "volkswagen.touareg",
+    "source_group_id": "volkswagen-volkswagen-touareg",
+    "source_ice_groups": [
+      "volkswagen-volkswagen-touareg"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1171"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "volkswagen.touareg",
+      "brand_id": null,
+      "brand_name": "VOLKSWAGEN",
+      "slug": null,
+      "name_en": "Volkswagen Touareg",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "volt.volt",
+    "source_group_id": "volt-volt-volt",
+    "source_ice_groups": [
+      "volt-volt-volt"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1175"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "volt.volt",
+      "brand_id": null,
+      "brand_name": "VOLT",
+      "slug": null,
+      "name_en": "VOLT Volt",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "volvo.c40",
+    "source_group_id": "volvo-volvo-ec40-c40",
+    "source_ice_groups": [
+      "volvo-volvo-ec40-c40"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "cd9af6faa42a4715"
+    ],
+    "owner_verdict": "OWNER_APPROVED",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "volvo.c40",
+      "brand_id": null,
+      "brand_name": "VOLVO",
+      "slug": null,
+      "name_en": "Volvo C40",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": [
+        "volvo.ec40"
+      ]
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "volvo.es90",
+    "source_group_id": "volvo-volvo-es90",
+    "source_ice_groups": [
+      "volvo-volvo-es90"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1179"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "volvo.es90",
+      "brand_id": null,
+      "brand_name": "VOLVO",
+      "slug": null,
+      "name_en": "ES90",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  },
+  {
+    "canonical_target_id": "zeekr.7x",
+    "source_group_id": "zeekr-zeekr-7x",
+    "source_ice_groups": [
+      "zeekr-zeekr-7x"
+    ],
+    "source_reg_type_scope": "ALL",
+    "frozen_owner_decision_refs": [
+      "owner-overlay-line:1199"
+    ],
+    "owner_verdict": "VALID_NEW_IDENTITY",
+    "create_vs_existing_link": "CREATE",
+    "catalog_id_collision": [],
+    "same_brand_name_collision": [],
+    "same_brand_alias_collision": [],
+    "collision_check_status": "NO_EXACT_COLLISION_IN_SNAPSHOT",
+    "catalog_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "catalog_snapshot_model_count": 323,
+    "catalog_snapshot_captured_at_utc": "2026-10-13T05:26:14+00:00",
+    "required_structural_fields": [
+      "canonical_id",
+      "brand_id",
+      "slug",
+      "name_en",
+      "status",
+      "payload",
+      "served_as_of",
+      "seed_release_id"
+    ],
+    "proposed_values": {
+      "canonical_id": "zeekr.7x",
+      "brand_id": null,
+      "brand_name": "ZEEKR",
+      "slug": null,
+      "name_en": "7X",
+      "status": "UNVERIFIED",
+      "payload": null,
+      "segment": null,
+      "body_type": null,
+      "lifecycle_owner_instruction": null,
+      "distinct_from": []
+    },
+    "materialization_status": "BLOCKED_GOVERNED_VEHICLE_MASTER_WRITER_PHASE1",
+    "materialization_required": true,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "writer_dependency": "Vehicle Master Phase 1 structural governed writer and CREATE authority"
+  }
+]
