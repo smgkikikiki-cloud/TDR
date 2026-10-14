@@ -55,7 +55,7 @@ The machine-readable IDs, acceptance statements and required evidence are frozen
 
 ## Progress and proof: separated from goals
 
-* **Immutable goal source:** this contract and `data-infra.requirements.json`. Never set "accepted" within the goal registry itself.
+* **Immutable goal source:** this contract and `data-infra.requirements.json`. Work package sequencing is documented in [TDR_DATA_INFRA_EXECUTION_PLAN.md](TDR_DATA_INFRA_EXECUTION_PLAN.md); it cannot relax the goal registry. Never set "accepted" within the goal registry itself.
 * **Mutable evidence ledger:** `docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json`; default is OPEN, never use fake PASS. An ACCEPTED requirement MUST identify evidence URI(s), independently verifiable execution context, tested commit SHA (40 hex), and explicit owner acceptance reference. **Owner acceptance and evidence are distinct**.
 * **Allowed states:** OPEN, IN_PROGRESS, BLOCKED, EVIDENCED, ACCEPTED. EVIDENCED is not DONE.
 * **Phase COMPLETE:** all its IDs ACCEPTED. **Project COMPLETE:** five phases COMPLETE plus separate, explicit signed owner final acceptance event. No auto-accept from CI.
