@@ -1,0 +1,58 @@
+name: TDR Data Infra Completion Contract
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, ready_for_review]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  data-infra-contract:
+    name: data-infra-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout trusted BASE
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: policy
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: candidate
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run contract gate positive/negative self-tests
+        shell: bash
+        working-directory: candidate
+        run: node --test scripts/check-data-infra-contract.test.mjs
+      - name: Check locked outcomes, owner acceptance and required agent pointers
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHECKER="$PWD/policy/scripts/check-data-infra-contract.mjs"
+          ROOT="$PWD/candidate"
+          if [ ! -f "$ROOT/docs/portfolio/data-infra.requirements.json" ]; then
+            ROOT="$PWD/policy"
+            echo "::notice::Legacy branch without contract; audit trusted base requirements"
+          fi
+          if [ ! -f "$CHECKER" ]; then
+            CHECKER="$PWD/candidate/scripts/check-data-infra-contract.mjs"
+            echo "::warning::Initial contract checker is a reviewed bootstrap proposal"
+          fi
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git -C candidate diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > "$RUNNER_TEMP/data-infra-changed.txt"
+          fi
+          TDR_CHECK_ROOT="$ROOT" TDR_CHECK_BASE="$PWD/policy" \
+            TDR_CHECK_CANDIDATE_ROOT="$PWD/candidate" \
+            TDR_CHECK_DIFF_PATH="$RUNNER_TEMP/data-infra-changed.txt" node "$CHECKER"

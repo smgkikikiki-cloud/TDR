@@ -1,0 +1,265 @@
+{
+  "schema": "tdr.data-infra.completion.v1",
+  "contract_version": "1.0.0",
+  "owner": "TDR owner",
+  "approved_scope_date": "2026-10-14",
+  "contract_path": "docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md",
+  "registry_path": "docs/portfolio/data-infra.requirements.json",
+  "final_state": "ALL_PHASES_ACCEPTED_BY_OWNER_WITH_EVIDENCE",
+  "phases": [
+    {
+      "id": "A",
+      "name": "Ice integration completion"
+    },
+    {
+      "id": "B",
+      "name": "R8 production serving"
+    },
+    {
+      "id": "C",
+      "name": "Monthly import and identity lifecycle"
+    },
+    {
+      "id": "D",
+      "name": "Quality, modules, website operations"
+    },
+    {
+      "id": "E",
+      "name": "Price Fetcher / Spec Filler integration-ready foundation"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "A-01",
+      "phase": "A",
+      "title": "Ice R7 acceptance",
+      "acceptance": "69 months lossless; latest Ice panels reconcile exactly; segment/body unknown remains visible; redirect cycle-free; wheel/tyre period_from respected.",
+      "evidence_required": "Read-only production R7 report + workflow run + frozen package/master SHA.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "A-02",
+      "phase": "A",
+      "title": "Scoped decision and queue",
+      "acceptance": "Every Ice group + registration-type pair is covered or visibly unresolved, including RY1/RY2/RY3/RY10; no silent ALL fallback.",
+      "evidence_required": "V70 regression plus live class-specific queue readback, 3 known pickup fixtures.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "A-03",
+      "phase": "A",
+      "title": "Admin create/link/exclude resilience",
+      "acceptance": "Authorized create, link, exclude are idempotent and recoverable; failed partial writes never masquerade as DONE.",
+      "evidence_required": "DB transaction/compensation test, concurrent/retry tests and audit-log readback.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "A-04",
+      "phase": "A",
+      "title": "Powertrain estimate fidelity",
+      "acceptance": "Use available Ice reg_est as estimate for range instead of midpoint; preserve min/max, certainty and source; no false exactness.",
+      "evidence_required": "G63 2026-09 regression 5 not 7.5 + missing-estimate, aggregation, certainty and bounds tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "A-05",
+      "phase": "A",
+      "title": "Ice PR readiness",
+      "acceptance": "Current Ice branch CI passes; roadmap and PR body reflect real production; owner explicitly authorizes merge; merge alone is not R8.",
+      "evidence_required": "Immutable commit SHA, CI jobs, owner merge approval and reviewed work-state/roadmap diff.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "B-01",
+      "phase": "B",
+      "title": "Ice production cutover",
+      "acceptance": "Production member market serves approved Ice release at its real period/master with no mixed legacy totals.",
+      "evidence_required": "Production /member/market and API readback, latest period and total reconcile.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "B-02",
+      "phase": "B",
+      "title": "Entitlements",
+      "acceptance": "Free/Pro quotas, scopes and authorization remain effective after cutover; no privileged data leak.",
+      "evidence_required": "Free/Pro/admin negative and positive E2E tests, authenticated API logs.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "B-03",
+      "phase": "B",
+      "title": "Reversible cutover",
+      "acceptance": "Owner-controlled flag off restores previous supported read path without data mutation; rollback rehearsed.",
+      "evidence_required": "Flag-off/flag-on smoke reports, deployment SHA, rollback timings/observed output.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "B-04",
+      "phase": "B",
+      "title": "Consistent website freshness",
+      "acceptance": "Any displayed registration total declares source/period; no August legacy and September Ice figures silently mixed.",
+      "evidence_required": "Route inventory and screenshot/API fixture checks for /member and /member/market.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-01",
+      "phase": "C",
+      "title": "Authorized package upload",
+      "acceptance": "One private-source upload accepts M7-sized or larger package; SHA matches independently owner-confirmed Ice delivery manifest; no write on failed check.",
+      "evidence_required": "Upload/download exact-byte replay, wrong-hash, missing-signoff, oversize and access-control tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-02",
+      "phase": "C",
+      "title": "Atomic import and audit",
+      "acceptance": "New package is staged, validated, committed once, read back against panel counts and totals; retries do not duplicate facts.",
+      "evidence_required": "Same-package rerun + injection failures, import ledger, panel crosschecks.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-03",
+      "phase": "C",
+      "title": "Versioned crosswalk carry-forward",
+      "acceptance": "Changing master 7.0 to another version preserves immutable historical owner decisions and produces a version-compatible serving snapshot without mismatched master errors.",
+      "evidence_required": "Synthetic master upgrade 7.0→8.0 with unchanged identities and immutable provenance tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-04",
+      "phase": "C",
+      "title": "Identity delta handling",
+      "acceptance": "Renames safely carry approved mapping; splits/merges/class changes create review or explicit evidence, never silent owner approval.",
+      "evidence_required": "Fixture pack rename, split, merge, redirect cycle, stale target and registration-class collision.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-05",
+      "phase": "C",
+      "title": "One-upload one-owner-confirm workflow",
+      "acceptance": "After one upload + explicit monthly owner approval, import→matcher/redirect→queue→acceptance runs without per-month code edits.",
+      "evidence_required": "Realistic new-month end-to-end dry-run and manual go/no-go checkpoint.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "C-06",
+      "phase": "C",
+      "title": "Release activation and rollback",
+      "acceptance": "Current member serving points only at accepted dataset+crosswalk pair; failed jobs cannot expose half-updated release.",
+      "evidence_required": "Release pointer/feature-gate test, mid-pipeline failure replay, rollback evidence.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-01",
+      "phase": "D",
+      "title": "Unmapped/Excluded accounting",
+      "acceptance": "Isuzu unidentified and other unknown units are preserved in total brand/missingness without guessing a model or pretending excluded means zero.",
+      "evidence_required": "Historical/monthly accounting and raw-versus-covered report with samples.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-02",
+      "phase": "D",
+      "title": "RY and matcher replay",
+      "acceptance": "RY class-specific decisions and Mercedes/Rolls matcher changes replay safely without overwriting owner locks.",
+      "evidence_required": "Production-shaped shadow replay diff with no unauthorized approved-row mutation.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-03",
+      "phase": "D",
+      "title": "Ice panel access audit",
+      "acceptance": "Registration province, powertrain, rim, tyre and metadata availability match package access/free-scope and period_from; not-yet-built UI is identified explicitly.",
+      "evidence_required": "Panel-to-route matrix with API/permission/coverage and missingness checks.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-04",
+      "phase": "D",
+      "title": "Chinese EV ranking",
+      "acceptance": "Clearly scoped and sourced BEV Chinese-brand ranking appears only when data + entitlement allow; otherwise explicit unavailable state.",
+      "evidence_required": "Golden brand/origin/BEV/filter fixtures and Free/Pro UI smoke.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-05",
+      "phase": "D",
+      "title": "Website navigation cleanup",
+      "acceptance": "Remove obsolete 4-of-6 selector when approved intelligence navigation is delivered without regressions.",
+      "evidence_required": "Owner-approved design decision, route screenshots and navigation tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-06",
+      "phase": "D",
+      "title": "Catalog attributes completeness",
+      "acceptance": "Segment/body status is enriched only from traceable evidence and governed edits; remaining unknown is truthfully counted.",
+      "evidence_required": "Before/after missingness report, source refs and governed writer readback.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "D-07",
+      "phase": "D",
+      "title": "Legacy cleanup and operational docs",
+      "acceptance": "Remove superseded one-time upload function only after dependency audit; record actual operational SOP and restore path.",
+      "evidence_required": "Reference search, deployment report, access/readback and rollback checklist.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-01",
+      "phase": "E",
+      "title": "Canonical source/authority boundaries",
+      "acceptance": "Ice registrations remain separate from Vehicle Master; only governed writer mutates canonical model, trim, price and spec facts.",
+      "evidence_required": "Authorization tests and prohibited legacy/direct-write negative tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-02",
+      "phase": "E",
+      "title": "Price Fetcher adapter readiness",
+      "acceptance": "Official OEM price/trim observation fixture traverses parse→evidence→identity reconcile→review→approved apply→serving.",
+      "evidence_required": "Five-stage integration fixture, source/observed/effective metadata, missing/ambiguous/no-change tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-03",
+      "phase": "E",
+      "title": "Spec Filler adapter readiness",
+      "acceptance": "Spec fixture maps brand/model/generation/variant/trim/field/unit/source to reviewable proposed changes without guessing or overwriting owner-locked values.",
+      "evidence_required": "Fixture roundtrip and conflict tests, field-specific provenance/coverage, approved serve.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-04",
+      "phase": "E",
+      "title": "Safe structural changes",
+      "acceptance": "Model/brand/trim identity changes have scoped validation, deterministic revisions, idempotent retries, fail-closed partial writes.",
+      "evidence_required": "Duplicate/concurrent/failure-injection and identity-collision tests.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-05",
+      "phase": "E",
+      "title": "Auditable revert",
+      "acceptance": "Every applied field mutation creates traceable change event; approved changes can revert safely without erasing history.",
+      "evidence_required": "Apply→serve→revert→serve integration and actor/source audit readback.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-06",
+      "phase": "E",
+      "title": "Stable read/API contracts",
+      "acceptance": "Consumer, TDR Pro and separately authorized Dealership Toolkit share canonical facts through typed entitlement-safe read models.",
+      "evidence_required": "Negative tenant/scope tests, stable contract fixtures, snapshot consistency.",
+      "required_state": "ACCEPTED"
+    },
+    {
+      "id": "E-07",
+      "phase": "E",
+      "title": "Parallel engine safety",
+      "acceptance": "Price Fetcher, Spec Filler, Ice file reader, CN–TH crosswalk and Thai competitor graph do not share unauthorized write/identity mechanisms.",
+      "evidence_required": "Source/fact authority table and forbidden-crosswalk/write integration tests.",
+      "required_state": "ACCEPTED"
+    }
+  ]
+}
