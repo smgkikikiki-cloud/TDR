@@ -1,0 +1,120 @@
+/* P08 final TDR design-system presentation. No comparison, authorization or quota logic lives here. */
+.compareDesignPage { width:100%; max-width:1440px; margin:0 auto; padding:0 var(--gutter, 40px) 96px; background:var(--surface-page); color:var(--ink); font-family:var(--font-sans); }
+.compareDesignPage :is(h1,h2,h3) { font-family:var(--font-display); color:var(--brand-navy); word-break:keep-all; text-wrap:balance; letter-spacing:normal; }
+.compareDesignPage a {color:var(--brand-blue);}
+.compareDesignPage .compareHero {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,0.8fr);gap:40px;align-items:center;margin:0;padding:64px 0 44px;border-bottom:1px solid var(--border);}
+.compareDesignPage .compareHeroCopy {min-width:0;}
+.compareDesignPage .compareHero h1 {font-size:clamp(32px,4.1vw,60px);line-height:1.22;letter-spacing:normal;margin:12px 0 16px;font-weight:700;}
+.compareDesignPage .compareHeroAccent {color:var(--red-text);display:inline;}
+.compareDesignPage .compareHero p {max-width:670px;font-size:16px;color:var(--ink-muted);line-height:1.8;margin:0 0 22px;}
+.compareDesignPage .compareCatalogLink {display:inline-flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--brand-blue);font-size:14px;font-weight:700;}
+.compareDesignPage .compareHeroAside {align-self:stretch;display:flex;flex-direction:column;justify-content:center;background:var(--surface-inverse);color:var(--ink-on-inverse);border-radius:var(--radius-xl);padding:25px 28px;min-width:0;}
+.compareDesignPage .compareHeroAside > span {font-size:11px;letter-spacing:0.12em;font-weight:700;color:var(--ink-on-inverse);}
+.compareDesignPage .compareHeroAside ol {list-style:none;margin:14px 0 0;padding:0;display:grid;gap:12px;}
+.compareDesignPage .compareHeroAside li {display:flex;gap:14px;align-items:flex-start;color:var(--ink-on-inverse);font-size:13px;line-height:1.5;}
+.compareDesignPage .compareHeroAside li b {flex:none;font-family:var(--font-mono);font-size:13px;font-weight:600;}
+.compareDesignPage .compareSectionHeader {display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:44px 0 15px;}
+.compareDesignPage .compareSectionHeader h2 {font-size:clamp(23px,2.4vw,31px);margin:7px 0 0;}
+.compareDesignPage .compareSectionHeader p {margin:0 0 3px;font-size:13px;color:var(--ink-muted);}
+.compareDesignPage .compareSlotForm {margin-bottom:0;}
+.compareDesignPage .compareSlotsHead {display:flex;gap:20px;align-items:baseline;justify-content:space-between;margin:7px 0 12px;}
+.compareDesignPage .compareSlotsHead b {font-size:14px;color:var(--ink);font-weight:700;}
+.compareDesignPage .compareSlotsHead span {color:var(--ink-muted);font-size:12px;}
+.compareDesignPage .compareSelectedNumber {font-family:var(--font-mono);color:var(--brand-blue);margin-left:9px;font-weight:600;}
+.compareDesignPage .compareSlots {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.compareDesignPage .compareSlot {border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-page);overflow:hidden;min-height:218px;box-shadow:none;}
+.compareDesignPage .compareSlotFilled {padding:19px 18px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:0;}
+.compareDesignPage .compareSlotNo {font-size:11px;font-weight:700;color:var(--brand-blue);letter-spacing:0.04em;}
+.compareDesignPage .compareSlotFilled > strong {font-family:var(--font-display);font-size:18px;color:var(--ink);line-height:1.35;margin:18px 0 0;white-space:normal;overflow-wrap:anywhere;}
+.compareDesignPage .compareSlotFilled > span:not(.compareSlotNo) {color:var(--ink-muted);font-size:13px;line-height:1.5;margin-top:7px;white-space:normal;}
+.compareDesignPage .compareSlotFilled > small {color:var(--ink-muted);font-size:12px;line-height:1.5;margin-top:8px;}
+.compareDesignPage .compareSlotFilled > .compareSlotPrice {font-family:var(--font-mono);font-weight:600;font-size:16px;color:var(--ink);margin-top:14px;}
+.compareDesignPage .compareSlotFilled > .compareSlotPriceMissing {font-family:var(--font-sans);font-size:12px;color:var(--ink-muted);}
+.compareDesignPage .compareSlotActions {width:100%;display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:auto;padding-top:18px;}
+.compareDesignPage .compareSlotActions button {min-height:44px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius-md);color:var(--brand-blue);background:var(--surface-page);font-size:13px;font-weight:600;cursor:pointer;}
+.compareDesignPage .compareSlotActions button:last-child {color:var(--ink-muted);margin-left:auto;}
+.compareDesignPage .compareSlotAdd {display:flex;min-height:218px;height:100%;width:100%;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--surface-raised);border:0;cursor:pointer;color:var(--brand-navy);}
+.compareDesignPage .compareSlotAdd:hover {background:var(--surface-raised);outline:2px solid var(--brand-blue);outline-offset:-3px;}
+.compareDesignPage .compareSlotAdd i {display:grid;place-items:center;border:1px solid var(--brand-blue);border-radius:50%;width:50px;height:50px;font-size:30px;font-weight:400;font-style:normal;}
+.compareDesignPage .compareSlotAdd b {font-size:15px;font-weight:700;}
+.compareDesignPage .compareSlotAdd small {font-size:12px;color:var(--ink-muted);}
+.compareDesignPage .compareSlotPicker {margin-top:18px;padding:23px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-raised);}
+.compareDesignPage .compareSlotPickerHead {display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px;font-size:18px;color:var(--ink);}
+.compareDesignPage .compareSlotPickerHead button {width:44px;height:44px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-page);color:var(--ink);cursor:pointer;font-size:22px;}
+.compareDesignPage .compareSlotField {display:grid;gap:8px;min-width:0;margin:0 0 18px;}
+.compareDesignPage .compareSlotField > span {color:var(--ink);font-size:13px;font-weight:700;}
+.compareDesignPage .compareSlotField input,.compareDesignPage .compareSlotField select {width:100%;min-height:48px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-page);color:var(--ink);padding:10px 14px;font-size:15px;}
+.compareDesignPage .compareSlotField input:focus-visible,.compareDesignPage .compareSlotField select:focus-visible {outline:2px solid var(--brand-blue);outline-offset:2px;}
+.compareDesignPage .comparePickHint {padding:15px;border:1px dashed var(--border-strong);background:var(--surface-page);border-radius:var(--radius-md);color:var(--ink-muted);font-size:13px;line-height:1.6;}
+.compareDesignPage .compareSlotTrimList {display:grid;gap:8px;max-height:360px;overflow:auto;}
+.compareDesignPage .compareSlotTrim {min-height:48px;text-align:left;padding:12px 14px;border-radius:var(--radius-md);background:var(--surface-page);color:var(--ink);border:1px solid var(--border);font-size:13px;line-height:1.5;cursor:pointer;}
+.compareDesignPage .compareSlotTrim.on {border:2px solid var(--brand-blue);color:var(--brand-navy);font-weight:700;}
+.compareDesignPage .compareSlotTrim:disabled {opacity:0.5;cursor:not-allowed;}
+.compareDesignPage .compareSlotPickerFoot {display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
+.compareDesignPage .compareSlotPickerFoot button {min-height:44px;border-radius:var(--radius-md);font-size:14px;padding:10px 18px;cursor:pointer;}
+.compareDesignPage .compareSlotCancel {background:var(--surface-page);color:var(--brand-blue);border:1px solid var(--border-strong);}
+.compareDesignPage .compareSlotConfirm {background:var(--action-primary);color:var(--on-action);border:1px solid var(--action-primary);}
+.compareDesignPage .compareSlotConfirm:disabled {opacity:0.45;cursor:not-allowed;}
+.compareDesignPage .compareRunBar {display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:18px;padding:16px 18px;background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);}
+.compareDesignPage .compareDiffToggle {display:flex;align-items:center;gap:11px;min-height:44px;cursor:pointer;}
+.compareDesignPage .compareDiffToggle input {width:19px;height:19px;accent-color:var(--brand-blue);}
+.compareDesignPage .compareDiffToggle span {font-size:14px!important;color:var(--ink)!important;font-weight:500;}
+.compareDesignPage .compareRunBar > button[type="submit"] {min-height:48px;min-width:178px;padding:12px 24px;border:0;border-radius:var(--radius-md);background:var(--accent);color:var(--on-accent);font-weight:700;font-size:15px;cursor:pointer;}
+.compareDesignPage .compareRunBar > button[type="submit"]:disabled {opacity:0.48;cursor:not-allowed;}
+.compareDesignPage .compareAnonHint {margin:16px 0 0;padding:13px 16px;border-radius:var(--radius-md);background:var(--surface-raised);color:var(--ink-muted);font-size:13px;}
+.compareDesignPage .compareAnonHint b {font-family:var(--font-mono);color:var(--brand-navy);}
+.compareDesignPage .compareShareBar {margin:16px 0 0;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:var(--radius-lg);}
+.compareDesignPage .compareShareBar > span {font-size:13px;color:var(--ink-muted);}
+.compareDesignPage .compareShareBar > div {display:flex;gap:9px;flex-wrap:wrap;}
+.compareDesignPage .compareShareBar a,.compareDesignPage .compareShareBar button {min-height:44px;padding:10px 15px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-page);color:var(--brand-blue);font-size:13px;font-weight:700;cursor:pointer;}
+.compareDesignPage .compareShareBar p {flex-basis:100%;font-size:12px;color:var(--ink-muted);margin:0;}
+.compareDesignPage .compareSignupWall,.compareDesignPage .compareNotice {background:var(--surface-raised);color:var(--ink);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius-md);padding:19px;font-size:14px;line-height:1.6;}
+.compareDesignPage .compareSignupWall b {font-size:16px;}
+.compareDesignPage .compareSignupWall span {color:var(--ink-muted);}
+.compareDesignPage .compareSignIn {display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--brand-blue);border-radius:var(--radius-md);background:var(--surface-page);color:var(--brand-blue);padding:10px 18px;font-size:14px;font-weight:700;}
+.compareDesignPage .compareAwaitingResult,.compareDesignPage .compareLoadingState {margin:32px 0 0;padding:30px;border:1px dashed var(--border-strong);border-radius:var(--radius-lg);background:var(--surface-raised);}
+.compareDesignPage .compareAwaitingResult h2,.compareDesignPage .compareLoadingState h2 {font-size:23px;margin:10px 0;}
+.compareDesignPage .compareAwaitingResult p {max-width:620px;color:var(--ink-muted);font-size:14px;line-height:1.75;margin:0;}
+.compareDesignPage .compareLoadingBars {display:grid;gap:9px;margin-top:20px;}
+.compareDesignPage .compareLoadingBars i {display:block;height:19px;border-radius:var(--radius-sm);background:var(--border);opacity:0.75;}
+.compareDesignPage .compareLoadingBars i:nth-child(2) {width:75%;}
+.compareDesignPage .compareLoadingBars i:nth-child(3) {width:48%;}
+.compareDesignPage .compareResultSection {margin-top:46px;}
+.compareDesignPage .compareResultIntro {display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:17px;}
+.compareDesignPage .compareResultIntro h2 {font-size:clamp(25px,3vw,35px);margin:8px 0 10px;}
+.compareDesignPage .compareResultIntro p {font-size:13px;line-height:1.65;color:var(--ink-muted);max-width:720px;margin:0;}
+.compareDesignPage .compareResultCount {font-family:var(--font-mono);color:var(--brand-blue);}
+.compareDesignPage .compareQuota {padding:9px 13px;background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--ink-muted);font-size:12px;white-space:nowrap;margin:0;}
+.compareDesignPage .compareTableWrap {margin:0;max-height:min(76vh,880px);overflow:auto;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-page);overscroll-behavior:contain;}
+.compareDesignPage .compareTable {border-collapse:separate;border-spacing:0;min-width:800px;width:100%;table-layout:fixed;}
+.compareDesignPage .compareTable th,.compareDesignPage .compareTable td {border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 17px;color:var(--ink);background:var(--surface-page);vertical-align:top;font-size:14px;line-height:1.55;text-align:left;}
+.compareDesignPage .compareTable tr > :last-child {border-right:0;}
+.compareDesignPage .compareTable thead th {position:sticky;top:0;z-index:3;background:var(--surface-raised);padding:14px 16px 18px;border-bottom:2px solid var(--border-strong);}
+.compareDesignPage .compareTable thead th:first-child {width:190px;font-size:12px;letter-spacing:0;color:var(--ink-muted);}
+.compareDesignPage .compareTable thead th:not(:first-child) {width:calc((100% - 190px) / 4);}
+.compareDesignPage .compareCarShot {height:118px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-page);overflow:hidden;margin:0 0 12px;}
+.compareDesignPage .compareCarShot.empty {background:var(--surface-raised);}
+.compareDesignPage .compareCarShot img {width:100%;height:100%;object-fit:contain;}
+.compareDesignPage .compareTable thead :is(small,strong,span,a) {display:block;}
+.compareDesignPage .compareTable thead small {font-size:11px;color:var(--ink-muted);letter-spacing:0;}
+.compareDesignPage .compareTable thead strong {font-family:var(--font-display);font-size:17px;color:var(--brand-navy);margin:5px 0;}
+.compareDesignPage .compareTable thead span {font-size:12px;color:var(--ink-muted);}
+.compareDesignPage .compareTable thead a {font-size:12px;font-weight:700;color:var(--brand-blue);margin-top:10px;border-bottom:0;}
+.compareDesignPage .compareStatusBadge {display:inline-block!important;font-size:11px;padding:4px 7px;border-radius:var(--radius-sm);margin:0 0 8px;font-weight:700;}
+.compareDesignPage .compareStatusCurrent {background:var(--surface-page);color:var(--delta-up);border:1px solid var(--delta-up);}
+.compareDesignPage .compareStatusHistorical {background:var(--surface-page);color:var(--ink-muted);border:1px solid var(--border-strong);}
+.compareDesignPage .compareStatusUnverified {background:var(--flag-estimate-bg);color:var(--flag-estimate-ink);}
+.compareDesignPage .compareGroup th {position:relative!important;background:var(--surface-inverse)!important;color:var(--ink-on-inverse)!important;font-size:13px;font-weight:700;letter-spacing:0;padding:12px 16px!important;border-bottom:0;}
+.compareDesignPage .compareTable tbody tr:not(.compareGroup) > th {font-size:13px;color:var(--ink-muted);font-weight:600;line-height:1.5;}
+.compareDesignPage .compareTable tbody td {font-size:14px;font-weight:500;line-height:1.6;}
+.compareDesignPage .compareTable tbody th em {display:inline-flex;align-items:center;font-style:normal;font-weight:600;font-size:10px;color:var(--red-text);border:1px solid var(--red-text);border-radius:var(--radius-sm);padding:2px 5px;margin-left:8px;}
+.compareDesignPage .compareTable tbody tr.compareDifferent td:not(.compareWinnerCell) {background:var(--surface-raised);}
+.compareDesignPage .compareTable .compareMissing {color:var(--ink-muted)!important;font-weight:400;}
+.compareDesignPage .compareTable td.compareWinnerCell {background:var(--surface-raised);font-weight:700;color:var(--brand-navy);}
+.compareDesignPage .compareTable .compareWinnerMark {display:inline-flex;margin-left:9px;padding:2px 6px;border-radius:var(--radius-sm);border:1px solid var(--delta-up);color:var(--delta-up);font-family:var(--font-sans);font-size:11px;font-weight:700;white-space:nowrap;}
+.compareDesignPage .compareResultSource {margin:16px 0 0;font-size:12px;line-height:1.7;color:var(--ink-muted);}
+.compareDesignPage :is(button,a,input,select,.compareTableWrap):focus-visible {outline:3px solid var(--brand-blue);outline-offset:3px;}
+@media(max-width:1190px) { .compareDesignPage .compareHero {grid-template-columns:1.3fr 0.8fr;gap:22px;} .compareDesignPage .compareSlots {gap:10px;} .compareDesignPage .compareSlotFilled {padding:14px;} }
+@media(max-width:1023px) { .compareDesignPage {padding:0 var(--gutter,24px) 64px;} .compareDesignPage .compareHero {grid-template-columns:1fr;gap:25px;padding:44px 0 32px;} .compareDesignPage .compareHeroAside {max-width:unset;} .compareDesignPage .compareHeroAside ol {grid-template-columns:repeat(3,minmax(0,1fr));} .compareDesignPage .compareSectionHeader {align-items:flex-start;} .compareDesignPage .compareSlots {grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(max-width:767px) { .compareDesignPage {padding:0 17px 70px;} .compareDesignPage .compareHero {padding:26px 0 22px;} .compareDesignPage .compareHero h1 {font-size:34px;} .compareDesignPage .compareHero p {font-size:14px;} .compareDesignPage .compareHeroAside {padding:18px;} .compareDesignPage .compareHeroAside ol {grid-template-columns:1fr;gap:8px;} .compareDesignPage .compareSectionHeader {display:block;padding:30px 0 10px;} .compareDesignPage .compareSectionHeader h2 {font-size:23px;} .compareDesignPage .compareSectionHeader p {margin-top:8px;} .compareDesignPage .compareSlots {gap:9px;} .compareDesignPage .compareSlot {min-height:178px;} .compareDesignPage .compareSlotFilled {padding:12px;} .compareDesignPage .compareSlotFilled > strong {margin-top:10px;font-size:15px;} .compareDesignPage .compareSlotFilled > .compareSlotPrice {font-size:13px;margin-top:9px;} .compareDesignPage .compareSlotActions {flex-wrap:wrap;padding-top:12px;} .compareDesignPage .compareSlotActions button {flex:1;} .compareDesignPage .compareSlotAdd {min-height:178px;} .compareDesignPage .compareSlotPicker {padding:14px;} .compareDesignPage .compareRunBar {flex-direction:column;align-items:stretch;} .compareDesignPage .compareRunBar > button[type="submit"] {width:100%;} .compareDesignPage .compareShareBar {align-items:flex-start;flex-direction:column;} .compareDesignPage .compareResultIntro {flex-direction:column;align-items:flex-start;} .compareDesignPage .compareResultSection {margin-top:32px;} .compareDesignPage .compareTableWrap {margin-left:-17px;margin-right:-17px;border-radius:0;max-height:70vh;} .compareDesignPage .compareTable {min-width:550px;width:max-content;table-layout:fixed;} .compareDesignPage .compareTable th,.compareDesignPage .compareTable td {padding:10px 8px;white-space:normal;overflow-wrap:anywhere;} .compareDesignPage .compareTable thead th:first-child {width:96px;} .compareDesignPage .compareTable thead th:not(:first-child) {width:150px;} .compareDesignPage .compareTable thead th {padding:10px 8px;} .compareDesignPage .compareTable thead strong {font-size:13px;} .compareDesignPage .compareCarShot {height:73px;margin-bottom:8px;} .compareDesignPage .compareTable tbody tr:not(.compareGroup) > th {font-size:11px;} .compareDesignPage .compareTable tbody td {font-size:12px;} .compareDesignPage .compareTable th:first-child:not([colspan]) {position:sticky;left:0;z-index:2;background:var(--surface-page);box-shadow:2px 0 0 var(--border);} .compareDesignPage .compareTable thead th:first-child {z-index:5!important;background:var(--surface-raised)!important;} .compareDesignPage .compareTable .compareWinnerMark {font-size:10px;margin:6px 0 0;display:inline-flex;} .compareDesignPage .compareTable .compareGroup th {position:relative!important;} }
+@media(prefers-reduced-motion:reduce) { .compareDesignPage * {scroll-behavior:auto;} }
