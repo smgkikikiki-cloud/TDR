@@ -42,9 +42,13 @@ assert.equal(checks.length, 1); assert.equal(checks[0].status, "FAIL");
 const loop = base(); loop.redirects = [{ old_model_group_id: "a", new_model_group_id: "b" }, { old_model_group_id: "b", new_model_group_id: "a" }];
 assert.equal(byId(runR7Checks(loop), "R7-7").status, "FAIL");
 
-// powertrain disagreeing with reg_trend -> FAIL
+// powertrain: an exact row far from reg_trend -> FAIL; a range row whose midpoint differs but whose envelope contains the trend -> PASS
 const pt = base(); (pt.powertrain[0] as any).reg_est = 90;
 assert.equal(byId(runR7Checks(pt), "R7-5").status, "FAIL");
+const rng = base(); rng.powertrain = [{ ...(rng.powertrain[0] as any), certainty: "range", reg_est: 100, reg_min: 90, reg_max: 140 }];
+const rngCheck = byId(runR7Checks(rng), "R7-5");
+assert.equal(rngCheck.status, "PASS");
+assert.equal((rngCheck.detail as any).groups_where_engine_displayed_value_differs_from_trend, 1); // midpoint 115 vs trend 100 is reported, not hidden
 
 // missing panel metadata is reported, never guessed
 const nopanel = base(); nopanel.panels = [];

@@ -119,21 +119,34 @@ export function runR7Checks(input: R7Input): R7Check[] {
   }
   add("R7-4", "Segment / body type: every unit lands in a bucket and 'ไม่ระบุ' is counted", dimsOk ? "PASS" : "FAIL", { month_total: trendTotal, ...dims });
 
-  // R7-5: powertrain certainty and ranges survive aggregation.
-  const trendByGroup = byGroup;
-  const ptByGroup = new Map<string, number>();
+  // R7-5: powertrain certainty and ranges survive aggregation. reg_trend must sit inside the group's [min, max] envelope
+  // (range rows contribute their min..max, other rows their estimate); the engine's displayed value (range midpoint) is reported separately.
+  const lo = new Map<string, number>();
+  const hi = new Map<string, number>();
+  const est = new Map<string, number>();
+  const shown = new Map<string, number>();
   const certainty = new Map<string, number>();
   let badRange = 0;
   for (const row of input.powertrain) {
+    const g = row.model_group_id;
     const resolved = resolveIcePowertrainRow(row);
-    ptByGroup.set(row.model_group_id, (ptByGroup.get(row.model_group_id) ?? 0) + resolved.value);
+    const e = Number(row.reg_est ?? 0);
+    const isRange = row.certainty === "range";
+    lo.set(g, (lo.get(g) ?? 0) + (isRange ? Number(row.reg_min ?? 0) : e));
+    hi.set(g, (hi.get(g) ?? 0) + (isRange ? Number(row.reg_max ?? 0) : e));
+    est.set(g, (est.get(g) ?? 0) + e);
+    shown.set(g, (shown.get(g) ?? 0) + resolved.value);
     certainty.set(row.certainty, (certainty.get(row.certainty) ?? 0) + 1);
-    if (row.certainty === "range" && !(Number(row.reg_min) <= Number(row.reg_max))) badRange += 1;
+    if (isRange && !(Number(row.reg_min) <= Number(row.reg_max))) badRange += 1;
   }
-  const mism = [...trendByGroup].filter(([g, t]) => ptByGroup.has(g) && Math.abs(t - (ptByGroup.get(g) as number)) > 0.5);
-  add("R7-5", "Powertrain: per-group sums match reg_trend (+-0.5) and range rows have min <= max", mism.length === 0 && badRange === 0 ? "PASS" : "FAIL",
-    { rows: input.powertrain.length, certainty_rows: Object.fromEntries(certainty), mismatching_groups: mism.length, bad_ranges: badRange,
-      sample: mism.slice(0, 5).map(([g, t]) => ({ g, trend: t, powertrain: ptByGroup.get(g) })) });
+  const outside = [...byGroup].filter(([g, t]) => lo.has(g) && (t < (lo.get(g) as number) - 0.5 || t > (hi.get(g) as number) + 0.5));
+  const estOff = [...byGroup].filter(([g, t]) => est.has(g) && Math.abs(t - (est.get(g) as number)) > 0.5);
+  const shownOff = [...byGroup].filter(([g, t]) => shown.has(g) && Math.abs(t - (shown.get(g) as number)) > 0.5);
+  add("R7-5", "Powertrain: reg_trend lies inside each group's min..max envelope; range rows have min <= max", outside.length === 0 && badRange === 0 ? "PASS" : "FAIL",
+    { rows: input.powertrain.length, certainty_rows: Object.fromEntries(certainty), groups_outside_envelope: outside.length, bad_ranges: badRange,
+      groups_where_ice_estimates_differ_from_trend: estOff.length,
+      groups_where_engine_displayed_value_differs_from_trend: shownOff.length,
+      sample_displayed_value_differs: shownOff.slice(0, 5).map(([g, t]) => ({ g, trend: t, displayed: shown.get(g), ice_estimate: est.get(g) })) });
 
   // R7-6: wheel/tyre availability from the persisted period_from, coverage exposed.
   const wheel: Record<string, unknown> = {};
