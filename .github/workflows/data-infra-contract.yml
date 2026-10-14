@@ -32,6 +32,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Run contract gate positive/negative self-tests
+        shell: bash
+        working-directory: candidate
+        run: node --test scripts/check-data-infra-contract.test.mjs
       - name: Check locked outcomes, owner acceptance and required agent pointers
         shell: bash
         run: |
