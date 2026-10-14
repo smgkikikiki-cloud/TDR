@@ -5,6 +5,7 @@
 **BEFORE reading task context, planning, patching code, reviewing, or claiming completion for Ice, Vehicle Master, data workflows, Price Fetcher, Spec Filler, price/trim/spec, member market or relevant website surfaces**, explicitly open and read ALL of:
 - `docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md` (v1.0.0; mandatory Definition of DONE; no goalpost changes)
 - `docs/portfolio/data-infra.requirements.json` (canonical requirement IDs / acceptance criteria)
+- `docs/portfolio/TDR_DATA_INFRA_EXECUTION_PLAN.md` (locked bounded work packages, sequencing and stop conditions)
 - `docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json` (OPEN/BLOCKED/EVIDENCED/ACCEPTED proof; not authoritative to weaken goals)
 - `docs/portfolio/TDR_MASTER_ROADMAP_V1.md` and `docs/portfolio/portfolio.plan.json`
 - `docs/WORK_STATE.md` and the matching domain gate/contract
