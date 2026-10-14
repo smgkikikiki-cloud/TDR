@@ -15,7 +15,7 @@
 | A4 Typed contracts for Compare, Pricing/Auth, Market, Analysis, Upcoming and Home | **CONDITIONAL PASS** | [Matrix](PAGE_DATA_CONTRACT_MATRIX.md) defines named v1 UI boundaries and source/security/state acceptance. Market/Upcoming/Analysis fields not proven by current source are explicit requirements/proposals, not deployed API claims. Panel 1–4/export contract awaits owner/source evidence. |
 | A5 Graft rows 0–15 dispositioned against code/design/PR branches | **PASS** | [Audit](UI_IMPLEMENTATION_AUDIT.md) gives 16/16 `KEEP/ADAPT/REPLACE/REMOVE` dispositions with file and exit evidence. |
 | A6 Executable revised roadmap and scoped future packets | **CONDITIONAL PASS** | [Execution matrix](PR_EXECUTION_MATRIX.md) covers all 16 rows, dependencies, path scope, tests, screenshots, and stage gates. Packets are not future-task authorization. Upcoming, static copy, Ice and Production integration still require exact owner/source/domain decisions. |
-| A7 Checks, no-write statement, reviewer and owner acceptance | **PENDING CHECKS / NO SELF-APPROVAL** | This page contains reviewer checklist, owner yes/no card, and exact check slots below. Update after running checks; reviewer/owner must sign separately. |
+| A7 Checks, no-write statement, reviewer and owner acceptance | **LOCAL CHECKS REPORTED PASS; REVIEWER RE-CHECK / OWNER SIGN-OFF PENDING** | Original Codex local commands are reported below. Independent QA identified two contract/authority defects; bounded docs corrections require revalidation. Reviewer and owner must sign separately. |
 
 ## Deterministic completeness and repository checks
 
@@ -49,6 +49,12 @@ Reviewer should use a clean checkout pinned to the branch SHA, then:
 7. Confirm no static-mock values, assumed coverage, guessed migration number, toolkit scope, or new owner decision became fact.
 8. Decide whether A1–A7 are **ACCEPT / REQUEST CHANGES** with cited evidence. Reviewer cannot authorize owner gates.
 
+## Independent review and bounded correction record — 2026-10-14
+
+Reviewer flagged **BLOCKER 1** (owner-approved Omise/฿1,099/฿11,490/30-day OTP Freemium was improperly declared stale despite **G0-C03 OPEN**) and **BLOCKER 2** (Compare contract incorrectly required authentication despite 10/day anonymous server-cookie allowance). These are documentation/contract blockers, **not permission to change deployed payment/access behavior**. The corresponding contract and roadmap documents have been amended on this Draft branch. **Independent re-review of the amended HEAD and owner acceptance remain mandatory.** The original local check table above describes the initial Codex worktree only; it must not be presented as a post-correction CI or test run.
+
+A separate reviewer also performed SELECT-only Production queries confirming 439 vehicle models and scoped Ice mapping 616 APPROVED / 64 EXCLUDED, without inferring R6/R7/R8 approval. See the attributed reviewer addendum in `PHASE_A_BASELINE.md`. Neither owner sign-off nor production cutover was exercised.
+
 ## Owner acceptance card — no default answers
 
 The owner may answer these after independent QA:
@@ -62,7 +68,7 @@ No checkbox is preselected. Owner acceptance of this documentation does not auth
 
 ## Open dependencies by lane
 
-- **Can be separately tasked after owner go:** Models, Brands/Search, Compare presentation, Stripe Pricing/Auth UI, design tokens/shell, and current research UI adaptation where existing contract suffices.
+- **Can be separately tasked after owner go:** Models, Brands/Search, Compare presentation (preserve anonymous 10/day and member paths), **provider-neutral** Pricing/Auth layouts (do not finalize prices/provider/OTP trial), design tokens/shell, and current research UI adaptation where existing contract suffices.
 - **UI shell can be tasked but live integration gated:** Home and Intelligence; Ice data requires accepted release evidence and R6/R7/R8 sequence.
-- **Owner/source decision needed before implementation:** Static legal/about/contact copy; Upcoming source rights/history/status and schema allocation; Panel 1–4/import/export fields and access policy; Analysis storage/media additions if existing research adapter proves insufficient.
+- **Owner/source decision needed before affected implementation:** **G0-C03 Website Pro commercial decision (Omise vs implemented Stripe; approved vs current prices; 30-day OTP Freemium; existing subscribers and migration)**; Static legal/about/contact copy; Upcoming source rights/history/status and schema allocation; Panel 1–4/import/export fields and access policy; Analysis storage/media additions if existing research adapter proves insufficient.
 - **Not verified:** hosted CI status, branch-protection rules, Vercel preview/Production routing/flags, deployed Supabase schema/ACL/migration ledger, Stripe live Price configuration.
