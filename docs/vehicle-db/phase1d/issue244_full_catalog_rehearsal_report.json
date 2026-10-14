@@ -1,6 +1,6 @@
 {
   "schema": "tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",
-  "executed_at_utc": "2026-10-13T19:21:32.158Z",
+  "executed_at_utc": "2026-10-14T04:04:51.440Z",
   "exact_command": "TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",
   "docker_image": "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75fd595d42e1fa316b9fb4378742297",
   "database": "PostgreSQL 16.10; Docker network=none; tmpfs-only; no published port",
@@ -13,55 +13,293 @@
     "raw_backup_pushed": false
   },
   "baseline": {
-    "source_hash_manifest": "Owner Context Handoff 2026-10-14 aggregate counts and MD5",
+    "source_hash_manifest": "Owner Context Handoff 2026-10-14 aggregate counts and MD5; unchanged expected values",
     "repository_v57_v64_restore": true,
-    "matching_relations": 15,
+    "decompressed_source_sha256": "76add61cb19c0f4bf97aa7cf7f9040aead2ae4b00c1ce193bff41405830c8266",
+    "restore_file_sha256": "76add61cb19c0f4bf97aa7cf7f9040aead2ae4b00c1ce193bff41405830c8266",
+    "source_schema_acl_manifest": "docs/vehicle-db/phase1d/issue244_live_source_schema_acl_diagnostic_2026-10-14.json",
+    "matching_relations": 21,
     "total_relations_checked": 21,
+    "mismatches": []
+  },
+  "column_fingerprint_comparison": {
+    "source_fingerprints": 61,
+    "compared_fingerprints": 61,
+    "matching_fingerprints": 61,
+    "mismatches": []
+  },
+  "source_schema_acl_comparison": {
+    "checked_sections": [
+      "relation_metadata",
+      "column_metadata",
+      "constraint_metadata",
+      "trigger_metadata",
+      "policy_metadata",
+      "role_acl",
+      "function_metadata"
+    ],
+    "source_record_counts": {
+      "relation_metadata": 21,
+      "column_metadata": 274,
+      "constraint_metadata": 96,
+      "trigger_metadata": 29,
+      "policy_metadata": 7,
+      "role_acl": 63,
+      "function_metadata": 34
+    },
+    "actual_record_counts": {
+      "relation_metadata": 21,
+      "column_metadata": 274,
+      "constraint_metadata": 96,
+      "trigger_metadata": 29,
+      "policy_metadata": 7,
+      "role_acl": 63,
+      "function_metadata": 89
+    },
+    "unexpected_local_records": {
+      "function_metadata": [
+        "public._release_semantic_manifest(m jsonb)",
+        "public._vehicle_master_pin_guard()",
+        "public._vehicle_master_supplemental_counts()",
+        "public.activate_vehicle_release(p_release_id text)",
+        "public.armor(bytea)",
+        "public.armor(bytea, text[], text[])",
+        "public.begin_vehicle_release(manifest jsonb)",
+        "public.crypt(text, text)",
+        "public.dearmor(text)",
+        "public.decrypt(bytea, bytea, text)",
+        "public.decrypt_iv(bytea, bytea, bytea, text)",
+        "public.digest(bytea, text)",
+        "public.digest(text, text)",
+        "public.encrypt(bytea, bytea, text)",
+        "public.encrypt_iv(bytea, bytea, bytea, text)",
+        "public.gen_random_bytes(integer)",
+        "public.gen_random_uuid()",
+        "public.gen_salt(text)",
+        "public.gen_salt(text, integer)",
+        "public.has_market_access(requested_product text)",
+        "public.hmac(bytea, bytea, text)",
+        "public.hmac(text, text, text)",
+        "public.ice_commit_staged_import(p_period text, p_package_version integer, p_master_version text, p_status text, p_confirmed_by jsonb, p_md5_index jsonb, p_panels jsonb, p_imported_by text)",
+        "public.ice_crosswalk_apply_id_change(p_old_model_group_id text, p_new_model_group_id text, p_type text, p_master_version text, p_reason text)",
+        "public.ice_crosswalk_upsert_match(p_model_group_id text, p_canonical_model_id text, p_match_method text, p_score numeric, p_status text, p_master_version text, p_decision_fingerprint text, p_reason text)",
+        "public.ice_live_table_counts()",
+        "public.pgp_armor_headers(text, OUT key text, OUT value text)",
+        "public.pgp_key_id(bytea)",
+        "public.pgp_pub_decrypt(bytea, bytea)",
+        "public.pgp_pub_decrypt(bytea, bytea, text)",
+        "public.pgp_pub_decrypt(bytea, bytea, text, text)",
+        "public.pgp_pub_decrypt_bytea(bytea, bytea)",
+        "public.pgp_pub_decrypt_bytea(bytea, bytea, text)",
+        "public.pgp_pub_decrypt_bytea(bytea, bytea, text, text)",
+        "public.pgp_pub_encrypt(text, bytea)",
+        "public.pgp_pub_encrypt(text, bytea, text)",
+        "public.pgp_pub_encrypt_bytea(bytea, bytea)",
+        "public.pgp_pub_encrypt_bytea(bytea, bytea, text)",
+        "public.pgp_sym_decrypt(bytea, text)",
+        "public.pgp_sym_decrypt(bytea, text, text)",
+        "public.pgp_sym_decrypt_bytea(bytea, text)",
+        "public.pgp_sym_decrypt_bytea(bytea, text, text)",
+        "public.pgp_sym_encrypt(text, text)",
+        "public.pgp_sym_encrypt(text, text, text)",
+        "public.pgp_sym_encrypt_bytea(bytea, text)",
+        "public.pgp_sym_encrypt_bytea(bytea, text, text)",
+        "public.prune_vehicle_releases(p_keep_superseded integer, p_staging_ttl interval)",
+        "public.publish_vehicle_release(release jsonb)",
+        "public.release_is_publicly_readable(target_release_id text)",
+        "public.rollback_vehicle_release(target_release_id text)",
+        "public.set_updated_at()",
+        "public.stage_vehicle_release_chunk(p_release_id text, p_section text, p_chunk_index integer, p_chunk_hash text, p_rows jsonb)",
+        "public.vehicle_master_finish_supplemental(p_release_id text, p_as_of date, p_expected jsonb)",
+        "public.vehicle_master_seed_from_release(p_release_id text, p_as_of date)",
+        "public.vehicle_master_seed_supplemental(p_release_id text, p_as_of date, p_section text, p_rows jsonb)"
+      ]
+    },
     "mismatches": [
       {
-        "relation": "vehicle_variants",
-        "expected_rows": 370,
-        "actual_rows": 370,
-        "expected_md5": "dbcea4aa79471faf9f0a5bcab3e732de",
-        "actual_md5": "a5f81dc2dee6aeb5d5f2ed9a437e0567"
+        "section": "relation_metadata",
+        "key": "current_market_trims",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_market_trims",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "428c2075badc10b06aa1900c1be8a246"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_market_trims",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "1df158007071dd5fb0a0442f3337afac"
+        }
       },
       {
-        "relation": "vehicle_trims",
-        "expected_rows": 1569,
-        "actual_rows": 1569,
-        "expected_md5": "61e0230c93dd2cbc6b3a5cbe9ccf64c5",
-        "actual_md5": "218c3a9a5d6a77226f6e985b09181887"
+        "section": "relation_metadata",
+        "key": "current_price_ledger",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_price_ledger",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "ec5158d3bf4acb792dbfb9e4df498193"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_price_ledger",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "f9059ebe8bbd47c83bea0ac496a386cf"
+        }
       },
       {
-        "relation": "vehicle_facts",
-        "expected_rows": 24492,
-        "actual_rows": 24492,
-        "expected_md5": "074a7cf2c603a218fc232e24a9e015a5",
-        "actual_md5": "9e14841a24b7d5cef2469b858bd94e52"
+        "section": "relation_metadata",
+        "key": "current_spec_facts",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_spec_facts",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "2e90a37d84ad2d0f18d596b7951c2c9b"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_spec_facts",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "fac1c7637d456d2965f58bd80243c113"
+        }
       },
       {
-        "relation": "vehicle_eco_evidence",
-        "expected_rows": 3,
-        "actual_rows": 3,
-        "expected_md5": "20d33f0f5260b5f038a41d183269c9cc",
-        "actual_md5": "0ca2b75ff07b653207ed53fb9870f24f"
+        "section": "relation_metadata",
+        "key": "current_vehicle_brands",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_vehicle_brands",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "9668fd3754a90ddf8f7f1c870156c4f3"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_vehicle_brands",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "1835689e6f3e6645f0084da310248ade"
+        }
       },
       {
-        "relation": "current_market_trims",
-        "expected_rows": 1569,
-        "actual_rows": 1569,
-        "expected_md5": "5d57479684c0faf3ca87b1db373adf55",
-        "actual_md5": "849663f97427ba230d776d7360bca06a"
+        "section": "relation_metadata",
+        "key": "current_vehicle_generations",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_vehicle_generations",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "0037acaf68de50c7bbe75481c7062998"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_vehicle_generations",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "169198bc6d5bc47a51cd4982d1eef117"
+        }
       },
       {
-        "relation": "current_spec_facts",
-        "expected_rows": 23083,
-        "actual_rows": 23083,
-        "expected_md5": "3681ad68ae64e3244bb86f6abbcea001",
-        "actual_md5": "fc7f69705ccdf786b5e4ee27a856b196"
+        "section": "relation_metadata",
+        "key": "current_vehicle_models",
+        "different_fields": [
+          "view_definition_md5"
+        ],
+        "expected_values": {
+          "relation": "current_vehicle_models",
+          "kind": "v",
+          "rls_enabled": false,
+          "rls_forced": false,
+          "reloptions": "security_invoker=true",
+          "view_definition_md5": "bad03789e46328373fd7263c8879745e"
+        },
+        "actual_values": {
+          "kind": "v",
+          "relation": "current_vehicle_models",
+          "reloptions": "security_invoker=true",
+          "rls_forced": false,
+          "rls_enabled": false,
+          "view_definition_md5": "f15730bb87609361a700bd574289dc57"
+        }
+      },
+      {
+        "section": "function_metadata",
+        "key": "public.vehicle_master_seed_check()",
+        "different_fields": [
+          "definition_md5"
+        ],
+        "expected_values": {
+          "schema": "public",
+          "name": "vehicle_master_seed_check",
+          "args": "",
+          "security_definer": false,
+          "definition_md5": "9db12082a9d17b1d74198a3d517b8529"
+        },
+        "actual_values": {
+          "args": "",
+          "name": "vehicle_master_seed_check",
+          "schema": "public",
+          "definition_md5": "8b735bfd4b62af593db9259eb56a9514",
+          "security_definer": false
+        }
+      },
+      {
+        "section": "function_metadata",
+        "key": "public.vehicle_serving_parity_check()",
+        "different_fields": [
+          "definition_md5"
+        ],
+        "expected_values": {
+          "schema": "public",
+          "name": "vehicle_serving_parity_check",
+          "args": "",
+          "security_definer": false,
+          "definition_md5": "1fb5066a9a8e40ff75ed73e687bab23a"
+        },
+        "actual_values": {
+          "args": "",
+          "name": "vehicle_serving_parity_check",
+          "schema": "public",
+          "definition_md5": "24b9ce7ea494c83c1b1d24ec5b5ce0fb",
+          "security_definer": false
+        }
       }
     ],
-    "deployed_schema_acl_manifest_available": false
+    "effective_acl_snapshot_replayed_in_disposable_db": true,
+    "source_diagnostic_engine": "PostgreSQL 17; connected SELECT-only queries using source role postgres; no row data returned",
+    "local_engine": "PostgreSQL 16.10"
   },
   "phase1c_applied": false,
   "basic_models_created": 0,
@@ -69,7 +307,12 @@
   "production_or_staging_writes": 0,
   "frozen_owner_decisions": 244,
   "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
-  "acceptance_result": "FULL_CATALOG_ACCEPTANCE_BLOCKED_SOURCE_FINGERPRINT_MISMATCH",
-  "blocked_reason": "Fail-closed before Phase 1C: restored pre-change catalog fingerprints do not all match the authorized source baseline. A fresh deployed schema/view/RLS/grant/ACL manifest was unavailable. No reconciliation or suppression was attempted.",
-  "raw_rows_in_report": false
+  "acceptance_result": "FULL_CATALOG_ACCEPTANCE_BLOCKED_SCHEMA_ACL_MISMATCH",
+  "blocked_reason": "Fail-closed before Phase 1C: restored source catalog hashes match but the local v57-v64 schema/ACL metadata does not exactly match the source diagnostic. No Phase1C SQL was applied.",
+  "raw_rows_in_report": false,
+  "restore_preparation": {
+    "original_decompressed_bytes_written_unchanged": true,
+    "numeric_scale_regression": "PASS: 405.0 and 1.0 preserved",
+    "focused_test": "scripts/check-phase1d-restore-bytes.ts"
+  }
 }

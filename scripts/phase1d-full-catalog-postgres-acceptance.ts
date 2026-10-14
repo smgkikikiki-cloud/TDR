@@ -5,7 +5,6 @@
  */
 import assert from "node:assert/strict";
 import { createHash, randomBytes } from "node:crypto";
-import { gunzipSync } from "node:zlib";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -13,6 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { planStructuralChanges, structuralHash, type Batch, type Snapshot } from "../lib/vehicle-engine/structural-writer.ts";
 import { buildStructuralRpcDraftRequest } from "../lib/vehicle-engine/basic-identity-db-compat.ts";
+import { decompressPrivateBackupJson } from "../lib/vehicle-engine/private-backup-json.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const image = "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75fd595d42e1fa316b9fb4378742297";
@@ -59,6 +59,83 @@ const quote = (s: string) => `'${s.replaceAll("'", "''")}'`;
 function pg(sql: string): string { return run("docker", ["exec", "-i", container, "psql", "-X", "-q", "-U", dbUser, "-d", dbName, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql); }
 function roleSql(role: string, sql: string, allowFailure = false): string {
   return run("docker", ["exec", "-i", container, "psql", "-X", "-q", "-U", role, "-d", dbName, "-v", "ON_ERROR_STOP=1", "-At", "-P", "pager=off"], sql, allowFailure);
+}
+const qident = (v: string) => `"${v.replaceAll('"', '""')}"`;
+const schemaDiagnosticPath = "docs/vehicle-db/phase1d/issue244_live_source_schema_acl_diagnostic_2026-10-14.json";
+const sourceDiagnostic = JSON.parse(fs.readFileSync(path.join(root, schemaDiagnosticPath), "utf8"));
+const sourceDiagnosticSections = sourceDiagnostic.sections as Record<string, any[]>;
+function jsonRows(sql: string): any[] {
+  const result = pg(sql);
+  return result ? JSON.parse(result) : [];
+}
+function collectSchemaAclMetadata(): Record<string, any[]> {
+  const relations = sourceDiagnosticSections.relation_metadata.map((r) => r.relation);
+  const relationArray = `ARRAY[${relations.map((r) => quote(r)).join(",")}]::text[]`;
+  const dbRoles = [...new Set(sourceDiagnosticSections.role_acl.map((r) => r.db_role))];
+  const roleArray = `ARRAY[${dbRoles.map((r) => quote(r)).join(",")}]::text[]`;
+  return {
+    relation_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'kind',c.relkind,'rls_enabled',c.relrowsecurity,'rls_forced',c.relforcerowsecurity,'reloptions',coalesce(array_to_string(c.reloptions,','),''),'view_definition_md5',CASE WHEN c.relkind IN ('v','m') THEN md5(coalesce(pg_get_viewdef(c.oid,false),'')) ELSE '' END) ORDER BY c.relname),'[]'::jsonb) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray});`),
+    column_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'column_name',a.attname,'data_type',format_type(a.atttypid,a.atttypmod),'not_null',a.attnotnull,'default_sql_md5',md5(coalesce(ic.generation_expression,ic.column_default,''))) ORDER BY c.relname,a.attname),'[]'::jsonb) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace LEFT JOIN information_schema.columns ic ON ic.table_schema=n.nspname AND ic.table_name=c.relname AND ic.column_name=a.attname WHERE n.nspname='public' AND c.relname=ANY(${relationArray}) AND a.attnum>0 AND NOT a.attisdropped;`),
+    constraint_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'constraint_name',k.conname,'kind',k.contype,'definition_md5',md5(pg_get_constraintdef(k.oid,true))) ORDER BY c.relname,k.conname),'[]'::jsonb) FROM pg_constraint k JOIN pg_class c ON c.oid=k.conrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray});`),
+    trigger_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'trigger_name',t.tgname,'enabled',t.tgenabled,'definition_md5',md5(pg_get_triggerdef(t.oid,true))) ORDER BY c.relname,t.tgname),'[]'::jsonb) FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray}) AND NOT t.tgisinternal;`),
+    policy_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',tablename,'policy_name',policyname,'cmd',cmd,'roles',roles::text,'using_md5',md5(coalesce(qual,'')),'with_check_md5',md5(coalesce(with_check,''))) ORDER BY tablename,policyname),'[]'::jsonb) FROM pg_policies WHERE schemaname='public' AND tablename=ANY(${relationArray});`),
+    role_acl: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',rr.relation,'db_role',pp.db_role,'select_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'SELECT'),'insert_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'INSERT'),'update_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'UPDATE'),'delete_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'DELETE')) ORDER BY rr.relation,pp.db_role),'[]'::jsonb) FROM unnest(${relationArray}) rr(relation) CROSS JOIN unnest(${roleArray}) pp(db_role);`),
+    function_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'name',p.proname,'args',pg_get_function_identity_arguments(p.oid),'security_definer',p.prosecdef,'definition_md5',md5(pg_get_functiondef(p.oid))) ORDER BY n.nspname,p.proname,pg_get_function_identity_arguments(p.oid)),'[]'::jsonb) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.prokind IN ('f','p');`),
+  };
+}
+function rowKey(section: string, row: any): string {
+  switch (section) {
+    case "relation_metadata": return row.relation;
+    case "column_metadata": return `${row.relation}.${row.column_name}`;
+    case "constraint_metadata": return `${row.relation}.${row.constraint_name}`;
+    case "trigger_metadata": return `${row.relation}.${row.trigger_name}`;
+    case "policy_metadata": return `${row.relation}.${row.policy_name}`;
+    case "role_acl": return `${row.relation}.${row.db_role}`;
+    case "function_metadata": return `${row.schema}.${row.name}(${row.args})`;
+    default: return JSON.stringify(row);
+  }
+}
+function compareMetadata(source: Record<string, any[]>, actual: Record<string, any[]>) {
+  const sections = Object.keys(source);
+  const mismatches: Array<{ section: string; key: string; different_fields: string[]; expected_values: Record<string,any> | null; actual_values: Record<string,any> | null }> = [];
+  const unexpectedLocalRecords: Record<string,string[]> = {};
+  const signature = (value: any) => value === undefined ? null : digest(JSON.stringify(Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b)))));
+  for (const section of sections) {
+    const expected = new Map(source[section].map((r) => [rowKey(section,r), r]));
+    const observed = new Map((actual[section] ?? []).map((r) => [rowKey(section,r), r]));
+    const unexpected = [...observed.keys()].filter((key)=>!expected.has(key));
+    if (unexpected.length) unexpectedLocalRecords[section]=unexpected;
+    for (const key of expected.keys()) {
+      const e = expected.get(key); const a = observed.get(key);
+      const es = signature(e); const as = signature(a);
+      if (es !== as) {
+        const fields = [...new Set([...Object.keys(e ?? {}),...Object.keys(a ?? {})])].sort();
+        const different_fields = fields.filter((field)=>JSON.stringify(e?.[field])!==JSON.stringify(a?.[field]));
+        mismatches.push({ section, key, different_fields, expected_values:e ?? null, actual_values:a ?? null });
+      }
+    }
+  }
+  return { checked_sections: sections, source_record_counts: Object.fromEntries(sections.map((s)=>[s,source[s].length])), actual_record_counts: Object.fromEntries(sections.map((s)=>[s,actual[s]?.length ?? 0])), unexpected_local_records:unexpectedLocalRecords,mismatches };
+}
+function reproduceDiagnosticEffectiveAclsLocally(): void {
+  const privileges = ["SELECT","INSERT","UPDATE","DELETE"] as const;
+  for (const row of sourceDiagnosticSections.role_acl) {
+    const relation = `public.${qident(String(row.relation))}`;
+    const role = qident(String(row.db_role));
+    const grants = privileges.filter((p)=>row[`${p.toLowerCase()}_allowed`]).join(",");
+    pg(`REVOKE ALL PRIVILEGES ON TABLE ${relation} FROM PUBLIC, ${role};${grants ? ` GRANT ${grants} ON TABLE ${relation} TO ${role};` : ""}`);
+  }
+}
+function collectColumnFingerprints(expected: any[]): any[] {
+  const result: any[] = [];
+  for (const item of expected) {
+    const relation = String(item.relation);
+    const column = String(item.column_name);
+    const expression = `md5((to_jsonb(t)->${quote(column)})::text)`;
+    const row = jsonRows(`SELECT jsonb_build_array(jsonb_build_object('relation',${quote(relation)},'column_name',${quote(column)},'values_seen',count(*),'column_multiset_md5',md5(coalesce(string_agg(${expression},'' ORDER BY ${expression}),'')))) FROM public.${qident(relation)} t;`)[0];
+    result.push(row);
+  }
+  return result;
 }
 function databaseSnapshot(afterPhase1c = false): Record<string, { rows: number; md5: string }> {
   const result: Record<string, { rows: number; md5: string }> = {};
@@ -131,7 +208,8 @@ assert.equal(verifier.status, 0, "REPOSITORY_BACKUP_VERIFIER_FAILED");
 const verified = JSON.parse(verifier.stdout);
 assert.equal(verified.valid, true);
 assert.equal(verified.checksum.value, expectedPayloadSha);
-const envelope = JSON.parse(gunzipSync(compressed).toString("utf8"));
+const restoreJsonBytes = decompressPrivateBackupJson(compressed);
+const envelope = JSON.parse(restoreJsonBytes.toString("utf8"));
 assert.equal(envelope.format, "tdr-vehicle-master-backup");
 assert.equal(envelope.format_version, 1);
 const payload = envelope.payload;
@@ -140,8 +218,9 @@ assert.equal(envelope.checksum?.value, expectedPayloadSha, "PRIVATE_BACKUP_DECLA
 assert.deepEqual(recordCounts(payload), relationCounts);
 assert.equal(Object.values(relationCounts).reduce((a, b) => a + b, 0), 28319);
 for (const table of tableOrder) assert.equal((payload.data[table] ?? []).length, relationCounts[table], `ROW_COUNT_MISMATCH:${table}`);
-const prettyPayload = path.join(os.tmpdir(), `tdr-issue244-payload-${process.pid}.json`);
-fs.writeFileSync(prettyPayload, JSON.stringify(envelope), { mode: 0o600 });
+const restoreInputPath = path.join(os.tmpdir(), `tdr-issue244-payload-${process.pid}.json`);
+fs.writeFileSync(restoreInputPath, restoreJsonBytes, { mode: 0o600 });
+assert.equal(digest(fs.readFileSync(restoreInputPath)), digest(restoreJsonBytes), "RESTORE_JSON_BYTES_CHANGED_BEFORE_IMPORT");
 const dbSecret = randomBytes(32).toString("hex");
 try {
   run("docker", ["run", "--detach", "--rm", "--name", container, "--network", "none", "--tmpfs", "/var/lib/postgresql/data:rw,noexec,nosuid,size=2g",
@@ -157,7 +236,7 @@ try {
     "supabase/migration_v15_canonical_vehicle_release.sql", "supabase/migration_v22_unified_vehicle_input.sql", "supabase/migration_v48_staged_vehicle_release.sql",
     "supabase/migration_v57_vehicle_master_tables.sql"];
   for (const f of files) pg(fs.readFileSync(path.join(root, f), "utf8"));
-  run("docker", ["cp", prettyPayload, `${container}:/tmp/private_vehicle_master_backup.json`]);
+  run("docker", ["cp", restoreInputPath, `${container}:/tmp/private_vehicle_master_backup.json`]);
   run("docker", ["exec", container, "chmod", "644", "/tmp/private_vehicle_master_backup.json"]);
   const source = `pg_read_file('/tmp/private_vehicle_master_backup.json')::jsonb #> '{payload,data,`;
   const qident = (v: string) => `"${v.replaceAll('"', '""')}"`;
@@ -199,21 +278,47 @@ try {
         expected_md5:expected ?? "NOT_PROVIDED", actual_md5:before[rel].md5 });
     }
   }
-  if (baselineMismatches.length) {
+  const columnFingerprintSource = sourceDiagnosticSections.column_fingerprints;
+  const columnFingerprintActual = collectColumnFingerprints(columnFingerprintSource);
+  const sourceColumnByKey = new Map(columnFingerprintSource.map((r) => [`${r.relation}.${r.column_name}`, r]));
+  const columnFingerprintMismatches = columnFingerprintActual.flatMap((actual) => {
+    const expected = sourceColumnByKey.get(`${actual.relation}.${actual.column_name}`);
+    return !expected || expected.values_seen !== actual.values_seen || expected.column_multiset_md5 !== actual.column_multiset_md5
+      ? [{ relation:actual.relation,column_name:actual.column_name,expected_values_seen:expected?.values_seen ?? null,actual_values_seen:actual.values_seen,
+          expected_md5:expected?.column_multiset_md5 ?? null,actual_md5:actual.column_multiset_md5 }]
+      : [];
+  });
+  const schemaAclSections = ["relation_metadata","column_metadata","constraint_metadata","trigger_metadata","policy_metadata","role_acl","function_metadata"];
+  const sourceSchemaAclSections = Object.fromEntries(schemaAclSections.map((s)=>[s,sourceDiagnosticSections[s] ?? []]));
+  reproduceDiagnosticEffectiveAclsLocally();
+  const sourceSchemaAclComparison = compareMetadata(sourceSchemaAclSections, collectSchemaAclMetadata());
+  const sourceDataMismatch = baselineMismatches.length > 0 || columnFingerprintMismatches.length > 0;
+  if (sourceDataMismatch || sourceSchemaAclComparison.mismatches.length) {
+    const result = sourceDataMismatch ? "FULL_CATALOG_ACCEPTANCE_BLOCKED_SOURCE_FINGERPRINT_MISMATCH" : "FULL_CATALOG_ACCEPTANCE_BLOCKED_SCHEMA_ACL_MISMATCH";
+    const blockedReason = sourceDataMismatch
+      ? "Fail-closed before Phase 1C: restored source aggregate or per-column fingerprints differ from the unchanged authorized baseline. No expected hash was changed or suppressed."
+      : `Fail-closed before Phase 1C: data fingerprints match, but ${sourceSchemaAclComparison.mismatches.length} source view/function definition digests differ. The source diagnostic is PostgreSQL 17 while this pinned rehearsal uses PostgreSQL 16.10; the diagnostic warns that these MD5s can vary by engine and supplies no source DDL to resolve the differences. No Phase1C SQL was applied.`;
     const blockedReport={schema:"tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",executed_at_utc:new Date().toISOString(),
       exact_command:"TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",docker_image:image,
       database:"PostgreSQL 16.10; Docker network=none; tmpfs-only; no published port",
       private_input:{available:true,gzip_sha256:expectedGzipSha,payload_sha256:expectedPayloadSha,tables:15,rows:28319,raw_backup_pushed:false},
-      baseline:{source_hash_manifest:"Owner Context Handoff 2026-10-14 aggregate counts and MD5",repository_v57_v64_restore:true,
-        deployed_schema_acl_manifest_available:false,
+      baseline:{source_hash_manifest:"Owner Context Handoff 2026-10-14 aggregate counts and MD5; unchanged expected values",repository_v57_v64_restore:true,
+        decompressed_source_sha256:digest(restoreJsonBytes),restore_file_sha256:digest(fs.readFileSync(restoreInputPath)),source_schema_acl_manifest:schemaDiagnosticPath,
         matching_relations:21-baselineMismatches.length,total_relations_checked:21,mismatches:baselineMismatches},
+      restore_preparation:{original_decompressed_bytes_written_unchanged:true,numeric_scale_regression:"PASS: 405.0 and 1.0 preserved",focused_test:"scripts/check-phase1d-restore-bytes.ts"},
+      column_fingerprint_comparison:{source_fingerprints:columnFingerprintSource.length,compared_fingerprints:columnFingerprintActual.length,
+        matching_fingerprints:columnFingerprintActual.length-columnFingerprintMismatches.length,mismatches:columnFingerprintMismatches},
+      source_schema_acl_comparison:{...sourceSchemaAclComparison,effective_acl_snapshot_replayed_in_disposable_db:true,
+        source_diagnostic_engine:sourceDiagnostic.source_db_engine,local_engine:`PostgreSQL ${pg("SELECT current_setting('server_version')")}`},
       phase1c_applied:false,basic_models_created:0,production_or_staging_connections:0,production_or_staging_writes:0,
-      frozen_owner_decisions:244,owner_ledger_sha256:frozenLedgerSha,acceptance_result:"FULL_CATALOG_ACCEPTANCE_BLOCKED_SOURCE_FINGERPRINT_MISMATCH",
-      blocked_reason:"Fail-closed before Phase 1C: restored pre-change catalog fingerprints do not all match the authorized source baseline. A fresh deployed schema/view/RLS/grant/ACL manifest was unavailable. No reconciliation or suppression was attempted.",raw_rows_in_report:false};
+      frozen_owner_decisions:244,owner_ledger_sha256:frozenLedgerSha,acceptance_result:result,
+      blocked_reason:blockedReason,raw_rows_in_report:false};
     fs.writeFileSync(path.join(root,"docs/vehicle-db/phase1d/issue244_full_catalog_rehearsal_report.json"),`${JSON.stringify(blockedReport,null,2)}\n`);
     console.log(JSON.stringify({acceptance_result:blockedReport.acceptance_result,source_rows:28319,relations_checked:21,matching_relations:blockedReport.baseline.matching_relations,
-      mismatches:baselineMismatches.map(({relation,expected_rows,actual_rows,expected_md5,actual_md5})=>({relation,expected_rows,actual_rows,expected_md5,actual_md5})),phase1c_applied:false,raw_rows_in_report:false},null,2));
-    throw new Error("ISSUE244_SOURCE_BASELINE_FINGERPRINT_MISMATCH");
+      column_fingerprints:`${blockedReport.column_fingerprint_comparison.matching_fingerprints}/${blockedReport.column_fingerprint_comparison.source_fingerprints}`,
+      source_data_mismatches:baselineMismatches.length+columnFingerprintMismatches.length,schema_acl_metadata_mismatches:sourceSchemaAclComparison.mismatches.length,
+      phase1c_applied:false,raw_rows_in_report:false},null,2));
+    throw new Error(sourceDataMismatch ? "ISSUE244_SOURCE_BASELINE_FINGERPRINT_MISMATCH" : "ISSUE244_SOURCE_SCHEMA_ACL_MISMATCH");
   }
   const readRoles = ["anon", "authenticated", "service_role"];
   const roleBefore: Record<string, string> = {};
@@ -341,5 +446,5 @@ try {
   console.log(JSON.stringify({schema:report.schema,executed_at_utc:report.executed_at_utc,acceptance_result:report.acceptance_result,rows:28319,tables:15,basic_models_created:8,sql_case_count:61,source_fingerprints_match:true,view_fingerprints_match:true,raw_rows_in_report:false},null,2));
 } finally {
   run("docker", ["rm", "--force", container], undefined, true);
-  fs.rmSync(prettyPayload,{force:true});
+  fs.rmSync(restoreInputPath,{force:true});
 }
