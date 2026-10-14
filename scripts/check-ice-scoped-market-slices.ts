@@ -51,6 +51,9 @@ assert.equal(value(ry1,"DOUBLE_CAB"),130);
 assert.equal(value(ry1,"CAB"),0);
 assert.equal(value(ry1,"ไม่ระบุ"),30);
 assert.equal(ry1.reduce((n,r)=>n+Number(r.registrations),0),160);
+const filteredModel = sliceScopedIceMarket({...base,dimension:"model",filters:{registrationTypes:["รย.1"]}}) as IceModelSliceRow[];
+assert.equal(filteredModel.find(r=>r.entity_key==="pickup")?.canonical_model_id,null,
+  "RY1-only window must not imply that a cross-class split has a group-level canonical ID");
 const bkk=sliceScopedIceMarket({...base,dimension:"body_type",filters:{provinces:["Bangkok"]}});
 assert.equal(value(bkk,"DOUBLE_CAB"),100);
 assert.equal(value(bkk,"CAB"),40);
