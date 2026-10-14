@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 const root=process.cwd();
 const checkPath=path.join(root,'scripts/check-data-infra-contract.mjs');
 const paths=['AGENTS.md','CLAUDE.md','docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md',
-'docs/portfolio/data-infra.requirements.json','docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json'];
+'docs/portfolio/data-infra.requirements.json','docs/portfolio/TDR_DATA_INFRA_EXECUTION_PLAN.md','docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json'];
 const createFixture=()=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'tdr-contract-'));
  for(const name of paths){const dest=path.join(dir,name);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.copyFileSync(path.join(root,name),dest)}
