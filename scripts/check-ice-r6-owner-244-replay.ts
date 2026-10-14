@@ -76,8 +76,11 @@ assert(owner.filter(x => x.owner_action === "OWNER_LINK_EXISTING"
   "all 28 nonmaterialized LINK targets must depend on already-approved frozen CREATEs");
 
 const decisions: OwnerScopedDecision[] = owner.map(d => {
-  assert(d.model_group_id && d.decision_id && d.canonical_target_id,
-    "owner record missing source, evidence or target " + d.decision_id);
+  assert(d.model_group_id && d.decision_id,
+    "owner record missing source or evidence " + d.decision_id);
+  if (d.owner_action === "OWNER_EXCLUDE_FROM_COUNT") {
+    assert.equal(d.canonical_target_id, "", "owner exclusion cannot carry a canonical target");
+  } else assert(d.canonical_target_id, "owner target missing " + d.decision_id);
   let status: OwnerScopedDecision["status"];
   if (d.owner_action === "OWNER_EXCLUDE_FROM_COUNT") status = "EXCLUDED";
   else if (d.owner_action === "OWNER_CREATE_IDENTITY") status = "PENDING";
