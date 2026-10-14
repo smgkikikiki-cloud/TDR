@@ -15,10 +15,13 @@ export default async function IceQueuePage({ searchParams }: { searchParams: Pro
   const db = adminDb();
   if (!db) return <div className="adminEditor"><div className="adminNotice">ฐานข้อมูลแอดมินยังไม่ได้ตั้งค่า</div></div>;
 
-  const [queue, coverage] = await Promise.all([
+  const [queue, coverage, modelList] = await Promise.all([
     db.from("ice_review_queue").select("*").eq("status", "OPEN").order("total_units", { ascending: false }).limit(200),
     db.rpc("ice_coverage_by_period"),
+    db.from("vehicle_models").select("canonical_id,brand_id,name_en").is("deleted_at", null).order("canonical_id").limit(2000),
   ]);
+  const models = (modelList.data || []) as { canonical_id: string; brand_id: string; name_en: string }[];
+  const optionText = (m: { canonical_id: string; name_en: string }) => `${m.name_en} (${m.canonical_id})`;
   const missing = Boolean(queue.error);
   const rows = (queue.data || []) as any[];
   const months = ((coverage.data || []) as any[]).slice(0, 3);
@@ -54,6 +57,9 @@ export default async function IceQueuePage({ searchParams }: { searchParams: Pro
       </div></div>
       {rows.length ? rows.map((r) => {
         const brand = title(String(r.brand || ""));
+        const brandModels = models.filter((m) => m.brand_id === slug(String(r.brand || "")));
+        const choices = brandModels.length ? brandModels : models;
+        const listId = `models-${String(r.model_group_id).replace(/[^A-Za-z0-9]+/g, "-")}`;
         const guess = r.suggestion || `${slug(String(r.brand || ""))}.${slug(String(r.model_name || ""))}`;
         return <section key={r.model_group_id} className="adminForm" style={{ marginBottom: 16 }}>
           <b>{r.brand} · {r.model_name}</b>
@@ -61,8 +67,9 @@ export default async function IceQueuePage({ searchParams }: { searchParams: Pro
 
           <form action={iceQueueLink} className="adminInlineForm">
             <input type="hidden" name="model_group_id" value={r.model_group_id} />
-            <label className="adminField"><span>ผูกกับรถที่มีอยู่ (รหัสรถ)</span>
-              <input name="canonical_model_id" type="text" defaultValue={r.suggestion || ""} placeholder="toyota.camry" /></label>
+            <label className="adminField"><span>ผูกกับรถที่มีอยู่ (พิมพ์ชื่อรุ่นแล้วเลือกจากรายการ)</span>
+              <input name="canonical_model_id" type="text" list={listId} autoComplete="off" defaultValue={r.suggestion || ""} placeholder={brandModels.length ? `รถของ ${brand}` : "พิมพ์ชื่อรุ่น"} />
+              <datalist id={listId}>{choices.map((m) => <option key={m.canonical_id} value={optionText(m)} />)}</datalist></label>
             <button className="adminPrimary">ผูก</button>
           </form>
 

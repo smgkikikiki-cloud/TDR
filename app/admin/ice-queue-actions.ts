@@ -18,7 +18,9 @@ const CANONICAL_ID = /^[a-z0-9_]+\.[a-z0-9_]+$/;
 
 /** People type "Mazda.MX-5"; stored ids are lower case with underscores ("mazda.mx_5"). */
 function normalizeId(value: string) {
-  return value.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  // A picked suggestion looks like "Mazda MX-5 (mazda.mx_5)": the id is the part in brackets.
+  const picked = value.match(/\(([A-Za-z0-9_.\- ]+)\)\s*$/);
+  return (picked ? picked[1] : value).trim().toLowerCase().replace(/[\s-]+/g, "_");
 }
 
 /** A mistake in the form must show a readable message on the page, never the generic production server error. */
