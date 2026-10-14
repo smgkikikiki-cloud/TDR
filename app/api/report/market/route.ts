@@ -33,6 +33,7 @@ import {
 import { normalizeRequestedMarketScopes } from "@/lib/market-scope";
 import { adminDb } from "@/lib/supabase";
 import { recordEvent } from "@/lib/telemetry";
+import { buildIceMemberMarket, iceMemberMarketEnabled, IceMemberMarketError, isIceMemberDimension } from "@/lib/ice-member-market";
 import {
   getActiveMarketPriceState,
   MARKET_PRICE_BANDS,
@@ -251,6 +252,53 @@ export async function GET(request: NextRequest) {
         error: `การเทียบแบบนี้อยู่ในแพ็กเกจแบบเสียค่าบริการ`,
         upgrade_required: true,
       }, { status: 403 });
+    }
+
+    // Ice source (Preview, or Production once the owner sets TDR_ICE_MEMBER_CUTOVER=approved). The plan/window/comparison
+    // checks above and the quota below are the same ones the old source uses; only where the rows come from differs.
+    if (iceMemberMarketEnabled()) {
+      if (!isIceMemberDimension(dimensionValue)) {
+        return NextResponse.json({ error: "มุมมองนี้ยังไม่มีข้อมูล Ice" }, { status: 400 });
+      }
+      const { registrationTypes, ...otherFilters } = filters;
+      if (priceBand || Object.values(otherFilters).some((v) => Array.isArray(v) && v.length)) {
+        return NextResponse.json({ error: "ตัวกรองนี้ยังไม่รองรับกับข้อมูล Ice (รองรับเฉพาะประเภททะเบียน)" }, { status: 400 });
+      }
+      try {
+        const iceWindow = resolveMarketWindow(period, windowValue);
+        const quota = await consumeMarketReportQuota(ctx, [
+          "ice", dimensionValue, windowValue, iceWindow.from, iceWindow.to,
+          comparisonMode ?? "", limit, trendMonths, canonicalFilterFingerprint(filters),
+        ]);
+        const ice = await buildIceMemberMarket({
+          dimension: dimensionValue, period, window: windowValue, comparison: comparisonMode,
+          registrationTypes: registrationTypes ?? [], limit, trendMonths,
+        });
+        await recordEvent({ eventName: "sales_run", userId: ctx.userId, props: { dimension: dimensionValue, window: windowValue, compare: comparisonMode, source: "ice" } });
+        const noPrice = { basis: "canonical_model_count", priced_models: 0, mixed_models: 0, total_models: 0, coverage_pct: 0 };
+        return NextResponse.json({
+          plan: {
+            tier: ctx.tier,
+            model_grain: isMarketDimensionAllowed("model", ctx.tier, null),
+            windows: getPolicy(ctx.tier).marketWindows,
+            comparisons: getPolicy(ctx.tier).marketComparisons,
+            filters: areMarketFiltersAllowed(ctx.tier),
+            history_from: historyWindowStart(ctx.tier),
+          },
+          source: "ice",
+          dimension: dimensionValue, period, window: windowValue,
+          period_from: ice.period_from, period_to: ice.period_to,
+          filters, price_band: null, price_coverage: noPrice, include_unmapped: false,
+          rows: ice.rows,
+          comparison: ice.comparison ? { ...ice.comparison, price_coverage: noPrice } : null,
+          trend: ice.trend, quota,
+        }, { headers: { "Cache-Control": "private, no-store" } });
+      } catch (error) {
+        if (error instanceof IceMemberMarketError) {
+          return NextResponse.json({ error: error.message, ...error.extra }, { status: error.status });
+        }
+        throw error;
+      }
     }
 
     const available = await getRegistrationAvailablePeriods(ctx);
