@@ -1,0 +1,291 @@
+{
+  "source": {
+    "application": "local optimized Next.js production server",
+    "comparisonEndpoint": "/api/tools/compare",
+    "responseStatus": 200,
+    "responseSnapshotSha256": "28a872d0ea0d08629b8912078a02bd944bf100e4a7452c088b7b4b72ed30a497",
+    "selected": [
+      {
+        "id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+        "brand_name": "BYD",
+        "model_name": "Atto 3",
+        "name": "BYD ATTO3 (410KM-PREMIUM)",
+        "retail_status": "CURRENT"
+      },
+      {
+        "id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+        "brand_name": "BYD",
+        "model_name": "Dolphin",
+        "name": "Extended Range Premium (60.48 kWh)",
+        "retail_status": "CURRENT"
+      },
+      {
+        "id": "tesla.model3.m3h.trim.premium_long_range_rwd_bev",
+        "brand_name": "Tesla",
+        "model_name": "Model 3",
+        "name": "Premium Long Range RWD",
+        "retail_status": "CURRENT"
+      },
+      {
+        "id": "toyota.yaris_cross.ac200.trim.hev_premium_hev",
+        "brand_name": "Toyota",
+        "model_name": "Yaris Cross",
+        "name": "HEV Premium",
+        "retail_status": "CURRENT"
+      }
+    ],
+    "groups": 17,
+    "winnerRows": 3,
+    "unknownValueRows": 76,
+    "anonymousRemaining": 9
+  },
+  "screenshots": [
+    {
+      "width": 1440,
+      "theme": "light",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-1440-light.png",
+      "bytes": 227061,
+      "sha256": "74309515b7794d8bbf16149e1992438796471a741b1d5408df44ad836409fc50",
+      "metrics": {
+        "pageWidth": 1440,
+        "pageScrollWidth": 1440,
+        "noPageOverflow": true,
+        "selectorColumns": 4,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 1358,
+        "tableClientWidth": 1358,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 1440,
+        "viewportHeight": 1000,
+        "colorScheme": "light",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-1440-dark.png",
+      "bytes": 230460,
+      "sha256": "359965051de61da2289b4c14f87fd3b4581434657f77ba664bd96fc11d03253a",
+      "metrics": {
+        "pageWidth": 1440,
+        "pageScrollWidth": 1440,
+        "noPageOverflow": true,
+        "selectorColumns": 4,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 1358,
+        "tableClientWidth": 1358,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 1440,
+        "viewportHeight": 1000,
+        "colorScheme": "dark",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-1024-light.png",
+      "bytes": 217265,
+      "sha256": "1f0cea7e3771143db35b8512f242ec031446395cb9a17efbf6902193cc6b4449",
+      "metrics": {
+        "pageWidth": 1024,
+        "pageScrollWidth": 1024,
+        "noPageOverflow": true,
+        "selectorColumns": 4,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 942,
+        "tableClientWidth": 942,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 1024,
+        "viewportHeight": 1000,
+        "colorScheme": "light",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-1024-dark.png",
+      "bytes": 220345,
+      "sha256": "a2c92f328025916771dd681c4c477597c3afce49253daf940b98080c1cd5889e",
+      "metrics": {
+        "pageWidth": 1024,
+        "pageScrollWidth": 1024,
+        "noPageOverflow": true,
+        "selectorColumns": 4,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 942,
+        "tableClientWidth": 942,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 1024,
+        "viewportHeight": 1000,
+        "colorScheme": "dark",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 834,
+      "theme": "light",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-834-light.png",
+      "bytes": 199694,
+      "sha256": "183fc4b33f81809a947ca1e0bcc9041f95ecc281c9eec90cdb1dab129897d2ce",
+      "metrics": {
+        "pageWidth": 834,
+        "pageScrollWidth": 834,
+        "noPageOverflow": true,
+        "selectorColumns": 2,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 800,
+        "tableClientWidth": 784,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 15,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 834,
+        "viewportHeight": 900,
+        "colorScheme": "light",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 834,
+      "theme": "dark",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-834-dark.png",
+      "bytes": 202454,
+      "sha256": "2071171a12faeba31e44337051b9db31e3bdc692f3b4cab8330aa50c51459c22",
+      "metrics": {
+        "pageWidth": 834,
+        "pageScrollWidth": 834,
+        "noPageOverflow": true,
+        "selectorColumns": 2,
+        "visibleVehicleColumns": 4,
+        "tableScrollWidth": 800,
+        "tableClientWidth": 784,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 15,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 834,
+        "viewportHeight": 900,
+        "colorScheme": "dark",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-390-light.png",
+      "bytes": 165544,
+      "sha256": "fe9150ae335254b3033dfe92be39689646bb88c118079a38b8a4a3fa56412463",
+      "metrics": {
+        "pageWidth": 390,
+        "pageScrollWidth": 390,
+        "noPageOverflow": true,
+        "selectorColumns": 2,
+        "visibleVehicleColumns": 2,
+        "tableScrollWidth": 652,
+        "tableClientWidth": 388,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 390,
+        "viewportHeight": 844,
+        "colorScheme": "light",
+        "fullPage": true
+      }
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "path": "docs/ui-overhaul/evidence/pr251/compare-390-dark.png",
+      "bytes": 168899,
+      "sha256": "53f80f5e7260534e3bd765c760584109377bca1450daac32339cc17ba5dc4fe5",
+      "metrics": {
+        "pageWidth": 390,
+        "pageScrollWidth": 390,
+        "noPageOverflow": true,
+        "selectorColumns": 2,
+        "visibleVehicleColumns": 2,
+        "tableScrollWidth": 652,
+        "tableClientWidth": 388,
+        "headerTopDelta": 1,
+        "rowHeaderLeftDelta": 1,
+        "underSizedTargets": [],
+        "emptyImagePlaceholders": 4
+      },
+      "capture": {
+        "viewportWidth": 390,
+        "viewportHeight": 844,
+        "colorScheme": "dark",
+        "fullPage": true
+      }
+    }
+  ],
+  "browser": {
+    "name": "Chromium",
+    "version": "154.0.8037.57"
+  },
+  "notes": [
+    "Viewport assertions were measured before full-page capture at the listed viewport dimensions.",
+    "At 834px the table has a 16px vertical scrollbar; the first-column offset metric includes that scrollbar gutter.",
+    "Broken vehicle image URLs are rendered as an explicit unavailable-image placeholder."
+  ],
+  "browserInteractions": [
+    {
+      "case": "real deep-link compare and canonical share IDs",
+      "status": "PASS",
+      "groups": 17,
+      "winnerMarks": 3
+    },
+    {
+      "case": "filter change clears stale comparison",
+      "status": "PASS"
+    },
+    {
+      "case": "keyboard focus and Escape picker close",
+      "status": "PASS"
+    },
+    {
+      "case": "unavailable deep-link guided replacement after validation error",
+      "status": "PASS"
+    },
+    {
+      "case": "signup wall retains selection deep-link",
+      "status": "PASS",
+      "responseStatus": 401
+    },
+    {
+      "case": "quota notice links to plans",
+      "status": "PASS",
+      "responseStatus": 429
+    }
+  ]
+}
