@@ -6,7 +6,8 @@
  *   node --experimental-strip-types scripts/ice-scoped-crosswalk-load.ts --apply    # writes (needs SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY)
  *
  * Which shadow rows are loaded:
- *   OWNER_APPROVED_LINK, OWNER_APPROVED_AUTO       -> APPROVED  (target must already exist in vehicle_models; otherwise it is reported and skipped)
+ *   OWNER_APPROVED_LINK, OWNER_APPROVED_AUTO,
+ *   PICKUP_RY_SPLIT_SHADOW + REJECTED_CANDIDATE_RECOVERY (only when backed by an owner-overlay line) -> APPROVED  (target must already exist in vehicle_models; otherwise it is reported and skipped)
  *   OWNER_APPROVED_SHADOW_IDENTITY                 -> PENDING   (owner said "create it"; waits for the structural writer)
  *   OWNER_EXCLUDED                                 -> EXCLUDED  (kept in raw totals, left out of coverage)
  * Everything else (low volume, ambiguous, matcher-only suggestions) is NOT loaded: it stays unresolved and goes to the review queue.
@@ -56,7 +57,7 @@ export function buildRows(csv: Record<string, string>[], masterVersion: string):
       model_group_id: r.source_package_model_group_id || r.model_group_id, reg_type_scope: r.reg_type,
       master_version: masterVersion, decision_ref: r.decision_ref, source_sha256: r.source_package_sha256, reason: r.reason || null,
     };
-    if (d === "OWNER_APPROVED_LINK" || d === "OWNER_APPROVED_AUTO")
+    if (d === "OWNER_APPROVED_LINK" || d === "OWNER_APPROVED_AUTO" || ((d === "PICKUP_RY_SPLIT_SHADOW" || d === "DETERMINISTIC_REJECTED_CANDIDATE_RECOVERY") && r.decision_ref.startsWith("owner-overlay-line:") && r.target_canonical_id))
       rows.push({ ...base, status: "APPROVED", canonical_model_id: r.target_canonical_id, pending_target_id: null });
     else if (d === "OWNER_APPROVED_SHADOW_IDENTITY")
       rows.push({ ...base, status: "PENDING", canonical_model_id: null, pending_target_id: r.target_canonical_id });
