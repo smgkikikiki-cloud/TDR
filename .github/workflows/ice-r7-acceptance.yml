@@ -56,6 +56,19 @@ jobs:
           PY
             [ -s "${RUNNER_TEMP}/r7.err" ] && { echo; echo '```'; head -c 3000 "${RUNNER_TEMP}/r7.err"; echo '```'; }
           } >> "${GITHUB_STEP_SUMMARY}"
+          # Also publish every check (and any crash message) as annotations, which are readable without downloading the artifact.
+          python3 - "${RUNNER_TEMP}/r7.json" "${RUNNER_TEMP}/r7.err" <<'PY'
+          import json, sys
+          try:
+              r = json.load(open(sys.argv[1]))
+              for c in r["checks"]:
+                  level = "error" if c["status"] == "FAIL" else "notice"
+                  d = json.dumps(c["detail"], ensure_ascii=False, separators=(",", ":"))[:1800].replace("%", "%25").replace("\n", " ")
+                  print(f"::{level} title=R7 {c['id']} {c['status']}::{c['label']} | {d}")
+          except Exception as e:
+              err = open(sys.argv[2]).read()[:1500].replace("%", "%25").replace("\n", " | ")
+              print(f"::error title=R7 report missing::{e} :: {err}")
+          PY
           exit $rc
       - uses: actions/upload-artifact@v4
         if: always()
