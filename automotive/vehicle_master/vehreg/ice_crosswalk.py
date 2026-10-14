@@ -64,7 +64,15 @@ def normalize_brand(brand: str, alias_map: dict[str, str]) -> str:
     matching purposes.
     """
     key = " ".join(brand.strip().lower().split())
-    return alias_map.get(key, key)
+    if key in alias_map:
+        return alias_map[key]
+    # Ice writes "MERCEDES BENZ" / "ROLLS ROYCE"; Vehicle Master writes "Mercedes-Benz" / "Rolls-Royce". Punctuation and
+    # spacing never distinguish two brands, so compare them with separators removed (alias keys are tried both ways).
+    squashed = "".join(ch for ch in key if ch.isalnum())
+    for alias_key, group in alias_map.items():
+        if "".join(ch for ch in alias_key if ch.isalnum()) == squashed:
+            return group
+    return squashed
 
 
 # ---------------------------------------------------------------------------

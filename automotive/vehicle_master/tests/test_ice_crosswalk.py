@@ -108,6 +108,16 @@ def test_normalize_brand_without_an_alias_entry_is_just_lowercased_and_trimmed()
     assert xwalk.normalize_brand("Toyota", {}) == "toyota"
 
 
+def test_brand_punctuation_never_splits_a_brand():
+    # Real M7.0 trap: Ice "MERCEDES BENZ" vs Vehicle Master "Mercedes-Benz" hid 15 Mercedes groups (47,891 units).
+    assert xwalk.normalize_brand("MERCEDES BENZ", {}) == xwalk.normalize_brand("Mercedes-Benz", {})
+    assert xwalk.normalize_brand("ROLLS ROYCE", {}) == xwalk.normalize_brand("Rolls-Royce", {})
+    assert xwalk.normalize_brand("Land Rover", {}) == xwalk.normalize_brand("LAND  ROVER", {})
+    # It must not merge different brands, and aliases still win.
+    assert xwalk.normalize_brand("Mini", {}) != xwalk.normalize_brand("Mini Cooper Works", {})
+    assert xwalk.normalize_brand("Deepal", {"deepal": "deepal_changan"}) == "deepal_changan"
+
+
 # ---------------------------------------------------------------------------
 # Maxus/Mifa model-name alias (§14.2 "MG Maxus 7/9 <-> MAXUS Mifa 7/9" -- the
 # brand alias alone does not fix this, since the *model names* don't resemble
