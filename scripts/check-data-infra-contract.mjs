@@ -16,6 +16,7 @@ try {
  if(JSON.stringify(spec.requirements.map(x=>x.id))!==JSON.stringify(ids))errors.push('REQUIREMENTS_CHANGED');
  if(JSON.stringify(spec.phases.map(x=>x.id))!==JSON.stringify(['A','B','C','D','E']))errors.push('PHASES_CHANGED');
  if(!doc.startsWith('# TDR Data Infrastructure — Locked Completion Contract v1.0.0'))errors.push('CONTRACT_MISSING');
+ if(!read(ROOT,planPath).startsWith('# TDR Data Infrastructure — Locked Work-Package Execution Order'))errors.push('EXECUTION_PLAN_MISSING');
  for(const r of spec.requirements){
   if(!r.title||!r.acceptance||!r.evidence_required||r.required_state!=='ACCEPTED'||r.phase!==r.id[0])errors.push('BAD_REQUIREMENT:'+r.id);
   if(!doc.includes('| '+r.id+' |'))errors.push('UNREFERENCED_REQUIREMENT:'+r.id);
