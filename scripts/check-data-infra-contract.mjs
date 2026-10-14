@@ -47,6 +47,7 @@ try {
   const prior=json(BASE,specPath);
   if(JSON.stringify(prior)!==JSON.stringify(spec))errors.push('LOCKED_TARGETS_CHANGED_REQUIRES_SEPARATE_OWNER_APPROVED_AMENDMENT');
   if(read(BASE,contractPath)!==doc)errors.push('LOCKED_CONTRACT_CHANGED_REQUIRES_SEPARATE_OWNER_APPROVED_AMENDMENT');
+  if(read(BASE,planPath)!==read(ROOT,planPath))errors.push('LOCKED_EXECUTION_PLAN_CHANGED_REQUIRES_OWNER_APPROVAL');
  }
  const changesFile=process.env.TDR_CHECK_DIFF_PATH;
  if(changesFile&&fs.existsSync(changesFile)&&process.env.GITHUB_EVENT_PATH){
