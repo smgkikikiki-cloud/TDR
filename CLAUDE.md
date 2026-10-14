@@ -1,4 +1,8 @@
-# TDR Automotive Intelligence — กฎสำหรับ Claude ในโปรเจกต์นี้
+# TDR Automotive Intelligence — กฎสำหรับ Claude ในโปรเจกต์นี้ 
+
+## LOCKED contract for Codex / Claude / any code agent (2026-10-14)
+
+Before any data, website market, price, trim or spec task, open `docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md`, `docs/portfolio/data-infra.requirements.json`, `docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json` and `AGENTS.md`; report its requirement IDs, test/evidence and domain permission boundary. No false DONE, no silent deferral and no changes of completion criteria without owner-approved amendment. Read these in addition to the Master Roadmap / domain state rules. The contract does not authorize production changes or execution.
 
 ## Portfolio Master Roadmap v1.0 — บังคับอ่านก่อนเริ่มงานทุกครั้ง
 
