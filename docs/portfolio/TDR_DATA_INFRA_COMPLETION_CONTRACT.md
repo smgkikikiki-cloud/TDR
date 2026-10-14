@@ -64,7 +64,7 @@ The machine-readable IDs, acceptance statements and required evidence are frozen
 ## Mandatory agent start-of-task handshake
 
 In **EVERY** coding, reviewing, test or planning session touching Ice, Vehicle Master, price, trim, specs, data services or product surfaces:
-1. Read `AGENTS.md`; this exact contract; the immutable JSON; acceptance ledger; `docs/WORK_STATE.md`; and the relevant domain gate and Master Roadmap. Read from repository, not chat memory.
+1. Read `AGENTS.md`; this exact contract; the immutable JSON; `docs/portfolio/TDR_DATA_INFRA_EXECUTION_PLAN.md`; acceptance ledger; `docs/WORK_STATE.md`; and the relevant domain gate and Master Roadmap. Read from repository, not chat memory.
 2. Report `contract_version`, source commit SHA, target requirement IDs, existing OPEN state, bounded changed paths, execution gate, rollback, tests and current blockers **before** modifying code.
 3. If a task cannot map to at least one requirement ID or has a conflicting requirement, STOP and request owner scope decision; do not implicitly weaken targets.
 4. After implementing, attach test result, provenance, code SHA and production readback where required to the ledger. No "DONE" until owner acceptance.
