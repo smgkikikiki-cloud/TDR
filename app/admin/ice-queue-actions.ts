@@ -2,7 +2,7 @@
 
 /**
  * Owner decisions for Ice model groups the monthly routine could not place (table ice_review_queue, v69).
- * Each action writes ONE decision for scope ALL into ice_model_crosswalk_scoped (provenance: the signed-in editor + date),
+ * Each action writes the decision (scope ALL, or one per undecided registration type for a partly decided group) into ice_model_crosswalk_scoped (provenance: the signed-in editor + date),
  * then closes the queue row. Nothing is guessed: a link needs an existing model id, a new car needs an explicit id and name.
  * Pickup groups that need a per-registration-type split (รย.1 / รย.2 ...) are not handled here; they stay a manual SQL job.
  */
@@ -51,16 +51,21 @@ async function context(formData: FormData) {
 async function decide(ctx: Awaited<ReturnType<typeof context>>, status: "APPROVED" | "EXCLUDED", target: string | null, kind: string, reason: string) {
   const { db, row, who, today } = ctx;
   const decisionRef = `admin-queue:${who}:${today}:${kind}`;
-  const { error } = await db.from("ice_model_crosswalk_scoped").insert({
-    model_group_id: row.model_group_id,
-    reg_type_scope: "ALL",
-    status,
-    canonical_model_id: status === "APPROVED" ? target : null,
-    master_version: row.first_seen_master_version || "unknown",
-    decision_ref: decisionRef,
-    source_sha256: createHash("sha256").update(`${decisionRef}|${row.model_group_id}|${target || ""}`).digest("hex"),
-    reason,
-  });
+  // A group with no decision yet is decided as a whole (scope ALL). A partly decided group (e.g. รย.3 done, รย.1/รย.2 not)
+  // gets one decision per undecided registration type, so the decisions already made are never overlapped.
+  const scopes: string[] = row.uncovered_scopes ? String(row.uncovered_scopes).split(",").map((x) => x.trim()).filter(Boolean) : ["ALL"];
+  const { error } = await db.from("ice_model_crosswalk_scoped").insert(
+    scopes.map((scope) => ({
+      model_group_id: row.model_group_id,
+      reg_type_scope: scope,
+      status,
+      canonical_model_id: status === "APPROVED" ? target : null,
+      master_version: row.first_seen_master_version || "unknown",
+      decision_ref: decisionRef,
+      source_sha256: createHash("sha256").update(`${decisionRef}|${row.model_group_id}|${scope}|${target || ""}`).digest("hex"),
+      reason,
+    })),
+  );
   if (error) throw new Error(`บันทึกคำตัดสินไม่สำเร็จ: ${error.message}`);
   const { error: closeError } = await db.from("ice_review_queue").update({ status: "DONE", closed_at: new Date().toISOString() }).eq("model_group_id", row.model_group_id);
   if (closeError) throw new Error(`ปิดรายการไม่สำเร็จ (คำตัดสินถูกบันทึกแล้ว): ${closeError.message}`);

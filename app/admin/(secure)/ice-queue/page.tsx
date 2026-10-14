@@ -63,7 +63,7 @@ export default async function IceQueuePage({ searchParams }: { searchParams: Pro
         const guess = r.suggestion || `${slug(String(r.brand || ""))}.${slug(String(r.model_name || ""))}`;
         return <section key={r.model_group_id} className="adminForm" style={{ marginBottom: 16 }}>
           <b>{r.brand} · {r.model_name}</b>
-          <small> {n(r.total_units)} คัน · ทะเบียน {r.reg_types || "-"} · รหัส {r.model_group_id}{r.suggestion ? ` · ระบบเดิมเดาว่า ${r.suggestion}` : ""}</small>
+          <small> {n(r.total_units)} คัน · ทะเบียน {r.reg_types || "-"}{r.uncovered_scopes ? ` (ที่ยังไม่ตัดสิน: ${r.uncovered_scopes})` : ""} · รหัส {r.model_group_id}{r.suggestion ? ` · ระบบเดิมเดาว่า ${r.suggestion}` : ""}</small>
 
           <form action={iceQueueLink} className="adminInlineForm">
             <input type="hidden" name="model_group_id" value={r.model_group_id} />
