@@ -441,10 +441,16 @@ export default function ComparePage() {
                   <small>{trim.brand_name}</small>
                   <strong>{trim.model_name}</strong>
                   <span>{trim.name}</span>
+                  <span className="compareHeaderPrice">{byId.get(trim.id)?.price_baht != null
+                    ? `฿${Math.round(byId.get(trim.id)!.price_baht!).toLocaleString("th-TH")}`
+                    : "ราคาไม่ระบุ"}</span>
                   {launchLabel(trim.launch_year, trim.launch_quarter) ? (
                     <span className="compareLaunchMeta">{launchLabel(trim.launch_year, trim.launch_quarter)}</span>
                   ) : null}
                   {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
+                  <button type="button" className="compareHeaderRemove"
+                    onClick={() => { const index = slots.findIndex((id) => id === trim.id); if (index >= 0) removeSlot(index); }}
+                    aria-label={`นำ ${trim.brand_name || ""} ${trim.model_name || ""} ${trim.name || ""} ออกจากรายการ`}>นำออก ×</button>
                 </th>
               ))}
             </tr>
