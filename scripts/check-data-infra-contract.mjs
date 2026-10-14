@@ -22,7 +22,7 @@ try {
  }
  for(const file of ['AGENTS.md','CLAUDE.md']){
   const source=read(ROOT,file);
-  for(const pointer of [contractPath,specPath,ledgerPath])if(!source.includes(pointer))errors.push('MISSING_BOOTSTRAP:'+file+':'+pointer);
+  for(const pointer of [contractPath,specPath,planPath,ledgerPath])if(!source.includes(pointer))errors.push('MISSING_BOOTSTRAP:'+file+':'+pointer);
  }
  if(ledger.contract_version!=='1.0.0'||ledger.schema!=='tdr.data-infra.acceptance-ledger.v1')errors.push('BAD_LEDGER');
  if(JSON.stringify(Object.keys(ledger.requirements).sort())!==JSON.stringify([...ids].sort()))errors.push('LEDGER_IDS_CHANGED');
