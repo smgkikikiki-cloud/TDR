@@ -7,6 +7,7 @@ const json = (r,p) => JSON.parse(read(r,p));
 const contractPath = 'docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md';
 const specPath = 'docs/portfolio/data-infra.requirements.json';
 const ledgerPath = 'docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json';
+const planPath = 'docs/portfolio/TDR_DATA_INFRA_EXECUTION_PLAN.md';
 const ids = 'A-01 A-02 A-03 A-04 A-05 B-01 B-02 B-03 B-04 C-01 C-02 C-03 C-04 C-05 C-06 D-01 D-02 D-03 D-04 D-05 D-06 D-07 E-01 E-02 E-03 E-04 E-05 E-06 E-07'.split(' ');
 const errors = [];
 try {
