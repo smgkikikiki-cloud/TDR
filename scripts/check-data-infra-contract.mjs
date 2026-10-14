@@ -47,6 +47,24 @@ try {
   if(JSON.stringify(prior)!==JSON.stringify(spec))errors.push('LOCKED_TARGETS_CHANGED_REQUIRES_SEPARATE_OWNER_APPROVED_AMENDMENT');
   if(read(BASE,contractPath)!==doc)errors.push('LOCKED_CONTRACT_CHANGED_REQUIRES_SEPARATE_OWNER_APPROVED_AMENDMENT');
  }
+ const changesFile=process.env.TDR_CHECK_DIFF_PATH;
+ if(changesFile&&fs.existsSync(changesFile)&&process.env.GITHUB_EVENT_PATH){
+  const candidate=process.env.TDR_CHECK_CANDIDATE_ROOT||ROOT;
+  if(fs.existsSync(path.join(candidate,specPath))){
+   const event=JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH,'utf8'));
+   const changed=fs.readFileSync(changesFile,'utf8').split(/\r?\n/).filter(Boolean);
+   const scope=/^(AGENTS\.md|CLAUDE\.md|lib\/(ice-|price-|spec-)|scripts\/(ice-|price-|spec-)|app\/(member\/|admin\/ice-|api\/report\/)|automotive\/vehicle_master\/|supabase\/|docs\/portfolio\/(TDR_DATA_INFRA_|data-infra\.requirements)|\.github\/workflows\/data-infra-contract\.yml)/;
+   if(event.pull_request&&changed.some(name=>scope.test(name))){
+    const body=String(event.pull_request.body||'');
+    for(const prefix of ['Contract-Version: 1.0.0','Requirement-IDs:','Acceptance-Tests:','Evidence-Plan:','Domain-Gate:']){
+     if(!body.includes(prefix))errors.push('PR_TASK_HANDSHAKE_MISSING:'+prefix);
+    }
+    const match=body.match(/^Requirement-IDs:\s*(.+)$/m);
+    const requested=match?match[1].split(',').map(x=>x.trim()).filter(Boolean):[];
+    if(!requested.length||requested.some(x=>!ids.includes(x)))errors.push('PR_UNKNOWN_REQUIREMENT_IDS');
+   }
+  }
+ }
  console.log(JSON.stringify({ok:!errors.length,requirements:ids.length,accepted:accepted.length,errors},null,2));
 }catch(e){errors.push('CHECK_FAILED:'+e.message);console.error(errors.join('\n'))}
 if(errors.length)process.exitCode=1;
