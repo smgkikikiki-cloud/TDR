@@ -1,5 +1,17 @@
 # TDR repository instructions
 
+## LOCKED COMPLETION CONTRACT — mandatory every Codex/agent session (owner directive 2026-10-14)
+
+**BEFORE reading task context, planning, patching code, reviewing, or claiming completion for Ice, Vehicle Master, data workflows, Price Fetcher, Spec Filler, price/trim/spec, member market or relevant website surfaces**, explicitly open and read ALL of:
+- `docs/portfolio/TDR_DATA_INFRA_COMPLETION_CONTRACT.md` (v1.0.0; mandatory Definition of DONE; no goalpost changes)
+- `docs/portfolio/data-infra.requirements.json` (canonical requirement IDs / acceptance criteria)
+- `docs/portfolio/TDR_DATA_INFRA_ACCEPTANCE_LEDGER.json` (OPEN/BLOCKED/EVIDENCED/ACCEPTED proof; not authoritative to weaken goals)
+- `docs/portfolio/TDR_MASTER_ROADMAP_V1.md` and `docs/portfolio/portfolio.plan.json`
+- `docs/WORK_STATE.md` and the matching domain gate/contract
+
+Task handshake MUST name: contract version, source commit SHA, requirement IDs, current acceptance status, planned file scope, test and evidence targets, and independent domain production/merge gate. If any is missing, **STOP** (do not make up a DONE). No status reaches ACCEPTED without verifiable commit/evidence plus explicit owner acceptance. No Phase DONE until all IDs ACCEPTED; no overall COMPLETE until A–E plus owner signature. A Codex assertion that it read files is not machine-verifiable; enforce outputs with `scripts/check-data-infra-contract.mjs` and CI; branch protection still must be enabled by the owner for merge enforcement. These instructions do **not** authorize disabled automation, production writes, Ice R8, merging or deployment.
+
+
 `smgkikikiki-cloud/TDR` is the single active repository for TDR Automotive Intelligence.
 
 ## Mandatory Master Roadmap bootstrap (owner-approved v1.0)
