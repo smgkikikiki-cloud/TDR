@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { sliceScopedIceMarket } from "../lib/ice-scoped-market-slices.ts";
-import type { IceRegTrendRow, VehicleModelDim } from "../lib/ice-market-engine.ts";
+import type { IceRegTrendRow, VehicleModelDim, IceModelSliceRow } from "../lib/ice-market-engine.ts";
 import type { OwnerScopedDecision } from "../lib/ice-scoped-crosswalk.ts";
 
 const fact = (group: string, regType: string, n: number, province = "Bangkok"): IceRegTrendRow => ({
@@ -26,7 +26,7 @@ const facts = [
 const base = {facts,ownerDecisions:decisions,vehicleModels:models,masterVersion:"7.0",scopedOnlyGroupIds:["pickup"]};
 const value = (rows: ReturnType<typeof sliceScopedIceMarket>, key: string) =>
   Number(rows.find(r=>r.entity_key===key)?.registrations ?? 0);
-const model = sliceScopedIceMarket({...base,dimension:"model",limit:100});
+const model = sliceScopedIceMarket({...base,dimension:"model",limit:100}) as IceModelSliceRow[];
 assert.deepEqual(model.map(r=>[r.entity_key,Number(r.registrations)]),
   [["pickup",140],["other",30],["excluded",20],["pending",10]]);
 assert.equal(model.reduce((n,r)=>n+Number(r.registrations),0),200);
