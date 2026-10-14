@@ -50,4 +50,9 @@ jobs:
             CHECKER="$PWD/candidate/scripts/check-data-infra-contract.mjs"
             echo "::warning::Initial contract checker is a reviewed bootstrap proposal"
           fi
-          TDR_CHECK_ROOT="$ROOT" TDR_CHECK_BASE="$PWD/policy" node "$CHECKER"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git -C candidate diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > "$RUNNER_TEMP/data-infra-changed.txt"
+          fi
+          TDR_CHECK_ROOT="$ROOT" TDR_CHECK_BASE="$PWD/policy" \
+            TDR_CHECK_CANDIDATE_ROOT="$PWD/candidate" \
+            TDR_CHECK_DIFF_PATH="$RUNNER_TEMP/data-infra-changed.txt" node "$CHECKER"
