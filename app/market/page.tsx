@@ -16,9 +16,10 @@ export const dynamic = "force-dynamic";
  */
 export default async function MarketPage() {
   // R8 controlled cutover only. Default remains the existing public market.
-  // This switch is NOT enabled by merging a Draft R6 PR. R6/R7 acceptance,
-  // explicit owner R8 approval and production env configuration come first.
-  const iceLive = process.env.TDR_ICE_R8_LIVE_CUTOVER === "approved";
+  // Preview may show real Ice brand-only numbers for non-production QA.
+  // Production MUST await approved R6/R7 and owner R8 cutover permission.
+  const iceLive = process.env.VERCEL_ENV === "preview"
+    || process.env.TDR_ICE_R8_LIVE_CUTOVER === "approved";
   const market = iceLive ? await getPublicMarketIce("brand") : await getPublicMarket("brand");
   const dimensionLabel = "แบรนด์";
 
