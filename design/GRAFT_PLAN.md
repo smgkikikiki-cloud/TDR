@@ -17,7 +17,7 @@ This Graft covers the original consumer/member website, Website Pro and Layer 1�
 6. **Compare:** preserve canonical trim identity, ?trims= and ?models= deep links, server quota and evidence-safe winner logic in lib/compare-winners.ts. Redesign the whole presentation; do not retain old layout only for compatibility.
 7. **Canonical boundary:** read Vehicle Master through its accepted current_* serving contract. Pages and APIs do not write those views. automotive/vehicle_master is engine/tooling, not canonical file data.
 8. **Price Fetcher is separate:** it collects OEM price/spec sources; it is not an Ice package reader/importer.
-9. **Billing:** lib/plans.ts, lib/billing.ts, PRODUCT_ACCESS.md and BILLING.md are Stripe-backed. Old Omise and old price/trial text is stale. This UI plan changes no payment behavior.
+9. **Billing and owner authority — G0-C03 OPEN:** Current `main` implements Stripe in `lib/plans.ts`/`lib/billing.ts` and the current code catalog lists ฿1,290 monthly / ฿2,970 quarterly / ฿9,480 annually. However `docs/MERGE_DECISIONS.md` records an owner-approved Omise + ฿1,099/month / ฿11,490/year + revised 30-day-OTP Freemium model. `docs/portfolio/G0_RECONCILIATION.md` C03 explicitly identifies this as an unresolved decision-vs-implementation conflict. **Neither set is silently revoked or activated by this UI plan.** Provider-neutral layout/components can proceed; price/provider/checkout/trial/entitlement presentation is owner-gated pending a separately recorded superseding decision, compatibility and existing-subscriber review. This UI plan changes no payment behavior.
 10. **Gates:** R6→R7→R8 and C01/C02 remain domain/governance evidence gates. Roadmap v1.0 does not authorize their execution. UI completion never implies Ice cutover, schema deployment or Production readiness.
 
 ## 1. Current state and authority
@@ -29,7 +29,7 @@ The exact main tree, PR inventory and subsystem states are in [PHASE_A_BASELINE.
 - Main Compare has a canonical picker, quota-accounted result and evidence-safe winner policy. Replace only the presentation.
 - Main /research has published preview, protected full read, quota and Admin authoring. Map P14/P15 to this runtime before considering a second table or storage pipeline.
 - Main /upcoming redirects to /models. Draft #220 supplies a static R0 contract/preview, not a live table, writer, Admin or route. Its migration names are stale and reserve no version.
-- Three Pro commitment plans and Stripe are current in code; live Price IDs/configuration are unverified.
+- Three Pro commitment plans and Stripe are current **implementation facts**, not a resolution of G0-C03 against the owner-approved Omise / revised-price / Freemium decisions; live Price IDs/configuration are unverified.
 - Main has token/design migration for Shell, shared components, Models, Brands and Search. design/migrated.json is not a complete page acceptance list.
 
 ## 2. Work order and Graft rows 0–15
@@ -47,12 +47,12 @@ One future implementation task per approved bounded slice, unless the owner expl
 | 6 | Models P02–P04 | Keep data engine; adapt remaining UI. | Canonical serving contract; no inferred facts. |
 | 7 | Brands/Search P05–P07 | Keep data engine; adapt remaining UI. | Canonical reads and stable URLs. |
 | 8 | Compare P08 | Replace full presentation; keep compare engine/policy. | tdr.compare-ui.v1; quota/winner/URL tests. |
-| 9 | Pricing/Auth P18–P21 | Adapt UI to current Stripe/auth runtime. | Shared plan/access policy; no payment changes. |
+| 9 | Pricing/Auth P18–P21 | Adapt provider-neutral UI to current runtime where safe; do not decide commercial policy. | G0-C03 owner decision before final plan prices, provider, checkout and trial/Free copy; preserve live access and billing until separately authorized. |
 | 10 | Static P22–P26 | Keep active news/companies; add only approved content/routes. | Owner copy, contact recipient, legal review. |
 | 11 | Intelligence P09–P12 | Replace UI against typed Ice adapter; hold live wiring. | R6/R7/R8, release/coverage evidence, owner cutover go. |
 | 12 | Upcoming P16–P17/Admin | Adapt R0 contract; no current full routes/writer. | Source/rights/status/history decisions and authorized migration allocation. |
 | 13 | Analysis P14–P15/Home cards | Adapt current Research pipeline first. | Verify shape/privacy before new schema. |
-| 14 | Omise/provider PR | Remove as separate lane; pricing/auth UI is row 9. | Stripe is current; no provider change. |
+| 14 | Omise/provider PR | Do not implement an independent provider migration under UI Graft; track owner-approved Omise proposal as unresolved G0-C03, not cancelled. | Provider/pricing/subscriber migration needs a separately authorized billing task; no provider change in UI PR. |
 | 15 | Ice panels 1–4/Info/CSV | Separate import/panel/export scope from #246. | Owner schema/rights/access/export contract and independent Ice acceptance. |
 
 Exact paths, denylist, tests and exit criteria are in [PR_EXECUTION_MATRIX.md](../docs/ui-overhaul/PR_EXECUTION_MATRIX.md). Page/API contracts are in [PAGE_DATA_CONTRACT_MATRIX.md](../docs/ui-overhaul/PAGE_DATA_CONTRACT_MATRIX.md).
