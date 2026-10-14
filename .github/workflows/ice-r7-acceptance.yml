@@ -4,6 +4,11 @@ name: Ice R7 acceptance (read-only)
 # docs/market-track/ROADMAP.md. Only SELECTs. Writes nothing, switches nothing, needs no confirmation.
 
 on:
+  # Runs when this workflow file itself is pushed on the pipeline branch, so it can be used before it reaches main
+  # (a manual run is only offered by GitHub once the file is on the default branch). Read-only either way.
+  push:
+    branches: [claude/ice-monthly-pipeline]
+    paths: [".github/workflows/ice-r7-acceptance.yml"]
   workflow_dispatch:
     inputs:
       period:
@@ -34,7 +39,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          node --experimental-strip-types scripts/ice-r7-acceptance.ts ${{ inputs.period }} > "${RUNNER_TEMP}/r7.json" 2> "${RUNNER_TEMP}/r7.err"
+          node --experimental-strip-types scripts/ice-r7-acceptance.ts ${{ inputs.period || '' }} > "${RUNNER_TEMP}/r7.json" 2> "${RUNNER_TEMP}/r7.err"
           rc=$?
           {
             echo "## Ice R7 acceptance (read-only)"
