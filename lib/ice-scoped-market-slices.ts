@@ -111,8 +111,22 @@ export function sliceScopedIceMarket(args: {
   const { groups, raw, mapped } = groupRows(resolved, dimension, args.vehicleModels);
   const result = ranked(groups, raw, mapped, args.limit ?? 100);
   if (dimension !== "model") return result;
+  // Group-level canonical metadata MUST consider ALL approved class scopes,
+  // not just the selected month/province/registration-class filter. Otherwise
+  // a pickup group split into RY1 and RY3 appears one-to-one when only RY1
+  // was observed in this query window.
+  const effectiveTargets = new Map<string, Set<string>>();
+  for (const d of args.ownerDecisions) {
+    if (d.status === "EXCLUDED") continue;
+    const targets = effectiveTargets.get(d.model_group_id) ?? new Set<string>();
+    targets.add(d.status === "APPROVED" && d.canonical_model_id
+      ? d.canonical_model_id : "__UNRESOLVED_SCOPE__");
+    effectiveTargets.set(d.model_group_id, targets);
+  }
   return result.map(row => ({
     ...row,
-    canonical_model_id: primaryCanonicalForScopedGroup(resolved, row.entity_key),
+    canonical_model_id: (effectiveTargets.get(row.entity_key)?.size ?? 0) > 1
+      ? null
+      : primaryCanonicalForScopedGroup(resolved, row.entity_key),
   }));
 }
