@@ -5,7 +5,9 @@ const COOKIE = "tdr_admin_session";
 const MAX_AGE_MS = 1000 * 60 * 60 * 24 * 30;
 const NAME_RE = /^[A-Za-z0-9฀-๿ _.@-]{1,40}$/;
 
-export type AdminEditor = { name: string };
+export type AdminEditor = { name: string; principal_id?: string };
+
+const PRINCIPAL_ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /** No fallback secret. A build with ADMIN_SESSION_SECRET unset cannot mint or
  *  accept a session at all — a shipped default would let anyone who reads the
@@ -46,6 +48,33 @@ function namedEditors(): Map<string, string> | null {
   return out.size ? out : null;
 }
 
+/** Structural writes require an independently configured, immutable principal
+ * identifier in addition to the legacy editor label. Shared-password mode is
+ * deliberately ineligible. Values are UUIDs assigned by the deployment owner,
+ * not derived from a display name, request, or cookie. */
+function structuralPrincipalIds(): Map<string, string> {
+  const raw = process.env.TDR_ADMIN_PRINCIPAL_IDS;
+  if (!raw) return new Map();
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return new Map();
+    const entries = Object.entries(parsed as Record<string, unknown>);
+    if (entries.some(([name, id]) => !name.trim() || typeof id !== "string" || !PRINCIPAL_ID_RE.test(id))) return new Map();
+    const ids = entries.map(([, id]) => (id as string).toLowerCase());
+    if (new Set(ids).size !== ids.length) return new Map();
+    return new Map(entries.map(([name, id]) => [name, (id as string).toLowerCase()]));
+  } catch {
+    return new Map();
+  }
+}
+
+function structuralPrincipalId(name: string): string | null {
+  // Structural authority is only available with a unique per-editor password.
+  const users = namedEditors();
+  if (!users?.has(name)) return null;
+  return structuralPrincipalIds().get(name) ?? null;
+}
+
 /** Returns the editor name to record, or null when the credentials do not match. */
 export function authenticate(name: string | null, password: string | null): string | null {
   if (!password) return null;
@@ -70,7 +99,10 @@ export function authenticate(name: string | null, password: string | null): stri
 export function makeAdminToken(name: string) {
   const key = sessionSecret();
   if (!key) throw new Error("ADMIN_SESSION_SECRET is not set");
-  const payload = `admin:${encodeURIComponent(name)}:${Date.now()}`;
+  const principalId = structuralPrincipalId(name);
+  const payload = principalId
+    ? `admin2:${principalId}:${encodeURIComponent(name)}:${Date.now()}`
+    : `admin:${encodeURIComponent(name)}:${Date.now()}`;
   return `${Buffer.from(payload).toString("base64url")}.${signature(payload, key)}`;
 }
 
@@ -85,14 +117,28 @@ export function readAdminToken(token?: string): AdminEditor | null {
     if (sig.length !== expected.length) return null;
     if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
     const parts = payload.split(":");
-    if (parts.length !== 3 || parts[0] !== "admin") return null;
-    const age = Date.now() - Number(parts[2]);
+    const isV2 = parts.length === 4 && parts[0] === "admin2";
+    if (!isV2 && (parts.length !== 3 || parts[0] !== "admin")) return null;
+    const principalId = isV2 ? parts[1].toLowerCase() : undefined;
+    const encodedName = isV2 ? parts[2] : parts[1];
+    const age = Date.now() - Number(isV2 ? parts[3] : parts[2]);
     if (!(age >= 0 && age < MAX_AGE_MS)) return null;
-    const name = decodeURIComponent(parts[1]);
-    return { name: NAME_RE.test(name) ? name : "editor" };
+    const name = decodeURIComponent(encodedName);
+    if (!NAME_RE.test(name)) return null;
+    if (isV2 && (principalId !== structuralPrincipalId(name) || !PRINCIPAL_ID_RE.test(principalId))) return null;
+    return { name, ...(principalId ? { principal_id: principalId } : {}) };
   } catch {
     return null;
   }
+}
+
+/** Stable identity for the future structural approval boundary. Legacy and
+ * shared-password sessions remain valid for existing admin screens but cannot
+ * approve structural writes. */
+export async function currentStructuralAdmin(): Promise<{ name: string; principal_id: string } | null> {
+  const editor = await currentEditor();
+  if (!editor?.principal_id) return null;
+  return { name: editor.name, principal_id: editor.principal_id };
 }
 
 export function verifyAdminToken(token?: string) {

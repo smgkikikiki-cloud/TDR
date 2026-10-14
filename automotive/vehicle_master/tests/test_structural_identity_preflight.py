@@ -55,4 +55,5 @@ def test_existing_schema_gaps_are_reported_without_fabricated_db_compatibility()
     for marker in ["BASIC", "C02", "C01", "vm_observations", "canonical_write_revisions", "SERIALIZABLE", "R6"]:
         assert marker in contract
     server = (ROOT / "lib/vehicle-engine/structural-writer-server.ts").read_text()
-    assert 'import "server-only"' in server and "currentEditor" in server and "r6_allowed: false" in server
+    assert 'import "server-only"' in server and "currentStructuralAdmin" in server
+    assert "actor_id: editor.principal_id" in server and "r6_allowed: false" in server

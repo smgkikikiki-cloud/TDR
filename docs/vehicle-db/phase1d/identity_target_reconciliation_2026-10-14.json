@@ -1,0 +1,1294 @@
+{
+  "schema": "tdr.vehicle-db.phase1d.identity-target-reconciliation.v1",
+  "source": {
+    "backup_gzip_sha256": "8b7dc88cf42c27516ec08ddf170173feff85891ac655caa9a6f3eb5511d8b962",
+    "decompressed_backup_sha256": "76add61cb19c0f4bf97aa7cf7f9040aead2ae4b00c1ce193bff41405830c8266",
+    "payload_sha256": "c51c20966be5f49dd0fe9a953793e666f6becf0f4d27a986158b6805e7659dad",
+    "tables": 15,
+    "rows": 28319,
+    "brands_checked": 62,
+    "catalog_models_checked": 323,
+    "raw_catalog_rows_in_report": false
+  },
+  "frozen_inputs": {
+    "owner_decisions": 244,
+    "owner_ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "frozen_owner_create_decisions": 38,
+    "decision_changes": 0
+  },
+  "candidate_reconciliation": {
+    "total_missing_identity_targets": 114,
+    "unique_target_count": 114,
+    "unique_decision_reference_count": 114,
+    "counts": {
+      "frozen_owner_create_no_normalized_name_or_alias_conflict": 34,
+      "frozen_owner_create_conflict_hold": 4,
+      "independent_candidate_no_conflict_and_brand_present": 65,
+      "independent_candidate_conflict_hold": 9,
+      "independent_candidate_brand_missing": 2
+    },
+    "registration_units": {
+      "total": 98025,
+      "frozen_owner_create": 3112,
+      "candidate_only": 94913
+    },
+    "registration_units_by_disposition": {
+      "READY_FOR_ADMIN_APPROVAL": 2862,
+      "HOLD_WITH_EXACT_REASON": 95163
+    },
+    "dispositions": [
+      {
+        "canonical_target_id": "audi.r8_spyder_v10",
+        "source_ref": "adb3def47c5d6170",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "changan.star_truck",
+        "source_ref": "5aa4b0d8b487cc8a",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "chevrolet.optra",
+        "source_ref": "bdd401ca0b1a5065",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.812",
+        "source_ref": "dddf5981f82198d6",
+        "registration_units_m7_0": 3,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.california",
+        "source_ref": "0541dd6b156939d3",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.f12_tdf",
+        "source_ref": "c707f375e8c424af",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.f360",
+        "source_ref": "29f77d8e21505f4d",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ford.ecosport",
+        "source_ref": "0ee753f8c64adca0",
+        "registration_units_m7_0": 3,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ford.fiesta",
+        "source_ref": "4ef7bf29b09bb2b6",
+        "registration_units_m7_0": 3,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ford.territory",
+        "source_ref": "c8af6e029d9f78a6",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.n_van",
+        "source_ref": "owner-overlay-line:164",
+        "registration_units_m7_0": 1,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.nsx_type_s",
+        "source_ref": "934f4a1929d70e6c",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hyundai.county",
+        "source_ref": "b46d6088d3761fde",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hyundai.sonata",
+        "source_ref": "ec89df59eefd9a4a",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hyundai.veloster",
+        "source_ref": "007e3b92c2d87e00",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "kia.soul",
+        "source_ref": "954a170bba32fa52",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "kia.soul_ev",
+        "source_ref": "df6beeee8b10711d",
+        "registration_units_m7_0": 4,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mg.gs",
+        "source_ref": "owner-overlay-line:288",
+        "registration_units_m7_0": 28,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mg.mg6",
+        "source_ref": "c122bc6d00754321",
+        "registration_units_m7_0": 9,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "sokon.ec31",
+        "source_ref": "ec156868f11e3f1a",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.coaster",
+        "source_ref": "owner-overlay-line:477",
+        "registration_units_m7_0": 7,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.hilux_vigo",
+        "source_ref": "42a67a816c726a6e",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.mirai",
+        "source_ref": "cb5ace255bbbc3e2",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "volvo.v90",
+        "source_ref": "c2659838d910ca36",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "asia_cab.as4",
+        "source_ref": "owner-overlay-line:598",
+        "registration_units_m7_0": 248,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_BRAND_IDENTITY_MISSING",
+        "reason": "BRAND_IDENTITY_NOT_PRESENT_IN_VERIFIED_VEHICLE_MASTER",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.a3",
+        "source_ref": "9f8ae7e8a2b0bcbf",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.a8l",
+        "source_ref": "owner-overlay-line:612",
+        "registration_units_m7_0": 22,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.q6",
+        "source_ref": "bdccbdecad7cd55a",
+        "registration_units_m7_0": 7,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_3",
+        "source_ref": "35e5416826b727de",
+        "registration_units_m7_0": 22,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_4",
+        "source_ref": "31db27fa51c287f8",
+        "registration_units_m7_0": 103,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_5",
+        "source_ref": "4314b2408d93afa4",
+        "registration_units_m7_0": 94,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_6",
+        "source_ref": "f51ec28f34641456",
+        "registration_units_m7_0": 44,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_7",
+        "source_ref": "8f04a87b22ff06ea",
+        "registration_units_m7_0": 16,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_q3",
+        "source_ref": "0c4c6e48dd4fbe3e",
+        "registration_units_m7_0": 81,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.rs_q7",
+        "source_ref": "a6f0ebb257154abc",
+        "registration_units_m7_0": 34,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.s3",
+        "source_ref": "owner-overlay-line:626",
+        "registration_units_m7_0": 20,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "audi.r8",
+        "source_ref": "d63f424e20065d85",
+        "registration_units_m7_0": 6,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bentley.continental",
+        "source_ref": "owner-overlay-line:641",
+        "registration_units_m7_0": 117,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.8_series",
+        "source_ref": "b2d7961ea909bbed",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.430i",
+        "source_ref": "owner-overlay-line:662",
+        "registration_units_m7_0": 1044,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.530e",
+        "source_ref": "owner-overlay-line:665",
+        "registration_units_m7_0": 5524,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.630i",
+        "source_ref": "owner-overlay-line:666",
+        "registration_units_m7_0": 802,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.m2",
+        "source_ref": "owner-overlay-line:674",
+        "registration_units_m7_0": 300,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.m3",
+        "source_ref": "owner-overlay-line:675",
+        "registration_units_m7_0": 639,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.m4",
+        "source_ref": "owner-overlay-line:676",
+        "registration_units_m7_0": 147,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.m5",
+        "source_ref": "owner-overlay-line:677",
+        "registration_units_m7_0": 18,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "bmw.x2",
+        "source_ref": "owner-overlay-line:693",
+        "registration_units_m7_0": 64,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "byd.e6",
+        "source_ref": "owner-overlay-line:700",
+        "registration_units_m7_0": 420,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "chery.q",
+        "source_ref": "owner-overlay-line:715",
+        "registration_units_m7_0": 332,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.488",
+        "source_ref": "owner-overlay-line:740",
+        "registration_units_m7_0": 35,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ferrari.purosangue",
+        "source_ref": "owner-overlay-line:743",
+        "registration_units_m7_0": 23,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "ford.ranger_raptor_double_cab",
+        "source_ref": "owner-overlay-line:751",
+        "registration_units_m7_0": 12839,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "foton.eview",
+        "source_ref": "owner-overlay-line:756",
+        "registration_units_m7_0": 144,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "foton.cp_foton_tm_i_blue_45",
+        "source_ref": "owner-overlay-line:757",
+        "registration_units_m7_0": 487,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "foton.tunland",
+        "source_ref": "owner-overlay-line:764",
+        "registration_units_m7_0": 140,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "gwm.ora_07",
+        "source_ref": "owner-overlay-line:772",
+        "registration_units_m7_0": 1698,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "gwm.ora_5",
+        "source_ref": "owner-overlay-line:773",
+        "registration_units_m7_0": 4809,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hino.xzu600r_wkmlst3",
+        "source_ref": "owner-overlay-line:786",
+        "registration_units_m7_0": 2634,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.brio",
+        "source_ref": "owner-overlay-line:791",
+        "registration_units_m7_0": 31,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.acty",
+        "source_ref": "owner-overlay-line:798",
+        "registration_units_m7_0": 7,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.e",
+        "source_ref": "owner-overlay-line:800",
+        "registration_units_m7_0": 2,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.freed",
+        "source_ref": "owner-overlay-line:802",
+        "registration_units_m7_0": 4,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.jazz",
+        "source_ref": "owner-overlay-line:809",
+        "registration_units_m7_0": 13790,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "honda.super_one",
+        "source_ref": "owner-overlay-line:815",
+        "registration_units_m7_0": 3,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hyundai.elantra_n",
+        "source_ref": "a4557f9d2143388c",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "hyundai.kona",
+        "source_ref": "owner-overlay-line:825",
+        "registration_units_m7_0": 19,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "jaecoo.j6",
+        "source_ref": "owner-overlay-line:839",
+        "registration_units_m7_0": 8659,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "jeep.gladiator",
+        "source_ref": "owner-overlay-line:857",
+        "registration_units_m7_0": 50,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "land_rover.discovery",
+        "source_ref": "owner-overlay-line:880",
+        "registration_units_m7_0": 5,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "lepas.l6",
+        "source_ref": "owner-overlay-line:884",
+        "registration_units_m7_0": 290,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_BRAND_IDENTITY_MISSING",
+        "reason": "BRAND_IDENTITY_NOT_PRESENT_IN_VERIFIED_VEHICLE_MASTER",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "lexus.rc",
+        "source_ref": "owner-overlay-line:895",
+        "registration_units_m7_0": 3,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "lotus.elise",
+        "source_ref": "6c77cf04a461f95c",
+        "registration_units_m7_0": 2,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "lotus.emira",
+        "source_ref": "owner-overlay-line:903",
+        "registration_units_m7_0": 1,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mg.maxus_v80",
+        "source_ref": "owner-overlay-line:917",
+        "registration_units_m7_0": 135,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mazda.mx_30",
+        "source_ref": "owner-overlay-line:925",
+        "registration_units_m7_0": 1,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mazda.mazda6e",
+        "source_ref": "owner-overlay-line:931",
+        "registration_units_m7_0": 604,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_amg_c",
+        "source_ref": "owner-overlay-line:938",
+        "registration_units_m7_0": 550,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_amg_g63",
+        "source_ref": "owner-overlay-line:939",
+        "registration_units_m7_0": 209,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.c350",
+        "source_ref": "owner-overlay-line:943",
+        "registration_units_m7_0": 2549,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_cla_class",
+        "source_ref": "owner-overlay-line:944",
+        "registration_units_m7_0": 429,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_cle_class",
+        "source_ref": "owner-overlay-line:945",
+        "registration_units_m7_0": 926,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.e300",
+        "source_ref": "owner-overlay-line:948",
+        "registration_units_m7_0": 4473,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_eqb_class",
+        "source_ref": "owner-overlay-line:949",
+        "registration_units_m7_0": 171,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_eqe_class",
+        "source_ref": "owner-overlay-line:950",
+        "registration_units_m7_0": 766,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_eqs_class",
+        "source_ref": "owner-overlay-line:951",
+        "registration_units_m7_0": 521,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_glb_class",
+        "source_ref": "owner-overlay-line:953",
+        "registration_units_m7_0": 374,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mercedes_benz.mercedes_benz_s350d",
+        "source_ref": "owner-overlay-line:956",
+        "registration_units_m7_0": 504,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mg.urban_ev",
+        "source_ref": "owner-overlay-line:976",
+        "registration_units_m7_0": 2473,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "mitsubishi.pajero",
+        "source_ref": "690b8d9fbc18980f",
+        "registration_units_m7_0": 37,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.leaf",
+        "source_ref": "owner-overlay-line:1014",
+        "registration_units_m7_0": 237,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.fairlady",
+        "source_ref": "owner-overlay-line:1019",
+        "registration_units_m7_0": 31,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.march",
+        "source_ref": "owner-overlay-line:1021",
+        "registration_units_m7_0": 4000,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.urvan_e26",
+        "source_ref": "owner-overlay-line:1026",
+        "registration_units_m7_0": 212,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.note",
+        "source_ref": "owner-overlay-line:1028",
+        "registration_units_m7_0": 3667,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "nissan.urvan",
+        "source_ref": "owner-overlay-line:1033",
+        "registration_units_m7_0": 550,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "peugeot.408",
+        "source_ref": "owner-overlay-line:1037",
+        "registration_units_m7_0": 79,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "peugeot.5008",
+        "source_ref": "owner-overlay-line:1038",
+        "registration_units_m7_0": 316,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "seres.ec31",
+        "source_ref": "owner-overlay-line:1058",
+        "registration_units_m7_0": 73,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "sokon.crc50",
+        "source_ref": "owner-overlay-line:1060",
+        "registration_units_m7_0": 101,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "subaru.levorge",
+        "source_ref": "fa7d4ad29e3d3907",
+        "registration_units_m7_0": 1,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "suzuki.spacia",
+        "source_ref": "owner-overlay-line:1081",
+        "registration_units_m7_0": 78,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.gr_corolla",
+        "source_ref": "f7a3c07aad0a2eac",
+        "registration_units_m7_0": 45,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.gr_yaris",
+        "source_ref": "owner-overlay-line:1123",
+        "registration_units_m7_0": 149,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.land_cruiser",
+        "source_ref": "owner-overlay-line:1133",
+        "registration_units_m7_0": 790,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_HOLD_EXISTING_ALIAS_COLLISION",
+        "reason": "EXISTING_CANONICAL_ID_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.land_cruiser_fj",
+        "source_ref": "owner-overlay-line:1134",
+        "registration_units_m7_0": 1472,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.roomy",
+        "source_ref": "owner-overlay-line:1144",
+        "registration_units_m7_0": 2,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.sienta",
+        "source_ref": "owner-overlay-line:1145",
+        "registration_units_m7_0": 2645,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.tr",
+        "source_ref": "owner-overlay-line:1146",
+        "registration_units_m7_0": 250,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "toyota.vios",
+        "source_ref": "owner-overlay-line:1149",
+        "registration_units_m7_0": 6647,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "volkswagen.touareg",
+        "source_ref": "owner-overlay-line:1171",
+        "registration_units_m7_0": 2,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "volt.volt",
+        "source_ref": "owner-overlay-line:1175",
+        "registration_units_m7_0": 484,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "volvo.c40",
+        "source_ref": "cd9af6faa42a4715",
+        "registration_units_m7_0": 2572,
+        "decision_state": "FROZEN_OWNER_CREATE",
+        "disposition": "READY_FOR_ADMIN_APPROVAL",
+        "candidate_review_status": "FROZEN_OWNER_CREATE_UNCHANGED",
+        "reason": "NO_CANONICAL_OR_NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION_IN_VERIFIED_BACKUP",
+        "approvals": "FROZEN_OWNER_CREATE_REQUIRES_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "volvo.es90",
+        "source_ref": "owner-overlay-line:1179",
+        "registration_units_m7_0": 145,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      },
+      {
+        "canonical_target_id": "zeekr.7x",
+        "source_ref": "owner-overlay-line:1199",
+        "registration_units_m7_0": 2892,
+        "decision_state": "CANDIDATE_ONLY_NO_OWNER_CREATE_APPROVAL",
+        "disposition": "HOLD_WITH_EXACT_REASON",
+        "candidate_review_status": "CANDIDATE_SCREEN_PASS_NO_COLLISION",
+        "reason": "NO_FROZEN_OWNER_CREATE_DECISION_NEW_APPROVAL_REQUIRED",
+        "approvals": "CANDIDATE_ONLY_REQUIRES_NEW_OWNER_CREATE_APPROVAL_AND_ADMIN_APPLY_AUTH"
+      }
+    ],
+    "conflicts": [
+      {
+        "target_id": "audi.a8l",
+        "source_ref": "owner-overlay-line:612",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "audi.a8",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "audi.rs_4",
+        "source_ref": "31db27fa51c287f8",
+        "review_class": "FROZEN_OWNER_CREATE",
+        "existing_canonical_id": "audi.rs",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "audi.rs_5",
+        "source_ref": "4314b2408d93afa4",
+        "review_class": "FROZEN_OWNER_CREATE",
+        "existing_canonical_id": "audi.rs",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "audi.rs_7",
+        "source_ref": "8f04a87b22ff06ea",
+        "review_class": "FROZEN_OWNER_CREATE",
+        "existing_canonical_id": "audi.rs",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "audi.s3",
+        "source_ref": "owner-overlay-line:626",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "audi.rs",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "bmw.430i",
+        "source_ref": "owner-overlay-line:662",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "bmw.4_series",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "bmw.530e",
+        "source_ref": "owner-overlay-line:665",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "bmw.bmw_5",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "byd.e6",
+        "source_ref": "owner-overlay-line:700",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "byd.byd_m6",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "mercedes_benz.mercedes_benz_amg_g63",
+        "source_ref": "owner-overlay-line:939",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "mercedes_benz.g_class",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "mercedes_benz.e300",
+        "source_ref": "owner-overlay-line:948",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "mercedes_benz.mb_e_class",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "mercedes_benz.mercedes_benz_s350d",
+        "source_ref": "owner-overlay-line:956",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "mercedes_benz.s_class",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "mitsubishi.pajero",
+        "source_ref": "690b8d9fbc18980f",
+        "review_class": "FROZEN_OWNER_CREATE",
+        "existing_canonical_id": "mitsubishi.pajero_sport",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      },
+      {
+        "target_id": "toyota.land_cruiser",
+        "source_ref": "owner-overlay-line:1133",
+        "review_class": "INDEPENDENT_REVIEW_CANDIDATE",
+        "existing_canonical_id": "toyota.land_cruiser_300",
+        "reason": "NORMALIZED_SAME_BRAND_NAME_ALIAS_COLLISION",
+        "materialization": "HOLD_PENDING_GOVERNED_ALIAS_IDENTITY_REPAIR"
+      }
+    ],
+    "ready_for_admin_approval_is_not_create_authorization": true,
+    "candidate_only_targets_are_not_ready_for_admin_apply_until_new_owner_create_approval": true,
+    "none_are_production_create_approvals": true,
+    "existing_identity_reuse_targets": 0,
+    "all_target_registrations_reconciled_once": true,
+    "ford_ranger_raptor": "HOLD_UNCHANGED"
+  }
+}

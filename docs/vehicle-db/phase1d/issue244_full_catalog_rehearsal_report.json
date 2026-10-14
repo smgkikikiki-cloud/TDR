@@ -1,0 +1,419 @@
+{
+  "schema": "tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",
+  "executed_at_utc": "2026-10-14T09:10:14.600Z",
+  "exact_command": "TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",
+  "docker_image": "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+  "database": "PostgreSQL 17.11; network=none; tmpfs-only; no published port",
+  "private_input": {
+    "available": true,
+    "raw_backup_pushed": false,
+    "gzip_sha256": "8b7dc88cf42c27516ec08ddf170173feff85891ac655caa9a6f3eb5511d8b962",
+    "payload_sha256": "c51c20966be5f49dd0fe9a953793e666f6becf0f4d27a986158b6805e7659dad",
+    "tables": 15,
+    "rows": 28319,
+    "location": "external private attachment/temp only"
+  },
+  "source_baseline": {
+    "diagnostic": "docs/vehicle-db/phase1d/issue244_live_source_schema_acl_diagnostic_2026-10-14.json",
+    "source_engine": "PostgreSQL 17; connected SELECT-only queries using source role postgres; no row data returned",
+    "relations_checked": 21,
+    "matching_relations": 21,
+    "relation_mismatches": [],
+    "column_fingerprints_checked": 61,
+    "matching_column_fingerprints": 61,
+    "column_fingerprint_mismatches": []
+  },
+  "schema_acl_parity": {
+    "repository_v57_v64_mismatches_before_source_definition_replay": [
+      "public.vehicle_master_seed_check()",
+      "public.vehicle_serving_parity_check()"
+    ],
+    "authoritative_source_definition_replay_mismatches": [],
+    "source_definition_replay_restored_metadata_parity": true,
+    "definition_hash_variants": [
+      {
+        "kind": "view",
+        "name": "current_vehicle_brands",
+        "source_md5": "9668fd3754a90ddf8f7f1c870156c4f3",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "9668fd3754a90ddf8f7f1c870156c4f3",
+          "pg_get_viewdef_pretty_false_md5": "1835689e6f3e6645f0084da310248ade"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "view",
+        "name": "current_vehicle_models",
+        "source_md5": "bad03789e46328373fd7263c8879745e",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "bad03789e46328373fd7263c8879745e",
+          "pg_get_viewdef_pretty_false_md5": "f15730bb87609361a700bd574289dc57"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "view",
+        "name": "current_vehicle_generations",
+        "source_md5": "0037acaf68de50c7bbe75481c7062998",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "0037acaf68de50c7bbe75481c7062998",
+          "pg_get_viewdef_pretty_false_md5": "169198bc6d5bc47a51cd4982d1eef117"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "view",
+        "name": "current_market_trims",
+        "source_md5": "428c2075badc10b06aa1900c1be8a246",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "428c2075badc10b06aa1900c1be8a246",
+          "pg_get_viewdef_pretty_false_md5": "1df158007071dd5fb0a0442f3337afac"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "view",
+        "name": "current_price_ledger",
+        "source_md5": "ec5158d3bf4acb792dbfb9e4df498193",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "ec5158d3bf4acb792dbfb9e4df498193",
+          "pg_get_viewdef_pretty_false_md5": "f9059ebe8bbd47c83bea0ac496a386cf"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "view",
+        "name": "current_spec_facts",
+        "source_md5": "2e90a37d84ad2d0f18d596b7951c2c9b",
+        "candidate_hashes": {
+          "pg_get_viewdef_pretty_true_md5": "2e90a37d84ad2d0f18d596b7951c2c9b",
+          "pg_get_viewdef_pretty_false_md5": "fac1c7637d456d2965f58bd80243c113"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "function",
+        "name": "vehicle_master_seed_check",
+        "source_md5": "9db12082a9d17b1d74198a3d517b8529",
+        "candidate_hashes": {
+          "prosrc_md5": "7faafdba0a11647dab8a7ae28bc6b8f9",
+          "pg_get_functiondef_md5": "9db12082a9d17b1d74198a3d517b8529"
+        },
+        "source_hash_matches_candidate": true
+      },
+      {
+        "kind": "function",
+        "name": "vehicle_serving_parity_check",
+        "source_md5": "1fb5066a9a8e40ff75ed73e687bab23a",
+        "candidate_hashes": {
+          "prosrc_md5": "50986dbc174b12bebdff8c643bf292ac",
+          "pg_get_functiondef_md5": "1fb5066a9a8e40ff75ed73e687bab23a"
+        },
+        "source_hash_matches_candidate": true
+      }
+    ],
+    "source_function_replay": {
+      "vehicle_master_seed_check": {
+        "export_md5": "9db12082a9d17b1d74198a3d517b8529",
+        "input_sha256": "59b1e37ff7dec2170de2ad0eeafb8f72baa0672f958ace203c120c6af232965b",
+        "source_definition_hash_match": true,
+        "behavior": {
+          "repository_rows": 63,
+          "source_rows": 63,
+          "repository_execution_error": null,
+          "source_execution_error": null,
+          "repository_failed_checks": 0,
+          "source_failed_checks": 0,
+          "repository_only_checks": 0,
+          "source_only_checks": 0,
+          "exact_result_sets_match": true
+        }
+      },
+      "vehicle_serving_parity_check": {
+        "export_md5": "1fb5066a9a8e40ff75ed73e687bab23a",
+        "input_sha256": "8a78fdff8c42e898ba6d51d076484182592a47cefc528c0172272c2c0e38c911",
+        "source_definition_hash_match": true,
+        "behavior": {
+          "repository_rows": 62,
+          "source_rows": 62,
+          "repository_execution_error": null,
+          "source_execution_error": null,
+          "repository_failed_checks": 0,
+          "source_failed_checks": 0,
+          "repository_only_checks": 0,
+          "source_only_checks": 0,
+          "exact_result_sets_match": true
+        }
+      }
+    },
+    "effective_acl_snapshot_replayed_in_disposable_db": true,
+    "role_view_access_before": {
+      "anon.current_vehicle_brands": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_brands"
+      },
+      "anon.current_vehicle_models": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_models"
+      },
+      "anon.current_vehicle_generations": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_generations"
+      },
+      "anon.current_market_trims": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_trims"
+      },
+      "anon.current_price_ledger": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_price_ledger"
+      },
+      "anon.current_spec_facts": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_facts"
+      },
+      "authenticated.current_vehicle_brands": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_brands"
+      },
+      "authenticated.current_vehicle_models": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_models"
+      },
+      "authenticated.current_vehicle_generations": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_generations"
+      },
+      "authenticated.current_market_trims": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_trims"
+      },
+      "authenticated.current_price_ledger": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_price_ledger"
+      },
+      "authenticated.current_spec_facts": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_facts"
+      },
+      "service_role.current_vehicle_brands": {
+        "outcome": "READABLE",
+        "row_count": "62"
+      },
+      "service_role.current_vehicle_models": {
+        "outcome": "READABLE",
+        "row_count": "323"
+      },
+      "service_role.current_vehicle_generations": {
+        "outcome": "READABLE",
+        "row_count": "326"
+      },
+      "service_role.current_market_trims": {
+        "outcome": "READABLE",
+        "row_count": "1569"
+      },
+      "service_role.current_price_ledger": {
+        "outcome": "READABLE",
+        "row_count": "1004"
+      },
+      "service_role.current_spec_facts": {
+        "outcome": "READABLE",
+        "row_count": "23083"
+      }
+    },
+    "role_view_access_after": {
+      "anon.current_vehicle_brands": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_brands"
+      },
+      "anon.current_vehicle_models": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_models"
+      },
+      "anon.current_vehicle_generations": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_generations"
+      },
+      "anon.current_market_trims": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_trims"
+      },
+      "anon.current_price_ledger": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_price_ledger"
+      },
+      "anon.current_spec_facts": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_facts"
+      },
+      "authenticated.current_vehicle_brands": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_brands"
+      },
+      "authenticated.current_vehicle_models": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_models"
+      },
+      "authenticated.current_vehicle_generations": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_generations"
+      },
+      "authenticated.current_market_trims": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_trims"
+      },
+      "authenticated.current_price_ledger": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_price_ledger"
+      },
+      "authenticated.current_spec_facts": {
+        "outcome": "DENIED_BASE_TABLE",
+        "relation": "vehicle_facts"
+      },
+      "service_role.current_vehicle_brands": {
+        "outcome": "READABLE",
+        "row_count": "62"
+      },
+      "service_role.current_vehicle_models": {
+        "outcome": "READABLE",
+        "row_count": "323"
+      },
+      "service_role.current_vehicle_generations": {
+        "outcome": "READABLE",
+        "row_count": "326"
+      },
+      "service_role.current_market_trims": {
+        "outcome": "READABLE",
+        "row_count": "1569"
+      },
+      "service_role.current_price_ledger": {
+        "outcome": "READABLE",
+        "row_count": "1004"
+      },
+      "service_role.current_spec_facts": {
+        "outcome": "READABLE",
+        "row_count": "23083"
+      }
+    },
+    "select_privileges_before": {
+      "anon.vehicle_brands": "f",
+      "anon.vehicle_models": "f",
+      "anon.current_vehicle_brands": "t",
+      "anon.current_vehicle_models": "t",
+      "anon.current_vehicle_generations": "t",
+      "anon.current_market_trims": "t",
+      "anon.current_price_ledger": "t",
+      "anon.current_spec_facts": "t",
+      "authenticated.vehicle_brands": "f",
+      "authenticated.vehicle_models": "f",
+      "authenticated.current_vehicle_brands": "t",
+      "authenticated.current_vehicle_models": "t",
+      "authenticated.current_vehicle_generations": "t",
+      "authenticated.current_market_trims": "t",
+      "authenticated.current_price_ledger": "t",
+      "authenticated.current_spec_facts": "t",
+      "service_role.vehicle_brands": "t",
+      "service_role.vehicle_models": "t",
+      "service_role.current_vehicle_brands": "t",
+      "service_role.current_vehicle_models": "t",
+      "service_role.current_vehicle_generations": "t",
+      "service_role.current_market_trims": "t",
+      "service_role.current_price_ledger": "t",
+      "service_role.current_spec_facts": "t"
+    },
+    "select_privileges_after": {
+      "anon.vehicle_brands": "f",
+      "anon.vehicle_models": "f",
+      "anon.current_vehicle_brands": "t",
+      "anon.current_vehicle_models": "t",
+      "anon.current_vehicle_generations": "t",
+      "anon.current_market_trims": "t",
+      "anon.current_price_ledger": "t",
+      "anon.current_spec_facts": "t",
+      "authenticated.vehicle_brands": "f",
+      "authenticated.vehicle_models": "f",
+      "authenticated.current_vehicle_brands": "t",
+      "authenticated.current_vehicle_models": "t",
+      "authenticated.current_vehicle_generations": "t",
+      "authenticated.current_market_trims": "t",
+      "authenticated.current_price_ledger": "t",
+      "authenticated.current_spec_facts": "t",
+      "service_role.vehicle_brands": "t",
+      "service_role.vehicle_models": "t",
+      "service_role.current_vehicle_brands": "t",
+      "service_role.current_vehicle_models": "t",
+      "service_role.current_vehicle_generations": "t",
+      "service_role.current_market_trims": "t",
+      "service_role.current_price_ledger": "t",
+      "service_role.current_spec_facts": "t"
+    }
+  },
+  "restored_catalog": {
+    "table_counts": {
+      "vehicle_master_state": 1,
+      "vehicle_brands": 62,
+      "vehicle_models": 323,
+      "vehicle_generations": 326,
+      "vehicle_variants": 370,
+      "vehicle_trims": 1569,
+      "vehicle_facts": 24492,
+      "vehicle_price_ledger": 1004,
+      "vehicle_campaigns": 44,
+      "vehicle_promotions": 48,
+      "vehicle_eco_evidence": 3,
+      "vehicle_current_retail_sets": 61,
+      "vehicle_trim_lifecycle_decisions": 15,
+      "vehicle_model_operational_states": 0,
+      "vehicle_legacy_identities": 1
+    },
+    "source_baseline_counts_and_hashes_matched": true,
+    "view_counts_and_hashes_matched": true,
+    "view_names": [
+      "current_vehicle_brands",
+      "current_vehicle_models",
+      "current_vehicle_generations",
+      "current_market_trims",
+      "current_price_ledger",
+      "current_spec_facts"
+    ],
+    "phase1c_legacy_catalog_rows_unchanged": true
+  },
+  "phase1c": {
+    "schema_and_rpc": "applied only in disposable database",
+    "basic_models_created": 8,
+    "canonical_ids": [
+      "honda.jazz",
+      "jaecoo.j6",
+      "toyota.vios",
+      "gwm.ora_5",
+      "nissan.march",
+      "nissan.note",
+      "zeekr.7x",
+      "toyota.sienta"
+    ],
+    "registrations_represented": 47109,
+    "rollback": "injected two-row transaction failure left zero model rows, observations, revisions or receipts for failed batch",
+    "same_payload_replay": "same receipt; no extra create",
+    "changed_payload_retry": "rejected",
+    "normalized_model_name_collision": "rejected by the SQL RPC identity-token collision guard",
+    "issuer_executor": "distinct named local PostgreSQL roles; operation ACL separation verified",
+    "approval_audit": "one observation, eight revisions, one receipt, eight identity evidence records",
+    "revert_path": "BASIC alias revision applied and compensated; alias state restored; all CATALOG fingerprints unchanged"
+  },
+  "frozen_inputs": {
+    "owner_decisions": 244,
+    "ledger_sha256": "9f251b6120d88e52c33215c5127fb6f87cd8c6cc334c39dc227bb540860ae1a8",
+    "scopes": 1407,
+    "registration_units": 4141987,
+    "effective_units": 4123704,
+    "excluded_units": 18283
+  },
+  "ford_ranger_raptor": "HOLD / 12839 registrations; not created",
+  "other_basic_rows": 0,
+  "production_or_staging_connections": 0,
+  "production_or_staging_writes": 0,
+  "acceptance_result": "PASS_LOCAL_FULL_CATALOG_REHEARSAL",
+  "production_acceptance": "BLOCKED_ADMIN_AUTH_C02_MIGRATION_ENFORCER",
+  "schema_acl_fidelity": "PASS: owner-provided live source function exports passed byte MD5, PostgreSQL 17 definition hash, behavior, schema, and ACL parity checks in isolated PostgreSQL 17.11",
+  "raw_rows_in_report": false
+}
