@@ -1,0 +1,60 @@
+name: Ice R7 acceptance (read-only)
+
+# Market Track R7: checks the live imported Ice data and the owner's scoped crosswalk against the R7 list in
+# docs/market-track/ROADMAP.md. Only SELECTs. Writes nothing, switches nothing, needs no confirmation.
+
+on:
+  workflow_dispatch:
+    inputs:
+      period:
+        description: "Buddhist YYYY-MM to check (empty = latest import)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  r7:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Run R7 acceptance (read-only)
+        shell: bash
+        run: |
+          set +e
+          node --experimental-strip-types scripts/ice-r7-acceptance.ts ${{ inputs.period }} > "${RUNNER_TEMP}/r7.json" 2> "${RUNNER_TEMP}/r7.err"
+          rc=$?
+          {
+            echo "## Ice R7 acceptance (read-only)"
+            echo
+            python3 - "${RUNNER_TEMP}/r7.json" <<'PY'
+          import json, sys
+          try:
+              r = json.load(open(sys.argv[1]))
+              print(f"**{r['status']}** - period {r['period']}, master {r['master_version']}\n")
+              for c in r["checks"]:
+                  print(f"- {c['status']} `{c['id']}` {c['label']}")
+          except Exception as e:
+              print("report could not be read:", e)
+          PY
+            [ -s "${RUNNER_TEMP}/r7.err" ] && { echo; echo '```'; head -c 3000 "${RUNNER_TEMP}/r7.err"; echo '```'; }
+          } >> "${GITHUB_STEP_SUMMARY}"
+          exit $rc
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ice-r7-report
+          path: ${{ runner.temp }}/r7.json
+          retention-days: 30
