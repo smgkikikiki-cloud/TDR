@@ -15,7 +15,10 @@ import { buildStructuralRpcDraftRequest } from "../lib/vehicle-engine/basic-iden
 import { decompressPrivateBackupJson } from "../lib/vehicle-engine/private-backup-json.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const image = "postgres:16.10-alpine@sha256:029660641a0cfc575b14f336ba448fb8a75fd595d42e1fa316b9fb4378742297";
+// The read-only source diagnostic was collected on PostgreSQL 17. Pin the
+// rehearsal to the same major so pg_get_viewdef/pg_get_functiondef hashes are
+// comparable evidence, rather than version-dependent formatter output.
+const image = "postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24";
 const container = `tdr-phase1d-full-${process.pid}`;
 const dbUser = "phase1c_owner";
 const dbName = "phase1c_acceptance";
@@ -74,13 +77,79 @@ function collectSchemaAclMetadata(): Record<string, any[]> {
   const dbRoles = [...new Set(sourceDiagnosticSections.role_acl.map((r) => r.db_role))];
   const roleArray = `ARRAY[${dbRoles.map((r) => quote(r)).join(",")}]::text[]`;
   return {
-    relation_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'kind',c.relkind,'rls_enabled',c.relrowsecurity,'rls_forced',c.relforcerowsecurity,'reloptions',coalesce(array_to_string(c.reloptions,','),''),'view_definition_md5',CASE WHEN c.relkind IN ('v','m') THEN md5(coalesce(pg_get_viewdef(c.oid,false),'')) ELSE '' END) ORDER BY c.relname),'[]'::jsonb) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray});`),
+    relation_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'kind',c.relkind,'rls_enabled',c.relrowsecurity,'rls_forced',c.relforcerowsecurity,'reloptions',coalesce(array_to_string(c.reloptions,','),''),'view_definition_md5',CASE WHEN c.relkind IN ('v','m') THEN md5(coalesce(pg_get_viewdef(c.oid,true),'')) ELSE '' END) ORDER BY c.relname),'[]'::jsonb) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray});`),
     column_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'column_name',a.attname,'data_type',format_type(a.atttypid,a.atttypmod),'not_null',a.attnotnull,'default_sql_md5',md5(coalesce(ic.generation_expression,ic.column_default,''))) ORDER BY c.relname,a.attname),'[]'::jsonb) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace LEFT JOIN information_schema.columns ic ON ic.table_schema=n.nspname AND ic.table_name=c.relname AND ic.column_name=a.attname WHERE n.nspname='public' AND c.relname=ANY(${relationArray}) AND a.attnum>0 AND NOT a.attisdropped;`),
     constraint_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'constraint_name',k.conname,'kind',k.contype,'definition_md5',md5(pg_get_constraintdef(k.oid,true))) ORDER BY c.relname,k.conname),'[]'::jsonb) FROM pg_constraint k JOIN pg_class c ON c.oid=k.conrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray});`),
     trigger_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',c.relname,'trigger_name',t.tgname,'enabled',t.tgenabled,'definition_md5',md5(pg_get_triggerdef(t.oid,true))) ORDER BY c.relname,t.tgname),'[]'::jsonb) FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(${relationArray}) AND NOT t.tgisinternal;`),
     policy_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',tablename,'policy_name',policyname,'cmd',cmd,'roles',roles::text,'using_md5',md5(coalesce(qual,'')),'with_check_md5',md5(coalesce(with_check,''))) ORDER BY tablename,policyname),'[]'::jsonb) FROM pg_policies WHERE schemaname='public' AND tablename=ANY(${relationArray});`),
     role_acl: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('relation',rr.relation,'db_role',pp.db_role,'select_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'SELECT'),'insert_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'INSERT'),'update_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'UPDATE'),'delete_allowed',has_table_privilege(pp.db_role,format('public.%I',rr.relation),'DELETE')) ORDER BY rr.relation,pp.db_role),'[]'::jsonb) FROM unnest(${relationArray}) rr(relation) CROSS JOIN unnest(${roleArray}) pp(db_role);`),
     function_metadata: jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'name',p.proname,'args',pg_get_function_identity_arguments(p.oid),'security_definer',p.prosecdef,'definition_md5',md5(pg_get_functiondef(p.oid))) ORDER BY n.nspname,p.proname,pg_get_function_identity_arguments(p.oid)),'[]'::jsonb) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.prokind IN ('f','p');`),
+  };
+}
+function collectDefinitionHashVariants(): any[] {
+  const out: any[] = [];
+  for (const name of views) {
+    const rows = jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('kind','view','name',c.relname,
+      'pg_get_viewdef_pretty_false_md5',md5(pg_get_viewdef(c.oid,false)),
+      'pg_get_viewdef_pretty_true_md5',md5(pg_get_viewdef(c.oid,true)))),'[]'::jsonb)
+      FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+      WHERE n.nspname='public' AND c.relname=${quote(name)} AND c.relkind IN ('v','m');`);
+    out.push(...rows);
+  }
+  for (const name of ["vehicle_master_seed_check", "vehicle_serving_parity_check"]) {
+    const rows = jsonRows(`SELECT coalesce(jsonb_agg(jsonb_build_object('kind','function','name',p.proname,
+      'pg_get_functiondef_md5',md5(pg_get_functiondef(p.oid)),
+      'prosrc_md5',md5(p.prosrc))),'[]'::jsonb)
+      FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+      WHERE n.nspname='public' AND p.proname=${quote(name)} AND pg_get_function_identity_arguments(p.oid)='';`);
+    out.push(...rows);
+  }
+  const sourceByKey = new Map<string,string>();
+  for (const row of sourceDiagnosticSections.relation_metadata) sourceByKey.set(`view.${row.relation}`,row.view_definition_md5);
+  for (const row of sourceDiagnosticSections.function_metadata) sourceByKey.set(`function.${row.name}`,row.definition_md5);
+  return out.map((row)=>{
+    const sourceMd5=sourceByKey.get(`${row.kind}.${row.name}`) ?? null;
+    const candidates=Object.fromEntries(Object.entries(row).filter(([k])=>k.endsWith("_md5")));
+    return {kind:row.kind,name:row.name,source_md5:sourceMd5,candidate_hashes:candidates,
+      source_hash_matches_candidate:sourceMd5!==null && Object.values(candidates).includes(sourceMd5)};
+  });
+}
+function sourceFunctionDefinition(name: string, envName: string): { sql: string; sha256: string } {
+  const configuredPath = process.env[envName];
+  if (!configuredPath) throw new Error(`SOURCE_FUNCTION_DEFINITION_REQUIRED:${envName}`);
+  const definitionPath = path.resolve(configuredPath);
+  assert.ok(!definitionPath.startsWith(`${root}${path.sep}`), "SOURCE_FUNCTION_DEFINITION_MUST_REMAIN_OUTSIDE_REPOSITORY");
+  const bytes = fs.readFileSync(definitionPath);
+  const sql = bytes.toString("utf8").trim();
+  assert.match(sql, new RegExp(`^CREATE OR REPLACE FUNCTION public\\.${name}\\(\\)\\s+RETURNS\\b`, "i"), `INVALID_SOURCE_FUNCTION_DEFINITION:${name}`);
+  assert.equal((sql.match(/CREATE OR REPLACE FUNCTION/gi) ?? []).length, 1, `SOURCE_FUNCTION_SQL_HAS_MULTIPLE_TOP_LEVEL_DEFINITIONS:${name}`);
+  assert.equal((sql.match(/\$function\$/g) ?? []).length, 2, `INVALID_SOURCE_FUNCTION_BODY_DELIMITER:${name}`);
+  assert.ok(sql.endsWith("$function$"), `SOURCE_FUNCTION_SQL_HAS_TRAILING_STATEMENTS:${name}`);
+  return { sql: `${sql};`, sha256: digest(bytes) };
+}
+function functionBehavior(name: string): { rows?: any[]; error?: string } {
+  try {
+    return { rows: jsonRows(`SELECT coalesce(jsonb_agg(to_jsonb(r) ORDER BY to_jsonb(r)::text),'[]'::jsonb) FROM public.${name}() r;`) };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { error: message.slice(0, 500) };
+  }
+}
+function behaviorDiff(before: { rows?: any[]; error?: string }, after: { rows?: any[]; error?: string }): Record<string, unknown> {
+  const oldRows = before.rows ?? [];
+  const newRows = after.rows ?? [];
+  const oldSet = new Set(oldRows.map((row) => JSON.stringify(row)));
+  const newSet = new Set(newRows.map((row) => JSON.stringify(row)));
+  return {
+    repository_rows: oldRows.length,
+    source_rows: newRows.length,
+    repository_execution_error: before.error ?? null,
+    source_execution_error: after.error ?? null,
+    repository_failed_checks: oldRows.filter((row) => row.ok === false).length,
+    source_failed_checks: newRows.filter((row) => row.ok === false).length,
+    repository_only_checks: [...oldSet].filter((row) => !newSet.has(row)).length,
+    source_only_checks: [...newSet].filter((row) => !oldSet.has(row)).length,
+    exact_result_sets_match: !before.error && !after.error && oldSet.size === newSet.size && [...oldSet].every((row) => newSet.has(row)),
   };
 }
 function rowKey(section: string, row: any): string {
@@ -264,7 +333,7 @@ try {
   for (const f of ["supabase/migration_v58_vehicle_serving_parity.sql", "supabase/migration_v59_vehicle_engine_rules.sql", "supabase/migration_v60_close_legacy_vehicle_write_path.sql",
     "supabase/migration_v61_vehicle_master_backups_bucket.sql", "supabase/migration_v62_ice_market_panels.sql", "supabase/migration_v63_ice_model_crosswalk.sql", "supabase/migration_v64_ice_panel_grain_fix.sql"])
     pg(fs.readFileSync(path.join(root, f), "utf8"));
-  assert.equal(pg("SELECT current_setting('server_version_num')::int >= 160010"), "t");
+  assert.equal(pg("SELECT current_setting('server_version_num')::int >= 170000"), "t");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_serving_parity_check() WHERE NOT ok"), "0");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_master_seed_check() WHERE NOT ok"), "0");
   assert.equal(pg("SELECT count(*) FROM public.vehicle_engine_rules_check()"), "0");
@@ -291,16 +360,47 @@ try {
   const schemaAclSections = ["relation_metadata","column_metadata","constraint_metadata","trigger_metadata","policy_metadata","role_acl","function_metadata"];
   const sourceSchemaAclSections = Object.fromEntries(schemaAclSections.map((s)=>[s,sourceDiagnosticSections[s] ?? []]));
   reproduceDiagnosticEffectiveAclsLocally();
+  const repositorySchemaAclComparison = compareMetadata(sourceSchemaAclSections, collectSchemaAclMetadata());
+  const repositoryDefinitionHashVariants = collectDefinitionHashVariants();
+  const seedFunctionBefore = functionBehavior("vehicle_master_seed_check");
+  const parityFunctionBefore = functionBehavior("vehicle_serving_parity_check");
+  const seedDefinition = sourceFunctionDefinition("vehicle_master_seed_check", "TDR_VM_SOURCE_SEED_CHECK_SQL");
+  const parityDefinition = sourceFunctionDefinition("vehicle_serving_parity_check", "TDR_VM_SOURCE_PARITY_CHECK_SQL");
+  assert.deepEqual(repositorySchemaAclComparison.mismatches.map((row: any) => row.key).sort(),
+    ["public.vehicle_master_seed_check()", "public.vehicle_serving_parity_check()"],
+    "UNEXPECTED_REPOSITORY_SCHEMA_ACL_DRIFT_BEFORE_SOURCE_FUNCTION_REPLAY");
+  pg(seedDefinition.sql);
+  pg(parityDefinition.sql);
+  const seedFunctionAfter = functionBehavior("vehicle_master_seed_check");
+  const parityFunctionAfter = functionBehavior("vehicle_serving_parity_check");
   const sourceSchemaAclComparison = compareMetadata(sourceSchemaAclSections, collectSchemaAclMetadata());
+  const definitionHashVariants = collectDefinitionHashVariants();
+  const sourceFunctionReplay = {
+    vehicle_master_seed_check: {
+      input_sha256: seedDefinition.sha256,
+      pg17_source_hash_matches: definitionHashVariants.find((row) => row.kind === "function" && row.name === "vehicle_master_seed_check")?.source_hash_matches_candidate === true,
+      behavior: behaviorDiff(seedFunctionBefore, seedFunctionAfter),
+    },
+    vehicle_serving_parity_check: {
+      input_sha256: parityDefinition.sha256,
+      pg17_source_hash_matches: definitionHashVariants.find((row) => row.kind === "function" && row.name === "vehicle_serving_parity_check")?.source_hash_matches_candidate === true,
+      behavior: behaviorDiff(parityFunctionBefore, parityFunctionAfter),
+    },
+    repository_definition_mismatches: repositorySchemaAclComparison.mismatches.map((row: any) => row.key),
+    source_definition_replay_restored_schema_parity: sourceSchemaAclComparison.mismatches.length === 0,
+  };
   const sourceDataMismatch = baselineMismatches.length > 0 || columnFingerprintMismatches.length > 0;
-  if (sourceDataMismatch || sourceSchemaAclComparison.mismatches.length) {
+  if (sourceDataMismatch || sourceSchemaAclComparison.mismatches.length
+      || definitionHashVariants.some((row) => row.source_hash_matches_candidate !== true)
+      || !!seedFunctionAfter.error || !!parityFunctionAfter.error
+      || (seedFunctionAfter.rows ?? []).some((row) => row.ok === false) || (parityFunctionAfter.rows ?? []).some((row) => row.ok === false)) {
     const result = sourceDataMismatch ? "FULL_CATALOG_ACCEPTANCE_BLOCKED_SOURCE_FINGERPRINT_MISMATCH" : "FULL_CATALOG_ACCEPTANCE_BLOCKED_SCHEMA_ACL_MISMATCH";
     const blockedReason = sourceDataMismatch
       ? "Fail-closed before Phase 1C: restored source aggregate or per-column fingerprints differ from the unchanged authorized baseline. No expected hash was changed or suppressed."
-      : `Fail-closed before Phase 1C: data fingerprints match, but ${sourceSchemaAclComparison.mismatches.length} source view/function definition digests differ. The source diagnostic is PostgreSQL 17 while this pinned rehearsal uses PostgreSQL 16.10; the diagnostic warns that these MD5s can vary by engine and supplies no source DDL to resolve the differences. No Phase1C SQL was applied.`;
+      : `Fail-closed before Phase 1C: data fingerprints match, but the authoritative source function replay did not establish exact schema-definition parity or both source validation functions did not pass. No expected hash was changed or suppressed; no Phase1C SQL was applied.`;
     const blockedReport={schema:"tdr.vehicle-db.issue244.full-catalog-postgres-acceptance.v1",executed_at_utc:new Date().toISOString(),
       exact_command:"TDR_VM_PRIVATE_BACKUP_GZIP=<private path> npm run check:phase1d-full-catalog-postgres",docker_image:image,
-      database:"PostgreSQL 16.10; Docker network=none; tmpfs-only; no published port",
+      database:`PostgreSQL ${pg("SELECT current_setting('server_version')")}; Docker network=none; tmpfs-only; no published port`,
       private_input:{available:true,gzip_sha256:expectedGzipSha,payload_sha256:expectedPayloadSha,tables:15,rows:28319,raw_backup_pushed:false},
       baseline:{source_hash_manifest:"Owner Context Handoff 2026-10-14 aggregate counts and MD5; unchanged expected values",repository_v57_v64_restore:true,
         decompressed_source_sha256:digest(restoreJsonBytes),restore_file_sha256:digest(fs.readFileSync(restoreInputPath)),source_schema_acl_manifest:schemaDiagnosticPath,
@@ -310,6 +410,10 @@ try {
         matching_fingerprints:columnFingerprintActual.length-columnFingerprintMismatches.length,mismatches:columnFingerprintMismatches},
       source_schema_acl_comparison:{...sourceSchemaAclComparison,effective_acl_snapshot_replayed_in_disposable_db:true,
         source_diagnostic_engine:sourceDiagnostic.source_db_engine,local_engine:`PostgreSQL ${pg("SELECT current_setting('server_version')")}`},
+      repository_schema_acl_comparison_before_source_function_replay:repositorySchemaAclComparison,
+      repository_definition_hash_variants_before_source_function_replay:repositoryDefinitionHashVariants,
+      source_function_replay:sourceFunctionReplay,
+      definition_hash_variants:definitionHashVariants,
       phase1c_applied:false,basic_models_created:0,production_or_staging_connections:0,production_or_staging_writes:0,
       frozen_owner_decisions:244,owner_ledger_sha256:frozenLedgerSha,acceptance_result:result,
       blocked_reason:blockedReason,raw_rows_in_report:false};
@@ -352,7 +456,7 @@ try {
   assert.equal(Object.keys(rawIceEvidence).length,8);
   const baseBatch = createBatch(intents,"issue244-first-eight-full-catalog","Issue 244 private full catalog acceptance",rawIceEvidence);
   const version = pg("SELECT current_setting('server_version')");
-  assert.match(version,/^16\./);
+  assert.match(version,/^17\./);
   pg(fs.readFileSync(path.join(root,"docs/vehicle-db/drafts/phase1c/basic_identity_schema.sql"),"utf8"));
   pg(fs.readFileSync(path.join(root,"docs/vehicle-db/drafts/phase1c/governed_structural_rpc.sql"),"utf8"));
   pg(`CREATE ROLE ${executor} LOGIN; CREATE ROLE ${issuer} LOGIN; GRANT vm_structural_approver TO ${executor}; GRANT vm_structural_approval_admin TO ${issuer};`);
