@@ -48,6 +48,12 @@ function launchLabel(year: number | string | null, quarter: number | string | nu
   return quarter ? `เปิดตัว Q${quarter} ${year}` : `เปิดตัว ${year}`;
 }
 
+function displayPrice(price: number | null | undefined) {
+  return typeof price === "number" && Number.isFinite(price)
+    ? `฿${Math.round(price).toLocaleString("th-TH")}`
+    : "ราคาไม่ระบุ";
+}
+
 function trimLabel(trim: TrimOption) {
   const bits = [trim.name || "รุ่นย่อย"];
   if (trim.powertrain) bits.push(trim.powertrain);
@@ -441,9 +447,7 @@ export default function ComparePage() {
                   <small>{trim.brand_name}</small>
                   <strong>{trim.model_name}</strong>
                   <span>{trim.name}</span>
-                  <span className="compareHeaderPrice">{byId.get(trim.id)?.price_baht != null
-                    ? `฿${Math.round(byId.get(trim.id)!.price_baht!).toLocaleString("th-TH")}`
-                    : "ราคาไม่ระบุ"}</span>
+                  <span className="compareHeaderPrice">{displayPrice(byId.get(trim.id)?.price_baht)}</span>
                   {launchLabel(trim.launch_year, trim.launch_quarter) ? (
                     <span className="compareLaunchMeta">{launchLabel(trim.launch_year, trim.launch_quarter)}</span>
                   ) : null}
