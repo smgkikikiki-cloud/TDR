@@ -39,6 +39,11 @@ test('PR cannot silently rewrite locked acceptance criteria',()=>{
  const r=run(f,base);assert.equal(r.status,1);assert.match(r.stdout,/LOCKED_TARGETS_CHANGED/);
  fs.rmSync(base,{recursive:true,force:true});fs.rmSync(f,{recursive:true,force:true});
 });
+test('locked work-package execution plan cannot silently change',()=>{
+ const base=createFixture(),f=createFixture();replace(f,'docs/portfolio/TDR_DATA_INFRA_EXECUTION_PLAN.md',t=>t.replace('One-upload/one-owner-action','Three-upload/three-owner-action'));
+ const r=run(f,base);assert.equal(r.status,1);assert.match(r.stdout,/LOCKED_EXECUTION_PLAN_CHANGED/);
+ fs.rmSync(base,{recursive:true,force:true});fs.rmSync(f,{recursive:true,force:true});
+});
 test('project cannot declare COMPLETE without owner signature',()=>{
  const f=createFixture();replace(f,ledger,t=>{const x=JSON.parse(t);x.overall_status='COMPLETE';return JSON.stringify(x)});
  const r=run(f);assert.equal(r.status,1);assert.match(r.stdout,/FALSE_PROJECT_COMPLETE/);fs.rmSync(f,{recursive:true,force:true});
