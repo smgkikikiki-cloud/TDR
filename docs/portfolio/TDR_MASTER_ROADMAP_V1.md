@@ -53,6 +53,17 @@ These labels are **sequence**, not fixed calendar dates. The site master, event 
 
 **Parallelization rule:** a blocker applies to its **dependent capability**, not to unrelated pure functions, UI design or read-only audits. G4 UX design can start alongside G1–G3, but cannot claim a live populated output until its sources are ready. Stage names describe delivery maturity; they are **not a single forced serial execution queue**.
 
+### W — Upcoming Cars recovery and design-alignment status (2026-10-12)
+
+**Repository snapshot / status, not a new workstream or owner design override:** Upcoming Cars is part of the original Website W lane (`design/GRAFT_PLAN.md` row 12, `design/PAGES.md` P16–P17/P27). The old `feature/upcoming-cars` branch, head `f2ed3719d4defc86f0ca1ab7450cd3bac5d3d17c` (2026-09-28), contains standalone editorial tables and Admin create/edit/hard-delete + append-only update history (legacy Chunks 1–2). **It is unmerged, had no PR at inspection, and is 258 commits behind `main`.** On `main`, `/upcoming` remains a redirect to `/models`; no public P16/P17 is implemented.
+
+**Design audit:** The owner-approved later U1–U6/P16/P17 design **does exist as text/schema requirements** (six stage values, four confidence levels, separate lifecycle/publication state, source-backed publishing, launch windows, image license, public list/detail and canonical links). **No dedicated complete Upcoming screen mockup/approved responsive previews were verified**, so visual fidelity remains an explicit preview/owner-review task. The earlier legacy Admin form instead has Rumored/Confirmed, three confidence levels, simpler dates and no publishing/source controls. These must not be mistaken for a coherent implementation of the later design. Legacy delete removes the whole car and cascades all update logs; individual log entries cannot be edited/deleted.
+
+**Migration blocker:** The old branch's `migration_v52_upcoming_cars.sql` conflicts with `main` v52; design-doc reservations `v57` Upcoming and `v58` Analysis have been superseded in practice by existing Vehicle Master migrations v57/v58 (and repository migrations run through at least v65). **No old SQL or legacy branch merge is authorized.** Verify deployed migration ledger/numbering and current security/data contract before proposing a new, separately reviewed editorial migration.
+
+**Next Codex chunk (R0 ONLY):** recover from **latest `main` on a fresh scoped branch/Draft PR**, use old branch strictly as reference, map P16/P17/P27/U1–U6 fields to permitted Admin operations and public-only DTOs, audit the migration slot and missing visual preview, prepare deterministic offline tests and a preview/contract for owner QA. **No schema application, canonical writes, production access, public route activation or R1–R3 implementation in R0.** Follow the detailed [Upcoming Cars recovery/design/Admin audit](UPCOMING_CARS_RECOVERY_AUDIT_2026-10-12.md). Any owner choice to replace the later full design with the old simplified contract requires a separately explicit decision. This dated note does not alter the owner-approved v1.0 product/release architecture.
+
+
 ## 5. Approved engine validity doctrine — not blanket formula approval
 
 Each engine must pass measurement gates M0–M5:
