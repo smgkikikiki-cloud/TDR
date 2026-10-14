@@ -1,8 +1,8 @@
--- Ice new-identity batch 'ice-2569-09-clean109' — creates 109 owner-decided models (5 alias-collision models are NOT in this file).
--- Needs v68 applied first. SAFE BY DEFAULT: it ends with ROLLBACK, so running it as-is changes nothing and only shows the result.
--- To really create: change the last line 'rollback;' to 'commit;' and run again. Undo later: select vm_revert_identity_batch('ice-2569-09-clean109');
+-- Ice new-identity batch 'ice-2569-09-all114': all 114 owner-decided models (owner confirmed the 5 alias-collision ones are new models; new brands Asia Cab and Lepas approved).
+-- Needs v68 applied first. SAFE BY DEFAULT: ends with ROLLBACK (changes nothing, only shows result).
+-- To really create: change the last line 'rollback;' to 'commit;' and run again. Undo: select vm_revert_identity_batch('ice-2569-09-all114');
 begin;
-select vm_create_identities('ice-2569-09-clean109', '[
+select vm_create_identities('ice-2569-09-all114', '[
 {
 "canonical_id": "audi.r8_spyder_v10",
 "brand_name_en": "Audi",
@@ -186,6 +186,13 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "note": "Ice owner-decided new identity [\"9f8ae7e8a2b0bcbf\"]"
 },
 {
+"canonical_id": "audi.a8l",
+"brand_name_en": "Audi",
+"name_en": "A8L",
+"status": "UNVERIFIED",
+"note": "Ice owner-decided new identity [\"owner-overlay-line:612\"]"
+},
+{
 "canonical_id": "audi.q6",
 "brand_name_en": "Audi",
 "name_en": "Audi Q6",
@@ -242,6 +249,13 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "note": "Ice owner-decided new identity [\"a6f0ebb257154abc\"]"
 },
 {
+"canonical_id": "audi.s3",
+"brand_name_en": "Audi",
+"name_en": "S3",
+"status": "UNVERIFIED",
+"note": "Ice owner-decided new identity [\"owner-overlay-line:626\"]"
+},
+{
 "canonical_id": "audi.r8",
 "brand_name_en": "Audi",
 "name_en": "Audi R8",
@@ -268,6 +282,13 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "name_en": "BMW 430i",
 "status": "UNVERIFIED",
 "note": "Ice owner-decided new identity [\"owner-overlay-line:662\"]"
+},
+{
+"canonical_id": "bmw.530e",
+"brand_name_en": "Bmw",
+"name_en": "530e",
+"status": "UNVERIFIED",
+"note": "Ice owner-decided new identity [\"owner-overlay-line:665\"]"
 },
 {
 "canonical_id": "bmw.630i",
@@ -310,6 +331,13 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "name_en": "X2",
 "status": "UNVERIFIED",
 "note": "Ice owner-decided new identity [\"owner-overlay-line:693\"]"
+},
+{
+"canonical_id": "byd.e6",
+"brand_name_en": "Byd",
+"name_en": "e6",
+"status": "UNVERIFIED",
+"note": "Ice owner-decided new identity [\"owner-overlay-line:700\"]"
 },
 {
 "canonical_id": "chery.q",
@@ -543,6 +571,13 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "note": "Ice owner-decided new identity [\"owner-overlay-line:945\"]"
 },
 {
+"canonical_id": "mercedes_benz.e300",
+"brand_name_en": "Mercedes Benz",
+"name_en": "E300",
+"status": "UNVERIFIED",
+"note": "Ice owner-decided new identity [\"owner-overlay-line:948\"]"
+},
+{
 "canonical_id": "mercedes_benz.mercedes_benz_eqb_class",
 "brand_name_en": "Mercedes Benz",
 "name_en": "Mercedes-Benz EQB-Class",
@@ -767,5 +802,4 @@ select vm_create_identities('ice-2569-09-clean109', '[
 "note": "Ice owner-decided new identity [\"owner-overlay-line:1199\"]"
 }
 ]'::jsonb, 'owner');
--- then (only after a real commit) run:  select ice_scoped_promote_pending();
 rollback;
