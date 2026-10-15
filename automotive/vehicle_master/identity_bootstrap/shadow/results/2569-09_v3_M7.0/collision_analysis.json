@@ -1,0 +1,3046 @@
+[
+ {
+  "brand": "AUDI",
+  "collision_signal": true,
+  "id": "audi-audi-a8l",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Audi A8L",
+  "non_contradiction_relations": [],
+  "pool_size": 17,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS",
+   "LEGACY_R6_AUTO_MATCH",
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a1",
+    "tdr_tokens": [
+     "a1"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a4",
+    "tdr_tokens": [
+     "a4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a5",
+    "tdr_tokens": [
+     "a5"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "AUDI",
+  "collision_signal": true,
+  "id": "audi-audi-s3",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "AUDI S3",
+  "non_contradiction_relations": [],
+  "pool_size": 17,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a1",
+    "tdr_tokens": [
+     "a1"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a4",
+    "tdr_tokens": [
+     "a4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "audi.a5",
+    "tdr_tokens": [
+     "a5"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BENTLEY",
+  "collision_signal": false,
+  "id": "bentley-bentley-continental",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Bentley Continental",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bentley.bentayga",
+    "tdr_tokens": [
+     "bentayga"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bentley.flying_spur",
+    "tdr_tokens": [
+     "flying",
+     "spur"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BMW",
+  "collision_signal": false,
+  "id": "bmw-bmw-m2",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "BMW M2",
+  "non_contradiction_relations": [],
+  "pool_size": 22,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.2_series_gran_coupe",
+    "tdr_tokens": [
+     "2",
+     "gran",
+     "coupe"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.4_series",
+    "tdr_tokens": [
+     "4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.7_series",
+    "tdr_tokens": [
+     "7"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BMW",
+  "collision_signal": false,
+  "id": "bmw-bmw-m3",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "BMW M3",
+  "non_contradiction_relations": [],
+  "pool_size": 22,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.2_series_gran_coupe",
+    "tdr_tokens": [
+     "2",
+     "gran",
+     "coupe"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.4_series",
+    "tdr_tokens": [
+     "4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.7_series",
+    "tdr_tokens": [
+     "7"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BMW",
+  "collision_signal": false,
+  "id": "bmw-bmw-m4",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "BMW M4",
+  "non_contradiction_relations": [],
+  "pool_size": 22,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.2_series_gran_coupe",
+    "tdr_tokens": [
+     "2",
+     "gran",
+     "coupe"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.4_series",
+    "tdr_tokens": [
+     "4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.7_series",
+    "tdr_tokens": [
+     "7"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BMW",
+  "collision_signal": false,
+  "id": "bmw-bmw-m5",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "BMW M5",
+  "non_contradiction_relations": [],
+  "pool_size": 22,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.2_series_gran_coupe",
+    "tdr_tokens": [
+     "2",
+     "gran",
+     "coupe"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.4_series",
+    "tdr_tokens": [
+     "4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.7_series",
+    "tdr_tokens": [
+     "7"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BMW",
+  "collision_signal": false,
+  "id": "bmw-x2",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "BMW X2",
+  "non_contradiction_relations": [],
+  "pool_size": 22,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.2_series_gran_coupe",
+    "tdr_tokens": [
+     "2",
+     "gran",
+     "coupe"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.4_series",
+    "tdr_tokens": [
+     "4"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "bmw.7_series",
+    "tdr_tokens": [
+     "7"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "BYD",
+  "collision_signal": true,
+  "id": "byd-e6",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "e6",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "byd.atto1",
+    "tdr_tokens": [
+     "atto",
+     "1"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "byd.atto2",
+    "tdr_tokens": [
+     "atto",
+     "2"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "byd.atto3",
+    "tdr_tokens": [
+     "atto",
+     "3"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "CHEVROLET",
+  "collision_signal": false,
+  "id": "chevrolet-chevrolet-corvette",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Chevrolet Corvette",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.captiva",
+    "tdr_tokens": [
+     "captiva"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.colorado_c_cab",
+    "tdr_tokens": [
+     "colorado",
+     "c",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.colorado_x_cab",
+    "tdr_tokens": [
+     "colorado",
+     "x",
+     "cab"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "CHEVROLET",
+  "collision_signal": false,
+  "id": "chevrolet-trailblazer",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Chevrolet Trailblazer",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.captiva",
+    "tdr_tokens": [
+     "captiva"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.colorado_c_cab",
+    "tdr_tokens": [
+     "colorado",
+     "c",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "chevrolet.colorado_x_cab",
+    "tdr_tokens": [
+     "colorado",
+     "x",
+     "cab"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "DAIHATSU",
+  "collision_signal": false,
+  "id": "daihatsu-daihatsu-copen",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Daihatsu Copen",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "daihatsu.hijet",
+    "tdr_tokens": [
+     "hijet"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "DAIHATSU",
+  "collision_signal": false,
+  "id": "daihatsu-daihatsu-move",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Daihatsu Move",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "daihatsu.hijet",
+    "tdr_tokens": [
+     "hijet"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FERRARI",
+  "collision_signal": false,
+  "id": "ferrari-ferrari-488",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Ferrari 488",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.12cilindri",
+    "tdr_tokens": [
+     "12cilindri"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.296",
+    "tdr_tokens": [
+     "296"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.f8",
+    "tdr_tokens": [
+     "f8"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FERRARI",
+  "collision_signal": false,
+  "id": "ferrari-ferrari-portofino",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Ferrari Portofino",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.12cilindri",
+    "tdr_tokens": [
+     "12cilindri"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.296",
+    "tdr_tokens": [
+     "296"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.f8",
+    "tdr_tokens": [
+     "f8"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FERRARI",
+  "collision_signal": false,
+  "id": "ferrari-ferrari-purosangue",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Ferrari Purosangue",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.12cilindri",
+    "tdr_tokens": [
+     "12cilindri"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.296",
+    "tdr_tokens": [
+     "296"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ferrari.f8",
+    "tdr_tokens": [
+     "f8"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FORD",
+  "collision_signal": false,
+  "id": "ford-ford-focus",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "FORD Focus",
+  "non_contradiction_relations": [],
+  "pool_size": 4,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ford.everest",
+    "tdr_tokens": [
+     "everest"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ford.mustang",
+    "tdr_tokens": [
+     "mustang"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "ford.ranger_cab",
+    "tdr_tokens": [
+     "ranger",
+     "cab"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FOTON",
+  "collision_signal": false,
+  "id": "foton-bj1041",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Foton BJ1041",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "foton.foton_truck",
+    "tdr_tokens": [
+     "truck"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "foton.miler_iblue_65",
+    "tdr_tokens": [
+     "miler",
+     "iblue",
+     "65"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "FOTON",
+  "collision_signal": false,
+  "id": "foton-eview",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Foton eView",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "foton.foton_truck",
+    "tdr_tokens": [
+     "truck"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "foton.miler_iblue_65",
+    "tdr_tokens": [
+     "miler",
+     "iblue",
+     "65"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-brio",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Brio",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-honda-acty",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Honda Acty",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-honda-amaze",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Honda Amaze",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-honda-freed",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Honda Freed",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-honda-n-box",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Honda N-BOX",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-prelude",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Prelude",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HONDA",
+  "collision_signal": false,
+  "id": "honda-super-one",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Honda Super-ONE",
+  "non_contradiction_relations": [],
+  "pool_size": 13,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.accord",
+    "tdr_tokens": [
+     "accord"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.brv",
+    "tdr_tokens": [
+     "br",
+     "v"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "honda.city",
+    "tdr_tokens": [
+     "city"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HYUNDAI",
+  "collision_signal": false,
+  "id": "hyundai-genesis-g80",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Genesis G80",
+  "non_contradiction_relations": [],
+  "pool_size": 9,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.creta",
+    "tdr_tokens": [
+     "creta"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.grand_starex",
+    "tdr_tokens": [
+     "grand",
+     "starex"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.h_1",
+    "tdr_tokens": [
+     "h",
+     "1"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HYUNDAI",
+  "collision_signal": false,
+  "id": "hyundai-kona",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Kona",
+  "non_contradiction_relations": [],
+  "pool_size": 9,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.creta",
+    "tdr_tokens": [
+     "creta"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.grand_starex",
+    "tdr_tokens": [
+     "grand",
+     "starex"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.h_1",
+    "tdr_tokens": [
+     "h",
+     "1"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "HYUNDAI",
+  "collision_signal": false,
+  "id": "hyundai-tucson",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Tucson",
+  "non_contradiction_relations": [],
+  "pool_size": 9,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.creta",
+    "tdr_tokens": [
+     "creta"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.grand_starex",
+    "tdr_tokens": [
+     "grand",
+     "starex"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "hyundai.h_1",
+    "tdr_tokens": [
+     "h",
+     "1"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "ISUZU",
+  "collision_signal": true,
+  "id": "isuzu-isuzu-cab4",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Isuzu CAB4",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "isuzu.dmax_cab",
+    "tdr_tokens": [
+     "d",
+     "max",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "isuzu.dmax_double_cab",
+    "tdr_tokens": [
+     "d",
+     "max",
+     "double",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "isuzu.isuzu_elf",
+    "tdr_tokens": [
+     "elf"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "JAC",
+  "collision_signal": false,
+  "id": "jac-t8",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "JAC T8",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jac.jac_truck",
+    "tdr_tokens": [
+     "truck"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "JAECOO",
+  "collision_signal": true,
+  "id": "jaecoo-jaecoo-j5",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Jaecoo J5",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_5_ev",
+    "tdr_tokens": [
+     "5",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6_ev",
+    "tdr_tokens": [
+     "6",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6t_ev",
+    "tdr_tokens": [
+     "6t",
+     "ev"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "JAECOO",
+  "collision_signal": false,
+  "id": "jaecoo-jaecoo-j6",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Jaecoo J6",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_5_ev",
+    "tdr_tokens": [
+     "5",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6_ev",
+    "tdr_tokens": [
+     "6",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6t_ev",
+    "tdr_tokens": [
+     "6t",
+     "ev"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "JAECOO",
+  "collision_signal": true,
+  "id": "jaecoo-jaecoo-j7",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Jaecoo J7",
+  "non_contradiction_relations": [],
+  "pool_size": 5,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS",
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_5_ev",
+    "tdr_tokens": [
+     "5",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6_ev",
+    "tdr_tokens": [
+     "6",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jaecoo.jaecoo_6t_ev",
+    "tdr_tokens": [
+     "6t",
+     "ev"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "JEEP",
+  "collision_signal": false,
+  "id": "jeep-jeep-gladiator",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "JEEP Gladiator",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "jeep.wrangler",
+    "tdr_tokens": [
+     "wrangler"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "KIA",
+  "collision_signal": false,
+  "id": "kia-k2500",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Kia K2500",
+  "non_contradiction_relations": [],
+  "pool_size": 6,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "kia.carnival",
+    "tdr_tokens": [
+     "carnival"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "kia.ev5",
+    "tdr_tokens": [
+     "ev5"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "kia.ev6",
+    "tdr_tokens": [
+     "ev6"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "LAMBORGHINI",
+  "collision_signal": false,
+  "id": "lamborghini-lamborghini-temerario",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Lamborghini Temerario",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lamborghini.huracan",
+    "tdr_tokens": [
+     "huracan"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lamborghini.revuelto",
+    "tdr_tokens": [
+     "revuelto"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lamborghini.urus",
+    "tdr_tokens": [
+     "urus"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "LAND ROVER",
+  "collision_signal": false,
+  "id": "land-rover-land-rover-discovery",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Land Rover Discovery",
+  "non_contradiction_relations": [],
+  "pool_size": 4,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "land_rover.defender",
+    "tdr_tokens": [
+     "defender"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "land_rover.range_rover",
+    "tdr_tokens": [
+     "range",
+     "rover"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "land_rover.range_rover_sport",
+    "tdr_tokens": [
+     "range",
+     "rover",
+     "sport"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "LEXUS",
+  "collision_signal": false,
+  "id": "lexus-lexus-rc",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Lexus RC",
+  "non_contradiction_relations": [],
+  "pool_size": 11,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lexus.lbx",
+    "tdr_tokens": [
+     "lbx"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lexus.lc",
+    "tdr_tokens": [
+     "lc"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lexus.lexus_es",
+    "tdr_tokens": [
+     "es"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "LOTUS",
+  "collision_signal": false,
+  "id": "lotus-emira",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Lotus Emira",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lotus.eletre",
+    "tdr_tokens": [
+     "eletre"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "lotus.emeya",
+    "tdr_tokens": [
+     "emeya"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MASERATI",
+  "collision_signal": false,
+  "id": "maserati-maserati-ghibli",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Maserati Ghibli",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.granturismo",
+    "tdr_tokens": [
+     "granturismo"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.grecale",
+    "tdr_tokens": [
+     "grecale"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.levante",
+    "tdr_tokens": [
+     "levante"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MASERATI",
+  "collision_signal": false,
+  "id": "maserati-maserati-mc20",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Maserati MC20",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.granturismo",
+    "tdr_tokens": [
+     "granturismo"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.grecale",
+    "tdr_tokens": [
+     "grecale"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.levante",
+    "tdr_tokens": [
+     "levante"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MASERATI",
+  "collision_signal": false,
+  "id": "maserati-maserati-quattroporte",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Maserati Quattroporte",
+  "non_contradiction_relations": [],
+  "pool_size": 3,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.granturismo",
+    "tdr_tokens": [
+     "granturismo"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.grecale",
+    "tdr_tokens": [
+     "grecale"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "maserati.levante",
+    "tdr_tokens": [
+     "levante"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MG",
+  "collision_signal": true,
+  "id": "maxus-maxus-v80",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Maxus V80",
+  "non_contradiction_relations": [],
+  "pool_size": 18,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CROSS_BRAND"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mg.mg3",
+    "tdr_tokens": [
+     "mg3"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mg.mg4",
+    "tdr_tokens": [
+     "mg4",
+     "electric"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mg.mg5",
+    "tdr_tokens": [
+     "mg5"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MAZDA",
+  "collision_signal": false,
+  "id": "mazda-mazda-mx-30",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Mazda MX-30",
+  "non_contradiction_relations": [],
+  "pool_size": 12,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.5,
+    "tdr": "mazda.cx30",
+    "tdr_tokens": [
+     "cx",
+     "30"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.5,
+    "tdr": "mazda.mx_5",
+    "tdr_tokens": [
+     "mx",
+     "5"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mazda.bt50_cab",
+    "tdr_tokens": [
+     "bt",
+     "50",
+     "cab"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MAZDA",
+  "collision_signal": false,
+  "id": "mazda-mazda6e",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Mazda6e",
+  "non_contradiction_relations": [],
+  "pool_size": 12,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mazda.bt50_cab",
+    "tdr_tokens": [
+     "bt",
+     "50",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mazda.bt50_double_cab",
+    "tdr_tokens": [
+     "bt",
+     "50",
+     "double",
+     "cab"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mazda.cx3",
+    "tdr_tokens": [
+     "cx",
+     "3"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "MCLAREN",
+  "collision_signal": false,
+  "id": "mclaren-mclaren-artura",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Mclaren Artura",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "mclaren.gts",
+    "tdr_tokens": [
+     "gts"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-leaf",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Leaf",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-nissan-be-1",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Nissan BE-1",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-nissan-fairlady",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Nissan Fairlady",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-nissan-march",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Nissan March",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-note",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Nissan Note",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "NISSAN",
+  "collision_signal": false,
+  "id": "nissan-urvan",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Nissan Urvan",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.almera",
+    "tdr_tokens": [
+     "almera"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.gtr",
+    "tdr_tokens": [
+     "gt",
+     "r"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "nissan.kicks",
+    "tdr_tokens": [
+     "kicks",
+     "e",
+     "power"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "PEUGEOT",
+  "collision_signal": false,
+  "id": "peugeot-peugeot-408",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Peugeot 408",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "peugeot.peugeot_2008",
+    "tdr_tokens": [
+     "2008"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "peugeot.peugeot_3008",
+    "tdr_tokens": [
+     "3008"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "PEUGEOT",
+  "collision_signal": false,
+  "id": "peugeot-peugeot-5008",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Peugeot 5008",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "peugeot.peugeot_2008",
+    "tdr_tokens": [
+     "2008"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "peugeot.peugeot_3008",
+    "tdr_tokens": [
+     "3008"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "ROLLS ROYCE",
+  "collision_signal": false,
+  "id": "rolls-royce-rolls-royce-cullinan",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Rolls-Royce Cullinan",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "rolls_royce.ghost",
+    "tdr_tokens": [
+     "ghost"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "ROLLS ROYCE",
+  "collision_signal": false,
+  "id": "rolls-royce-rolls-royce-phantom",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Rolls-Royce Phantom",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "rolls_royce.ghost",
+    "tdr_tokens": [
+     "ghost"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "ROLLS ROYCE",
+  "collision_signal": false,
+  "id": "rolls-royce-rolls-royce-spectre",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Rolls-Royce Spectre",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "rolls_royce.ghost",
+    "tdr_tokens": [
+     "ghost"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SERES",
+  "collision_signal": false,
+  "id": "seres-seres-ec31",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Seres EC31",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "seres.seres_3",
+    "tdr_tokens": [
+     "3"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SOKON",
+  "collision_signal": false,
+  "id": "sokon-crc50",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Sokon CRC50",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "sokon.sokon_ec35",
+    "tdr_tokens": [
+     "ec35"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SUBARU",
+  "collision_signal": false,
+  "id": "subaru-subaru-wrx",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Subaru WRX",
+  "non_contradiction_relations": [],
+  "pool_size": 4,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "subaru.brz",
+    "tdr_tokens": [
+     "brz"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "subaru.crosstrek",
+    "tdr_tokens": [
+     "crosstrek"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "subaru.forester",
+    "tdr_tokens": [
+     "forester"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SUZUKI",
+  "collision_signal": false,
+  "id": "suzuki-apv",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "APV",
+  "non_contradiction_relations": [],
+  "pool_size": 8,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.celerio",
+    "tdr_tokens": [
+     "celerio"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ciaz",
+    "tdr_tokens": [
+     "ciaz"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ertiga",
+    "tdr_tokens": [
+     "ertiga"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SUZUKI",
+  "collision_signal": false,
+  "id": "suzuki-grand-vitara",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Grand Vitara",
+  "non_contradiction_relations": [],
+  "pool_size": 8,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.celerio",
+    "tdr_tokens": [
+     "celerio"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ciaz",
+    "tdr_tokens": [
+     "ciaz"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ertiga",
+    "tdr_tokens": [
+     "ertiga"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "SUZUKI",
+  "collision_signal": false,
+  "id": "suzuki-suzuki-spacia",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Suzuki Spacia",
+  "non_contradiction_relations": [],
+  "pool_size": 8,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.celerio",
+    "tdr_tokens": [
+     "celerio"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ciaz",
+    "tdr_tokens": [
+     "ciaz"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "suzuki.ertiga",
+    "tdr_tokens": [
+     "ertiga"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "TATA",
+  "collision_signal": false,
+  "id": "tata-tata-xenon",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "TATA Xenon",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "tata.tata_super_ace",
+    "tdr_tokens": [
+     "super",
+     "ace"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "TOYOTA",
+  "collision_signal": false,
+  "id": "toyota-toyota-roomy",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Toyota Roomy",
+  "non_contradiction_relations": [],
+  "pool_size": 30,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.alphard",
+    "tdr_tokens": [
+     "alphard"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.avanza",
+    "tdr_tokens": [
+     "avanza"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.bz4x",
+    "tdr_tokens": [
+     "bz4x"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "TOYOTA",
+  "collision_signal": false,
+  "id": "toyota-toyota-sienta",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Toyota Sienta",
+  "non_contradiction_relations": [],
+  "pool_size": 30,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.alphard",
+    "tdr_tokens": [
+     "alphard"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.avanza",
+    "tdr_tokens": [
+     "avanza"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.bz4x",
+    "tdr_tokens": [
+     "bz4x"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "TOYOTA",
+  "collision_signal": false,
+  "id": "toyota-toyota-tr",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Toyota TR",
+  "non_contradiction_relations": [],
+  "pool_size": 30,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.alphard",
+    "tdr_tokens": [
+     "alphard"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.avanza",
+    "tdr_tokens": [
+     "avanza"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.bz4x",
+    "tdr_tokens": [
+     "bz4x"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "TOYOTA",
+  "collision_signal": false,
+  "id": "toyota-vios",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Vios",
+  "non_contradiction_relations": [],
+  "pool_size": 30,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.alphard",
+    "tdr_tokens": [
+     "alphard"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.avanza",
+    "tdr_tokens": [
+     "avanza"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "toyota.bz4x",
+    "tdr_tokens": [
+     "bz4x"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-volkswagen-caddy",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volkswagen Caddy",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-volkswagen-golf",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volkswagen Golf",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": true,
+  "id": "volkswagen-volkswagen-multivan",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volkswagen Multivan",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-volkswagen-t-roc",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volkswagen T-ROC",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-volkswagen-touareg",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volkswagen Touareg",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": true,
+  "id": "volkswagen-vw-idbuzz",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "VW ID.Buzz",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-vw-t-cross",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "VW T-Cross",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLKSWAGEN",
+  "collision_signal": false,
+  "id": "volkswagen-vw-tiguan",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "VW Tiguan",
+  "non_contradiction_relations": [],
+  "pool_size": 1,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volkswagen.caravelle",
+    "tdr_tokens": [
+     "caravelle"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLT",
+  "collision_signal": false,
+  "id": "volt-volt-volt",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "VOLT Volt",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volt.volt_for_four",
+    "tdr_tokens": [
+     "for",
+     "four"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volt.volt_for_two",
+    "tdr_tokens": [
+     "for",
+     "two"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "VOLVO",
+  "collision_signal": false,
+  "id": "volvo-volvo-es90",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Volvo ES90",
+  "non_contradiction_relations": [],
+  "pool_size": 10,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volvo.ec40",
+    "tdr_tokens": [
+     "ec40"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volvo.ex30",
+    "tdr_tokens": [
+     "ex30"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "volvo.ex40",
+    "tdr_tokens": [
+     "ex40"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "WULING",
+  "collision_signal": true,
+  "id": "wuling-binguo",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Binguo",
+  "non_contradiction_relations": [],
+  "pool_size": 4,
+  "review_flags": [
+   "POSSIBLE_EXISTING_IDENTITY_CATALOG_ALIAS",
+   "LEGACY_R6_AUTO_MATCH",
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_air_ev",
+    "tdr_tokens": [
+     "air",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_bingo",
+    "tdr_tokens": [
+     "bingo"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_darion",
+    "tdr_tokens": [
+     "darion",
+     "ev"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "WULING",
+  "collision_signal": false,
+  "id": "wuling-e10",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Wuling E10",
+  "non_contradiction_relations": [],
+  "pool_size": 4,
+  "review_flags": [],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_air_ev",
+    "tdr_tokens": [
+     "air",
+     "ev"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_bingo",
+    "tdr_tokens": [
+     "bingo"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "wuling.wuling_darion",
+    "tdr_tokens": [
+     "darion",
+     "ev"
+    ]
+   }
+  ]
+ },
+ {
+  "brand": "ZEEKR",
+  "collision_signal": false,
+  "id": "zeekr-zeekr-7x",
+  "ir_dry_run": [
+   "NO_CANDIDATE",
+   "NO_CANDIDATE_ALL_EXCLUDED",
+   []
+  ],
+  "name": "Zeekr 7X",
+  "non_contradiction_relations": [],
+  "pool_size": 2,
+  "review_flags": [
+   "LEGACY_R6_STRONG_PROPOSAL"
+  ],
+  "top_pool_candidates": [
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "zeekr.zeekr_009",
+    "tdr_tokens": [
+     "009"
+    ]
+   },
+   {
+    "relation": "CONTRADICTION",
+    "score": 0.0,
+    "tdr": "zeekr.zeekr_x",
+    "tdr_tokens": [
+     "x"
+    ]
+   }
+  ]
+ }
+]

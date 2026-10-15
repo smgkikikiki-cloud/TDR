@@ -1,0 +1,302 @@
+# Identity Bootstrap v1 -- machine-readable reason-code registry.
+#
+# A decision's outcome is folded from the *routes* of the codes that fired (SPEC §7.2):
+#   any HOLD code -> HOLD;  else any REVIEW code -> IDENTITY_REVIEW;  else CREATE_IDENTITY.
+# `clearable` says what, if anything, may remove a REVIEW code before folding (SPEC §6):
+#   never            nothing may clear it; a human acts through another path (bind, fix upstream, create a brand, ...)
+#   evidence         independent tier>=2 evidence attesting a model nameplate (lexical suspicions only)
+#   admin            a recorded admin structure decision bound to the review fingerprint
+#   evidence_or_admin  either of the above
+# `primary_rank`: the primary reason of a decision is the fired code of the winning route with the lowest rank.
+version: 1
+
+outcomes:
+  CREATE_IDENTITY: A minimal canonical identity shell may be created (write plan emitted).
+  IDENTITY_REVIEW: A human must decide; nothing is created and the question is queued.
+  HOLD: Nothing is created and no human decision is requested; re-evaluate when new input arrives.
+
+routes: [CREATE, REVIEW, HOLD, NONE, REFUSE]
+clearable_values: [never, evidence, admin, evidence_or_admin]
+
+codes:
+  # ---- the one positive code -------------------------------------------------------------------------------------
+  NEW_IDENTITY_CONFIRMED:
+    area: OUTCOME
+    kind: decision
+    route: CREATE
+    clearable: never
+    primary_rank: 90
+    summary: Settled, structurally clean provider identity with no credible existing counterpart; evidence tier requirement met.
+
+  # ---- activation gate (Identity Resolution hand-off) ---------------------------------------------------------------
+  NOT_ACTIVATED:
+    area: ACTIVATION
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 10
+    summary: Identity Resolution did not end in NO_CANDIDATE for this subject (it AUTO/PROPOSEd, was AMBIGUOUS, PROTECTED, SUPPRESSED or INSUFFICIENT_DATA); Bootstrap has nothing to do.
+  STRUCTURAL_CONFLICT:
+    area: ACTIVATION
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 41
+    summary: Identity Resolution raised a structural review, or subjects in this batch are structurally ambiguous with each other (equal, sibling or containing names from one provider).
+
+  # ---- state / idempotency ---------------------------------------------------------------------------------------------
+  IDENTITY_ALREADY_DISCOVERED:
+    area: STATE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 11
+    summary: This external identity is already bound to an identity, or an identity with the same brand and name key already exists in DISCOVERED/ENRICHING/VERIFIED/PUBLISHED. Idempotent no-op.
+  IDENTITY_COALESCED:
+    area: STATE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 12
+    summary: Another subject in this batch (a second provider) names the same identity; one plan creates it and carries this subject as an additional alias.
+  IDENTITY_PREVIOUSLY_WITHDRAWN:
+    area: STATE
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 46
+    summary: A WITHDRAWN identity with the same brand and name key exists; it is never silently re-created or reinstated.
+  ADMIN_DECLINED:
+    area: STATE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 15
+    summary: An admin answered the review for this exact fingerprint with DO_NOT_CREATE; it is not raised again unless the evidence changes.
+
+  # ---- provider lineage ------------------------------------------------------------------------------------------------
+  LINEAGE_CONTINUITY_EXISTING_IDENTITY:
+    area: LINEAGE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 13
+    summary: Provider lineage (rename, or a merge of ids bound to one identity) shows this subject continues an identity that already exists; a new TDR model is never created. A suggested alias binding is attached.
+  LINEAGE_UNRESOLVED:
+    area: LINEAGE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 14
+    summary: The provider's identity-change graph for this subject is cyclic or otherwise cannot be read without guessing.
+  PROVIDER_LINEAGE_AMBIGUOUS:
+    area: LINEAGE
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 47
+    summary: The subject takes part in a provider SPLIT, or in a MERGE of ids bound to different identities; whether it is a distinct TDR model is a human decision. No TDR entity is created, merged or duplicated automatically.
+
+  # ---- subject quality -------------------------------------------------------------------------------------------------
+  PROVIDER_IDENTITY_PROVISIONAL:
+    area: SUBJECT
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 20
+    summary: The provider itself marks the identity provisional (Ice '__provisional' or 'BRAND|MODEL'); wait for the provider to settle it.
+  PROVIDER_RAW_NAME:
+    area: SUBJECT
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 21
+    summary: The identity is an unresolved raw registration name or code (identity_status unmapped_name, a separator in the id, or a registration-code-shaped token).
+  NAME_UNSPECIFIED:
+    area: SUBJECT
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 22
+    summary: The name is blank, 'ไม่ระบุ', 'unknown' or an equivalent placeholder, or no token remains after brand-prefix removal.
+  BRAND_UNKNOWN:
+    area: SUBJECT
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 23
+    summary: The brand is blank, a placeholder, or cannot be resolved to a single TDR brand.
+  BRAND_NOT_IN_TDR:
+    area: SUBJECT
+    kind: flag
+    route: REVIEW
+    clearable: never
+    primary_rank: 40
+    summary: The brand is clean but TDR has no such brand. Creating a brand is a separate governed action; Bootstrap never creates one.
+
+  # ---- relation to existing / pending identities -------------------------------------------------------------------------
+  DUPLICATE_CANONICAL_SUSPECTED:
+    area: RELATION
+    kind: flag
+    route: REVIEW
+    clearable: never
+    primary_rank: 42
+    summary: The name is equal (exact, alias, token-equivalent or one-edit fuzzy) to an existing canonical model or alias of the same brand family. Bind it; do not create it.
+  EXISTING_IDENTITY_SUSPECTED:
+    area: RELATION
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 43
+    summary: The name shares a nameplate stem with an existing or pending identity (sibling names, a rename or rebadge candidate); it may be a variant, generation or alias of it.
+  PROVIDER_FINER_THAN_TDR:
+    area: RELATION
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 44
+    summary: The subject's name contains an existing TDR model's name plus extra tokens (Honda City Hatchback vs TDR City); the provider may be finer-grained than TDR's deliberate model.
+  PROVIDER_COARSER_THAN_TDR:
+    area: RELATION
+    kind: flag
+    route: REVIEW
+    clearable: admin
+    primary_rank: 45
+    summary: The subject's name is contained in an existing TDR model's name (Hilux Travo vs TDR Hilux Travo Cab); the provider aggregates what TDR splits.
+
+  # ---- shape suspicions (lexical; evidence about the real world can clear them) ---------------------------------------------
+  POSSIBLE_MODEL_CODE:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 50
+    summary: A token has the shape of a model/displacement code (E300, C350) rather than a nameplate.
+  POSSIBLE_TRIM_NOT_MODEL:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 51
+    summary: A token is a trim or grade word (Sport, Premium, Limited, Pro, Max, ...).
+  POSSIBLE_POWERTRAIN_DERIVATIVE:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 52
+    summary: A token is an engine/powertrain/drivetrain word or displacement (EV, HEV, 2.4, AWD, Diesel).
+  POSSIBLE_BODY_VARIANT:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 53
+    summary: A token is a body-style or cab word (Hatchback, Sedan, Double Cab).
+  POSSIBLE_GENERATION_VARIANT:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 54
+    summary: A token is a generation, facelift or model-year marker (Gen 2, Mk3, New, 2025).
+
+  POSSIBLE_TRUNCATED_NAME:
+    area: SHAPE
+    kind: flag
+    route: REVIEW
+    clearable: evidence_or_admin
+    primary_rank: 55
+    summary: The name remainder is a single letter or only a dangling word (Jeep Grand, Tesla Model, Chery Q); the provider may have cut the nameplate short. Soft only, never an existence rule.
+
+  # ---- evidence ----------------------------------------------------------------------------------------------------------
+  INSUFFICIENT_IDENTITY_EVIDENCE:
+    area: EVIDENCE
+    kind: gate
+    route: HOLD
+    clearable: never
+    primary_rank: 30
+    summary: The evidence presented does not reach the tier the classification of this subject requires, or the provider is not allowed to create identities, or no citable evidence reference exists.
+
+  # ---- allocation --------------------------------------------------------------------------------------------------------
+  CANONICAL_ID_COLLISION:
+    area: ALLOCATION
+    kind: flag
+    route: REVIEW
+    clearable: never
+    primary_rank: 60
+    summary: The deterministic canonical id is already taken by a different identity (or two creatable subjects in this batch derive the same id). Ids are never auto-suffixed.
+
+  # ---- informational (never decide an outcome) -------------------------------------------------------------------------------
+  FLAG_CLEARED_BY_EVIDENCE:
+    area: INFO
+    kind: info
+    route: NONE
+    clearable: never
+    primary_rank: 95
+    summary: A lexical suspicion was cleared by tier>=2 evidence attesting a model nameplate. The cleared codes are listed in the evidence basis.
+  ADMIN_STRUCTURE_DECISION_APPLIED:
+    area: INFO
+    kind: info
+    route: NONE
+    clearable: never
+    primary_rank: 96
+    summary: An admin CREATE_IDENTITY decision bound to this review fingerprint cleared admin-clearable review codes.
+  ADMIN_DECISION_CANNOT_CLEAR_HARD_FLAG:
+    area: INFO
+    kind: info
+    route: NONE
+    clearable: never
+    primary_rank: 97
+    summary: An admin directive was present but a code that no directive can clear is still firing; the directive had no effect on it.
+  MULTI_PROVIDER_CORROBORATION:
+    area: INFO
+    kind: info
+    route: NONE
+    clearable: never
+    primary_rank: 98
+    summary: Two or more providers independently named the same identity in this batch (evidence tier 1).
+
+  # ---- refusals (no decision is emitted for the run) --------------------------------------------------------------------------
+  INPUT_SCHEMA_INVALID:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 100
+    summary: The snapshot does not validate against input.schema.json.
+  INPUT_SOURCE_VERSION_MISSING:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 101
+    summary: source_version.label is empty; provenance could not be written.
+  INPUT_DUPLICATE_SUBJECT_ID:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 102
+    summary: Two subjects share (provider, entity_id).
+  INPUT_POLICY_VERSION_UNSUPPORTED:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 103
+    summary: snapshot.policy_version is not the policy version the engine holds.
+  INPUT_RESOLUTION_MISSING:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 104
+    summary: A subject carries no Identity Resolution result. Bootstrap never runs on raw provider subjects.
+  INPUT_LINEAGE_SOURCE_MISSING:
+    area: INPUT
+    kind: refusal
+    route: REFUSE
+    clearable: never
+    primary_rank: 105
+    summary: The provider declared identity changes but supplied no machine-readable lineage source; nothing is inferred from prose.

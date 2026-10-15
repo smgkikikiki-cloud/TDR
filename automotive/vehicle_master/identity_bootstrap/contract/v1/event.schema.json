@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-bootstrap:v1:event",
+  "title": "VEHICLE_IDENTITY_CREATED v1",
+  "description": "The hand-off to the enrichment subsystem. It is enqueued in the same transaction as the identity (transactional outbox), delivered at least once, and the consumer MUST be idempotent on event_id. It carries everything the enrichment bot needs to start without re-running identity discovery. provider_hints are UNVERIFIED provider claims offered as search hints; they are never written to Vehicle Master by Bootstrap.",
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "alias": {
+      "type": "object",
+      "required": ["provider", "external_id", "relation"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"type": "string", "minLength": 1},
+        "external_id": {"type": "string", "minLength": 1},
+        "relation": {"enum": ["ORIGIN", "ADDITIONAL", "RETIRED_PREDECESSOR"]}
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["event_type", "event_version", "event_id", "canonical_model_id", "canonical_name", "brand_id", "identity_state", "enrichment_state", "source", "aliases", "creation", "enrichment_hints", "occurred_at"],
+      "additionalProperties": false,
+      "properties": {
+        "event_type": {"const": "VEHICLE_IDENTITY_CREATED"},
+        "event_version": {"const": 1},
+        "event_id": {"$ref": "#/$defs/sha"},
+        "canonical_model_id": {"type": "string", "minLength": 1},
+        "canonical_name": {"type": "string", "minLength": 1},
+        "brand_id": {"type": "string", "minLength": 1},
+        "identity_state": {"const": "DISCOVERED"},
+        "enrichment_state": {"const": "PENDING"},
+        "source": {
+          "type": "object",
+          "required": ["provider", "external_id", "source_version", "first_seen_period"],
+          "additionalProperties": false,
+          "properties": {
+            "provider": {"type": "string", "minLength": 1},
+            "external_id": {"type": "string", "minLength": 1},
+            "source_version": {"type": "string", "minLength": 1},
+            "first_seen_period": {"type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"}
+          }
+        },
+        "aliases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/alias"}},
+        "creation": {
+          "type": "object",
+          "required": ["reason_codes", "decision_fingerprint", "creator_type", "evidence", "policy_version", "contract_version", "apply_mode"],
+          "additionalProperties": false,
+          "properties": {
+            "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "decision_fingerprint": {"$ref": "#/$defs/sha"},
+            "creator_type": {"enum": ["machine", "admin"]},
+            "run_id": {"type": "string"},
+            "evidence": {
+              "type": "object",
+              "required": ["tier", "kinds", "refs"],
+              "additionalProperties": false,
+              "properties": {
+                "tier": {"type": "integer", "minimum": 0},
+                "kinds": {"type": "array", "items": {"type": "string"}},
+                "refs": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+              }
+            },
+            "policy_version": {"type": "integer", "minimum": 1},
+            "contract_version": {"const": 1},
+            "apply_mode": {"enum": ["PROPOSE", "DIRECT"]}
+          }
+        },
+        "enrichment_hints": {
+          "type": "object",
+          "required": ["known_names", "excluded_neighbors", "provider_hints"],
+          "additionalProperties": false,
+          "properties": {
+            "known_names": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "excluded_neighbors": {
+              "type": "array",
+              "description": "Existing identities a human or evidence explicitly decided this is NOT. The enrichment subsystem must not merge into or duplicate them.",
+              "items": {
+                "type": "object",
+                "required": ["canonical_id", "name_relation"],
+                "additionalProperties": false,
+                "properties": {
+                  "canonical_id": {"type": "string"},
+                  "name_relation": {"type": "string"}
+                }
+              }
+            },
+            "provider_hints": {"type": "object"}
+          }
+        },
+        "occurred_at": {"type": ["string", "null"]}
+      }
+    }
+  },
+  "$ref": "#/$defs/event"
+}

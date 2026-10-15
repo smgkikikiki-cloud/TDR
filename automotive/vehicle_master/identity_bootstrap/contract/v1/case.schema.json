@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-bootstrap:v1:case",
+  "title": "Identity Bootstrap v1 -- golden corpus line",
+  "description": "One JSON object per line of cases.jsonl. kind decide = a snapshot and the expected decisions (or a refusal); apply = a sequence of writer steps against an in-memory store; allocate = the id allocator alone; lifecycle = one transition request.",
+  "$defs": {
+    "common": {
+      "type": "object",
+      "required": ["id", "kind", "title", "taxonomy", "origin", "input", "expect"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$"},
+        "kind": {"enum": ["decide", "apply", "allocate", "lifecycle"]},
+        "title": {"type": "string", "minLength": 8},
+        "taxonomy": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[A-Z]+-[0-9]{2}$"}},
+        "origin": {"enum": ["task_example", "ice_m7_data", "design"]},
+        "validate_input": {"type": "boolean"}
+      }
+    },
+    "decision_expect": {
+      "type": "object",
+      "required": ["outcome"],
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {"enum": ["CREATE_IDENTITY", "IDENTITY_REVIEW", "HOLD"]},
+        "primary_reason": {"type": "string"},
+        "reason_codes": {"type": "array", "items": {"type": "string"}},
+        "canonical_model_id": {"type": ["string", "null"]},
+        "canonical_name": {"type": ["string", "null"]},
+        "slug": {"type": ["string", "null"]},
+        "identity_state": {"type": ["string", "null"]},
+        "enrichment_state": {"type": ["string", "null"]},
+        "creator_type": {"type": ["string", "null"]},
+        "evidence_tier": {"type": ["integer", "null"]},
+        "queue": {"type": ["string", "null"]},
+        "priority_band": {"type": "string"},
+        "alert": {"type": ["string", "null"]},
+        "aliases": {"type": "array", "items": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "string"}}},
+        "first_seen_period": {"type": "string"},
+        "existing_identity": {"type": ["string", "null"]},
+        "suggested_binding_reason": {"type": ["string", "null"]},
+        "cleared_flags": {"type": "array", "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string"}}},
+        "excluded_neighbors": {"type": "array", "items": {"type": "string"}},
+        "batch_group_size": {"type": "integer", "minimum": 0},
+        "write_plan": {"type": "boolean"},
+        "event_type": {"type": ["string", "null"]},
+        "outbox_table": {"type": ["string", "null"]},
+        "apply_mode": {"type": ["string", "null"]},
+        "lock_key": {"type": ["string", "null"]},
+        "shell_columns": {"type": "array", "items": {"type": "string"}},
+        "provider_hints": {"type": "object"},
+        "precondition_kinds": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "decide_case": {
+      "type": "object",
+      "required": ["kind", "input", "expect"],
+      "properties": {
+        "kind": {"const": "decide"},
+        "input": {"type": "object"},
+        "expect": {
+          "oneOf": [
+            {"type": "object", "required": ["refusal"], "additionalProperties": false, "properties": {"refusal": {"type": "string"}}},
+            {"type": "object", "required": ["decisions"], "additionalProperties": false, "properties": {"decisions": {"type": "object", "additionalProperties": {"$ref": "#/$defs/decision_expect"}}}}
+          ]
+        }
+      }
+    },
+    "apply_case": {
+      "type": "object",
+      "required": ["kind", "input", "expect"],
+      "properties": {
+        "kind": {"const": "apply"},
+        "input": {
+          "type": "object",
+          "required": ["base", "steps"],
+          "additionalProperties": false,
+          "properties": {
+            "base": {"type": "string"},
+            "steps": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["do"], "properties": {"do": {"enum": ["apply", "insert_identity", "insert_alias"]}}}}
+          }
+        },
+        "expect": {
+          "type": "object",
+          "required": ["results", "counts"],
+          "additionalProperties": false,
+          "properties": {
+            "results": {"type": "array", "items": {"type": ["string", "null"]}},
+            "counts": {"type": "object"},
+            "redecide": {"type": "object"}
+          }
+        }
+      }
+    },
+    "allocate_case": {
+      "type": "object",
+      "required": ["kind", "input", "expect"],
+      "properties": {
+        "kind": {"const": "allocate"},
+        "input": {"type": "object", "required": ["brand_id", "display_name", "spellings", "identities"]},
+        "expect": {"type": "object", "required": ["ok"]}
+      }
+    },
+    "lifecycle_case": {
+      "type": "object",
+      "required": ["kind", "input", "expect"],
+      "properties": {
+        "kind": {"const": "lifecycle"},
+        "input": {"type": "object", "required": ["from", "to", "actor"]},
+        "expect": {"type": "object", "required": ["allowed"]}
+      }
+    },
+    "case": {
+      "allOf": [
+        {"$ref": "#/$defs/common"},
+        {"oneOf": [{"$ref": "#/$defs/decide_case"}, {"$ref": "#/$defs/apply_case"}, {"$ref": "#/$defs/allocate_case"}, {"$ref": "#/$defs/lifecycle_case"}]}
+      ]
+    }
+  },
+  "$ref": "#/$defs/case"
+}

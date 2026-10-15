@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tdr:identity-bootstrap:v1:decision",
+  "title": "Identity Bootstrap v1 -- output records",
+  "description": "Exactly one of a decision (one per subject) or a refusal (the whole run, no decisions). A decision is a pure function of (snapshot, policy): no clock, no run id, no I/O. The write plan is a PLAN; nothing in this contract writes.",
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+    "subject_ref": {
+      "type": "object",
+      "required": ["provider", "entity_id", "display_name"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"type": "string", "minLength": 1},
+        "entity_id": {"type": "string", "minLength": 1},
+        "display_name": {"type": "string"}
+      }
+    },
+    "evidence_basis": {
+      "type": "object",
+      "description": "Exactly what evidence justified (or failed to justify) creation.",
+      "required": ["tier", "kinds", "refs", "cleared_flags"],
+      "additionalProperties": false,
+      "properties": {
+        "tier": {"type": ["integer", "null"], "minimum": 0},
+        "kinds": {"type": "array", "items": {"type": "string"}},
+        "refs": {"type": "array", "items": {"type": "string"}},
+        "cleared_flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "cleared_by"],
+            "additionalProperties": false,
+            "properties": {"code": {"$ref": "#/$defs/code"}, "cleared_by": {"enum": ["evidence", "admin"]}}
+          }
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "required": ["canonical_model_id", "brand_id", "canonical_name", "slug", "identity_key", "identity_state", "enrichment_state", "allocation"],
+      "additionalProperties": false,
+      "properties": {
+        "canonical_model_id": {"type": "string", "minLength": 3},
+        "brand_id": {"type": "string", "minLength": 1},
+        "canonical_name": {"type": "string", "minLength": 1},
+        "slug": {"type": "string", "minLength": 1},
+        "identity_key": {"type": "string", "minLength": 3},
+        "identity_state": {"const": "DISCOVERED"},
+        "enrichment_state": {"const": "PENDING"},
+        "allocation": {
+          "type": "object",
+          "required": ["method", "local_segment", "collision"],
+          "additionalProperties": false,
+          "properties": {
+            "method": {"const": "BRAND_DOT_SLUG_OF_CANONICAL_NAME"},
+            "local_segment": {"type": "string", "minLength": 1},
+            "collision": {"const": false}
+          }
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["op", "idempotency_key"],
+      "additionalProperties": false,
+      "properties": {
+        "op": {"enum": ["RESERVE_CANONICAL_ID", "INSERT_IDENTITY_SHELL", "INSERT_EXTERNAL_ALIAS", "INSERT_PROVENANCE", "ENQUEUE_EVENT", "PROPOSE_ORIGIN_MAPPING"]},
+        "idempotency_key": {"$ref": "#/$defs/sha"},
+        "table": {"type": "string"},
+        "values": {"type": "object"},
+        "rows": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "precondition": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"enum": ["canonical_id_absent", "slug_absent", "identity_key_absent", "alias_absent_or_same", "brand_exists", "brand_identity_digest"]},
+        "canonical_id": {"type": "string"},
+        "slug": {"type": "string"},
+        "brand_id": {"type": "string"},
+        "identity_key": {"type": "string"},
+        "provider": {"type": "string"},
+        "external_id": {"type": "string"},
+        "digest": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "write_plan": {
+      "type": "object",
+      "required": ["plan_id", "apply_mode", "actor_kind", "required_permission", "lock_key", "preconditions", "operations", "event", "deferred_fields"],
+      "additionalProperties": false,
+      "properties": {
+        "plan_id": {"$ref": "#/$defs/sha"},
+        "apply_mode": {"enum": ["PROPOSE", "DIRECT"]},
+        "actor_kind": {"type": "string"},
+        "required_permission": {"type": "string"},
+        "lock_key": {"type": "string"},
+        "preconditions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/precondition"}},
+        "operations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/operation"}},
+        "event": {"$ref": "event.schema.json#/$defs/event"},
+        "deferred_fields": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["required", "queue", "priority_band", "alert"],
+      "additionalProperties": false,
+      "properties": {
+        "required": {"type": "boolean"},
+        "queue": {"type": ["string", "null"]},
+        "priority_band": {"type": "string"},
+        "alert": {"type": ["string", "null"]}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["record_type", "contract_version", "policy", "provider", "source_version", "subject", "outcome", "primary_reason", "reason_codes", "evidence_basis", "creator_type", "identity", "existing_identity", "suggested_binding", "batch_group", "review", "write_plan", "fingerprints"],
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {"const": "decision"},
+        "contract_version": {"const": 1},
+        "policy": {
+          "type": "object",
+          "required": ["version", "digest"],
+          "additionalProperties": false,
+          "properties": {"version": {"type": "integer"}, "digest": {"$ref": "#/$defs/sha"}}
+        },
+        "provider": {"type": "string"},
+        "source_version": {"type": "string"},
+        "subject": {"$ref": "#/$defs/subject_ref"},
+        "outcome": {"enum": ["CREATE_IDENTITY", "IDENTITY_REVIEW", "HOLD"]},
+        "primary_reason": {"$ref": "#/$defs/code"},
+        "reason_codes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/code"}},
+        "evidence_basis": {"$ref": "#/$defs/evidence_basis"},
+        "creator_type": {"enum": ["machine", "admin", null]},
+        "identity": {"anyOf": [{"$ref": "#/$defs/identity"}, {"type": "null"}]},
+        "existing_identity": {
+          "description": "The identity a HOLD/REVIEW points at (already discovered, continuity, duplicate), when exactly one is known.",
+          "type": ["string", "null"]
+        },
+        "suggested_binding": {
+          "description": "Informational. Bootstrap never binds an external id to an existing identity; that is Identity Resolution / the alias writer.",
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["canonical_id", "provider", "external_id", "reason"],
+              "additionalProperties": false,
+              "properties": {
+                "canonical_id": {"type": "string"},
+                "provider": {"type": "string"},
+                "external_id": {"type": "string"},
+                "reason": {"$ref": "#/$defs/code"}
+              }
+            }
+          ]
+        },
+        "batch_group": {"type": "array", "items": {"type": "string"}},
+        "review": {"$ref": "#/$defs/review"},
+        "write_plan": {"anyOf": [{"$ref": "#/$defs/write_plan"}, {"type": "null"}]},
+        "fingerprints": {
+          "type": "object",
+          "required": ["decision", "review", "idempotency_key", "identity_key"],
+          "additionalProperties": false,
+          "properties": {
+            "decision": {"$ref": "#/$defs/sha"},
+            "review": {"$ref": "#/$defs/sha"},
+            "idempotency_key": {"$ref": "#/$defs/sha"},
+            "identity_key": {"type": ["string", "null"]}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"outcome": {"const": "CREATE_IDENTITY"}}},
+          "then": {
+            "properties": {
+              "primary_reason": {"const": "NEW_IDENTITY_CONFIRMED"},
+              "identity": {"$ref": "#/$defs/identity"},
+              "write_plan": {"$ref": "#/$defs/write_plan"},
+              "creator_type": {"enum": ["machine", "admin"]}
+            }
+          },
+          "else": {
+            "properties": {
+              "identity": {"type": "null"},
+              "write_plan": {"type": "null"},
+              "creator_type": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "refusal": {
+      "type": "object",
+      "required": ["record_type", "contract_version", "code", "detail"],
+      "additionalProperties": false,
+      "properties": {
+        "record_type": {"const": "refusal"},
+        "contract_version": {"const": 1},
+        "code": {"$ref": "#/$defs/code"},
+        "detail": {"type": "string"}
+      }
+    },
+    "record": {"oneOf": [{"$ref": "#/$defs/decision"}, {"$ref": "#/$defs/refusal"}]}
+  },
+  "$ref": "#/$defs/record"
+}
