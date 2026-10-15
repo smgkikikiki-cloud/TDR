@@ -167,6 +167,8 @@ check("the suggest route never uses a service role", /service_role|SERVICE_ROLE|
 
 console.log("\nheader at small phones (360 regression)");
 const shell = readFileSync("app/shell.css", "utf8");
+const brandCss = readFileSync("app/brands/brands.css", "utf8");
+check("mobile A–Z jump targets meet the 44px minimum", /@media \(max-width: 767px\)[\s\S]*?\.tdr-brands-jump a, \.tdr-brands-jump span \{ min-width: 44px; min-height: 44px; \}/.test(brandCss), true);
 check("header compaction guard: <=400px shrinks the logo and tightens the controls", /@media \(max-width: 400px\)[^{]*\{[^@]*?\.tdr-logo img \{ height: 26px/.test(shell), true);
 check("Sign up / drawer guard: <=340px hides the header Sign up (the drawer still carries it)", /@media \(max-width: 340px\)[^{]*\{[^@]*?\.tdr-signup \{ display: none/.test(shell) && /tdr-signup/.test(readFileSync("components/MobileNav.tsx", "utf8")), true);
 check("right-alignment guard: the phone header keeps its controls on the right edge (nav + acts rule overridden)", /\.tdr-nav \+ \.tdr-acts \{ margin-left: auto; \}/.test(shell), true);

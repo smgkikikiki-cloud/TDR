@@ -24,7 +24,7 @@ tbody[id^="brand-"] { scroll-margin-top: 150px; }
 .tdr-brands-sk-rows { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
 @media (max-width: 767px) {
   .tdr-brands-jump { top: 64px; }
-  .tdr-brands-jump a, .tdr-brands-jump span { min-width: 40px; min-height: 40px; }
+  .tdr-brands-jump a, .tdr-brands-jump span { min-width: 44px; min-height: 44px; }
   .tdr-brands-letter th, tbody[id^="brand-"] { scroll-margin-top: 130px; }
   .tdr-brands-kpis { grid-template-columns: minmax(0, 1fr); }
 }
