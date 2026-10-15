@@ -1,0 +1,2577 @@
+{
+  "issue": 253,
+  "branch": "design/p02-p07-vehicle-ui-20261015",
+  "baseMainSha": "c6a4a09877cbdcb7759584e59ce5f9df9f854023",
+  "validatedCodeSha": "a546a5af019a1010b75e98f756685b6dd450e04f",
+  "captureSha": "a546a5af019a1010b75e98f756685b6dd450e04f",
+  "capturedAt": "2026-10-15T03:48:10.284Z",
+  "browser": {
+    "name": "Chromium",
+    "version": "154.0.8037.57",
+    "executable": "/usr/bin/chromium"
+  },
+  "runtime": {
+    "kind": "Next.js production build served locally for read-only browser QA",
+    "dataMode": "live public Vehicle Master serving views through canonical read adapters",
+    "productionWrites": 0
+  },
+  "routeMatrix": {
+    "pages": [
+      {
+        "id": "P02",
+        "url": "/models"
+      },
+      {
+        "id": "P03",
+        "url": "/models/aion-aion-y-plus"
+      },
+      {
+        "id": "P04",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev"
+      },
+      {
+        "id": "P05",
+        "url": "/brands"
+      },
+      {
+        "id": "P06",
+        "url": "/brands/byd"
+      },
+      {
+        "id": "P07",
+        "url": "/search?q=atto2"
+      }
+    ],
+    "widths": [
+      1440,
+      1024,
+      834,
+      390
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "viewportHeight": 1000,
+    "deviceScaleFactor": 1,
+    "captures": [
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2363
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3268
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3717
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 6148
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2853
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 2934
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3517
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 4337
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 3513
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3606
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3740
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 4467
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 5546
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 5591
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 5638
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 5866
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2284
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3228
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3540
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 6101
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 1440,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 1000
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 1024,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 1000
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 834,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 1000
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 390,
+        "theme": "light",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 1044
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(14, 21, 38)",
+          "bodyBackground": "rgb(255, 255, 255)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2363
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3268
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3717
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p02-models",
+        "url": "/models",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 6148
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2853
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 2934
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3517
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p03-model-detail",
+        "url": "/models/aion-aion-y-plus",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 4337
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 4,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 3513
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3606
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3740
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p04-trim-specifications",
+        "url": "/models/byd-atto2/extended_range_premium_45_1_kwh_bev",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 4467
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 0,
+        "specGroups": 6,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 5546
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 5591
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 5638
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p05-brands",
+        "url": "/brands",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 5866
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 0,
+        "brandRows": 62,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 2284
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 3228
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 3540
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p06-brand-detail",
+        "url": "/brands/byd",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 6101
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 12,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 1440,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1440,
+          "height": 1000
+        },
+        "documentWidth": 1440,
+        "clientWidth": 1440,
+        "bodyWidth": 1440,
+        "bodyClientWidth": 1440,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 1024,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 1024,
+          "height": 1000
+        },
+        "documentWidth": 1024,
+        "clientWidth": 1024,
+        "bodyWidth": 1024,
+        "bodyClientWidth": 1024,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 834,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 834,
+          "height": 1000
+        },
+        "documentWidth": 834,
+        "clientWidth": 834,
+        "bodyWidth": 834,
+        "bodyClientWidth": 834,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      },
+      {
+        "page": "p07-search",
+        "url": "/search?q=atto2",
+        "width": 390,
+        "theme": "dark",
+        "httpStatus": 200,
+        "pixels": {
+          "width": 390,
+          "height": 1044
+        },
+        "documentWidth": 390,
+        "clientWidth": 390,
+        "bodyWidth": 390,
+        "bodyClientWidth": 390,
+        "h1Count": 1,
+        "modelCards": 1,
+        "brandRows": 0,
+        "specGroups": 0,
+        "undersizedControls": 0,
+        "unnamedControls": 0,
+        "altlessImages": 0,
+        "themeColors": {
+          "text": "rgb(238, 242, 250)",
+          "bodyBackground": "rgb(10, 20, 38)"
+        }
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "screenshots/p02-models-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 2363
+        },
+        "bytes": 456675,
+        "sha256": "6dddb6e0c655bfe5363d0aa5ff4379f6f2cdf9dcd4e6c2886242eec82471be41"
+      },
+      {
+        "path": "screenshots/p02-models-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 3268
+        },
+        "bytes": 476346,
+        "sha256": "6f1cd34508e9aff3347a2eba111ece8fa25de28800db62d1114655f4b89371aa"
+      },
+      {
+        "path": "screenshots/p02-models-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 3717
+        },
+        "bytes": 508305,
+        "sha256": "b5f43ce254f5575f99821ed9b762547d489a5041f803f6fc68dc153d977c0210"
+      },
+      {
+        "path": "screenshots/p02-models-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 6148
+        },
+        "bytes": 486235,
+        "sha256": "454419e87d877a1fd1bc9e7dccdde6938bc5fbd8800c12ba851697778ae901cf"
+      },
+      {
+        "path": "screenshots/p03-model-detail-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 2853
+        },
+        "bytes": 511647,
+        "sha256": "52cd36280b6cda6f0df19d3b37b30e46f19adb375d68d520178f5084e812130b"
+      },
+      {
+        "path": "screenshots/p03-model-detail-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 2934
+        },
+        "bytes": 571418,
+        "sha256": "7b488f412f957ef9c50f0c5d93dc22292a791c5a4e5e271bb1bf11cfd60e2002"
+      },
+      {
+        "path": "screenshots/p03-model-detail-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 3517
+        },
+        "bytes": 452734,
+        "sha256": "9b1ddb85dbf0a1333cb6f2754355190a23116f0e1a34ebc207638cdd8207cdcc"
+      },
+      {
+        "path": "screenshots/p03-model-detail-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 4337
+        },
+        "bytes": 412316,
+        "sha256": "91b0b8c09ca10a02c91fc78ad372143569ea2e12b1c39a1192a527ec2af60454"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 3513
+        },
+        "bytes": 314772,
+        "sha256": "aac688c93f7b60cc93bf487fbaae13a8c0782f9d8e96ff3e74a42aa9780744af"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 3606
+        },
+        "bytes": 300215,
+        "sha256": "d1b91e8bcd37afdd57bd58f8acf36c11f1088a0defb6ba181752ebac39592137"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 3740
+        },
+        "bytes": 287414,
+        "sha256": "f9620f3f069383b110ea43d2e5b445b710d4da1e2a25ff79f0a49de474c4a873"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 4467
+        },
+        "bytes": 273712,
+        "sha256": "d844c09a2a82224a472eb188599981625473bbd83b395fc157e0436100466154"
+      },
+      {
+        "path": "screenshots/p05-brands-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 5546
+        },
+        "bytes": 307091,
+        "sha256": "d6c17e4db22a810fe0b6343e90668c8469115dca00b01910384db0f133a0b765"
+      },
+      {
+        "path": "screenshots/p05-brands-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 5591
+        },
+        "bytes": 287403,
+        "sha256": "7d10a3644199b11d3df1571d56a84f8168da8c3b775b5391d2004d25bd7627ec"
+      },
+      {
+        "path": "screenshots/p05-brands-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 5638
+        },
+        "bytes": 276376,
+        "sha256": "cf95949b51e8eccc8da31f37a72c4c55796077bbbdf340ff4e13a4e5bd5917f4"
+      },
+      {
+        "path": "screenshots/p05-brands-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 5866
+        },
+        "bytes": 255443,
+        "sha256": "cf1dd75ca0bc726033bff34dc509d17a4d34ee8d90d8c8843eb19d35c472fb19"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 2284
+        },
+        "bytes": 712098,
+        "sha256": "f2976b582d707e231d4a91fe84aefd6a0d225970cd11cfd4504b78ed70a83cd1"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 3228
+        },
+        "bytes": 757361,
+        "sha256": "7b4221d849ee2de14e7214676f53d8126c91318cda379b613c29368e6fa46003"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 3540
+        },
+        "bytes": 909007,
+        "sha256": "ad7c8feb0f742212ae8f2b50b8d71f74eba4975c2b674deb3fcc88c6d2c49d47"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 6101
+        },
+        "bytes": 826653,
+        "sha256": "79796da8c5b5217dc0cb3271412414e461a1cb2539fc5820824dc1456feee47a"
+      },
+      {
+        "path": "screenshots/p07-search-1440-light.png",
+        "width": 1440,
+        "theme": "light",
+        "pixels": {
+          "width": 1440,
+          "height": 1000
+        },
+        "bytes": 157486,
+        "sha256": "b5e364d09482f8acbe295abab91c288df2400a43233c3c3548d63355fd3883a0"
+      },
+      {
+        "path": "screenshots/p07-search-1024-light.png",
+        "width": 1024,
+        "theme": "light",
+        "pixels": {
+          "width": 1024,
+          "height": 1000
+        },
+        "bytes": 166899,
+        "sha256": "906e3e3e9c2731982c7b5b0ca4da0e28968fdf129b9fed555abba918cc7e59e6"
+      },
+      {
+        "path": "screenshots/p07-search-834-light.png",
+        "width": 834,
+        "theme": "light",
+        "pixels": {
+          "width": 834,
+          "height": 1000
+        },
+        "bytes": 130372,
+        "sha256": "0853c2418bac0739007794253c5910cc3e7217cd8063c0285b9895f48db7d93f"
+      },
+      {
+        "path": "screenshots/p07-search-390-light.png",
+        "width": 390,
+        "theme": "light",
+        "pixels": {
+          "width": 390,
+          "height": 1044
+        },
+        "bytes": 115358,
+        "sha256": "371bc4277b3ba0578b8d5237a28866a1aaa263795d4590660a3ec62f87bcc6e1"
+      },
+      {
+        "path": "screenshots/p02-models-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 2363
+        },
+        "bytes": 459128,
+        "sha256": "48e746c2569351a3781208023779b98b02ca73acf6f5344732f54707e499ef18"
+      },
+      {
+        "path": "screenshots/p02-models-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 3268
+        },
+        "bytes": 479906,
+        "sha256": "122ed98031fe9b8f29ffb0ce311776fa917e076d76d1e32346a23548ec45ac81"
+      },
+      {
+        "path": "screenshots/p02-models-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 3717
+        },
+        "bytes": 510188,
+        "sha256": "f7010713953278f181bebce3431a638665007770868b6f904a38068d603dc217"
+      },
+      {
+        "path": "screenshots/p02-models-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 6148
+        },
+        "bytes": 493351,
+        "sha256": "fe27d69034a87be8fc671db4f805dd60039fb2f26dd109cb42877ff313c8024f"
+      },
+      {
+        "path": "screenshots/p03-model-detail-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 2853
+        },
+        "bytes": 516679,
+        "sha256": "35039593600a7d42aaaec10e1327bba4a0bb2cc62979ee2e54825ee7fff79b57"
+      },
+      {
+        "path": "screenshots/p03-model-detail-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 2934
+        },
+        "bytes": 576186,
+        "sha256": "e3a37048800b3588179e73a968ab71e613c463a3d819b79a7d382aff60d5b362"
+      },
+      {
+        "path": "screenshots/p03-model-detail-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 3517
+        },
+        "bytes": 456674,
+        "sha256": "09939b56df81cc3d4d375a7ca40a0863aa58b8d06e4a752a89c2630b55477727"
+      },
+      {
+        "path": "screenshots/p03-model-detail-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 4337
+        },
+        "bytes": 417553,
+        "sha256": "3d902b1d17287b9e377876dfa95ed5088c6113c0376cfd0094fd2ff3f0b18a32"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 3513
+        },
+        "bytes": 320131,
+        "sha256": "d594e05e601d179ba00a5328fd698c314c47b125cc50b06c7eadef4d1e453023"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 3606
+        },
+        "bytes": 305310,
+        "sha256": "034f0efb399858c9ec17c50705d000ffb90d273851251535844a0b4cac6f09f3"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 3740
+        },
+        "bytes": 293837,
+        "sha256": "30b35794b76ea87f4e8430d5c7370e1c1d5a49cba2c47d2f127c872318d5e54a"
+      },
+      {
+        "path": "screenshots/p04-trim-specifications-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 4467
+        },
+        "bytes": 281946,
+        "sha256": "557c3542656478bb7866683a755f55ebac7b72296525853d007d67f5d9384891"
+      },
+      {
+        "path": "screenshots/p05-brands-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 5546
+        },
+        "bytes": 311556,
+        "sha256": "af46603bf388eae32540e91dfe53cd1e8c12d48da41fff7b1636f519c4c3a22a"
+      },
+      {
+        "path": "screenshots/p05-brands-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 5591
+        },
+        "bytes": 292224,
+        "sha256": "9070f567c61a4fea8f1233975d3ec5699765388c1f56b61dc8c8bef9af4e6955"
+      },
+      {
+        "path": "screenshots/p05-brands-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 5638
+        },
+        "bytes": 281552,
+        "sha256": "8c046c3fc5e322537cb26a1c73fde477436bdb6daea01bebb0c68fb2106bdc05"
+      },
+      {
+        "path": "screenshots/p05-brands-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 5866
+        },
+        "bytes": 261094,
+        "sha256": "034579046c6dd196e40f9638b7e399ba4046b4e5270b418648644428d79aab70"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 2284
+        },
+        "bytes": 702032,
+        "sha256": "43fa64c420b73f51f41edbc5cf37501f02bd61ef1aa5f7b64eb3d3cf24139eb7"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 3228
+        },
+        "bytes": 748134,
+        "sha256": "91beb487a9645d46423f1bcba6bbb06982a84bcaec613d9e7378476de8f125f1"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 3540
+        },
+        "bytes": 894225,
+        "sha256": "7ce1ef5b54b22ee6568d9cae2bbd868ba5e30d5d42df40baf059476d9c3ae305"
+      },
+      {
+        "path": "screenshots/p06-brand-detail-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 6101
+        },
+        "bytes": 818392,
+        "sha256": "29d851346955253d2c6ba3eecd32395694d5c5d4372b13f197017098e312cc99"
+      },
+      {
+        "path": "screenshots/p07-search-1440-dark.png",
+        "width": 1440,
+        "theme": "dark",
+        "pixels": {
+          "width": 1440,
+          "height": 1000
+        },
+        "bytes": 156885,
+        "sha256": "d319cba5b002c45e741b50d4d17f5d753369f1df1bbb3dcea2984cf8498f37b0"
+      },
+      {
+        "path": "screenshots/p07-search-1024-dark.png",
+        "width": 1024,
+        "theme": "dark",
+        "pixels": {
+          "width": 1024,
+          "height": 1000
+        },
+        "bytes": 165742,
+        "sha256": "2ecf5fd7048dca5799884badfdd1716e3effeae24b1a4360dcc77f775d82b40a"
+      },
+      {
+        "path": "screenshots/p07-search-834-dark.png",
+        "width": 834,
+        "theme": "dark",
+        "pixels": {
+          "width": 834,
+          "height": 1000
+        },
+        "bytes": 129594,
+        "sha256": "4129994a428e86251e7db4d24e8427d03f3735d7da6ca5b9bf72acf4cf2edd26"
+      },
+      {
+        "path": "screenshots/p07-search-390-dark.png",
+        "width": 390,
+        "theme": "dark",
+        "pixels": {
+          "width": 390,
+          "height": 1044
+        },
+        "bytes": 115404,
+        "sha256": "c85c97c8d84f67fa2932589afffa97a83607a05678d5a0214c78878232909598"
+      }
+    ],
+    "summary": {
+      "count": 48,
+      "allHttp200": true,
+      "noHorizontalOverflow": true,
+      "oneH1Each": true,
+      "noUnnamedControls": true,
+      "allInteractiveTargetsAtLeast44": true,
+      "allRenderedImagesHaveAlt": true
+    }
+  },
+  "supplemental": {
+    "screenshots": [
+      {
+        "path": "screenshots/supplemental-upcoming-gated-empty-light.png",
+        "state": "Upcoming remains an honest owner-gated empty state",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 844
+        },
+        "bytes": 51149,
+        "sha256": "d497d924f3573a6446e73a0a6a67d70ef737501de97bb5d6e9b19e59e0da632a"
+      },
+      {
+        "path": "screenshots/supplemental-search-empty-light.png",
+        "state": "canonical search no-result state",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1327
+        },
+        "bytes": 87650,
+        "sha256": "2921f410d58b82f68a01f57729cb5c677d56d1c13757c247a3f5ef081ff4b5e9"
+      },
+      {
+        "path": "screenshots/supplemental-search-empty-query-light.png",
+        "state": "P07 empty query with canonical popular-brand/body-type suggestions",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 69122,
+        "sha256": "83cc6636311996546708ab16f1b0641bbefe0e77eafbdca539ff39ac6f688aac"
+      },
+      {
+        "path": "screenshots/supplemental-search-overlay-results-light.png",
+        "state": "P07 live suggestions from canonical Vehicle Master",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 62717,
+        "sha256": "34f022c9cc897fe95ee8fca8630297caa3759a0b3b148d1870411cb97d193726"
+      },
+      {
+        "path": "screenshots/supplemental-search-overlay-error-light.png",
+        "state": "P07 simulated 500 response; overlay exposes retry action",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 72701,
+        "sha256": "ead89f953867fb5f87252cb461344aec50b73d29c124a9088662a37c0929731d"
+      },
+      {
+        "path": "screenshots/supplemental-invalid-trim-404-light.png",
+        "state": "P04 invalid canonical trim renders framework 404/noindex under Next streamed loading boundary",
+        "theme": "light",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1324
+        },
+        "bytes": 38801,
+        "sha256": "eb61c5e05a431b35c33552ba39a5f9390e906713e754ef6dd690d659024489ed"
+      },
+      {
+        "path": "screenshots/supplemental-upcoming-gated-empty-dark.png",
+        "state": "Upcoming remains an honest owner-gated empty state",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 844
+        },
+        "bytes": 52811,
+        "sha256": "9586efad4eb6cd344407c40eccf690e0b2fe54649f1df412570a2f2170b827cf"
+      },
+      {
+        "path": "screenshots/supplemental-search-empty-dark.png",
+        "state": "canonical search no-result state",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1327
+        },
+        "bytes": 90544,
+        "sha256": "4e8eb993901ca3912dfb0724e458efdd282e580f053d1d8ad0038f580e135c66"
+      },
+      {
+        "path": "screenshots/supplemental-search-empty-query-dark.png",
+        "state": "P07 empty query with canonical popular-brand/body-type suggestions",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 71653,
+        "sha256": "ba0879a0930911f23395cf977d228452e2f314c47a8c69eae77e952316648b17"
+      },
+      {
+        "path": "screenshots/supplemental-search-overlay-results-dark.png",
+        "state": "P07 live suggestions from canonical Vehicle Master",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 64083,
+        "sha256": "17609207ff46f1514c22d1afb39cee4b6140e276f1a3955dabcec3c6f46eb61b"
+      },
+      {
+        "path": "screenshots/supplemental-search-overlay-error-dark.png",
+        "state": "P07 simulated 500 response; overlay exposes retry action",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1145
+        },
+        "bytes": 74617,
+        "sha256": "9134eccba9008b17cc90b2a7d69df4837cfb2fd35860cb810d5e363c849b4d64"
+      },
+      {
+        "path": "screenshots/supplemental-invalid-trim-404-dark.png",
+        "state": "P04 invalid canonical trim renders framework 404/noindex under Next streamed loading boundary",
+        "theme": "dark",
+        "width": 390,
+        "pixels": {
+          "width": 390,
+          "height": 1324
+        },
+        "bytes": 39829,
+        "sha256": "29fa7c0b2175a2bf9d429474e7d57c84aa687815fd346972db2fed97c6b76c1a"
+      }
+    ],
+    "checks": [
+      {
+        "check": "Aion Y Plus current and historical trims remain separated; historical list collapsed by default and contains no order links",
+        "pass": true,
+        "currentNames": [
+          "490 Premium\n63.2 kWh · BEV\n490 กม. NEDC\n฿995,900"
+        ],
+        "historicalNames": [
+          "410 Premium\nไฟฟ้าล้วน\nเลิกจำหน่ายแล้ว",
+          "490 Elite\nไฟฟ้าล้วน\nเลิกจำหน่ายแล้ว"
+        ],
+        "historicalLinkCount": 0,
+        "initiallyCollapsed": true
+      },
+      {
+        "check": "P02 Upcoming remains separated and empty under its actual R0 gate",
+        "pass": true,
+        "text": "กำลังมา\n\nยังไม่มีข้อมูลรถที่กำลังมา"
+      },
+      {
+        "check": "P07 no-result query displays an explicit empty state plus suggestions",
+        "pass": true
+      },
+      {
+        "check": "P07 live suggestion error is announced and retryable (local network failure fixture)",
+        "pass": true,
+        "errorText": "ค้นหาไม่สำเร็จ · ลองอีกครั้ง"
+      },
+      {
+        "check": "P04 invalid trim renders a not-found page and is excluded from indexing (Next streaming keeps HTTP 200)",
+        "pass": true,
+        "httpStatus": 200,
+        "notFoundText": true,
+        "noindex": true
+      },
+      {
+        "check": "P02 filter/sort/page URL preservation and browser-back restoration",
+        "pass": true,
+        "initial": "http://127.0.0.1:3000/models?body=PICKUP&sort=name&page=1",
+        "next": "/models?body=PICKUP&sort=name&page=2",
+        "roundtrip": true,
+        "back": true
+      },
+      {
+        "check": "invalid filter URL degrades safely to the catalog",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "check": "P05 keyboard brand filter then A–Z anchor navigation",
+        "pass": true,
+        "focusedLetter": "T",
+        "hash": "#brand-T"
+      },
+      {
+        "check": "Aion Y Plus current and historical trims remain separated; historical list collapsed by default and contains no order links",
+        "pass": true,
+        "currentNames": [
+          "490 Premium\n63.2 kWh · BEV\n490 กม. NEDC\n฿995,900"
+        ],
+        "historicalNames": [
+          "410 Premium\nไฟฟ้าล้วน\nเลิกจำหน่ายแล้ว",
+          "490 Elite\nไฟฟ้าล้วน\nเลิกจำหน่ายแล้ว"
+        ],
+        "historicalLinkCount": 0,
+        "initiallyCollapsed": true
+      },
+      {
+        "check": "P02 Upcoming remains separated and empty under its actual R0 gate",
+        "pass": true,
+        "text": "กำลังมา\n\nยังไม่มีข้อมูลรถที่กำลังมา"
+      },
+      {
+        "check": "P07 no-result query displays an explicit empty state plus suggestions",
+        "pass": true
+      },
+      {
+        "check": "P07 live suggestion error is announced and retryable (local network failure fixture)",
+        "pass": true,
+        "errorText": "ค้นหาไม่สำเร็จ · ลองอีกครั้ง"
+      },
+      {
+        "check": "P04 invalid trim renders a not-found page and is excluded from indexing (Next streaming keeps HTTP 200)",
+        "pass": true,
+        "httpStatus": 200,
+        "notFoundText": true,
+        "noindex": true
+      },
+      {
+        "check": "P02 filter/sort/page URL preservation and browser-back restoration",
+        "pass": true,
+        "initial": "http://127.0.0.1:3000/models?body=PICKUP&sort=name&page=1",
+        "next": "/models?body=PICKUP&sort=name&page=2",
+        "roundtrip": true,
+        "back": true
+      },
+      {
+        "check": "invalid filter URL degrades safely to the catalog",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "check": "P05 keyboard brand filter then A–Z anchor navigation",
+        "pass": true,
+        "focusedLetter": "T",
+        "hash": "#brand-T"
+      },
+      {
+        "check": "P02 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P02 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P03 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P03 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P04 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P04 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P05 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P05 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P06 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P06 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P07 light 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P07 light 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P02 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P02 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P03 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P03 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P04 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P04 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P05 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P05 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P06 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P06 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      },
+      {
+        "check": "P07 dark 1366px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1366,
+          1366,
+          1366,
+          1366
+        ]
+      },
+      {
+        "check": "P07 dark 1280px overflow regression",
+        "pass": true,
+        "dimensions": [
+          1280,
+          1280,
+          1280,
+          1280
+        ]
+      }
+    ],
+    "summary": {
+      "screenshotCount": 12,
+      "checks": 40,
+      "passed": 40,
+      "failed": 0
+    }
+  },
+  "canonicalReadEvidence": {
+    "authority": "Vehicle Master public current_* serving views; segment/body remain Vehicle Master-owned",
+    "aggregateFromLiveP02": {
+      "currentModels": 318,
+      "currentBrands": 62,
+      "assembledCkdSkdModels": 135,
+      "importedCbuModels": 142,
+      "currentTrims": 1431
+    },
+    "aggregateFromLiveP06Byd": {
+      "currentModels": 12,
+      "currentTrims": 27,
+      "priceRangeThb": {
+        "min": 429900,
+        "max": 1499000
+      }
+    },
+    "sampleModels": [
+      {
+        "canonical_id": "aion.aion_y_plus",
+        "slug": "aion-aion-y-plus",
+        "name_en": "Aion Y Plus",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "byd.atto2",
+        "slug": "byd-atto2",
+        "name_en": "Atto 2",
+        "status": "CURRENT"
+      }
+    ],
+    "sampleCurrentTrimRows": [
+      {
+        "canonical_id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+        "model_id": "aion.aion_y_plus",
+        "name": "410 Premium",
+        "status": "HISTORICAL"
+      },
+      {
+        "canonical_id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+        "model_id": "aion.aion_y_plus",
+        "name": "490 Elite",
+        "status": "HISTORICAL"
+      },
+      {
+        "canonical_id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+        "model_id": "aion.aion_y_plus",
+        "name": "490 Premium",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "model_id": "byd.atto2",
+        "name": "Extended Range Premium (45.1 kWh)",
+        "status": "CURRENT"
+      },
+      {
+        "canonical_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "model_id": "byd.atto2",
+        "name": "Standard Range Dynamic (32 kWh)",
+        "status": "CURRENT"
+      }
+    ],
+    "search": {
+      "query": "atto2",
+      "firstCanonicalResult": "/models/byd-atto2",
+      "firstSuggestion": {
+        "canonicalId": "byd.atto2",
+        "slug": "byd-atto2",
+        "name": "Atto 2",
+        "brand": "BYD"
+      },
+      "routeAndSuggestOrderingIdentical": true
+    },
+    "historicalSeparation": {
+      "modelCanonicalId": "aion.aion_y_plus",
+      "current": [
+        "490 Premium"
+      ],
+      "historical": [
+        "410 Premium",
+        "490 Elite"
+      ],
+      "historicalListCollapsedByDefault": true,
+      "historicalRowsLinkCount": 0
+    },
+    "sourceRestrictions": "Only minimal public canonical identifiers and status/name fields are recorded; no raw/private catalog dump is included."
+  },
+  "accessibility": {
+    "automatedBrowserChecks": [
+      "one H1 per rendered page",
+      "accessible names for visible buttons/forms/links",
+      "nonempty alt text on rendered images",
+      "44px measured controls and model/brand jump tiles",
+      "search dialog initial focus, tab wrapping, Escape and focus return",
+      "tablet filter sheet Escape and focus return",
+      "P05 keyboard filtering and A–Z anchor navigation",
+      "P06 source-error block has retry path (source regression assertion)"
+    ],
+    "staticCheck": "check:design token/contrast/component checks passed"
+  },
+  "interactions": [
+    {
+      "check": "search overlay initial focus, trapped tab sequence, live canonical suggestions, escape return",
+      "pass": true,
+      "focusIn": true,
+      "shiftTarget": "ดูผลทั้งหมด →",
+      "tabTarget": "ค้นหารุ่นรถหรือแบรนด์",
+      "returned": true
+    },
+    {
+      "check": "search overlay recoverable error state",
+      "pass": true
+    },
+    {
+      "check": "real current Vehicle Master model links into P08 Compare by canonical ID",
+      "pass": true,
+      "model": "Atto 2",
+      "modelPath": "/models/byd-atto2",
+      "compareHref": "/compare?models=byd.atto2"
+    },
+    {
+      "check": "tablet filter sheet Escape close and focus return",
+      "pass": true,
+      "focusReturn": true
+    },
+    {
+      "check": "page and header use same canonical search ordering",
+      "pass": true,
+      "leadingResult": "/models/byd-atto2",
+      "leadingSuggestion": {
+        "slug": "byd-atto2",
+        "name": "Atto 2",
+        "brand": "BYD"
+      }
+    },
+    {
+      "check": "canonical search no-result empty state",
+      "pass": true
+    },
+    {
+      "check": "unknown brand fails as 404",
+      "pass": true,
+      "status": 404
+    },
+    {
+      "check": "search overlay initial focus, trapped tab sequence, live canonical suggestions, escape return",
+      "pass": true,
+      "focusIn": true,
+      "shiftTarget": "ดูผลทั้งหมด →",
+      "tabTarget": "ค้นหารุ่นรถหรือแบรนด์",
+      "returned": true
+    },
+    {
+      "check": "search overlay recoverable error state",
+      "pass": true
+    },
+    {
+      "check": "real current Vehicle Master model links into P08 Compare by canonical ID",
+      "pass": true,
+      "model": "Atto 2",
+      "modelPath": "/models/byd-atto2",
+      "compareHref": "/compare?models=byd.atto2"
+    },
+    {
+      "check": "tablet filter sheet Escape close and focus return",
+      "pass": true,
+      "focusReturn": true
+    },
+    {
+      "check": "page and header use same canonical search ordering",
+      "pass": true,
+      "leadingResult": "/models/byd-atto2",
+      "leadingSuggestion": {
+        "slug": "byd-atto2",
+        "name": "Atto 2",
+        "brand": "BYD"
+      }
+    },
+    {
+      "check": "canonical search no-result empty state",
+      "pass": true
+    },
+    {
+      "check": "unknown brand fails as 404",
+      "pass": true,
+      "status": 404
+    }
+  ],
+  "checks": {
+    "npm run check": {
+      "status": "PASS",
+      "exitCode": 0
+    },
+    "npm run check:design": {
+      "status": "PASS",
+      "exitCode": 0
+    },
+    "npm run build": {
+      "status": "PASS",
+      "exitCode": 0,
+      "warning": "Non-blocking pre-existing autoprefixer warning in app/pricing/pricing.module.css:41; outside P02–P07 scope."
+    },
+    "node --experimental-strip-types scripts/check-brands-search.ts": {
+      "status": "PASS",
+      "exitCode": 0
+    },
+    "git diff --check": {
+      "status": "PASS",
+      "exitCode": 0
+    },
+    "hosted GitHub Actions": {
+      "status": "PENDING",
+      "details": "Will be checked after Draft PR creation."
+    },
+    "Vercel Preview": {
+      "status": "PENDING",
+      "details": "Will be checked after Draft PR creation."
+    }
+  },
+  "gates": {
+    "upcomingP02AndP06": "GATED: owner-approved Upcoming source/release boundary is not integrated; pages show no fabricated upcoming rows.",
+    "modelRegistrationsP03": "GATED: Ice market reader and R6–R8 remain gated; P03 uses a truthful unavailable card and no registration values.",
+    "iceCutover": "Not enabled."
+  },
+  "knownRuntimeNote": "Invalid trim/model routes render Next.js not-found UI with noindex; under the existing streaming loading boundary they return HTTP 200. Unknown brand without a loading boundary returns HTTP 404. No canonical data is shown for invalid trim.",
+  "noProductionWrites": true,
+  "failures": []
+}

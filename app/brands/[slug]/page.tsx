@@ -62,8 +62,17 @@ export default async function BrandPage({ params, searchParams }: {
   const { slug } = await params;
   const sp = normalizeParams(await searchParams);
   delete sp.brand; // the brand is the page itself, never a filter on it
-  // Looked up before the Suspense boundary so an unknown brand is a real 404, not a 200 with a not-found body.
-  const brand: any = await getCanonicalBrand(slug);
+  // Resolve before the Suspense boundary so an unknown brand is a real 404, not a 200 with a not-found body.
+  // A serving-view failure is a recoverable block error, separate from a valid query with no matching brand.
+  let brand: any;
+  try {
+    brand = await getCanonicalBrand(slug);
+  } catch {
+    return <div className="tdr-wrap">
+      <PageHead eyebrow="Vehicle Database" eyebrowLang="en" title="แบรนด์รถ" />
+      <BlockError title="แบรนด์รถ" retryHref={`/brands/${encodeURIComponent(slug)}`} />
+    </div>;
+  }
   if (!brand) notFound();
   return <Suspense key={`${slug}?${JSON.stringify(sp)}`} fallback={<ListSkeleton />}><BrandBody slug={slug} brand={brand} sp={sp} /></Suspense>;
 }
