@@ -29,12 +29,12 @@ Token-efficient use: open the reference HTML only for the section you're buildin
   - `--red-text` for emphasis only: section eyebrows, key words in headings (`<span class="hl">`), "ดูทั้งหมด →" links, free price / savings. Never body text.
 - Deltas: `--delta-up` green with ▲ and `+`; `--delta-down` red with ▼ and `−`. Arrow + sign always; never colour alone.
 - Sequential map: `--map-1…5` (light→dark). Selected province: `--accent`.
-- Diverging map: `--diverge-1` (big drop) … `--diverge-3` (≈0 or base <30) … `--diverge-5` (big rise). Legend with +/−; tap shows number.
-- Categorical charts (donut/stacked): `--chart-cat-1…5` in that order; >5 groups → "อื่นๆ"; every slice has a visible number/table.
+- Diverging map: `--diverge-1` (big drop, orange) … `--diverge-4` (≈0 or base <30) … `--diverge-7` (big rise, blue). Legend with +/−; tap shows number.
+- Categorical charts (donut/stacked): `--chart-cat-1…8` in that order; >8 groups → "อื่นๆ"; every slice has a visible number/table.
 - Dark mode from day one: `data-theme` on `<html>` + `prefers-color-scheme`. TDR logo on dark sits on a white plate.
 
 ## 4. Type
-- Headings `--font-display` (Anuphan), body `--font-sans` (IBM Plex Sans Thai), **all numbers** `--font-mono` (IBM Plex Mono) + `tabular-nums`. Load via `next/font/google`.
+- Prompt only (tokens v3, owner decision 2569-10-15): `--font-display`, `--font-sans`, `--font-mono` all resolve to Prompt; **all numbers** use `--font-mono` at weight 500–700 + `tabular-nums`. Load via `next/font/google`.
 - Body 16px (phone 15), min 12px.
 - Thai: no letter-spacing (only English uppercase eyebrows); buttons/nav/badges `nowrap`; headings `word-break: keep-all` and **no single-word last line** (wrap the tail phrase in nowrap).
 - Thousands separators; Buddhist-era dates ("ส.ค. 2569").
@@ -68,7 +68,7 @@ No horizontal overflow at 1440/1366/1280/1024/834/390 (header has overflowed at 
 - Never hard-code numbers or number-derived sentences (e.g. "รถใหม่ 35% เป็น EV แล้ว"); compute from latest period.
 - Locked content: static decorative placeholder + `tdr-tier` badge, never hidden and never real data blurred (see §10.5). Only the Analysis teaser (server-generated) may show a sharp strip.
 - `.tdr-watermark` is a deterrent, not protection: it does not stop screenshots. Say so wherever it's described.
-- Map/diverge midpoint (`--diverge-3`) and any fill under 3:1 against the page needs a 1px `--border-strong` outline (defined in tokens.json; diverge-2/3/4 and map-1/2 need it); chart slice colours in light mode are ≥3:1 vs white.
+- Map/diverge midpoint (`--diverge-4`) and any fill under 3:1 against the page needs a 1px `--border-strong` outline (defined in tokens.json; diverge-2…5 and map-1/2/3 need it); chart slice colours in light mode are ≥3:1 vs white.
 - Tier badges: `tdr-tier--free` = plan/quota "Free"; `tdr-tier--member` "สมาชิก" = Analysis report `required_tier = MEMBER`; `--pro`; `--enterprise`. Never reuse `--free` for a report's tier.
 - Freemium screens and every exported file: username watermark.
 

@@ -125,8 +125,8 @@ a.tdr-card:focus-visible { outline: 2px solid var(--brand-blue); outline-offset:
 .tdr-otp { display: flex; gap: 8px; }
 .tdr-otp .tdr-input { width: 44px; text-align: center; font-family: var(--font-mono); padding: 0; }
 
-/* Swatch and map fills. Fills under 3:1 against the page (map-1/2, diverge-2/3/4, and diverge-4 in dark
-   mode at 2.9:1) need the --border-strong outline (DESIGN §8), so every swatch and region carries it;
+/* Swatch and map fills. Fills under 3:1 against the page (map-1/2/3 and diverge-2…5, see the list printed by
+   check-design-contrast) need the --border-strong outline (DESIGN §8), so every swatch and region carries it;
    scripts/check-design-contrast.ts fails if that rule or the tokens behind it regress. */
 .tdr-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; border: 1px solid var(--border-strong); flex: none; }
 .tdr-swatch--square { width: 12px; height: 12px; }
@@ -141,11 +141,16 @@ a.tdr-card:focus-visible { outline: 2px solid var(--brand-blue); outline-offset:
 .tdr-fill-div-3 { fill: var(--diverge-3); background-color: var(--diverge-3); }
 .tdr-fill-div-4 { fill: var(--diverge-4); background-color: var(--diverge-4); }
 .tdr-fill-div-5 { fill: var(--diverge-5); background-color: var(--diverge-5); }
+.tdr-fill-div-6 { fill: var(--diverge-6); background-color: var(--diverge-6); }
+.tdr-fill-div-7 { fill: var(--diverge-7); background-color: var(--diverge-7); }
 .tdr-fill-cat-1 { fill: var(--chart-cat-1); background-color: var(--chart-cat-1); }
 .tdr-fill-cat-2 { fill: var(--chart-cat-2); background-color: var(--chart-cat-2); }
 .tdr-fill-cat-3 { fill: var(--chart-cat-3); background-color: var(--chart-cat-3); }
 .tdr-fill-cat-4 { fill: var(--chart-cat-4); background-color: var(--chart-cat-4); }
 .tdr-fill-cat-5 { fill: var(--chart-cat-5); background-color: var(--chart-cat-5); }
+.tdr-fill-cat-6 { fill: var(--chart-cat-6); background-color: var(--chart-cat-6); }
+.tdr-fill-cat-7 { fill: var(--chart-cat-7); background-color: var(--chart-cat-7); }
+.tdr-fill-cat-8 { fill: var(--chart-cat-8); background-color: var(--chart-cat-8); }
 .tdr-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12px; color: var(--ink-muted); }
 .tdr-legend li { display: inline-flex; align-items: center; gap: 6px; }
 
