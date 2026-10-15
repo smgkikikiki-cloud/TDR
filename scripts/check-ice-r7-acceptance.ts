@@ -48,7 +48,9 @@ assert.equal(byId(runR7Checks(pt), "R7-5").status, "FAIL");
 const rng = base(); rng.powertrain = [{ ...(rng.powertrain[0] as any), certainty: "range", reg_est: 100, reg_min: 90, reg_max: 140 }];
 const rngCheck = byId(runR7Checks(rng), "R7-5");
 assert.equal(rngCheck.status, "PASS");
-assert.equal((rngCheck.detail as any).groups_where_engine_displayed_value_differs_from_trend, 1); // midpoint 115 vs trend 100 is reported, not hidden
+assert.equal((rngCheck.detail as any).groups_where_engine_displayed_value_differs_from_trend, 0); // Ice's own estimate is used, so it reconciles
+const noEst = base(); noEst.powertrain = [{ ...(noEst.powertrain[0] as any), certainty: "range", reg_est: null, reg_min: 90, reg_max: 140 }];
+assert.equal((byId(runR7Checks(noEst), "R7-5").detail as any).groups_where_engine_displayed_value_differs_from_trend, 1); // midpoint 115 vs trend 100 is reported, not hidden
 
 // missing panel metadata is reported, never guessed
 const nopanel = base(); nopanel.panels = [];

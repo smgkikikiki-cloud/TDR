@@ -367,15 +367,19 @@ export type ResolvedPowertrainRow = {
 /** The §14.3 per-row display rule, exactly:
  *    exact  -> reg_est
  *    family -> reg_est, plus the required note
- *    range  -> expose reg_min..reg_max (value is their midpoint, used only for
- *              ranking/summation -- the range itself is the real display fact)
+ *    range  -> expose reg_min..reg_max (value is Ice's own reg_est when present,
+ *              else the min/max midpoint; used only for ranking/summation -- the
+ *              range itself is the real display fact)
  * Matches vehreg/ice_package.py's `_powertrain_value` convention (M2): prefer
- * reg_est, else the min/max midpoint. */
+ * reg_est, else the min/max midpoint. Ice's reg_est is what reconciles with
+ * reg_trend (SKILL step 4); the midpoint overshoots (e.g. 3 rows of 0..5 = 7.5
+ * where reg_trend says 5). */
 export function resolveIcePowertrainRow(row: IceRegPowertrainRow): ResolvedPowertrainRow {
   if (row.certainty === "range") {
     const min = row.reg_min != null ? Number(row.reg_min) : 0;
     const max = row.reg_max != null ? Number(row.reg_max) : 0;
-    return { value: (min + max) / 2, certainty: "range", reg_min: min, reg_max: max, note: null };
+    const value = row.reg_est != null ? Number(row.reg_est) : (min + max) / 2;
+    return { value, certainty: "range", reg_min: min, reg_max: max, note: null };
   }
   const value = row.reg_est != null ? Number(row.reg_est) : 0;
   return {
