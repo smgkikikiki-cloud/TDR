@@ -5,7 +5,7 @@
  *  - Any --map-N / --diverge-N fill under 3:1 against the page (in either mode) needs the --border-strong
  *    outline; design/components.css must give .tdr-swatch a 1px border and .tdr-region a non-scaling 1px
  *    stroke in that colour (a thinner outline fails). This is where the
- *    known cases are covered: map-1/2, diverge-2/3/4, and --diverge-4 in dark mode at 2.9:1.
+ *    known cases are covered: map-1/2/3 and diverge-2…5 (the script prints the exact list).
  *
  *    node --experimental-strip-types scripts/check-design-contrast.ts [path/to/components.css]
  */
@@ -51,7 +51,7 @@ for (const mode of modes) for (const [fg, bg] of textPairs) {
 // non-text marks, 3:1 against the page
 for (const mode of modes) {
   const page = get("surface-page", mode);
-  for (const name of ["border-strong", "chart-cat-1", "chart-cat-2", "chart-cat-3", "chart-cat-4", "chart-cat-5"]) {
+  for (const name of ["border-strong", "chart-cat-1", "chart-cat-2", "chart-cat-3", "chart-cat-4", "chart-cat-5", "chart-cat-6", "chart-cat-7", "chart-cat-8"]) {
     const r = ratio(get(name, mode), page);
     if (r < 3) fail(`${mode}: --${name} is ${r.toFixed(2)}:1 against the page (needs 3)`);
   }
@@ -79,15 +79,13 @@ else if (regionWidth[2] !== "px") fail(`${cssPath}: .tdr-region stroke-width mus
 else if (Number(regionWidth[1]) < 1) fail(`${cssPath}: .tdr-region outline is ${regionWidth[1]}px (needs at least 1px)`);
 if (!/vector-effect:\s*non-scaling-stroke/.test(region)) fail(`${cssPath}: .tdr-region needs vector-effect: non-scaling-stroke so 1px stays 1px when the map SVG is scaled`);
 const needsOutline: string[] = [];
-for (const prefix of ["map", "diverge"]) for (let n = 1; n <= 5; n++) {
+for (const prefix of ["map", "diverge"]) for (let n = 1; n <= (prefix === "map" ? 5 : 7); n++) {
   const name = `${prefix}-${n}`;
   for (const mode of modes) {
     const r = ratio(get(name, mode), get("surface-page", mode));
     if (r < 3) needsOutline.push(`--${name} ${mode} ${r.toFixed(2)}:1`);
   }
 }
-const d4 = ratio(get("diverge-4", "dark"), get("surface-page", "dark"));
-if (!(d4 < 3)) console.log(`  note --diverge-4 (dark) is now ${d4.toFixed(2)}:1; the outline is no longer required for it`);
 console.log(`  outlined by --border-strong (${needsOutline.length}): ${needsOutline.join(", ")}`);
 console.log(`\ndesign contrast: ${failed} failure(s)`);
 if (failed) process.exit(1);
