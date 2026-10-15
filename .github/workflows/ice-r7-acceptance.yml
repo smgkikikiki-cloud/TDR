@@ -1,0 +1,79 @@
+name: Ice R7 acceptance (read-only)
+
+# Market Track R7: checks the live imported Ice data and the owner's scoped crosswalk against the R7 list in
+# docs/market-track/ROADMAP.md. Only SELECTs. Writes nothing, switches nothing, needs no confirmation.
+
+on:
+  # Runs when this workflow file itself is pushed on the pipeline branch, so it can be used before it reaches main
+  # (a manual run is only offered by GitHub once the file is on the default branch). Read-only either way.
+  push:
+    branches: [claude/ice-monthly-pipeline]
+    paths: [".github/workflows/ice-r7-acceptance.yml"]
+  workflow_dispatch:
+    inputs:
+      period:
+        description: "Buddhist YYYY-MM to check (empty = latest import)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  r7:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Run R7 acceptance (read-only)
+        shell: bash
+        run: |
+          set +e
+          node --experimental-strip-types scripts/ice-r7-acceptance.ts ${{ inputs.period || '' }} > "${RUNNER_TEMP}/r7.json" 2> "${RUNNER_TEMP}/r7.err"
+          rc=$?
+          {
+            echo "## Ice R7 acceptance (read-only)"
+            echo
+            python3 - "${RUNNER_TEMP}/r7.json" <<'PY'
+          import json, sys
+          try:
+              r = json.load(open(sys.argv[1]))
+              print(f"**{r['status']}** - period {r['period']}, master {r['master_version']}\n")
+              for c in r["checks"]:
+                  print(f"- {c['status']} `{c['id']}` {c['label']}")
+          except Exception as e:
+              print("report could not be read:", e)
+          PY
+            [ -s "${RUNNER_TEMP}/r7.err" ] && { echo; echo '```'; head -c 3000 "${RUNNER_TEMP}/r7.err"; echo '```'; }
+          } >> "${GITHUB_STEP_SUMMARY}"
+          # Also publish every check (and any crash message) as annotations, which are readable without downloading the artifact.
+          python3 - "${RUNNER_TEMP}/r7.json" "${RUNNER_TEMP}/r7.err" <<'PY'
+          import json, sys
+          try:
+              r = json.load(open(sys.argv[1]))
+              for c in r["checks"]:
+                  level = "error" if c["status"] == "FAIL" else "notice"
+                  d = json.dumps(c["detail"], ensure_ascii=False, separators=(",", ":"))[:1800].replace("%", "%25").replace("\n", " ")
+                  print(f"::{level} title=R7 {c['id']} {c['status']}::{c['label']} | {d}")
+          except Exception as e:
+              err = open(sys.argv[2]).read()[:1500].replace("%", "%25").replace("\n", " | ")
+              print(f"::error title=R7 report missing::{e} :: {err}")
+          PY
+          exit $rc
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ice-r7-report
+          path: ${{ runner.temp }}/r7.json
+          retention-days: 30
+# check set v2: powertrain envelope

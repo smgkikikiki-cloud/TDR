@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { CompareToggle } from "@/components/models/CompareTray";
-import { bodyLabel } from "@/lib/body-labels";
+import { bodyLabel, retailStatusLabel } from "@/lib/body-labels";
 import { familyOfBody } from "@/lib/body-families";
 import { displayName } from "@/lib/display-name";
 import { POWERTRAIN_LABEL, bahtRangeText, pictureCredit, type ModelListRow } from "@/lib/models/list";
 
 export type ModelCardRow = ModelListRow & {
+  status?: unknown;
   image_url?: string | null;
   image_source_url?: string | null;
   image_source_type?: string | null;
@@ -41,6 +42,7 @@ export function ModelCard({ r, trimCount, compare = true }: { r: ModelCardRow; t
           {price ? <span className="tdr-models-price">{price}</span> : <span className="tdr-models-miss">ยังไม่ประกาศราคา</span>}
           {trimCount ? <span className="tdr-models-card__trims">{trimCount.toLocaleString("en-US")} รุ่นย่อย</span> : null}
         </div>
+        {r.status && r.status !== "CURRENT" ? <div className="tdr-models-card__tags"><span className="tdr-models-tag">{retailStatusLabel(r.status)}</span></div> : null}
         {ev || local || r.production_type === "CBU" ? (
           <div className="tdr-models-card__tags">
             {ev ? <span className="tdr-models-tag tdr-models-tag--ev">EV</span> : null}

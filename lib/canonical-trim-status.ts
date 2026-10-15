@@ -26,6 +26,13 @@ export function isCurrentLifecycleStatus(status: unknown): boolean {
   return status === "CURRENT";
 }
 
+/** Catalogue LIST rule: lifecycle-CURRENT models, plus identities created from Ice registrations
+ *  (payload.origin.source === "ice"), which carry UNVERIFIED / HISTORICAL and are shown with a status tag.
+ *  Every other non-current model stays hidden from lists exactly as before. KPIs still count CURRENT only. */
+export function isCatalogueListed(row: { status?: unknown; origin?: { source?: unknown } | null }): boolean {
+  return isCurrentLifecycleStatus(row.status) || row.origin?.source === "ice";
+}
+
 /** PUBLIC_CURRENT_TRIMS = rows from the active release whose lifecycle
  *  status is CURRENT. The one place both public trim readers
  *  (lib/canonical-data.ts, lib/compare-canonical-data.ts) narrow a raw

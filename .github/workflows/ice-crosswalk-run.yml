@@ -12,17 +12,14 @@ on:
       master_version:
         description: "Ice master_version this run is evaluated against (must equal the live import)"
         required: true
-        default: "7.0"
         type: string
-      package_path:
-        description: "Archived package in the repo that holds id_changes.csv"
+      object_path:
+        description: "Private source-imports object path of the SAME package the import workflow used (e.g. ice-market/TDR_FULL_<period>_v<n>_M<x>.zip)"
         required: true
-        default: "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip"
         type: string
       expected_sha256:
-        description: "Expected SHA256 of that archived package"
+        description: "SHA256 from Ice's delivery record, confirmed by the owner (same value as in the import run)"
         required: true
-        default: "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
         type: string
       confirm_production:
         description: "I confirm this may write the production crosswalk tables (candidates only, nothing approved)"
@@ -46,7 +43,7 @@ jobs:
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       MASTER_VERSION: ${{ inputs.master_version }}
-      PACKAGE_PATH: ${{ inputs.package_path }}
+      ICE_OBJECT_PATH: ${{ inputs.object_path }}
       EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
 
     steps:
@@ -55,21 +52,56 @@ jobs:
           ref: main
           persist-credentials: false
 
-      - name: Preflight
+      - name: Preflight credentials
         shell: bash
         run: |
           set -euo pipefail
+          # One source of truth: the package is read from the private Storage bucket, exactly like the import workflow.
+          echo "PACKAGE_PATH=${RUNNER_TEMP}/$(basename "${ICE_OBJECT_PATH}")" >> "${GITHUB_ENV}"
           if [ -z "${SUPABASE_URL}" ]; then echo "::error::SUPABASE_URL is not configured."; exit 1; fi
           if [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
             echo "::error::SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is required."; exit 1
           fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install storage client
+        run: npm ci --ignore-scripts
+
+      - name: Download the package from the private source-imports bucket
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require("fs");
+          const { createClient } = require("@supabase/supabase-js");
+          (async () => {
+            const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+            const supabase = createClient(process.env.SUPABASE_URL, key, {
+              auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+            });
+            const { data, error } = await supabase.storage.from("source-imports").download(process.env.ICE_OBJECT_PATH);
+            if (error) throw new Error(`Storage download failed: ${error.message}`);
+            const bytes = Buffer.from(await data.arrayBuffer());
+            fs.writeFileSync(process.env.PACKAGE_PATH, bytes);
+            console.log(`downloaded ${bytes.length} bytes from source-imports/${process.env.ICE_OBJECT_PATH}`);
+          })().catch((error) => { console.error(error); process.exit(1); });
+          NODE
+
+      - name: Verify exact SHA256 (must equal the owner-confirmed delivery value)
+        shell: bash
+        run: |
+          set -euo pipefail
           echo "${EXPECTED_SHA256}  ${PACKAGE_PATH}" | sha256sum -c -
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Extract id_changes.csv from the archived package
+      - name: Extract id_changes.csv from the package
         shell: bash
         run: |
           set -euo pipefail

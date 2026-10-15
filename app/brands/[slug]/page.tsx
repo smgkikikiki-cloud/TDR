@@ -6,7 +6,7 @@ import { ModelsExplorer, type ExplorerModel } from "@/components/models/ModelsEx
 import { UpcomingCards } from "@/components/upcoming/UpcomingCards";
 import { BlockEmpty, BlockError } from "@/components/models/states";
 import { getCanonicalBrand, getCanonicalModelsByBrand, getCurrentTrimCountsByModel } from "@/lib/canonical-data";
-import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
+import { isCatalogueListed, isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 import { displayName } from "@/lib/display-name";
 import { brandKpis } from "@/lib/brands";
 import { bahtRangeText, normalizeParams, type ModelsParams } from "@/lib/models/list";
@@ -19,10 +19,11 @@ import { UPCOMING_CARD_MAX, safeUpcoming, upcomingSource } from "@/lib/upcoming/
 async function BrandBody({ slug, brand, sp }: { slug: string; brand: any; sp: ModelsParams }) {
   const name = displayName(brand);
 
-  let models: ExplorerModel[], trimCounts: Map<string, number>;
+  let models: ExplorerModel[], listed: ExplorerModel[], trimCounts: Map<string, number>;
   try {
     const [rows, counts] = await Promise.all([getCanonicalModelsByBrand(brand.id), getCurrentTrimCountsByModel()]);
     models = (rows as ExplorerModel[]).filter((m) => isCurrentLifecycleStatus(m.status));
+    listed = (rows as ExplorerModel[]).filter((m) => isCatalogueListed(m as any));
     trimCounts = counts;
   } catch {
     return <div className="tdr-wrap">
@@ -46,8 +47,8 @@ async function BrandBody({ slug, brand, sp }: { slug: string; brand: any; sp: Mo
       <KpiCard label="รุ่นย่อย" value={kpi.trims} />
       <KpiCard label="ช่วงราคา" value={range || "ยังไม่ประกาศราคา"} />
     </div>
-    {models.length ? (
-      <ModelsExplorer sp={sp} current={models} brands={[]} trimCounts={trimCounts} brandCount={0} basePath={`/brands/${slug}`} fixedBrand={{ slug: brand.slug, name }} tilesToCatalogue />
+    {listed.length ? (
+      <ModelsExplorer sp={sp} current={listed} brands={[]} trimCounts={trimCounts} brandCount={0} basePath={`/brands/${slug}`} fixedBrand={{ slug: brand.slug, name }} tilesToCatalogue />
     ) : (
       <BlockEmpty title="ยังไม่มีรถของแบรนด์นี้" text={`ยังไม่มีรุ่นที่ยังจำหน่ายของ ${name} ในฐานข้อมูล`} />
     )}

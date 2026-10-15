@@ -1,0 +1,45 @@
+{
+  "schema": "tdr.ice-scoped-crosswalk-v2-acceptance-evidence.v1",
+  "source_pr229_head_sha": "872a1117b163feac42e0ce55314cd7a7408896b5",
+  "source_pr232_head_sha": "3050beb1cdad4530808177de7b9d66abb21364f3",
+  "m7_sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+  "catalog_snapshot_sha256": "22bf90654f5b117e59a6a9f73f22d91e6490d0b0b173808df26afc21ac30445c",
+  "python_runner_sha256": "a373049f31fd3a2399aad4b74c52d5258f567beaca71439adb04078b2aca6f95",
+  "outputs": [
+    {
+      "path": "m7_scoped_resolver_qa.json",
+      "sha256": "ba666d415a57ed7b37c98a1b8bf079ba3a892d0f0963d67a9eb75b85ad757410",
+      "bytes": 6504
+    },
+    {
+      "path": "m7_scoped_resolver_rows_1407.csv",
+      "sha256": "1bc905d640613d84efe499462fcd660f47d53a7c48e17a6736ff2b460d2f9215",
+      "bytes": 220049
+    },
+    {
+      "path": "materialization_plan_114.json",
+      "sha256": "e79378268d2356b7410add6b849b8d69dc4254f6edf493cc59b171d71eba9c14",
+      "bytes": 181627
+    },
+    {
+      "path": "materialization_plan_114.csv",
+      "sha256": "914e586859aff1fa1e60893d079030ba3aebcca3b028a70397cac246a619b4b7",
+      "bytes": 97802
+    },
+    {
+      "path": "real_m7_reader_totals.json",
+      "sha256": "2d9a2b01f9e3ceae1e08f11a992333caa8343eca0b3c6bec8973bc39137105e6",
+      "bytes": 2177931
+    },
+    {
+      "path": "many_to_one_target_groups.json",
+      "sha256": "88cafffe562bedce12e5fa87a36cd351c9152c4c5eb0587d1dc089d17c4db550",
+      "bytes": 3387
+    },
+    {
+      "path": "acceptance_report.md",
+      "sha256": "5bf292948bb7a4d08dfa5a7b4de6f8de327494d122c475ad013e5a3b9c49c7e9",
+      "bytes": 2720
+    }
+  ]
+}

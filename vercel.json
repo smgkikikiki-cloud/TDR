@@ -4,6 +4,7 @@
     "deploymentEnabled": {
       "main": true,
       "design/*": true,
+      "claude/ice-monthly-pipeline": true,
       "**": false
     }
   }

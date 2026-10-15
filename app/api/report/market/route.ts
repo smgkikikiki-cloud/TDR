@@ -33,6 +33,7 @@ import {
 import { normalizeRequestedMarketScopes } from "@/lib/market-scope";
 import { adminDb } from "@/lib/supabase";
 import { recordEvent } from "@/lib/telemetry";
+import { buildIceMemberMarket, iceMemberMarketEnabled, IceMemberMarketError, isIceMemberDimension } from "@/lib/ice-member-market";
 import {
   getActiveMarketPriceState,
   MARKET_PRICE_BANDS,
@@ -253,10 +254,23 @@ export async function GET(request: NextRequest) {
       }, { status: 403 });
     }
 
-    const available = await getRegistrationAvailablePeriods(ctx);
+    // Ice source (Preview, or Production once the owner sets TDR_ICE_MEMBER_CUTOVER=approved). The plan/window/comparison
+    // checks above and the single quota call below are the same ones the old source uses; only where the rows come from differs.
+    const useIce = iceMemberMarketEnabled();
+    const { registrationTypes, ...otherFilters } = filters;
+    if (useIce) {
+      if (!isIceMemberDimension(dimensionValue)) {
+        return NextResponse.json({ error: "มุมมองนี้ยังไม่มีข้อมูล Ice" }, { status: 400 });
+      }
+      if (priceBand || Object.values(otherFilters).some((v) => Array.isArray(v) && v.length)) {
+        return NextResponse.json({ error: "ตัวกรองนี้ยังไม่รองรับกับข้อมูล Ice (รองรับเฉพาะประเภททะเบียน)" }, { status: 400 });
+      }
+    }
+
+    const available = useIce ? [] : await getRegistrationAvailablePeriods(ctx);
     const currentWindow = resolveMarketWindow(period, windowValue);
     const missingCurrent = missingReportPeriods(currentWindow, available);
-    if (missingCurrent.length) {
+    if (!useIce && missingCurrent.length) {
       return NextResponse.json({
         error: "registration market window is incomplete",
         window: currentWindow,
@@ -265,7 +279,7 @@ export async function GET(request: NextRequest) {
     }
 
     const db = adminDb();
-    const priceState = db ? await getActiveMarketPriceState(db) : null;
+    const priceState = db && !useIce ? await getActiveMarketPriceState(db) : null;
     const currentPriceCoverage = await priceCoverage(priceState, currentWindow.to);
     if (priceBand && currentPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
       return NextResponse.json({
@@ -284,11 +298,44 @@ export async function GET(request: NextRequest) {
     // two requests that differ only in those must not be treated as the
     // same request and coalesce.
     const quota = await consumeMarketReportQuota(ctx, [
-      dimensionValue, windowValue, currentWindow.from, currentWindow.to,
+      useIce ? "ice" : "", dimensionValue, windowValue, currentWindow.from, currentWindow.to,
       comparisonMode ?? "", priceBand ?? "", includeUnmapped,
       limit, trendMonths,
       canonicalFilterFingerprint(filters),
     ]);
+
+    if (useIce && isIceMemberDimension(dimensionValue)) {
+      try {
+        const ice = await buildIceMemberMarket({
+          dimension: dimensionValue, period, window: windowValue, comparison: comparisonMode,
+          registrationTypes: registrationTypes ?? [], limit, trendMonths,
+        });
+        await recordEvent({ eventName: "sales_run", userId: ctx.userId, props: { dimension: dimensionValue, window: windowValue, compare: comparisonMode, source: "ice" } });
+        const noPrice = { basis: "canonical_model_count", priced_models: 0, mixed_models: 0, total_models: 0, coverage_pct: 0 };
+        return NextResponse.json({
+          plan: {
+            tier: ctx.tier,
+            model_grain: isMarketDimensionAllowed("model", ctx.tier, null),
+            windows: getPolicy(ctx.tier).marketWindows,
+            comparisons: getPolicy(ctx.tier).marketComparisons,
+            filters: areMarketFiltersAllowed(ctx.tier),
+            history_from: historyWindowStart(ctx.tier),
+          },
+          source: "ice",
+          dimension: dimensionValue, period, window: windowValue,
+          period_from: ice.period_from, period_to: ice.period_to,
+          filters, price_band: null, price_coverage: noPrice, include_unmapped: false,
+          rows: ice.rows,
+          comparison: ice.comparison ? { ...ice.comparison, price_coverage: noPrice } : null,
+          trend: ice.trend, quota,
+        }, { headers: { "Cache-Control": "private, no-store" } });
+      } catch (error) {
+        if (error instanceof IceMemberMarketError) {
+          return NextResponse.json({ error: error.message, ...error.extra }, { status: error.status });
+        }
+        throw error;
+      }
+    }
 
     // Every window this request could need, resolved up front -- before any
     // registration-fact fetch -- so the underlying facts (paginated fact

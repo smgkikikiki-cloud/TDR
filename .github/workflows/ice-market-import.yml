@@ -6,17 +6,14 @@ on:
       object_path:
         description: "Private source-imports object path"
         required: true
-        default: "ice-market/TDR_FULL_2569-09_v3_M7.0.zip"
         type: string
       expected_sha256:
-        description: "Expected SHA256 for the exact package"
+        description: "SHA256 from Ice's delivery record, confirmed by the owner"
         required: true
-        default: "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d"
         type: string
       owner_declared_final:
         description: "Exact owner-declared final filename"
         required: true
-        default: "TDR_FULL_2569-09_v3_M7.0.zip"
         type: string
       imported_by:
         description: "Actor recorded on ice_package_imports"

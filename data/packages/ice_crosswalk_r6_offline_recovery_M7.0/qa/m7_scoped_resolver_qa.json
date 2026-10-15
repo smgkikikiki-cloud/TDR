@@ -1,0 +1,213 @@
+{
+  "schema": "tdr.ice-scoped-crosswalk-v2-m7-acceptance.v1",
+  "source_pr229_head_sha": "872a1117b163feac42e0ce55314cd7a7408896b5",
+  "implementation_base_pr232_head_sha": "3050beb1cdad4530808177de7b9d66abb21364f3",
+  "m7": {
+    "path": "data/packages/2569-09/v3_M7.0/TDR_FULL_2569-09_v3_M7.0.zip",
+    "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+    "master_version": "7.0",
+    "period": "2569-09",
+    "source_group_count": 1200,
+    "raw_fact_rows": 262985,
+    "group_reg_type_rows": 1407,
+    "registration_total": 4141987,
+    "shadow_rows_verified": 1407,
+    "shadow_key_and_count_mismatches": 0
+  },
+  "provenance_checks": [
+    {
+      "manifest": "source_manifest.json",
+      "files_verified": 10,
+      "mismatches": 0
+    },
+    {
+      "manifest": "artifact_manifest.json",
+      "files_verified": 19,
+      "mismatches": 0
+    },
+    {
+      "manifest": "M7_FULL_PACKAGE",
+      "sha256": "c558d2d4cc3ed667f8b30ea028dbb66c4030cdce4e7daabe735df870cb94677d",
+      "matches_frozen_source_manifest": true
+    },
+    {
+      "manifest": "SELECT_ONLY_LIVE_READBACK",
+      "sha256": "52da1d28ad1624c5c28d9d6776351fb6277b02539d52063c4c58a0e1ca8979f3",
+      "live_registration_rows_match_frozen_m7": true
+    }
+  ],
+  "owner_decisions": {
+    "frozen_rows": 244,
+    "ledger_decisions_exercised": 244,
+    "mismatches": 0,
+    "action_disposition_target_and_registration_units_verified": true,
+    "action_counts": {
+      "KEEP_EXISTING_AUTO": 63,
+      "OWNER_CREATE_IDENTITY": 38,
+      "OWNER_EXCLUDE_FROM_COUNT": 51,
+      "OWNER_LINK_EXISTING": 92
+    },
+    "owner_overlay_groups": 1200,
+    "owner_overlay_sha256": "e660cf9133cd0a99ffe8c87d1ba06dc0c72ef89b8a313a0a7285f54da1332430",
+    "reopen_or_infer_replacements": 0,
+    "decision_resolver_mismatches": 0
+  },
+  "v2_resolver_1_407": {
+    "rows": 1407,
+    "units": 4141987,
+    "disposition_rows": {
+      "LEGACY_ACTIVE": 71,
+      "OWNER_APPROVED": 377,
+      "OWNER_EXCLUDED": 63,
+      "OWNER_PENDING": 14,
+      "PENDING_MATERIALIZATION": 166,
+      "SCOPED_CLASS_UNRESOLVED": 5,
+      "UNMATCHED": 711
+    },
+    "disposition_units": {
+      "LEGACY_ACTIVE": 213045,
+      "OWNER_APPROVED": 3763511,
+      "OWNER_EXCLUDED": 13901,
+      "OWNER_PENDING": 1007,
+      "PENDING_MATERIALIZATION": 98079,
+      "SCOPED_CLASS_UNRESOLVED": 30,
+      "UNMATCHED": 52414
+    }
+  },
+  "coverage": {
+    "fixed_denominator": 4141987,
+    "approved_servable_owner_units": 3763511,
+    "approved_servable_owner_pct": 90.8624532138802,
+    "legacy_auto_units": 213045,
+    "legacy_auto_pct": 5.143545839231267,
+    "combined_approved_plus_legacy_auto_units": 3976556,
+    "combined_approved_plus_legacy_auto_pct": 96.00599905311147,
+    "proposed_not_approved_units": 30,
+    "pending_units": 99116,
+    "excluded_units_kept_in_fixed_denominator": 13901,
+    "unmatched_or_ambiguous_units": 52414,
+    "partitions_sum_to_fixed_denominator": true,
+    "target_pct": 99.1,
+    "target_units": 4104710,
+    "target_met_by_approved_plus_legacy_auto": false,
+    "target_gap_units": 128154,
+    "proposed_not_approved_group_reg_type_rows": 5,
+    "proposed_not_approved_is_subset_of_pending": true
+  },
+  "reader_adapter": {
+    "raw_rows_resolved_once": 262985,
+    "raw_units_before": 4141987,
+    "raw_units_after": 4141987,
+    "live_vs_frozen_m7_canonical_rows_sha256": "1c58780ce6d620b4da7b485d6a2a27093172dca13fa06797c3ada5a1d6663b66",
+    "live_vs_frozen_m7_exact_match": true,
+    "raw_loss_or_duplication_units": 0,
+    "period_province_reg_type_scopes": 15359,
+    "many_to_one_target_count": 31,
+    "many_to_one_examples": {
+      "bentley.flying_spur": [
+        "BENTLEY|MULSANNE SPEED",
+        "bentley-bentley-flying"
+      ],
+      "bmw.4_series": [
+        "bmw-420d-coupe-rhd__provisional",
+        "bmw-420d-gran-coupe-rhd__provisional"
+      ],
+      "bmw.7_series": [
+        "BMW|740LI LIMOUSINE RHD",
+        "bmw-bmw-7-series"
+      ],
+      "bmw.bmw_3": [
+        "BMW|318D M SPORT SALOON MANUAL",
+        "BMW|328I M SPORT",
+        "BMW|530I LIMOUSINE RHD",
+        "bmw-bmw-3-series"
+      ],
+      "bmw.bmw_5": [
+        "BMW|525D CELEBRATION EDITION",
+        "BMW|525D M SPORT",
+        "bmw-bmw-5-series"
+      ],
+      "bmw.i8": [
+        "BMW|I8",
+        "BMW|I8 HYBRID",
+        "BMW|I8 RHD",
+        "BMW|I8 ROADSTER",
+        "BMW|I8 ROADSTER RHD"
+      ],
+      "farizon.farizon_sv": [
+        "farizon-farizon-mpv-sv6",
+        "farizon-farizon-sv"
+      ],
+      "honda.step_wgn": [
+        "honda-honda-stepwagon",
+        "honda-step-wgn"
+      ],
+      "isuzu.dmax_double_cab": [
+        "isuzu-isuzu-cab4",
+        "isuzu-isuzu-d-max"
+      ],
+      "kia.carnival": [
+        "KIA|CANIVAL",
+        "kia-carnival"
+      ]
+    },
+    "segment_totals": {
+      "A": 66315,
+      "B": 1302301,
+      "C": 555442,
+      "D": 432332,
+      "E": 144262,
+      "F": 1452565,
+      "UNKNOWN": 23339,
+      "ไม่ระบุ": 165431
+    },
+    "body_type_totals": {
+      "COUPE": 8135,
+      "CROSSOVER": 808963,
+      "HATCHBACK": 389368,
+      "MPV": 183659,
+      "OFFROAD": 14793,
+      "PICKUP": 1453064,
+      "PPV": 286664,
+      "SEDAN": 752510,
+      "TRUCK": 10796,
+      "VAN": 55327,
+      "WAGON": 13277,
+      "ไม่ระบุ": 165431
+    },
+    "reader_mapping_disposition_units": {
+      "LEGACY_ACTIVE": 213045,
+      "OWNER_APPROVED": 3763511,
+      "OWNER_EXCLUDED": 13901,
+      "OWNER_PENDING": 1007,
+      "PENDING_MATERIALIZATION": 98079,
+      "SCOPED_CLASS_UNRESOLVED": 30,
+      "UNMATCHED": 52414
+    },
+    "raw_vs_aggregate_v2_resolver_mismatches": 0
+  },
+  "materialization": {
+    "target_rows": 114,
+    "unique_target_ids": 114,
+    "all_missing_targets_blocked_on_governed_writer": true,
+    "missing_frozen_link_target_count": 0,
+    "missing_frozen_link_targets": {},
+    "missing_frozen_link_target_units": 0,
+    "collision_snapshot_sha256": "e650d8ef1d5abd7ca56d3f9b165af6e81d27c24bac55138d002c64e0cd410130",
+    "collision_snapshot_model_count": 323,
+    "collision_status_counts": {
+      "NO_EXACT_COLLISION_IN_SNAPSHOT": 109,
+      "OWNER_DISTINCT_ALIAS_COLLISION": 5
+    },
+    "collision_snapshot_is_a_full_vehicle_models_select": true,
+    "alias_field_source": "vehicle_models.payload.aliases"
+  },
+  "production_boundary": {
+    "database_writes": 0,
+    "ddl_executed": false,
+    "migration_number_assigned": false,
+    "pr_merge": false,
+    "deployment": false,
+    "live_reader_cutover": false
+  }
+}

@@ -1,3 +1,4 @@
+import { iceCoverageRows, iceMemberMarketEnabled } from "@/lib/ice-member-market";
 import { NextRequest, NextResponse } from "next/server";
 import {
   getRegistrationAnalytics,
@@ -35,12 +36,15 @@ export async function GET(request: NextRequest) {
     // Quota fingerprinting is entirely server-side (see
     // lib/access-policy-server.ts::requestFingerprint) -- there is no
     // client-supplied action id in this contract to trust or misuse.
-    const rows = await getRegistrationAnalytics({
+    let rows = await getRegistrationAnalytics({
       accessToken: match[1],
       dimension: dimensionValue,
       period,
       limit,
     });
+
+    // Same access check as above has already passed; with the Ice flag on, the month picker lists Ice months instead.
+    if (dimensionValue === "coverage" && iceMemberMarketEnabled()) rows = (await iceCoverageRows()) as unknown as typeof rows;
 
     if (dimensionValue !== "coverage") {
       const db = adminDb();

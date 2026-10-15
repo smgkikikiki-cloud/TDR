@@ -1,0 +1,39 @@
+{
+  "master_version": "7.0",
+  "materialized": ["brand.cab", "brand.shared", "legacy.ok"],
+  "scoped_only": ["pickup"],
+  "owner": [
+    {"group_id":"group-a","reg_type":"ALL","action":"APPROVED","canonical_id":"brand.shared","decision_ref":"owner:shared-a","master_version":"7.0"},
+    {"group_id":"group-b","reg_type":"ALL","action":"APPROVED","canonical_id":"brand.shared","decision_ref":"owner:shared-b","master_version":"7.0"},
+    {"group_id":"pickup","reg_type":"RY1","action":"APPROVED","canonical_id":"brand.shared","decision_ref":"pickup:ry1","master_version":"7.0"},
+    {"group_id":"pickup","reg_type":"RY2","action":"APPROVED","canonical_id":"brand.shared","decision_ref":"pickup:ry2","master_version":"7.0"},
+    {"group_id":"pickup","reg_type":"RY3","action":"APPROVED","canonical_id":"brand.cab","decision_ref":"pickup:ry3","master_version":"7.0"},
+    {"group_id":"excluded","reg_type":"ALL","action":"EXCLUDED","canonical_id":null,"decision_ref":"owner:excluded","master_version":"7.0"},
+    {"group_id":"unmaterialized","reg_type":"ALL","action":"APPROVED","canonical_id":"brand.new","decision_ref":"owner:new","master_version":"7.0"}
+  ],
+  "legacy": [
+    {"group_id":"legacy","canonical_id":"legacy.ok","status":"AUTO"},
+    {"group_id":"proposal","canonical_id":"brand.shared","status":"PROPOSED"},
+    {"group_id":"ambiguous","canonical_id":"brand.shared","status":"AUTO"},
+    {"group_id":"ambiguous","canonical_id":"legacy.ok","status":"APPROVED"}
+  ],
+  "models": [
+    {"canonical_id":"brand.shared","segment":"SUV","body_type":"SUV"},
+    {"canonical_id":"brand.cab","segment":"Pickup","body_type":"Other Cab"},
+    {"canonical_id":"legacy.ok","segment":"Sedan","body_type":"Sedan"}
+  ],
+  "facts": [
+    {"period":"2569-08","province":"Bangkok","reg_type":"รย.1","model_group_id":"group-a","brand":"Brand","model_name":"A","reg_count":10},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"group-a","brand":"Brand","model_name":"A","reg_count":4},
+    {"period":"2569-09","province":"Chiang Mai","reg_type":"รย.1","model_group_id":"group-b","brand":"Brand","model_name":"B","reg_count":9},
+    {"period":"2569-09","province":"Bangkok","reg_type":"RY1","model_group_id":"pickup","brand":"Brand","model_name":"Pickup","reg_count":20},
+    {"period":"2569-09","province":"Bangkok","reg_type":"RY2","model_group_id":"pickup","brand":"Brand","model_name":"Pickup","reg_count":3},
+    {"period":"2569-09","province":"Bangkok","reg_type":"RY3","model_group_id":"pickup","brand":"Brand","model_name":"Pickup","reg_count":7},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.4","model_group_id":"pickup","brand":"Brand","model_name":"Pickup","reg_count":2},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"excluded","brand":"Brand","model_name":"Excluded","reg_count":5},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"legacy","brand":"Brand","model_name":"Legacy","reg_count":11},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"proposal","brand":"Brand","model_name":"Proposal","reg_count":13},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"unmaterialized","brand":"Brand","model_name":"New","reg_count":17},
+    {"period":"2569-09","province":"Bangkok","reg_type":"รย.1","model_group_id":"ambiguous","brand":"Brand","model_name":"Ambiguous","reg_count":8}
+  ]
+}

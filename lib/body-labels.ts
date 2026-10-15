@@ -13,6 +13,7 @@ export const BODY_LABEL: Record<string, string> = {
   "WAGON": "แวกอน",
   "VAN": "รถตู้",
   "TRUCK": "รถบรรทุก",
+  "OTHER": "ยังไม่ระบุตัวถัง",
 };
 
 /** Falls back to the stored value, so a body type that is not in the map

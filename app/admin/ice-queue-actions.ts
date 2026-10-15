@@ -1,0 +1,118 @@
+"use server";
+
+/**
+ * Owner decisions for Ice model groups the monthly routine could not place (table ice_review_queue, v69).
+ * Each action writes the decision (scope ALL, or one per undecided registration type for a partly decided group) into ice_model_crosswalk_scoped (provenance: the signed-in editor + date),
+ * then closes the queue row. Nothing is guessed: a link needs an existing model id, a new car needs an explicit id and name.
+ * Pickup groups that need a per-registration-type split (รย.1 / รย.2 ...) are not handled here; they stay a manual SQL job.
+ */
+
+import { createHash } from "node:crypto";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { currentEditor, isAdmin } from "@/lib/admin-auth";
+import { field } from "@/lib/admin-form";
+import { adminDb } from "@/lib/supabase";
+
+const CANONICAL_ID = /^[a-z0-9_]+\.[a-z0-9_]+$/;
+
+/** People type "Mazda.MX-5"; stored ids are lower case with underscores ("mazda.mx_5"). */
+function normalizeId(value: string) {
+  // A picked suggestion looks like "Mazda MX-5 (mazda.mx_5)": the id is the part in brackets.
+  const picked = value.match(/\(([A-Za-z0-9_.\- ]+)\)\s*$/);
+  return (picked ? picked[1] : value).trim().toLowerCase().replace(/[\s-]+/g, "_");
+}
+
+/** A mistake in the form must show a readable message on the page, never the generic production server error. */
+async function safely(fn: () => Promise<void>) {
+  try {
+    await fn();
+  } catch (error: any) {
+    if (typeof error?.digest === "string" && error.digest.startsWith("NEXT_REDIRECT")) throw error;
+    redirect(`/admin/ice-queue?error=${encodeURIComponent(error instanceof Error ? error.message : "เกิดข้อผิดพลาด")}`);
+  }
+}
+
+async function context(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const db = adminDb();
+  if (!db) throw new Error("ฐานข้อมูลแอดมินยังไม่ได้ตั้งค่า");
+  const groupId = field(formData, "model_group_id");
+  if (!groupId) throw new Error("ไม่มีรหัสกลุ่มรุ่น");
+  const { data: row, error } = await db.from("ice_review_queue").select("*").eq("model_group_id", groupId).eq("status", "OPEN").maybeSingle();
+  if (error) throw new Error(`อ่านคิวไม่ได้: ${error.message}`);
+  if (!row) throw new Error("รายการนี้ถูกตัดสินไปแล้วหรือไม่อยู่ในคิว");
+  const editor = await currentEditor();
+  const who = editor?.name || "tdr-admin";
+  const today = new Date().toISOString().slice(0, 10);
+  return { db, row, who, today };
+}
+
+async function decide(ctx: Awaited<ReturnType<typeof context>>, status: "APPROVED" | "EXCLUDED", target: string | null, kind: string, reason: string) {
+  const { db, row, who, today } = ctx;
+  const decisionRef = `admin-queue:${who}:${today}:${kind}`;
+  // A group with no decision yet is decided as a whole (scope ALL). A partly decided group (e.g. รย.3 done, รย.1/รย.2 not)
+  // gets one decision per undecided registration type, so the decisions already made are never overlapped.
+  const scopes: string[] = row.uncovered_scopes ? String(row.uncovered_scopes).split(",").map((x) => x.trim()).filter(Boolean) : ["ALL"];
+  const { error } = await db.from("ice_model_crosswalk_scoped").insert(
+    scopes.map((scope) => ({
+      model_group_id: row.model_group_id,
+      reg_type_scope: scope,
+      status,
+      canonical_model_id: status === "APPROVED" ? target : null,
+      master_version: row.first_seen_master_version || "unknown",
+      decision_ref: decisionRef,
+      source_sha256: createHash("sha256").update(`${decisionRef}|${row.model_group_id}|${scope}|${target || ""}`).digest("hex"),
+      reason,
+    })),
+  );
+  if (error) throw new Error(`บันทึกคำตัดสินไม่สำเร็จ: ${error.message}`);
+  const { error: closeError } = await db.from("ice_review_queue").update({ status: "DONE", closed_at: new Date().toISOString() }).eq("model_group_id", row.model_group_id);
+  if (closeError) throw new Error(`ปิดรายการไม่สำเร็จ (คำตัดสินถูกบันทึกแล้ว): ${closeError.message}`);
+  revalidatePath("/admin/ice-queue");
+  redirect(`/admin/ice-queue?done=${encodeURIComponent(row.model_group_id)}`);
+}
+
+/** Link the group to a model that already exists. */
+export async function iceQueueLink(formData: FormData) { await safely(() => linkImpl(formData)); }
+async function linkImpl(formData: FormData) {
+  const ctx = await context(formData);
+  const target = normalizeId(field(formData, "canonical_model_id"));
+  if (!CANONICAL_ID.test(target)) throw new Error(`รหัสรถ "${target}" ไม่ถูกรูปแบบ ต้องเป็น แบรนด์.รุ่น เช่น mazda.mx_5 (ตัวอักษร ตัวเลข และขีดล่างเท่านั้น)`);
+  const { data: model, error } = await ctx.db.from("vehicle_models").select("canonical_id").eq("canonical_id", target).is("deleted_at", null).maybeSingle();
+  if (error) throw new Error(`ตรวจรถไม่ได้: ${error.message}`);
+  if (!model) throw new Error(`ไม่พบรถรหัส ${target} ในฐานข้อมูล — ตรวจรหัสอีกครั้ง (ใช้ขีดล่าง เช่น mazda.mx_5)`);
+  await decide(ctx, "APPROVED", target, "link", `owner linked in admin queue to ${target}`);
+}
+
+/** The group is not a car TDR counts (trailer, unidentifiable, etc.). */
+export async function iceQueueExclude(formData: FormData) { await safely(() => excludeImpl(formData)); }
+async function excludeImpl(formData: FormData) {
+  const ctx = await context(formData);
+  const why = field(formData, "reason") || "excluded by owner in admin queue";
+  await decide(ctx, "EXCLUDED", null, "exclude", why);
+}
+
+/** Create a brand-new model through the governed writer (v68), then link the group to it. */
+export async function iceQueueCreate(formData: FormData) { await safely(() => createImpl(formData)); }
+async function createImpl(formData: FormData) {
+  const ctx = await context(formData);
+  const canonicalId = normalizeId(field(formData, "canonical_id"));
+  const nameEn = field(formData, "name_en");
+  const brandName = field(formData, "brand_name_en");
+  const status = field(formData, "status") || "UNVERIFIED";
+  if (!CANONICAL_ID.test(canonicalId)) throw new Error("รหัสรถใหม่ต้องอยู่ในรูป แบรนด์.รุ่น เช่น byd.seal");
+  if (!nameEn) throw new Error("กรุณาใส่ชื่อรุ่น");
+  if (!["UNVERIFIED", "HISTORICAL"].includes(status)) throw new Error("สถานะต้องเป็น รอยืนยัน หรือ เลิกขายแล้ว");
+  const batch = `admin-queue-${ctx.today}-${canonicalId.replace(/[^a-z0-9]/g, "")}`;
+  const { data, error } = await ctx.db.rpc("vm_create_identities", {
+    p_batch_id: batch,
+    p_items: [{ canonical_id: canonicalId, brand_name_en: brandName || undefined, name_en: nameEn, status, note: `Ice group ${ctx.row.model_group_id}` }],
+    p_actor: ctx.who,
+  });
+  if (error) throw new Error(`สร้างรถไม่สำเร็จ: ${error.message}`);
+  const created = (data as any)?.created?.length || 0;
+  const skipped = (data as any)?.skipped?.[0];
+  if (!created && skipped?.why !== "EXISTS") throw new Error(`ไม่ได้สร้างรถ: ${skipped?.why || "ไม่ทราบสาเหตุ"} — ถ้ารถนี้มีอยู่แล้วให้ใช้ปุ่ม "ผูกกับรถที่มีอยู่"`);
+  await decide(ctx, "APPROVED", canonicalId, "create", `owner created ${canonicalId} in admin queue (batch ${batch})`);
+}

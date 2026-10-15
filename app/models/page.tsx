@@ -5,7 +5,7 @@ import { ListSkeleton } from "@/components/models/ListSkeleton";
 import { ModelsExplorer, type ExplorerModel } from "@/components/models/ModelsExplorer";
 import { BlockEmpty, BlockError } from "@/components/models/states";
 import { getCanonicalBrands, getCanonicalModels, getCurrentTrimCountsByModel } from "@/lib/canonical-data";
-import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
+import { isCatalogueListed, isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 import { formatNumber } from "@/lib/design/format";
 import { modelsHref, normalizeParams, type ModelsParams } from "@/lib/models/list";
 
@@ -75,6 +75,7 @@ async function SoldTab({ sp }: { sp: ModelsParams }) {
   }
 
   const current = (all as ExplorerModel[]).filter((r) => isCurrentLifecycleStatus(r.status));
+  const listed = (all as ExplorerModel[]).filter((r) => isCatalogueListed(r as any));
   const brandCount = new Set(current.map((r) => r.brands?.slug).filter(Boolean)).size;
   const trimTotal = current.reduce((n, r) => n + (trimCounts.get(r.id) || 0), 0);
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
@@ -91,10 +92,10 @@ async function SoldTab({ sp }: { sp: ModelsParams }) {
       <KpiCard label="ประกอบในไทย (CKD/SKD)" value={assembled} />
       <KpiCard label="นำเข้าทั้งคัน (CBU)" value={imported} />
     </div>
-    <p className="tdr-models-note">นับจากรุ่นที่ยังจำหน่ายอยู่ในฐานข้อมูล TDR รุ่นที่เลิกจำหน่ายแล้วไม่ถูกนับ</p>
+    <p className="tdr-models-note">นับจากรุ่นที่ยังจำหน่ายอยู่ในฐานข้อมูล TDR รุ่นที่เลิกจำหน่ายแล้วไม่ถูกนับ รถที่ติดป้าย "รอยืนยันข้อมูล" หรือ "เลิกขายแล้ว" มาจากทะเบียนจริงและยังไม่นับในตัวเลขข้างบน</p>
 
     <Tabs sp={sp} tab={tab} />
 
-    <ModelsExplorer sp={sp} current={current} brands={brands} trimCounts={trimCounts} brandCount={brandCount} />
+    <ModelsExplorer sp={sp} current={listed} brands={brands} trimCounts={trimCounts} brandCount={brandCount} />
   </div>;
 }

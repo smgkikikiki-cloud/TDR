@@ -17,6 +17,8 @@
  * proven against real Supabase access ahead of the M5 cutover.
  */
 import { adminDb } from "@/lib/supabase";
+import { sliceScopedIceMarket, type ScopedIceDimension } from "./ice-scoped-market-slices.ts";
+import type { OwnerScopedDecision } from "./ice-scoped-crosswalk.ts";
 import {
   compareMarketSliceRows,
   missingReportPeriods,
@@ -194,6 +196,16 @@ export async function fetchIceCrosswalk(db: NonNullable<Db>): Promise<IceCrosswa
   return pagedSelectAll<IceCrosswalkLink>(db, "ice_model_crosswalk", "model_group_id,canonical_model_id,status", ["id"]);
 }
 
+/** v2 only: reviewer-approved scoped decisions. No implicit fallback to v63
+ * PROPOSED or group-level AUTO rows. This table does not exist until the
+ * separately approved R6 migration is applied; an unavailable relation throws. */
+export async function fetchIceScopedCrosswalk(db: NonNullable<Db>): Promise<OwnerScopedDecision[]> {
+  return pagedSelectAll<OwnerScopedDecision>(
+    db, "ice_model_crosswalk_scoped",
+    "model_group_id,reg_type_scope,status,canonical_model_id,decision_ref,master_version",
+    ["model_group_id", "reg_type_scope"]);
+}
+
 export async function fetchIceModelGroupRedirects(db: NonNullable<Db>): Promise<IceModelGroupRedirectRow[]> {
   return pagedSelectAll<IceModelGroupRedirectRow>(
     db, "ice_model_group_redirects", "old_model_group_id,new_model_group_id", ["old_model_group_id"]);
@@ -313,6 +325,46 @@ export async function getIceMarketSlice(args: {
       throw new Error(`unreachable Ice market dimension: ${String(exhaustive)}`);
     }
   }
+}
+
+/**
+ * R6 v2 post-migration read path (PRE-CUTOVER). The website does NOT call
+ * this until owner-reviewed R6/R7/R8. Unlike old getIceMarketSlice, it never
+ * joins a whole model group to v63 canonical targets; all registration-class
+ * facts are resolved one-to-one before segment/body attribution.
+ *
+ * If v2 does not exist, is empty or points at a stale master_version,
+ * this throws instead of silently switching to legacy market data.
+ */
+export async function getIceScopedMarketSlice(args: {
+  dimension: ScopedIceDimension;
+  window: MarketPeriodWindow;
+  filters?: IceMarketFilters;
+  limit?: number;
+}): Promise<MarketSliceRow[] | IceModelSliceRow[]> {
+  const db = adminDb();
+  if (!db) throw new Error("Ice scoped market needs server database credentials");
+  const [release, decisions, rows, models] = await Promise.all([
+    latestIceImportRelease(db), fetchIceScopedCrosswalk(db),
+    fetchIceRegTrend(db, args.window), fetchVehicleModelDims(db),
+  ]);
+  if (!release) throw new Error("No accepted Ice import for scoped market");
+  if (!decisions.length) throw new Error("R6 scoped Crosswalk is empty; R8 cannot serve");
+  if (decisions.some(row => row.master_version !== release.master_version)) {
+    throw new Error("R6 scoped Crosswalk master version does not match Ice import");
+  }
+  const scopedOnly = [...new Set(decisions
+    .filter(d => d.reg_type_scope !== "ALL").map(d => d.model_group_id))];
+  return sliceScopedIceMarket({
+    dimension: args.dimension,
+    facts: rows,
+    ownerDecisions: decisions,
+    vehicleModels: models,
+    masterVersion: release.master_version,
+    scopedOnlyGroupIds: scopedOnly,
+    filters: args.filters,
+    limit: args.limit,
+  });
 }
 
 export class IceMarketDimensionError extends Error {
