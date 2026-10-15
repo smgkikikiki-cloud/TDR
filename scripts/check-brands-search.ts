@@ -146,6 +146,7 @@ const brandPage = readFileSync("app/brands/[slug]/page.tsx", "utf8");
 check("a brand page renders the shared ModelsExplorer with the brand as a preset", /<ModelsExplorer[^>]*fixedBrand=/.test(brandPage) && /basePath=\{`\/brands\/\$\{slug\}`\}/.test(brandPage), true);
 check("/models renders the same explorer", /<ModelsExplorer/.test(readFileSync("app/models/page.tsx", "utf8")), true);
 check("an unknown brand is a real 404 (looked up before the Suspense boundary)", brandPage.indexOf("notFound()") !== -1 && brandPage.indexOf("notFound()") < brandPage.indexOf("<Suspense"), true);
+check("a canonical brand-read failure shows a retryable block error before the Suspense boundary", /try\s*\{\s*brand\s*=\s*await getCanonicalBrand\(slug\);\s*\}\s*catch\s*\{[\s\S]*?<BlockError title="แบรนด์รถ" retryHref=\{`\/brands\/\$\{encodeURIComponent\(slug\)\}`\}/.test(brandPage), true);
 check("the brand page has no news block", /getRelatedEvents|sfNewsList|\/news/.test(strip(brandPage)), false);
 check("upcoming (PR 12) is not queried on the brand page or on /search", /upcoming_vehicles|getUpcoming/.test(strip(brandPage) + strip(readFileSync("app/search/page.tsx", "utf8"))), false);
 check("the header carries the search overlay", /<SearchOverlay \/>/.test(readFileSync("components/Header.tsx", "utf8")), true);
