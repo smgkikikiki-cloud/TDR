@@ -244,6 +244,10 @@ check("family certainty uses reg_est and carries the required note",
   resolvedFamily, { value: 45, certainty: "family", reg_min: null, reg_max: null, note: "แบ่งระหว่างรุ่นในตระกูลโดย TDR" });
 check("the note is never the word ประมาณการ", resolvedFamily.note?.includes("ประมาณการ"), false);
 const resolvedRange = resolveIcePowertrainRow(regPowertrainP3[2]);
+check("a range row with Ice's reg_est uses it for the value (reconciles with reg_trend), range still exposed",
+  resolveIcePowertrainRow({ period: "2569-09", province: "P", reg_type: "รย.1", brand: "B", model_group_id: "g", model_name: "g",
+    fuel_group: "PHEV", reg_est: 0.4, reg_min: 0, reg_max: 5, certainty: "range" } as any),
+  { value: 0.4, certainty: "range", reg_min: 0, reg_max: 5, note: null });
 check("range certainty exposes reg_min/reg_max", resolvedRange, { value: 70, certainty: "range", reg_min: 60, reg_max: 80, note: null });
 
 const powertrainSlice = sliceIceByPowertrain(regPowertrainP3);
