@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/design/assets/brand/tdr-logo-full.png";
+import logo from "@/design/assets/brand/logo/tdr-logo-h-reverse@3x.png";
 
-/** Site footer (design/DESIGN.md §7, reference/home_v7.html): inverse surface, logo on a
- *  white plate, the six legal/site links, and the data source line. */
+/** Site footer (design/DESIGN.md §7, reference/home_v7.html): inverse surface (navy in both themes),
+ *  reverse logo, the six legal/site links, and the data source line. */
 export function Footer() {
   return (
     <footer className="tdr-footer">
       <div className="tdr-wrap tdr-footer__row">
-        <span className="tdr-footer__logo"><Image src={logo} alt="TDR Automotive Intelligence" /></span>
+        <span className="tdr-footer__logo"><Image src={logo} alt="TDR Thailand Development Report" /></span>
         <nav aria-label="ลิงก์ท้ายเว็บ">
           <Link href="/about">เกี่ยวกับ TDR</Link>
           <Link href="/contact">ติดต่อเรา</Link>

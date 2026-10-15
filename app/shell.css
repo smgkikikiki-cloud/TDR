@@ -17,10 +17,14 @@
 .tdr-header { border-bottom: 1px solid var(--border); background: var(--surface-page); position: sticky; top: 0; z-index: 5; }
 .tdr-header__row { height: 84px; display: flex; align-items: center; gap: 32px; }
 .tdr-logo { display: block; flex: none; }
-.tdr-logo img { height: 44px; width: auto; display: block; }
-:root[data-theme="dark"] .tdr-logo { background: var(--logo-plate); border-radius: var(--radius-md); padding: 4px 8px; }
+.tdr-logo img { height: 44px; width: auto; }
+/* Two official files, one visible: full colour on light, reverse on dark (no plate behind the logo). */
+.tdr-logo__dark { display: none; }
+:root[data-theme="dark"] .tdr-logo__light { display: none; }
+:root[data-theme="dark"] .tdr-logo__dark { display: block; }
 @media (prefers-color-scheme: dark) {
-  :root:where(:not([data-theme="light"])) .tdr-logo { background: var(--logo-plate); border-radius: var(--radius-md); padding: 4px 8px; }
+  :root:where(:not([data-theme="light"])) .tdr-logo__light { display: none; }
+  :root:where(:not([data-theme="light"])) .tdr-logo__dark { display: block; }
 }
 .tdr-nav { display: flex; gap: 28px; flex: 1; justify-content: center; white-space: nowrap; }
 .tdr-nav a { color: var(--ink); font-weight: 500; font-size: 15px; padding: 8px 0; border-bottom: 2px solid transparent; }
@@ -41,8 +45,7 @@
 /* Footer */
 .tdr-footer { background: var(--surface-inverse); color: var(--ink-on-inverse); }
 .tdr-footer__row { padding-top: 32px; padding-bottom: 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-size: 14px; }
-.tdr-footer__logo { background: var(--logo-plate); padding: 6px 10px; border-radius: var(--radius-md); }
-.tdr-footer__logo img { height: 28px; width: auto; display: block; }
+.tdr-footer__logo img { height: 41px; width: auto; display: block; }
 .tdr-footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .tdr-footer nav a { color: var(--ink-on-inverse); }
 .tdr-footer__src { opacity: .8; font-size: 13px; }
@@ -50,17 +53,17 @@
 /* Phone bottom bar */
 .tdr-bottom { display: none; }
 
-/* 1280–1399: tighter nav gaps, logo 32, gutter 40 */
+/* 1280–1399: tighter nav gaps, gutter 40. Logo is 41px tall from here up to 768: the brand minimum for the main logo is 160px wide. */
 @media (max-width: 1399px) {
   :root { --tdr-gutter: 40px; }
   .tdr-header__row { gap: 16px; }
-  .tdr-logo img { height: 32px; }
+  .tdr-logo img { height: 41px; }
   .tdr-nav { gap: 18px; }
 }
 /* 1024–1279: the "แพ็กเกจ" link leaves the header */
 @media (max-width: 1279px) {
   .tdr-header__row { gap: 12px; }
-  .tdr-logo img { height: 30px; }
+  .tdr-logo img { height: 41px; }
   .tdr-nav { gap: 14px; }
   .tdr-nav a { font-size: 14px; }
   .tdr-acts { gap: 6px; }
@@ -73,7 +76,7 @@
   :root { --tdr-gutter: 24px; }
   .tdr-nav { display: none; }
   .tdr-header__row { gap: 16px; }
-  .tdr-logo img { height: 36px; }
+  .tdr-logo img { height: 41px; }
   .tdr-burger { display: inline-flex; }
   .tdr-acts .tdr-login { display: none; }
   .tdr-acts { margin-left: auto; }
@@ -99,11 +102,7 @@
   .tdr-header__row { gap: 6px; }
   .tdr-acts { gap: 2px; }
   .tdr-logo img { height: 26px; }
-  :root[data-theme="dark"] .tdr-logo { padding: 3px 6px; }
   .tdr-acts .tdr-signup { padding: 0 8px; font-size: 13px; }
-}
-@media (max-width: 400px) and (prefers-color-scheme: dark) {
-  :root:where(:not([data-theme="light"])) .tdr-logo { padding: 3px 6px; }
 }
 /* 340 and below cannot hold the Sign up button as well; it stays one tap away in the burger drawer. */
 @media (max-width: 340px) {
