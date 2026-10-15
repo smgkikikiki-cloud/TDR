@@ -12,7 +12,7 @@ import {
   type MarketComparison, type MarketMovementRow, type MarketPeriodWindow, type MarketSliceRow, type MarketWindow,
 } from "@/lib/registration-market";
 import {
-  getIceMarketSlice, getIceScopedMarketSlice, iceAvailablePeriods, missingIceReportPeriods,
+  getIceMarketSlice, getIceScopedMarketSlice, iceAvailablePeriods, icePeriodTotals, missingIceReportPeriods,
 } from "@/lib/ice-market-data";
 
 export const ICE_MEMBER_DIMENSIONS = ["brand", "registration_type", "powertrain", "model", "segment", "body_type"] as const;
@@ -56,7 +56,9 @@ export async function buildIceMemberMarket(args: {
 }): Promise<IceMemberMarket> {
   const db = adminDb();
   if (!db) throw new IceMemberMarketError(503, "ยังเชื่อมฐานข้อมูลไม่ได้");
-  const available = await iceAvailablePeriods(db);
+  // One database call gives the month list and every month's total (see icePeriodTotals).
+  const totals = await icePeriodTotals(db);
+  const available = totals ? [...totals.keys()].sort() : await iceAvailablePeriods(db);
   const current = resolveMarketWindow(args.period, args.window);
   const missing = missingIceReportPeriods(current, available);
   if (missing.length) throw new IceMemberMarketError(409, "ยังไม่มีข้อมูล Ice ครบช่วงนี้", { window: current, missing_periods: missing });
@@ -75,7 +77,10 @@ export async function buildIceMemberMarket(args: {
 
   const trendPeriods = args.trendMonths > 0 ? available.filter((p) => p <= current.to).slice(-args.trendMonths) : [];
   const trend: Array<{ period: string; total: number }> = [];
+  // One database call gives every month's total (verified equal to the brand panel's total for all 69 months).
+  // Only a registration-type filter needs the slower month-by-month path, because the totals call cannot filter.
   for (const p of trendPeriods) {
+    if (totals && !args.registrationTypes.length && totals.has(p)) { trend.push({ period: p, total: totals.get(p) as number }); continue; }
     try {
       const one = await sliceFor("brand", resolveMarketWindow(p, "month"), args.registrationTypes, 1);
       trend.push({ period: p, total: Number(one[0]?.market_total || 0) });
@@ -88,9 +93,11 @@ export async function buildIceMemberMarket(args: {
 export async function iceCoverageRows(): Promise<Array<{ period: string; total_registrations: number; mapped_unit_pct: number | null }>> {
   const db = adminDb();
   if (!db) return [];
-  const periods = await iceAvailablePeriods(db);
+  const totals = await icePeriodTotals(db);
+  const periods = totals ? [...totals.keys()].sort() : await iceAvailablePeriods(db);
   const out: Array<{ period: string; total_registrations: number; mapped_unit_pct: number | null }> = [];
   for (const p of periods) {
+    if (totals?.has(p)) { out.push({ period: p, total_registrations: totals.get(p) as number, mapped_unit_pct: null }); continue; }
     const one = await sliceFor("brand", resolveMarketWindow(p, "month"), [], 1);
     out.push({ period: p, total_registrations: Number(one[0]?.market_total || 0), mapped_unit_pct: null });
   }

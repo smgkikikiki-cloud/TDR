@@ -439,7 +439,23 @@ export async function getIceMarketReport(args: {
  * reg_type) is bounded and small enough that paging the one `period` column
  * and deduplicating client-side is simple, correct, and needs no new
  * migration -- revisit with an RPC only if real volume proves otherwise. */
+/** Total registrations per Ice month in ONE database call (ice_coverage_by_period, v69), keyed by window period
+ * ("YYYY-MM-01" shape, like iceAvailablePeriods). Verified equal to the province panel's total for all 69 months.
+ * null when the call is unavailable, so callers fall back instead of failing. */
+export async function icePeriodTotals(db: NonNullable<Db>): Promise<Map<string, number> | null> {
+  try {
+    const { data, error } = await db.rpc("ice_coverage_by_period");
+    if (error || !Array.isArray(data) || !data.length) return null;
+    return new Map((data as Array<{ period: string; total_units: number | string }>)
+      .map((r) => [toWindowPeriod(String(r.period)), Number(r.total_units)] as [string, number]));
+  } catch { return null; }
+}
+
 export async function iceAvailablePeriods(db: NonNullable<Db>): Promise<string[]> {
+  // Paging through the whole province table (150k+ rows, ~150 round trips) just to list months made every member
+  // request very slow; the single-call totals answer the same question. The old path remains as the fallback.
+  const totals = await icePeriodTotals(db);
+  if (totals) return distinctSortedPeriods(totals.keys());
   const rows = await pagedSelectAll<{ period: string }>(
     db, "ice_reg_province", "period", ["period", "province", "reg_type", "brand", "fuel_group"]);
   return distinctSortedPeriods(rows.map((row) => toWindowPeriod(row.period)));
