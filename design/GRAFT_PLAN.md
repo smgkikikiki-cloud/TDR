@@ -3,6 +3,7 @@
 **Owner design decision:** 2026-10-01, this Graft is the full Website/Website Pro overhaul, not a reskin.
 
 **Evidence refresh:** 2026-10-14 against main SHA c2715cbee494ae076b2582ef99f2bbc590b5dd99; PR #173/#220/#246 heads are in the Phase A baseline.
+**Owner decisions 2026-10-15/16:** public site vs TDR Pro split, the new `/market` (free snapshot + Pro/Enterprise entry; no redirect), a News system and Freemium v2 principles are recorded in `docs/MERGE_DECISIONS.md` (section "ทิศทางผลิตภัณฑ์") with detail in `docs/product-direction/`. They add rows 16–17 and amend rows 9–11 below; they dispatch nothing.
 **Roadmap authority:** approved TDR Master Roadmap v1.0. portfolio.plan.json remains execution.enabled=false. This is an implementation handoff only. It grants no task, merge, migration, deployment, billing, Ice gate or Production permission.
 
 ## 0. Scope and invariants
@@ -32,7 +33,7 @@ The exact main tree, PR inventory and subsystem states are in [PHASE_A_BASELINE.
 - Three Pro commitment plans and Stripe are current **implementation facts**, not a resolution of G0-C03 against the owner-approved Omise / revised-price / Freemium decisions; live Price IDs/configuration are unverified.
 - Main has token/design migration for Shell, shared components, Models, Brands and Search. design/migrated.json is not a complete page acceptance list.
 
-## 2. Work order and Graft rows 0–15
+## 2. Work order and Graft rows 0–17
 
 One future implementation task per approved bounded slice, unless the owner explicitly combines them. Independent UI lanes can proceed in parallel. This document does not dispatch future work.
 
@@ -47,13 +48,15 @@ One future implementation task per approved bounded slice, unless the owner expl
 | 6 | Models P02–P04 | Keep data engine; adapt remaining UI. | Canonical serving contract; no inferred facts. |
 | 7 | Brands/Search P05–P07 | Keep data engine; adapt remaining UI. | Canonical reads and stable URLs. |
 | 8 | Compare P08 | Replace full presentation; keep compare engine/policy. | tdr.compare-ui.v1; quota/winner/URL tests. |
-| 9 | Pricing/Auth P18–P21 | Adapt provider-neutral UI to current runtime where safe; do not decide commercial policy. | G0-C03 owner decision before final plan prices, provider, checkout and trial/Free copy; preserve live access and billing until separately authorized. |
-| 10 | Static P22–P26 | Keep active news/companies; add only approved content/routes. | Owner copy, contact recipient, legal review. |
-| 11 | Intelligence P09–P12 | Replace UI against typed Ice adapter; hold live wiring. | R6/R7/R8, release/coverage evidence, owner cutover go. |
+| 9 | Pricing/Auth P18–P21 | Adapt provider-neutral UI to current runtime where safe; do not decide commercial policy. | G0-C03 owner decision before final plan prices, provider and checkout; trial/Free copy follows the Freemium v2 principles (MERGE_DECISIONS P4, `docs/product-direction/FREEMIUM_V2.md`); preserve live access and billing until separately authorized. |
+| 10 | Static P22–P26 | Keep active companies; add only approved content/routes. The `/news` event list is superseded by the News system (row 16); its event stream moves (destination undecided). | Owner copy, contact recipient, legal review. |
+| 11 | Intelligence P09–P12 | Replace UI against typed Ice adapter; hold live wiring. `/market` is **not** redirected: it becomes the public snapshot + Pro/Enterprise entry page (MERGE_DECISIONS P2; design approved, presentation only, no price, no news block). The Intelligence panels are directed to be replaced by the TDR Pro workbench (row 17); the `/intelligence` route name is unchanged until the owner decides. | R6/R7/R8, release/coverage evidence, owner cutover go. The new `/market` implementation (adjust draft #259 or a new PR) needs an owner go and no merge without it. |
 | 12 | Upcoming P16–P17/Admin | Adapt R0 contract; no current full routes/writer. | Source/rights/status/history decisions and authorized migration allocation. |
 | 13 | Analysis P14–P15/Home cards | Adapt current Research pipeline first. | Verify shape/privacy before new schema. |
 | 14 | Omise/provider PR | Do not implement an independent provider migration under UI Graft; track owner-approved Omise proposal as unresolved G0-C03, not cancelled. | Provider/pricing/subscriber migration needs a separately authorized billing task; no provider change in UI PR. |
 | 15 | Ice panels 1–4/Info/CSV | Separate import/panel/export scope from #246. | Owner schema/rights/access/export contract and independent Ice acceptance. |
+| 16 | News (`feat/news-*`) | New editorial system (list, article page, admin-created tags, breaking flag, links into model/compare pages). Editorial content may reference canonical vehicle IDs but never defines vehicle facts. Plan and PR order: `docs/product-direction/NEWS_PLAN.md`. | Docs row first; then owner go per slice. Schema slice needs an unused migration number (v69/v70 are unapplied; check main and open PRs) and the owner runs the SQL. No UI starts before the schema/admin slice is accepted. |
+| 17 | TDR Pro workbench (Website Pro, Layer 2) | Design-only demo exists (private Design artifact, synthetic data). Not a task and not dispatched. | Roadmap task approval, a typed Ice data contract, G0-C03 for entitlement/price copy, Ice rights on derived data. No live claim until built. |
 
 Exact paths, denylist, tests and exit criteria are in [PR_EXECUTION_MATRIX.md](../docs/ui-overhaul/PR_EXECUTION_MATRIX.md). Page/API contracts are in [PAGE_DATA_CONTRACT_MATRIX.md](../docs/ui-overhaul/PAGE_DATA_CONTRACT_MATRIX.md).
 
