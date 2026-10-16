@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "id": "s12_noise_storm_one_real_change",
+  "title": "Eight scrapes, noise on every page, one real price cut",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "PRICE_LIST",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-01T10:01:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 0
+      },
+      "noise": "build-4037 sess=1eef 2026-10-01 10:01:03 ad=1"
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-02T10:02:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4074 sess=3dde 2026-10-02 10:02:06 ad=2"
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-03T10:03:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4111 sess=5ccd 2026-10-03 10:03:09 ad=3"
+    },
+    {
+      "id": "o4",
+      "t": "2026-10-04T10:04:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4148 sess=7bbc 2026-10-04 10:04:12 ad=4"
+    },
+    {
+      "id": "o5",
+      "t": "2026-10-05T10:05:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4185 sess=9aab 2026-10-05 10:05:15 ad=5"
+    },
+    {
+      "id": "o6",
+      "t": "2026-10-06T10:06:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 689,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 689000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "AMOUNTS"
+        ],
+        "max_ai_calls": 0
+      },
+      "noise": "build-4222 sess=b99a 2026-10-06 10:06:18 ad=6"
+    },
+    {
+      "id": "o7",
+      "t": "2026-10-07T10:07:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 689,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 689000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4259 sess=d889 2026-10-07 10:07:21 ad=7"
+    },
+    {
+      "id": "o8",
+      "t": "2026-10-08T10:08:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 689,000 Test drive More information</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 689000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-4296 sess=f778 2026-10-08 10:08:24 ad=8"
+    }
+  ]
+}

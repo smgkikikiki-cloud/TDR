@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "id": "s19_swapped_trim_amount_pairs",
+  "title": "Trims and amounts swapped inside one quoted row",
+  "provenance": {
+    "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+    "rights": "Fully synthetic text written for this test; no third-party content.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "CURRENT_MODEL_PAGE",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท</p>",
+      "expect": {
+        "disposition": "REVIEW",
+        "claims": [],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 1,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|789000",
+          "JAECOO 5 EV|ULTRA|LIST_PRICE|699000"
+        ]
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 789000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 699000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "PENDING_RETRY",
+        "max_ai_calls": 1,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|789000",
+          "JAECOO 5 EV|ULTRA|LIST_PRICE|699000"
+        ]
+      },
+      "noise": "b2",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 699000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 789000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท JAECOO 5 EV ULTRA ราคาขายปลีกแนะนำ 789,000 บาท</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0,
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "p5_never": [
+          "JAECOO 5 EV|MAX+|LIST_PRICE|789000",
+          "JAECOO 5 EV|ULTRA|LIST_PRICE|699000"
+        ]
+      },
+      "noise": "b3"
+    }
+  ],
+  "regression_for": "PEE2-F2",
+  "p5": true,
+  "ledger_seed": [
+    {
+      "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev",
+      "amount": 699000,
+      "price_type": "LIST_PRICE",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+      "amount": 789000,
+      "price_type": "LIST_PRICE",
+      "observed_at": "2026-09-01"
+    }
+  ]
+}

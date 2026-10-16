@@ -8,6 +8,14 @@ GET so unchanged price text can count as a real later observation for P5's 24h
 rule. Pass ``--match-trims`` as well to run P4 canonical MarketTrim matching.
 No mode writes PriceLedger, the catalog, or serving data.
 
+Optional Price Event Engine (PEE-1): with ``--extract-prices`` and the feature
+flag ``TDR_PRICE_EVENT_ENGINE=1`` (off by default), changed price-related page
+content that P3 cannot reliably read may be interpreted by a configured LLM
+provider. Its claims are validated against the page evidence and appended to
+the P3 claims; unresolved items are reported under each row's ``price_event``.
+``--event-state`` persists its fingerprints, cache and daily budgets; without
+it the engine never calls a provider (budgets could not be enforced).
+
 Discovered promotion detail URLs are durable fetch state. Once an index exposes
 a promotion page, later polls keep watching that page even when the index itself
 returns 304. This prevents a detail-page price edit from disappearing behind an
@@ -43,6 +51,11 @@ from vehreg.price_fetch import (  # noqa: E402
     FetchResult,
     FetchState,
     adapter_for,
+)
+from vehreg.price_event import (  # noqa: E402
+    EventState,
+    PriceEventConfig,
+    PriceEventEngine,
 )
 from vehreg.price_match import match_trim_diagnostic  # noqa: E402
 from vehreg.price_sources import (  # noqa: E402
@@ -209,6 +222,9 @@ def main(argv: list[str] | None = None) -> int:
                         help="run P4 canonical MarketTrim matching; requires --extract-prices")
     parser.add_argument("--max-discovered", type=int, default=20,
                         help="maximum newly discovered targets to follow in this run")
+    parser.add_argument("--event-state", type=Path, default=None,
+                        help="JSON state file for the optional Price Event Engine "
+                             "(only used when TDR_PRICE_EVENT_ENGINE=1)")
     parser.add_argument("--state-in", type=Path, default=None)
     parser.add_argument("--state-out", type=Path, default=None)
     parser.add_argument("--out", type=Path, default=None)
@@ -224,6 +240,21 @@ def main(argv: list[str] | None = None) -> int:
     catalog = Catalog.load(args.data_dir, args.year) if args.match_trims else None
     siblings_by_model = None
     model_memo: dict = {}
+    event_engine = None
+    if args.extract_prices:
+        event_config = PriceEventConfig.from_env()
+        if event_config.enabled:
+            if args.event_state is None:
+                print("warning: TDR_PRICE_EVENT_ENGINE=1 without --event-state: "
+                      "daily budgets cannot be enforced across runs, so no AI "
+                      "provider call will be made (rules and fingerprints only)",
+                      file=sys.stderr)
+            event_engine = PriceEventEngine(
+                event_config,
+                state=EventState(args.event_state,
+                                 cache_entries=event_config.cache_entries),
+                catalog=catalog,
+            )
 
     targets = [target for target in registry.targets_for()
                if registry.effective_adapter(target) in ADAPTERS]
@@ -270,9 +301,14 @@ def main(argv: list[str] | None = None) -> int:
 
         claims: list[dict] = []
         extraction_warnings: list[str] = []
+        event = None
         if args.extract_prices:
             extracted = extract_oem_price_claims(target, result)
-            for claim in extracted.claims:
+            ai_claims = ()
+            if event_engine is not None:
+                event = event_engine.process(target, result, deterministic=extracted)
+                ai_claims = event.ai_claims
+            for claim in (*extracted.claims, *ai_claims):
                 matched = None
                 if catalog is not None:
                     matched = match_trim_diagnostic(
@@ -298,6 +334,7 @@ def main(argv: list[str] | None = None) -> int:
             "discovered_targets": [
                 _discovered_dict(item) for item in result.discovered_targets
             ],
+            **({"price_event": event.as_dict()} if event is not None else {}),
         })
 
         if not args.follow_discovery:

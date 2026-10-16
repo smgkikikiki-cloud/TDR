@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "id": "s06_home_multi_model",
+  "title": "Multi-model homepage: other models' prices are not P3's job",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "PRICE_LIST",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>OMODA C5 EV MAX+ Price 709,000 THB</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section><section>JAECOO 6 EV 2WD MAX Price 859,000</section>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "OMODA C5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 6 EV",
+            "trim": "2WD MAX",
+            "amount": 859000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 1
+      },
+      "noise": "build-1",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 709000,
+              "brand_raw": "OMODA",
+              "model_raw": "OMODA C5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "OMODA C5 EV MAX+ Price 709,000 THB",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 859000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 6 EV",
+              "trim_raw": "2WD MAX",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 6 EV 2WD MAX Price 859,000",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>OMODA C5 EV MAX+ Price 709,000 THB</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 699,000 Test drive More information</section><section>JAECOO 6 EV 2WD MAX Price 859,000</section>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "OMODA C5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 6 EV",
+            "trim": "2WD MAX",
+            "amount": 859000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "build-2"
+    },
+    {
+      "id": "o3",
+      "t": "2026-10-07T12:00:00+07:00",
+      "body": "<section>JAECOO 5 EV ULTRA NEW JAECOO 5 EV Estimated Price THB 809,000 Test drive More information</section><section>OMODA C5 EV MAX+ Price 709,000 THB</section><section>JAECOO 5 EV MAX+ JAECOO 5 EV Price THB 689,000 Test drive More information</section><section>JAECOO 6 EV 2WD MAX Price 859,000</section>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 689000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 809000,
+            "type": "ESTIMATED_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "OMODA C5 EV",
+            "trim": "MAX+",
+            "amount": 709000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 6 EV",
+            "trim": "2WD MAX",
+            "amount": 859000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "AMOUNTS"
+        ],
+        "max_ai_calls": 1
+      },
+      "noise": "build-3",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 709000,
+              "brand_raw": "OMODA",
+              "model_raw": "OMODA C5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "OMODA C5 EV MAX+ Price 709,000 THB",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 859000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 6 EV",
+              "trim_raw": "2WD MAX",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 6 EV 2WD MAX Price 859,000",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

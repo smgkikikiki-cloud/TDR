@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "id": "s04_promo_window_extended",
+  "title": "Campaign window extended across a month boundary",
+  "provenance": {
+    "evidence_kind": "RECONSTRUCTED_FROM_PILOT_NOTES",
+    "source_refs": [
+      "automotive/vehicle_master/docs/price-intelligence/P3_LIVE_PILOT_2026_09_09.md",
+      "automotive/vehicle_master/vehreg/data/2026/market/campaigns/jaecoo.json"
+    ],
+    "rights": "No third-party page is stored. Short factual price statements are re-typed from internal pilot notes; page chrome and noise are synthetic.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "PROMOTION",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-08-21T09:00:00+07:00",
+      "body": "<h1>BIG MOTOR SALE 2026</h1><p>JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)</p><p>Sale period 21–30 August 2026</p>",
+      "expect": {
+        "disposition": "DETERMINISTIC",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-08-30"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-08-30"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 0
+      }
+    },
+    {
+      "id": "o2",
+      "t": "2026-08-28T10:00:00+07:00",
+      "body": "<h1>BIG MOTOR SALE 2026</h1><p>JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)</p><p>Sale period 21 August – 6 September 2026</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-06"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-06"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "DATES"
+        ],
+        "max_ai_calls": 1,
+        "tolerated": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ]
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 579000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-06",
+              "reference_price_thb": 699000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 669000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-06",
+              "reference_price_thb": 789000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o3",
+      "t": "2026-08-29T11:00:00+07:00",
+      "body": "<h1>BIG MOTOR SALE 2026</h1><p>JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)</p><p>Sale period 21 August – 6 September 2026</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-06"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-06"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0,
+        "tolerated": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ]
+      },
+      "noise": "build-7"
+    },
+    {
+      "id": "o4",
+      "t": "2026-09-03T10:00:00+07:00",
+      "body": "<h1>BIG MOTOR SALE 2026</h1><p>JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)</p><p>Sale period 21 August – 13 September 2026</p>",
+      "expect": {
+        "disposition": "REVIEW",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NEW",
+        "kinds": [
+          "DATES"
+        ],
+        "max_ai_calls": 1,
+        "tolerated": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "forbidden": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-30"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-30"
+          }
+        ]
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 579000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-30",
+              "reference_price_thb": 699000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 669000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-30",
+              "reference_price_thb": 789000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o5",
+      "t": "2026-09-04T10:00:00+07:00",
+      "body": "<h1>BIG MOTOR SALE 2026</h1><p>JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)</p><p>JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)</p><p>Sale period 21 August – 13 September 2026</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-13"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": "2026-08-21",
+            "to": "2026-09-13"
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 789000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "PENDING_RETRY",
+        "max_ai_calls": 1,
+        "tolerated": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 579000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 669000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          }
+        ]
+      },
+      "noise": "build-8",
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 579000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-13",
+              "reference_price_thb": 699000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ Special Price THB 579,000 (from THB 699,000)",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 669000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": "2026-08-21",
+              "effective_to": "2026-09-13",
+              "reference_price_thb": 789000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA Special Price THB 669,000 (from THB 789,000)",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

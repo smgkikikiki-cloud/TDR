@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "id": "s25_neighbouring_wording_does_not_leak",
+  "title": "A neighbour's promo / finance wording must not change an MSRP",
+  "provenance": {
+    "evidence_kind": "SYNTHETIC_ADVERSARIAL",
+    "rights": "Fully synthetic text written for this test; no third-party content.",
+    "label_status": "PROPOSED_PENDING_OWNER_REVIEW"
+  },
+  "source_id": "official_jaecoo_th",
+  "role": "CURRENT_MODEL_PAGE",
+  "observations": [
+    {
+      "id": "o1",
+      "t": "2026-10-05T10:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท ราคาพิเศษ 599,000 บาท JAECOO 5 EV ULTRA ราคาเมื่อใช้สินเชื่อ 649,000 บาท JAECOO 5 EV LONG RANGE MAX ราคาขายปลีกแนะนำ 679,000 บาท</p>",
+      "expect": {
+        "disposition": "AI_EXTRACTED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 649000,
+            "type": "FINANCE_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 679000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "baseline": true,
+        "max_ai_calls": 1
+      },
+      "ai_replies": [
+        {
+          "claims": [
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 699000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "CAMPAIGN_PRICE",
+              "amount_thb": 599000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "MAX+",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": 699000,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท ราคาพิเศษ 599,000 บาท",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "FINANCE_PRICE",
+              "amount_thb": 649000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "ULTRA",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV ULTRA ราคาเมื่อใช้สินเชื่อ 649,000 บาท",
+              "evidence_segment": 0
+            },
+            {
+              "price_type": "LIST_PRICE",
+              "amount_thb": 679000,
+              "brand_raw": "JAECOO",
+              "model_raw": "JAECOO 5 EV",
+              "trim_raw": "LONG RANGE MAX",
+              "effective_from": null,
+              "effective_to": null,
+              "reference_price_thb": null,
+              "conditions": null,
+              "evidence_text": "JAECOO 5 EV LONG RANGE MAX ราคาขายปลีกแนะนำ 679,000 บาท",
+              "evidence_segment": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o2",
+      "t": "2026-10-06T11:00:00+07:00",
+      "body": "<p>JAECOO 5 EV MAX+ ราคาขายปลีกแนะนำ 699,000 บาท ราคาพิเศษ 599,000 บาท JAECOO 5 EV ULTRA ราคาเมื่อใช้สินเชื่อ 649,000 บาท JAECOO 5 EV LONG RANGE MAX ราคาขายปลีกแนะนำ 679,000 บาท</p>",
+      "expect": {
+        "disposition": "UNCHANGED",
+        "claims": [
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 699000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "MAX+",
+            "amount": 599000,
+            "type": "CAMPAIGN_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "ULTRA",
+            "amount": 649000,
+            "type": "FINANCE_PRICE",
+            "from": null,
+            "to": null
+          },
+          {
+            "model": "JAECOO 5 EV",
+            "trim": "LONG RANGE MAX",
+            "amount": 679000,
+            "type": "LIST_PRICE",
+            "from": null,
+            "to": null
+          }
+        ],
+        "event": "NONE",
+        "max_ai_calls": 0
+      },
+      "noise": "b2"
+    }
+  ]
+}
