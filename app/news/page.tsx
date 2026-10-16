@@ -1,2 +1,62 @@
-import { PageIntro } from "@/components/PageIntro";import { getEvents } from "@/lib/data";
-export default async function News(){const rows=await getEvents(100);return <><PageIntro eyebrow="EVENT STREAM" title="ข่าวและการเปลี่ยนแปลง" description="ข่าวที่ถูกจัดเป็น event และเชื่อมกลับไปยังรุ่น โรงงาน แบรนด์ หรือบริษัทในฐานข้อมูล"/><div className="eventStream">{rows.length?rows.map((e:any)=><article key={e.id} className="eventRow"><time>{e.event_date}</time><div><small>{e.event_type.toUpperCase()}</small><h2>{e.title_th}</h2><p>{e.summary_th||''}</p>{e.source_url?<a href={e.source_url} target="_blank" rel="noreferrer">{e.source_name||'แหล่งข้อมูล'} ↗</a>:null}</div></article>):<div className="publicEmptyCard">ยังไม่มี Event ที่เผยแพร่</div>}</div></>}
+import Link from "next/link";
+import { Card, Chip, PageHead } from "@/components/design";
+import { BreakingBadge } from "@/components/NewsBadge";
+import { getPublishedNews, getUsedNewsTags } from "@/lib/news";
+import { formatThaiDate, isBreaking } from "@/lib/news-format";
+
+export const dynamic = "force-dynamic";
+
+/** P26 /news: PageHead + simple list rows + empty state. Newest first; a story published in the
+ *  last 24 hours carries the BREAKING badge. Not in the top nav (MERGE_DECISIONS); footer only. */
+export default async function NewsPage({ searchParams }: { searchParams: Promise<{ tag?: string }> }) {
+  const { tag } = await searchParams;
+  const [news, tags] = await Promise.all([getPublishedNews({ tagSlug: tag || undefined }), getUsedNewsTags()]);
+  const now = Date.now();
+
+  return (
+    <div className="tdr-wrap tdr-news">
+      <PageHead eyebrow="NEWS" eyebrowLang="en" title="ข่าว" />
+
+      {tags.length ? (
+        <nav className="tdr-news__filters" aria-label="กรองตามแท็ก">
+          <Chip href="/news" aria-current={!tag ? "true" : undefined}>ทั้งหมด</Chip>
+          {tags.map((t) => (
+            <Chip key={t.id} href={`/news?tag=${encodeURIComponent(t.slug)}`} aria-current={tag === t.slug ? "true" : undefined}>{t.name}</Chip>
+          ))}
+        </nav>
+      ) : null}
+
+      {news.length ? (
+        <div className="tdr-news__list">
+          {news.map((a) => (
+            <article key={a.id} className="tdr-news__item">
+              {a.heroImageUrl ? (
+                <Link href={`/news/${a.slug}`} className="tdr-news__thumb" tabIndex={-1} aria-hidden="true">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={a.heroImageUrl} alt="" loading="lazy" />
+                </Link>
+              ) : null}
+              <div>
+                <div className="tdr-news__meta">
+                  {isBreaking(a.publishedAt, now) ? <BreakingBadge /> : null}
+                  <time dateTime={a.publishedAt}>{formatThaiDate(a.publishedAt)}</time>
+                </div>
+                <h2 className="tdr-news__title"><Link href={`/news/${a.slug}`}>{a.title}</Link></h2>
+                {a.summary ? <p className="tdr-news__summary">{a.summary}</p> : null}
+                {a.tags.length ? (
+                  <div className="tdr-news__tags">
+                    {a.tags.map((t) => <Chip key={t.id} href={`/news?tag=${encodeURIComponent(t.slug)}`}>{t.name}</Chip>)}
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <Card tone="dashed">
+          <b className="tdr-card__title">{tag ? "ยังไม่มีข่าวในแท็กนี้" : "ยังไม่มีข่าวเผยแพร่"}</b>
+        </Card>
+      )}
+    </div>
+  );
+}

@@ -68,6 +68,13 @@
     "lib/upcoming/boundary.ts",
     "components/upcoming/UpcomingCards.tsx",
     "app/compare/page.tsx",
-    "app/compare/compare-design.css"
+    "app/compare/compare-design.css",
+    "app/news/page.tsx",
+    "app/news/[slug]/page.tsx",
+    "app/news/layout.tsx",
+    "app/news/loading.tsx",
+    "app/news/error.tsx",
+    "app/news/news.css",
+    "components/NewsBadge.tsx"
   ]
 }
