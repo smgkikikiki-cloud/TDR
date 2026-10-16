@@ -2,7 +2,7 @@ import { getPublicMarket, PUBLIC_BRAND_LIMIT, type PublicMarket } from "@/lib/pu
 import { getPublicMarketIce } from "@/lib/ice-public-market";
 import { MarketCharts } from "./MarketCharts";
 import { groupedNumber } from "@/components/charts/format";
-import { Button, Card, Delta, Flag, KpiCard, PageHead, Table } from "@/components/design";
+import { Button, Card, Delta, Flag, KpiCard, LockedBlock, PageHead, Table, TierBadge } from "@/components/design";
 import "./market.css";
 
 export const dynamic = "force-dynamic";
@@ -102,13 +102,49 @@ function MarketBody({ market, dimensionLabel, iceLive }: { market: PublicMarket;
         </Table>
       </section>
 
-      <Card tone="raised" as="section" className="tdr-market-more">
-        <div>
-          <b className="tdr-card__title">หน้านี้เป็น snapshot สาธารณะของงวดล่าสุด {PUBLIC_BRAND_LIMIT} อันดับแรก</b>
-          <p>การเปลี่ยนมุมมอง ช่วงเวลา เปรียบเทียบช่วง กรองข้อมูล และดูรายรุ่น เริ่มในบัญชีสมาชิก</p>
+      <section className="tdr-market-pro" aria-labelledby="market-pro-title">
+        <h2 id="market-pro-title" className="tdr-market-h2">ลึกกว่านี้ในบัญชีสมาชิก</h2>
+        <p className="tdr-market-pro__lead">หน้านี้แสดงเฉพาะภาพรวมระดับแบรนด์ของงวดล่าสุด มุมมองต่อไปนี้ต้องมีบัญชี และยังไม่ได้แสดงตัวเลขจริงบนหน้าสาธารณะ</p>
+        <div className="tdr-market-pro__grid">
+          <LockedBlock tier="pro" height={96} message="ยอดจดทะเบียนรายรุ่น สำหรับสมาชิก Pro" />
+          <LockedBlock tier="pro" height={96} message="เทียบช่วงเดียวกันของปีก่อน และย้อนหลัง 6/12 เดือน สำหรับสมาชิก Pro" />
+          <LockedBlock tier="pro" height={96} message="กรองตามแบรนด์ เซกเมนต์ และตัวถัง สำหรับสมาชิก Pro" />
         </div>
-        <Button variant="accent" href="/member/market">เริ่มวิเคราะห์ตลาด</Button>
-      </Card>
+        <p className="tdr-market-note">ยังไม่มีข้อมูลรายจังหวัดในระบบ จึงไม่แสดงมุมมองนี้</p>
+      </section>
+
+      <section className="tdr-market-plans" aria-labelledby="market-plans-title">
+        <h2 id="market-plans-title" className="tdr-market-h2">เลือกระดับการใช้งาน</h2>
+        <div className="tdr-market-plans__grid">
+          <Card as="article" className="tdr-market-plan">
+            <TierBadge tier="free" />
+            <b className="tdr-card__title">ดูภาพรวมตลาด</b>
+            <ul>
+              <li>snapshot งวดล่าสุด ระดับแบรนด์ ไม่ต้องมีบัญชี</li>
+              <li>สมัครสมาชิกฟรีเพื่อวิเคราะห์เพิ่ม (วันละ 5 ครั้ง ย้อนหลัง 12 เดือน)</li>
+            </ul>
+            <Button variant="accent" href="/member/market">เริ่มวิเคราะห์ตลาด</Button>
+          </Card>
+          <Card as="article" className="tdr-market-plan" tone="raised">
+            <TierBadge tier="pro" />
+            <b className="tdr-card__title">วิเคราะห์เต็มรูปแบบ</b>
+            <ul>
+              <li>รายรุ่น กรองข้อมูล เทียบปีต่อปี ย้อนหลังทั้งคลัง</li>
+              <li>ส่งออกข้อมูลได้ไม่จำกัด ไม่มีลายน้ำ</li>
+            </ul>
+            <Button variant="secondary" href="/pricing">ดูแผน Pro</Button>
+          </Card>
+          <Card as="article" className="tdr-market-plan">
+            <TierBadge tier="enterprise" />
+            <b className="tdr-card__title">สำหรับทีมและองค์กร</b>
+            <ul>
+              <li>ใช้งานร่วมกันหลายคนในองค์กร</li>
+              <li>ปรับตามโจทย์จริง คุยกับทีมงานก่อน</li>
+            </ul>
+            <Button variant="contact" href="/contact">ติดต่อทีมงาน</Button>
+          </Card>
+        </div>
+      </section>
 
       <p className="tdr-market-source">
         ที่มา: ข้อมูลจดทะเบียนรถใหม่จากกรมการขนส่งทางบก · รวบรวมและวิเคราะห์โดย TDR Automotive Intelligence ·

@@ -45,6 +45,14 @@
 .tdr-market-table .tdr-table .tdr-num { text-align: right; }
 .tdr-market-table__others th, .tdr-market-table__others td { color: var(--ink-muted); }
 
+/* pro teasers + plans (no prices) */
+.tdr-market-pro, .tdr-market-plans { margin-bottom: 24px; }
+.tdr-market-h2 { margin: 0 0 8px; font: var(--type-h3); color: var(--ink); }
+.tdr-market-pro__lead, .tdr-market-note { margin: 0 0 12px; color: var(--ink-muted); font: var(--type-body-sm); }
+.tdr-market-pro__grid, .tdr-market-plans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tdr-market-plan { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; min-width: 0; }
+.tdr-market-plan ul { margin: 0; padding-left: 18px; color: var(--ink-muted); font: var(--type-body-sm); display: flex; flex-direction: column; gap: 6px; flex: 1; }
+
 /* upgrade band + source */
 .tdr-market-more { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; }
 .tdr-market-more p { margin: 4px 0 0; color: var(--ink-muted); font: var(--type-body-sm); }
@@ -55,7 +63,7 @@
 
 @media (max-width: 1023px) {
   .tdr-market-kpis { grid-template-columns: minmax(0, 1fr); }
-  .tdr-market-grid { grid-template-columns: minmax(0, 1fr); }
+  .tdr-market-grid, .tdr-market-pro__grid, .tdr-market-plans__grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 767px) {
   .tdr-market-donut { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 16px; }
