@@ -2,6 +2,10 @@
 
 This file is the persistent execution state for long-running TDR work. Agents must read this file before continuing any multi-step TDR data repair, audit, batch, or migration task.
 
+## Website / product direction (2026-10-16 — read before any website, `/market`, News, membership or Pro/Enterprise task)
+
+Owner decisions of 2026-10-15/16 (public site vs TDR Pro split, the new `/market` snapshot page, a News system, Freemium v2 principles) are recorded in `docs/MERGE_DECISIONS.md` (section "ทิศทางผลิตภัณฑ์") with detail in `docs/product-direction/`, and as rows 16–17 plus amendments to rows 9–11 of `design/GRAFT_PLAN.md`. These are documentation only: no task is dispatched, `portfolio.plan.json` stays `execution.enabled=false` / `task_queue=[]`, and pricing, payment provider and existing-subscriber handling remain blocked by G0-C03. Open PR #259 (`design/market`) and #256 are unmerged and wait for the owner's explicit go.
+
 ## Vehicle DB v3 platform state (current — read before anything vehicle-related)
 
 Vehicle DB v3 **Phase 0 is complete** (`docs/vehicle-db/VEHICLE_DB_V3.md`) — all seven steps,
