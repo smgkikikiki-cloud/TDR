@@ -78,6 +78,7 @@ export async function saveNewsArticle(formData: FormData) {
     body_th: body,
     hero_image_url: hero,
     hero_image_alt: field(formData, "hero_image_alt") || null,
+    hero_image_credit: field(formData, "hero_image_credit") || null,
     external_links: externalLinks,
     status,
     published_at: publishedAt,

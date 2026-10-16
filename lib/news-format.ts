@@ -59,3 +59,13 @@ export function newsSlugify(value: string): string {
   const slug = value.normalize("NFKD").toLowerCase().replace(/[^a-z0-9ก-๙]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
   return slug || "news";
 }
+
+/** Buddhist-era date for the reader, Bangkok time ("16 ต.ค. 2569"; DESIGN §4). */
+export function formatThaiDate(iso: string, withTime = false): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return new Intl.DateTimeFormat("th-TH-u-ca-buddhist", {
+    day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Bangkok",
+    ...(withTime ? { hour: "2-digit", minute: "2-digit", hour12: false } : {}),
+  }).format(d);
+}

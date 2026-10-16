@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { BREAKING_WINDOW_HOURS, isBreaking, parseExternalLinks, parseTagNames, splitParagraphs } from "../lib/news-format.ts";
+import { BREAKING_WINDOW_HOURS, formatThaiDate, isBreaking, parseExternalLinks, parseTagNames, splitParagraphs } from "../lib/news-format.ts";
 
 let failed = 0;
 function check(name: string, got: unknown, want: unknown = true) {
@@ -23,6 +23,11 @@ check("links: title | url", parseExternalLinks("ข่าวเดิม | https
   [{ title: "ข่าวเดิม", url: "https://a.example/x" }, { title: "https://b.example", url: "https://b.example" }]);
 let threw = false; try { parseExternalLinks("x | javascript:alert(1)"); } catch { threw = true; }
 check("non-http link is rejected", threw);
+
+console.log("\nnews — design rules");
+check("dates are Buddhist era", /2569/.test(formatThaiDate("2026-10-16T05:00:00Z")));
+check("News is not in the top nav (MERGE_DECISIONS)", !fs.readFileSync("lib/navigation.ts", "utf8").includes('"/news"'));
+check("footer keeps the exact /news label", fs.readFileSync("components/Footer.tsx", "utf8").includes('<Link href="/news">ข่าวและการเปลี่ยนแปลง</Link>'));
 
 console.log("\nnews — migration posture");
 const sql = fs.readFileSync("supabase/migration_v71_news.sql", "utf8");

@@ -1,5 +1,5 @@
-/** Red blinking "breaking news" marker. The blink is CSS-only and is switched off
- *  for readers who ask for reduced motion (the dot stays solid red). */
+/** "BREAKING" marker for a story published in the last 24 hours. The blink is CSS-only,
+ *  off under prefers-reduced-motion (the dot stays solid). Never colour alone: it carries a word. */
 export function BreakingBadge() {
-  return <span className="newsBreaking"><i aria-hidden="true" />BREAKING</span>;
+  return <span className="tdr-news__live" lang="en"><i aria-hidden="true" />BREAKING</span>;
 }

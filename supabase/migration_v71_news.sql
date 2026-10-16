@@ -23,6 +23,8 @@ create table if not exists public.news_articles (
   body_th text not null,
   hero_image_url text,
   hero_image_alt text,
+  -- Photo credit shown under the hero (DESIGN.md §9: images carry a credit).
+  hero_image_credit text,
   -- Extra "read more" links to outside pages, one {"title","url"} per element.
   external_links jsonb not null default '[]'::jsonb,
   status text not null default 'draft' check (status in ('draft', 'published')),

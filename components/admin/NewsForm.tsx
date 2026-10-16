@@ -4,7 +4,7 @@ import { formatExternalLinks, type ExternalLink } from "@/lib/news-format";
 
 export type NewsFormValues = {
   id?: string; slug?: string; title_th?: string; summary_th?: string | null; body_th?: string;
-  hero_image_url?: string | null; hero_image_alt?: string | null; status?: string;
+  hero_image_url?: string | null; hero_image_alt?: string | null; hero_image_credit?: string | null; status?: string;
   external_links?: ExternalLink[]; tagIds?: string[]; relatedIds?: string[];
 };
 
@@ -35,6 +35,7 @@ export function NewsForm({ values = {}, tags, others }: {
       <label className="adminField"><span>อัปโหลดภาพใหม่ (JPG/PNG/WebP/AVIF ไม่เกิน 4 MB)</span><input type="file" name="hero_file" accept="image/jpeg,image/png,image/webp,image/avif" /></label>
       <Field label="หรือวางลิงก์ภาพ (https://…)" name="hero_image_url" />
       <Field label="คำอธิบายภาพ (alt)" name="hero_image_alt" defaultValue={values.hero_image_alt} />
+      <Field label="เครดิตภาพ (แสดงใต้ภาพ)" name="hero_image_credit" defaultValue={values.hero_image_credit} />
     </fieldset>
 
     <fieldset className="adminCheckGroup adminFieldWide">

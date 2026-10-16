@@ -17,6 +17,7 @@ export type NewsPreview = {
   summary: string | null;
   heroImageUrl: string | null;
   heroImageAlt: string | null;
+  heroImageCredit: string | null;
   publishedAt: string;
   tags: NewsTag[];
 };
@@ -34,7 +35,7 @@ export function newsTableMissing(error: any): boolean {
   return message.includes("news_") && (message.includes("does not exist") || message.includes("schema cache") || message.includes("could not find"));
 }
 
-const PREVIEW_COLUMNS = "id,slug,title_th,summary_th,hero_image_url,hero_image_alt,published_at";
+const PREVIEW_COLUMNS = "id,slug,title_th,summary_th,hero_image_url,hero_image_alt,hero_image_credit,published_at";
 
 async function tagsFor(db: any, articleIds: string[]): Promise<Map<string, NewsTag[]>> {
   const map = new Map<string, NewsTag[]>();
@@ -63,6 +64,7 @@ function toPreview(row: any, tags: Map<string, NewsTag[]>): NewsPreview {
     summary: row.summary_th ?? null,
     heroImageUrl: row.hero_image_url ?? null,
     heroImageAlt: row.hero_image_alt ?? null,
+    heroImageCredit: row.hero_image_credit ?? null,
     publishedAt: row.published_at,
     tags: tags.get(row.id) || [],
   };
