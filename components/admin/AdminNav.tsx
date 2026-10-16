@@ -27,6 +27,7 @@ export async function AdminNav() {
       <Link href="/admin/exceptions">รายการที่ต้องตัดสิน</Link>
       <Link href="/admin/ice-queue">คิวรถ Ice</Link>
       <Link href="/admin/market">ข้อมูลตลาด</Link>
+      <Link href="/admin/news">ข่าว (News)</Link>
       <Link href="/admin/research">ไฟล์งานวิจัย</Link>
 
       <span className="adminNavHeading">LEVEL 0 · ใช้เมื่อ reset lineup</span>

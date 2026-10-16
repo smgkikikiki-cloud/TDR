@@ -6,6 +6,7 @@ export const primaryNav = [
   { href: "/models", label: "Vehicle Database" },
   { href: "/compare", label: "Compare Specs" },
   { href: "/research", label: "Analysis Report" },
+  { href: "/news", label: "News" },
 ];
 
 /** Header actions. Sign-up and sign-in share the member page until the auth pages ship. */

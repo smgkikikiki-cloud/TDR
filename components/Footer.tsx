@@ -13,7 +13,8 @@ export function Footer() {
           <Link href="/about">เกี่ยวกับ TDR</Link>
           <Link href="/contact">ติดต่อเรา</Link>
           <Link href="/pricing">แพ็กเกจ</Link>
-          <Link href="/news">ข่าวและการเปลี่ยนแปลง</Link>
+          <Link href="/news">ข่าว</Link>
+          <Link href="/events">ข่าวและการเปลี่ยนแปลง</Link>
           <Link href="/terms">เงื่อนไขการใช้บริการ</Link>
           <Link href="/privacy">นโยบายความเป็นส่วนตัว</Link>
         </nav>

@@ -99,7 +99,7 @@ export default async function ReportsPage() {
     <section className="sfBlock">
       <div className="sfZoneHead">
         <div><div className="sfEyebrow">อ่านได้ฟรี</div><h2>ข่าวอุตสาหกรรม</h2></div>
-        <Link href="/news">ข่าวทั้งหมด →</Link>
+        <Link href="/events">ข่าวทั้งหมด →</Link>
       </div>
       {events.length ? (
         <div className="sfNewsList">
