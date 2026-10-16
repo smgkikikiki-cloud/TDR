@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Button, Card, LockedBlock } from "@/components/design";
 import { useEffect, useState } from "react";
 import { browserDb } from "@/lib/supabase-browser";
 
@@ -54,10 +54,10 @@ export function ResearchUnlock({ slug }: { slug: string }) {
   }
 
   if (status === "unlocked" && article) {
-    return <section className="researchBody">
+    return <section className="tdr-research-body" aria-label="ฉบับเต็ม">
       {article.body_th.split(/\n{2,}/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
       {article.quota && article.quota.limit !== null ? (
-        <p className="researchQuota">
+        <p className="tdr-research-quota">
           อ่านฉบับเต็มไปแล้ว {article.quota.used}/{article.quota.limit} ครั้งในเดือนนี้
           {article.already_unlocked ? " (บทความนี้ปลดล็อกไว้แล้ว อ่านซ้ำไม่เสียสิทธิ์)" : ""}
         </p>
@@ -66,32 +66,33 @@ export function ResearchUnlock({ slug }: { slug: string }) {
   }
 
   if (token === null) {
-    return <section className="researchGate">
-      <b>เข้าสู่ระบบเพื่ออ่านฉบับเต็ม</b>
-      <span>บัญชีฟรีอ่านฉบับเต็มได้ 2 บทความ/เดือน อัปเกรดเพื่ออ่านไม่จำกัด</span>
-      <Link className="sfBtn" href={`/member/login?next=${encodeURIComponent(`/research/${slug}`)}`}>
-        สมัครฟรี / เข้าสู่ระบบ
-      </Link>
-    </section>;
+    return <div className="tdr-research-gate">
+      <LockedBlock
+        tier="member"
+        height={96}
+        message="เข้าสู่ระบบเพื่ออ่านฉบับเต็ม บัญชีฟรีอ่านได้ 2 บทความ/เดือน อัปเกรดเพื่ออ่านไม่จำกัด"
+        cta={{ label: "สมัครฟรี / เข้าสู่ระบบ", href: `/member/login?next=${encodeURIComponent(`/research/${slug}`)}` }}
+      />
+    </div>;
   }
 
-  return <section className="researchGate">
+  return <Card as="section" className="tdr-research-gate">
     {status === "quota" ? (
-      <>
-        <b>ใช้สิทธิ์อ่านฉบับเต็มของเดือนนี้ครบแล้ว</b>
-        <span>{message} อัปเกรดบัญชีเพื่ออ่านไม่จำกัด</span>
-        <Link className="sfBtn" href="/pricing">ดูแพ็กเกจ</Link>
-      </>
+      <div role="alert">
+        <b className="tdr-card__title">ใช้สิทธิ์อ่านฉบับเต็มของเดือนนี้ครบแล้ว</b>
+        <p>{message} อัปเกรดบัญชีเพื่ออ่านไม่จำกัด</p>
+        <Button variant="accent" href="/pricing">ดูแพ็กเกจ</Button>
+      </div>
     ) : status === "error" ? (
-      <>
-        <b>โหลดบทวิเคราะห์ไม่สำเร็จ</b>
-        <span>{message}</span>
-        <button className="sfBtn" type="button" onClick={unlock}>ลองอีกครั้ง</button>
-      </>
+      <div role="alert">
+        <b className="tdr-card__title">โหลดบทวิเคราะห์ไม่สำเร็จ</b>
+        <p>{message}</p>
+        <Button onClick={unlock}>ลองอีกครั้ง</Button>
+      </div>
     ) : (
-      <button className="sfBtn" type="button" disabled={status === "loading" || token === undefined} onClick={unlock}>
+      <Button variant="accent" disabled={status === "loading" || token === undefined} onClick={unlock}>
         {status === "loading" ? "กำลังโหลด…" : "อ่านฉบับเต็ม"}
-      </button>
+      </Button>
     )}
-  </section>;
+  </Card>;
 }
